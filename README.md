@@ -13,6 +13,14 @@
   <img alt="Database" src="https://img.shields.io/badge/database-PostgreSQL%20%7C%20Redis-1B1B1B?style=for-the-badge">
 </p>
 
+<p align="center">
+  <img alt="Status" src="https://img.shields.io/badge/status-active%20development-5B21B6?style=flat-square">
+  <img alt="API" src="https://img.shields.io/badge/api-FastAPI%20Async-0E7490?style=flat-square">
+  <img alt="UI" src="https://img.shields.io/badge/ui-Tailwind%20%2B%20Motion-7C3AED?style=flat-square">
+  <img alt="Auth" src="https://img.shields.io/badge/auth-JWT%20%2B%20OAuth-334155?style=flat-square">
+  <img alt="Observability" src="https://img.shields.io/badge/metrics-Prometheus-7F1D1D?style=flat-square">
+</p>
+
 ---
 
 ## Quick Navigation
@@ -22,7 +30,9 @@
 - [Architecture Snapshot](#architecture-snapshot)
 - [Repository Structure](#repository-structure)
 - [Quick Start](#quick-start)
+- [Command Center by Role](#command-center-by-role)
 - [API Surface (Key Routes)](#api-surface-key-routes)
+- [Demo Script (Presentation Flow)](#demo-script-presentation-flow)
 - [Inference Modes](#inference-modes)
 - [Security and Secret Handling](#security-and-secret-handling)
 - [Superpowers and Agent Skills](#superpowers-and-agent-skills)
@@ -158,9 +168,47 @@ Environment template:
 
 ---
 
+## Command Center by Role
+
+<table>
+  <tr>
+    <td width="33%" valign="top">
+      <h3>Developer</h3>
+      <p>Run application stack for feature work.</p>
+      <pre><code>cd ~/Desktop/HypeVault
+bash scripts/dev_setup.sh
+cd backend && uvicorn main:app --reload --host 0.0.0.0 --port 8000
+# new terminal
+cd frontend && npm install && npm run dev</code></pre>
+    </td>
+    <td width="33%" valign="top">
+      <h3>Infrastructure</h3>
+      <p>Bring dependencies and readiness online.</p>
+      <pre><code>cd ~/Desktop/HypeVault
+docker compose -f infra/docker-compose.yml up -d postgres redis triton
+curl -sS http://localhost:8000/health
+curl -sS -i http://localhost:8000/health/ready</code></pre>
+    </td>
+    <td width="33%" valign="top">
+      <h3>ML / Inference</h3>
+      <p>Export and run model path.</p>
+      <pre><code>cd ~/Desktop/HypeVault
+. .venv/bin/activate
+python scripts/export_tensorrt.py
+# fallback mode
+export INFERENCE_BACKEND=torch
+export LOCAL_MODEL_PATH=models/hypevault_classifier.pt</code></pre>
+    </td>
+  </tr>
+</table>
+
+---
+
 ## API Surface (Key Routes)
 
-### Authentication
+<details open>
+  <summary><strong>Authentication</strong></summary>
+
 - `POST /auth/register`
 - `POST /auth/login`
 - `POST /auth/google`
@@ -168,7 +216,11 @@ Environment template:
 - `POST /auth/logout`
 - `GET /auth/me`
 
-### Verification and Listings
+</details>
+
+<details open>
+  <summary><strong>Verification and Listings</strong></summary>
+
 - `POST /verify/authenticate`
 - `POST /listings/`
 - `GET /listings/`
@@ -177,10 +229,37 @@ Environment template:
 - `GET /listings/{id}/comparison`
 - `POST /listings/presign`
 
-### Operations
+</details>
+
+<details>
+  <summary><strong>Operations</strong></summary>
+
 - `GET /health`
 - `GET /health/ready`
 - `GET /metrics`
+
+</details>
+
+---
+
+## Demo Script (Presentation Flow)
+
+Use this minimal runbook for a polished live demo:
+
+1. **Open landing page** and position the narrative: AI-gated trust layer for luxury commerce.
+2. **Authenticate as seller**, create/upload listing, run verification.
+3. **Show verdict + confidence** and explain gating logic.
+4. **Open comparison panel** and highlight cross-market pricing context.
+5. **Switch to buyer perspective** and show curated discovery flow.
+6. **Close with operations proof** using `GET /health/ready` and `GET /metrics`.
+
+Presentation-ready command block:
+
+```bash
+curl -sS http://localhost:8000/health
+curl -sS -i http://localhost:8000/health/ready
+curl -sS http://localhost:8000/metrics | sed -n '1,20p'
+```
 
 ---
 
