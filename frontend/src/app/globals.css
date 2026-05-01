@@ -1,0 +1,320 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   HYPEVAULT × GTA VI — Vice City retrowave theme
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --hv-bg:          #0B0118;            /* near-black w/ purple cast */
+  --hv-bg-alt:      #160329;            /* deeper magenta */
+  --hv-bg-card:     #1B0533;            /* tile bg */
+  --hv-bg-inverse:  #FFEDF6;            /* contrast cream-pink */
+
+  /* Brand neons */
+  --hv-pink:        #FF1FA4;
+  --hv-pink-soft:   #FF6FCB;
+  --hv-cyan:        #00E1FF;
+  --hv-orange:      #FF7A1A;
+  --hv-yellow:      #FFD24A;
+  --hv-violet:      #9B5BFF;
+
+  /* Text */
+  --hv-fg:          #FFEDF6;            /* warm white */
+  --hv-fg-muted:    rgba(255, 237, 246, 0.6);
+  --hv-fg-subtle:   rgba(255, 237, 246, 0.4);
+
+  /* Borders */
+  --hv-border:      rgba(255, 31, 164, 0.22);
+  --hv-border-soft: rgba(255, 237, 246, 0.07);
+
+  /* Compatibility tokens (so old refs to #FF3B00 still work) */
+  --hv-accent:      var(--hv-pink);
+  --hv-link:        var(--hv-cyan);
+  --hv-success:     #38EFA1;
+}
+
+@layer base {
+  h1, h2, h3, h4 {
+    letter-spacing: -0.022em;
+    font-weight: 800;
+    font-style: italic;
+  }
+
+  ::selection {
+    background-color: var(--hv-pink);
+    color: #fff;
+  }
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #6E1A8E var(--hv-bg);
+}
+html, body { overscroll-behavior: none; }
+
+body {
+  font-family: var(--font-sans), "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", system-ui, sans-serif;
+  background-color: var(--hv-bg);
+  color: var(--hv-fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Sunset gradient base */
+  background-image:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(255, 122, 26, 0.18), transparent 65%),
+    radial-gradient(ellipse 100% 60% at 50% 110%, rgba(255, 31, 164, 0.20), transparent 55%);
+  background-attachment: fixed;
+}
+
+::-webkit-scrollbar           { width: 8px; }
+::-webkit-scrollbar-track     { background: var(--hv-bg); }
+::-webkit-scrollbar-thumb     { background: linear-gradient(180deg, #FF1FA4, #6E1A8E); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #00E1FF, #FF1FA4); }
+
+/* ─────────────────────────────────────────────────────────────
+   GTA VI UTILITIES
+   ───────────────────────────────────────────────────────────── */
+
+.hv-display-xl  { font-size: clamp(3rem, 8.5vw, 7rem); line-height: 1.0; letter-spacing: -0.045em; font-weight: 900; font-style: italic; }
+.hv-display-lg  { font-size: clamp(2rem, 4.8vw, 3.5rem); line-height: 1.04; letter-spacing: -0.03em; font-weight: 800; font-style: italic; }
+.hv-display-md  { font-size: clamp(1.5rem, 2.8vw, 2.25rem); line-height: 1.12; letter-spacing: -0.02em; font-weight: 800; font-style: italic; }
+
+.hv-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--hv-cyan);
+  text-shadow: 0 0 16px rgba(0, 225, 255, 0.55);
+}
+
+/* Vice City gradient — use on continuous text or blocks; see span rule below */
+.hv-gradient-text {
+  background-image: linear-gradient(95deg, #FFD24A 0%, #FF7A1A 28%, #FF1FA4 58%, #9B5BFF 88%);
+  background-attachment: fixed;
+  background-size: 120vw 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 22px rgba(255, 31, 164, 0.45));
+}
+
+/*
+ * Per-letter spans need a clipped fill; `fixed` keeps one gradient field so letters
+ * are not each painted with a squashed rainbow (striped “shabby” look).
+ */
+.hv-gradient-text span {
+  -webkit-text-fill-color: transparent;
+  background-image: inherit;
+  background-attachment: fixed;
+  background-size: inherit;
+  background-position: inherit;
+  background-repeat: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Hero line 2 — single warm accent (earlier brand orange), not full multicolor */
+.hv-hero-accent-text {
+  color: #ff8a3b;
+  text-shadow:
+    0 0 14px rgba(255, 122, 26, 0.85),
+    0 0 32px rgba(255, 59, 0, 0.45),
+    0 0 48px rgba(255, 31, 164, 0.25);
+}
+
+/* Hot pink neon outline title */
+.hv-neon-title {
+  color: #FFEDF6;
+  text-shadow:
+    0 0 6px  rgba(255, 31, 164, 0.85),
+    0 0 18px rgba(255, 31, 164, 0.55),
+    0 0 40px rgba(255, 122, 26, 0.45);
+}
+
+/* Cards become "neon panels" */
+.hv-card {
+  background: linear-gradient(155deg, rgba(255,31,164,0.08), rgba(0,225,255,0.04) 60%, rgba(255,255,255,0.02));
+  border-radius: 20px;
+  border: 1px solid var(--hv-border);
+  box-shadow:
+    0 18px 50px -16px rgba(255, 31, 164, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 240ms;
+}
+.hv-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 26px 70px -14px rgba(0, 225, 255, 0.40),
+    0 12px 30px -12px rgba(255, 31, 164, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  border-color: rgba(0, 225, 255, 0.45);
+}
+
+.hv-section-alt  { background: var(--hv-bg-alt); }
+.hv-section-dark { background: #000; color: var(--hv-fg); }
+
+/* Neon pill button */
+.hv-btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.6rem;
+  border-radius: 980px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  font-style: italic;
+  transition: all 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+/* Primary = hot pink with cyan halo */
+.hv-btn-primary {
+  background: linear-gradient(95deg, #FF1FA4, #FF7A1A);
+  color: #fff;
+  box-shadow:
+    0 12px 36px -10px rgba(255, 31, 164, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+.hv-btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.07);
+  box-shadow:
+    0 18px 48px -10px rgba(255, 31, 164, 0.85),
+    0 0 30px 4px rgba(0, 225, 255, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.16) inset;
+}
+
+/* "Blue" CTA → cyan neon */
+.hv-btn-blue {
+  background: linear-gradient(95deg, #00E1FF, #9B5BFF);
+  color: #0B0118;
+  box-shadow:
+    0 12px 36px -10px rgba(0, 225, 255, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.16) inset;
+}
+.hv-btn-blue:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.07);
+  box-shadow:
+    0 16px 50px -10px rgba(0, 225, 255, 0.8),
+    0 0 30px 4px rgba(255, 31, 164, 0.35);
+}
+
+.hv-btn-secondary {
+  background: transparent;
+  color: var(--hv-cyan);
+  border: 1px solid rgba(0, 225, 255, 0.35);
+}
+.hv-btn-secondary:hover { color: #fff; border-color: var(--hv-cyan); background: rgba(0,225,255,0.06); }
+
+/* Chevron link → cyan, glowing */
+.hv-chevron {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--hv-cyan);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-style: italic;
+  text-shadow: 0 0 18px rgba(0, 225, 255, 0.55);
+  transition: gap 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hv-chevron::after {
+  content: "›";
+  font-size: 18px;
+  transform: translateY(-1px);
+}
+.hv-chevron:hover { gap: 10px; color: #fff; }
+
+/* Marquee */
+@keyframes hv-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-hv-marquee      { animation: hv-marquee 40s linear infinite; }
+.animate-hv-marquee-slow { animation: hv-marquee 60s linear infinite; }
+.hv-marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+
+/* Scanline overlay (CRT vibe) — opt-in via class on a wrapper */
+.hv-scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.025) 0,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  mix-blend-mode: overlay;
+}
+
+/* Neon ring frame */
+.hv-neon-frame {
+  position: relative;
+}
+.hv-neon-frame::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(115deg, #FF1FA4, #00E1FF, #FF7A1A, #FF1FA4);
+  background-size: 280% 280%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: hv-neon-spin 7s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes hv-neon-spin {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* Sunset stripe */
+.hv-sunset {
+  background: linear-gradient(180deg,
+    #FFD24A 0%,
+    #FF7A1A 18%,
+    #FF1FA4 48%,
+    #9B5BFF 78%,
+    #0B0118 100%
+  );
+}
+
+.hv-link-underline { position: relative; }
+.hv-link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -1px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform-origin: right center;
+  transform: scaleX(0);
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hv-link-underline:hover::after { transform-origin: left center; transform: scaleX(1); }

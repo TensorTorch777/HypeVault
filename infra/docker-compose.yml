@@ -1,0 +1,99 @@
+# Local development. API uses host port 8000; Triton is on 18000 (HTTP), 18001 (gRPC), 18002 (metrics).
+# Start database only: docker compose up -d postgres redis
+# Full stack: docker compose up -d
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.backend
+    container_name: hypevault-backend
+    working_dir: /app
+    volumes:
+      - ../backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://hypevault:hypevault@postgres:5432/hypevault
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: dev-secret-change-me
+      TRITON_HOST: triton
+      TRITON_PORT: "8001"
+      AWS_REGION: ap-south-1
+      S3_BUCKET: hypevault-listings
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - hypevault-network
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.frontend
+    container_name: hypevault-frontend
+    working_dir: /app
+    volumes:
+      - ../frontend:/app
+      - frontend-node-modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - hypevault-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: hypevault-postgres
+    environment:
+      POSTGRES_USER: hypevault
+      POSTGRES_PASSWORD: hypevault
+      POSTGRES_DB: hypevault
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hypevault -d hypevault"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hypevault-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: hypevault-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - hypevault-network
+
+  triton:
+    image: nvcr.io/nvidia/tritonserver:23.10-py3
+    container_name: hypevault-triton
+    command: ["tritonserver", "--model-repository=/models"]
+    volumes:
+      - ../models:/models
+    ports:
+      - "18000:8000"
+      - "18001:8001"
+      - "18002:8002"
+    networks:
+      - hypevault-network
+
+networks:
+  hypevault-network:
+    name: hypevault-network
+
+volumes:
+  postgres-data:
+  redis-data:
+  frontend-node-modules:

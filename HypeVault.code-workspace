@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../scraper/Label_0_Sneakers"
+		},
+		{
+			"path": "../scraper/Label_0_Watches"
+		},
+		{
+			"path": "../scraper/Label_1_Sneakers"
+		},
+		{
+			"path": "../scraper/Label_1_Watches"
+		}
+	],
+	"settings": {}
+}

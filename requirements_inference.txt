@@ -1,0 +1,4 @@
+# Optional: local PyTorch inference (INFERENCE_BACKEND=torch + LOCAL_MODEL_PATH)
+# pip install -r requirements_inference.txt
+torch>=2.1.0,<2.5.0
+timm>=0.9.12

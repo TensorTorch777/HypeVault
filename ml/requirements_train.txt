@@ -1,0 +1,26 @@
+# HypeVault — Training environment
+# Install on RTX 6000 Pro Blackwell (CUDA 12.4+ / 13.x)
+# Run: pip install -r requirements_train.txt
+
+# ── PyTorch + CUDA ──────────────────────────────────────────────────
+# Install PyTorch FIRST via the official command for your CUDA version:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+# Then install the rest:
+
+# ── Core DL ─────────────────────────────────────────────────────────
+timm>=1.0.9                    # DINOv2 via timm (fallback to torch.hub)
+torchvision>=0.19.0
+
+# ── Image processing ────────────────────────────────────────────────
+Pillow>=10.0.0
+numpy>=1.26.0
+
+# ── ONNX export ─────────────────────────────────────────────────────
+onnx>=1.16.0
+onnxruntime-gpu>=1.18.0        # verify export without TRT
+
+# ── Utilities ───────────────────────────────────────────────────────
+tqdm>=4.66.0
+matplotlib>=3.9.0
+scikit-learn>=1.5.0            # confusion matrix, classification report
+pandas>=2.2.0                  # logging / CSV export of metrics
