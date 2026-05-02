@@ -35,7 +35,6 @@
 - [Demo Script (Presentation Flow)](#demo-script-presentation-flow)
 - [Inference Modes](#inference-modes)
 - [Security and Secret Handling](#security-and-secret-handling)
-- [Superpowers and Agent Skills](#superpowers-and-agent-skills)
 - [Production Notes](#production-notes)
 - [License](#license)
 
@@ -292,9 +291,9 @@ Switch back to `INFERENCE_BACKEND=triton` for production parity.
 
 - Never commit secrets.
 - Keep runtime values in environment variables only.
-- Use `.env.example` as the template.
+- Use a local env template (keep secrets out of git).
 - `.gitignore` is configured to exclude:
-  - `.env*` (except `.env.example`)
+  - `.env*` and `.env.example`
   - key/cert artifacts
   - service-account JSON files
   - heavyweight training and dataset folders
@@ -302,22 +301,6 @@ Switch back to `INFERENCE_BACKEND=triton` for production parity.
 Before each push:
 - verify no secret-bearing files are staged
 - keep machine-specific `.env` and credential material local-only
-
----
-
-## Superpowers and Agent Skills
-
-The npm package `@obra/superpowers` is not published; Superpowers is distributed as a plugin and skill library:
-- Cursor install: `/add-plugin superpowers` or marketplace
-- Offline bootstrap: `scripts/bootstrap_superpowers.sh`
-
-Domain skills for this repository are under `.cursor/skills/`:
-- `authentication.md`
-- `dinov2_inference.md`
-- `playwright_scraper.md`
-- `price_dashboard.md`
-- `image_upload.md`
-- `aws_infra.md`
 
 ---
 

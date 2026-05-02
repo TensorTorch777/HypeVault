@@ -9,8 +9,7 @@
     "dev:clean:3001": "rm -rf .next && next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3000",
-    "lint": "next lint",
-    "superpowers:bootstrap": "bash ../scripts/bootstrap_superpowers.sh"
+    "lint": "next lint"
   },
   "dependencies": {
     "@react-three/drei": "^9.122.0",
