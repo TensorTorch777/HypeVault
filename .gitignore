@@ -43,4 +43,5 @@ service-account*.json
 secrets/
 tmp/
 .cursor/
+scripts/bootstrap_superpowers.sh
 vendor/superpowers/
