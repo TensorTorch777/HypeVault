@@ -18,6 +18,7 @@ from database import Listing, ListingCategory, ListingStatus, User, get_db
 from inference.engine import classify_image
 from inference.schemas import AuthenticateResponse
 from inference.triton_client import preprocess_chw
+from inference.verdict import apply_min_authentic_confidence
 from s3_client import upload_file_bytes
 
 _log = logging.getLogger(__name__)
@@ -55,8 +56,7 @@ async def authenticate(
             pil = Image.open(io.BytesIO(raw)).convert("RGB")
         except Exception:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid image file")
-        resized_pil = pil.resize((518, 518), Image.Resampling.LANCZOS)
-        arr = np.array(resized_pil)  # HWC RGB uint8
+        arr = np.array(pil)  # HWC RGB uint8; resize + normalize in preprocess_chw
         nchw = preprocess_chw(arr)
 
         list_uuid: uuid.UUID
@@ -92,7 +92,7 @@ async def authenticate(
         s3_url = await upload_file_bytes(key=s3_key, body=raw, content_type=ct)
 
         try:
-            verdict, confidence = await classify_image(nchw)
+            raw_verdict, raw_confidence = await classify_image(nchw)
         except Exception as exc:
             _log.exception("inference_failed: %s", exc)
             raise HTTPException(
@@ -100,10 +100,23 @@ async def authenticate(
                 detail="AI verification service unavailable. Please try again.",
             )
 
+        verdict, confidence = apply_min_authentic_confidence(
+            raw_verdict,
+            raw_confidence,
+            settings.inference_min_authentic_confidence,
+        )
+        if raw_verdict == "AUTHENTIC" and verdict == "FAKE":
+            _log.info(
+                "authenticate_below_authentic_floor listing_id=%s raw_auth_conf=%.4f floor=%s",
+                list_uuid,
+                raw_confidence,
+                settings.inference_min_authentic_confidence,
+            )
+
         listing.s3_url = s3_url
         listing.verdict = verdict
         listing.confidence = float(confidence)
-        if verdict == "FAKE" or float(confidence) < float(settings.inference_live_conf_threshold):
+        if verdict == "FAKE":
             listing.status = ListingStatus.rejected
         else:
             listing.status = ListingStatus.live
@@ -115,6 +128,7 @@ async def authenticate(
             confidence=float(confidence),
             s3_url=s3_url,
             listing_id=str(list_uuid),
+            listing_status=listing.status.value,  # type: ignore[arg-type]
         )
     except HTTPException:
         raise

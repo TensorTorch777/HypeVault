@@ -41,7 +41,8 @@ export function ProductVisualPanel({
   const confidencePct =
     listing?.confidence != null ? Math.min(100, Math.max(0, Math.round(listing.confidence * 100))) : null;
 
-  const showPlaceholder = !(hasImage && verified);
+  const showHero = hasImage && (verified || fake);
+  const showPlaceholder = !showHero;
 
   return (
     <div
@@ -55,12 +56,18 @@ export function ProductVisualPanel({
       }}
     >
       <div className="relative flex flex-1 flex-col px-6 pb-6 pt-10 md:px-8">
-        {hasImage && verified ? (
+        {showHero ? (
           <div className="relative mx-auto mt-2 aspect-square w-full max-w-[min(100%,380px)] flex-1 overflow-hidden rounded-xl border border-white/10">
             <Image src={listing!.s3_url!} alt="" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
-            <span className="absolute left-3 top-3 rounded-md bg-[#00C851] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-black shadow-lg">
-              Authentic
-            </span>
+            {verified ? (
+              <span className="absolute left-3 top-3 rounded-md bg-[#00C851] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-black shadow-lg">
+                Live · Authentic
+              </span>
+            ) : (
+              <span className="absolute left-3 top-3 rounded-md bg-red-600 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-white shadow-lg">
+                AI flagged
+              </span>
+            )}
             {confidencePct != null ? (
               <span className="absolute bottom-3 right-3 rounded-md bg-black/75 px-2.5 py-1 text-xs font-bold tabular-nums text-white backdrop-blur-sm">
                 {confidencePct}% confidence
@@ -93,11 +100,11 @@ export function ProductVisualPanel({
         <div
           className={cn(
             "mt-auto w-full border-t border-white/[0.06] pt-5",
-            hasImage && verified ? "sr-only" : ""
+            showHero ? "sr-only" : ""
           )}
         >
           {fake ? (
-            <p className="text-sm font-medium text-red-400">Authenticity signals: review required</p>
+            <p className="text-sm font-medium text-red-400">Authenticity signals: AI classified as fake or below threshold</p>
           ) : loading ? (
             <p className="text-sm font-normal text-[#a1a1aa]">
               Authenticity signals: checking

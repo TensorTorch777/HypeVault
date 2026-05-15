@@ -1,16 +1,16 @@
 """
-HypeVault — DINOv2-Giant Full Fine-Tuning
-==========================================
+HypeVault — DINOv2 local training (RTX 5080 profile)
+=====================================================
 Binary classification: Authentic (0) vs Deepfake (1)
+
+Smaller backbone (DINOv2-Base via timm), **504×504** input (multiple of patch 14; 512² is invalid for ViT-P/14), batch settings sized
+for ~16 GB VRAM. Original `ml/train.py` remains the DINOv2-Giant / 518px path.
 
 Dataset layout expected:
   Label_0_Sneakers/<brand>/*.jpg   → label 0
   Label_0_Watches/<brand>/*.jpg    → label 0
   Label_1_Sneakers/<brand>/*.jpg   → label 1
   Label_1_Watches/<brand>/*.jpg    → label 1
-
-Hardware: RTX 6000 Pro Blackwell (96 GB VRAM)
-Resolution: 518 × 518 (DINOv2 native patch grid)
 """
 
 from __future__ import annotations
@@ -53,24 +53,26 @@ except ImportError:
 # Hyper-parameters (all overridable via CLI)
 # ─────────────────────────────────────────────
 DEFAULTS = dict(
-    data_root="/home/tensortorch26/Desktop/scraper",
-    output_dir="/home/tensortorch26/Desktop/HypeVault/ml/checkpoints",
-    model_name="dinov2_vitg14_reg",    # DINOv2-Giant with registers (best variant)
-    img_size=518,
-    batch_size=8,                       # A100-80GB: Giant+518px needs grad-ckpt; effective 32 with accum=4
+    data_root="/home/tensortorch26/Desktop/HypeVault",
+    output_dir="/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/checkpoints",
+    # DINOv2-Base (timm id); ~86M backbone params — fits 16 GB at 512²
+    model_name="vit_base_patch14_dinov2.lvd142m",
+    # DINOv2 patch14 → H and W must be divisible by 14 (512 is invalid). 504 = 36×14, smaller than 518.
+    img_size=504,
+    batch_size=16,
     num_epochs=20,
-    lr=1e-5,                            # low LR for full fine-tune of 1.1B params
+    lr=2e-5,
     weight_decay=0.05,
     warmup_epochs=2,
     label_smoothing=0.05,
     dropout=0.2,
     val_split=0.1,
-    num_workers=8,
+    num_workers=6,
     seed=42,
     grad_clip=1.0,
-    accumulate_grad=4,                  # effective batch = batch_size * accumulate_grad = 32
-    amp_dtype="bf16",                   # bf16 for Blackwell; use fp16 if needed
-    save_every=5,                       # save checkpoint every N epochs
+    accumulate_grad=2,                  # effective batch = 16 * 2 = 32
+    amp_dtype="bf16",
+    save_every=2,
     resume_from=None,                   # path to best_model.pt to resume from
     start_epoch=1,                      # epoch to start from when resuming
     early_stop_patience=5,
@@ -355,8 +357,8 @@ def make_weighted_sampler(dataset: HypeVaultDataset) -> WeightedRandomSampler:
 
 class DINOv2Classifier(nn.Module):
     """
-    DINOv2-Giant backbone + binary classification head.
-    Full fine-tuning — all 1.1B parameters trained end-to-end.
+    DINOv2 backbone (Giant / Large / Base — set `model_name`) + binary head.
+    Full fine-tune of the backbone by default.
     """
 
     def __init__(self, model_name: str, dropout: float = 0.2):
@@ -383,6 +385,8 @@ class DINOv2Classifier(nn.Module):
             "dinov2_vitg14":     "dinov2_vitg14",
             "dinov2_vitl14_reg": "dinov2_vitl14_reg",
             "dinov2_vitl14":     "dinov2_vitl14",
+            "dinov2_vitb14_reg": "dinov2_vitb14_reg",
+            "dinov2_vitb14":     "dinov2_vitb14",
         }
         if model_name in hub_names:
             try:
@@ -406,10 +410,17 @@ class DINOv2Classifier(nn.Module):
                 "dinov2_vitg14":     "vit_giant_patch14_dinov2.lvd142m",
                 "dinov2_vitl14_reg": "vit_large_patch14_reg4_dinov2.lvd142m",
                 "dinov2_vitl14":     "vit_large_patch14_dinov2.lvd142m",
+                "dinov2_vitb14_reg": "vit_base_patch14_reg4_dinov2.lvd142m",
+                "dinov2_vitb14":     "vit_base_patch14_dinov2.lvd142m",
             }
             timm_name = timm_names.get(model_name, model_name)
             print(f"Loading {timm_name} via timm...")
-            model = timm.create_model(timm_name, pretrained=True, num_classes=0)
+            model = timm.create_model(
+                timm_name,
+                pretrained=True,
+                num_classes=0,
+                dynamic_img_size=True,
+            )
             print(f"  Loaded via timm ✓")
             self._enable_grad_checkpointing(model)
             return model
@@ -457,14 +468,14 @@ class DINOv2Classifier(nn.Module):
         print("  Warning: could not enable gradient checkpointing — proceeding without it")
 
     def _get_embed_dim(self, backbone) -> int:
-        # DINOv2-Giant: 1536. ViT-Large: 1024
+        # DINOv2-Giant: 1536. ViT-L: 1024. ViT-B: 768
         if hasattr(backbone, "embed_dim"):
             return backbone.embed_dim
         if hasattr(backbone, "num_features"):
             return backbone.num_features
         # fallback: run a dummy forward
         with torch.no_grad():
-            dummy = torch.zeros(1, 3, 518, 518)
+            dummy = torch.zeros(1, 3, 504, 504)
             out = backbone(dummy)
             return out.shape[-1]
 
@@ -637,7 +648,7 @@ def plot_training_curves(
     best_val_f1  = max(r["val_f1"]  for r in history)
 
     title = (
-        f"HypeVault — DINOv2-Giant Training\n"
+        f"HypeVault — DINOv2-Base · 504px (RTX 5080)\n"
         f"Epoch {best_epoch} | val_acc={best_val_acc:.2f}%  val_f1={best_val_f1:.4f}"
     )
     if subtitle:
@@ -732,7 +743,7 @@ def plot_confusion_eval(
     axes = [fig.add_subplot(gs[r, c]) for r in range(2) for c in range(3)]
 
     title = (
-        f"HypeVault — DINOv2-Giant  |  Val set: {num_val:,} images\n"
+        f"HypeVault — DINOv2-Base · 504px  |  Val set: {num_val:,} images\n"
         f"Accuracy={best_val_acc*100:.2f}%  F1={best_val_f1:.4f}  "
         f"ROC-AUC={roc_auc:.4f}  PR-AUC={pr_auc:.4f}\n"
         f"TN={tn:,}  FP={fp}  FN={fn}  TP={tp:,}"
@@ -841,7 +852,7 @@ def write_history(out_dir: Path, history: list[dict], test_summary: dict | None 
 
 
 def main():
-    parser = argparse.ArgumentParser(description="HypeVault DINOv2-Giant fine-tuning")
+    parser = argparse.ArgumentParser(description="HypeVault DINOv2 (RTX 5080 / 504px) fine-tuning")
     for k, v in DEFAULTS.items():
         if v is None:
             parser.add_argument(f"--{k}", type=str, default=None)

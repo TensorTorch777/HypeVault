@@ -25,6 +25,7 @@ models/**/*.onnx
 models/
 checkpoints/
 ml/checkpoints/
+ml_rtx5080/checkpoints/
 Label_0_Sneakers/
 Label_0_Watches/
 Label_1_Sneakers/
@@ -42,6 +43,9 @@ credentials.json
 service-account*.json
 secrets/
 tmp/
+synthetic_deepfakes/
+backend/local_uploads/
+.venv-hf/
 .cursor/
 scripts/bootstrap_superpowers.sh
 vendor/superpowers/

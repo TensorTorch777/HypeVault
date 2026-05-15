@@ -42,13 +42,20 @@ export function AuthBadge({
         <div className="min-w-0">
           <p className="text-xs font-semibold uppercase tracking-wider text-primary/55">AI verdict</p>
           <p className={`mt-2 text-2xl font-semibold tracking-tight ${isAuthentic ? "text-success" : "text-danger"}`}>
-            {isAuthentic ? "AI Verified Authentic" : "AI Detected: Deepfake Listing"}
+            {isAuthentic ? "AI Verified Authentic" : "AI detected — fake / rejected"}
           </p>
           {pct != null && (
             <p className="mt-2 text-sm text-primary/65">
-              <span className="font-semibold text-primary">{pct.toFixed(1)}%</span> confidence
+              <span className="font-semibold text-primary">{pct.toFixed(1)}%</span>{" "}
+              {isAuthentic ? "authentic confidence" : "confidence (fake side)"}
             </p>
           )}
+          {!isAuthentic ? (
+            <p className="mt-2 text-xs text-primary/50">
+              Listings below the server&apos;s minimum authentic-confidence threshold are classified as fake and not
+              published.
+            </p>
+          ) : null}
         </div>
       </div>
     </motion.div>

@@ -57,7 +57,12 @@ class DINOv2Classifier(nn.Module):
                 "dinov2_vitl14": "vit_large_patch14_dinov2.lvd142m",
             }
             timm_name = timm_names.get(model_name, model_name)
-            return timm.create_model(timm_name, pretrained=True, num_classes=0)
+            return timm.create_model(
+                timm_name,
+                pretrained=True,
+                num_classes=0,
+                dynamic_img_size=True,
+            )
 
         raise RuntimeError("Install timm or ensure torch.hub can load facebookresearch/dinov2")
 

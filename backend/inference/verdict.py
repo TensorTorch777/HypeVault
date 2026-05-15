@@ -28,3 +28,18 @@ def logits_to_verdict(
         confidence = 1.0 - prob_fake
 
     return verdict, round(confidence, 6)
+
+
+def apply_min_authentic_confidence(
+    verdict: Literal["AUTHENTIC", "FAKE"],
+    confidence: float,
+    min_authentic: float,
+) -> tuple[Literal["AUTHENTIC", "FAKE"], float]:
+    """
+    Policy: authentic confidence below `min_authentic` (e.g. 0.88) is treated as FAKE / deepfake for
+    storage and API responses. Confidence after remap is P(fake) for consistency with logits_to_verdict.
+    """
+    c = float(confidence)
+    if verdict == "AUTHENTIC" and c < float(min_authentic):
+        return "FAKE", round(1.0 - c, 6)
+    return verdict, round(c, 6)

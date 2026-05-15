@@ -94,6 +94,24 @@ python train.py \
   --num_workers 8
 ```
 
+For products held out from training (recommended before production accuracy claims):
+
+```bash
+python train.py \
+  --data_root ~/scraper \
+  --test_root ~/scraper_held_out \
+  --output_dir ~/HypeVault/ml/checkpoints \
+  --model_name dinov2_vitg14_reg \
+  --img_size 518 \
+  --batch_size 48 \
+  --num_epochs 20 \
+  --lr 1e-5 \
+  --amp_dtype bf16 \
+  --num_workers 8
+```
+
+`train.py` splits by product folder (brand/model directory), not by individual image, so near-duplicate listing photos from the same SKU do not leak across train and validation.
+
 Expected training time: **~4–6 hours**, ~**$8–11**. Use after topping up.
 
 ### 5 — Monitor training
@@ -181,16 +199,28 @@ scp user@<GPU_IP>:~/HypeVault/ml/checkpoints/dinov2_hypevault_fp16.trt \
 
 ---
 
+## Validation vs held-out test
+
+Validation accuracy is measured on products from the **same scraped distribution** as training (StockX-style folders), with splits at the **product** level so duplicate angles of one listing do not appear in both train and val.
+
+That same-distribution validation can still look strong when val products resemble train products (brand, lighting, marketplace). It is **not** a substitute for generalization to unseen products or marketplaces.
+
+For production accuracy claims, reserve a **held-out test root** of products never used in training and pass `--test_root`. `history.json` stores per-epoch validation under `epochs` and final held-out metrics under `test` when `--test_root` is set.
+
+---
+
 ## Expected Results (from PPT literature)
 
 Based on similar DINOv2 binary classification work  
 (Garcia-Cotte et al. 2024, arXiv:2410.05969):
 
-| Metric | Target |
-|---|---|
-| Accuracy | **>95%** |
-| F1 | >0.95 |
-| Inference latency (TRT FP16) | **<200ms** |
+| Metric | Same-distribution val | Held-out test |
+|---|---|---|
+| Accuracy | **>95%** (typical) | **Lower** — use for production claims |
+| F1 | >0.95 (typical) | Report separately from val |
+| Inference latency (TRT FP16) | **<200ms** | Same deployment path |
+
+Treat validation as a training monitor; treat held-out test as the bar for deployment expectations.
 
 ---
 

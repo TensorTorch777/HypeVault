@@ -21,19 +21,19 @@ INPUT_NAME = settings.triton_input_name
 OUTPUT_NAME = settings.triton_output_name
 TIMEOUT_S = 5.0
 MAX_ATTEMPTS = 2
-MODEL_INPUT_SIZE = 518  # DINOv2 native resolution
 
 
 def preprocess_chw(image_rgb: np.ndarray) -> np.ndarray:
     """
     HWC RGB → NCHW float32 ImageNet normalized (batch 1).
-    Resizes to MODEL_INPUT_SIZE (518 × 518) — critical for DINOv2 patch grid.
+    Resizes to `settings.inference_img_size` (must match training + Triton model dims).
     """
     from PIL import Image as _PILImage
 
     try:
+        side = int(settings.inference_img_size)
         pil = _PILImage.fromarray(image_rgb.astype(np.uint8)).resize(
-            (MODEL_INPUT_SIZE, MODEL_INPUT_SIZE),
+            (side, side),
             _PILImage.BICUBIC,
         )
         img = np.array(pil).astype(np.float32) / 255.0

@@ -60,8 +60,14 @@ class Settings(BaseSettings):
     triton_input_name: str = "input__0"
     triton_output_name: str = "output__0"
 
+    # Must match training `img_size` (e.g. 518 for Giant runs, 504 for ml_rtx5080 ViT-B/14).
+    inference_img_size: int = 518
+
     # Report-strict gates
     report_enforce_triton: bool = True
+    # Model AUTHENTIC branch reports P(authentic). Below this → stored and returned as FAKE (rejected).
+    inference_min_authentic_confidence: float = 0.88
+    # Deprecated: use inference_min_authentic_confidence. Kept for older .env files (unused in authenticate).
     inference_live_conf_threshold: float = 0.90
     upload_min_side_px: int = 400
     upload_max_bytes: int = 10 * 1024 * 1024

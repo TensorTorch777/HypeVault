@@ -63,7 +63,13 @@ export default function SellerUploadPage() {
     fd.append("product_name", productName || "Untitled listing");
     fd.append("category", category);
     fd.append("listing_id", id);
-    const { data } = await api.post("/verify/authenticate", fd);
+    const { data } = await api.post<{
+      verdict: "AUTHENTIC" | "FAKE";
+      confidence: number;
+      s3_url: string;
+      listing_id: string;
+      listing_status: "live" | "rejected" | "pending";
+    }>("/verify/authenticate", fd);
     setVerdict(data.verdict);
     setConfidence(data.confidence);
     return data.verdict as "AUTHENTIC" | "FAKE";
