@@ -17,6 +17,7 @@ __pycache__/
 dist/
 build/
 .next/
+*.tsbuildinfo
 node_modules/
 frontend/node_modules/
 models/**/*.plan
