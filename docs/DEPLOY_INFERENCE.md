@@ -4,12 +4,22 @@
 
 1. **Environment** — Root `.env` should include at least `DATABASE_URL`, `REDIS_URL`, `JWT_SECRET`, `NEXT_PUBLIC_API_URL`, and the inference block below. **`INFERENCE_MIN_AUTHENTIC_CONFIDENCE`** (default 0.88): model **AUTHENTIC** scores below this are stored and returned as **FAKE** / rejected. **Next.js** reads public vars from `frontend/.env.local` (`NEXT_PUBLIC_API_URL=http://localhost:8000`).
 
-2. **Database** — From repo root:
+2. **Database** — From repo root, bring up Postgres/Redis (Docker or local). If you keep an optional local helper `scripts/run_local_stack.sh` (not tracked in git), run it; otherwise:
+
+   ```bash
+   docker compose -f infra/docker-compose.yml up -d postgres redis
+   cd backend && ../.venv/bin/python -m alembic upgrade head
+   cd .. && .venv/bin/python scripts/seed_database.py
+   ```
+
+   (Adjust paths if your venv lives elsewhere.) The old one-liner was:
+
    ```bash
    docker compose -f infra/docker-compose.yml up -d postgres redis
    bash scripts/run_local_stack.sh
    ```
-   The script starts Docker services when possible, runs **Alembic** + **seed**, then prints commands for the API and frontend.
+
+   The script is gitignored; duplicate its steps manually if you don’t have a local copy.
 
 3. **Run processes** (two terminals):
    - API: `cd backend && ../.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --reload`

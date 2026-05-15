@@ -46,6 +46,7 @@ tmp/
 synthetic_deepfakes/
 backend/local_uploads/
 .venv-hf/
+# Shell helpers are local/dev-only; keep yours uncommitted.
+scripts/*.sh
 .cursor/
-scripts/bootstrap_superpowers.sh
 vendor/superpowers/

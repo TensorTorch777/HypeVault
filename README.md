@@ -107,7 +107,7 @@ backend/      FastAPI app, auth, listings, inference, scraper
 frontend/     Next.js UI and client integrations
 infra/        Docker and deployment helper artifacts
 ml/           Training and model utility scripts
-scripts/      Setup, export, seed, and local automation scripts
+scripts/      Python utilities; optional local *.sh helpers are gitignored
 ```
 
 ---
@@ -116,22 +116,9 @@ scripts/      Setup, export, seed, and local automation scripts
 
 ### 1) Fast path
 
-From repo root (with Docker running):
+From repo root (with Docker running). Shell helpers under `scripts/` are **not** tracked in git; use the manual path below or keep your own local `dev_setup.sh`.
 
-```bash
-bash scripts/dev_setup.sh
-```
-
-This script:
-- creates `.venv`
-- installs Python dependencies
-- starts Postgres + Redis
-- runs Alembic migrations
-- seeds initial data
-
-### 2) Manual path
-
-If you prefer manual setup:
+### 2) Manual path (recommended clone)
 
 ```bash
 python3 -m venv .venv
@@ -175,7 +162,10 @@ Environment template:
       <h3>Developer</h3>
       <p>Run application stack for feature work.</p>
       <pre><code>cd ~/Desktop/HypeVault
-bash scripts/dev_setup.sh
+python3 -m venv .venv && . .venv/bin/activate
+pip install -r requirements.txt
+docker compose -f infra/docker-compose.yml up -d postgres redis
+cd backend && alembic upgrade head && cd .. && python scripts/seed_database.py
 cd backend && uvicorn main:app --reload --host 0.0.0.0 --port 8000
 # new terminal
 cd frontend && npm install && npm run dev</code></pre>
@@ -268,8 +258,8 @@ curl -sS http://localhost:8000/metrics | sed -n '1,20p'
 - Model name: `dinov2_classifier`
 - Input tensor: `input__0` shape `[1,3,518,518]` FP32
 - See scripts:
-  - `scripts/export_tensorrt.py`
-  - `scripts/setup_triton.sh`
+  - `scripts/export_tensorrt.py` (when present)
+  - optional local `scripts/setup_triton.sh` (not tracked)
 
 ### Local Torch fallback
 Use when Triton is unavailable:
