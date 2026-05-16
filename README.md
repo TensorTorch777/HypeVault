@@ -34,6 +34,7 @@
 - [API Surface (Key Routes)](#api-surface-key-routes)
 - [Demo Script (Presentation Flow)](#demo-script-presentation-flow)
 - [Inference Modes](#inference-modes)
+- [Model training results](#model-training-results)
 - [Security and Secret Handling](#security-and-secret-handling)
 - [Production Notes](#production-notes)
 - [License](#license)
@@ -106,7 +107,8 @@ flowchart LR
 backend/      FastAPI app, auth, listings, inference, scraper
 frontend/     Next.js UI and client integrations
 infra/        Docker and deployment helper artifacts
-ml/           Training and model utility scripts
+ml/           Training and model utility scripts (DINOv2-Giant; RTX 6000 Pro Blackwell reference run)
+ml_rtx5080/   ViT-B / 504px training pipeline and checkpoints (RTX 5080)
 scripts/      Python utilities; optional local *.sh helpers are gitignored
 ```
 
@@ -274,6 +276,39 @@ Then configure in `.env`:
 - `DINOV2_MODEL_NAME=dinov2_vitg14_reg`
 
 Switch back to `INFERENCE_BACKEND=triton` for production parity.
+
+---
+
+## Model training results
+
+Binary authenticity classifier: **Authentic (label 0)** vs **Deepfake (label 1)** — see dataset layout in `ml/train.py`.  
+Below: **training curves** and **validation confusion-matrix dashboards** for two training setups.
+
+### NVIDIA RTX 6000 Pro Blackwell (`ml/`)
+
+Full fine-tune pipeline (**DINOv2-Giant**, Stage 2). Validation eval figure summarizes ~**6,000** held-out images (Authentic vs Deepfake).
+
+<p align="center">
+  <img src="ml/checkpoints/training_curves.png" alt="HypeVault training curves — DINOv2-Giant on RTX 6000 Pro Blackwell (ml/checkpoints)" width="780">
+</p>
+
+<p align="center">
+  <img src="ml/checkpoints/confusion_matrix_eval.png" alt="HypeVault confusion matrix and eval metrics — RTX 6000 Pro Blackwell (ml/checkpoints)" width="780">
+</p>
+
+### NVIDIA GeForce RTX 5080 (`ml_rtx5080/`)
+
+Smaller backbone / resolution run (see `ml_rtx5080/train.py`).
+
+<p align="center">
+  <img src="ml_rtx5080/checkpoints/training_curves.png" alt="HypeVault training curves — RTX 5080 (ml_rtx5080/checkpoints)" width="780">
+</p>
+
+<p align="center">
+  <img src="ml_rtx5080/checkpoints/confusion_matrix_eval.png" alt="HypeVault confusion matrix eval — RTX 5080 (ml_rtx5080/checkpoints)" width="780">
+</p>
+
+> Checkpoint weights (`.pt`, `.onnx`, etc.) stay **gitignored**; only these PNG artifacts are tracked for documentation.
 
 ---
 

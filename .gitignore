@@ -24,9 +24,14 @@ models/**/*.plan
 models/**/*.engine
 models/**/*.onnx
 models/
-checkpoints/
-ml/checkpoints/
-ml_rtx5080/checkpoints/
+/checkpoints/
+# Track eval plots only; keep weights / ONNX / logs out of git
+ml/checkpoints/*
+!ml/checkpoints/training_curves.png
+!ml/checkpoints/confusion_matrix_eval.png
+ml_rtx5080/checkpoints/*
+!ml_rtx5080/checkpoints/training_curves.png
+!ml_rtx5080/checkpoints/confusion_matrix_eval.png
 Label_0_Sneakers/
 Label_0_Watches/
 Label_1_Sneakers/
