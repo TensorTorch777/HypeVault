@@ -21,7 +21,17 @@ _log = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/", response_model=ListingRead, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/",
+    response_model=ListingRead,
+    status_code=status.HTTP_201_CREATED,
+)
+@router.post(
+    "",
+    response_model=ListingRead,
+    status_code=status.HTTP_201_CREATED,
+    include_in_schema=False,
+)
 async def create_listing(
     body: ListingCreate,
     db: Annotated[AsyncSession, Depends(get_db)],
@@ -46,6 +56,7 @@ async def create_listing(
 
 
 @router.get("/", response_model=list[ListingRead])
+@router.get("", response_model=list[ListingRead], include_in_schema=False)
 async def list_my_listings(
     db: Annotated[AsyncSession, Depends(get_db)],
     user: Annotated[User, Depends(get_current_user)],

@@ -10,7 +10,9 @@ import { AuthBadge } from "@/components/AuthBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { api, fetchMe } from "@/lib/api";
+import axios from "axios";
+
+import { api, fetchMe, getApiErrorMessage } from "@/lib/api";
 
 const steps = ["Images", "Details", "Verify", "Result"] as const;
 
@@ -176,8 +178,15 @@ export default function SellerUploadPage() {
                             setListingId(id);
                             await runVerify(id);
                             setStep(3);
-                          } catch {
-                            setErr("Verification failed. Ensure Triton is running and your image meets requirements.");
+                          } catch (e) {
+                            const fallback =
+                              "Verification failed. If you use Triton, ensure it is running; if you use torch, check LOCAL_MODEL_PATH and API logs. Use a JPEG/PNG/WebP under 10MB.";
+                            const msg = axios.isAxiosError(e)
+                              ? getApiErrorMessage(e, fallback)
+                              : e instanceof Error
+                                ? e.message
+                                : fallback;
+                            setErr(msg);
                           }
                         })();
                       }}

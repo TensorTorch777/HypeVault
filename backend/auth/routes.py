@@ -77,8 +77,15 @@ def _set_auth_cookies(response: Response, tokens: TokenResponse) -> None:
 
 
 def _clear_auth_cookies(response: Response) -> None:
-    response.delete_cookie(key=settings.access_cookie_name, path="/")
-    response.delete_cookie(key=settings.refresh_cookie_name, path="/")
+    # Must match attributes used in _set_auth_cookies or browsers ignore the clear.
+    for key in (settings.access_cookie_name, settings.refresh_cookie_name):
+        response.delete_cookie(
+            key=key,
+            path="/",
+            secure=bool(settings.cookie_secure),
+            httponly=True,
+            samesite=settings.cookie_samesite,
+        )
 
 
 async def _verify_google_id_token(id_token: str) -> str:
