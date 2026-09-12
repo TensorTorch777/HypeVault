@@ -26,13 +26,13 @@ export function ListingsEmptyState() {
         The vault is empty.
       </h3>
       <p className="mt-2 text-[15px] text-[#6E6E73]">
-        Be the first to list a verified sneaker or watch.
+        Be the first to list a verified luxury watch.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-4">
         <Link href="/seller/upload" className="hv-btn-pill hv-btn-primary">
           List an item
         </Link>
-        <Link href="/product/Sneakers" className="hv-chevron">
+        <Link href="/product/Luxury%20watches" className="hv-chevron">
           Browse market prices
         </Link>
       </div>

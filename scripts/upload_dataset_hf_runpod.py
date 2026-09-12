@@ -15,15 +15,13 @@ from huggingface_hub import HfApi, login
 
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp"}
 DEFAULT_DATASET_ROOT = Path("/home/tensortorch26/Desktop/scraper")
-DEFAULT_REPO_NAME = "sneakers-watches-dataset"
+DEFAULT_REPO_NAME = "watches-auth-dataset"
 DEFAULT_RUNPOD_HOST = "root@154.54.102.53"
 DEFAULT_RUNPOD_PORT = "18332"
 DEFAULT_SSH_KEY = Path.home() / ".ssh" / "id_ed25519"
 DEFAULT_POD_DATA_ROOT = "/workspace/data"
 EXPECTED_FOLDERS = (
-    "Label_0_Sneakers",
     "Label_0_Watches",
-    "Label_1_Sneakers",
     "Label_1_Watches",
 )
 EXPECTED_PER_FOLDER = 15_000

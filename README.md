@@ -1,7 +1,7 @@
 # HypeVault
 
 <p align="center">
-  <strong>The AI-Gated Marketplace for Authentic Sneakers and Ultra-Luxury Watches</strong><br/>
+  <strong>The AI-Gated Marketplace for Authentic Ultra-Luxury Watches</strong><br/>
   Buy-now experience with AI verification, price intelligence, and seller transparency.
 </p>
 
@@ -43,7 +43,7 @@
 
 ## Overview
 
-HypeVault is a full-stack marketplace platform focused on trust-first commerce.
+HypeVault is a full-stack marketplace for **ultra-luxury watches**, focused on trust-first commerce.
 Each listing passes through AI verification and pricing intelligence before being surfaced to buyers.
 
 Core principles:

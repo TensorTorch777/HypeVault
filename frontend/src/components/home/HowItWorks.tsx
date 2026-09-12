@@ -47,7 +47,7 @@ export function HowItWorks() {
         eyebrow="Live market"
         title="Three platforms. One transparent surface."
         body="We pull real-time prices, delivery windows and seller ratings from StockX, Chrono24 and eBay. No tab-hopping, no hidden fees — just the truth."
-        cta={{ label: "See the comparison", href: "/product/Sneakers" }}
+        cta={{ label: "See the comparison", href: "/product/Luxury%20watches" }}
       >
         <PriceChartMockup />
       </Step>

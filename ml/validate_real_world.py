@@ -41,8 +41,7 @@ from train import DINOv2Classifier, build_transforms
 # ─── Dataset: per-brand breakout ─────────────────────────────────────────────
 
 class DetailedDataset(Dataset):
-    LABEL_DIRS = {0: ["Label_0_Sneakers", "Label_0_Watches"],
-                  1: ["Label_1_Sneakers", "Label_1_Watches"]}
+    LABEL_DIRS = {0: ["Label_0_Watches"], 1: ["Label_1_Watches"]}
 
     def __init__(self, root: Path, transform=None, degradation=None):
         self.transform = transform
@@ -51,7 +50,7 @@ class DetailedDataset(Dataset):
 
         for label, dirs in self.LABEL_DIRS.items():
             for d in dirs:
-                category = "sneaker" if "Sneakers" in d else "watch"
+                category = "watch"
                 folder = root / d
                 if not folder.exists():
                     continue

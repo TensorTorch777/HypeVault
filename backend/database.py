@@ -25,6 +25,7 @@ class UserRole(str, PyEnum):
 
 
 class ListingCategory(str, PyEnum):
+    # Legacy DB value — product is watches-only; API rejects new sneaker creates.
     sneaker = "sneaker"
     watch = "watch"
 

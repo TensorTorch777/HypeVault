@@ -1,9 +1,9 @@
 "use client";
 
-import { LUXURY_SNEAKER_BRANDS, LUXURY_WATCH_BRANDS } from "@/lib/catalog";
+import { LUXURY_WATCH_BRANDS } from "@/lib/catalog";
 
-const ROW_1 = [...LUXURY_SNEAKER_BRANDS, ...LUXURY_WATCH_BRANDS.slice(0, 3)];
-const ROW_2 = [...LUXURY_WATCH_BRANDS.slice(3), ...LUXURY_SNEAKER_BRANDS.slice(0, 3).reverse()];
+const ROW_1 = [...LUXURY_WATCH_BRANDS];
+const ROW_2 = [...LUXURY_WATCH_BRANDS].reverse();
 
 function Row({ items, reverse = false, speed = "animate-hv-marquee" }: { items: string[]; reverse?: boolean; speed?: string }) {
   const doubled = [...items, ...items];

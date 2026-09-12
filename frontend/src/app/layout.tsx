@@ -28,11 +28,11 @@ export const metadata: Metadata = {
     template: "%s · HypeVault",
   },
   description:
-    "The AI-gated marketplace for authentic luxury sneakers and ultra-luxury watches. Every listing verified by DINOv2-Giant.",
+    "The AI-gated marketplace for authentic ultra-luxury watches. Every listing verified by DINOv2 before it goes live.",
   openGraph: {
     title: "HypeVault",
     description:
-      "The AI-gated marketplace for authentic luxury sneakers and ultra-luxury watches.",
+      "The AI-gated marketplace for authentic ultra-luxury watches.",
     type: "website",
   },
 };

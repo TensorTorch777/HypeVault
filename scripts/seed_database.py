@@ -1,4 +1,4 @@
-"""Seed Postgres with demo users + luxury sneaker / watch listings (run with DATABASE_URL set).
+"""Seed Postgres with demo users + luxury watch listings (run with DATABASE_URL set).
 
 These rows are **curated demo inventory**, not live web scraping. For production, ingest via
 licensed feeds, seller uploads, or partner APIs — respect robots.txt and site terms.
@@ -21,20 +21,8 @@ from database import Listing, ListingCategory, ListingStatus, User, UserRole  # 
 
 pwd = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__default_rounds=12)
 
-# (product_name, category, brand, condition, size)
+# (product_name, category, brand, condition, size) — watches only
 DEMO_LISTINGS: list[tuple[str, ListingCategory, str, str, str]] = [
-    # Sneakers — luxury designers
-    ("Alexander McQueen Oversized Sneaker White", ListingCategory.sneaker, "Alexander McQueen", "New", "EU 42"),
-    ("Alexander McQueen Tread Slick Boot", ListingCategory.sneaker, "Alexander McQueen", "Like new", "EU 41"),
-    ("Balenciaga Triple S Grey", ListingCategory.sneaker, "Balenciaga", "New", "EU 43"),
-    ("Balenciaga Track Sneaker Black", ListingCategory.sneaker, "Balenciaga", "New", "EU 42"),
-    ("Dior B23 High-Top Oblique", ListingCategory.sneaker, "Dior", "New", "EU 42"),
-    ("Dior B30 Mesh Runner", ListingCategory.sneaker, "Dior", "Excellent", "EU 41"),
-    ("Gucci Rhyton Logo Leather", ListingCategory.sneaker, "Gucci", "New", "EU 42.5"),
-    ("Gucci Ace Embroidered Bee", ListingCategory.sneaker, "Gucci", "Excellent", "EU 41"),
-    ("Louis Vuitton Trainer Monogram", ListingCategory.sneaker, "Louis Vuitton", "New", "EU 9 US"),
-    ("Louis Vuitton Skate Sneaker", ListingCategory.sneaker, "Louis Vuitton", "Like new", "EU 8 US"),
-    # Watches — haute horlogerie
     ("A. Lange & Söhne Zeitwerk", ListingCategory.watch, "A. Lange & Söhne", "Unworn", "41.9mm"),
     ("A. Lange & Söhne Lange 1", ListingCategory.watch, "A. Lange & Söhne", "Excellent", "38.5mm"),
     ("Audemars Piguet Royal Oak 15500ST", ListingCategory.watch, "Audemars Piguet", "Excellent", "41mm"),

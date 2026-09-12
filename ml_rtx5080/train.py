@@ -6,11 +6,9 @@ Binary classification: Authentic (0) vs Deepfake (1)
 Smaller backbone (DINOv2-Base via timm), **504×504** input (multiple of patch 14; 512² is invalid for ViT-P/14), batch settings sized
 for ~16 GB VRAM. Original `ml/train.py` remains the DINOv2-Giant / 518px path.
 
-Dataset layout expected:
-  Label_0_Sneakers/<brand>/*.jpg   → label 0
-  Label_0_Watches/<brand>/*.jpg    → label 0
-  Label_1_Sneakers/<brand>/*.jpg   → label 1
-  Label_1_Watches/<brand>/*.jpg    → label 1
+Dataset layout expected (watches only):
+  Label_0_Watches/<brand>/*.jpg    → label 0 (Authentic)
+  Label_1_Watches/<brand>/*.jpg    → label 1 (Deepfake)
 """
 
 from __future__ import annotations
@@ -54,7 +52,7 @@ except ImportError:
 # ─────────────────────────────────────────────
 DEFAULTS = dict(
     data_root="/home/tensortorch26/Desktop/HypeVault",
-    output_dir="/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/checkpoints",
+    output_dir="/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/checkpoints_watches",
     # DINOv2-Base (timm id); ~86M backbone params — fits 16 GB at 512²
     model_name="vit_base_patch14_dinov2.lvd142m",
     # DINOv2 patch14 → H and W must be divisible by 14 (512 is invalid). 504 = 36×14, smaller than 518.
@@ -88,8 +86,8 @@ DEFAULTS = dict(
 # ─────────────────────────────────────────────
 
 LABEL_DIRS = {
-    0: ["Label_0_Sneakers", "Label_0_Watches"],
-    1: ["Label_1_Sneakers", "Label_1_Watches"],
+    0: ["Label_0_Watches"],
+    1: ["Label_1_Watches"],
 }
 
 
@@ -213,8 +211,8 @@ def write_split_manifest(
 class HypeVaultDataset(Dataset):
     """
     Loads images from the 4 label folders:
-      Label_0_Sneakers, Label_0_Watches → 0 (Authentic)
-      Label_1_Sneakers, Label_1_Watches → 1 (Deepfake)
+      Label_0_Watches → 0 (Authentic)
+      Label_1_Watches → 1 (Deepfake)
     """
 
     LABEL_DIRS = LABEL_DIRS

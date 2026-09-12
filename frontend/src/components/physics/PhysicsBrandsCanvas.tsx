@@ -4,12 +4,9 @@ import { useEffect, useRef } from "react";
 import Matter from "matter-js";
 
 import { GobblyText } from "@/components/motion/BouncyText";
-import { LUXURY_SNEAKER_BRANDS, LUXURY_WATCH_BRANDS } from "@/lib/catalog";
+import { LUXURY_WATCH_BRANDS } from "@/lib/catalog";
 
-const BRANDS = [
-  ...LUXURY_SNEAKER_BRANDS.map((b) => ({ name: b, kind: "sneaker" as const })),
-  ...LUXURY_WATCH_BRANDS.map((b)  => ({ name: b, kind: "watch"   as const })),
-];
+const BRANDS = LUXURY_WATCH_BRANDS.map((b) => ({ name: b, kind: "watch" as const }));
 
 const COLOR_BG     = "#0B0118";
 const COLOR_INK    = "#FFEDF6";

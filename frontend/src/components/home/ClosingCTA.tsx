@@ -92,7 +92,7 @@ export function ClosingCTA() {
                   Seller dashboard
                 </Link>
               ) : (
-                <Link href="/product/Sneakers" className="inline-flex min-h-[44px] items-center hv-chevron">
+                <Link href="/product/Luxury%20watches" className="inline-flex min-h-[44px] items-center hv-chevron">
                   Explore market
                 </Link>
               )}

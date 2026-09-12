@@ -79,9 +79,9 @@ function AskCard({ item, index }: { item: AskItem; index: number }) {
 const DEFAULT_ASKS: AskItem[] = [
   {
     id: "a1",
-    category: "Sneakers",
-    question: "Why can’t buyers verify a drop before they wire trust to a stranger’s camera roll?",
-    href: "/product/Sneakers",
+    category: "Watches",
+    question: "Why can’t buyers verify a five-figure watch before they wire trust to a stranger’s camera roll?",
+    href: "/product/Luxury%20watches",
     variant: "white",
   },
   {
@@ -100,8 +100,8 @@ const DEFAULT_ASKS: AskItem[] = [
   },
   {
     id: "a4",
-    category: "Watches",
-    question: "Why do five-figure watches ship with the same proof bar as a t-shirt listing?",
+    category: "Grails",
+    question: "Why do ultra-luxury watches ship with the same proof bar as a t-shirt listing?",
     href: "/product/Luxury%20watches",
     variant: "white",
   },
@@ -116,7 +116,7 @@ const DEFAULT_ASKS: AskItem[] = [
     id: "a6",
     category: "Buyers",
     question: "Why can’t one dashboard show delivery, rating, and lowest ask in one breath?",
-    href: "/product/Sneakers",
+    href: "/product/Luxury%20watches",
     variant: "dark",
   },
 ];

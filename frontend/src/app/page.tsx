@@ -19,14 +19,6 @@ const PhysicsBrandsCanvas = dynamic(
   { ssr: false, loading: () => <div className="h-[520px] w-full bg-[#0B0118]" /> }
 );
 
-const FEED_SNEAKER_IMAGES = [
-  "/products/feed-dior.jpg",
-  "/products/feed-balenciaga.jpg",
-  "/products/feed-gucci.jpg",
-  "/products/feed-lv-2.jpg",
-  "/products/feed-dior-2.jpg",
-];
-
 const FEED_WATCH_IMAGES = [
   "/products/feed-richard-mille.jpg",
   "/products/feed-ap-2.jpg",
@@ -35,14 +27,14 @@ const FEED_WATCH_IMAGES = [
 ];
 
 const GENERIC_RECENT_ITEMS = [
-  { name: "Nike Dunk Low Panda", brand: "Nike", category: "sneaker", status: "live", verdict: "AUTHENTIC" },
-  { name: "Adidas Yeezy Boost 350 V2", brand: "Adidas", category: "sneaker", status: "live", verdict: "AUTHENTIC" },
-  { name: "Air Jordan 1 Retro High OG", brand: "Jordan", category: "sneaker", status: "live", verdict: "AUTHENTIC" },
-  { name: "New Balance 9060", brand: "New Balance", category: "sneaker", status: "live", verdict: "AUTHENTIC" },
   { name: "Rolex Submariner Date", brand: "Rolex", category: "watch", status: "live", verdict: "AUTHENTIC" },
   { name: "Omega Speedmaster Moonwatch", brand: "Omega", category: "watch", status: "live", verdict: "AUTHENTIC" },
   { name: "Audemars Piguet Royal Oak", brand: "Audemars Piguet", category: "watch", status: "live", verdict: "AUTHENTIC" },
   { name: "Patek Philippe Nautilus", brand: "Patek Philippe", category: "watch", status: "live", verdict: "AUTHENTIC" },
+  { name: "Richard Mille RM 011", brand: "Richard Mille", category: "watch", status: "live", verdict: "AUTHENTIC" },
+  { name: "Vacheron Constantin Overseas", brand: "Vacheron Constantin", category: "watch", status: "live", verdict: "AUTHENTIC" },
+  { name: "A. Lange & Söhne Zeitwerk", brand: "A. Lange & Söhne", category: "watch", status: "live", verdict: "AUTHENTIC" },
+  { name: "Patek Philippe Aquanaut", brand: "Patek Philippe", category: "watch", status: "live", verdict: "AUTHENTIC" },
 ] as const;
 
 export default function HomePage() {
@@ -85,7 +77,7 @@ export default function HomePage() {
           <Reveal>
             <p className="hv-eyebrow">Find an item</p>
             <h2 className="mx-auto mt-3 max-w-md font-[family-name:var(--font-display)] hv-display-md text-[#FFEDF6]">
-              ANY SNEAKER. ANY GRAIL.
+              ANY WATCH. ANY GRAIL.
             </h2>
           </Reveal>
           <Reveal delay={0.15} className="mt-8">
@@ -132,10 +124,7 @@ export default function HomePage() {
 
           <Stagger gap={0.07} className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {GENERIC_RECENT_ITEMS.map((l, idx) => {
-              const fallback =
-                l.category === "watch"
-                  ? FEED_WATCH_IMAGES[idx % FEED_WATCH_IMAGES.length]
-                  : FEED_SNEAKER_IMAGES[idx % FEED_SNEAKER_IMAGES.length];
+              const fallback = FEED_WATCH_IMAGES[idx % FEED_WATCH_IMAGES.length];
               return (
                 <StaggerItem key={`${l.category}-${l.name}`}>
                   <Link href={`/product/${encodeURIComponent(l.name)}`} prefetch className="group block h-full">

@@ -25,7 +25,7 @@ def main() -> None:
         "--repo-root",
         type=Path,
         default=Path(__file__).resolve().parents[1],
-        help="HypeVault repo root (contains Label_0_Sneakers, etc.)",
+        help="HypeVault repo root (contains Label_0_Watches, Label_1_Watches)",
     )
     ap.add_argument(
         "--out",

@@ -7,13 +7,13 @@ DINOv2-Giant (1.1B params) full end-to-end fine-tuning on
 
 ## Dataset
 
+Watches only (sneakers training folders removed):
+
 | Folder | Label | Meaning | Count |
 |---|---|---|---|
-| `Label_0_Sneakers` | **0** | Authentic | 15,000 |
 | `Label_0_Watches` | **0** | Authentic | 15,000 |
-| `Label_1_Sneakers` | **1** | Deepfake | 15,000 |
 | `Label_1_Watches` | **1** | Deepfake | 15,000 |
-| **Total** | | | **60,000** |
+| **Total** | | | **30,000** |
 
 ---
 

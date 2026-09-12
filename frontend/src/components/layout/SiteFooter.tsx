@@ -8,7 +8,6 @@ const COLUMNS = [
   {
     heading: "Shop",
     links: [
-      { label: "Sneakers",             href: "/product/Sneakers" },
       { label: "Luxury watches",       href: "/product/Luxury%20watches" },
       { label: "Recent verifications", href: "/#recent" },
     ],
@@ -25,7 +24,7 @@ const COLUMNS = [
     heading: "Trust",
     links: [
       { label: "How AI verification works", href: "/#how" },
-      { label: "Market comparison",         href: "/product/Sneakers" },
+      { label: "Market comparison",         href: "/product/Luxury%20watches" },
       { label: "Authenticity promise",      href: "/" },
     ],
   },

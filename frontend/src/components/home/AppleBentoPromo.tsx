@@ -11,26 +11,24 @@ export function AppleBentoPromo() {
   return (
     <section className="bg-[#FBFBFD] py-4">
       <div className="mx-auto grid max-w-[1080px] gap-2 px-2 md:grid-cols-2 md:gap-3 md:px-3">
-        {/* SNEAKERS — light tile */}
         <BentoTile
           tone="light"
-          eyebrow="HypeVault for Sneakers"
-          title="Heat, only real."
-          subtitle="Designer drops, runway pieces — every photo screened by AI."
-          ctaPrimary={{ label: "Shop sneakers",  href: "/product/Sneakers" }}
-          ctaSecondary={{ label: "How AI sees ›", href: "/#how" }}
-        >
-          <SneakerVisual />
-        </BentoTile>
-
-        {/* WATCHES — dark tile */}
-        <BentoTile
-          tone="dark"
           eyebrow="HypeVault for Watches"
           title="Quiet luxury, loud trust."
-          subtitle="From Royal Oak to RM. Compare grail prices in one tap."
+          subtitle="From Royal Oak to RM — every photo screened by AI before it goes live."
           ctaPrimary={{ label: "Shop watches", href: "/product/Luxury%20watches" }}
-          ctaSecondary={{ label: "See pricing ›", href: "/product/Luxury%20watches" }}
+          ctaSecondary={{ label: "How AI sees ›", href: "/#how" }}
+        >
+          <WatchVisualLight />
+        </BentoTile>
+
+        <BentoTile
+          tone="dark"
+          eyebrow="Price intelligence"
+          title="Compare before you wire."
+          subtitle="Chrono24, StockX, and eBay asks in one view — with authenticity already gated."
+          ctaPrimary={{ label: "See pricing", href: "/product/Luxury%20watches" }}
+          ctaSecondary={{ label: "List a watch ›", href: "/seller/upload" }}
         >
           <WatchVisual />
         </BentoTile>
@@ -119,14 +117,13 @@ function BentoTile({
   );
 }
 
-/* ─── Real Louis Vuitton sneaker shot ──────────────────────── */
-function SneakerVisual() {
+function WatchVisualLight() {
   return (
     <div className="relative h-full w-full overflow-hidden">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/products/sneaker-louis-vuitton.jpg"
-        alt="Louis Vuitton trainer"
+        src="/products/watch-royal-oak.jpg"
+        alt="Audemars Piguet Royal Oak"
         className="absolute inset-x-0 bottom-0 h-full w-full object-cover object-center"
       />
       <div

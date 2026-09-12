@@ -11,7 +11,6 @@ import { fetchMe, logoutRemote } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { href: "/product/Sneakers",         label: "Sneakers" },
   { href: "/product/Luxury%20watches", label: "Watches" },
   { href: "/#how",                     label: "Method" },
 ];
@@ -99,7 +98,7 @@ export function TopNav() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <Link href="/product/Sneakers" aria-label="Search" className="text-[#FFEDF6]/80 transition-colors hover:text-[#00E1FF]">
+          <Link href="/product/Luxury%20watches" aria-label="Search" className="text-[#FFEDF6]/80 transition-colors hover:text-[#00E1FF]">
             <Search className="h-[15px] w-[15px]" strokeWidth={1.6} />
           </Link>
           <Link

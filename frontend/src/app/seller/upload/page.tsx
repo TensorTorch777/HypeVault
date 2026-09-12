@@ -33,7 +33,7 @@ export default function SellerUploadPage() {
   const [step, setStep] = useState(0);
   const [files, setFiles] = useState<File[]>([]);
   const [productName, setProductName] = useState("");
-  const [category, setCategory] = useState<"sneaker" | "watch">("sneaker");
+  const category = "watch" as const;
   const [brand, setBrand] = useState("");
   const [condition, setCondition] = useState("");
   const [size, setSize] = useState("");
@@ -128,14 +128,7 @@ export default function SellerUploadPage() {
                   </div>
                   <div>
                     <label className="text-xs font-semibold text-primary/55">Category</label>
-                    <div className="mt-2 grid grid-cols-2 gap-2">
-                      <Button type="button" variant={category === "sneaker" ? "primary" : "outline"} onClick={() => setCategory("sneaker")}>
-                        Sneaker
-                      </Button>
-                      <Button type="button" variant={category === "watch" ? "primary" : "outline"} onClick={() => setCategory("watch")}>
-                        Watch
-                      </Button>
-                    </div>
+                    <p className="mt-2 text-sm font-medium text-primary/80">Luxury watch</p>
                   </div>
                   <div>
                     <label className="text-xs font-semibold text-primary/55">Brand</label>

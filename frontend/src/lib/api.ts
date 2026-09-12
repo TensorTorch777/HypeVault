@@ -224,7 +224,7 @@ export type Listing = {
 
 export async function fetchRecentListings(
   limit = 6,
-  opts?: { category?: "sneaker" | "watch"; brand?: string }
+  opts?: { category?: "watch"; brand?: string }
 ): Promise<Listing[]> {
   try {
     const params: Record<string, string | number> = { limit };

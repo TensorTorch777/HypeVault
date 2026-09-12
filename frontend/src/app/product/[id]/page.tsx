@@ -14,11 +14,9 @@ import { fetchComparison, fetchComparisonByQuery, fetchListing } from "@/lib/api
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
-function inferCategory(title: string, listingCategory?: string): string {
-  if (listingCategory === "sneaker" || listingCategory === "watch") return listingCategory;
-  const t = title.toLowerCase();
-  if (t.includes("watch")) return "watch";
-  return "sneaker";
+function inferCategory(_title: string, listingCategory?: string): string {
+  if (listingCategory === "watch" || listingCategory === "sneaker") return listingCategory;
+  return "watch";
 }
 
 export default function ProductPage({ params }: { params: { id: string } }) {

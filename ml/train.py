@@ -3,11 +3,9 @@ HypeVault — DINOv2-Giant Full Fine-Tuning
 ==========================================
 Binary classification: Authentic (0) vs Deepfake (1)
 
-Dataset layout expected:
-  Label_0_Sneakers/<brand>/*.jpg   → label 0
-  Label_0_Watches/<brand>/*.jpg    → label 0
-  Label_1_Sneakers/<brand>/*.jpg   → label 1
-  Label_1_Watches/<brand>/*.jpg    → label 1
+Dataset layout expected (watches only):
+  Label_0_Watches/<brand>/*.jpg    → label 0 (Authentic)
+  Label_1_Watches/<brand>/*.jpg    → label 1 (Deepfake)
 
 Hardware: RTX 6000 Pro Blackwell (96 GB VRAM)
 Resolution: 518 × 518 (DINOv2 native patch grid)
@@ -86,8 +84,8 @@ DEFAULTS = dict(
 # ─────────────────────────────────────────────
 
 LABEL_DIRS = {
-    0: ["Label_0_Sneakers", "Label_0_Watches"],
-    1: ["Label_1_Sneakers", "Label_1_Watches"],
+    0: ["Label_0_Watches"],
+    1: ["Label_1_Watches"],
 }
 
 
@@ -211,8 +209,8 @@ def write_split_manifest(
 class HypeVaultDataset(Dataset):
     """
     Loads images from the 4 label folders:
-      Label_0_Sneakers, Label_0_Watches → 0 (Authentic)
-      Label_1_Sneakers, Label_1_Watches → 1 (Deepfake)
+      Label_0_Watches → 0 (Authentic)
+      Label_1_Watches → 1 (Deepfake)
     """
 
     LABEL_DIRS = LABEL_DIRS

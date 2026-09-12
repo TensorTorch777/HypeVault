@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Footprints, Watch } from "lucide-react";
+import { Watch } from "lucide-react";
 
 import type { Listing } from "@/lib/api";
 import { cn } from "@/lib/utils";
@@ -33,8 +33,7 @@ export function ProductVisualPanel({
   loading: boolean;
   isUuid: boolean;
 }) {
-  const isSneaker = category === "sneaker";
-  const Icon = isSneaker ? Footprints : Watch;
+  const Icon = Watch;
   const hasImage = Boolean(listing?.s3_url);
   const verified = listing?.verdict === "AUTHENTIC";
   const fake = listing?.verdict === "FAKE";
@@ -88,7 +87,7 @@ export function ProductVisualPanel({
                 AI verified
               </span>
               <span className="rounded-full bg-white/[0.08] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[#a1a1aa]">
-                {isSneaker ? "Sneakers" : "Watches"}
+                Watches
               </span>
               <span className="rounded-full bg-white/[0.08] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[#a1a1aa]">
                 Market compared

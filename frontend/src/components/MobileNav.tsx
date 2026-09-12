@@ -26,13 +26,13 @@ export function MobileNav() {
         { href: "/", label: "Home", icon: Home },
         { href: "/seller/dashboard", label: "Account", icon: User },
         { href: "/seller/upload", label: "Sell", icon: UploadCloud },
-        { href: "/product/Sneakers", label: "Search", icon: Search },
+        { href: "/product/Luxury%20watches", label: "Search", icon: Search },
       ] as const;
     }
     return [
       { href: "/", label: "Home", icon: Home },
         { href: me ? "/" : "/login", label: "Account", icon: User },
-      { href: "/product/Sneakers", label: "Search", icon: Search },
+      { href: "/product/Luxury%20watches", label: "Search", icon: Search },
     ] as const;
   }, [me, role]);
 

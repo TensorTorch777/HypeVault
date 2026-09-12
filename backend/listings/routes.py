@@ -38,6 +38,11 @@ async def create_listing(
     user: Annotated[User, Depends(require_seller)],
 ) -> Listing:
     try:
+        if body.category != ListingCategory.watch:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Only watch listings are supported",
+            )
         listing = Listing(
             seller_id=user.id,
             product_name=body.product_name,
