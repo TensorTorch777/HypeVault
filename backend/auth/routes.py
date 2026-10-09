@@ -16,7 +16,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from auth.deps import get_current_user
 from config import settings
 from auth.jwt_handler import ACCESS_TOKEN_EXPIRE, REFRESH_TOKEN_EXPIRE, create_access_token, create_refresh_token, decode_token
-from auth.models import GoogleAuthRequest, LogoutRequest, RefreshRequest, TokenResponse, UserLogin, UserPublic, UserRegister
+from auth.models import (
+    PUBLIC_REGISTRATION_ROLES,
+    GoogleAuthRequest,
+    LogoutRequest,
+    RefreshRequest,
+    TokenResponse,
+    UserLogin,
+    UserPublic,
+    UserRegister,
+)
 from database import User, UserRole, get_db
 from redis_client import get_redis
 
@@ -154,6 +163,8 @@ async def register(body: UserRegister, db: Annotated[AsyncSession, Depends(get_d
         existing = await db.execute(select(User).where(User.email == str(body.email)))
         if existing.scalar_one_or_none() is not None:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered")
+        if body.role not in PUBLIC_REGISTRATION_ROLES:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Role cannot be self-assigned")
         user = User(
             email=str(body.email),
             password_hash=_hash_password(body.password),

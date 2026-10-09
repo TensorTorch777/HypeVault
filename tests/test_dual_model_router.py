@@ -79,8 +79,44 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
             with self.assertRaises(ModelRoutingError) as caught:
                 await infer_allowlisted_model(DINOV3_EXPERIMENTAL, None)
         self.assertEqual(caught.exception.status, "MODEL_UNAVAILABLE")
-        ready.assert_awaited_once_with("dinov3_authenticity_candidate")
+        ready.assert_awaited_once_with("dinov3_authenticity_candidate", "1")
         infer.assert_not_awaited()
+
+    async def test_non_finite_or_wrong_size_output_fails_closed(self) -> None:
+        from inference.model_router import DINOV3_EXPERIMENTAL, ModelRoutingError, infer_allowlisted_model
+        import numpy as np
+
+        batch = np.zeros((1, 3, 512, 512), dtype=np.float32)
+        for output in (
+            np.asarray([[float("nan")]], dtype=np.float32),
+            np.asarray([[float("inf")]], dtype=np.float32),
+            np.asarray([[0.1], [0.2]], dtype=np.float32),
+        ):
+            with patch("inference.model_router.named_model_ready", AsyncMock(return_value=True)), patch(
+                "inference.model_router.infer_named_model", AsyncMock(return_value=output)
+            ):
+                with self.assertRaises(ModelRoutingError) as caught:
+                    await infer_allowlisted_model(DINOV3_EXPERIMENTAL, batch)
+            self.assertEqual(caught.exception.status, "INFERENCE_ERROR")
+
+    async def test_readiness_is_per_model_and_separate_from_server_ready(self) -> None:
+        from inference.model_router import readiness_report
+
+        async def ready(name, version):
+            self.assertEqual(version, "1")
+            return name == "dinov3_authenticity_candidate"
+
+        with patch("inference.model_router.named_model_ready", new=AsyncMock(side_effect=ready)), patch(
+            "inference.model_router.triton_server_status", new=AsyncMock(return_value={"live": True, "ready": False})
+        ):
+            report = await readiness_report()
+        states = {row["logical_id"]: row["ready"] for row in report["models"]}
+        self.assertEqual(states, {"dinov2_legacy": False, "dinov3_experimental": True})
+        self.assertEqual(report["server"], {"live": True, "ready": False})
+        self.assertEqual(report["publication_decision"], "BLOCKED")
+        self.assertNotIn("decision", report)
+        dinov2 = next(row for row in report["models"] if row["logical_id"] == "dinov2_legacy")
+        self.assertFalse(dinov2["same_model_as_live_route"])
 
     async def test_selected_model_is_the_only_infer_target(self) -> None:
         from inference.model_router import DINOV2_LEGACY, infer_allowlisted_model
@@ -98,6 +134,7 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result["logit"], 0.25)
         infer.assert_awaited_once()
         self.assertEqual(infer.await_args.args[0], "dinov2_classifier")
+        self.assertEqual(infer.await_args.args[1], "1")
 
     async def test_research_routes_and_fail_closed(self) -> None:
         from fastapi.responses import JSONResponse
@@ -165,24 +202,39 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
         os.environ["HYPEVAULT_DEPLOYMENT_MODE"] = "research"
         image = _Upload(_jpeg())
 
-        async def dinov2_infer(model_id, array):
-            self.assertEqual(model_id, "dinov2_legacy")
-            return {
-                "logit": 2.0,
-                "logical_id": model_id,
-                "triton_name": "dinov2_classifier",
-                "version": "1",
-                "response_model": "LEGACY_DINOV2",
-                "temperature": None,
-            }
+        def dinov2_infer_for(logit):
+            async def dinov2_infer(model_id, array):
+                self.assertEqual(model_id, "dinov2_legacy")
+                self.assertEqual(tuple(array.shape), (1, 3, 518, 518))
+                return {
+                    "logit": logit,
+                    "logical_id": model_id,
+                    "triton_name": "dinov2_classifier",
+                    "version": "1",
+                    "response_model": "LEGACY_DINOV2",
+                    "temperature": None,
+                }
 
-        with patch("inference.research_routes.infer_allowlisted_model", new=AsyncMock(side_effect=dinov2_infer)):
+            return dinov2_infer
+
+        with (
+            patch("inference.research_routes.settings.inference_img_size", 504),
+            patch("inference.research_routes.infer_allowlisted_model", new=AsyncMock(side_effect=dinov2_infer_for(-3.0))),
+        ):
             dinov2 = await research_verify(current_user=object(), image=image, brand="Patek Philippe", logical_model="dinov2_legacy")
         self.assertEqual(dinov2.model, "LEGACY_DINOV2")
         self.assertEqual(dinov2.model_version, "1")
+        self.assertEqual(dinov2.decision, "AUTHENTIC")
+        self.assertIsNone(dinov2.checkpoint_sha)
+        self.assertNotEqual(dinov2.policy_version, "shadow_v1")
         self.assertEqual(dinov2.publication_decision, "BLOCKED")
         self.assertFalse(dinov2.production_ready)
         self.assertEqual(dinov2.brand_verification, "NOT_PERFORMED")
+
+        # sigmoid(-1) gives P(authentic) 0.731, below the live route's 0.88 authentic floor.
+        with patch("inference.research_routes.infer_allowlisted_model", new=AsyncMock(side_effect=dinov2_infer_for(-1.0))):
+            floored = await research_verify(current_user=object(), image=image, brand="Patek Philippe", logical_model="dinov2_legacy")
+        self.assertEqual(floored.decision, "FAKE")
 
         class _Result:
             system_status = "ok"
@@ -262,12 +314,21 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
 
     def test_candidate_config_does_not_replace_dinov2(self) -> None:
         candidate = (REPO / "infra" / "triton" / "dinov3_authenticity_candidate" / "config.pbtxt").read_text()
-        dinov2 = (REPO / "models" / "dinov2_classifier" / "config.pbtxt").read_text()
+        dinov2 = (REPO / "infra" / "triton" / "dinov2_classifier" / "config.pbtxt").read_text()
         self.assertIn('name: "dinov3_authenticity_candidate"', candidate)
         self.assertIn('name: "dinov2_classifier"', dinov2)
-        self.assertIn("518", dinov2)
-        self.assertIn("512", candidate)
+        self.assertIn("dims: [ 3, 518, 518 ]", dinov2)
+        self.assertIn("dims: [ 3, 512, 512 ]", candidate)
         self.assertNotIn("dinov3", dinov2.lower())
+
+    @unittest.skipUnless(
+        (REPO / "models" / "dinov2_classifier" / "config.pbtxt").is_file(),
+        "requires the local gitignored Triton repository models/dinov2_classifier",
+    )
+    def test_tracked_dinov2_config_matches_the_local_repository(self) -> None:
+        tracked = (REPO / "infra" / "triton" / "dinov2_classifier" / "config.pbtxt").read_bytes()
+        deployed = (REPO / "models" / "dinov2_classifier" / "config.pbtxt").read_bytes()
+        self.assertEqual(tracked, deployed)
 
 
 if __name__ == "__main__":

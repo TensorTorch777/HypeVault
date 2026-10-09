@@ -16,7 +16,7 @@ from fastapi import APIRouter, Depends, File, Form, UploadFile, status
 from fastapi.responses import JSONResponse
 from PIL import Image
 
-from auth.deps import get_current_user
+from auth.deps import require_research_user
 from config import settings
 from database import User
 from inference.research_access import (
@@ -31,7 +31,7 @@ from inference.model_router import (
     DINOV3_EXPERIMENTAL,
     ModelRoutingError,
     infer_allowlisted_model,
-    model_readiness,
+    readiness_report,
     resolve_model,
 )
 from inference.schemas import ResearchVerifyResponse
@@ -43,7 +43,8 @@ router = APIRouter()
 ALLOWED_CT = {"image/jpeg", "image/png", "image/webp"}
 
 _RESEARCH_DESCRIPTION = (
-    "Frozen DINOv3 research classification within five user-declared watch brands. "
+    "Research classification within five user-declared watch brands, using an allowlisted "
+    "DINOv2 or DINOv3 Triton model. Requires a server-side research entitlement. "
     "The brand is not independently verified from the image. "
     "This is not a production authenticity service. "
     "Production, missing, and unknown deployment modes return POLICY_ERROR and no verdict."
@@ -60,11 +61,11 @@ def frozen_checkpoint_digest() -> str:
 @router.post(
     "/verify",
     response_model=ResearchVerifyResponse,
-    summary="DINOv3 five-brand research classification",
+    summary="Allowlisted DINOv2 or DINOv3 five-brand research classification",
     description=_RESEARCH_DESCRIPTION,
 )
 async def research_verify(
-    current_user: Annotated[User, Depends(get_current_user)],
+    current_user: Annotated[User, Depends(require_research_user)],
     image: Annotated[UploadFile, File(...)],
     brand: Annotated[str | None, Form()] = None,
     logical_model: Annotated[str | None, Form()] = None,
@@ -82,6 +83,7 @@ async def research_verify(
     if blocked is not None:
         log_research_event(
             _log,
+            model=spec["logical_id"],
             declared_brand=(brand or "").strip() or None,
             decision=None,
             status="POLICY_ERROR",
@@ -95,6 +97,7 @@ async def research_verify(
     if scope.scope_status != "SUPPORTED":
         log_research_event(
             _log,
+            model=spec["logical_id"],
             declared_brand=declared or None,
             decision=None,
             status="UNSUPPORTED_SCOPE",
@@ -109,6 +112,7 @@ async def research_verify(
     if invalid is not None:
         log_research_event(
             _log,
+            model=spec["logical_id"],
             declared_brand=scope.canonical_brand,
             decision=None,
             status="INVALID_INPUT",
@@ -125,6 +129,7 @@ async def research_verify(
             _log.exception("research_checkpoint_unreadable: %s", exc)
             log_research_event(
                 _log,
+                model=spec["logical_id"],
                 declared_brand=scope.canonical_brand,
                 decision=None,
                 status="POLICY_ERROR",
@@ -139,6 +144,7 @@ async def research_verify(
         if mismatch is not None:
             log_research_event(
                 _log,
+                model=spec["logical_id"],
                 declared_brand=scope.canonical_brand,
                 decision=None,
                 status="POLICY_ERROR",
@@ -153,6 +159,7 @@ async def research_verify(
     except Exception:
         log_research_event(
             _log,
+            model=spec["logical_id"],
             declared_brand=scope.canonical_brand,
             decision=None,
             status="INVALID_INPUT",
@@ -171,6 +178,7 @@ async def research_verify(
         _log.exception("research_model_failed: %s", exc)
         log_research_event(
             _log,
+            model=spec["logical_id"],
             declared_brand=scope.canonical_brand,
             decision=None,
             status="MODEL_ERROR",
@@ -185,6 +193,7 @@ async def research_verify(
         _log.exception("research_model_failed: %s", exc)
         log_research_event(
             _log,
+            model=spec["logical_id"],
             declared_brand=scope.canonical_brand,
             decision=None,
             status="MODEL_ERROR",
@@ -197,14 +206,19 @@ async def research_verify(
         )
 
     if spec["logical_id"] == DINOV2_LEGACY:
-        from inference.verdict import logits_to_verdict
+        from inference.verdict import apply_min_authentic_confidence, logits_to_verdict
         import numpy as np
 
-        verdict, _confidence = logits_to_verdict(np.asarray([routed["logit"]], dtype=np.float32))
+        raw_verdict, raw_confidence = logits_to_verdict(np.asarray([routed["logit"]], dtype=np.float32))
+        verdict, _confidence = apply_min_authentic_confidence(
+            raw_verdict,
+            raw_confidence,
+            settings.inference_min_authentic_confidence,
+        )
         body = research_success_body(
             decision=verdict,
             declared_brand=scope.canonical_brand or "",
-            checkpoint_sha="dinov2_classifier:1",
+            checkpoint_sha=None,
             policy_version="legacy_dinov2_logit_v1",
             model="LEGACY_DINOV2",
             model_version=str(routed["version"]),
@@ -212,10 +226,11 @@ async def research_verify(
         )
         log_research_event(
             _log,
+            model=spec["logical_id"],
             declared_brand=scope.canonical_brand,
             decision=verdict,
             status=verdict,
-            checkpoint_sha="dinov2_classifier:1",
+            checkpoint_sha=None,
             error=False,
         )
         return ResearchVerifyResponse(**body)
@@ -227,6 +242,7 @@ async def research_verify(
     if result.system_status != "ok" or result.decision is None:
         log_research_event(
             _log,
+            model=spec["logical_id"],
             declared_brand=scope.canonical_brand,
             decision=None,
             status="POLICY_ERROR",
@@ -244,6 +260,7 @@ async def research_verify(
     ):
         log_research_event(
             _log,
+            model=spec["logical_id"],
             declared_brand=scope.canonical_brand,
             decision=None,
             status="POLICY_ERROR",
@@ -265,6 +282,7 @@ async def research_verify(
     )
     log_research_event(
         _log,
+        model=spec["logical_id"],
         declared_brand=scope.canonical_brand,
         decision=result.decision,
         status=result.decision,
@@ -290,19 +308,19 @@ def _array_for_model(spec: dict, pil: Image.Image):
     import numpy as np
     from inference.triton_client import preprocess_chw
 
-    return preprocess_chw(np.asarray(pil))
+    channels, height, width = spec["input_dims"]
+    if channels != 3 or height != width:
+        raise ModelRoutingError("INFERENCE_ERROR", "The selected model has an unsupported input contract.")
+    return preprocess_chw(np.asarray(pil), side=height)
 
 
 @router.get("/models")
 async def research_model_readiness(
-    current_user: Annotated[User, Depends(get_current_user)],
+    current_user: Annotated[User, Depends(require_research_user)],
 ) -> dict:
-    """Per-model Triton readiness. This endpoint does not return a decision."""
+    """Server liveness and per-model Triton readiness. This endpoint does not return a decision."""
     del current_user
-    models = []
-    for model_id in (DINOV2_LEGACY, DINOV3_EXPERIMENTAL):
-        models.append(await model_readiness(model_id))
-    return {"models": models, "publication_decision": "BLOCKED"}
+    return await readiness_report()
 
 
 def _invalid_image_body(content_type: str, raw: bytes) -> dict[str, str | None] | None:

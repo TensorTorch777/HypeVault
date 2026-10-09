@@ -32,18 +32,23 @@ def research_success_body(
     *,
     decision: str,
     declared_brand: str,
-    checkpoint_sha: str,
+    checkpoint_sha: str | None,
     policy_version: str,
     model: str = "DINOV3_RESEARCH_PROTOTYPE",
     model_version: str = "1",
     model_scope: str = "FIVE_BRAND_RESEARCH_PROTOTYPE",
-) -> dict[str, str | bool]:
+) -> dict[str, str | bool | None]:
     if decision not in {"AUTHENTIC", "FAKE", "REVIEW"}:
         raise ValueError("research success requires an in-scope decision")
     if model == "DINOV3_RESEARCH_PROTOTYPE":
         blocked = checkpoint_block_body(checkpoint_sha)
         if blocked is not None:
             raise ValueError("refusing a success body for a mismatched checkpoint")
+    elif model == "LEGACY_DINOV2":
+        if checkpoint_sha is not None or decision == "REVIEW":
+            raise ValueError("a DINOv2 research body carries no DINOv3 checkpoint and no REVIEW policy")
+    else:
+        raise ValueError("unknown research model identity")
     return {
         "status": decision,
         "decision": decision,
@@ -68,14 +73,16 @@ def log_research_event(
     status: str,
     checkpoint_sha: str | None,
     error: bool,
+    model: str = "dinov3_experimental",
 ) -> None:
     """Metadata only. Image bytes are not logged."""
     from inference.research_guard import deployment_state
 
     logger.info(
-        "dinov3_research_request mode=%s model=dinov3 checkpoint_sha=%s scope_version=%s "
+        "research_request mode=%s model=%s checkpoint_sha=%s scope_version=%s "
         "policy_version=%s declared_brand=%s status=%s decision=%s error=%s",
         deployment_state(),
+        model,
         checkpoint_sha,
         SCOPE_VERSION,
         POLICY_VERSION,

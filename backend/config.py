@@ -72,6 +72,14 @@ class Settings(BaseSettings):
     upload_min_side_px: int = 400
     upload_max_bytes: int = 10 * 1024 * 1024
 
+    # Comma-separated account emails allowed to call /research/*. Empty → nobody. Never set from a request.
+    research_user_emails: str = ""
+
+
+def research_user_allowlist(raw: str | None = None) -> frozenset[str]:
+    value = settings.research_user_emails if raw is None else raw
+    return frozenset(part.strip().casefold() for part in (value or "").split(",") if part.strip())
+
 
 @lru_cache
 def get_settings() -> Settings:

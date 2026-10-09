@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { AuthBadge } from "@/components/AuthBadge";
@@ -11,10 +11,17 @@ import { api, getApiErrorMessage } from "@/lib/api";
 
 const DINOV2_LEGACY = "dinov2_legacy";
 const DINOV3_EXPERIMENTAL = "dinov3_experimental";
+const MODEL_IDS = [DINOV2_LEGACY, DINOV3_EXPERIMENTAL] as const;
+type ModelId = (typeof MODEL_IDS)[number];
 
-const MODEL_LABELS: Record<string, string> = {
+const MODEL_LABELS: Record<ModelId, string> = {
   [DINOV2_LEGACY]: "DINOv2 — Legacy",
-  [DINOV3_EXPERIMENTAL]: "DINOv3 — Experimental",
+  [DINOV3_EXPERIMENTAL]: "DINOv3 — Experimental — Not approved for production",
+};
+
+const EXPECTED_MODEL: Record<ModelId, ResearchResult["model"]> = {
+  [DINOV2_LEGACY]: "LEGACY_DINOV2",
+  [DINOV3_EXPERIMENTAL]: "DINOV3_RESEARCH_PROTOTYPE",
 };
 
 type ResearchResult = {
@@ -25,25 +32,70 @@ type ResearchResult = {
   model_scope: string;
   research_only: true;
   production_ready: false;
-  checkpoint_sha: string;
-  model: string;
+  checkpoint_sha: string | null;
+  model: "LEGACY_DINOV2" | "DINOV3_RESEARCH_PROTOTYPE";
   model_version?: string;
+};
+
+type ModelReadiness = {
+  logical_id: string;
+  model: string;
+  version: string;
+  architecture: string;
+  same_model_as_live_route: boolean;
+  ready: boolean;
+};
+
+type ReadinessReport = {
+  server: { live: boolean; ready: boolean };
+  models: ModelReadiness[];
 };
 
 export default function ResearchDemoPage() {
   const [brand, setBrand] = useState("");
   const [file, setFile] = useState<File | null>(null);
-  const [modelId, setModelId] = useState(DINOV2_LEGACY);
-  const [result, setResult] = useState<ResearchResult | null>(null);
+  const [modelId, setModelId] = useState<ModelId | null>(null);
+  const [readiness, setReadiness] = useState<ReadinessReport | null>(null);
+  const [readinessErr, setReadinessErr] = useState<string | null>(null);
+  const [result, setResult] = useState<{ selected: ModelId; body: ResearchResult } | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    api
+      .get<ReadinessReport>("/research/models")
+      .then(({ data }) => {
+        if (cancelled) return;
+        setReadiness(data);
+        const firstReady = MODEL_IDS.find((id) => data.models.some((m) => m.logical_id === id && m.ready));
+        setModelId(firstReady ?? null);
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        const fallback = "Model readiness is unavailable. No model can be selected.";
+        setReadinessErr(axios.isAxiosError(error) ? getApiErrorMessage(error, fallback) : fallback);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const statusFor = (id: ModelId) => readiness?.models.find((m) => m.logical_id === id) ?? null;
+  const isReady = (id: ModelId) => Boolean(statusFor(id)?.ready);
   const experimental = modelId === DINOV3_EXPERIMENTAL;
+  const selectedStatus = modelId ? statusFor(modelId) : null;
 
   async function submit() {
+    if (!modelId || !isReady(modelId)) {
+      setErr("The selected model is not ready. No other model will be used.");
+      return;
+    }
     if (!file) {
       setErr("Choose an image before running the research demo.");
       return;
     }
+    const selected = modelId;
     setErr(null);
     setResult(null);
     setPending(true);
@@ -51,11 +103,15 @@ export default function ResearchDemoPage() {
       const body = new FormData();
       body.append("image", file);
       body.append("brand", brand);
-      body.append("logical_model", modelId);
+      body.append("logical_model", selected);
       const { data } = await api.post<ResearchResult>("/research/verify", body);
-      setResult(data);
+      if (data.model !== EXPECTED_MODEL[selected]) {
+        setErr("The response came from a different model than the one selected. The result was discarded.");
+        return;
+      }
+      setResult({ selected, body: data });
     } catch (error) {
-      const fallback = "The research demo did not return a classification.";
+      const fallback = "The selected model did not return a classification.";
       setErr(axios.isAxiosError(error) ? getApiErrorMessage(error, fallback) : fallback);
     } finally {
       setPending(false);
@@ -81,16 +137,39 @@ export default function ResearchDemoPage() {
             <select
               id="research-model"
               className="mt-2 flex h-11 w-full rounded-md border border-primary/15 bg-transparent px-3 text-sm"
-              value={modelId}
+              value={modelId ?? ""}
+              disabled={!readiness || pending}
               onChange={(event) => {
-                setModelId(event.target.value);
+                setModelId(event.target.value as ModelId);
                 setResult(null);
+                setErr(null);
               }}
             >
-              <option value={DINOV2_LEGACY}>{MODEL_LABELS[DINOV2_LEGACY]}</option>
-              <option value={DINOV3_EXPERIMENTAL}>{MODEL_LABELS[DINOV3_EXPERIMENTAL]}</option>
+              {modelId === null ? <option value="">No model is ready</option> : null}
+              {MODEL_IDS.map((id) => (
+                <option key={id} value={id} disabled={!isReady(id)}>
+                  {MODEL_LABELS[id]}
+                  {readiness && !isReady(id) ? " (unavailable)" : ""}
+                </option>
+              ))}
             </select>
-            <p className="mt-2 text-sm text-primary/70">Selected model: {MODEL_LABELS[modelId]}</p>
+            {!readiness && !readinessErr ? <p className="mt-2 text-sm text-primary/60">Checking model readiness</p> : null}
+            {readinessErr ? <p className="mt-2 text-sm font-semibold text-danger">{readinessErr}</p> : null}
+            {readiness ? (
+              <ul className="mt-2 space-y-1 text-xs text-primary/60">
+                {MODEL_IDS.map((id) => {
+                  const s = statusFor(id);
+                  return (
+                    <li key={id}>
+                      {MODEL_LABELS[id]}: {s?.ready ? "ready" : "unavailable"}
+                      {s ? ` · ${s.architecture}` : ""}
+                      {s && !s.same_model_as_live_route ? " · not the live listing-check model" : ""}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+            {modelId ? <p className="mt-2 text-sm text-primary/70">Selected model: {MODEL_LABELS[modelId]}</p> : null}
             {experimental ? (
               <p className="mt-2 text-sm font-semibold text-danger">EXPERIMENTAL — NOT APPROVED FOR PRODUCTION</p>
             ) : null}
@@ -119,7 +198,11 @@ export default function ResearchDemoPage() {
               onChange={(event) => setFile(event.target.files?.[0] ?? null)}
             />
           </div>
-          <Button className="min-h-[44px]" disabled={pending} onClick={() => void submit()}>
+          <Button
+            className="min-h-[44px]"
+            disabled={pending || !modelId || !selectedStatus?.ready}
+            onClick={() => void submit()}
+          >
             {pending ? "Running research demo" : "Run research demo"}
           </Button>
           {err ? <p className="text-sm font-semibold text-danger">{err}</p> : null}
@@ -127,21 +210,27 @@ export default function ResearchDemoPage() {
             <div className="space-y-3">
               <AuthBadge
                 lane="research"
-                verdict={result.decision}
+                verdict={result.body.decision}
                 confidence={null}
-                declaredBrand={result.declared_brand}
+                declaredBrand={result.body.declared_brand}
               />
               <p className="text-sm text-primary/70">
-                Model identity: {result.model}
-                {result.model_version ? ` version ${result.model_version}` : ""}
+                Model that ran: {result.body.model}
+                {result.body.model_version ? ` version ${result.body.model_version}` : ""} (selected{" "}
+                {MODEL_LABELS[result.selected]})
               </p>
-              {result.model === "DINOV3_RESEARCH_PROTOTYPE" ? (
+              {result.body.model === "DINOV3_RESEARCH_PROTOTYPE" ? (
                 <p className="text-sm font-semibold text-danger">EXPERIMENTAL — NOT APPROVED FOR PRODUCTION</p>
               ) : null}
-              <p className="text-sm text-primary/70">Brand verification: not performed</p>
-              <p className="text-sm text-primary/70">Scope: {result.model_scope}</p>
+              <p className="text-sm text-primary/70">Declared brand: {result.body.declared_brand}</p>
+              <p className="text-sm text-primary/70">
+                brand_verification = {result.body.brand_verification} (the brand was not checked from the image)
+              </p>
+              <p className="text-sm text-primary/70">Scope: {result.body.model_scope}</p>
               <p className="text-sm text-primary/70">Research only. This result cannot publish a listing.</p>
-              <p className="break-all text-xs text-primary/50">Checkpoint {result.checkpoint_sha}</p>
+              {result.body.checkpoint_sha ? (
+                <p className="break-all text-xs text-primary/50">Checkpoint {result.body.checkpoint_sha}</p>
+              ) : null}
             </div>
           ) : null}
         </CardContent>
