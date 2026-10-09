@@ -47,6 +47,7 @@ class UiSemanticGapTests(unittest.TestCase):
         self.assertIn("Compare both models", page)
         self.assertIn("neither one is treated as more accurate", page)
         self.assertIn("cannot publish a listing", page)
+        self.assertIn("DeclaredBrandSelect", page)
         self.assertIn("Declared brand", page)
         self.assertIn("Research access is not enabled", copy)
         self.assertIn("Outside current research scope — no result produced", copy)
@@ -72,7 +73,18 @@ class UiSemanticGapTests(unittest.TestCase):
         self.assertIn("Legacy screening in progress.", page)
         self.assertIn("was not created again", page)
         self.assertIn("fd.append(\"listing_id\", id)", page)
-        self.assertIn("Declared brand", page)
+        self.assertIn("DeclaredBrandSelect", page)
+        brands = (FRONT / "lib/supportedBrands.ts").read_text()
+        gate = (REPO / "backend/inference/scope_gate.py").read_text()
+        for name in (
+            "A. Lange & Söhne",
+            "Audemars Piguet",
+            "Patek Philippe",
+            "Richard Mille",
+            "Vacheron Constantin",
+        ):
+            self.assertIn(f'"{name}"', brands)
+            self.assertIn(f'"{name}"', gate)
 
     def test_visible_listing_copy_is_not_an_authenticity_certificate(self) -> None:
         labels = (FRONT / "lib/customerLabel.ts").read_text()

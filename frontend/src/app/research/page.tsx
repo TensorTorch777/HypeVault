@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { AuthBadge } from "@/components/AuthBadge";
+import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -248,12 +249,16 @@ export default function ResearchDemoPage() {
             <label className="text-xs font-semibold text-primary/55" htmlFor="research-brand">
               Declared brand
             </label>
-            <Input
+            <DeclaredBrandSelect
               id="research-brand"
-              className="mt-2"
               value={brand}
-              onChange={(event) => setBrand(event.target.value)}
-              placeholder="Patek Philippe"
+              disabled={pending}
+              onChange={(next) => {
+                setBrand(next);
+                setResult(null);
+                setComparison(null);
+                setErr(null);
+              }}
             />
             <p className="mt-2 text-xs text-primary/60">{DECLARED_BRAND_NOTE}</p>
           </div>
@@ -272,7 +277,7 @@ export default function ResearchDemoPage() {
           <div className="flex flex-wrap gap-3">
             <Button
               className="min-h-[44px]"
-              disabled={pending || !modelId || !selectedStatus?.ready}
+              disabled={pending || !brand || !modelId || !selectedStatus?.ready}
               onClick={() => void submit()}
             >
               {pending ? "Running research demo" : "Run research demo"}
@@ -280,7 +285,7 @@ export default function ResearchDemoPage() {
             <Button
               variant="outline"
               className="min-h-[44px]"
-              disabled={pending || !file}
+              disabled={pending || !file || !brand}
               onClick={() => void compareBoth()}
             >
               Compare both models
