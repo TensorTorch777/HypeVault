@@ -274,7 +274,7 @@ def _compare(protocol, candidate_by_batch: dict, fp32, live, sizes) -> dict:
     return {"per_batch_size": per_batch, "rows": rows}
 
 
-def run(stage: str, url: str, require_gpu: bool, out: Path | None = None, gpu_protocol: str = "v2") -> dict:
+def run(stage: str, url: str, require_gpu: bool, out_path: Path | None = None, gpu_protocol: str = "v2") -> dict:
     import numpy as np
 
     if stage == "triton" and require_gpu:
@@ -347,7 +347,7 @@ def run(stage: str, url: str, require_gpu: bool, out: Path | None = None, gpu_pr
         "final_test_images_opened": 0,
     }
     key = stage if stage == "export" else ("triton_gpu" if require_gpu and gpu else "triton_cpu")
-    target = out if (out and key == "triton_gpu") else RESULTS[key]
+    target = out_path if (out_path and key == "triton_gpu") else RESULTS[key]
     if key == "triton_gpu" and target.exists():
         raise RuntimeError(f"{target.name} exists; give each GPU attempt its own --out file")
     target.write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
