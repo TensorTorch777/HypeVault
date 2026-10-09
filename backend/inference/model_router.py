@@ -145,9 +145,16 @@ async def model_readiness(model_id: str) -> dict[str, Any]:
 
 
 async def readiness_report() -> dict[str, Any]:
+    from inference.checkpoint_identity import checkpoint_identity_status
+
     server = await triton_server_status()
     models = [await model_readiness(model_id) for model_id in allowlist()]
-    return {"server": server, "models": models, "publication_decision": "BLOCKED"}
+    return {
+        "server": server,
+        "models": models,
+        "publication_decision": "BLOCKED",
+        "dinov3_checkpoint": checkpoint_identity_status(),
+    }
 
 
 async def infer_allowlisted_model(model_id: str, array_nchw) -> dict[str, Any]:

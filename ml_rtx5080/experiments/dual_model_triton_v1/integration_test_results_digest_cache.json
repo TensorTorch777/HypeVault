@@ -1,0 +1,237 @@
+{
+  "executed_at": "2026-10-09T12:24:37.388238+00:00",
+  "stack": {
+    "api": "uvicorn main:app, HYPEVAULT_DEPLOYMENT_MODE=research, RESEARCH_USER_EMAILS=<one E2E account>",
+    "production_api": "second uvicorn with HYPEVAULT_DEPLOYMENT_MODE=production",
+    "triton": "Triton 2.65.0 NGC 26.01 GPU exact-FP32 both models loaded; dinov2_vitb14_live + dinov3_authenticity_candidate KIND_GPU use_tf32=0",
+    "database": "hypevault-postgres (local dev)",
+    "frontend": "next start (production build)",
+    "gpu_used": true,
+    "readiness_at_start": {
+      "dinov2_legacy": {
+        "ready": true,
+        "reason": null
+      },
+      "dinov3_experimental": {
+        "ready": true,
+        "reason": null
+      }
+    }
+  },
+  "input": {
+    "sample_id": "Label_0_Watches/Audemars Piguet/b1a40ed1b5b9.jpg",
+    "split": "calibration",
+    "declared_brand": "Audemars Piguet"
+  },
+  "flows": {
+    "registration_refuses_privileged_role": {
+      "result": "PASS",
+      "evidence": {
+        "http_status": 422
+      }
+    },
+    "1_research_page_renders": {
+      "result": "PASS",
+      "evidence": {
+        "http_status": 200
+      }
+    },
+    "2_dinov2_selection_invokes_only_dinov2_vitb14_live": {
+      "result": "PASS",
+      "evidence": {
+        "dinov2_ready": true,
+        "dinov2_unavailable_reason": null,
+        "http_status": 200,
+        "status": "AUTHENTIC",
+        "decision": "AUTHENTIC",
+        "dinov2_vitb14_live_inference_count_before_after": [
+          31,
+          32
+        ],
+        "dinov3_inference_count_before_after": [
+          1,
+          1
+        ],
+        "inference_executed": true
+      }
+    },
+    "2b_old_vitg14_dinov2_classifier_not_routed": {
+      "result": "PASS",
+      "evidence": {
+        "dinov2_classifier_inference_count_before_after": [
+          null,
+          null
+        ]
+      }
+    },
+    "3_dinov3_selection_invokes_only_dinov3_authenticity_candidate": {
+      "result": "PASS",
+      "evidence": {
+        "http_status": 200,
+        "dinov3_inference_count_before_after": [
+          1,
+          2
+        ],
+        "decision": "AUTHENTIC"
+      }
+    },
+    "4_model_identity_in_response": {
+      "result": "PASS",
+      "evidence": {
+        "response": {
+          "status": "AUTHENTIC",
+          "decision": "AUTHENTIC",
+          "declared_brand": "Audemars Piguet",
+          "brand_verification": "NOT_PERFORMED",
+          "research_only": true,
+          "production_ready": false,
+          "publication_decision": "BLOCKED",
+          "checkpoint_sha": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+          "policy_version": "shadow_v1",
+          "model": "DINOV3_RESEARCH_PROTOTYPE",
+          "model_version": "1",
+          "model_scope": "FIVE_BRAND_RESEARCH_PROTOTYPE"
+        },
+        "ui": "checked separately in the browser"
+      }
+    },
+    "5_unavailable_model_returns_controlled_error": {
+      "result": "PASS",
+      "evidence": {
+        "unloaded_http_status": 503,
+        "unloaded_body": {
+          "status": "MODEL_ERROR",
+          "decision": null,
+          "reason": "The selected model did not return a result.",
+          "publication_decision": "BLOCKED"
+        },
+        "readiness_while_unloaded": {
+          "dinov2_legacy": true,
+          "dinov3_experimental": false
+        },
+        "reloaded_http_status": 200,
+        "same_decision_after_reload": true
+      }
+    },
+    "6_production_mode_blocks_dinov3": {
+      "result": "PASS",
+      "evidence": {
+        "research_route": {
+          "status": "POLICY_ERROR",
+          "decision": null,
+          "reason": "DINOv3 candidate is blocked outside research mode.",
+          "publication_decision": "BLOCKED"
+        },
+        "live_route_with_dinov3_selector": {
+          "status": "POLICY_ERROR",
+          "decision": null,
+          "reason": "DINOv3 candidate is blocked on the live DINOv2 route.",
+          "publication_decision": "BLOCKED"
+        }
+      }
+    },
+    "7_missing_unsupported_brand_and_invalid_image_fail_closed": {
+      "result": "PASS",
+      "evidence": {
+        "missing_brand": [
+          422,
+          "UNSUPPORTED_SCOPE"
+        ],
+        "unsupported_brand": [
+          422,
+          "UNSUPPORTED_SCOPE"
+        ],
+        "invalid_image": [
+          400,
+          "INVALID_INPUT"
+        ],
+        "triton_name_as_selector": [
+          422,
+          "POLICY_ERROR"
+        ]
+      }
+    },
+    "8_model_errors_are_not_verdicts": {
+      "result": "PASS",
+      "evidence": {
+        "error_responses": [
+          [
+            503,
+            "MODEL_ERROR"
+          ],
+          [
+            400,
+            "INVALID_INPUT"
+          ],
+          [
+            422,
+            "POLICY_ERROR"
+          ]
+        ]
+      }
+    },
+    "9_research_calls_create_no_listings": {
+      "result": "PASS",
+      "evidence": {
+        "listings_before": 53,
+        "listings_after_research_calls": 53
+      }
+    },
+    "10_legacy_verification_cannot_auto_publish": {
+      "result": "PASS",
+      "evidence": {
+        "http_status": 200,
+        "model": "LEGACY_DINOV2",
+        "verdict": "AUTHENTIC",
+        "listing_status_in_db": "pending",
+        "backend": "local PyTorch DINOv2 (INFERENCE_BACKEND=torch); not Triton"
+      }
+    },
+    "11_historical_listing_labels": {
+      "result": "PASS",
+      "evidence": {
+        "live_listing_labels": {
+          "Legacy screening — not verified": 19,
+          "Demo listing — not verified": 20
+        }
+      }
+    },
+    "12_only_authorized_research_users": {
+      "result": "PASS",
+      "evidence": {
+        "buyer_verify": 403,
+        "buyer_models": 403,
+        "anonymous_verify": 401
+      }
+    }
+  },
+  "api_end_to_end_latency": {
+    "dinov2_legacy": {
+      "requests": 30,
+      "http_statuses": [
+        200
+      ],
+      "p50_ms": 45.69752799579874,
+      "p90_ms": 48.473853996256366,
+      "max_ms": 55.025850000674836,
+      "includes": "HTTP, auth, image decode, preprocessing, Triton gRPC, policy, response"
+    },
+    "dinov3_experimental": {
+      "requests": 30,
+      "http_statuses": [
+        200
+      ],
+      "p50_ms": 44.32905899739126,
+      "p90_ms": 50.62694999651285,
+      "max_ms": 54.12815699673956,
+      "includes": "HTTP, auth, image decode, preprocessing, Triton gRPC, policy, response"
+    }
+  },
+  "cleanup": {
+    "listings_after_cleanup": 53,
+    "users_after_cleanup": 9,
+    "listings_before": 53,
+    "users_before": 9
+  },
+  "all_passed": true
+}

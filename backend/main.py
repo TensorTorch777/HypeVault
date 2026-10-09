@@ -18,6 +18,7 @@ from starlette.responses import Response
 from auth.routes import router as auth_router
 from config import settings
 from database import AsyncSessionLocal
+from inference.checkpoint_identity import CheckpointIdentityError, checkpoint_identity_ready, verify_frozen_checkpoint
 from inference.research_routes import router as research_router
 from inference.routes import router as inference_router
 from inference.triton_client import triton_ready
@@ -50,6 +51,10 @@ REQUEST_LATENCY = Histogram("hypevault_request_latency_seconds", "Request latenc
 async def lifespan(app: FastAPI):
     try:
         LOCAL_UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+        try:
+            verify_frozen_checkpoint()
+        except CheckpointIdentityError as exc:
+            _log.exception("dinov3_checkpoint_identity_failed: %s", exc)
         yield
     finally:
         try:
@@ -173,6 +178,11 @@ async def health_ready() -> JSONResponse:
         _log.warning("health_ready_scraper: %s", exc)
         checks["scraper"] = "error"
         ok = False
+    try:
+        checks["dinov3_checkpoint"] = "ok" if checkpoint_identity_ready() else "error"
+    except Exception as exc:
+        _log.warning("health_ready_dinov3_checkpoint: %s", exc)
+        checks["dinov3_checkpoint"] = "error"
     payload = {"status": "ready" if ok else "degraded", **checks}
     return JSONResponse(
         status_code=status.HTTP_200_OK if ok else status.HTTP_503_SERVICE_UNAVAILABLE,

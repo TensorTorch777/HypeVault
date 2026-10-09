@@ -19,6 +19,7 @@ from PIL import Image
 from auth.deps import require_research_user
 from config import settings
 from database import User
+from inference.checkpoint_identity import CheckpointIdentityError, verified_checkpoint_digest
 from inference.research_access import (
     checkpoint_block_body,
     log_research_event,
@@ -52,10 +53,8 @@ _RESEARCH_DESCRIPTION = (
 
 
 def frozen_checkpoint_digest() -> str:
-    from inference.dinov3_model import CHECKPOINT
-    from reference_inference import file_sha256
-
-    return file_sha256(CHECKPOINT)
+    """Return the startup-verified digest. This does not hash the checkpoint."""
+    return verified_checkpoint_digest()
 
 
 @router.post(
@@ -125,6 +124,32 @@ async def research_verify(
     if spec["logical_id"] == DINOV3_EXPERIMENTAL:
         try:
             digest = frozen_checkpoint_digest()
+        except CheckpointIdentityError as exc:
+            _log.exception("research_checkpoint_identity: %s", exc)
+            blocked_status = exc.status if exc.status in {"POLICY_ERROR", "MODEL_ERROR"} else "MODEL_ERROR"
+            http_status = (
+                status.HTTP_503_SERVICE_UNAVAILABLE
+                if blocked_status == "MODEL_ERROR"
+                else status.HTTP_403_FORBIDDEN
+            )
+            message = (
+                "The DINOv3 checkpoint could not be verified."
+                if blocked_status == "MODEL_ERROR"
+                else "DINOv3 checkpoint does not match the frozen artifact."
+            )
+            log_research_event(
+                _log,
+                model=spec["logical_id"],
+                declared_brand=scope.canonical_brand,
+                decision=None,
+                status=blocked_status,
+                checkpoint_sha=None,
+                error=True,
+            )
+            return JSONResponse(
+                status_code=http_status,
+                content=failure_body(blocked_status, message),
+            )
         except Exception as exc:
             _log.exception("research_checkpoint_unreadable: %s", exc)
             log_research_event(
@@ -132,13 +157,13 @@ async def research_verify(
                 model=spec["logical_id"],
                 declared_brand=scope.canonical_brand,
                 decision=None,
-                status="POLICY_ERROR",
+                status="MODEL_ERROR",
                 checkpoint_sha=None,
                 error=True,
             )
             return JSONResponse(
-                status_code=status.HTTP_403_FORBIDDEN,
-                content=failure_body("POLICY_ERROR", "DINOv3 checkpoint does not match the frozen artifact."),
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                content=failure_body("MODEL_ERROR", "The DINOv3 checkpoint could not be verified."),
             )
         mismatch = checkpoint_block_body(digest)
         if mismatch is not None:

@@ -13,22 +13,22 @@ The research selector serves a model only on the validated GPU precision.
 `DOCKER_GPU_ACCESS = PASS`
 
 `RTX5080_VISIBLE_IN_CONTAINER = true (GPU 0: NVIDIA GeForce RTX 5080, UUID GPU-b415f453-8f9a-ea64-7780-65d3d8086109, driver 580.178.04)`
-
+  
 `TRITON_VERSION = 2.65.0 (NGC 26.01, CUDA 13.1.1 in minor-version-compatibility mode on the CUDA 13.0 driver; image sha256:c9f2ede50ccc4a3ce66e22e26ed1b5adc0c68516b58edfaca738693719c2146b)`
 
 `DINOV2_TRITON_READY = true (dinov2_vitb14_live v1, KIND_GPU, use_tf32=0)`
 
 `DINOV3_TRITON_READY = true (dinov3_authenticity_candidate v1, KIND_GPU, use_tf32=0)`
 
-`DINOV2_GPU_PARITY = PASS (attempt 2; attempt 1 FAIL under default TF32)`
+`DINOV2_GPU_PARITY = PASS (attempt 2 and dual-loaded re-run; attempt 1 FAIL under default TF32)`
 
-`DINOV3_GPU_PARITY = PASS (attempt 2; attempt 1 FAIL under default TF32)`
+`DINOV3_GPU_PARITY = PASS (attempt 2 and dual-loaded re-run; attempt 1 FAIL under default TF32)`
 
 `GPU_PERFORMANCE_MEASURED = true`
 
-`DUAL_MODEL_E2E_TEST = PASS (14 of 14 flows on the GPU stack)`
+`DUAL_MODEL_E2E_TEST = PASS (14 of 14 flows on the GPU stack, repeated after digest cache)`
 
-`UNIT_TESTS = PASS (435 tests, OK, skipped=3)`
+`UNIT_TESTS = PASS (444 tests, OK, skipped=3; 9 new checkpoint-identity tests)`
 
 `FRONTEND_CHECKS = PASS (lint 0 warnings, tsc, next build)`
 
@@ -198,8 +198,96 @@ The agent did not modify that project. To fix it, restore the `fonoster` project
 
 The independent data pilot remains `NO_GO`. Successful GPU serving and parity are not evidence that authenticity generalizes across unseen brands.
 
-## Next steps
+Fonoster is out of scope for this repository and was not restored, modified, or deleted.
 
-1. Review PR #1. Both selector models have now passed Triton GPU validation, which was your condition for review. Merging remains your decision.
-2. Optional engineering follow-up: cache the frozen DINOv3 checkpoint digest at startup instead of hashing 1 GB per request (cuts DINOv3 API latency from about 495 ms to about the Triton time). Also consider a `gpu_mem_limit` to cap DINOv2's 9.7 GB batch-8 arena.
-3. Restore the `fonoster` stack (section 7) if it is still needed.
+## 9. Checkpoint digest cache and dual-model concurrency
+
+Follow-up on `feature/dual-model-triton`. The frozen checkpoint, temperature `0.24038200410185356`, threshold `0.50`, and final-test artifacts were not changed.
+
+### 9.1 Hash verification moved to startup
+
+`backend/inference/checkpoint_identity.py` hashes `epoch_018.pt` once during FastAPI lifespan (and again only on an explicit reload). The digest is cached only if it equals `5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f`. A mismatch or hashing error leaves the cache empty; `/research/verify` then returns `decision = null` and does not call Triton. DINOv2 verification is unchanged.
+
+| Measurement | Before | After |
+| --- | --- | --- |
+| SHA-256 of the 1 046 865 163-byte checkpoint | 444.3 ms mean (3 runs; `checkpoint_hash_before.json`) | 444.1 ms once at process start (`checkpoint_hash_after.json`) |
+| Cached digest lookup | n/a (hashed every request) | 0.000086 ms mean over 100 lookups; `hash_calls = 1` |
+| `/research/verify` DINOv3 API p50 / p90 (30 requests) | 495.3 / 499.4 ms (`gpu_performance_results.json`) | 44.3 / 49.6 ms sequential with both models loaded (`dual_model_concurrency.json`); E2E repeat 44.3 / 50.6 ms (`integration_test_results_digest_cache.json`) |
+| Triton `compute_infer` during those 30 DINOv3 API requests | 14.38 ms (single-model bench) | 14.42 ms |
+| DINOv2 API p50 / p90 (30 requests, both loaded) | 45.9 / 49.0 ms (DINOv2 alone) | 50.1 / 56.0 ms (first-request warmup 671 ms); E2E 45.7 / 48.5 ms |
+
+The cached DINOv3 API p50 (44 ms) is still above Triton's 14 ms compute. The remaining time is HTTP, image decode, preprocessing, gRPC, and policy. After cache, `dinov3_checkpoint.hash_calls` stayed 1 through 30 sequential DINOv3 API calls plus 200 mixed concurrent DINOv3 calls.
+
+Tests in `tests/test_checkpoint_identity.py`: correct identity is cached; repeated requests do not re-hash; a mismatched file fails closed and is not cached; reload re-hashes; hashing errors return `MODEL_ERROR` with `decision = null`.
+
+### 9.2 Dual-loaded mixed concurrency
+
+Both models were loaded together on the same Triton 26.01 process, GPU 0, `KIND_GPU`, `use_tf32=0`. Evidence: `dual_model_concurrency.json`.
+
+| Memory | MiB |
+| --- | --- |
+| Idle Triton (no models) | 324 |
+| DINOv2 only | 920 |
+| Dual loaded, idle | 1 506 |
+| Peak Triton during mixed API load | 2 706 |
+| Host GPU used after mixed load | 3 222 |
+
+16 303 MiB GPU. Dual-loaded mixed traffic fit. No OOM, no precision change.
+
+Mixed concurrent `/research/verify` (8 workers, 200 requests per model, explicit `logical_model`):
+
+| Model | Completed | Failed | p50 / p90 ms | Triton inference-count delta | Mean compute_infer ms |
+| --- | --- | --- | --- | --- | --- |
+| `dinov2_legacy` → `dinov2_vitb14_live` | 200 | 0 | 126.0 / 135.0 | 200 | 17.64 |
+| `dinov3_experimental` → `dinov3_authenticity_candidate` | 200 | 0 | 116.7 / 186.6 | 200 | 14.53 |
+
+Combined throughput 52.7 req/s. Decisions consistent (`AUTHENTIC` on the protocol image). DINOv3 responses carried the frozen checkpoint SHA. Unload of one model left the other READY; reload restored both. Old `dinov2_classifier` was not called.
+
+GPU parity re-run with **both** models resident, same frozen tolerances (`1e-4` logit, `1e-5` probability):
+
+- DINOv2: `dinov2_live_triton_gpu_parity_dual_loaded.json` PASS. Max abs logit error 2.360e-05, max abs probability error 4.460e-07, 0 verdict mismatches.
+- DINOv3: `dinov3_triton_gpu_parity_dual_loaded.json` PASS. Max abs logit error 4.256e-05 (batch 2), max abs probability error 9.813e-07, 0 decision mismatches.
+
+### 9.3 Regression
+
+- `.venv/bin/python -m unittest discover -s tests -v`: first pass while Triton still held a 12.6 GiB batch-8 arena failed `test_tiny_training_smoke` with CUDA OOM. After unloading both models (Triton 392 MiB), **444 tests, OK, skipped=3**.
+- Frontend: `npm run lint` 0 warnings; `npx tsc --noEmit`; `npm run build` compiled.
+- E2E `scripts/e2e_dual_model.py` against research API :8000, production API :8010, GPU Triton, `next start`: **14/14 PASS** (`integration_test_results_digest_cache.json`). Live `/verify/authenticate` used `INFERENCE_BACKEND=torch` (the research selector still uses Triton). Historical labels 19 × `Legacy screening — not verified`, 20 × `Demo listing — not verified`. Listings 53 before and after. `AUTHENTICITY_MODEL_PRODUCTION_APPROVED = false`.
+
+### 9.4 Git
+
+Intended files only. No `.env`, weights, datasets, or unrelated `ml_rtx5080/train.py` / experiment trees.
+
+## Flag block
+
+`CHECKPOINT_DIGEST_CACHED_AT_STARTUP = true`
+
+`HASH_MISMATCH_FAILS_CLOSED = true`
+
+`BOTH_MODELS_READY_SIMULTANEOUSLY = true`
+
+`DUAL_MODEL_GPU_CONCURRENCY = PASS`
+
+`DINOV2_GPU_PARITY = PASS`
+
+`DINOV3_GPU_PARITY = PASS`
+
+`DINOv3_API_LATENCY_IMPROVED = true (p50 495.3 ms → 44.3 ms; not equal to 14.4 ms Triton compute)`
+
+`AUTOMATIC_PUBLICATION_BLOCKED = true`
+
+`DINOv3_PRODUCTION_ALLOWED = false`
+
+`PR_MERGED = false`
+
+`MAIN_VERIFIED = false`
+
+`RESEARCH_BRANCH_CREATED = false`
+
+`MODEL_CHANGED = false`
+
+`CALIBRATION_CHANGED = false`
+
+`FINAL_TEST_TOUCHED = false`
+
+`PRODUCTION_PROMOTION_ALLOWED = false`

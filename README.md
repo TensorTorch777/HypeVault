@@ -65,7 +65,7 @@ General luxury-watch authenticity is unsupported. Open-set rejection is not vali
 - Calibration: 2,998 samples, frozen temperature `0.24038200410185356`.
 - Robustness: clean false-authentic 0 and false-fake 0. Quality policy caught 8 of 9 known stress false-fake events. Resize/recompression remains uncovered.
 - OOD: Phase 35 is `OOD_FAIL` (337/408 authentic escape; unseen luxury about 88.1%). Phase 36 is `WATCH_OOD_UNRESOLVED` (25 holdout images).
-- Serving: the live backend is still DINOv2. The frozen research candidate is DINOv3. ONNX CUDA, TensorRT, and Triton are not available for that candidate.
+- Serving: live listing checks stay on DINOv2 (`dinov2_vitb14_live`, ViT-B/14 at 504). The frozen research candidate is DINOv3 (`dinov3_authenticity_candidate`). Both are served together on NVIDIA Triton 26.01 GPU with exact FP32 (`use_tf32=0`). The old ViT-G/14 `dinov2_classifier` is not routed. `AUTHENTICITY_MODEL_PRODUCTION_APPROVED` remains false.
 
 ## Known blockers
 
@@ -291,15 +291,19 @@ curl -sS http://localhost:8000/metrics | sed -n '1,20p'
 
 ## Inference Modes
 
-### Triton mode (recommended path)
-- Model name: `dinov2_classifier`
-- Input tensor: `input__0` shape `[1,3,518,518]` FP32
-- See scripts:
-  - `scripts/export_tensorrt.py` (when present)
-  - optional local `scripts/setup_triton.sh` (not tracked)
+Two allowlisted Triton models, selected by a logical id. Triton model names are server-side and are rejected as client selectors.
+
+| Logical id | Triton model | Artifact | Input | Role |
+| --- | --- | --- | --- | --- |
+| `dinov2_legacy` | `dinov2_vitb14_live` v1 | live ViT-B/14 checkpoint `fe1daa0b…fa66` | `[1,3,504,504]` FP32 | live listing check and research selector |
+| `dinov3_experimental` | `dinov3_authenticity_candidate` v1 | frozen `epoch_018.pt` `5a38c93f…d28f`, temperature `0.24038200410185356` | `[1,3,512,512]` FP32 | research/shadow only |
+
+Validated GPU serving is `KIND_GPU` with `use_tf32=0`. The SHA-256 of the DINOv3 checkpoint is verified at API startup and cached; a mismatch fails closed (`decision = null`) and is not hashed again on every request. Production mode cannot select DINOv3. Neither model auto-publishes a listing.
+
+The unrouted `dinov2_classifier` ViT-G/14 518 artifact is not a substitute for either selector model.
 
 ### Local Torch fallback
-Use when Triton is unavailable:
+Use when Triton is unavailable for the live DINOv2 listing path:
 
 ```bash
 pip install -r requirements_inference.txt

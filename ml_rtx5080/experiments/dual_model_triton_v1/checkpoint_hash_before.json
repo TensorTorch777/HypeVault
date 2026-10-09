@@ -1,0 +1,19 @@
+{
+  "path": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+  "bytes": 1046865163,
+  "expected": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "digests": [
+    "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f"
+  ],
+  "match": true,
+  "hash_times_ms": [
+    448.1731959967874,
+    442.8294450044632,
+    441.99544499861076
+  ],
+  "mean_ms": 444.3326953332871,
+  "min_ms": 441.99544499861076,
+  "max_ms": 448.1731959967874
+}

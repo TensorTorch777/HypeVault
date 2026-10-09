@@ -126,13 +126,15 @@ The stock **`infra/Dockerfile.backend`** only installs `requirements.txt` (no Py
 
 Set **`REPORT_ENFORCE_TRITON=true`** only if you require Triton for compliance-style reporting.
 
+The compose `triton` service still pins Triton 23.10 and the old `dinov2_classifier` layout. The dual-model GPU path uses the pinned `nvcr.io/nvidia/tritonserver:26.01-py3` image, explicit model control, and the reviewed exact-FP32 configs (`use_tf32=0`) for `dinov2_vitb14_live` and `dinov3_authenticity_candidate`. See `docs/engineering/gpu_runtime_admin_steps.md`. Do not route `dinov2_classifier`. The API verifies the frozen DINOv3 checkpoint SHA-256 at startup and caches it; a mismatch fails closed and does not hash the 1 GB file on every `/research/verify` request.
+
 ---
 
 ## 4. Smoke test
 
 With the API running and a buyer JWT (or your test client), `POST /verify/authenticate` remains the legacy DINOv2 listing check. A supported response identifies `model = LEGACY_DINOV2`, `model_status = LEGACY`, `research_candidate = false`, and `production_validation = NOT_ESTABLISHED`. It does not carry the DINOv3 checkpoint or temperature. An unsupported brand returns HTTP 422 `UNSUPPORTED_SCOPE` with `decision = null`.
 
-`POST /research/verify` is the frozen DINOv3 research prototype. It runs only when `HYPEVAULT_DEPLOYMENT_MODE` is `research` or `shadow`. A missing mode stays legacy production and blocks DINOv3. An unknown mode fails closed. The research response includes `declared_brand`, `brand_verification = NOT_PERFORMED`, `model_scope = FIVE_BRAND_RESEARCH_PROTOTYPE`, `research_only = true`, `production_ready = false`, `checkpoint_sha`, and `policy_version`. It does not create a customer listing.
+`POST /research/verify` accepts `logical_model=dinov2_legacy` or `dinov3_experimental`. DINOv3 remains a five-brand research prototype. It runs only when `HYPEVAULT_DEPLOYMENT_MODE` is `research` or `shadow`. A missing mode stays legacy production and blocks DINOv3. An unknown mode fails closed. The research response includes `declared_brand`, `brand_verification = NOT_PERFORMED`, `model_scope = FIVE_BRAND_RESEARCH_PROTOTYPE`, `research_only = true`, `production_ready = false`, `checkpoint_sha`, and `policy_version`. It does not create a customer listing.
 
 Do not point `LOCAL_MODEL_PATH` or `TRITON_MODEL_NAME` at DINOv3. Docker Compose does not set `HYPEVAULT_DEPLOYMENT_MODE`, so the default process blocks the research candidate.
 
