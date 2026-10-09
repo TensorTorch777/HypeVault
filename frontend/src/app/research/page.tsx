@@ -146,14 +146,16 @@ export default function ResearchDemoPage() {
         explainBody.append("brand", brand);
         explainBody.append("logical_model", selected);
         const explained = await api.post<ResearchExplanationPayload>("/research/explain", explainBody);
-        if (explained.data.classification?.model !== data.model) {
+        if (explained.data.status === "unavailable") {
+          setExplanation(explained.data);
+        } else if (explained.data.status === "ok" && explained.data.classification?.model === data.model) {
+          setExplanation(explained.data);
+        } else {
           setExplanation({
             status: "unavailable",
             reason: "The explanation model did not match the classification model.",
             publication_decision: "BLOCKED",
           });
-        } else {
-          setExplanation(explained.data);
         }
       } catch {
         setExplanation({

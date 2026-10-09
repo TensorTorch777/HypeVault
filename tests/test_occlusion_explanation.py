@@ -110,6 +110,42 @@ class OcclusionTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             asyncio.run(measure_regions(image, broken, timeout_s=5))
 
+    def test_a_slow_final_inference_cannot_return_success_after_the_deadline(self) -> None:
+        from PIL import Image as PilImage
+
+        from inference.occlusion import measure_regions
+
+        image = PilImage.new("RGB", (8, 8), (4, 5, 6))
+        calls = {"n": 0}
+
+        async def late_final(sample):
+            del sample
+            calls["n"] += 1
+            if calls["n"] == 17:
+                await asyncio.sleep(0.2)
+            return 1.0
+
+        with self.assertRaises(TimeoutError):
+            asyncio.run(measure_regions(image, late_final, timeout_s=0.05))
+
+    def test_display_cutoff_is_a_provisional_heuristic(self) -> None:
+        from inference.occlusion import WEAK_ABS_DELTA, WEAK_ABS_DELTA_ROLE, sensitivity_record
+
+        boxes = [{"row": 0, "col": 0, "x": 0, "y": 0, "width": 1, "height": 1}]
+        record = sensitivity_record(
+            baseline_logit=0.0,
+            masked_logits=[0.002],
+            boxes=boxes,
+            model_id="LEGACY_DINOV2",
+            model_version="1",
+            preprocessing_id="legacy_square_resize_504_imagenet",
+            decision="AUTHENTIC",
+        )
+        self.assertEqual(WEAK_ABS_DELTA, 0.001)
+        self.assertEqual(WEAK_ABS_DELTA_ROLE, "provisional_heuristic")
+        self.assertIn("not tuned on the locked final test set", record["method"]["weak_abs_delta_note"])
+        self.assertNotIn("component", " ".join(str(item) for item in record["patches"][0]))
+
 
 class ExplanationTextTests(unittest.TestCase):
     def _evidence(self, decision: str = "FAKE", delta: float = 0.0) -> dict:
@@ -216,6 +252,7 @@ class ResearchExplainRouteTests(unittest.TestCase):
         self.assertEqual(body["publication_decision"], "BLOCKED")
         self.assertFalse(body["independent_authentication"])
         self.assertEqual(body["sensitivity"]["model_id"], "LEGACY_DINOV2")
+        self.assertEqual(body["sensitivity"]["method"]["weak_abs_delta_role"], "provisional_heuristic")
         self.assertEqual(body["cost"]["inferences"], 17)
         self.assertGreaterEqual(body["cost"]["elapsed_ms"], 0)
         self.assertNotIn("probability that the watch is genuinely authentic", body["explanation"]["observation"])
