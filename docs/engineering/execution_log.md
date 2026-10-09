@@ -23,6 +23,27 @@ Statuses: `PASS`, `FAIL`, `BLOCKED`, `IN_PROGRESS`, `NOT_STARTED`.
 | `8cd2cab` | B, C4 | CPU Triton parity results, E2E script and results, runtime diagnostics |
 | `f688ff7` | B2, E2, E3 | Admin GPU steps, data-governance workflow, record schema v2, admission validator |
 
+## Owner decisions applied (2026-10-09, later session)
+
+1. **Option B for DINOv2.** The live ViT-B/14 at 504 is registered as the separate Triton model `dinov2_vitb14_live` v1, with a tracked identity. `dinov2_classifier` is untouched and no longer routed.
+2. **GPU work waits for the administrator.** The driver is untouched. On the re-check, `nvidia-ctk` is still absent, there is still no CDI spec, and `docker run --gpus all` still fails with the CDI error.
+3. **PR #1 stays open and unmerged** until both models pass Triton GPU validation. No deployment.
+
+| Commit | Content |
+| --- | --- |
+| `6e5856f` | DINOv2 parity protocol v1 (SHA-256 `8b7f7bbf…854b`) and harness, committed before any measurement |
+| `ad721c9` | Selector remapped to `dinov2_vitb14_live` behind a parity gate, export parity result, identity file, reviewed GPU configs, GPU-stage protocol (SHA-256 `c4ec2851…e710`), tests |
+
+Evidence:
+- **Artifact identity:** `best_model.pt` SHA-256 `fe1daa0b…fa66` loads strictly (0 missing, 0 unexpected keys) into the backend `DINOv2Classifier`. The served `model.onnx` (`f367c2d4…7c17c`) and `dinov2_hypevault.onnx.data` (`b0a57707…172c`) are byte-identical copies of the 2026-05-15 export.
+- **Export parity** (`dinov2_live_export_parity.json`, host ONNX Runtime 1.26 CPU on the Triton model bytes, 24 non-test inputs, batch sizes 1, 2, 4, 8):
+  - max abs logit error vs FP32 `1.62e-5` (tolerance `1e-4`)
+  - max abs probability error `4.14e-7` (tolerance `1e-5`)
+  - 0 verdict mismatches vs FP32 and vs the live FP16 GPU path (20 AUTHENTIC, 4 FAKE in each); max logit delta vs live FP16 `5.3e-3`
+- **Triton:** `dinov2_vitb14_live` on CPU Triton 23.10 is `UNAVAILABLE: Unsupported model IR version: 10, max supported IR version: 9`. The router reported it unavailable (`TRITON_MODEL_NOT_READY`) while DINOv3 stayed ready on `KIND_CPU`. A live DINOv2 request returned `MODEL_UNAVAILABLE`, and the DINOv3 inference count stayed 0 → 0.
+- **Protocol fix:** the v1 protocol pins the `KIND_CPU` config hash, which would block the required GPU run. Rather than edit v1 after its export results, a separate GPU-stage protocol was written before any DINOv2 Triton measurement. It has identical inputs, tolerances, and pass rule, and pins `config.gpu.pbtxt`.
+- **Tests:** local suite 435 tests OK (skipped=3); clean extract 57 tests OK (skipped=2).
+
 ## Workstream A — repository release readiness
 
 | Item | Status | Evidence |
@@ -42,7 +63,7 @@ Statuses: `PASS`, `FAIL`, `BLOCKED`, `IN_PROGRESS`, `NOT_STARTED`.
 | B1 | PASS | Raw output is in `docs/engineering/runtime_diagnostics_2026-10-09.txt`. The driver is not the cause: modules are loaded, `/dev/nvidia*` exists, and host PyTorch sees the RTX 5080 at compute capability 12.0. The causes are the container runtime/CDI (no toolkit packages, no CDI spec, no `daemon.json`), permissions (sudo needs a password), and, at that time, disk (915 MB free). |
 | B2 | BLOCKED | Needs root. The exact official commands are in `docs/engineering/gpu_runtime_admin_steps.md`. Nothing was installed and the driver was not touched. |
 | B3 | BLOCKED | Selected pin: `nvcr.io/nvidia/tritonserver:26.01-py3`, index digest `sha256:c9f2ede5…146b`, amd64 `sha256:8a4ecd6b…4be5`, 7.64 GB compressed. Release notes state driver 575 or later, Blackwell support, and ONNX Runtime 1.24.1. Not pulled: it cannot start on the GPU until B2 is done. Disk later rose to 42 GB from outside this work, so space is no longer the blocker. |
-| B4 | BLOCKED | `dinov2_classifier` fails on Triton 23.10: `Unsupported model IR version: 10, max supported IR version: 9`. Separately, the live route runs local PyTorch `vit_base_patch14_dinov2.lvd142m` at 504, while `dinov2_classifier` is a 40-block ViT-g/14 at 518 with no identity file. Choosing which DINOv2 backs the selector is an owner decision. |
+| B4 | BLOCKED | Owner chose Option B. `dinov2_vitb14_live` (live ViT-B/14 at 504) has verified artifact identity and export parity. It cannot load in Triton 23.10 (ONNX IR 10 > 9), and GPU containers are blocked. Resume with the pinned 26.01 image after the admin steps. |
 | B5 | BLOCKED | GPU execution is blocked. Done on CPU: the checkpoint SHA was re-verified, a single authoritative export (`model.onnx` SHA-256 `d1d0c9bc…3edb`, matching `identity.json`) was confirmed, and `dinov3_authenticity_candidate` v1 reached `READY` on CPU Triton 23.10 with explicit model control (the duplicate export was not loaded). |
 | B6 | PASS (CPU scope) | Protocol `parity_protocol_v1.json` (SHA-256 `858abd0c…e4cb`) was committed in `b639dc3` before measurement. On CPU Triton vs. the FP32 CPU PyTorch reference, 24 non-test inputs (17 original sizes, train/validation/calibration) at batch sizes 1, 2, 4, 8 gave: max abs logit error `3.08e-5` (≤ `1e-4`), mean `3.21e-6`, max abs probability error `3.30e-7` (≤ `1e-5`), 0 decision mismatches. Batched and single outputs were bitwise equal, and server stats showed 112 inferences over 54 executions. DINOv2 parity is not run; its route is unavailable and returns `MODEL_ERROR` with `decision: null`. GPU parity is BLOCKED. |
 | B7 | BLOCKED | Per the plan, metrics stay `null` while GPU execution is blocked (`latency_and_memory_results.json`). No CPU numbers were substituted. |
@@ -61,7 +82,7 @@ Statuses: `PASS`, `FAIL`, `BLOCKED`, `IN_PROGRESS`, `NOT_STARTED`.
 | Item | Status | Evidence |
 | --- | --- | --- |
 | D1 | IN_PROGRESS | The PR targets current `main`, and CPU CI is green. The diff contains no weights, `models/`, `.env`, or images. GPU parity is explicitly blocked in the PR description. The selector disables unavailable models. |
-| D2 | BLOCKED | Merging needs human review and approval of the staged release, plus the DINOv2 identity decision. No approval exists. The agent did not merge. |
+| D2 | BLOCKED | The owner decided PR #1 stays open until both models pass Triton GPU validation. Neither has yet. The agent did not merge. |
 | D3 | BLOCKED | Not merged, so there is no merge commit to verify. |
 
 ## Workstream E — data governance

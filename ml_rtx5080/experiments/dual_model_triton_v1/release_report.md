@@ -12,11 +12,17 @@ The dual-model selector, research access control, and customer-label safety work
 - **End-to-end:** `integration_test_results.json`. All 13 flows pass against the local stack with CPU Triton. DINOv2 flows show fail-closed behaviour only, because the model does not load.
 - **Browser:** the research page disables DINOv2 as unavailable, selects DINOv3, and shows `EXPERIMENTAL — NOT APPROVED FOR PRODUCTION`.
 
+## DINOv2 selector target (owner decision: Option B)
+
+- `dinov2_legacy` routes to `dinov2_vitb14_live`, the live ViT-B/14 at 504. Its identity is in `infra/triton/dinov2_vitb14_live/identity.json`. `dinov2_classifier` is untouched and unrouted.
+- **Export parity:** `dinov2_live_export_parity.json` PASS. Max logit error vs FP32 `1.62e-5`, 0 verdict mismatches vs FP32 and the live FP16 path.
+- **Triton:** unavailable. IR 10 does not load in Triton 23.10, and GPU containers are blocked. The parity gate keeps it out of the selector.
+
 ## Not done
 
 - GPU Triton serving, GPU parity, latency, and memory. Blocked by the container runtime, root access, and disk space.
-- DINOv2 Triton serving and DINOv2 parity. Blocked by ONNX IR 10 on Triton 23.10, plus the owner decision on which DINOv2 backs the selector.
-- Merge to `main`. Needs review and approval.
+- DINOv2 Triton serving and Triton parity. Blocked by ONNX IR 10 on Triton 23.10 and by the GPU runtime.
+- Merge to `main`. Waits until both models pass Triton GPU validation, then review.
 - Deployment. Out of scope.
 
 `DINOv3_PRODUCTION_ALLOWED = false`
