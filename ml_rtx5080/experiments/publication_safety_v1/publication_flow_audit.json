@@ -1,0 +1,15 @@
+{
+  "endpoint": "POST /verify/authenticate",
+  "verdict_module": "backend/inference/verdict.py via engine.classify_image",
+  "model": "DINOv2",
+  "publication_write": "backend/inference/routes.py",
+  "model_evidence_field": "listings.verdict",
+  "publication_field": "listings.status",
+  "previous_live_condition": "Any non-FAKE legacy verdict assigned ListingStatus.live immediately after classify_image. No user confirmation.",
+  "fake_behavior": "ListingStatus.rejected. The listing is absent from GET /listings/recent, which selects status live.",
+  "authentic_behavior_after_gate": "ListingStatus.pending. verdict may be AUTHENTIC. publication_decision is BLOCKED.",
+  "automatic": true,
+  "user_confirmed": false,
+  "authentic_bypassed_other_review": "Yes, before this phase. No separate review control existed. pending is the existing unpublished state.",
+  "customer_catalog_query": "GET /listings/recent filters ListingStatus.live"
+}

@@ -9,7 +9,7 @@ const COLUMNS = [
     heading: "Shop",
     links: [
       { label: "Luxury watches",       href: "/product/Luxury%20watches" },
-      { label: "Recent verifications", href: "/#recent" },
+      { label: "Recent listings", href: "/#recent" },
     ],
   },
   {
@@ -23,9 +23,9 @@ const COLUMNS = [
   {
     heading: "Trust",
     links: [
-      { label: "How AI verification works", href: "/#how" },
+      { label: "Five-brand research scope", href: "/#how" },
       { label: "Market comparison",         href: "/product/Luxury%20watches" },
-      { label: "Authenticity promise",      href: "/" },
+      { label: "Known limitations",         href: "/#how" },
     ],
   },
   {
@@ -95,7 +95,7 @@ export function SiteFooter() {
 
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <p className="text-[11px] leading-[1.5] text-[#FFEDF6]/40">
-            © {new Date().getFullYear()} HypeVault · Built on DINOv2-Giant ·
+            © {new Date().getFullYear()} HypeVault · Five-brand research prototype ·
             Capstone — not a live marketplace.
           </p>
           <div className="flex gap-4 text-[11px] text-[#FFEDF6]/55">

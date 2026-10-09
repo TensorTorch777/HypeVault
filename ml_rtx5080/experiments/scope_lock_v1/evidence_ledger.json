@@ -1,0 +1,78 @@
+{
+  "entries": [
+    {
+      "conclusion": "Frozen model identity is DINOv3 ViT-B/16, cls_patch_attention, 512 input, checkpoint epoch_018.pt.",
+      "artifact": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/config.json",
+      "checkpoint": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+      "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+      "backbone": "vit_base_patch16_dinov3.lvd1689m"
+    },
+    {
+      "conclusion": "The audited corpus has 30000 images, 15000 authentic and 15000 fake, five brands, and no product-disjoint guarantee.",
+      "artifact": "ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+      "membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+      "manifest_file_sha256": "4d0d20c17d12ac29cb299b7b4f369ebcce3c5acd7b2fd5430d61f952b9852eea"
+    },
+    {
+      "conclusion": "Temperature 0.24038200410185356 was fitted on 2998 calibration samples.",
+      "artifact": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/calibration/calibration_summary.json",
+      "calibration_sample_count": 2998,
+      "calibrated_nll": 2.5221722488311116e-09,
+      "calibrated_brier": 8.573122380084356e-18,
+      "calibrated_ece": 0.0
+    },
+    {
+      "conclusion": "The locked five-brand final test has 3006 samples and calibrated ROC-AUC, PR-AUC, and F1 of 1.0, with zero false-authentic and zero false-fake counts.",
+      "artifact": "ml_rtx5080/experiments/final_test_v1/final_test_summary.json",
+      "sample_count": 3006,
+      "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f"
+    },
+    {
+      "conclusion": "Resize/recompression of one Richard Mille reference remains an uncovered false-fake stress case. Eight of nine known stress false-fake events were caught.",
+      "artifact": "ml_rtx5080/experiments/image_quality_v2/quality_operating_points.json",
+      "case": "Label_0_Watches/Richard Mille/9eda705bd8c9.jpg|resize_recompression"
+    },
+    {
+      "conclusion": "The shadow quality gate is LOW_RESOLUTION or LOW_CONTRAST to REVIEW, then P(fake) at 0.50. It is not promoted.",
+      "artifact": "ml_rtx5080/experiments/production_readiness_v1/readiness_report.json",
+      "policy_version": "shadow_v1"
+    },
+    {
+      "conclusion": "Phase 35 is OOD_FAIL. 408 OOD samples, 337 authentic escapes, unseen-luxury escape 0.8814432989690721.",
+      "artifact": "ml_rtx5080/experiments/ood_validation_v1/ood_status.json",
+      "status": "OOD_FAIL"
+    },
+    {
+      "conclusion": "Phase 36 is an underpowered independent watch-like observation and does not confirm or overturn Phase 35.",
+      "artifact": "ml_rtx5080/experiments/watch_like_ood_v1/watch_like_ood_status.json",
+      "status": "WATCH_OOD_UNRESOLVED",
+      "holdout_images": 25
+    },
+    {
+      "conclusion": "Phase 37 admitted no additional protocol-compliant corpus.",
+      "artifact": "ml_rtx5080/experiments/watch_like_ood_v2/acquisition_status.json",
+      "WATCH_OOD_V2_CORPUS_READY": false
+    },
+    {
+      "conclusion": "Phase 38 recommended scope reduction and forbade promotion.",
+      "artifact": "ml_rtx5080/experiments/ood_strategy_v1/recommendation.json",
+      "PROTOCOL_DECISION": "SCOPE_REDUCTION_RECOMMENDED",
+      "PROMOTION_ALLOWED": false
+    },
+    {
+      "conclusion": "The live customer path is still the DINOv2 stack. This phase did not edit those backend files.",
+      "artifacts": [
+        "backend/inference/verdict.py",
+        "backend/inference/dinov2_model.py",
+        "backend/inference/local_torch.py",
+        "backend/inference/triton_client.py"
+      ]
+    },
+    {
+      "conclusion": "Production readiness was conditional and not a promotion.",
+      "artifact": "ml_rtx5080/experiments/production_readiness_v1/readiness_report.json",
+      "readiness": "CONDITIONALLY_READY",
+      "current_production_status": "not_promoted"
+    }
+  ]
+}

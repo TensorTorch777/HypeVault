@@ -1,0 +1,45 @@
+{
+  "routes": [
+    {
+      "route": "POST /verify/authenticate",
+      "model": "DINOv2",
+      "entrypoint": "backend/inference/routes.py -> engine.classify_image",
+      "default_backend": "triton",
+      "default_triton_model_name": "dinov2_classifier",
+      "status": "active",
+      "customer_facing": true,
+      "research_only_response": true,
+      "production_ready": false
+    },
+    {
+      "route": "shadow compose_shadow_record / run_shadow_image",
+      "model": "DINOv3",
+      "entrypoint": "backend/inference/shadow.py",
+      "checkpoint": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+      "status": "research only",
+      "customer_facing": false,
+      "called_from_http_route": false
+    },
+    {
+      "route": "local research scripts under ml_rtx5080",
+      "model": "DINOv3",
+      "status": "research",
+      "customer_facing": false
+    }
+  ],
+  "defaults_unchanged": {
+    "inference_backend": "triton",
+    "triton_model_name": "dinov2_classifier",
+    "local_model_path": "",
+    "dinov2_model_name": "dinov2_vitg14_reg"
+  },
+  "automatic_fallback_between_dinov2_and_dinov3": false,
+  "dinov3_production_traffic_allowed": false,
+  "production_block": "HYPEVAULT_DEPLOYMENT_MODE defaults to production and blocks DINOv3 forward paths. The live route also refuses settings whose model path or Triton name contains dinov3.",
+  "live_dinov2_files_untouched": [
+    "backend/inference/verdict.py",
+    "backend/inference/dinov2_model.py",
+    "backend/inference/local_torch.py",
+    "backend/inference/triton_client.py"
+  ]
+}

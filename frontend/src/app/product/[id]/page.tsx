@@ -3,13 +3,13 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { AuthBadge } from "@/components/AuthBadge";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import { PriceTrendChart } from "@/components/PriceTrendChart";
 import { ProductVisualPanel } from "@/components/product/ProductVisualPanel";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchComparison, fetchComparisonByQuery, fetchListing } from "@/lib/api";
+import { customerLabel } from "@/lib/customerLabel";
 
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -84,15 +84,23 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <div className="mt-6">
               {isUuid && listingQ.isLoading ? <Skeleton className="h-40 w-full rounded-2xl" /> : null}
               {isUuid && listingQ.data ? (
-                <AuthBadge
-                  verdict={(listingQ.data.verdict as "AUTHENTIC" | "FAKE" | null) ?? null}
-                  confidence={listingQ.data.confidence}
-                />
+                <div className="rounded-2xl border border-white/[0.08] bg-[#111111] p-6">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-primary/55">Listing</p>
+                  <p className="mt-2 text-2xl font-semibold tracking-tight text-primary">
+                    {customerLabel(listingQ.data)}
+                  </p>
+                  <p className="mt-2 text-sm text-primary/70">
+                    A visible listing is published. That is separate from authenticity verification.
+                  </p>
+                  <p className="mt-1 text-sm text-primary/70">
+                    Declared brand: {listingQ.data.brand?.trim() ? listingQ.data.brand : "not supplied"}
+                  </p>
+                </div>
               ) : null}
               {!isUuid ? (
                 <div className="rounded-2xl border border-white/[0.08] bg-[#111111] p-6 text-sm text-primary/65">
                   You’re viewing a quick market comparison for{" "}
-                  <span className="font-semibold text-primary">{title}</span>. Create a listing to run AI verification.
+                  <span className="font-semibold text-primary">{title}</span>. A stored listing result is the legacy DINOv2 check, not the DINOv3 research prototype.
                 </div>
               ) : null}
             </div>

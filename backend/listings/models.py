@@ -5,9 +5,11 @@ from __future__ import annotations
 from datetime import datetime
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 
 from database import ListingCategory, ListingStatus
+from listings.customer_label import customer_label as label_for_listing
+from listings.customer_label import evidence_role as role_for_listing
 
 
 class ListingCreate(BaseModel):
@@ -41,6 +43,25 @@ class ListingRead(BaseModel):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+    @computed_field
+    @property
+    def customer_label(self) -> str:
+        return label_for_listing(
+            status=self.status,
+            verdict=self.verdict,
+            confidence=self.confidence,
+            s3_url=self.s3_url,
+        )
+
+    @computed_field
+    @property
+    def evidence_role(self) -> str:
+        return role_for_listing(
+            verdict=self.verdict,
+            confidence=self.confidence,
+            s3_url=self.s3_url,
+        )
 
 
 class PresignRequest(BaseModel):

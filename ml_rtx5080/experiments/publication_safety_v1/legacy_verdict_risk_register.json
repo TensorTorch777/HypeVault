@@ -1,0 +1,33 @@
+{
+  "risks": [
+    {
+      "id": "L1",
+      "path": "POST /verify/authenticate",
+      "before": "AUTHENTIC set listings.status to live",
+      "after": "status stays pending; publication_decision is BLOCKED"
+    },
+    {
+      "id": "L2",
+      "path": "POST /research/verify",
+      "before": "Did not write listings",
+      "after": "Still does not write listings. Response publication_decision is BLOCKED."
+    },
+    {
+      "id": "L3",
+      "path": "PATCH /listings/{id}",
+      "before": "ListingUpdate has no status or verdict field",
+      "after": "Unchanged. A seller cannot publish through this update."
+    },
+    {
+      "id": "L4",
+      "path": "scripts/seed_database.py and scripts/import_chrono24_csv.py",
+      "before": "Inserted verdict AUTHENTIC and status live without a model",
+      "after": "New rows are pending and have no verdict."
+    },
+    {
+      "id": "L5",
+      "path": "Existing database rows",
+      "note": "Rows already marked live are not rewritten by this phase."
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api, fetchMe, logoutRemote, type Listing } from "@/lib/api";
+import { customerLabel } from "@/lib/customerLabel";
 
 export default function SellerDashboardPage() {
   const router = useRouter();
@@ -41,7 +42,7 @@ export default function SellerDashboardPage() {
             <h1 className="text-2xl font-semibold">Seller dashboard</h1>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-sm text-primary/65">Log in as a seller to manage listings and track verification.</p>
+            <p className="text-sm text-primary/65">Log in as a seller to manage listings and research classifications.</p>
             <div className="flex flex-wrap gap-3">
               <Link href="/login">
                 <Button className="min-h-[44px]">Log in</Button>
@@ -64,7 +65,7 @@ export default function SellerDashboardPage() {
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-primary/45">Seller</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight">Dashboard</h1>
-          <p className="mt-2 text-sm text-primary/60">Listings, verification outcomes, and quick actions.</p>
+          <p className="mt-2 text-sm text-primary/60">Listings and their publication labels. A live listing is visible, not verified.</p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <Link href="/seller/upload">
@@ -122,7 +123,7 @@ export default function SellerDashboardPage() {
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold">{l.product_name}</p>
                     <p className="mt-1 text-xs text-primary/55">
-                      {l.category} • <span className="font-semibold text-primary">{l.status}</span>
+                      {l.category} • <span className="font-semibold text-primary">{customerLabel(l)}</span>
                     </p>
                   </div>
                   <Button variant="outline" className="min-h-[44px] shrink-0">

@@ -1,0 +1,74 @@
+{
+  "allowed_labels": ["SUPPORTED", "SUPPORTED_WITH_SCOPE", "NOT_SUPPORTED", "UNKNOWN"],
+  "claims": [
+    {
+      "id": "A",
+      "claim": "The model can distinguish authentic vs fake examples for the five trained brands when the caller declares one of those brands. This is classification within the evaluated scope, not image-level brand identification.",
+      "label": "SUPPORTED_WITH_SCOPE",
+      "scope": "In-distribution final test of 3006 images across the five training brands. The brand is user-declared. The model does not verify that the image belongs to that brand."
+    },
+    {
+      "id": "B",
+      "claim": "The model is a general luxury-watch authenticity detector.",
+      "label": "NOT_SUPPORTED",
+      "scope": "The catalog and the final test contain five brands. Phase 35 showed high authentic escape on other watches."
+    },
+    {
+      "id": "C",
+      "claim": "The model can safely reject unseen watch brands.",
+      "label": "NOT_SUPPORTED",
+      "scope": "Phase 35 unseen-luxury authentic escape was 171/194. Phase 36 had 14 unseen-luxury holdout images and is unresolved."
+    },
+    {
+      "id": "D",
+      "claim": "The model is protected against OOD inputs.",
+      "label": "NOT_SUPPORTED",
+      "scope": "Phase 35 status is OOD_FAIL. production_ood_threshold is null. 337/408 OOD images were AUTHENTIC under the no-OOD-gate shadow rule."
+    },
+    {
+      "id": "E",
+      "claim": "The model is suitable for production customer traffic.",
+      "label": "NOT_SUPPORTED",
+      "scope": "Promotion is forbidden. The live serving path is DINOv2. The frozen candidate is DINOv3 and is not the customer path."
+    },
+    {
+      "id": "F",
+      "claim": "The model has demonstrated zero false-authentic errors.",
+      "label": "SUPPORTED_WITH_SCOPE",
+      "scope": "Zero false-authentic counts on the locked five-brand final test and on the tested stress suite. This does not extend outside that evaluated scope."
+    },
+    {
+      "id": "G",
+      "claim": "The model has demonstrated zero false-authentic errors on the full luxury-watch universe.",
+      "label": "NOT_SUPPORTED",
+      "scope": "The universe was not tested. Phase 35 is evidence against treating in-distribution zeros as universal."
+    },
+    {
+      "id": "H",
+      "claim": "The model's five-brand final test achieved perfect classification.",
+      "label": "SUPPORTED_WITH_SCOPE",
+      "scope": "Calibrated ROC-AUC, PR-AUC, and F1 are 1.0 on 3006 locked in-distribution samples. This is not evidence of universal luxury-watch authenticity."
+    },
+    {
+      "id": "I",
+      "claim": "The model is calibrated.",
+      "label": "SUPPORTED_WITH_SCOPE",
+      "scope": "One temperature, 0.24038200410185356, was fitted on 2998 in-distribution calibration samples. It was not fitted on OOD images and was not refit here."
+    },
+    {
+      "id": "J",
+      "claim": "The model is production-ready.",
+      "label": "NOT_SUPPORTED",
+      "scope": "Phase 34 was CONDITIONALLY_READY and not promoted. OOD, runtime parity, serving infrastructure, and policy approval remain open. Phase 38 recommended scope reduction."
+    }
+  ],
+  "named_capabilities": {
+    "GENERAL_LUXURY_WATCH_DETECTOR": "NOT_SUPPORTED",
+    "UNSEEN_BRAND_REJECTION": "NOT_SUPPORTED",
+    "OOD_PROTECTION": "NOT_SUPPORTED",
+    "PRODUCTION_READY": "NOT_SUPPORTED",
+    "FIVE_BRAND_CLASSIFICATION": "SUPPORTED_WITH_SCOPE",
+    "BRAND_IDENTITY_FROM_IMAGE": "NOT_SUPPORTED"
+  },
+  "five_brand_classification_meaning": "Classification of authentic versus fake within the five evaluated brands after a user declaration. It is not brand identification."
+}

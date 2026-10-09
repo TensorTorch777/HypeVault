@@ -130,7 +130,11 @@ Set **`REPORT_ENFORCE_TRITON=true`** only if you require Triton for compliance-s
 
 ## 4. Smoke test
 
-With the API running and a buyer JWT (or your test client), call **`POST /verify/authenticate`** with a JPEG/PNG. Check logs for `local_torch_infer_ok` or `triton_infer_ok` and the returned `verdict` / `confidence`.
+With the API running and a buyer JWT (or your test client), `POST /verify/authenticate` remains the legacy DINOv2 listing check. A supported response identifies `model = LEGACY_DINOV2`, `model_status = LEGACY`, `research_candidate = false`, and `production_validation = NOT_ESTABLISHED`. It does not carry the DINOv3 checkpoint or temperature. An unsupported brand returns HTTP 422 `UNSUPPORTED_SCOPE` with `decision = null`.
+
+`POST /research/verify` is the frozen DINOv3 research prototype. It runs only when `HYPEVAULT_DEPLOYMENT_MODE` is `research` or `shadow`. A missing mode stays legacy production and blocks DINOv3. An unknown mode fails closed. The research response includes `declared_brand`, `brand_verification = NOT_PERFORMED`, `model_scope = FIVE_BRAND_RESEARCH_PROTOTYPE`, `research_only = true`, `production_ready = false`, `checkpoint_sha`, and `policy_version`. It does not create a customer listing.
+
+Do not point `LOCAL_MODEL_PATH` or `TRITON_MODEL_NAME` at DINOv3. Docker Compose does not set `HYPEVAULT_DEPLOYMENT_MODE`, so the default process blocks the research candidate.
 
 ---
 

@@ -1,0 +1,13 @@
+{
+  "MODEL_CORRECTNESS": "PASS",
+  "CALIBRATION": "PASS",
+  "FINAL_TEST": "PASS",
+  "ROBUSTNESS": "PASS_WITH_LIMITATIONS",
+  "OOD": "FAIL",
+  "PRODUCTION_RUNTIME": "FAIL",
+  "PRODUCTION_INFRASTRUCTURE": "FAIL",
+  "POLICY_APPROVAL": "PENDING",
+  "PROMOTION_ALLOWED": false,
+  "rule": "A perfect in-distribution final test does not override an OOD failure.",
+  "production_ood_threshold": null
+}

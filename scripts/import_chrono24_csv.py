@@ -96,9 +96,9 @@ async def run(csv_path: Path, limit: int, seller_email: str, dry_run: bool) -> N
                     brand=brand,
                     condition=cond,
                     size=size,
-                    verdict="AUTHENTIC",
-                    confidence=0.94,
-                    status=ListingStatus.live,
+                    verdict=None,
+                    confidence=None,
+                    status=ListingStatus.pending,
                     s3_url=None,
                 )
             )

@@ -1,0 +1,8 @@
+{
+  "suite": "python -m unittest discover -s tests -v",
+  "tests_run": 378,
+  "skipped": 3,
+  "failures": 0,
+  "integration": "not_run",
+  "integration_blocker": "PostgreSQL was not listening on port 5432 and the API was not listening on port 8000. HypeVault compose services were not running."
+}

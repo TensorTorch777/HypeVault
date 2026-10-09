@@ -1,0 +1,40 @@
+{
+  "SYSTEM_SCOPE": "FIVE_BRAND_AUTHENTICITY_RESEARCH_PROTOTYPE",
+  "GENERAL_LUXURY_WATCH_AUTHENTICITY": "UNSUPPORTED",
+  "OPEN_SET_AUTHENTICITY": "UNSUPPORTED",
+  "OOD_PROTECTION": "UNVALIDATED",
+  "PRODUCTION_PROMOTION": "FORBIDDEN",
+  "supported_brands": [
+    "A. Lange & Söhne",
+    "Audemars Piguet",
+    "Patek Philippe",
+    "Richard Mille",
+    "Vacheron Constantin"
+  ],
+  "unsupported_brands": "Any brand that is not an explicit member of supported_brands, including Rolex, Omega, Cartier, Tudor, and an omitted brand.",
+  "supported_image_assumptions": [
+    "The request declares one of the five supported brands before inference.",
+    "The image is a watch photograph in the same general product-photo setting as the five-brand catalog.",
+    "The authenticity head is used only after that declaration. It is not a brand identifier."
+  ],
+  "known_dataset_limitations": [
+    "30000 audited images, 15000 authentic and 15000 fake, five brands only.",
+    "No verified product or SKU identity.",
+    "No marketplace or source metadata.",
+    "Product-disjoint evaluation cannot be established."
+  ],
+  "final_test_status": "3006 in-distribution samples scored once. ROC-AUC, PR-AUC, and F1 are 1.0 on the calibrated report. False-authentic and false-fake counts are 0. The test was not reopened in this phase.",
+  "calibration_status": "Temperature fitted on 2998 calibration samples and frozen. Not refit in this phase.",
+  "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "temperature": 0.24038200410185356,
+  "policy_version": "shadow_v1",
+  "brand_input_mode": "USER_DECLARED",
+  "brand_identity_verified_by_model": false,
+  "brand_identity_verified_by_image": false,
+  "brand_scope_gate": "DECLARATION_ONLY",
+  "brand_declaration_warning": "The supplied brand is a user-declared scope parameter and is not independently verified from the image.",
+  "brand_verification": "Brand verification is outside the current model scope.",
+  "scope_version": "scope_lock_v1",
+  "timestamp": "2026-10-07T13:50:00+00:00",
+  "production_ood_threshold": null
+}

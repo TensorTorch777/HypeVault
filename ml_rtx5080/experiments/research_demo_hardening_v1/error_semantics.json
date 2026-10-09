@@ -1,0 +1,18 @@
+{
+  "statuses": [
+    "UNSUPPORTED_SCOPE",
+    "POLICY_ERROR",
+    "MODEL_ERROR",
+    "INVALID_INPUT",
+    "AUTHENTIC",
+    "FAKE",
+    "REVIEW"
+  ],
+  "fail_closed": {
+    "UNSUPPORTED_SCOPE": "HTTP 422, decision null, before image classification",
+    "INVALID_INPUT": "HTTP 400, decision null, no authenticity verdict",
+    "MODEL_ERROR": "HTTP 503, decision null, listing verdict is not set",
+    "POLICY_ERROR": "DINOv3 blocked in production mode, or live settings point at DINOv3"
+  },
+  "never_collapse_errors_into": ["AUTHENTIC", "FAKE"]
+}

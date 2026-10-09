@@ -142,7 +142,7 @@ export const VAULT_FEED_LEFT: VaultFeedItem[] = [
     tone: "violet",
     icon: "clock",
     label: "SLA watch",
-    title: "P95 verify latency 4.1s · inside target band",
+    title: "P95 research classification latency 4.1s · inside target band",
     meta: "5m ago",
   },
 ];

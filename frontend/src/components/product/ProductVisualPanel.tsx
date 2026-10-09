@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Watch } from "lucide-react";
 
 import type { Listing } from "@/lib/api";
+import { customerLabel } from "@/lib/customerLabel";
 import { cn } from "@/lib/utils";
 
 function PulseDots() {
@@ -35,12 +36,8 @@ export function ProductVisualPanel({
 }) {
   const Icon = Watch;
   const hasImage = Boolean(listing?.s3_url);
-  const verified = listing?.verdict === "AUTHENTIC";
-  const fake = listing?.verdict === "FAKE";
-  const confidencePct =
-    listing?.confidence != null ? Math.min(100, Math.max(0, Math.round(listing.confidence * 100))) : null;
-
-  const showHero = hasImage && (verified || fake);
+  const label = listing ? customerLabel(listing) : null;
+  const showHero = hasImage && Boolean(label);
   const showPlaceholder = !showHero;
 
   return (
@@ -58,20 +55,9 @@ export function ProductVisualPanel({
         {showHero ? (
           <div className="relative mx-auto mt-2 aspect-square w-full max-w-[min(100%,380px)] flex-1 overflow-hidden rounded-xl border border-white/10">
             <Image src={listing!.s3_url!} alt="" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
-            {verified ? (
-              <span className="absolute left-3 top-3 rounded-md bg-[#00C851] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-black shadow-lg">
-                Live · Authentic
-              </span>
-            ) : (
-              <span className="absolute left-3 top-3 rounded-md bg-red-600 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-white shadow-lg">
-                AI flagged
-              </span>
-            )}
-            {confidencePct != null ? (
-              <span className="absolute bottom-3 right-3 rounded-md bg-black/75 px-2.5 py-1 text-xs font-bold tabular-nums text-white backdrop-blur-sm">
-                {confidencePct}% confidence
-              </span>
-            ) : null}
+            <span className="absolute left-3 top-3 max-w-[16rem] rounded-md bg-black/80 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-white shadow-lg">
+              {label}
+            </span>
           </div>
         ) : null}
 
@@ -83,8 +69,8 @@ export function ProductVisualPanel({
               {title}
             </h2>
             <div className="relative z-[1] mt-4 flex flex-wrap justify-center gap-2">
-              <span className="rounded-full bg-[#00C851]/20 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[#4ade80]">
-                AI verified
+              <span className="rounded-full bg-white/[0.08] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[#a1a1aa]">
+                {label ?? "Not a stored listing"}
               </span>
               <span className="rounded-full bg-white/[0.08] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[#a1a1aa]">
                 Watches
@@ -102,32 +88,20 @@ export function ProductVisualPanel({
             showHero ? "sr-only" : ""
           )}
         >
-          {fake ? (
-            <p className="text-sm font-medium text-red-400">Authenticity signals: AI classified as fake or below threshold</p>
-          ) : loading ? (
+          {loading ? (
             <p className="text-sm font-normal text-[#a1a1aa]">
-              Authenticity signals: checking
+              Listing status
               <PulseDots />
             </p>
-          ) : verified && confidencePct != null ? (
+          ) : label ? (
             <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#888888]">Authenticity signals</p>
-              <div className="mt-2 flex items-center justify-between gap-3">
-                <p className="text-sm text-white">Verified</p>
-                <span className="text-sm font-bold tabular-nums text-white">{confidencePct}%</span>
-              </div>
-              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.08]">
-                <div
-                  className="h-full rounded-full bg-[#00C851] transition-all duration-500"
-                  style={{ width: `${confidencePct}%` }}
-                />
-              </div>
+              <p className="text-sm text-white">{label}</p>
+              <p className="mt-1 text-xs text-[#a1a1aa]">
+                Published means the listing is visible. It is not an authenticity verification.
+              </p>
             </div>
           ) : (
-            <p className="text-sm font-normal text-[#a1a1aa]">
-              Authenticity signals: checking
-              <PulseDots />
-            </p>
+            <p className="text-sm font-normal text-[#a1a1aa]">Not a stored listing</p>
           )}
         </div>
       </div>

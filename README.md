@@ -1,8 +1,8 @@
 # HypeVault
 
 <p align="center">
-  <strong>The AI-Gated Marketplace for Authentic Ultra-Luxury Watches</strong><br/>
-  Buy-now experience with AI verification, price intelligence, and seller transparency.
+  <strong>Five-brand authenticity research prototype</strong><br/>
+  Not a universal luxury-watch authenticator, and not ready for production promotion.
 </p>
 
 <p align="center">
@@ -41,15 +41,49 @@
 
 ---
 
+## Current status
+
+`NOT_READY_FOR_PROMOTION`
+
+## Scope
+
+Five-brand authenticity research prototype.
+
+Supported brands:
+
+1. A. Lange & Söhne
+2. Audemars Piguet
+3. Patek Philippe
+4. Richard Mille
+5. Vacheron Constantin
+
+General luxury-watch authenticity is unsupported. Open-set rejection is not validated. `production_ood_threshold` is null.
+
+## Validation summary
+
+- Final test: 3,006 in-distribution samples, five brands, calibrated ROC-AUC 1.0, PR-AUC 1.0, F1 1.0, false-authentic 0, false-fake 0. This is not universal authenticity evidence.
+- Calibration: 2,998 samples, frozen temperature `0.24038200410185356`.
+- Robustness: clean false-authentic 0 and false-fake 0. Quality policy caught 8 of 9 known stress false-fake events. Resize/recompression remains uncovered.
+- OOD: Phase 35 is `OOD_FAIL` (337/408 authentic escape; unseen luxury about 88.1%). Phase 36 is `WATCH_OOD_UNRESOLVED` (25 holdout images).
+- Serving: the live backend is still DINOv2. The frozen research candidate is DINOv3. ONNX CUDA, TensorRT, and Triton are not available for that candidate.
+
+## Known blockers
+
+- OOD fail
+- Runtime parity between the live DINOv2 path and the frozen DINOv3 candidate
+- Serving infrastructure
+- Policy approval
+
 ## Overview
 
-HypeVault is a full-stack marketplace for **ultra-luxury watches**, focused on trust-first commerce.
-Each listing passes through AI verification and pricing intelligence before being surfaced to buyers.
+HypeVault is a marketplace codebase aimed at luxury-watch listings.
+The authenticity model is a research prototype for the five brands above.
+A declared brand outside that list returns `UNSUPPORTED_SCOPE` and no authentic or fake verdict.
 
 Core principles:
-- Verification before visibility
-- Comparable market context before purchase
-- Production-oriented APIs and operational checks
+- No authenticity verdict outside the five-brand scope
+- Comparable market context is separate from authenticity
+- Customer-facing production promotion is forbidden
 
 ---
 
@@ -212,7 +246,8 @@ export LOCAL_MODEL_PATH=models/hypevault_classifier.pt</code></pre>
 <details open>
   <summary><strong>Verification and Listings</strong></summary>
 
-- `POST /verify/authenticate`
+- `POST /verify/authenticate` — legacy DINOv2 listing check. `model = LEGACY_DINOV2`, `research_candidate = false`, `production_validation = NOT_ESTABLISHED`. It is not the DINOv3 research prototype. The brand field is user-declared. Unsupported brands return HTTP 422 `UNSUPPORTED_SCOPE` with `decision = null`.
+- `POST /research/verify` — frozen DINOv3 five-brand research prototype. Requires `HYPEVAULT_DEPLOYMENT_MODE=research` or `shadow`. Production, missing, and unknown modes return `POLICY_ERROR` with `decision = null`. `brand_verification = NOT_PERFORMED`, `research_only = true`, `production_ready = false`.
 - `POST /listings/`
 - `GET /listings/`
 - `GET /listings/recent`
@@ -330,6 +365,8 @@ Before each push:
 ---
 
 ## Production Notes
+
+Customer-facing promotion of the authenticity model is forbidden. The notes below are operational only.
 
 - Prefer S3 pre-signed uploads via `POST /listings/presign`
 - Ensure Redis is healthy for token rotation and cache paths

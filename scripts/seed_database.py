@@ -77,9 +77,9 @@ async def main() -> None:
                     brand=brand,
                     condition=condition,
                     size=size,
-                    verdict="AUTHENTIC",
-                    confidence=0.965,
-                    status=ListingStatus.live,
+                    verdict=None,
+                    confidence=None,
+                    status=ListingStatus.pending,
                     s3_url=None,
                 )
             )

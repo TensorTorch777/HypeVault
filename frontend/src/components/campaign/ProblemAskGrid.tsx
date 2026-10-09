@@ -80,7 +80,7 @@ const DEFAULT_ASKS: AskItem[] = [
   {
     id: "a1",
     category: "Watches",
-    question: "Why can’t buyers verify a five-figure watch before they wire trust to a stranger’s camera roll?",
+    question: "Why can’t buyers see a scoped research classification before they wire trust to a stranger’s camera roll?",
     href: "/product/Luxury%20watches",
     variant: "white",
   },

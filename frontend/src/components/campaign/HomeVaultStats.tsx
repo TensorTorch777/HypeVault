@@ -16,7 +16,7 @@ const cards = [
     suffix: "+",
     prefix: "" as string,
     label: "Checks queued",
-    description: "Images screened for authenticity signals.",
+    description: "Research classifications inside the five-brand scope.",
   },
   {
     key: "markets",

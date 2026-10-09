@@ -73,7 +73,7 @@ const TAUNTS: Taunt[] = [
   {
     id: "t10",
     eyebrow: "LIVE",
-    line: "Your size just ‘verified’ somewhere else 👀",
+    line: "Your size just landed somewhere else 👀",
     href: "/product/Luxury%20watches",
     position: "right-[1%] top-[50%] hidden md:block md:right-[4%]",
     z: 10,
