@@ -233,7 +233,8 @@ export default function ResearchDemoPage() {
             </label>
             <select
               id="research-model"
-              className="mt-2 flex h-11 w-full rounded-md border border-primary/15 bg-transparent px-3 text-sm"
+              className="mt-2 flex h-11 w-full rounded-md border border-[#1D1D1F]/20 bg-white px-3 text-sm text-[#1D1D1F]"
+              style={{ color: "#1D1D1F", backgroundColor: "#FFFFFF" }}
               value={modelId ?? ""}
               disabled={!readiness || pending}
               onChange={(event) => {
@@ -242,9 +243,13 @@ export default function ResearchDemoPage() {
                 setErr(null);
               }}
             >
-              {modelId === null ? <option value="">No model is available to serve</option> : null}
+              {modelId === null ? (
+                <option value="" style={{ color: "#1D1D1F", backgroundColor: "#FFFFFF" }}>
+                  No model is available to serve
+                </option>
+              ) : null}
               {MODEL_IDS.map((id) => (
-                <option key={id} value={id} disabled={!isReady(id)}>
+                <option key={id} value={id} disabled={!isReady(id)} style={{ color: "#1D1D1F", backgroundColor: "#FFFFFF" }}>
                   {MODEL_LABELS[id]}
                   {readiness && !isReady(id) ? " (unavailable)" : ""}
                 </option>
