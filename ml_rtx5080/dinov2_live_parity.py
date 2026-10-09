@@ -6,6 +6,7 @@ DINOv2Classifier loaded from ml_rtx5080/checkpoints/best_model.pt, logits_to_ver
 
   --write-protocol      freeze inputs, artifact hashes, and tolerances (run once, before measuring)
   --write-gpu-protocol  same inputs and tolerances, pinned to the reviewed KIND_GPU config
+  --write-gpu-protocol-v2  after attempt 1 failed on TF32: same again, pinned to the exact-FP32 GPU config
   --stage export        host onnxruntime (CPU) on the exact Triton model bytes vs the references
   --stage triton        Triton gRPC vs the references; --require-gpu uses the GPU protocol and refuses a CPU instance
 
@@ -33,6 +34,9 @@ PROTOCOL = OUT / "dinov2_live_parity_protocol_v1.json"
 PROTOCOL_SHA = OUT / "dinov2_live_parity_protocol_v1.sha256"
 GPU_PROTOCOL = OUT / "dinov2_live_triton_gpu_protocol_v1.json"
 GPU_PROTOCOL_SHA = OUT / "dinov2_live_triton_gpu_protocol_v1.sha256"
+GPU_PROTOCOL_V2 = OUT / "dinov2_live_triton_gpu_protocol_v2.json"
+GPU_PROTOCOL_V2_SHA = OUT / "dinov2_live_triton_gpu_protocol_v2.sha256"
+GPU_ATTEMPT1 = OUT / "dinov2_live_triton_gpu_parity_attempt1.json"
 RESULTS = {
     "export": OUT / "dinov2_live_export_parity.json",
     "triton_cpu": OUT / "dinov2_live_triton_cpu_parity.json",
@@ -48,6 +52,8 @@ ONNX = MODEL_DIR / "model.onnx"
 ONNX_DATA = MODEL_DIR / "dinov2_hypevault.onnx.data"
 TRACKED_CONFIG = _REPO / "infra" / "triton" / "dinov2_vitb14_live" / "config.pbtxt"
 TRACKED_GPU_CONFIG = _REPO / "infra" / "triton" / "dinov2_vitb14_live" / "config.gpu.pbtxt"
+TRACKED_GPU_FP32_CONFIG = _REPO / "infra" / "triton" / "dinov2_vitb14_live" / "config.gpu_fp32.pbtxt"
+INSTALLED_CONFIG = _REPO / "models" / "dinov2_vitb14_live" / "config.pbtxt"
 
 MODEL_NAME = "dinov2_vitb14_live"
 MODEL_VERSION = "1"
@@ -135,6 +141,31 @@ def write_gpu_protocol() -> dict:
     raw = (json.dumps(protocol, indent=2, ensure_ascii=False) + "\n").encode()
     GPU_PROTOCOL.write_bytes(raw)
     GPU_PROTOCOL_SHA.write_text(f"{hashlib.sha256(raw).hexdigest()}  {GPU_PROTOCOL.name}\n")
+    return protocol
+
+
+def write_gpu_protocol_v2() -> dict:
+    """Second GPU attempt: same inputs, tolerances, and rule; config pinned to exact FP32 (use_tf32=0)."""
+    if GPU_PROTOCOL_V2.exists():
+        raise RuntimeError(f"{GPU_PROTOCOL_V2} already exists. A protocol is written once, before measurement.")
+    attempt1 = json.loads(GPU_ATTEMPT1.read_text())
+    if attempt1["status"] != "FAIL":
+        raise RuntimeError("v2 exists only to follow a recorded attempt-1 failure")
+    base = _load_protocol(GPU_PROTOCOL, GPU_PROTOCOL_SHA, TRACKED_GPU_CONFIG)
+    protocol = dict(base)
+    protocol["protocol"] = "dinov2_live_triton_gpu_parity_v2"
+    protocol["derived_from"] = {"protocol": GPU_PROTOCOL.name, "sha256": GPU_PROTOCOL_SHA.read_text().split()[0]}
+    protocol["artifacts"] = _artifact_hashes(TRACKED_GPU_FP32_CONFIG)
+    protocol["attempt1"] = {
+        "result": GPU_ATTEMPT1.name,
+        "status": attempt1["status"],
+        "max_abs_logit_error_vs_fp32": max(e["max_abs_logit_error_vs_fp32"] for e in attempt1["per_batch_size"].values()),
+        "cause": "ONNX Runtime CUDA EP uses TF32 by default (use_tf32=1); confirmed on synthetic inputs in gpu_precision_diagnostic.json",
+    }
+    protocol["why_separate"] = "the only change from v1 is the serving config, which adds use_tf32=0 so GEMMs run in exact FP32"
+    raw = (json.dumps(protocol, indent=2, ensure_ascii=False) + "\n").encode()
+    GPU_PROTOCOL_V2.write_bytes(raw)
+    GPU_PROTOCOL_V2_SHA.write_text(f"{hashlib.sha256(raw).hexdigest()}  {GPU_PROTOCOL_V2.name}\n")
     return protocol
 
 
@@ -243,12 +274,17 @@ def _compare(protocol, candidate_by_batch: dict, fp32, live, sizes) -> dict:
     return {"per_batch_size": per_batch, "rows": rows}
 
 
-def run(stage: str, url: str, require_gpu: bool) -> dict:
+def run(stage: str, url: str, require_gpu: bool, out: Path | None = None, gpu_protocol: str = "v2") -> dict:
     import numpy as np
 
     if stage == "triton" and require_gpu:
-        protocol_path, protocol_sha = GPU_PROTOCOL, GPU_PROTOCOL_SHA
-        protocol = _load_protocol(GPU_PROTOCOL, GPU_PROTOCOL_SHA, TRACKED_GPU_CONFIG)
+        protocol_path, protocol_sha, config = {
+            "v1": (GPU_PROTOCOL, GPU_PROTOCOL_SHA, TRACKED_GPU_CONFIG),
+            "v2": (GPU_PROTOCOL_V2, GPU_PROTOCOL_V2_SHA, TRACKED_GPU_FP32_CONFIG),
+        }[gpu_protocol]
+        protocol = _load_protocol(protocol_path, protocol_sha, config)
+        if INSTALLED_CONFIG.read_bytes() != config.read_bytes():
+            raise RuntimeError(f"Triton's installed config is not {config.name}; parity not run")
     else:
         protocol_path, protocol_sha = PROTOCOL, PROTOCOL_SHA
         protocol = _load_protocol()
@@ -311,7 +347,10 @@ def run(stage: str, url: str, require_gpu: bool) -> dict:
         "final_test_images_opened": 0,
     }
     key = stage if stage == "export" else ("triton_gpu" if require_gpu and gpu else "triton_cpu")
-    RESULTS[key].write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
+    target = out if (out and key == "triton_gpu") else RESULTS[key]
+    if key == "triton_gpu" and target.exists():
+        raise RuntimeError(f"{target.name} exists; give each GPU attempt its own --out file")
+    target.write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
     return results
 
 
@@ -322,6 +361,9 @@ def main() -> int:
     parser.add_argument("--stage", choices=("export", "triton"))
     parser.add_argument("--url", default="localhost:18001")
     parser.add_argument("--require-gpu", action="store_true")
+    parser.add_argument("--out", type=Path, default=None, help="GPU result file for this attempt")
+    parser.add_argument("--write-gpu-protocol-v2", action="store_true")
+    parser.add_argument("--gpu-protocol", choices=("v1", "v2"), default="v2")
     args = parser.parse_args()
     if args.write_protocol:
         protocol = write_protocol()
@@ -331,9 +373,13 @@ def main() -> int:
         protocol = write_gpu_protocol()
         print(f"wrote {GPU_PROTOCOL.name}: {len(protocol['inputs'])} inputs, sha256 {GPU_PROTOCOL_SHA.read_text().split()[0]}")
         return 0
+    if args.write_gpu_protocol_v2:
+        protocol = write_gpu_protocol_v2()
+        print(f"wrote {GPU_PROTOCOL_V2.name}: {len(protocol['inputs'])} inputs, sha256 {GPU_PROTOCOL_V2_SHA.read_text().split()[0]}")
+        return 0
     if not args.stage:
         parser.error("--stage is required unless --write-protocol is given")
-    results = run(args.stage, args.url, args.require_gpu)
+    results = run(args.stage, args.url, args.require_gpu, args.out, args.gpu_protocol)
     summary = {k: results[k] for k in ("status", "stage", "scope", "routing_allowed_by_this_result", "reference")}
     summary["per_batch_size"] = results["per_batch_size"]
     print(json.dumps(summary, indent=2))

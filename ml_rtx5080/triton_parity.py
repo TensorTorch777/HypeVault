@@ -26,6 +26,12 @@ OUT = _PKG / "experiments" / "dual_model_triton_v1"
 PROTOCOL = OUT / "parity_protocol_v1.json"
 PROTOCOL_SHA = OUT / "parity_protocol_v1.sha256"
 RESULTS = OUT / "parity_results.json"
+GPU_RESULTS = OUT / "dinov3_triton_gpu_parity.json"
+GPU_PROTOCOL_V2 = OUT / "dinov3_triton_gpu_protocol_v2.json"
+GPU_PROTOCOL_V2_SHA = OUT / "dinov3_triton_gpu_protocol_v2.sha256"
+GPU_ATTEMPT1 = OUT / "dinov3_triton_gpu_parity_attempt1.json"
+GPU_FP32_CONFIG = _REPO / "infra" / "triton" / "dinov3_authenticity_candidate" / "config.gpu_fp32.pbtxt"
+INSTALLED_CONFIG = _REPO / "models" / "dinov3_authenticity_candidate" / "config.pbtxt"
 CASES_CSV = _PKG / "experiments" / "backend_parity_v2" / "onnx_parity.csv"
 SPLIT_MANIFEST = _PKG / "experiments" / "dataset_audit" / "split_manifest_v2.json"
 CHECKPOINT = _PKG / "experiments" / "v2_dinov3_cls_patch_attention" / "epoch_018.pt"
@@ -98,14 +104,44 @@ def write_protocol() -> dict:
     return protocol
 
 
-def _load_protocol() -> dict:
-    raw = PROTOCOL.read_bytes()
-    recorded = PROTOCOL_SHA.read_text().split()[0]
+def _load_protocol(path: Path = PROTOCOL, sha_path: Path = PROTOCOL_SHA) -> dict:
+    raw = path.read_bytes()
+    recorded = sha_path.read_text().split()[0]
     if _sha256_bytes(raw) != recorded:
         raise RuntimeError("parity protocol changed after it was hashed")
     protocol = json.loads(raw)
     if protocol["tolerances"] != {"max_abs_logit_error": LOGIT_ATOL, "max_abs_probability_error": PROBABILITY_ATOL}:
         raise RuntimeError("tolerances differ from the pre-registered protocol")
+    pinned = protocol.get("serving_config")
+    if pinned:
+        if _file_sha256(_REPO / pinned["path"]) != pinned["sha256"]:
+            raise RuntimeError("the pinned serving config changed after the protocol was written")
+        if INSTALLED_CONFIG.read_bytes() != (_REPO / pinned["path"]).read_bytes():
+            raise RuntimeError(f"Triton's installed config is not {pinned['path']}; parity not run")
+    return protocol
+
+
+def write_gpu_protocol_v2() -> dict:
+    """Second GPU attempt: protocol v1 inputs, tolerances, and rule unchanged; config pinned to exact FP32."""
+    if GPU_PROTOCOL_V2.exists():
+        raise RuntimeError(f"{GPU_PROTOCOL_V2} already exists. A protocol is written once, before measurement.")
+    attempt1 = json.loads(GPU_ATTEMPT1.read_text())
+    if attempt1["status"] != "FAIL" or not attempt1["gpu_inference_claimed"]:
+        raise RuntimeError("v2 exists only to follow a recorded GPU attempt-1 failure")
+    protocol = dict(_load_protocol())
+    protocol["protocol"] = "dinov3_triton_gpu_parity_v2"
+    protocol["derived_from"] = {"protocol": PROTOCOL.name, "sha256": PROTOCOL_SHA.read_text().split()[0]}
+    protocol["serving_config"] = {"path": str(GPU_FP32_CONFIG.relative_to(_REPO)), "sha256": _file_sha256(GPU_FP32_CONFIG)}
+    protocol["attempt1"] = {
+        "result": GPU_ATTEMPT1.name,
+        "status": attempt1["status"],
+        "max_abs_logit_error": max(e["max_abs_logit_error"] for e in attempt1["per_batch_size"].values()),
+        "cause": "ONNX Runtime CUDA EP uses TF32 by default (use_tf32=1); confirmed on synthetic inputs in gpu_precision_diagnostic.json",
+    }
+    protocol["why_separate"] = "the only change is the serving config, which adds use_tf32=0 so GEMMs run in exact FP32"
+    raw = (json.dumps(protocol, indent=2, ensure_ascii=False) + "\n").encode()
+    GPU_PROTOCOL_V2.write_bytes(raw)
+    GPU_PROTOCOL_V2_SHA.write_text(f"{_sha256_bytes(raw)}  {GPU_PROTOCOL_V2.name}\n")
     return protocol
 
 
@@ -133,7 +169,7 @@ def _model_instance_kind(client) -> str:
     return ",".join(sorted(kinds)) or "KIND_AUTO"
 
 
-def run(url: str, require_gpu: bool) -> dict:
+def run(url: str, require_gpu: bool, out: Path | None = None, gpu_protocol: str = "v2") -> dict:
     import numpy as np
     import torch
     import tritonclient.grpc as grpcclient
@@ -142,7 +178,8 @@ def run(url: str, require_gpu: bool) -> dict:
     from dinov3_serving import preprocess_serving_image
     from reference_inference import forward_logits, load_reference_model
 
-    protocol = _load_protocol()
+    protocol_path, protocol_sha = (GPU_PROTOCOL_V2, GPU_PROTOCOL_V2_SHA) if (require_gpu and gpu_protocol == "v2") else (PROTOCOL, PROTOCOL_SHA)
+    protocol = _load_protocol(protocol_path, protocol_sha)
     checkpoint_sha = _file_sha256(CHECKPOINT)
     if checkpoint_sha != FROZEN_SHA:
         raise RuntimeError("frozen checkpoint hash mismatch; parity not run")
@@ -224,8 +261,9 @@ def run(url: str, require_gpu: bool) -> dict:
         "status": "PASS" if passed else "FAIL",
         "scope": "CPU Triton parity" if "KIND_GPU" not in kind else "GPU Triton parity",
         "gpu_inference_claimed": "KIND_GPU" in kind,
-        "protocol": str(PROTOCOL.relative_to(_REPO)),
-        "protocol_sha256": PROTOCOL_SHA.read_text().split()[0],
+        "protocol": str(protocol_path.relative_to(_REPO)),
+        "protocol_sha256": protocol_sha.read_text().split()[0],
+        "serving_config": protocol.get("serving_config"),
         "tolerances": protocol["tolerances"],
         "tolerances_widened_after_results": False,
         "model": {"triton_name": MODEL_NAME, "version": MODEL_VERSION, "instance_kind": kind},
@@ -244,7 +282,10 @@ def run(url: str, require_gpu: bool) -> dict:
         "validated_equivalent": passed,
     }
     results["original_sizes"] = [list(size) for size in results["original_sizes"]]
-    RESULTS.write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
+    target = (out or GPU_RESULTS) if results["gpu_inference_claimed"] else RESULTS
+    if results["gpu_inference_claimed"] and target.exists():
+        raise RuntimeError(f"{target.name} exists; give each GPU attempt its own --out file")
+    target.write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
     return results
 
 
@@ -253,12 +294,19 @@ def main() -> int:
     parser.add_argument("--write-protocol", action="store_true")
     parser.add_argument("--url", default="localhost:18001")
     parser.add_argument("--require-gpu", action="store_true")
+    parser.add_argument("--out", type=Path, default=None, help="GPU result file (default dinov3_triton_gpu_parity.json)")
+    parser.add_argument("--write-gpu-protocol-v2", action="store_true")
+    parser.add_argument("--gpu-protocol", choices=("v1", "v2"), default="v2", help="v1 = the base protocol used by GPU attempt 1")
     args = parser.parse_args()
     if args.write_protocol:
         protocol = write_protocol()
         print(f"wrote {PROTOCOL} with {len(protocol['inputs'])} inputs; sha256 {PROTOCOL_SHA.read_text().split()[0]}")
         return 0
-    results = run(args.url, args.require_gpu)
+    if args.write_gpu_protocol_v2:
+        protocol = write_gpu_protocol_v2()
+        print(f"wrote {GPU_PROTOCOL_V2.name}: {len(protocol['inputs'])} inputs, sha256 {GPU_PROTOCOL_V2_SHA.read_text().split()[0]}")
+        return 0
+    results = run(args.url, args.require_gpu, args.out, args.gpu_protocol)
     print(json.dumps({k: results[k] for k in ("status", "scope", "samples", "per_batch_size")}, indent=2))
     return 0 if results["status"] == "PASS" else 1
 
