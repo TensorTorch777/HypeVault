@@ -23,6 +23,8 @@ class ResearchExplanationConsistencyTests(unittest.TestCase):
         self.assertIn("a matching explanation is attached", result.stdout)
         self.assertIn("a model mismatch discards the explanation payload", result.stdout)
         self.assertIn("a decision mismatch discards the explanation payload", result.stdout)
+        self.assertIn("a nested sensitivity model mismatch discards the explanation payload", result.stdout)
+        self.assertIn("a nested sensitivity decision mismatch discards the explanation payload", result.stdout)
         self.assertIn("an unavailable explanation keeps its own reason", result.stdout)
 
 

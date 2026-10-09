@@ -15,7 +15,9 @@ export function explanationForVerifiedResult(
   const matches =
     explanation.status === "ok" &&
     explanation.classification?.model === verified.model &&
-    explanation.classification?.decision === verified.decision;
+    explanation.classification?.decision === verified.decision &&
+    explanation.sensitivity?.model_id === verified.model &&
+    explanation.sensitivity?.baseline_decision === verified.decision;
   if (matches) {
     return explanation;
   }
