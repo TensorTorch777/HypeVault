@@ -1,0 +1,4 @@
+# CPU-only extras for the unit suite. Install with the PyTorch CPU index (see .github/workflows/ci.yml).
+torch==2.11.0+cpu
+torchvision==0.26.0+cpu
+timm==1.0.26
