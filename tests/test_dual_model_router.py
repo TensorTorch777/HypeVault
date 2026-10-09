@@ -18,6 +18,8 @@ sys.path.insert(0, str(REPO / "ml_rtx5080"))
 FROZEN_SHA = "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f"
 FROZEN_TEMPERATURE = 0.24038200410185356
 LIVE_DINOV2_SHA = "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66"
+CPU_PROFILE = {"kinds": frozenset({"KIND_CPU"}), "cuda_parameters": {}}
+GPU_FP32_PROFILE = {"kinds": frozenset({"KIND_GPU"}), "cuda_parameters": {"use_tf32": "0"}}
 
 
 class _Upload:
@@ -57,8 +59,8 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(dinov2["input_dims"], [3, 504, 504])
         self.assertTrue(dinov2["same_model_as_live_route"])
         self.assertEqual(dinov2["source_checkpoint_sha256"], LIVE_DINOV2_SHA)
-        self.assertEqual(dinov2["validated_instance_kinds"], frozenset())
-        self.assertEqual(dinov3["validated_instance_kinds"], frozenset({"KIND_CPU"}))
+        self.assertEqual(dinov2["validated_serving"], {"KIND_GPU": {"use_tf32": "0"}})
+        self.assertEqual(dinov3["validated_serving"], {"KIND_CPU": {}, "KIND_GPU": {"use_tf32": "0"}})
         self.assertEqual(dinov3["input_dims"], [3, 512, 512])
         self.assertIsNone(dinov2["temperature"])
         self.assertEqual(dinov3["temperature"], FROZEN_TEMPERATURE)
@@ -99,7 +101,7 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
         ):
             with (
                 patch("inference.model_router.named_model_ready", AsyncMock(return_value=True)),
-                patch("inference.model_router.named_model_instance_kinds", AsyncMock(return_value=frozenset({"KIND_CPU"}))),
+                patch("inference.model_router.named_model_serving_profile", AsyncMock(return_value=CPU_PROFILE)),
                 patch("inference.model_router.infer_named_model", AsyncMock(return_value=output)),
             ):
                 with self.assertRaises(ModelRoutingError) as caught:
@@ -115,7 +117,7 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
 
         with (
             patch("inference.model_router.named_model_ready", new=AsyncMock(side_effect=ready)),
-            patch("inference.model_router.named_model_instance_kinds", new=AsyncMock(return_value=frozenset({"KIND_CPU"}))),
+            patch("inference.model_router.named_model_serving_profile", new=AsyncMock(return_value=CPU_PROFILE)),
             patch("inference.model_router.triton_server_status", new=AsyncMock(return_value={"live": True, "ready": False})),
         ):
             report = await readiness_report()
@@ -125,6 +127,16 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(rows["dinov2_legacy"]["ready"])
         self.assertEqual(rows["dinov2_legacy"]["unavailable_reason"], "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE")
         self.assertTrue(rows["dinov2_legacy"]["same_model_as_live_route"])
+
+        with (
+            patch("inference.model_router.named_model_ready", new=AsyncMock(side_effect=ready)),
+            patch("inference.model_router.named_model_serving_profile", new=AsyncMock(return_value=GPU_FP32_PROFILE)),
+            patch("inference.model_router.triton_server_status", new=AsyncMock(return_value={"live": True, "ready": True})),
+        ):
+            gpu = {row["logical_id"]: row for row in (await readiness_report())["models"]}
+        self.assertTrue(gpu["dinov2_legacy"]["ready"])
+        self.assertTrue(gpu["dinov3_experimental"]["ready"])
+        self.assertEqual(gpu["dinov2_legacy"]["served_instance_kinds"], ["KIND_GPU"])
         self.assertEqual(report["server"], {"live": True, "ready": False})
         self.assertEqual(report["publication_decision"], "BLOCKED")
         self.assertNotIn("decision", report)
@@ -134,22 +146,25 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
         import numpy as np
 
         infer = AsyncMock(side_effect=AssertionError("an unvalidated model reached inference"))
+        gpu_tf32_default = {"kinds": frozenset({"KIND_GPU"}), "cuda_parameters": {}}
+        gpu_tf32_on = {"kinds": frozenset({"KIND_GPU"}), "cuda_parameters": {"use_tf32": "1"}}
         cases = (
-            (DINOV2_LEGACY, frozenset({"KIND_CPU"}), "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"),
-            (DINOV2_LEGACY, frozenset({"KIND_GPU"}), "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"),
-            (DINOV3_EXPERIMENTAL, frozenset({"KIND_GPU"}), "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"),
-            (DINOV3_EXPERIMENTAL, frozenset({"KIND_CPU", "KIND_GPU"}), "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"),
+            (DINOV2_LEGACY, CPU_PROFILE, "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"),
+            (DINOV2_LEGACY, gpu_tf32_default, "SERVING_PRECISION_NOT_VALIDATED"),
+            (DINOV2_LEGACY, gpu_tf32_on, "SERVING_PRECISION_NOT_VALIDATED"),
+            (DINOV3_EXPERIMENTAL, gpu_tf32_default, "SERVING_PRECISION_NOT_VALIDATED"),
+            (DINOV3_EXPERIMENTAL, {"kinds": frozenset({"KIND_MODEL"}), "cuda_parameters": {}}, "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"),
             (DINOV3_EXPERIMENTAL, None, "INSTANCE_KIND_UNKNOWN"),
         )
-        for model_id, kinds, reason in cases:
+        for model_id, profile, reason in cases:
             with (
                 patch("inference.model_router.named_model_ready", AsyncMock(return_value=True)),
-                patch("inference.model_router.named_model_instance_kinds", AsyncMock(return_value=kinds)),
+                patch("inference.model_router.named_model_serving_profile", AsyncMock(return_value=profile)),
                 patch("inference.model_router.infer_named_model", infer),
             ):
                 with self.assertRaises(ModelRoutingError) as caught:
                     await infer_allowlisted_model(model_id, np.zeros((1, 3, 504, 504), dtype=np.float32))
-            self.assertEqual(caught.exception.status, "MODEL_UNAVAILABLE", (model_id, kinds))
+            self.assertEqual(caught.exception.status, "MODEL_UNAVAILABLE", (model_id, profile))
             self.assertIn(reason, caught.exception.message)
         infer.assert_not_awaited()
 
@@ -161,7 +176,7 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
         infer = AsyncMock(return_value=np.asarray([[0.25]], dtype=np.float32))
         with (
             patch("inference.model_router.named_model_ready", ready),
-            patch("inference.model_router.named_model_instance_kinds", AsyncMock(return_value=frozenset({"KIND_CPU"}))),
+            patch("inference.model_router.named_model_serving_profile", AsyncMock(return_value=GPU_FP32_PROFILE)),
             patch("inference.model_router.infer_named_model", infer),
         ):
             result = await infer_allowlisted_model(DINOV3_EXPERIMENTAL, np.zeros((1, 3, 512, 512), dtype=np.float32))

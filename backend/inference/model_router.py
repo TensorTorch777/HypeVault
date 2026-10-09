@@ -4,9 +4,9 @@ Logical identifiers are the only values a client may send. Triton model
 names, versions, and checkpoint paths are server-side. A missing model
 returns an error. The other model is never used as a substitute.
 
-A model is selectable only when Triton serves it on an instance kind that
-has passed Triton parity. `validated_instance_kinds` changes only in a
-reviewed commit that cites the parity result.
+A model is selectable only when Triton serves it on an instance kind, with
+the CUDA execution-provider settings, that passed Triton parity.
+`validated_serving` changes only in a reviewed commit that cites the result.
 """
 
 from __future__ import annotations
@@ -16,10 +16,13 @@ from typing import Any
 
 from inference.triton_client import (
     infer_named_model,
-    named_model_instance_kinds,
     named_model_ready,
+    named_model_serving_profile,
     triton_server_status,
 )
+
+# GPU parity failed with ONNX Runtime's default TF32 math and passed with exact FP32.
+EXACT_FP32_GPU = {"use_tf32": "0"}
 
 DINOV2_LEGACY = "dinov2_legacy"
 DINOV3_EXPERIMENTAL = "dinov3_experimental"
@@ -52,8 +55,10 @@ _MODELS: dict[str, dict[str, Any]] = {
         "architecture": "DINOv2 ViT-B/14 (vit_base_patch14_dinov2.lvd142m), live listing-check checkpoint, 504 input",
         "source_checkpoint_sha256": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66",
         "same_model_as_live_route": True,
-        "validated_instance_kinds": frozenset(),
-        "validation_evidence": "dinov2_live_triton_gpu_parity.json (pending; export parity passed in dinov2_live_export_parity.json)",
+        "validated_serving": {"KIND_GPU": EXACT_FP32_GPU},
+        "validation_evidence": {
+            "KIND_GPU": "dinov2_live_triton_gpu_parity_attempt2.json (PASS, protocol dinov2_live_triton_gpu_protocol_v2.json)",
+        },
         "research_only": False,
         "production_route": True,
     },
@@ -75,8 +80,11 @@ _MODELS: dict[str, dict[str, Any]] = {
         "architecture": "DINOv3 ViT-B/16 cls_patch_attention ONNX export, 512 input",
         "checkpoint_sha256": FROZEN_DINOV3_SHA256,
         "same_model_as_live_route": False,
-        "validated_instance_kinds": frozenset({"KIND_CPU"}),
-        "validation_evidence": "parity_results.json (CPU Triton parity PASS)",
+        "validated_serving": {"KIND_CPU": {}, "KIND_GPU": EXACT_FP32_GPU},
+        "validation_evidence": {
+            "KIND_CPU": "parity_results.json (CPU Triton parity PASS)",
+            "KIND_GPU": "dinov3_triton_gpu_parity_attempt2.json (PASS, protocol dinov3_triton_gpu_protocol_v2.json)",
+        },
         "research_only": True,
         "production_route": False,
     },
@@ -104,12 +112,17 @@ def resolve_model(model_id: str) -> dict[str, Any]:
 async def _availability(spec: dict[str, Any]) -> tuple[bool, str | None, list[str]]:
     if not await named_model_ready(spec["triton_name"], spec["version"]):
         return False, "TRITON_MODEL_NOT_READY", []
-    kinds = await named_model_instance_kinds(spec["triton_name"], spec["version"])
-    if not kinds:
+    profile = await named_model_serving_profile(spec["triton_name"], spec["version"])
+    if not profile or not profile["kinds"]:
         return False, "INSTANCE_KIND_UNKNOWN", []
-    validated = spec["validated_instance_kinds"]
-    if not validated or not kinds <= validated:
+    kinds = profile["kinds"]
+    validated = spec["validated_serving"]
+    if not kinds <= set(validated):
         return False, "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE", sorted(kinds)
+    for kind in kinds:
+        required = validated[kind]
+        if any(profile["cuda_parameters"].get(key) != value for key, value in required.items()):
+            return False, "SERVING_PRECISION_NOT_VALIDATED", sorted(kinds)
     return True, None, sorted(kinds)
 
 
@@ -124,7 +137,7 @@ async def model_readiness(model_id: str) -> dict[str, Any]:
         "architecture": spec["architecture"],
         "same_model_as_live_route": spec["same_model_as_live_route"],
         "served_instance_kinds": kinds,
-        "validated_instance_kinds": sorted(spec["validated_instance_kinds"]),
+        "validated_instance_kinds": sorted(spec["validated_serving"]),
         "ready": ready,
         "unavailable_reason": reason,
         "research_only": spec["research_only"],

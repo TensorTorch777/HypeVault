@@ -72,6 +72,7 @@ def main() -> int:
     parser.add_argument("--triton-desc", required=True, help="Image, digest, and whether GPU was used; recorded verbatim")
     parser.add_argument("--gpu-used", action="store_true", help="Set only when Triton metrics showed GPU execution")
     parser.add_argument("--results", default=str(OUT))
+    parser.add_argument("--latency-samples", type=int, default=30)
     parser.add_argument("--research-email", default="e2e-research@example.com")
     parser.add_argument("--buyer-email", default="e2e-buyer@example.com")
     parser.add_argument("--seller-email", default="e2e-seller@example.com")
@@ -86,6 +87,7 @@ def main() -> int:
 
     flows: dict[str, dict] = {}
     models: dict = {"models": []}
+    api_latency: dict = {}
     created_emails = [args.research_email, args.buyer_email, args.seller_email]
     baseline_listings = listing_count()
     baseline_users = int(psql("select count(*) from users;"))
@@ -181,6 +183,27 @@ def main() -> int:
             {"response": body3, "ui": "checked separately in the browser"},
         )
 
+        api_latency = {}
+        for logical in ("dinov2_legacy", "dinov3_experimental"):
+            if not ready[logical]:
+                api_latency[logical] = None
+                continue
+            samples, statuses = [], set()
+            for _ in range(args.latency_samples):
+                started = time.perf_counter()
+                response = post(research, {"brand": brand, "logical_model": logical})
+                samples.append((time.perf_counter() - started) * 1000)
+                statuses.add(response.status_code)
+            ordered = sorted(samples)
+            api_latency[logical] = {
+                "requests": len(samples),
+                "http_statuses": sorted(statuses),
+                "p50_ms": ordered[len(ordered) // 2],
+                "p90_ms": ordered[int(0.9 * (len(ordered) - 1))],
+                "max_ms": ordered[-1],
+                "includes": "HTTP, auth, image decode, preprocessing, Triton gRPC, policy, response",
+            }
+
         unload = httpx.post(f"{args.triton_http}/v2/repository/models/dinov3_authenticity_candidate/unload", timeout=60)
         for _ in range(30):
             if httpx.get(f"{args.triton_http}/v2/models/dinov3_authenticity_candidate/versions/1/ready", timeout=5).status_code != 200:
@@ -199,7 +222,7 @@ def main() -> int:
             unload.status_code == 200
             and unavailable.status_code == 503
             and unavailable.json()["decision"] is None
-            and not any(m["ready"] for m in models_down["models"])
+            and not next(m["ready"] for m in models_down["models"] if m["logical_id"] == "dinov3_experimental")
             and load.status_code == 200
             and restored.status_code == 200
             and restored.json()["decision"] == body3.get("decision"),
@@ -251,10 +274,14 @@ def main() -> int:
                 "triton_name_as_selector": [unknown_model.status_code, unknown_model.json()["status"]],
             },
         )
+        errors_seen = [unavailable, invalid, unknown_model] + ([] if ready["dinov2_legacy"] else [dinov2])
         record(
             "8_model_errors_are_not_verdicts",
-            all(r.json().get("status") not in ("AUTHENTIC", "FAKE", "REVIEW") for r in (dinov2, unavailable)),
-            {"statuses": [dinov2.json()["status"], unavailable.json()["status"]]},
+            all(
+                r.status_code >= 400 and r.json().get("status") not in ("AUTHENTIC", "FAKE", "REVIEW") and r.json().get("decision") is None
+                for r in errors_seen
+            ),
+            {"error_responses": [[r.status_code, r.json().get("status")] for r in errors_seen]},
         )
         record(
             "9_research_calls_create_no_listings",
@@ -345,6 +372,7 @@ def main() -> int:
         },
         "input": {"sample_id": authentic_case["sample_id"], "split": authentic_case["split"], "declared_brand": brand},
         "flows": flows,
+        "api_end_to_end_latency": api_latency,
         "cleanup": cleanup,
         "all_passed": all(f["result"] == "PASS" for f in flows.values()),
     }

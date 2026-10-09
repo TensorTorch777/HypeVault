@@ -18,13 +18,17 @@
       "temperature": null,
       "decision_policy": "sigmoid(logit) at the legacy 0.50 threshold, then the live route's 0.88 minimum-authentic-confidence floor",
       "checkpoint_sha_in_response": null,
-      "precision": "FP32 export of the checkpoint the live route runs in float16 autocast",
+      "precision": "exact FP32 on GPU (ONNX Runtime CUDA EP use_tf32=0)",
       "architecture": "DINOv2 ViT-B/14 (vit_base_patch14_dinov2.lvd142m), live listing-check checkpoint, 504 input",
       "source_checkpoint_sha256": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66",
       "same_model_as_live_route": true,
-      "validated_instance_kinds": [],
       "research_only": false,
-      "production_route": true
+      "production_route": true,
+      "validated_serving": {
+        "KIND_GPU": {
+          "use_tf32": "0"
+        }
+      }
     },
     "dinov3_experimental": {
       "response_model": "DINOV3_RESEARCH_PROTOTYPE",
@@ -43,16 +47,19 @@
       "temperature": 0.24038200410185356,
       "decision_threshold": 0.5,
       "decision_policy": "shadow_v1 PolicyEngine with fast_quality_gate on the raw logit",
-      "precision": "FP32",
+      "precision": "exact FP32 on GPU (ONNX Runtime CUDA EP use_tf32=0); FP32 on CPU",
       "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
       "model_scope": "FIVE_BRAND_RESEARCH_PROTOTYPE",
       "brand_verification": "NOT_PERFORMED",
       "research_only": true,
       "production_ready": false,
       "production_route": false,
-      "validated_instance_kinds": [
-        "KIND_CPU"
-      ]
+      "validated_serving": {
+        "KIND_CPU": {},
+        "KIND_GPU": {
+          "use_tf32": "0"
+        }
+      }
     }
   },
   "client_may_send_triton_name": false,
@@ -100,12 +107,23 @@
     "reason": "ViT-g/14 at 518 with no identity file; not the live listing-check model (owner chose Option B on 2026-10-09)"
   },
   "validation_gate": {
-    "rule": "a model is selectable only when Triton reports it ready and every served instance kind is in validated_instance_kinds",
+    "rule": "selectable only when Triton reports the model ready, every served instance kind is in validated_serving, and GPU instances serve the validated CUDA EP settings",
     "unavailable_reasons": [
       "TRITON_MODEL_NOT_READY",
       "INSTANCE_KIND_UNKNOWN",
-      "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"
+      "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE",
+      "SERVING_PRECISION_NOT_VALIDATED"
     ],
-    "how_a_kind_is_added": "a reviewed commit to backend/inference/model_router.py that cites a passing Triton parity result for that kind"
-  }
+    "why_precision_is_checked": "GPU attempt 1 with ONNX Runtime's default TF32 math failed parity for both models; exact FP32 passed",
+    "evidence": {
+      "dinov2_KIND_GPU": "dinov2_live_triton_gpu_parity_attempt2.json (PASS)",
+      "dinov3_KIND_GPU": "dinov3_triton_gpu_parity_attempt2.json (PASS)",
+      "dinov3_KIND_CPU": "parity_results.json (PASS)"
+    }
+  },
+  "serving_configs": {
+    "dinov2_vitb14_live": "infra/triton/dinov2_vitb14_live/config.gpu_fp32.pbtxt",
+    "dinov3_authenticity_candidate": "infra/triton/dinov3_authenticity_candidate/config.gpu_fp32.pbtxt"
+  },
+  "triton_image": "nvcr.io/nvidia/tritonserver:26.01-py3@sha256:c9f2ede50ccc4a3ce66e22e26ed1b5adc0c68516b58edfaca738693719c2146b (Triton 2.65.0)"
 }

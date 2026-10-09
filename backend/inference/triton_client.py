@@ -167,13 +167,19 @@ async def named_model_ready(model_name: str, model_version: str) -> bool:
         return False
 
 
-async def named_model_instance_kinds(model_name: str, model_version: str) -> frozenset[str] | None:
-    """Instance kinds Triton is serving for this model version, or None if the config is unreadable."""
+async def named_model_serving_profile(model_name: str, model_version: str) -> dict | None:
+    """Instance kinds and CUDA execution-provider parameters Triton is serving, or None if unreadable."""
 
-    def _check() -> frozenset[str]:
+    def _check() -> dict:
         client = grpcclient.InferenceServerClient(url=f"{settings.triton_host}:{settings.triton_port}")
         config = client.get_model_config(model_name, model_version, as_json=True)["config"]
-        return frozenset(group.get("kind", "KIND_AUTO") for group in config.get("instance_group", []))
+        kinds = frozenset(group.get("kind", "KIND_AUTO") for group in config.get("instance_group", []))
+        cuda: dict[str, str] = {}
+        accelerators = (config.get("optimization") or {}).get("execution_accelerators") or {}
+        for accelerator in accelerators.get("gpu_execution_accelerator") or []:
+            if accelerator.get("name") == "cuda":
+                cuda.update({str(k): str(v) for k, v in (accelerator.get("parameters") or {}).items()})
+        return {"kinds": kinds, "cuda_parameters": cuda}
 
     try:
         return await asyncio.to_thread(_check)
