@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { api } from "@/lib/api";
+import { explanationForVerifiedResult } from "@/lib/researchExplanationConsistency";
 import {
   DECLARED_BRAND_NOTE,
   SERVING_STATUS_LABEL,
@@ -146,17 +147,12 @@ export default function ResearchDemoPage() {
         explainBody.append("brand", brand);
         explainBody.append("logical_model", selected);
         const explained = await api.post<ResearchExplanationPayload>("/research/explain", explainBody);
-        if (explained.data.status === "unavailable") {
-          setExplanation(explained.data);
-        } else if (explained.data.status === "ok" && explained.data.classification?.model === data.model) {
-          setExplanation(explained.data);
-        } else {
-          setExplanation({
-            status: "unavailable",
-            reason: "The explanation model did not match the classification model.",
-            publication_decision: "BLOCKED",
-          });
-        }
+        setExplanation(
+          explanationForVerifiedResult(
+            { model: data.model, decision: data.decision },
+            explained.data,
+          ),
+        );
       } catch {
         setExplanation({
           status: "unavailable",
