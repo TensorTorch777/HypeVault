@@ -1,0 +1,17 @@
+{
+  "endpoint": "POST /verify/authenticate",
+  "model": "DINOv2",
+  "entrypoint": "backend/inference/routes.py -> engine.classify_image",
+  "deployment_mode_default": "LEGACY_PRODUCTION when HYPEVAULT_DEPLOYMENT_MODE is unset",
+  "authentication_required": true,
+  "authentication_mechanism": "Access cookie or bearer JWT via get_current_user. Any authenticated user, not a separate research credential.",
+  "public_unauthenticated": false,
+  "rate_limiting": false,
+  "reaches_legacy_dinov2": true,
+  "reaches_dinov3": false,
+  "writes_listing_verdict": true,
+  "can_be_read_as_authenticity_guarantee": "The verdict words AUTHENTIC and FAKE remain, and a passing listing can become live. The response now labels the path LEGACY_DINOV2 with production_validation NOT_ESTABLISHED.",
+  "docker_compose_sets_deployment_mode": false,
+  "triton_default_model": "dinov2_classifier",
+  "research_endpoint": "POST /research/verify"
+}

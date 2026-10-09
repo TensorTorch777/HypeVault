@@ -1,0 +1,38 @@
+{
+  "host_kernel": "7.0.0-38-generic",
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 5080",
+    "driver": "580.178.04",
+    "memory_mib": 16303,
+    "cuda_visible_to_host_pytorch": true,
+    "pytorch": "2.11.0+cu130"
+  },
+  "tritonserver_on_host": false,
+  "docker": {
+    "server_version": "29.4.3",
+    "runtimes": ["io.containerd.runc.v2", "runc"],
+    "nvidia_container_runtime_present": false,
+    "local_image": "nvcr.io/nvidia/tritonserver:23.10-py3",
+    "local_image_id": "83513cb05c7e",
+    "local_image_size": "19.5GB",
+    "gpu_probe_command": "docker run --rm --gpus all nvcr.io/nvidia/tritonserver:23.10-py3 nvidia-smi",
+    "gpu_probe_result": "failed to discover GPU vendor from CDI: no known GPU vendor found",
+    "blackwell_note": "Triton 23.10 is older than the RTX 5080. GPU passthrough was not available, so a newer Triton image was not pulled."
+  },
+  "disk": {
+    "filesystem": "/dev/nvme0n1p5",
+    "size": "416G",
+    "used": "393G",
+    "available": "1.1G",
+    "use_percent": "100%"
+  },
+  "checkpoint": {
+    "path": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+    "sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "expected_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "matches": true,
+    "temperature": 0.24038200410185356
+  },
+  "decision": "GPU_TRITON_BLOCKED",
+  "drivers_changed": false
+}

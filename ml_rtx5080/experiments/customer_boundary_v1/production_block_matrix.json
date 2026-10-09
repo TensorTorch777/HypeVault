@@ -1,0 +1,14 @@
+{
+  "dinov3_research": "ALLOWED",
+  "dinov3_shadow": "ALLOWED",
+  "dinov3_production": "BLOCKED",
+  "dinov3_unknown_mode": "BLOCKED",
+  "dinov3_missing_mode": "BLOCKED",
+  "unsupported_brand": "UNSUPPORTED_SCOPE",
+  "missing_brand": "UNSUPPORTED_SCOPE",
+  "invalid_image": "INVALID_INPUT",
+  "model_error": "MODEL_ERROR",
+  "legacy_dinov2_route": "LEGACY",
+  "dinov3_checkpoint_mismatch": "POLICY_ERROR",
+  "blocked_responses_may_be_authentic_or_fake": false
+}

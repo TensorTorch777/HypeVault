@@ -1,0 +1,38 @@
+{
+  "dinov2_classifier": {
+    "preserved": true,
+    "config_path": "models/dinov2_classifier/config.pbtxt",
+    "backend": "onnxruntime",
+    "version": "1",
+    "input": {"name": "input__0", "dtype": "FP32", "dims": [3, 518, 518]},
+    "output": {"name": "output__0", "dtype": "FP32", "dims": [1], "meaning": "raw_logit"},
+    "preprocessing": "legacy_square_resize_518_imagenet",
+    "temperature": null,
+    "precision": "FP32",
+    "artifact_note": "models/dinov2_classifier/1/model.onnx.data is the existing external ONNX data. It was not rewritten and was not re-hashed in this phase.",
+    "loaded_by_triton": false
+  },
+  "dinov3_authenticity_classifier": {
+    "role": "existing_export_left_unchanged",
+    "identity_source_checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "identity_export_artifact_sha256": "d1d0c9bc010551b006b7cd57830d0d2511928832aefb4582bb71d70e02363edb",
+    "temperature": 0.24038200410185356,
+    "temperature_in_graph": false,
+    "output": "raw_logit",
+    "preprocessing": "resize_pad_square_eval_v1",
+    "onnx_rehashed_this_phase": false
+  },
+  "dinov3_authenticity_candidate": {
+    "config_tracked_at": "infra/triton/dinov3_authenticity_candidate/config.pbtxt",
+    "local_repo": "models/dinov3_authenticity_candidate",
+    "version": "1",
+    "backend": "onnxruntime",
+    "instance_group": "KIND_CPU",
+    "gpu_not_enabled_reason": "Docker cannot discover a GPU vendor, and Triton 23.10 was not started.",
+    "input": {"name": "input__0", "dtype": "FP32", "dims": [3, 512, 512]},
+    "output": {"name": "output__0", "dtype": "FP32", "dims": [1], "meaning": "raw_logit"},
+    "artifact": "symlink to models/dinov3_authenticity_classifier/1/model.onnx",
+    "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "loaded_by_triton": false
+  }
+}

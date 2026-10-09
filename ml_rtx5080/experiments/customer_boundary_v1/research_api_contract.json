@@ -1,0 +1,25 @@
+{
+  "endpoint": "POST /research/verify",
+  "model": "DINOV3_RESEARCH_PROTOTYPE",
+  "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "temperature": 0.24038200410185356,
+  "allowed_modes": ["research", "shadow"],
+  "creates_listing": false,
+  "brand_input_mode": "USER_DECLARED",
+  "brand_verification": "NOT_PERFORMED",
+  "model_scope": "FIVE_BRAND_RESEARCH_PROTOTYPE",
+  "research_only": true,
+  "production_ready": false,
+  "success_fields": [
+    "status",
+    "decision",
+    "declared_brand",
+    "brand_verification",
+    "model_scope",
+    "research_only",
+    "production_ready",
+    "checkpoint_sha",
+    "policy_version",
+    "model"
+  ]
+}

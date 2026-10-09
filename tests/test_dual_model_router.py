@@ -1,0 +1,274 @@
+"""Phase 50 allowlisted dual-model routing. Mocks are not GPU serving evidence."""
+
+from __future__ import annotations
+
+import io
+import os
+import sys
+import unittest
+from pathlib import Path
+from unittest.mock import AsyncMock, patch
+
+from PIL import Image
+
+REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "backend"))
+sys.path.insert(0, str(REPO / "ml_rtx5080"))
+
+FROZEN_SHA = "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f"
+FROZEN_TEMPERATURE = 0.24038200410185356
+
+
+class _Upload:
+    def __init__(self, raw: bytes, content_type: str = "image/jpeg") -> None:
+        self._raw = raw
+        self.content_type = content_type
+
+    async def read(self) -> bytes:
+        return self._raw
+
+
+def _jpeg() -> bytes:
+    buffer = io.BytesIO()
+    Image.new("RGB", (32, 24), (8, 9, 10)).save(buffer, format="JPEG")
+    return buffer.getvalue()
+
+
+class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
+    def tearDown(self) -> None:
+        os.environ.pop("HYPEVAULT_DEPLOYMENT_MODE", None)
+
+    def test_allowlist_keeps_separate_contracts(self) -> None:
+        from inference.model_router import (
+            DINOV2_LEGACY,
+            DINOV3_EXPERIMENTAL,
+            FROZEN_DINOV3_TEMPERATURE,
+            PARITY_LOGIT_ATOL,
+            PARITY_PROBABILITY_ATOL,
+            resolve_model,
+        )
+
+        dinov2 = resolve_model(DINOV2_LEGACY)
+        dinov3 = resolve_model(DINOV3_EXPERIMENTAL)
+        self.assertEqual(dinov2["triton_name"], "dinov2_classifier")
+        self.assertEqual(dinov3["triton_name"], "dinov3_authenticity_candidate")
+        self.assertNotEqual(dinov2["triton_name"], dinov3["triton_name"])
+        self.assertEqual(dinov2["input_dims"], [3, 518, 518])
+        self.assertEqual(dinov3["input_dims"], [3, 512, 512])
+        self.assertIsNone(dinov2["temperature"])
+        self.assertEqual(dinov3["temperature"], FROZEN_TEMPERATURE)
+        self.assertEqual(FROZEN_DINOV3_TEMPERATURE, FROZEN_TEMPERATURE)
+        self.assertEqual(dinov3["checkpoint_sha256"], FROZEN_SHA)
+        self.assertEqual(dinov2["output_meaning"], "raw_logit")
+        self.assertEqual(dinov3["output_meaning"], "raw_logit")
+        self.assertEqual(PARITY_LOGIT_ATOL, 1e-4)
+        self.assertEqual(PARITY_PROBABILITY_ATOL, 1e-5)
+        with self.assertRaises(Exception):
+            resolve_model("dinov3_authenticity_candidate")
+        with self.assertRaises(Exception):
+            resolve_model("../epoch_018.pt")
+
+    async def test_missing_model_does_not_call_the_other_model(self) -> None:
+        from inference.model_router import DINOV3_EXPERIMENTAL, ModelRoutingError, infer_allowlisted_model
+
+        ready = AsyncMock(return_value=False)
+        infer = AsyncMock(side_effect=AssertionError("silent fallback"))
+        with patch("inference.model_router.named_model_ready", ready), patch(
+            "inference.model_router.infer_named_model", infer
+        ):
+            with self.assertRaises(ModelRoutingError) as caught:
+                await infer_allowlisted_model(DINOV3_EXPERIMENTAL, None)
+        self.assertEqual(caught.exception.status, "MODEL_UNAVAILABLE")
+        ready.assert_awaited_once_with("dinov3_authenticity_candidate")
+        infer.assert_not_awaited()
+
+    async def test_selected_model_is_the_only_infer_target(self) -> None:
+        from inference.model_router import DINOV2_LEGACY, infer_allowlisted_model
+        import numpy as np
+
+        ready = AsyncMock(return_value=True)
+        infer = AsyncMock(return_value=np.asarray([[0.25]], dtype=np.float32))
+        with patch("inference.model_router.named_model_ready", ready), patch(
+            "inference.model_router.infer_named_model", infer
+        ):
+            result = await infer_allowlisted_model(DINOV2_LEGACY, np.zeros((1, 3, 518, 518), dtype=np.float32))
+        self.assertEqual(result["triton_name"], "dinov2_classifier")
+        self.assertEqual(result["response_model"], "LEGACY_DINOV2")
+        self.assertIsNone(result["temperature"])
+        self.assertEqual(result["logit"], 0.25)
+        infer.assert_awaited_once()
+        self.assertEqual(infer.await_args.args[0], "dinov2_classifier")
+
+    async def test_research_routes_and_fail_closed(self) -> None:
+        from fastapi.responses import JSONResponse
+
+        from inference.publication_gate import AUTHENTICITY_MODEL_PRODUCTION_APPROVED
+        from inference.research_routes import research_verify
+
+        self.assertFalse(AUTHENTICITY_MODEL_PRODUCTION_APPROVED)
+        image = _Upload(_jpeg())
+
+        os.environ["HYPEVAULT_DEPLOYMENT_MODE"] = "production"
+        blocked = await research_verify(current_user=object(), image=image, brand="Patek Philippe", logical_model="dinov3_experimental")
+        self.assertIsInstance(blocked, JSONResponse)
+        self.assertEqual(blocked.status_code, 403)
+        self.assertIn(b'"decision":null', blocked.body)
+
+        os.environ["HYPEVAULT_DEPLOYMENT_MODE"] = "not-a-mode"
+        unknown_mode = await research_verify(current_user=object(), image=image, brand="Patek Philippe", logical_model="dinov2_legacy")
+        self.assertEqual(unknown_mode.status_code, 403)
+        self.assertIn(b'"decision":null', unknown_mode.body)
+
+        os.environ["HYPEVAULT_DEPLOYMENT_MODE"] = "research"
+        unknown = await research_verify(current_user=object(), image=image, brand="Patek Philippe", logical_model="dinov2_classifier")
+        self.assertEqual(unknown.status_code, 422)
+        self.assertIn(b"Unknown model identifier", unknown.body)
+        self.assertIn(b'"decision":null', unknown.body)
+
+        missing_brand = await research_verify(current_user=object(), image=image, brand="", logical_model="dinov2_legacy")
+        self.assertEqual(missing_brand.status_code, 422)
+        self.assertIn(b'"decision":null', missing_brand.body)
+
+        unsupported = await research_verify(current_user=object(), image=image, brand="Rolex", logical_model="dinov3_experimental")
+        self.assertEqual(unsupported.status_code, 422)
+        self.assertIn(b'"decision":null', unsupported.body)
+
+        invalid = await research_verify(
+            current_user=object(),
+            image=_Upload(b"not-an-image"),
+            brand="Patek Philippe",
+            logical_model="dinov3_experimental",
+        )
+        self.assertEqual(invalid.status_code, 400)
+        self.assertIn(b'"decision":null', invalid.body)
+
+        skipped = AsyncMock(side_effect=AssertionError("checkpoint mismatch must not infer"))
+        with (
+            patch("inference.research_routes.frozen_checkpoint_digest", return_value="0" * 64),
+            patch("inference.research_routes.infer_allowlisted_model", new=skipped),
+        ):
+            mismatch = await research_verify(
+                current_user=object(),
+                image=image,
+                brand="Patek Philippe",
+                logical_model="dinov3_experimental",
+            )
+        self.assertEqual(mismatch.status_code, 403)
+        self.assertIn(b"POLICY_ERROR", mismatch.body)
+        self.assertIn(b'"decision":null', mismatch.body)
+        skipped.assert_not_awaited()
+
+    async def test_successful_selection_identifies_the_model_and_blocks_publication(self) -> None:
+        from inference.research_routes import research_verify
+        import numpy as np
+
+        os.environ["HYPEVAULT_DEPLOYMENT_MODE"] = "research"
+        image = _Upload(_jpeg())
+
+        async def dinov2_infer(model_id, array):
+            self.assertEqual(model_id, "dinov2_legacy")
+            return {
+                "logit": 2.0,
+                "logical_id": model_id,
+                "triton_name": "dinov2_classifier",
+                "version": "1",
+                "response_model": "LEGACY_DINOV2",
+                "temperature": None,
+            }
+
+        with patch("inference.research_routes.infer_allowlisted_model", new=AsyncMock(side_effect=dinov2_infer)):
+            dinov2 = await research_verify(current_user=object(), image=image, brand="Patek Philippe", logical_model="dinov2_legacy")
+        self.assertEqual(dinov2.model, "LEGACY_DINOV2")
+        self.assertEqual(dinov2.model_version, "1")
+        self.assertEqual(dinov2.publication_decision, "BLOCKED")
+        self.assertFalse(dinov2.production_ready)
+        self.assertEqual(dinov2.brand_verification, "NOT_PERFORMED")
+
+        class _Result:
+            system_status = "ok"
+            decision = "REVIEW"
+            checkpoint_sha256 = FROZEN_SHA
+            temperature = FROZEN_TEMPERATURE
+            policy_version = "shadow_v1"
+
+        async def dinov3_infer(model_id, array):
+            self.assertEqual(model_id, "dinov3_experimental")
+            self.assertEqual(tuple(array.shape), (1, 3, 512, 512))
+            return {
+                "logit": -0.1,
+                "logical_id": model_id,
+                "triton_name": "dinov3_authenticity_candidate",
+                "version": "1",
+                "response_model": "DINOV3_RESEARCH_PROTOTYPE",
+                "temperature": FROZEN_TEMPERATURE,
+            }
+
+        with (
+            patch("inference.research_routes.frozen_checkpoint_digest", return_value=FROZEN_SHA),
+            patch("inference.research_routes.infer_allowlisted_model", new=AsyncMock(side_effect=dinov3_infer)),
+            patch("inference.shadow._policy_batch", return_value=[_Result()]),
+        ):
+            dinov3 = await research_verify(
+                current_user=object(),
+                image=image,
+                brand="Audemars Piguet",
+                logical_model="dinov3_experimental",
+            )
+        self.assertEqual(dinov3.model, "DINOV3_RESEARCH_PROTOTYPE")
+        self.assertEqual(dinov3.checkpoint_sha, FROZEN_SHA)
+        self.assertEqual(dinov3.model_scope, "FIVE_BRAND_RESEARCH_PROTOTYPE")
+        self.assertTrue(dinov3.research_only)
+        self.assertFalse(dinov3.production_ready)
+        self.assertEqual(dinov3.publication_decision, "BLOCKED")
+        self.assertEqual(dinov3.brand_verification, "NOT_PERFORMED")
+        self.assertEqual(dinov3.decision, "REVIEW")
+        del np
+
+    async def test_inference_failure_has_no_decision(self) -> None:
+        from fastapi.responses import JSONResponse
+
+        from inference.model_router import ModelRoutingError
+        from inference.research_routes import research_verify
+
+        os.environ["HYPEVAULT_DEPLOYMENT_MODE"] = "research"
+        with (
+            patch("inference.research_routes.frozen_checkpoint_digest", return_value=FROZEN_SHA),
+            patch(
+                "inference.research_routes.infer_allowlisted_model",
+                new=AsyncMock(side_effect=ModelRoutingError("INFERENCE_ERROR", "timeout")),
+            ),
+        ):
+            failed = await research_verify(
+                current_user=object(),
+                image=_Upload(_jpeg()),
+                brand="Vacheron Constantin",
+                logical_model="dinov3_experimental",
+            )
+        self.assertIsInstance(failed, JSONResponse)
+        self.assertEqual(failed.status_code, 503)
+        self.assertIn(b'"decision":null', failed.body)
+        self.assertIn(b"MODEL_ERROR", failed.body)
+
+    def test_live_route_rejects_a_dinov3_selector_before_inference(self) -> None:
+        routes = (REPO / "backend" / "inference" / "routes.py").read_text()
+        self.assertLess(routes.index("DINOv3 candidate is blocked"), routes.index("classify_image("))
+        research = (REPO / "frontend" / "src" / "app" / "research" / "page.tsx").read_text()
+        seller = (REPO / "frontend" / "src" / "app" / "seller" / "upload" / "page.tsx").read_text()
+        self.assertIn("EXPERIMENTAL — NOT APPROVED FOR PRODUCTION", research)
+        self.assertIn("dinov2_legacy", research)
+        self.assertIn("dinov3_experimental", research)
+        self.assertNotIn("dinov3_experimental", seller)
+        self.assertNotIn("dinov3_authenticity_candidate", research)
+
+    def test_candidate_config_does_not_replace_dinov2(self) -> None:
+        candidate = (REPO / "infra" / "triton" / "dinov3_authenticity_candidate" / "config.pbtxt").read_text()
+        dinov2 = (REPO / "models" / "dinov2_classifier" / "config.pbtxt").read_text()
+        self.assertIn('name: "dinov3_authenticity_candidate"', candidate)
+        self.assertIn('name: "dinov2_classifier"', dinov2)
+        self.assertIn("518", dinov2)
+        self.assertIn("512", candidate)
+        self.assertNotIn("dinov3", dinov2.lower())
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -107,7 +107,18 @@ export function getApiErrorMessage(err: unknown, fallback: string): string {
     return fallback;
   }
 
-  const d = err.response.data as { detail?: unknown } | undefined;
+  const body = err.response.data as { status?: unknown; reason?: unknown; detail?: unknown } | undefined;
+  if (
+    body &&
+    (body.status === "UNSUPPORTED_SCOPE" ||
+      body.status === "INVALID_INPUT" ||
+      body.status === "MODEL_ERROR" ||
+      body.status === "POLICY_ERROR") &&
+    typeof body.reason === "string"
+  ) {
+    return body.reason;
+  }
+  const d = body;
   if (!d) {
     if (err.response.status === 401) return "Invalid credentials.";
     return fallback;
@@ -220,6 +231,8 @@ export type Listing = {
   confidence: number | null;
   status: string;
   created_at: string;
+  customer_label?: string;
+  evidence_role?: "SEED_CONSTANT" | "HISTORICAL_MODEL_EVIDENCE" | "NONE" | string;
 };
 
 export async function fetchRecentListings(

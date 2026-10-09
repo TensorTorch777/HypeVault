@@ -1,0 +1,12 @@
+{
+  "method": "Customer-visible frontend and API copy were reviewed. Internal labels, tests, dataset class names, and model-output tokens AUTHENTIC and FAKE were left in place.",
+  "changed_product_claims": [
+    "Seller upload no longer describes the legacy DINOv2 call as the five-brand DINOv3 research classification.",
+    "Navigation separates Research demo from Legacy check.",
+    "Listing result copy identifies legacy DINOv2 rather than the research prototype.",
+    "README and deployment notes separate POST /verify/authenticate from POST /research/verify."
+  ],
+  "left_as_model_output": ["AUTHENTIC", "FAKE", "REVIEW"],
+  "left_as_code_or_test": ["verdict fields", "unittest names", "checkpoint and policy constants"],
+  "left_as_research_terminology": ["five-brand research prototype on the research demo page"]
+}

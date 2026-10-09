@@ -1,0 +1,11 @@
+{
+  "endpoint": "POST /verify/authenticate",
+  "choice": "Option B. The route stays available as legacy infrastructure and is explicitly identified. It was not switched to DINOv3 and it was not disabled, because the listing flow still depends on it.",
+  "model": "LEGACY_DINOV2",
+  "model_status": "LEGACY",
+  "research_candidate": false,
+  "production_validation": "NOT_ESTABLISHED",
+  "dinov3_checkpoint_attached": false,
+  "dinov3_temperature_attached": false,
+  "brand_verification": "NOT_PERFORMED"
+}

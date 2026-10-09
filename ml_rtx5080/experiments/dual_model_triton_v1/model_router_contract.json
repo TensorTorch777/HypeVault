@@ -1,0 +1,53 @@
+{
+  "allowlist": {
+    "dinov2_legacy": {
+      "response_model": "LEGACY_DINOV2",
+      "triton_name": "dinov2_classifier",
+      "version": "1",
+      "input_name": "input__0",
+      "output_name": "output__0",
+      "input_dtype": "FP32",
+      "input_dims": [3, 518, 518],
+      "output_meaning": "raw_logit",
+      "preprocessing": "legacy_square_resize_518_imagenet",
+      "temperature": null,
+      "decision_policy": "sigmoid(logit) compared with the existing legacy threshold",
+      "precision": "FP32",
+      "research_only": false,
+      "production_route": true
+    },
+    "dinov3_experimental": {
+      "response_model": "DINOV3_RESEARCH_PROTOTYPE",
+      "triton_name": "dinov3_authenticity_candidate",
+      "version": "1",
+      "input_name": "input__0",
+      "output_name": "output__0",
+      "input_dtype": "FP32",
+      "input_dims": [3, 512, 512],
+      "output_meaning": "raw_logit",
+      "preprocessing": "resize_pad_square_eval_v1",
+      "temperature": 0.24038200410185356,
+      "decision_threshold": 0.5,
+      "decision_policy": "existing shadow policy on the raw logit; temperature stays 0.24038200410185356",
+      "precision": "FP32",
+      "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+      "model_scope": "FIVE_BRAND_RESEARCH_PROTOTYPE",
+      "brand_verification": "NOT_PERFORMED",
+      "research_only": true,
+      "production_ready": false,
+      "production_route": false
+    }
+  },
+  "client_may_send_triton_name": false,
+  "silent_fallback": false,
+  "timeout_seconds": 5.0,
+  "missing_model_status": "MODEL_ERROR",
+  "missing_model_decision": null,
+  "unknown_logical_id_status": "POLICY_ERROR",
+  "production_dinov3_status": "POLICY_ERROR",
+  "parity_tolerances_registered_before_measurement": {
+    "max_absolute_logit_error": 1e-4,
+    "max_absolute_probability_error": 1e-5,
+    "source": "ml_rtx5080/dinov3_serving.py LOGIT_ATOL and PROBABILITY_ATOL"
+  }
+}

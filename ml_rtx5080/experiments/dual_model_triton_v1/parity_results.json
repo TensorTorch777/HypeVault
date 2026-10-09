@@ -1,0 +1,18 @@
+{
+  "status": "BLOCKED",
+  "reason": "Triton did not start. Docker GPU probe failed with: failed to discover GPU vendor from CDI: no known GPU vendor found. No host tritonserver binary is installed.",
+  "tolerances_fixed_before_this_result": {
+    "max_absolute_logit_error": 1e-4,
+    "max_absolute_probability_error": 1e-5
+  },
+  "tolerances_widened_after_results": false,
+  "dinov3_reference": "FP32 PyTorch shadow path was not compared because the Triton candidate did not serve.",
+  "dinov2_reference": "Legacy DINOv2 was not compared because dinov2_classifier did not serve.",
+  "max_absolute_logit_error": null,
+  "mean_absolute_logit_error": null,
+  "max_probability_error": null,
+  "decision_mismatches_at_0_50": null,
+  "by_input_size": null,
+  "by_batch_size": null,
+  "validated_equivalent": false
+}

@@ -105,3 +105,53 @@ async def triton_ready() -> bool:
         return await asyncio.to_thread(_check)
     except Exception:
         return False
+
+
+def _named_infer_sync(
+    model_name: str,
+    array_nchw: np.ndarray,
+    input_name: str,
+    output_name: str,
+    timeout_s: float,
+) -> np.ndarray:
+    """One request to one named model. This function does not choose a substitute model."""
+    url = f"{settings.triton_host}:{settings.triton_port}"
+    client = grpcclient.InferenceServerClient(url=url)
+    inputs = [grpcclient.InferInput(input_name, array_nchw.shape, "FP32")]
+    inputs[0].set_data_from_numpy(array_nchw)
+    outputs = [grpcclient.InferRequestedOutput(output_name)]
+    result = client.infer(
+        model_name=model_name,
+        inputs=inputs,
+        outputs=outputs,
+        client_timeout=timeout_s,
+    )
+    return result.as_numpy(output_name)
+
+
+async def infer_named_model(
+    model_name: str,
+    array_nchw: np.ndarray,
+    input_name: str,
+    output_name: str,
+    timeout_s: float = TIMEOUT_S,
+) -> np.ndarray:
+    return await asyncio.to_thread(
+        _named_infer_sync,
+        model_name,
+        array_nchw,
+        input_name,
+        output_name,
+        timeout_s,
+    )
+
+
+async def named_model_ready(model_name: str) -> bool:
+    def _check() -> bool:
+        client = grpcclient.InferenceServerClient(url=f"{settings.triton_host}:{settings.triton_port}")
+        return bool(client.is_server_ready() and client.is_model_ready(model_name))
+
+    try:
+        return await asyncio.to_thread(_check)
+    except Exception:
+        return False

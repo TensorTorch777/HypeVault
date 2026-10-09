@@ -1,0 +1,46 @@
+{
+  "unit_suite": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "result": "OK",
+    "tests": 416,
+    "skipped": 3,
+    "elapsed_seconds": 49.057,
+    "skips": [
+      "Triton is not accepting connections on port 8001. Parity was not fabricated.",
+      "ONNX CUDAExecutionProvider libraries are missing.",
+      "TensorRT and Triton are not available"
+    ]
+  },
+  "frontend": {
+    "tsc_no_emit": "passed",
+    "next_build": "passed",
+    "next_lint_interactive": "not configured; next lint prompted for a new ESLint setup and was not given one",
+    "next_build_typecheck_and_lint_step": "passed",
+    "research_route_in_build": "/research"
+  },
+  "browser": {
+    "url": "http://localhost:3000/research",
+    "default_selection": "DINOv2 — Legacy",
+    "dinov3_selection": "DINOv3 — Experimental",
+    "experimental_notice_visible_when_dinov3_selected": true,
+    "notice_text": "EXPERIMENTAL — NOT APPROVED FOR PRODUCTION",
+    "seller_upload": "redirects to login before the listing form; source check confirms the seller page does not contain dinov3_experimental"
+  },
+  "gpu_triton_end_to_end": "BLOCKED",
+  "gpu_blocker": "failed to discover GPU vendor from CDI: no known GPU vendor found",
+  "unit_mocks_are_gpu_evidence": false,
+  "flows": {
+    "1_research_demo_loads": "passed",
+    "2_user_selects_dinov2": "passed",
+    "3_user_selects_dinov3": "passed",
+    "4_result_identifies_model": "unit-tested with a mock Triton response; live Triton result BLOCKED",
+    "5_dinov3_experimental_notice": "passed",
+    "6_unsupported_brand": "unit-tested; live Triton path BLOCKED",
+    "7_missing_brand": "unit-tested; live Triton path BLOCKED",
+    "8_invalid_image": "unit-tested; live Triton path BLOCKED",
+    "9_production_dinov3_request": "unit-tested fail-closed; live server BLOCKED",
+    "10_missing_triton_model": "unit-tested no fallback; live readiness BLOCKED",
+    "11_neither_model_publishes": "unit-tested publication_decision BLOCKED and production flag false",
+    "12_legacy_listing_labels": "unchanged in this phase; not re-verified against a live database"
+  }
+}
