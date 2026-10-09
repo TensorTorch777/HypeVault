@@ -1,5 +1,9 @@
 # GPU container runtime: steps for the machine administrator
 
+**Status, 2026-10-09 17:06: done.** The owner ran `sudo bash scripts/install_nvidia_container_toolkit.sh` (local, gitignored). Toolkit 1.20.1 is installed, the CDI spec lists `nvidia.com/gpu=all`, Docker has the `nvidia` runtime, and the pinned image sees the RTX 5080. Results are in `ml_rtx5080/experiments/dual_model_triton_v1/phase51_report.md`.
+
+Use the exact-FP32 configs `infra/triton/*/config.gpu_fp32.pbtxt` for serving, not `config.gpu.pbtxt`, which failed parity under TF32. The Docker restart left 4 `fonoster` containers stopped because their project files were missing (report section 7).
+
 These steps need root. The agent cannot run them because `sudo` requires a password. The agent will not ask for, store, or work around that password.
 
 Sources, read on 2026-10-09:
