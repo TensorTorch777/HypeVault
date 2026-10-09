@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { AuthBadge } from "@/components/AuthBadge";
+import { ResearchExplanation, type ResearchExplanationPayload } from "@/components/ResearchExplanation";
 import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -81,6 +82,10 @@ export default function ResearchDemoPage() {
   const [comparison, setComparison] = useState<Partial<Record<ModelId, LaneOutcome>> | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [explanation, setExplanation] = useState<ResearchExplanationPayload | null>(null);
+  const [explanationPending, setExplanationPending] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewSize, setPreviewSize] = useState({ width: 1, height: 1 });
 
   useEffect(() => {
     let cancelled = false;
@@ -121,6 +126,7 @@ export default function ResearchDemoPage() {
     setErr(null);
     setResult(null);
     setComparison(null);
+    setExplanation(null);
     setPending(true);
     try {
       const body = new FormData();
@@ -133,6 +139,31 @@ export default function ResearchDemoPage() {
         return;
       }
       setResult({ selected, body: data });
+      setExplanationPending(true);
+      try {
+        const explainBody = new FormData();
+        explainBody.append("image", file);
+        explainBody.append("brand", brand);
+        explainBody.append("logical_model", selected);
+        const explained = await api.post<ResearchExplanationPayload>("/research/explain", explainBody);
+        if (explained.data.classification?.model !== data.model) {
+          setExplanation({
+            status: "unavailable",
+            reason: "The explanation model did not match the classification model.",
+            publication_decision: "BLOCKED",
+          });
+        } else {
+          setExplanation(explained.data);
+        }
+      } catch {
+        setExplanation({
+          status: "unavailable",
+          reason: "The explanation request failed.",
+          publication_decision: "BLOCKED",
+        });
+      } finally {
+        setExplanationPending(false);
+      }
     } catch (error) {
       const status = axios.isAxiosError(error) ? error.response?.status : undefined;
       const bodyStatus = axios.isAxiosError(error) ? (error.response?.data as { status?: string } | undefined)?.status : undefined;
@@ -150,6 +181,7 @@ export default function ResearchDemoPage() {
     setErr(null);
     setResult(null);
     setComparison(null);
+    setExplanation(null);
     setPending(true);
     const next: Partial<Record<ModelId, LaneOutcome>> = {};
     await Promise.all(
@@ -271,7 +303,21 @@ export default function ResearchDemoPage() {
               className="mt-2"
               type="file"
               accept="image/jpeg,image/png,image/webp"
-              onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+              onChange={(event) => {
+                const next = event.target.files?.[0] ?? null;
+                setFile(next);
+                setExplanation(null);
+                if (previewUrl) URL.revokeObjectURL(previewUrl);
+                if (!next) {
+                  setPreviewUrl(null);
+                  return;
+                }
+                const url = URL.createObjectURL(next);
+                setPreviewUrl(url);
+                const img = new Image();
+                img.onload = () => setPreviewSize({ width: img.naturalWidth, height: img.naturalHeight });
+                img.src = url;
+              }}
             />
           </div>
           <div className="flex flex-wrap gap-3">
@@ -320,6 +366,13 @@ export default function ResearchDemoPage() {
               {result.body.checkpoint_sha ? (
                 <p className="break-all text-xs text-primary/50">Checkpoint {result.body.checkpoint_sha}</p>
               ) : null}
+              <ResearchExplanation
+                imageUrl={previewUrl}
+                imageWidth={previewSize.width}
+                imageHeight={previewSize.height}
+                payload={explanation}
+                pending={explanationPending}
+              />
             </div>
           ) : null}
           {comparison ? (

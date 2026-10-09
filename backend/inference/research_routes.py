@@ -317,6 +317,160 @@ async def research_verify(
     return ResearchVerifyResponse(**body)
 
 
+EXPLANATION_TIMEOUT_S = 20.0
+
+
+@router.post(
+    "/explain",
+    summary="Research-only occlusion explanation for an allowlisted model",
+    description=(
+        "Measures how masking image regions changes the selected model's raw logit. "
+        "Does not create a listing, does not publish, and does not replace the classifier result."
+    ),
+)
+async def research_explain(
+    current_user: Annotated[User, Depends(require_research_user)],
+    image: Annotated[UploadFile, File(...)],
+    brand: Annotated[str | None, Form()] = None,
+    logical_model: Annotated[str | None, Form()] = None,
+) -> JSONResponse:
+    """Authorized research explanation. A failure returns an unavailable explanation and no invented evidence."""
+    del current_user
+    prepared = await _prepare_research_image(image, brand, logical_model)
+    if isinstance(prepared, JSONResponse):
+        return prepared
+    spec, pil, digest = prepared
+    try:
+        import numpy as np
+
+        from inference.explanation_text import narrate
+        from inference.occlusion import measure_regions, sensitivity_record
+        from inference.verdict import apply_min_authentic_confidence, logits_to_verdict
+
+        async def _logit(sample: Image.Image) -> float:
+            array = _array_for_model(spec, sample)
+            routed = await infer_allowlisted_model(spec["logical_id"], array)
+            if routed.get("response_model") != spec["response_model"]:
+                raise ModelRoutingError("MODEL_ERROR", "Model identity did not match the selected research model.")
+            return float(routed["logit"])
+
+        baseline, masked_logits, boxes, elapsed_ms = await measure_regions(pil, _logit, EXPLANATION_TIMEOUT_S)
+        if spec["logical_id"] == DINOV2_LEGACY:
+            verdict, confidence = logits_to_verdict(np.array([baseline], dtype=np.float32))
+            decision, _confidence = apply_min_authentic_confidence(
+                verdict,
+                confidence,
+                settings.inference_min_authentic_confidence,
+            )
+        else:
+            from inference.shadow import _policy_batch
+
+            decision = _policy_batch([pil], np.array([baseline], dtype=np.float64), digest or "")[0].decision
+        evidence = sensitivity_record(
+            baseline_logit=baseline,
+            masked_logits=masked_logits,
+            boxes=boxes,
+            model_id=spec["response_model"],
+            model_version=str(spec["version"]),
+            preprocessing_id=str(spec["preprocessing"]),
+            decision=str(decision),
+        )
+        narrative = await narrate(evidence)
+    except TimeoutError:
+        return _unavailable("The explanation timed out before every region was measured.")
+    except (ModelRoutingError, ValueError, KeyError) as exc:
+        _log.exception("research_explain_failed: %s", exc)
+        return _unavailable("The explanation could not be computed from the selected model.")
+    except Exception as exc:
+        _log.exception("research_explain_failed: %s", exc)
+        return _unavailable("The explanation could not be computed from the selected model.")
+
+    return JSONResponse(
+        {
+            "status": "ok",
+            "research_only": True,
+            "publication_decision": "BLOCKED",
+            "independent_authentication": False,
+            "classification": {
+                "decision": evidence["baseline_decision"],
+                "model": evidence["model_id"],
+                "model_version": evidence["model_version"],
+            },
+            "sensitivity": evidence,
+            "explanation": narrative,
+            "cost": {
+                "inferences": 1 + len(evidence["patches"]),
+                "elapsed_ms": elapsed_ms,
+            },
+        }
+    )
+
+
+def _unavailable(reason: str) -> JSONResponse:
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={
+            "status": "unavailable",
+            "reason": reason,
+            "research_only": True,
+            "publication_decision": "BLOCKED",
+            "independent_authentication": False,
+            "sensitivity": None,
+            "explanation": None,
+        },
+    )
+
+
+async def _prepare_research_image(image: UploadFile, brand: str | None, logical_model: str | None):
+    selected = logical_model or DINOV3_EXPERIMENTAL
+    try:
+        spec = resolve_model(selected)
+    except ModelRoutingError:
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            content=failure_body("POLICY_ERROR", "Unknown model identifier."),
+        )
+    blocked = mode_block_body()
+    if blocked is not None:
+        return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content=blocked)
+    scope = evaluate_declared_brand((brand or "").strip())
+    if scope.scope_status != "SUPPORTED":
+        return JSONResponse(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, content=unsupported_scope_body())
+    raw = await image.read()
+    invalid = _invalid_image_body((image.content_type or "application/octet-stream").lower(), raw)
+    if invalid is not None:
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=invalid)
+    digest = None
+    if spec["logical_id"] == DINOV3_EXPERIMENTAL:
+        try:
+            digest = frozen_checkpoint_digest()
+        except CheckpointIdentityError as exc:
+            blocked_status = exc.status if exc.status in {"POLICY_ERROR", "MODEL_ERROR"} else "MODEL_ERROR"
+            http_status = (
+                status.HTTP_503_SERVICE_UNAVAILABLE
+                if blocked_status == "MODEL_ERROR"
+                else status.HTTP_403_FORBIDDEN
+            )
+            message = (
+                "The DINOv3 checkpoint could not be verified."
+                if blocked_status == "MODEL_ERROR"
+                else "DINOv3 checkpoint does not match the frozen artifact."
+            )
+            return JSONResponse(status_code=http_status, content=failure_body(blocked_status, message))
+        mismatch = checkpoint_block_body(digest)
+        if mismatch is not None:
+            return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content=mismatch)
+    try:
+        pil = Image.open(io.BytesIO(raw)).convert("RGB")
+        pil.load()
+    except Exception:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content=failure_body("INVALID_INPUT", "Invalid image file"),
+        )
+    return spec, pil, digest
+
+
 def _array_for_model(spec: dict, pil: Image.Image):
     """Use the authoritative preprocess for the selected model only."""
     if spec["logical_id"] == DINOV3_EXPERIMENTAL:
