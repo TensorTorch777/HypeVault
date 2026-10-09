@@ -1,0 +1,149 @@
+{
+  "protocol": "dinov3_triton_parity_v1",
+  "model": {
+    "triton_name": "dinov3_authenticity_candidate",
+    "version": "1"
+  },
+  "reference": "reference_inference.load_reference_model + forward_logits, FP32, CPU, no autocast, no temperature",
+  "preprocessing": "dinov3_serving.preprocess_serving_image (resize_pad_square_eval_v1, 3x512x512 FP32)",
+  "frozen_checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "frozen_temperature": 0.24038200410185356,
+  "decision_threshold": 0.5,
+  "probability": "sigmoid(logit / frozen_temperature)",
+  "tolerances": {
+    "max_abs_logit_error": 0.0001,
+    "max_abs_probability_error": 1e-05
+  },
+  "pass_rule": "every batch size within both tolerances and zero decision mismatches at the threshold",
+  "batch_sizes": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "inputs_source": "ml_rtx5080/experiments/backend_parity_v2/onnx_parity.csv",
+  "inputs": [
+    {
+      "sample_id": "Label_0_Watches/Audemars Piguet/b1a40ed1b5b9.jpg",
+      "split": "calibration",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/Patek Philippe/9ba50fea3805.jpg",
+      "split": "train",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/Patek Philippe/c2f778c66d15.jpg",
+      "split": "train",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/63d2c86b29d3.jpg",
+      "split": "train",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/Audemars Piguet/99fcd3b9051c.jpg",
+      "split": "train",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/Richard Mille/a11094843532.jpg",
+      "split": "train",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/Richard Mille/9eda705bd8c9.jpg",
+      "split": "validation",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0003c0bd6ebe.jpg",
+      "split": "train",
+      "role": "authentic"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/002016510ba1.jpg",
+      "split": "train",
+      "role": "authentic"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/002bc8d03cd5.jpg",
+      "split": "train",
+      "role": "authentic"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00617b670111.jpg",
+      "split": "train",
+      "role": "authentic"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/001067d69616.jpg",
+      "split": "train",
+      "role": "fake"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/004c219b045c.jpg",
+      "split": "train",
+      "role": "fake"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/005442daf6b3.jpg",
+      "split": "train",
+      "role": "fake"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/005bb6357b99.jpg",
+      "split": "train",
+      "role": "fake"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00e7fec26604.jpg",
+      "split": "train",
+      "role": "low_resolution"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/033824530806.jpg",
+      "split": "train",
+      "role": "low_resolution"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0ce059828e7b.jpg",
+      "split": "train",
+      "role": "low_contrast"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0fcb6427bbbb.jpg",
+      "split": "train",
+      "role": "low_contrast"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/1f4e2e10b83b.jpg",
+      "split": "train",
+      "role": "both_quality_flags"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00a208f1d991.jpg",
+      "split": "train",
+      "role": "additional"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00b4fe2dd8d0.jpg",
+      "split": "train",
+      "role": "additional"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00ca5dec6dfd.jpg",
+      "split": "train",
+      "role": "additional"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00d5a56c2800.jpg",
+      "split": "train",
+      "role": "additional"
+    }
+  ],
+  "final_test_images_opened": 0,
+  "tolerances_may_change_after_results": false
+}
