@@ -34,6 +34,14 @@ ml_rtx5080/checkpoints/*
 !ml_rtx5080/checkpoints/confusion_matrix_eval.png
 ml_rtx5080/checkpoints_watches/
 ml_rtx5080/logs/
+# Experiment weights and exports stay local. Configs, reports and small JSON are tracked on purpose.
+ml_rtx5080/experiments/**/*.pt
+ml_rtx5080/experiments/**/*.pth
+ml_rtx5080/experiments/**/*.onnx
+ml_rtx5080/experiments/**/*.onnx.data
+ml_rtx5080/experiments/**/*.safetensors
+ml_rtx5080/experiments/**/*.engine
+ml_rtx5080/experiments/**/*.plan
 Label_0_Watches/
 Label_1_Watches/
 *.log
