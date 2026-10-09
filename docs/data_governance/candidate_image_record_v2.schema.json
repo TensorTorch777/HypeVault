@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "candidate_image_record_v2",
+  "title": "Candidate image record v2",
+  "description": "One record per candidate image. Extends image_label_evidence_v1. UNKNOWN never means verified. Admission is decided by ml_rtx5080/data_admission.py, not by this schema alone.",
+  "extends": "ml_rtx5080/experiments/dataset_rebuild_v1/image_label_evidence_schema.json (image_label_evidence_v1)",
+  "type": "object",
+  "required": ["record_id", "image", "source", "rights", "brand", "label", "disposition"],
+  "additionalProperties": false,
+  "properties": {
+    "record_id": {"type": "string", "minLength": 1},
+    "image": {
+      "type": "object",
+      "required": ["sha256", "uri", "width", "height", "format", "file_size_bytes", "exif_location_stripped", "derivative_of", "duplicate_status", "duplicate_of"],
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "uri": {"type": "string", "minLength": 1, "description": "Path or URI in the access-controlled store"},
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1},
+        "format": {"type": "string"},
+        "file_size_bytes": {"type": "integer", "minimum": 1},
+        "exif_location_stripped": {"type": "boolean"},
+        "derivative_of": {"type": ["string", "null"], "description": "SHA-256 of the original when this is a resize or crop"},
+        "duplicate_status": {"enum": ["UNIQUE", "EXACT_DUPLICATE", "NEAR_DUPLICATE", "UNKNOWN"]},
+        "duplicate_of": {"type": ["string", "null"]}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["source_type", "source_reference", "product_or_listing_id", "source_group_id", "chain_of_custody"],
+      "additionalProperties": false,
+      "properties": {
+        "source_type": {"enum": ["QUALIFIED_EXAMINER", "OWNER_PERMISSION_PHOTOGRAPHY", "INSTITUTION", "UNKNOWN"]},
+        "source_reference": {"type": "string", "description": "Source URL or documented private source reference"},
+        "product_or_listing_id": {"type": "string"},
+        "source_group_id": {"type": "string", "description": "Groups images from the same source or physical item for disjoint splits"},
+        "chain_of_custody": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["step", "actor_ref", "date"],
+            "properties": {"step": {"type": "string"}, "actor_ref": {"type": "string"}, "date": {"type": "string"}}
+          }
+        }
+      }
+    },
+    "rights": {
+      "type": "object",
+      "required": ["permission_id", "permission_status", "research_use", "training_use", "public_display", "retention_until"],
+      "additionalProperties": false,
+      "properties": {
+        "permission_id": {"type": "string"},
+        "permission_status": {"enum": ["EFFECTIVE", "NOT_EFFECTIVE", "WITHDRAWN", "EXPIRED", "UNKNOWN"]},
+        "research_use": {"enum": ["GRANTED", "DENIED", "UNKNOWN"]},
+        "training_use": {"enum": ["GRANTED", "DENIED", "UNKNOWN"]},
+        "public_display": {"enum": ["GRANTED", "DENIED", "UNKNOWN"]},
+        "retention_until": {"type": ["string", "null"], "description": "ISO date"}
+      }
+    },
+    "brand": {
+      "type": "object",
+      "required": ["value", "basis", "evidence_id"],
+      "additionalProperties": false,
+      "properties": {
+        "value": {"type": "string"},
+        "basis": {"type": "string", "description": "e.g. case-back engraving, movement calibre. A wordmark alone is not sufficient"},
+        "evidence_id": {"type": "string"}
+      }
+    },
+    "label": {
+      "type": "object",
+      "required": ["value", "method", "verifier_ref", "verifier_qualification_evidence_id", "verifier_independent", "confidence", "evidence_id", "evidence_date"],
+      "additionalProperties": false,
+      "properties": {
+        "value": {"enum": ["authentic", "counterfeit", "undetermined", "UNKNOWN"]},
+        "method": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "verifier_ref": {"type": "string", "description": "Access-controlled reference, not a public name"},
+        "verifier_qualification_evidence_id": {"type": "string"},
+        "verifier_independent": {"type": "boolean"},
+        "confidence": {"enum": ["certain", "probable", "UNKNOWN"]},
+        "evidence_id": {"type": "string"},
+        "evidence_date": {"type": "string"},
+        "history": {"type": "array"}
+      }
+    },
+    "disposition": {
+      "type": "object",
+      "required": ["status", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "status": {"enum": ["PENDING", "ADMIT", "HOLD_DISPUTED", "EXCLUDE"]},
+        "reason": {"type": "string"}
+      }
+    }
+  }
+}

@@ -26,14 +26,22 @@
     "probe_cdi_device": "CDI device injection failed: unresolvable CDI devices nvidia.com/gpu=all"
   },
   "permissions": {"passwordless_sudo": false, "user_in_docker_group": true},
-  "disk": {"root_available": "915M", "docker_images_reclaimable": "0B", "docker_build_cache_reclaimable": "257.1MB"},
+  "disk": {
+    "root_available_at_diagnostics": "915M",
+    "root_available_later_same_day": "42G",
+    "change_note": "About 41 GB was freed outside this work during the session. The frozen checkpoint, both model repositories, and the live DINOv2 checkpoint were re-checked and are present; epoch_018.pt still hashes to the frozen SHA-256.",
+    "docker_images_reclaimable": "0B",
+    "docker_build_cache_reclaimable": "257.1MB"
+  },
   "blocker_classification": {
     "driver": "NOT_A_BLOCKER",
     "container_runtime_cdi": "BLOCKER",
     "permissions": "BLOCKER",
-    "disk_space": "BLOCKER",
-    "triton_image_version": "BLOCKER"
+    "disk_space": "NOT_A_BLOCKER after 42G became free",
+    "triton_image_version": "BLOCKER until a Blackwell-capable image is pulled after the runtime is fixed",
+    "dinov2_artifact_identity": "OWNER_DECISION: the Triton dinov2_classifier export (2026-04-27, ViT-g/14 at 518) has no identity file linking it to a checkpoint, and DEPLOY_INFERENCE.md describes serving the live ViT-B/14 export at 504 instead"
   },
+  "image_pull_deferred_reason": "Pulling the 7.64 GB (compressed) 26.01 image would only enable CPU serving until the container runtime is fixed, and the DINOv2 artifact it would serve is not yet chosen.",
   "triton_images": {
     "local": {
       "image": "nvcr.io/nvidia/tritonserver:23.10-py3",
