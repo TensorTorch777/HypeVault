@@ -34,7 +34,7 @@ The research selector serves a model only on the validated GPU precision.
 
 `FEATURE_BRANCH_UPDATED = true`
 
-`PR_MERGED = false`
+`PR_MERGED = true (merge commit f2acf4a211541fc509f67fc2a1157d4dbac83d16)`
 
 `DINOv3_PRODUCTION_ALLOWED = false`
 
@@ -258,6 +258,10 @@ GPU parity re-run with **both** models resident, same frozen tolerances (`1e-4` 
 
 Intended files only. No `.env`, weights, datasets, or unrelated `ml_rtx5080/train.py` / experiment trees.
 
+- Merge commit: `f2acf4a211541fc509f67fc2a1157d4dbac83d16` (PR [#1](https://github.com/TensorTorch777/HypeVault/pull/1), merged 2026-10-09, no branch protection / required reviews on `main`).
+- `main` verified at that SHA: checkpoint identity module present, `AUTHENTICITY_MODEL_PRODUCTION_APPROVED = false`, 41 routing/identity/publication tests OK. GitHub CI on `6e05e66` (backend + frontend) SUCCESS; GPU job SKIPPED (manual).
+- Research branch `research/dinov3-cross-brand-v2` created from that `main`. Plan: `docs/research/dinov3_cross_brand_v2_plan.md`. No training started.
+
 ## Flag block
 
 `CHECKPOINT_DIGEST_CACHED_AT_STARTUP = true`
@@ -278,11 +282,11 @@ Intended files only. No `.env`, weights, datasets, or unrelated `ml_rtx5080/trai
 
 `DINOv3_PRODUCTION_ALLOWED = false`
 
-`PR_MERGED = false`
+`PR_MERGED = true (f2acf4a211541fc509f67fc2a1157d4dbac83d16)`
 
-`MAIN_VERIFIED = false`
+`MAIN_VERIFIED = true`
 
-`RESEARCH_BRANCH_CREATED = false`
+`RESEARCH_BRANCH_CREATED = true (research/dinov3-cross-brand-v2)`
 
 `MODEL_CHANGED = false`
 
