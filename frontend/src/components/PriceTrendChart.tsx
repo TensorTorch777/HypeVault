@@ -50,6 +50,7 @@ export function PriceTrendChart({ titleSeed }: { titleSeed: string }) {
 
   return (
     <div className="w-full">
+      <p className="mb-2 text-xs font-semibold text-[#FFEDF6]/70">Illustrative sample data — not live market prices.</p>
       <div className="mb-3 flex gap-6 border-b border-white/[0.06] pb-2">
         {(["30D", "90D", "1Y"] as const).map((r) => (
           <button

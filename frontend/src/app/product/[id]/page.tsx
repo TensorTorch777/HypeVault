@@ -9,7 +9,7 @@ import { ProductVisualPanel } from "@/components/product/ProductVisualPanel";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchComparison, fetchComparisonByQuery, fetchListing } from "@/lib/api";
-import { customerLabel } from "@/lib/customerLabel";
+import { customerStatusCopy } from "@/lib/customerLabel";
 
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -87,13 +87,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 <div className="rounded-2xl border border-white/[0.08] bg-[#111111] p-6">
                   <p className="text-xs font-semibold uppercase tracking-wider text-primary/55">Listing</p>
                   <p className="mt-2 text-2xl font-semibold tracking-tight text-primary">
-                    {customerLabel(listingQ.data)}
+                    {customerStatusCopy(listingQ.data).title}
                   </p>
-                  <p className="mt-2 text-sm text-primary/70">
-                    A visible listing is published. That is separate from authenticity verification.
-                  </p>
+                  <p className="mt-2 text-sm text-primary/70">{customerStatusCopy(listingQ.data).detail}</p>
                   <p className="mt-1 text-sm text-primary/70">
-                    Declared brand: {listingQ.data.brand?.trim() ? listingQ.data.brand : "not supplied"}
+                    Declared brand: {listingQ.data.brand?.trim() ? listingQ.data.brand : "not supplied"} — not verified from the image.
                   </p>
                 </div>
               ) : null}
@@ -116,7 +114,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               {isUuid && listingQ.data ? (
                 <>
                   <div className="flex justify-between border-b border-white/[0.06] py-2">
-                    <span className="text-primary/50">Brand</span>
+                    <span className="text-primary/50">Declared brand</span>
                     <span className="font-semibold text-primary">{listingQ.data.brand ?? "—"}</span>
                   </div>
                   <div className="flex justify-between border-b border-white/[0.06] py-2">
@@ -136,10 +134,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         <div className="mt-12 border-t border-white/[0.06] pt-12 md:mt-16 md:pt-16">
           <p className="hv-section-label">Compare market pricing</p>
           <h2 className="font-[family-name:var(--font-display)] text-xl font-extrabold tracking-tight md:text-2xl">
-            Live market snapshot
+            Market comparison
           </h2>
           <p className="mt-2 text-sm text-primary/60">
-            Side-by-side reference pricing. HypeVault highlights strong offers — this is not an auction flow.
+            Prices appear only when this request returns them. An empty or failed request is not a live quote, and a price is not an authenticity result.
           </p>
           <div className="mt-6">
             <ComparisonTable

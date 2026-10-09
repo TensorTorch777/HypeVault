@@ -27,7 +27,7 @@ function saveRecent(q: string) {
 
 export function SearchBar({
   className,
-  placeholder = "Search the five evaluated brands",
+  placeholder = "Search the five in-scope research brands",
   initialQuery = "",
   variant = "light",
 }: {

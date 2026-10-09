@@ -94,7 +94,7 @@ const DEFAULT_ASKS: AskItem[] = [
   {
     id: "a3",
     category: "Trust",
-    question: "Why shouldn’t authenticity be machine-checked before a listing ever goes live?",
+    question: "Why is a model screening result still not the same thing as a verified authentic watch?",
     href: "/register",
     variant: "dark",
   },
@@ -115,7 +115,7 @@ const DEFAULT_ASKS: AskItem[] = [
   {
     id: "a6",
     category: "Buyers",
-    question: "Why can’t one dashboard show delivery, rating, and lowest ask in one breath?",
+    question: "Why is a sample price easy to mistake for a live StockX, Chrono24, or eBay ask?",
     href: "/product/Luxury%20watches",
     variant: "dark",
   },

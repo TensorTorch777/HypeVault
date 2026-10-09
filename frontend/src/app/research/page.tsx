@@ -7,7 +7,14 @@ import { AuthBadge } from "@/components/AuthBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { api, getApiErrorMessage } from "@/lib/api";
+import { api } from "@/lib/api";
+import {
+  DECLARED_BRAND_NOTE,
+  SERVING_STATUS_LABEL,
+  VALIDITY_NOT_ESTABLISHED,
+  classifyHttpFailure,
+  researchFailureMessage,
+} from "@/lib/semanticCopy";
 
 const DINOV2_LEGACY = "dinov2_legacy";
 const DINOV3_EXPERIMENTAL = "dinov3_experimental";
@@ -53,6 +60,11 @@ const UNAVAILABLE_REASONS: Record<string, string> = {
   PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE: "Triton parity not validated for this instance",
 };
 
+type LaneOutcome =
+  | { state: "unavailable" }
+  | { state: "error"; message: string }
+  | { state: "ok"; body: ResearchResult };
+
 type ReadinessReport = {
   server: { live: boolean; ready: boolean };
   models: ModelReadiness[];
@@ -65,6 +77,7 @@ export default function ResearchDemoPage() {
   const [readiness, setReadiness] = useState<ReadinessReport | null>(null);
   const [readinessErr, setReadinessErr] = useState<string | null>(null);
   const [result, setResult] = useState<{ selected: ModelId; body: ResearchResult } | null>(null);
+  const [comparison, setComparison] = useState<Partial<Record<ModelId, LaneOutcome>> | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -80,8 +93,9 @@ export default function ResearchDemoPage() {
       })
       .catch((error) => {
         if (cancelled) return;
-        const fallback = "Model readiness is unavailable. No model can be selected.";
-        setReadinessErr(axios.isAxiosError(error) ? getApiErrorMessage(error, fallback) : fallback);
+        const status = axios.isAxiosError(error) ? error.response?.status : undefined;
+        const bodyStatus = axios.isAxiosError(error) ? (error.response?.data as { status?: string } | undefined)?.status : undefined;
+        setReadinessErr(researchFailureMessage(classifyHttpFailure(status, bodyStatus)));
       });
     return () => {
       cancelled = true;
@@ -95,7 +109,7 @@ export default function ResearchDemoPage() {
 
   async function submit() {
     if (!modelId || !isReady(modelId)) {
-      setErr("The selected model is not ready. No other model will be used.");
+      setErr("Serving status: unavailable. No other model will be used, and no result was produced.");
       return;
     }
     if (!file) {
@@ -105,6 +119,7 @@ export default function ResearchDemoPage() {
     const selected = modelId;
     setErr(null);
     setResult(null);
+    setComparison(null);
     setPending(true);
     try {
       const body = new FormData();
@@ -118,11 +133,55 @@ export default function ResearchDemoPage() {
       }
       setResult({ selected, body: data });
     } catch (error) {
-      const fallback = "The selected model did not return a classification.";
-      setErr(axios.isAxiosError(error) ? getApiErrorMessage(error, fallback) : fallback);
+      const status = axios.isAxiosError(error) ? error.response?.status : undefined;
+      const bodyStatus = axios.isAxiosError(error) ? (error.response?.data as { status?: string } | undefined)?.status : undefined;
+      setErr(researchFailureMessage(classifyHttpFailure(status, bodyStatus)));
     } finally {
       setPending(false);
     }
+  }
+
+  async function compareBoth() {
+    if (!file) {
+      setErr("Choose an image before comparing the two research models.");
+      return;
+    }
+    setErr(null);
+    setResult(null);
+    setComparison(null);
+    setPending(true);
+    const next: Partial<Record<ModelId, LaneOutcome>> = {};
+    await Promise.all(
+      MODEL_IDS.map(async (id) => {
+        if (!isReady(id)) {
+          next[id] = { state: "unavailable" };
+          return;
+        }
+        try {
+          const body = new FormData();
+          body.append("image", file);
+          body.append("brand", brand);
+          body.append("logical_model", id);
+          const { data } = await api.post<ResearchResult>("/research/verify", body);
+          if (data.model !== EXPECTED_MODEL[id]) {
+            next[id] = {
+              state: "error",
+              message: "The response came from a different model than this lane. It was discarded.",
+            };
+            return;
+          }
+          next[id] = { state: "ok", body: data };
+        } catch (error) {
+          const status = axios.isAxiosError(error) ? error.response?.status : undefined;
+          const bodyStatus = axios.isAxiosError(error)
+            ? (error.response?.data as { status?: string } | undefined)?.status
+            : undefined;
+          next[id] = { state: "error", message: researchFailureMessage(classifyHttpFailure(status, bodyStatus)) };
+        }
+      }),
+    );
+    setComparison(next);
+    setPending(false);
   }
 
   return (
@@ -152,7 +211,7 @@ export default function ResearchDemoPage() {
                 setErr(null);
               }}
             >
-              {modelId === null ? <option value="">No model is ready</option> : null}
+              {modelId === null ? <option value="">No model is available to serve</option> : null}
               {MODEL_IDS.map((id) => (
                 <option key={id} value={id} disabled={!isReady(id)}>
                   {MODEL_LABELS[id]}
@@ -160,17 +219,18 @@ export default function ResearchDemoPage() {
                 </option>
               ))}
             </select>
-            {!readiness && !readinessErr ? <p className="mt-2 text-sm text-primary/60">Checking model readiness</p> : null}
-            {readinessErr ? <p className="mt-2 text-sm font-semibold text-danger">{readinessErr}</p> : null}
+            {!readiness && !readinessErr ? <p className="mt-2 text-sm text-primary/60">Checking serving status</p> : null}
+            {readinessErr ? <p className="mt-2 text-sm font-semibold text-danger" role="alert">{readinessErr}</p> : null}
+            <p className="mt-2 text-sm text-primary/70">{VALIDITY_NOT_ESTABLISHED}</p>
             {readiness ? (
               <ul className="mt-2 space-y-1 text-xs text-primary/60">
                 {MODEL_IDS.map((id) => {
                   const s = statusFor(id);
                   return (
                     <li key={id}>
-                      {MODEL_LABELS[id]}:{" "}
+                      {SERVING_STATUS_LABEL} · {MODEL_LABELS[id]}:{" "}
                       {s?.ready
-                        ? "ready"
+                        ? "available"
                         : `unavailable${s?.unavailable_reason ? ` (${UNAVAILABLE_REASONS[s.unavailable_reason] ?? s.unavailable_reason})` : ""}`}
                       {s ? ` · ${s.architecture}` : ""}
                       {s ? (s.same_model_as_live_route ? " · same model as the live listing check" : " · not the live listing-check model") : ""}
@@ -195,6 +255,7 @@ export default function ResearchDemoPage() {
               onChange={(event) => setBrand(event.target.value)}
               placeholder="Patek Philippe"
             />
+            <p className="mt-2 text-xs text-primary/60">{DECLARED_BRAND_NOTE}</p>
           </div>
           <div>
             <label className="text-xs font-semibold text-primary/55" htmlFor="research-image">
@@ -208,14 +269,27 @@ export default function ResearchDemoPage() {
               onChange={(event) => setFile(event.target.files?.[0] ?? null)}
             />
           </div>
-          <Button
-            className="min-h-[44px]"
-            disabled={pending || !modelId || !selectedStatus?.ready}
-            onClick={() => void submit()}
-          >
-            {pending ? "Running research demo" : "Run research demo"}
-          </Button>
-          {err ? <p className="text-sm font-semibold text-danger">{err}</p> : null}
+          <div className="flex flex-wrap gap-3">
+            <Button
+              className="min-h-[44px]"
+              disabled={pending || !modelId || !selectedStatus?.ready}
+              onClick={() => void submit()}
+            >
+              {pending ? "Running research demo" : "Run research demo"}
+            </Button>
+            <Button
+              variant="outline"
+              className="min-h-[44px]"
+              disabled={pending || !file}
+              onClick={() => void compareBoth()}
+            >
+              Compare both models
+            </Button>
+          </div>
+          <p className="text-xs text-primary/60">
+            Comparison runs each research model separately on this image and declared brand. The two classifications are not combined, and neither one is treated as more accurate. Neither result publishes a listing.
+          </p>
+          {err ? <p className="text-sm font-semibold text-danger" role="alert">{err}</p> : null}
           {result ? (
             <div className="space-y-3">
               <AuthBadge
@@ -241,6 +315,41 @@ export default function ResearchDemoPage() {
               {result.body.checkpoint_sha ? (
                 <p className="break-all text-xs text-primary/50">Checkpoint {result.body.checkpoint_sha}</p>
               ) : null}
+            </div>
+          ) : null}
+          {comparison ? (
+            <div className="space-y-3">
+              <p className="text-sm font-semibold text-primary">Research-only side-by-side classification</p>
+              <p className="text-sm text-primary/70">{DECLARED_BRAND_NOTE} {VALIDITY_NOT_ESTABLISHED}</p>
+              <div className="grid gap-3 md:grid-cols-2">
+                {MODEL_IDS.map((id) => {
+                  const lane = comparison[id];
+                  return (
+                    <div key={id} className="rounded-xl border border-primary/15 p-4">
+                      <p className="text-sm font-semibold">{MODEL_LABELS[id]}</p>
+                      {id === DINOV3_EXPERIMENTAL ? (
+                        <p className="mt-1 text-xs font-semibold text-danger">EXPERIMENTAL — NOT APPROVED FOR PRODUCTION</p>
+                      ) : (
+                        <p className="mt-1 text-xs text-primary/60">Legacy research path. Not a production certificate.</p>
+                      )}
+                      {lane?.state === "unavailable" ? (
+                        <p className="mt-3 text-sm text-primary/70" role="status">Serving status: unavailable. No result was produced for this model.</p>
+                      ) : null}
+                      {lane?.state === "error" ? (
+                        <p className="mt-3 text-sm font-semibold text-danger" role="alert">{lane.message}</p>
+                      ) : null}
+                      {lane?.state === "ok" ? (
+                        <div className="mt-3 space-y-2">
+                          <p className="text-sm">Model classification: {lane.body.decision} — research screening result, not verified.</p>
+                          <p className="text-sm text-primary/70">Declared brand: {lane.body.declared_brand}</p>
+                          <p className="text-sm text-primary/70">Model that ran: {lane.body.model}</p>
+                          <p className="text-xs text-primary/55">This lane cannot publish a listing.</p>
+                        </div>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ) : null}
         </CardContent>

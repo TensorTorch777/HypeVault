@@ -33,7 +33,7 @@ export function ListingsEmptyState() {
           List an item
         </Link>
         <Link href="/product/Luxury%20watches" className="hv-chevron">
-          Browse market prices
+          Sample market page — not live prices
         </Link>
       </div>
     </div>

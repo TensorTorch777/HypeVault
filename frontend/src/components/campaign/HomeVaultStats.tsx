@@ -16,7 +16,7 @@ const cards = [
     suffix: "+",
     prefix: "" as string,
     label: "Checks queued",
-    description: "Research classifications inside the five-brand scope.",
+    description: "Illustrative count — not a live queue of research classifications.",
   },
   {
     key: "markets",
@@ -27,7 +27,7 @@ const cards = [
     suffix: "",
     prefix: "",
     label: "Marketplaces",
-    description: "StockX · Chrono24 · eBay — one comparison surface.",
+    description: "StockX, Chrono24, and eBay are named as examples. These counts are not live market data.",
   },
   {
     key: "latency",
@@ -38,12 +38,14 @@ const cards = [
     suffix: "s",
     prefix: "<",
     label: "Latency target",
-    description: "Inference + pricing snapshot, cached when possible.",
+    description: "Illustrative figure — not a measured live latency.",
   },
 ] as const;
 
 export function HomeVaultStats() {
   return (
+    <div>
+      <p className="mb-4 text-sm font-semibold text-[#FFEDF6]/75">Illustrative figures — not live operations or live market prices.</p>
     <Stagger gap={0.1} className="grid auto-rows-fr gap-5 md:grid-cols-3 md:gap-6">
       {cards.map((c) => (
         <StaggerItem key={c.key}>
@@ -80,5 +82,6 @@ export function HomeVaultStats() {
         </StaggerItem>
       ))}
     </Stagger>
+    </div>
   );
 }

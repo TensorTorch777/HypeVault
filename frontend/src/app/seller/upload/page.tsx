@@ -12,7 +12,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 
-import { api, fetchMe, getApiErrorMessage } from "@/lib/api";
+import { api, fetchMe } from "@/lib/api";
+import { DECLARED_BRAND_NOTE, classifyHttpFailure, researchFailureMessage } from "@/lib/semanticCopy";
 
 const steps = ["Images", "Details", "Legacy check", "Result"] as const;
 
@@ -38,6 +39,8 @@ export default function SellerUploadPage() {
   const [condition, setCondition] = useState("");
   const [size, setSize] = useState("");
   const [listingId, setListingId] = useState<string | null>(null);
+  const [listingStatus, setListingStatus] = useState<string | null>(null);
+  const [stage, setStage] = useState<"idle" | "creating" | "screening" | "screened" | "screening_failed" | "create_failed">("idle");
   const [verdict, setVerdict] = useState<"AUTHENTIC" | "FAKE" | null>(null);
   const [confidence, setConfidence] = useState<number | null>(null);
   const [err, setErr] = useState<string | null>(null);
@@ -75,7 +78,41 @@ export default function SellerUploadPage() {
     }>("/verify/authenticate", fd);
     setVerdict(data.verdict);
     setConfidence(data.confidence);
-    return data.verdict as "AUTHENTIC" | "FAKE";
+    setListingStatus(data.listing_status);
+    return data;
+  }
+
+  async function runLegacyCheck() {
+    setErr(null);
+    let id = listingId;
+    try {
+      if (!id) {
+        setStage("creating");
+        id = await createListing();
+        setListingId(id);
+      }
+      setStage("screening");
+      await runVerify(id);
+      setStage("screened");
+      setStep(3);
+    } catch (e) {
+      if (id) {
+        setListingId(id);
+        setStage("screening_failed");
+        const status = axios.isAxiosError(e) ? e.response?.status : undefined;
+        const bodyStatus = axios.isAxiosError(e) ? (e.response?.data as { status?: string } | undefined)?.status : undefined;
+        const kind = classifyHttpFailure(status, bodyStatus);
+        const specific = kind === "scope" || kind === "invalid" || kind === "access" || kind === "unavailable";
+        setErr(
+          specific
+            ? `${researchFailureMessage(kind)} Listing ${id} already exists and was not created again.`
+            : `Listing ${id} was created, but screening did not complete. It may still be pending and is not verified. Retry screening without creating another listing.`,
+        );
+        return;
+      }
+      setStage("create_failed");
+      setErr("The listing was not created. Nothing was screened.");
+    }
   }
 
   return (
@@ -132,10 +169,10 @@ export default function SellerUploadPage() {
                     <p className="mt-2 text-sm font-medium text-primary/80">Luxury watch</p>
                   </div>
                   <div>
-                    <label className="text-xs font-semibold text-primary/55">Brand</label>
+                    <label className="text-xs font-semibold text-primary/55">Declared brand</label>
                     <Input className="mt-2" value={brand} onChange={(e) => setBrand(e.target.value)} />
                     <p className="mt-2 text-xs text-primary/55">
-                      Legacy DINOv2 listing check. The selected brand is user-declared and is not independently verified from the image. This is not the DINOv3 research prototype.
+                      {DECLARED_BRAND_NOTE} Legacy DINOv2 listing check. This is not the DINOv3 research prototype. An out-of-scope brand produces no authenticity result.
                     </p>
                   </div>
                   <div>
@@ -162,35 +199,23 @@ export default function SellerUploadPage() {
                   <p className="text-sm text-primary/65">
                     This runs the legacy DINOv2 classifier. It is not the frozen DINOv3 research prototype, and it is not a production authenticity guarantee. An unsupported brand returns no authentic or fake verdict.
                   </p>
-                  {err ? <p className="text-sm font-semibold text-danger">{err}</p> : null}
+                  <p className="text-sm text-primary/70" role="status">
+                    {stage === "creating" ? "Creating listing." : null}
+                    {stage === "screening" ? "Legacy screening in progress. The listing is not verified yet." : null}
+                    {stage === "screening_failed" && listingId ? `Listing ${listingId} exists. Screening did not complete.` : null}
+                    {stage === "idle" || stage === "create_failed" ? "Listing creation and screening are separate steps." : null}
+                  </p>
+                  {err ? <p className="text-sm font-semibold text-danger" role="alert">{err}</p> : null}
                   <div className="flex justify-between gap-3">
-                    <Button variant="outline" className="min-h-[44px]" onClick={() => setStep(1)}>
+                    <Button variant="outline" className="min-h-[44px]" onClick={() => setStep(1)} disabled={stage === "creating" || stage === "screening"}>
                       Back
                     </Button>
                     <Button
                       className="min-h-[44px]"
-                      onClick={() => {
-                        void (async () => {
-                          try {
-                            setErr(null);
-                            const id = listingId ?? (await createListing());
-                            setListingId(id);
-                            await runVerify(id);
-                            setStep(3);
-                          } catch (e) {
-                            const fallback =
-                              "Verification failed. If you use Triton, ensure it is running; if you use torch, check LOCAL_MODEL_PATH and API logs. Use a JPEG/PNG/WebP under 10MB.";
-                            const msg = axios.isAxiosError(e)
-                              ? getApiErrorMessage(e, fallback)
-                              : e instanceof Error
-                                ? e.message
-                                : fallback;
-                            setErr(msg);
-                          }
-                        })();
-                      }}
+                      disabled={stage === "creating" || stage === "screening"}
+                      onClick={() => void runLegacyCheck()}
                     >
-                      Run legacy check
+                      {listingId ? "Retry screening" : "Run legacy check"}
                     </Button>
                   </div>
                 </motion.div>
@@ -199,6 +224,7 @@ export default function SellerUploadPage() {
               {step === 3 ? (
                 <motion.div key="s3" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="space-y-5">
                   <AuthBadge verdict={verdict} confidence={confidence} declaredBrand={brand} lane="legacy" />
+                  {listingId ? <p className="text-sm text-primary/70">Listing {listingId}. Workflow status: {listingStatus ?? "pending"} — not a verified authentic result.</p> : null}
                   <div className="flex flex-wrap gap-3">
                     {listingId ? (
                       <Button className="min-h-[44px]" onClick={() => router.push(`/product/${listingId}`)}>

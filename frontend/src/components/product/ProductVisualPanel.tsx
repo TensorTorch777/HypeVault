@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Watch } from "lucide-react";
 
 import type { Listing } from "@/lib/api";
-import { customerLabel } from "@/lib/customerLabel";
+import { customerStatusCopy } from "@/lib/customerLabel";
 import { cn } from "@/lib/utils";
 
 function PulseDots() {
@@ -36,7 +36,7 @@ export function ProductVisualPanel({
 }) {
   const Icon = Watch;
   const hasImage = Boolean(listing?.s3_url);
-  const label = listing ? customerLabel(listing) : null;
+  const label = listing ? customerStatusCopy(listing).title : null;
   const showHero = hasImage && Boolean(label);
   const showPlaceholder = !showHero;
 

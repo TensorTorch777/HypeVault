@@ -28,11 +28,11 @@ export const metadata: Metadata = {
     template: "%s · HypeVault",
   },
   description:
-    "Research prototype for authenticity classification within five evaluated luxury-watch brands. Not a universal authenticity guarantee.",
+    "Research prototype for in-scope watch-brand screening. Not a certificate and not a real-world authenticity guarantee.",
   openGraph: {
     title: "HypeVault",
     description:
-      "Research prototype for authenticity classification within five evaluated luxury-watch brands.",
+      "Research prototype for in-scope watch-brand screening. Not a real-world authenticity guarantee.",
     type: "website",
   },
 };

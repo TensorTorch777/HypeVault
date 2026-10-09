@@ -27,14 +27,14 @@ const FEED_WATCH_IMAGES = [
 ];
 
 const GENERIC_RECENT_ITEMS = [
-  { name: "Rolex Submariner Date", brand: "Rolex", category: "watch", label: "Outside scope" },
-  { name: "Omega Speedmaster Moonwatch", brand: "Omega", category: "watch", label: "Outside scope" },
-  { name: "Audemars Piguet Royal Oak", brand: "Audemars Piguet", category: "watch", label: "Demo listing — not verified" },
-  { name: "Patek Philippe Nautilus", brand: "Patek Philippe", category: "watch", label: "Demo listing — not verified" },
-  { name: "Richard Mille RM 011", brand: "Richard Mille", category: "watch", label: "Demo listing — not verified" },
-  { name: "Vacheron Constantin Overseas", brand: "Vacheron Constantin", category: "watch", label: "Demo listing — not verified" },
-  { name: "A. Lange & Söhne Zeitwerk", brand: "A. Lange & Söhne", category: "watch", label: "Demo listing — not verified" },
-  { name: "Patek Philippe Aquanaut", brand: "Patek Philippe", category: "watch", label: "Demo listing — not verified" },
+  { name: "Rolex Submariner Date", brand: "Rolex", category: "watch", label: "Demo example — not live inventory" },
+  { name: "Omega Speedmaster Moonwatch", brand: "Omega", category: "watch", label: "Demo example — not live inventory" },
+  { name: "Audemars Piguet Royal Oak", brand: "Audemars Piguet", category: "watch", label: "Demo example — not live inventory" },
+  { name: "Patek Philippe Nautilus", brand: "Patek Philippe", category: "watch", label: "Demo example — not live inventory" },
+  { name: "Richard Mille RM 011", brand: "Richard Mille", category: "watch", label: "Demo example — not live inventory" },
+  { name: "Vacheron Constantin Overseas", brand: "Vacheron Constantin", category: "watch", label: "Demo example — not live inventory" },
+  { name: "A. Lange & Söhne Zeitwerk", brand: "A. Lange & Söhne", category: "watch", label: "Demo example — not live inventory" },
+  { name: "Patek Philippe Aquanaut", brand: "Patek Philippe", category: "watch", label: "Demo example — not live inventory" },
 ] as const;
 
 export default function HomePage() {
@@ -47,7 +47,7 @@ export default function HomePage() {
       <section className="relative border-y border-[rgba(255,31,164,0.18)] bg-[#0B0118]">
         <div className="mx-auto flex max-w-[1080px] items-end justify-between gap-6 px-5 pt-10 pb-2">
           <Reveal variant="slideLeft">
-            <p className="hv-eyebrow">Inventory · live</p>
+            <p className="hv-eyebrow">Interactive demo — not live inventory</p>
             <h2
               className="mt-2 font-[family-name:var(--font-display)] font-extrabold italic text-[#FFEDF6]"
               style={{ fontSize: "clamp(1.75rem, 3.4vw, 2.5rem)", letterSpacing: "-0.025em", lineHeight: 1.05 }}
@@ -77,7 +77,7 @@ export default function HomePage() {
           <Reveal>
             <p className="hv-eyebrow">Find an item</p>
             <h2 className="mx-auto mt-3 max-w-md font-[family-name:var(--font-display)] hv-display-md text-[#FFEDF6]">
-              FIVE EVALUATED BRANDS.
+              FIVE IN-SCOPE BRANDS.
             </h2>
           </Reveal>
           <Reveal delay={0.15} className="mt-8">
@@ -110,9 +110,9 @@ export default function HomePage() {
         <div className="mx-auto max-w-[1080px] px-5">
           <div className="mb-14 flex items-end justify-between gap-4">
             <Reveal variant="slideLeft">
-              <p className="hv-eyebrow">Recent listings</p>
+              <p className="hv-eyebrow">Demo examples — not live inventory</p>
               <h2 className="mt-3 font-[family-name:var(--font-display)] hv-display-lg text-[#FFEDF6]">
-                FRESH IN THE VAULT.
+                SAMPLE CARDS, NOT THE CATALOG.
               </h2>
             </Reveal>
             <Reveal variant="slideRight" delay={0.1}>
@@ -127,7 +127,7 @@ export default function HomePage() {
               const fallback = FEED_WATCH_IMAGES[idx % FEED_WATCH_IMAGES.length];
               return (
                 <StaggerItem key={`${l.category}-${l.name}`}>
-                  <Link href={`/product/${encodeURIComponent(l.name)}`} prefetch className="group block h-full">
+                  <div className="group block h-full">
                     <motion.div
                       whileHover={{ y: -8, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }}
                       className="hv-card h-full overflow-hidden"
@@ -166,7 +166,7 @@ export default function HomePage() {
                         </div>
                       </div>
                     </motion.div>
-                  </Link>
+                  </div>
                 </StaggerItem>
               );
             })}

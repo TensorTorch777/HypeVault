@@ -34,7 +34,7 @@ export function HomeCategoryShowcase() {
                 Five-brand research prototype.
               </p>
               <p className="mt-3 max-w-[32ch] text-[15px] leading-[1.5] text-[#6E6E73]">
-                Authenticity research is limited to five evaluated brands. Market comparables stay in the same view.
+                Authenticity research is limited to five in-scope brands. It is not a real-world authenticity guarantee.
               </p>
             </div>
             <span className="inline-flex w-fit items-center gap-1 text-[15px] font-medium text-[#0066CC]">

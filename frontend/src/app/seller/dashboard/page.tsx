@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api, fetchMe, logoutRemote, type Listing } from "@/lib/api";
-import { customerLabel } from "@/lib/customerLabel";
+import { customerStatusCopy } from "@/lib/customerLabel";
 
 export default function SellerDashboardPage() {
   const router = useRouter();
@@ -123,7 +123,7 @@ export default function SellerDashboardPage() {
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold">{l.product_name}</p>
                     <p className="mt-1 text-xs text-primary/55">
-                      {l.category} • <span className="font-semibold text-primary">{customerLabel(l)}</span>
+                      {l.category} • <span className="font-semibold text-primary">{customerStatusCopy(l).title}</span>
                     </p>
                   </div>
                   <Button variant="outline" className="min-h-[44px] shrink-0">
