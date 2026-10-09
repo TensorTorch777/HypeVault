@@ -1,4 +1,5 @@
 {
+  "source": "backend/inference/model_router.py",
   "allowlist": {
     "dinov2_legacy": {
       "response_model": "LEGACY_DINOV2",
@@ -9,10 +10,13 @@
       "input_dtype": "FP32",
       "input_dims": [3, 518, 518],
       "output_meaning": "raw_logit",
-      "preprocessing": "legacy_square_resize_518_imagenet",
+      "preprocessing": "legacy square bicubic resize to the adapter's 518 input, ImageNet normalization",
       "temperature": null,
-      "decision_policy": "sigmoid(logit) compared with the existing legacy threshold",
+      "decision_policy": "sigmoid(logit) at the legacy 0.50 threshold, then the live route's 0.88 minimum-authentic-confidence floor",
+      "checkpoint_sha_in_response": null,
       "precision": "FP32",
+      "architecture": "DINOv2 ViT-g/14 ONNX export, 40 transformer blocks, 518 input",
+      "same_model_as_live_route": false,
       "research_only": false,
       "production_route": true
     },
@@ -25,10 +29,10 @@
       "input_dtype": "FP32",
       "input_dims": [3, 512, 512],
       "output_meaning": "raw_logit",
-      "preprocessing": "resize_pad_square_eval_v1",
+      "preprocessing": "resize_pad_square_eval_v1 via dinov3_serving.preprocess_serving_image",
       "temperature": 0.24038200410185356,
       "decision_threshold": 0.5,
-      "decision_policy": "existing shadow policy on the raw logit; temperature stays 0.24038200410185356",
+      "decision_policy": "shadow_v1 PolicyEngine with fast_quality_gate on the raw logit",
       "precision": "FP32",
       "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
       "model_scope": "FIVE_BRAND_RESEARCH_PROTOTYPE",
@@ -39,15 +43,30 @@
     }
   },
   "client_may_send_triton_name": false,
+  "client_field": "logical_model",
+  "default_when_omitted": "dinov3_experimental",
   "silent_fallback": false,
+  "version_pinned_on_infer_and_ready": true,
+  "readiness": "server live plus model-version ready, per model; server-wide readiness reported separately",
   "timeout_seconds": 5.0,
-  "missing_model_status": "MODEL_ERROR",
+  "non_finite_or_wrong_size_output": "INFERENCE_ERROR, decision null",
+  "missing_model_status": "MODEL_ERROR (HTTP 503)",
   "missing_model_decision": null,
-  "unknown_logical_id_status": "POLICY_ERROR",
-  "production_dinov3_status": "POLICY_ERROR",
+  "unknown_logical_id_status": "POLICY_ERROR (HTTP 422)",
+  "production_or_unknown_mode_status": "POLICY_ERROR (HTTP 403)",
+  "live_route_dinov3_selector_status": "POLICY_ERROR (HTTP 403)",
+  "access_control": {
+    "dependency": "auth.deps.require_research_user",
+    "entitlement_source": "RESEARCH_USER_EMAILS server setting; empty means nobody",
+    "registration_roles": ["buyer", "seller"],
+    "unauthenticated": "HTTP 401",
+    "authenticated_without_entitlement": "HTTP 403"
+  },
   "parity_tolerances_registered_before_measurement": {
     "max_absolute_logit_error": 1e-4,
     "max_absolute_probability_error": 1e-5,
-    "source": "ml_rtx5080/dinov3_serving.py LOGIT_ATOL and PROBABILITY_ATOL"
+    "protocol": "ml_rtx5080/experiments/dual_model_triton_v1/parity_protocol_v1.json",
+    "protocol_sha256": "858abd0c03f27103d56625e0934d5886b7234770fffeff15c3c72d8e7020e4cb",
+    "committed_before_results_in": "b639dc3"
   }
 }

@@ -1,38 +1,63 @@
 {
-  "host_kernel": "7.0.0-38-generic",
-  "gpu": {
-    "name": "NVIDIA GeForce RTX 5080",
+  "captured_on": "2026-10-09",
+  "raw_diagnostics": "docs/engineering/runtime_diagnostics_2026-10-09.txt",
+  "host": {
+    "os": "Ubuntu 24.04.4 LTS",
+    "kernel": "7.0.0-38-generic",
+    "gpu": "NVIDIA GeForce RTX 5080",
+    "compute_capability": [12, 0],
     "driver": "580.178.04",
     "memory_mib": 16303,
-    "cuda_visible_to_host_pytorch": true,
-    "pytorch": "2.11.0+cu130"
+    "nvidia_kernel_modules_loaded": true,
+    "nvidia_device_nodes_present": true,
+    "host_pytorch": "2.11.0+cu130, CUDA 13.0, cuda available true",
+    "host_onnxruntime": "1.26.0"
   },
-  "tritonserver_on_host": false,
-  "docker": {
-    "server_version": "29.4.3",
+  "container_runtime": {
+    "docker_server": "29.4.3",
     "runtimes": ["io.containerd.runc.v2", "runc"],
-    "nvidia_container_runtime_present": false,
-    "local_image": "nvcr.io/nvidia/tritonserver:23.10-py3",
-    "local_image_id": "83513cb05c7e",
-    "local_image_size": "19.5GB",
-    "gpu_probe_command": "docker run --rm --gpus all nvcr.io/nvidia/tritonserver:23.10-py3 nvidia-smi",
-    "gpu_probe_result": "failed to discover GPU vendor from CDI: no known GPU vendor found",
-    "blackwell_note": "Triton 23.10 is older than the RTX 5080. GPU passthrough was not available, so a newer Triton image was not pulled."
+    "default_runtime": "runc",
+    "nvidia_container_toolkit_packages": "none installed",
+    "nvidia_ctk_binary": false,
+    "daemon_json": "absent",
+    "cdi_spec_dirs_configured": ["/etc/cdi", "/var/run/cdi"],
+    "cdi_spec_dirs_exist": false,
+    "probe_gpus_all": "failed to discover GPU vendor from CDI: no known GPU vendor found",
+    "probe_cdi_device": "CDI device injection failed: unresolvable CDI devices nvidia.com/gpu=all"
   },
-  "disk": {
-    "filesystem": "/dev/nvme0n1p5",
-    "size": "416G",
-    "used": "393G",
-    "available": "1.1G",
-    "use_percent": "100%"
+  "permissions": {"passwordless_sudo": false, "user_in_docker_group": true},
+  "disk": {"root_available": "915M", "docker_images_reclaimable": "0B", "docker_build_cache_reclaimable": "257.1MB"},
+  "blocker_classification": {
+    "driver": "NOT_A_BLOCKER",
+    "container_runtime_cdi": "BLOCKER",
+    "permissions": "BLOCKER",
+    "disk_space": "BLOCKER",
+    "triton_image_version": "BLOCKER"
   },
-  "checkpoint": {
-    "path": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
-    "sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
-    "expected_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
-    "matches": true,
-    "temperature": 0.24038200410185356
+  "triton_images": {
+    "local": {
+      "image": "nvcr.io/nvidia/tritonserver:23.10-py3",
+      "digest": "sha256:83513cb05c7e53ada093cab904daa8861d5b8bc67d75dd78237731411b744da9",
+      "triton": "2.39.0",
+      "onnxruntime": "1.16.0",
+      "max_onnx_ir_version": 9,
+      "suitable_for_rtx_5080_gpu": false
+    },
+    "selected_pin_not_pulled": {
+      "image": "nvcr.io/nvidia/tritonserver:26.01-py3",
+      "index_digest": "sha256:c9f2ede50ccc4a3ce66e22e26ed1b5adc0c68516b58edfaca738693719c2146b",
+      "linux_amd64_digest": "sha256:8a4ecd6bb4ac45386eb36c917adad864386d08acd2dfc41392ddd66637244be5",
+      "compressed_size_gb": 7.64,
+      "triton": "2.65.0",
+      "cuda": "13.1.1",
+      "onnxruntime": "1.24.1",
+      "documented_driver_requirement": "NVIDIA Driver release 575 or later",
+      "documented_gpu_support": "compute capability 7.5 and later, including Blackwell",
+      "source": "https://docs.nvidia.com/deeplearning/triton-inference-server/release-notes/rel-26-01.html",
+      "why_not_latest": "26.09 (CUDA 13.4.1, ONNX Runtime 1.28.0) does not state a minimum driver in its release notes. 26.01 states 575+, which the host driver 580.178.04 meets.",
+      "open_risk": "Public reports state that prebuilt ONNX Runtime CUDA packages lacked sm_120 kernels in early 2026. CUDA execution of the ONNX backend on the RTX 5080 must be proven on hardware before GPU serving is claimed."
+    }
   },
-  "decision": "GPU_TRITON_BLOCKED",
-  "drivers_changed": false
+  "drivers_changed": false,
+  "packages_installed": ["eslint@8.57.1 and eslint-config-next@14.2.5 as frontend devDependencies only"]
 }

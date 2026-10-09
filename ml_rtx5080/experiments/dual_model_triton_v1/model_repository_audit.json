@@ -1,26 +1,47 @@
 {
+  "checked_on": "2026-10-09",
   "dinov2_classifier": {
     "preserved": true,
     "config_path": "models/dinov2_classifier/config.pbtxt",
+    "tracked_fixture": "infra/triton/dinov2_classifier/config.pbtxt",
+    "config_sha256": "9488821bf515001efff6fe32853665a09e9430327d4f2ec88451a58cfb7f7c4f",
+    "fixture_byte_identical": true,
     "backend": "onnxruntime",
     "version": "1",
     "input": {"name": "input__0", "dtype": "FP32", "dims": [3, 518, 518]},
     "output": {"name": "output__0", "dtype": "FP32", "dims": [1], "meaning": "raw_logit"},
-    "preprocessing": "legacy_square_resize_518_imagenet",
-    "temperature": null,
-    "precision": "FP32",
-    "artifact_note": "models/dinov2_classifier/1/model.onnx.data is the existing external ONNX data. It was not rewritten and was not re-hashed in this phase.",
-    "loaded_by_triton": false
+    "onnx_ir_version": 10,
+    "onnx_opset": 17,
+    "external_initializers": 572,
+    "transformer_blocks": 40,
+    "architecture_inferred": "DINOv2 ViT-g/14 at 518",
+    "artifact_dates": "model.onnx and model.onnx.data dated 2026-04-27",
+    "triton_23_10_load": "UNAVAILABLE: Unsupported model IR version: 10, max supported IR version: 9",
+    "same_model_as_live_route": false
+  },
+  "live_legacy_route": {
+    "path": "POST /verify/authenticate",
+    "backend": "local PyTorch (INFERENCE_BACKEND=torch)",
+    "checkpoint": "ml_rtx5080/checkpoints/best_model.pt",
+    "model_name": "vit_base_patch14_dinov2.lvd142m",
+    "input_size": 504,
+    "checkpoint_date": "2026-05-15",
+    "onnx_export_present": "ml_rtx5080/checkpoints/dinov2_hypevault.onnx (IR 10, opset 18, input [batch, 3, 504, 504], output [batch])",
+    "served_by_triton": false
   },
   "dinov3_authenticity_classifier": {
-    "role": "existing_export_left_unchanged",
+    "role": "existing export left unchanged; authoritative artifact for the candidate",
     "identity_source_checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
     "identity_export_artifact_sha256": "d1d0c9bc010551b006b7cd57830d0d2511928832aefb4582bb71d70e02363edb",
+    "measured_model_onnx_sha256": "d1d0c9bc010551b006b7cd57830d0d2511928832aefb4582bb71d70e02363edb",
+    "onnx_ir_version": 8,
+    "onnx_opset": 18,
     "temperature": 0.24038200410185356,
     "temperature_in_graph": false,
     "output": "raw_logit",
     "preprocessing": "resize_pad_square_eval_v1",
-    "onnx_rehashed_this_phase": false
+    "loaded_by_triton": false,
+    "excluded_from_loading": "explicit model control loads only dinov3_authenticity_candidate"
   },
   "dinov3_authenticity_candidate": {
     "config_tracked_at": "infra/triton/dinov3_authenticity_candidate/config.pbtxt",
@@ -28,11 +49,12 @@
     "version": "1",
     "backend": "onnxruntime",
     "instance_group": "KIND_CPU",
-    "gpu_not_enabled_reason": "Docker cannot discover a GPU vendor, and Triton 23.10 was not started.",
     "input": {"name": "input__0", "dtype": "FP32", "dims": [3, 512, 512]},
     "output": {"name": "output__0", "dtype": "FP32", "dims": [1], "meaning": "raw_logit"},
-    "artifact": "symlink to models/dinov3_authenticity_classifier/1/model.onnx",
-    "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
-    "loaded_by_triton": false
+    "artifact": "relative symlink to models/dinov3_authenticity_classifier/1/model.onnx",
+    "artifact_resolves_to_single_export": true,
+    "checkpoint_sha256_verified_today": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "triton_23_10_cpu_load": "READY",
+    "triton_gpu_load": "BLOCKED"
   }
 }
