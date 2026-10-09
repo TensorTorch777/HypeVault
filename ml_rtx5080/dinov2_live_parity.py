@@ -33,7 +33,11 @@ PROTOCOL = OUT / "dinov2_live_parity_protocol_v1.json"
 PROTOCOL_SHA = OUT / "dinov2_live_parity_protocol_v1.sha256"
 GPU_PROTOCOL = OUT / "dinov2_live_triton_gpu_protocol_v1.json"
 GPU_PROTOCOL_SHA = OUT / "dinov2_live_triton_gpu_protocol_v1.sha256"
-RESULTS = {"export": OUT / "dinov2_live_export_parity.json", "triton": OUT / "dinov2_live_triton_parity.json"}
+RESULTS = {
+    "export": OUT / "dinov2_live_export_parity.json",
+    "triton_cpu": OUT / "dinov2_live_triton_cpu_parity.json",
+    "triton_gpu": OUT / "dinov2_live_triton_gpu_parity.json",
+}
 INPUTS_FROM = OUT / "parity_protocol_v1.json"
 SPLIT_MANIFEST = _PKG / "experiments" / "dataset_audit" / "split_manifest_v2.json"
 
@@ -119,7 +123,7 @@ def write_gpu_protocol() -> dict:
     """Pin the GPU-stage run to the reviewed KIND_GPU config. Inputs, tolerances, and rule come from v1 unchanged."""
     if GPU_PROTOCOL.exists():
         raise RuntimeError(f"{GPU_PROTOCOL} already exists. A protocol is written once, before measurement.")
-    if RESULTS["triton"].exists():
+    if RESULTS["triton_gpu"].exists():
         raise RuntimeError("a Triton result already exists; the GPU protocol must precede it")
     base = _load_protocol(PROTOCOL, PROTOCOL_SHA, TRACKED_CONFIG)
     protocol = dict(base)
@@ -306,7 +310,8 @@ def run(stage: str, url: str, require_gpu: bool) -> dict:
         **compared,
         "final_test_images_opened": 0,
     }
-    RESULTS[stage].write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
+    key = stage if stage == "export" else ("triton_gpu" if require_gpu and gpu else "triton_cpu")
+    RESULTS[key].write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
     return results
 
 

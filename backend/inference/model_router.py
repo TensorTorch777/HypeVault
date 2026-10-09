@@ -53,7 +53,7 @@ _MODELS: dict[str, dict[str, Any]] = {
         "source_checkpoint_sha256": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66",
         "same_model_as_live_route": True,
         "validated_instance_kinds": frozenset(),
-        "validation_evidence": "dinov2_live_triton_parity.json (pending; export parity passed in dinov2_live_export_parity.json)",
+        "validation_evidence": "dinov2_live_triton_gpu_parity.json (pending; export parity passed in dinov2_live_export_parity.json)",
         "research_only": False,
         "production_route": True,
     },

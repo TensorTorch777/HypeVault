@@ -1,0 +1,141 @@
+# Phase 51 runtime diagnostics. Captured 2026-10-09T16:41:08+05:30. Missing commands and files are findings, not errors.
+
+$ cat /etc/os-release
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.4 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
+[exit=0]
+
+$ uname -r
+7.0.0-38-generic
+[exit=0]
+
+$ nvidia-smi
+Fri Oct  9 16:41:08 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.178.04             Driver Version: 580.178.04     CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 5080        Off |   00000000:01:00.0  On |                  N/A |
+|  0%   46C    P3             45W /  360W |     504MiB /  16303MiB |      9%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            6900      G   /usr/lib/xorg/Xorg                      192MiB |
+|    0   N/A  N/A            7832      G   /usr/bin/gnome-shell                     39MiB |
+|    0   N/A  N/A           12399      G   ...rack-uuid=3190708988185955192        114MiB |
+|    0   N/A  N/A           12889      G   /usr/share/cursor/cursor                 80MiB |
+|    0   N/A  N/A          186841      G   /usr/bin/nautilus                        13MiB |
++-----------------------------------------------------------------------------------------+
+[exit=0]
+
+$ docker version
+Client: Docker Engine - Community
+ Version:           29.4.3
+ API version:       1.54
+ Go version:        go1.26.2
+ Git commit:        055a478
+ Built:             Wed May  6 17:07:36 2026
+ OS/Arch:           linux/amd64
+ Context:           default
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          29.4.3
+  API version:      1.54 (minimum version 1.40)
+  Go version:       go1.26.2
+  Git commit:       56be731
+  Built:            Wed May  6 17:07:36 2026
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          v2.2.3
+  GitCommit:        77c84241c7cbdd9b4eca2591793e3d4f4317c590
+ runc:
+  Version:          1.3.5
+  GitCommit:        v1.3.5-0-g488fc13e
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+[exit=0]
+
+$ df -h /
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme0n1p5  416G  372G   23G  95% /
+[exit=0]
+
+$ command -v nvidia-ctk
+[exit=1]
+
+$ nvidia-ctk --version
+bash: line 1: nvidia-ctk: command not found
+[exit=127]
+
+$ nvidia-ctk cdi list
+bash: line 1: nvidia-ctk: command not found
+[exit=127]
+
+$ dpkg -l | grep -E 'nvidia-container|libnvidia-container'
+[exit=1]
+
+$ ls -la /etc/cdi /var/run/cdi
+ls: cannot access '/etc/cdi': No such file or directory
+ls: cannot access '/var/run/cdi': No such file or directory
+[exit=2]
+
+$ cat /etc/docker/daemon.json
+cat: /etc/docker/daemon.json: No such file or directory
+[exit=1]
+
+$ docker info (selected fields)
+ServerVersion=29.4.3 DefaultRuntime=runc Runtimes=io.containerd.runc.v2 runc  CDISpecDirs=[/etc/cdi /var/run/cdi] OS=Ubuntu 24.04.4 LTS CgroupDriver=systemd
+
+$ sudo -n true
+sudo: a password is required
+[exit=1]
+
+$ docker image inspect <pinned 26.01>
+Id=sha256:c9f2ede50ccc4a3ce66e22e26ed1b5adc0c68516b58edfaca738693719c2146b RepoDigests=[nvcr.io/nvidia/tritonserver@sha256:c9f2ede50ccc4a3ce66e22e26ed1b5adc0c68516b58edfaca738693719c2146b] Created=2026-01-27T22:29:25.128810597Z Size=7643848213
+
+$ docker run --rm --gpus all nvcr.io/nvidia/tritonserver:26.01-py3@sha256:c9f2ede50ccc4a3ce66e22e26ed1b5adc0c68516b58edfaca738693719c2146b nvidia-smi
+docker: Error response from daemon: failed to discover GPU vendor from CDI: no known GPU vendor found
+
+Run 'docker run --help' for more information
+[exit=125]
+
+$ docker run --rm --device nvidia.com/gpu=all nvcr.io/nvidia/tritonserver:26.01-py3@sha256:c9f2ede50ccc4a3ce66e22e26ed1b5adc0c68516b58edfaca738693719c2146b nvidia-smi
+docker: Error response from daemon: CDI device injection failed: unresolvable CDI devices nvidia.com/gpu=all
+
+Run 'docker run --help' for more information
+[exit=125]
+
+$ running containers (a Docker restart would interrupt these)
+fonoster-apiserver-1 fonoster/apiserver:0.17.1 Up 8 hours
+fonoster-asterisk-1 fonoster/asterisk:20 Up 8 hours (healthy)
+fonoster-routr-1 fonoster/routr-one:2.13.22 Up 8 hours
+fonoster-postgres-1 postgres:16.10-alpine3.22 Up 8 hours
+fonoster-influxdb-1 influxdb:2.7 Up 8 hours
+fonoster-autopilot-1 fonoster/autopilot:0.17.1 Up 8 hours
+fonoster-nats-1 nats:2.11.8 Up 8 hours
+fonoster-autoheal-1 willfarrell/autoheal:latest Up 8 hours (healthy)
+fonoster-dashboard-1 fonoster/dashboard:0.17.1 Up 8 hours
+fonoster-envoy-1 envoyproxy/envoy:v1.35.0 Up 8 hours
+fonoster-rtpengine-1 fonoster/rtpengine:0.3.17 Up 8 hours

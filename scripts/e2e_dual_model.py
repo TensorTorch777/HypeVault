@@ -69,6 +69,9 @@ def main() -> int:
     parser.add_argument("--frontend", default="http://127.0.0.1:3000")
     parser.add_argument("--triton-grpc", default="localhost:18001")
     parser.add_argument("--triton-http", default="http://localhost:18000")
+    parser.add_argument("--triton-desc", required=True, help="Image, digest, and whether GPU was used; recorded verbatim")
+    parser.add_argument("--gpu-used", action="store_true", help="Set only when Triton metrics showed GPU execution")
+    parser.add_argument("--results", default=str(OUT))
     parser.add_argument("--research-email", default="e2e-research@example.com")
     parser.add_argument("--buyer-email", default="e2e-buyer@example.com")
     parser.add_argument("--seller-email", default="e2e-seller@example.com")
@@ -82,6 +85,7 @@ def main() -> int:
     triton = grpcclient.InferenceServerClient(args.triton_grpc)
 
     flows: dict[str, dict] = {}
+    models: dict = {"models": []}
     created_emails = [args.research_email, args.buyer_email, args.seller_email]
     baseline_listings = listing_count()
     baseline_users = int(psql("select count(*) from users;"))
@@ -121,22 +125,39 @@ def main() -> int:
         models = httpx.get(f"{args.api}/research/models", headers={"Authorization": f"Bearer {research}"}, timeout=30).json()
         ready = {m["logical_id"]: m["ready"] for m in models["models"]}
 
-        v2_before, v3_before = triton_count(triton, "dinov2_classifier"), triton_count(triton, "dinov3_authenticity_candidate")
+        reasons = {m["logical_id"]: m.get("unavailable_reason") for m in models["models"]}
+        old_before = triton_count(triton, "dinov2_classifier")
+        v2_before, v3_before = triton_count(triton, "dinov2_vitb14_live"), triton_count(triton, "dinov3_authenticity_candidate")
         dinov2 = post(research, {"brand": brand, "logical_model": "dinov2_legacy"})
-        v2_after, v3_after = triton_count(triton, "dinov2_classifier"), triton_count(triton, "dinov3_authenticity_candidate")
+        v2_after, v3_after = triton_count(triton, "dinov2_vitb14_live"), triton_count(triton, "dinov3_authenticity_candidate")
         body = dinov2.json()
+        if ready["dinov2_legacy"]:
+            dinov2_ok = (
+                dinov2.status_code == 200
+                and body.get("model") == "LEGACY_DINOV2"
+                and v2_after == (v2_before or 0) + 1
+                and v3_after == v3_before
+            )
+        else:
+            dinov2_ok = dinov2.status_code == 503 and body["decision"] is None and v2_after == v2_before and v3_after == v3_before
         record(
-            "2_dinov2_selection_invokes_only_dinov2_classifier",
-            (not ready["dinov2_legacy"]) and dinov2.status_code == 503 and body["decision"] is None and v3_after == v3_before,
+            "2_dinov2_selection_invokes_only_dinov2_vitb14_live",
+            dinov2_ok,
             {
                 "dinov2_ready": ready["dinov2_legacy"],
+                "dinov2_unavailable_reason": reasons["dinov2_legacy"],
                 "http_status": dinov2.status_code,
                 "status": body.get("status"),
                 "decision": body.get("decision"),
+                "dinov2_vitb14_live_inference_count_before_after": [v2_before, v2_after],
                 "dinov3_inference_count_before_after": [v3_before, v3_after],
-                "dinov2_inference_count_before_after": [v2_before, v2_after],
-                "note": "dinov2_classifier cannot load in Triton 23.10 (ONNX IR 10). The request failed closed and DINOv3 did not run.",
+                "inference_executed": bool(ready["dinov2_legacy"]),
             },
+        )
+        record(
+            "2b_old_vitg14_dinov2_classifier_not_routed",
+            triton_count(triton, "dinov2_classifier") == old_before,
+            {"dinov2_classifier_inference_count_before_after": [old_before, triton_count(triton, "dinov2_classifier")]},
         )
 
         v3_before = triton_count(triton, "dinov3_authenticity_candidate")
@@ -316,17 +337,18 @@ def main() -> int:
         "stack": {
             "api": "uvicorn main:app, HYPEVAULT_DEPLOYMENT_MODE=research, RESEARCH_USER_EMAILS=<one E2E account>",
             "production_api": "second uvicorn with HYPEVAULT_DEPLOYMENT_MODE=production",
-            "triton": "nvcr.io/nvidia/tritonserver:23.10-py3, CPU only, explicit model control, dinov3_authenticity_candidate loaded",
+            "triton": args.triton_desc,
             "database": "hypevault-postgres (local dev)",
             "frontend": "next start (production build)",
-            "gpu_used": False,
+            "gpu_used": args.gpu_used,
+            "readiness_at_start": {m["logical_id"]: {"ready": m["ready"], "reason": m.get("unavailable_reason")} for m in models["models"]},
         },
         "input": {"sample_id": authentic_case["sample_id"], "split": authentic_case["split"], "declared_brand": brand},
         "flows": flows,
         "cleanup": cleanup,
         "all_passed": all(f["result"] == "PASS" for f in flows.values()),
     }
-    OUT.write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
+    Path(args.results).write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps({name: f["result"] for name, f in flows.items()}, indent=2))
     print(json.dumps(cleanup))
     return 0 if results["all_passed"] else 1
