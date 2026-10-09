@@ -17,6 +17,7 @@ sys.path.insert(0, str(REPO / "ml_rtx5080"))
 
 FROZEN_SHA = "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f"
 FROZEN_TEMPERATURE = 0.24038200410185356
+LIVE_DINOV2_SHA = "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66"
 
 
 class _Upload:
@@ -50,10 +51,14 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
 
         dinov2 = resolve_model(DINOV2_LEGACY)
         dinov3 = resolve_model(DINOV3_EXPERIMENTAL)
-        self.assertEqual(dinov2["triton_name"], "dinov2_classifier")
+        self.assertEqual(dinov2["triton_name"], "dinov2_vitb14_live")
         self.assertEqual(dinov3["triton_name"], "dinov3_authenticity_candidate")
         self.assertNotEqual(dinov2["triton_name"], dinov3["triton_name"])
-        self.assertEqual(dinov2["input_dims"], [3, 518, 518])
+        self.assertEqual(dinov2["input_dims"], [3, 504, 504])
+        self.assertTrue(dinov2["same_model_as_live_route"])
+        self.assertEqual(dinov2["source_checkpoint_sha256"], LIVE_DINOV2_SHA)
+        self.assertEqual(dinov2["validated_instance_kinds"], frozenset())
+        self.assertEqual(dinov3["validated_instance_kinds"], frozenset({"KIND_CPU"}))
         self.assertEqual(dinov3["input_dims"], [3, 512, 512])
         self.assertIsNone(dinov2["temperature"])
         self.assertEqual(dinov3["temperature"], FROZEN_TEMPERATURE)
@@ -92,8 +97,10 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
             np.asarray([[float("inf")]], dtype=np.float32),
             np.asarray([[0.1], [0.2]], dtype=np.float32),
         ):
-            with patch("inference.model_router.named_model_ready", AsyncMock(return_value=True)), patch(
-                "inference.model_router.infer_named_model", AsyncMock(return_value=output)
+            with (
+                patch("inference.model_router.named_model_ready", AsyncMock(return_value=True)),
+                patch("inference.model_router.named_model_instance_kinds", AsyncMock(return_value=frozenset({"KIND_CPU"}))),
+                patch("inference.model_router.infer_named_model", AsyncMock(return_value=output)),
             ):
                 with self.assertRaises(ModelRoutingError) as caught:
                     await infer_allowlisted_model(DINOV3_EXPERIMENTAL, batch)
@@ -104,37 +111,67 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
 
         async def ready(name, version):
             self.assertEqual(version, "1")
-            return name == "dinov3_authenticity_candidate"
+            return True
 
-        with patch("inference.model_router.named_model_ready", new=AsyncMock(side_effect=ready)), patch(
-            "inference.model_router.triton_server_status", new=AsyncMock(return_value={"live": True, "ready": False})
+        with (
+            patch("inference.model_router.named_model_ready", new=AsyncMock(side_effect=ready)),
+            patch("inference.model_router.named_model_instance_kinds", new=AsyncMock(return_value=frozenset({"KIND_CPU"}))),
+            patch("inference.model_router.triton_server_status", new=AsyncMock(return_value={"live": True, "ready": False})),
         ):
             report = await readiness_report()
-        states = {row["logical_id"]: row["ready"] for row in report["models"]}
-        self.assertEqual(states, {"dinov2_legacy": False, "dinov3_experimental": True})
+        rows = {row["logical_id"]: row for row in report["models"]}
+        self.assertTrue(rows["dinov3_experimental"]["ready"])
+        self.assertIsNone(rows["dinov3_experimental"]["unavailable_reason"])
+        self.assertFalse(rows["dinov2_legacy"]["ready"])
+        self.assertEqual(rows["dinov2_legacy"]["unavailable_reason"], "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE")
+        self.assertTrue(rows["dinov2_legacy"]["same_model_as_live_route"])
         self.assertEqual(report["server"], {"live": True, "ready": False})
         self.assertEqual(report["publication_decision"], "BLOCKED")
         self.assertNotIn("decision", report)
-        dinov2 = next(row for row in report["models"] if row["logical_id"] == "dinov2_legacy")
-        self.assertFalse(dinov2["same_model_as_live_route"])
+
+    async def test_unvalidated_instance_kind_is_never_routed(self) -> None:
+        from inference.model_router import DINOV2_LEGACY, DINOV3_EXPERIMENTAL, ModelRoutingError, infer_allowlisted_model
+        import numpy as np
+
+        infer = AsyncMock(side_effect=AssertionError("an unvalidated model reached inference"))
+        cases = (
+            (DINOV2_LEGACY, frozenset({"KIND_CPU"}), "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"),
+            (DINOV2_LEGACY, frozenset({"KIND_GPU"}), "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"),
+            (DINOV3_EXPERIMENTAL, frozenset({"KIND_GPU"}), "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"),
+            (DINOV3_EXPERIMENTAL, frozenset({"KIND_CPU", "KIND_GPU"}), "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"),
+            (DINOV3_EXPERIMENTAL, None, "INSTANCE_KIND_UNKNOWN"),
+        )
+        for model_id, kinds, reason in cases:
+            with (
+                patch("inference.model_router.named_model_ready", AsyncMock(return_value=True)),
+                patch("inference.model_router.named_model_instance_kinds", AsyncMock(return_value=kinds)),
+                patch("inference.model_router.infer_named_model", infer),
+            ):
+                with self.assertRaises(ModelRoutingError) as caught:
+                    await infer_allowlisted_model(model_id, np.zeros((1, 3, 504, 504), dtype=np.float32))
+            self.assertEqual(caught.exception.status, "MODEL_UNAVAILABLE", (model_id, kinds))
+            self.assertIn(reason, caught.exception.message)
+        infer.assert_not_awaited()
 
     async def test_selected_model_is_the_only_infer_target(self) -> None:
-        from inference.model_router import DINOV2_LEGACY, infer_allowlisted_model
+        from inference.model_router import DINOV3_EXPERIMENTAL, infer_allowlisted_model
         import numpy as np
 
         ready = AsyncMock(return_value=True)
         infer = AsyncMock(return_value=np.asarray([[0.25]], dtype=np.float32))
-        with patch("inference.model_router.named_model_ready", ready), patch(
-            "inference.model_router.infer_named_model", infer
+        with (
+            patch("inference.model_router.named_model_ready", ready),
+            patch("inference.model_router.named_model_instance_kinds", AsyncMock(return_value=frozenset({"KIND_CPU"}))),
+            patch("inference.model_router.infer_named_model", infer),
         ):
-            result = await infer_allowlisted_model(DINOV2_LEGACY, np.zeros((1, 3, 518, 518), dtype=np.float32))
-        self.assertEqual(result["triton_name"], "dinov2_classifier")
-        self.assertEqual(result["response_model"], "LEGACY_DINOV2")
-        self.assertIsNone(result["temperature"])
+            result = await infer_allowlisted_model(DINOV3_EXPERIMENTAL, np.zeros((1, 3, 512, 512), dtype=np.float32))
+        self.assertEqual(result["triton_name"], "dinov3_authenticity_candidate")
+        self.assertEqual(result["response_model"], "DINOV3_RESEARCH_PROTOTYPE")
         self.assertEqual(result["logit"], 0.25)
         infer.assert_awaited_once()
-        self.assertEqual(infer.await_args.args[0], "dinov2_classifier")
+        self.assertEqual(infer.await_args.args[0], "dinov3_authenticity_candidate")
         self.assertEqual(infer.await_args.args[1], "1")
+        ready.assert_awaited_once_with("dinov3_authenticity_candidate", "1")
 
     async def test_research_routes_and_fail_closed(self) -> None:
         from fastapi.responses import JSONResponse
@@ -205,11 +242,11 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
         def dinov2_infer_for(logit):
             async def dinov2_infer(model_id, array):
                 self.assertEqual(model_id, "dinov2_legacy")
-                self.assertEqual(tuple(array.shape), (1, 3, 518, 518))
+                self.assertEqual(tuple(array.shape), (1, 3, 504, 504))
                 return {
                     "logit": logit,
                     "logical_id": model_id,
-                    "triton_name": "dinov2_classifier",
+                    "triton_name": "dinov2_vitb14_live",
                     "version": "1",
                     "response_model": "LEGACY_DINOV2",
                     "temperature": None,
@@ -218,7 +255,7 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
             return dinov2_infer
 
         with (
-            patch("inference.research_routes.settings.inference_img_size", 504),
+            patch("inference.research_routes.settings.inference_img_size", 518),
             patch("inference.research_routes.infer_allowlisted_model", new=AsyncMock(side_effect=dinov2_infer_for(-3.0))),
         ):
             dinov2 = await research_verify(current_user=object(), image=image, brand="Patek Philippe", logical_model="dinov2_legacy")
@@ -320,6 +357,17 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
         self.assertIn("dims: [ 3, 518, 518 ]", dinov2)
         self.assertIn("dims: [ 3, 512, 512 ]", candidate)
         self.assertNotIn("dinov3", dinov2.lower())
+
+    def test_live_dinov2_is_a_separate_triton_model(self) -> None:
+        live = (REPO / "infra" / "triton" / "dinov2_vitb14_live" / "config.pbtxt").read_text()
+        legacy = (REPO / "infra" / "triton" / "dinov2_classifier" / "config.pbtxt").read_text()
+        self.assertIn('name: "dinov2_vitb14_live"', live)
+        self.assertIn("dims: [ 3, 504, 504 ]", live)
+        self.assertIn("reshape: { shape: [ ] }", live)
+        self.assertIn('name: "dinov2_classifier"', legacy)
+        self.assertIn("dims: [ 3, 518, 518 ]", legacy)
+        router = (REPO / "backend" / "inference" / "model_router.py").read_text()
+        self.assertNotIn('"dinov2_classifier"', router)
 
     @unittest.skipUnless(
         (REPO / "models" / "dinov2_classifier" / "config.pbtxt").is_file(),

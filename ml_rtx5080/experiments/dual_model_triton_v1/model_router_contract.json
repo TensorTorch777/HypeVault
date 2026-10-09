@@ -3,20 +3,26 @@
   "allowlist": {
     "dinov2_legacy": {
       "response_model": "LEGACY_DINOV2",
-      "triton_name": "dinov2_classifier",
+      "triton_name": "dinov2_vitb14_live",
       "version": "1",
       "input_name": "input__0",
       "output_name": "output__0",
       "input_dtype": "FP32",
-      "input_dims": [3, 518, 518],
+      "input_dims": [
+        3,
+        504,
+        504
+      ],
       "output_meaning": "raw_logit",
-      "preprocessing": "legacy square bicubic resize to the adapter's 518 input, ImageNet normalization",
+      "preprocessing": "live route path: PIL convert('RGB'), np.array, preprocess_chw at the adapter's 504 input, ImageNet normalization",
       "temperature": null,
       "decision_policy": "sigmoid(logit) at the legacy 0.50 threshold, then the live route's 0.88 minimum-authentic-confidence floor",
       "checkpoint_sha_in_response": null,
-      "precision": "FP32",
-      "architecture": "DINOv2 ViT-g/14 ONNX export, 40 transformer blocks, 518 input",
-      "same_model_as_live_route": false,
+      "precision": "FP32 export of the checkpoint the live route runs in float16 autocast",
+      "architecture": "DINOv2 ViT-B/14 (vit_base_patch14_dinov2.lvd142m), live listing-check checkpoint, 504 input",
+      "source_checkpoint_sha256": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66",
+      "same_model_as_live_route": true,
+      "validated_instance_kinds": [],
       "research_only": false,
       "production_route": true
     },
@@ -27,7 +33,11 @@
       "input_name": "input__0",
       "output_name": "output__0",
       "input_dtype": "FP32",
-      "input_dims": [3, 512, 512],
+      "input_dims": [
+        3,
+        512,
+        512
+      ],
       "output_meaning": "raw_logit",
       "preprocessing": "resize_pad_square_eval_v1 via dinov3_serving.preprocess_serving_image",
       "temperature": 0.24038200410185356,
@@ -39,7 +49,10 @@
       "brand_verification": "NOT_PERFORMED",
       "research_only": true,
       "production_ready": false,
-      "production_route": false
+      "production_route": false,
+      "validated_instance_kinds": [
+        "KIND_CPU"
+      ]
     }
   },
   "client_may_send_triton_name": false,
@@ -58,15 +71,41 @@
   "access_control": {
     "dependency": "auth.deps.require_research_user",
     "entitlement_source": "RESEARCH_USER_EMAILS server setting; empty means nobody",
-    "registration_roles": ["buyer", "seller"],
+    "registration_roles": [
+      "buyer",
+      "seller"
+    ],
     "unauthenticated": "HTTP 401",
     "authenticated_without_entitlement": "HTTP 403"
   },
   "parity_tolerances_registered_before_measurement": {
-    "max_absolute_logit_error": 1e-4,
-    "max_absolute_probability_error": 1e-5,
+    "max_absolute_logit_error": 0.0001,
+    "max_absolute_probability_error": 1e-05,
     "protocol": "ml_rtx5080/experiments/dual_model_triton_v1/parity_protocol_v1.json",
     "protocol_sha256": "858abd0c03f27103d56625e0934d5886b7234770fffeff15c3c72d8e7020e4cb",
-    "committed_before_results_in": "b639dc3"
+    "committed_before_results_in": "b639dc3",
+    "dinov2_live": {
+      "export_stage_protocol": "dinov2_live_parity_protocol_v1.json",
+      "export_stage_protocol_sha256": "8b7f7bbfcf7b2e31945734279fcb131e6cf30ce2ef8f6fd2811b75ff5ce9854b",
+      "gpu_stage_protocol": "dinov2_live_triton_gpu_protocol_v1.json",
+      "gpu_stage_protocol_sha256": "c4ec2851d9dec0a3ac9ff77629cc1690f1fe6a5afd8c62d90a3593049266e710",
+      "max_absolute_logit_error_vs_fp32": 0.0001,
+      "max_absolute_probability_error_vs_fp32": 1e-05,
+      "verdict_mismatches_vs_fp32_and_live_fp16": 0
+    }
+  },
+  "previous_dinov2_target": {
+    "triton_name": "dinov2_classifier",
+    "status": "no longer routed; artifact and config left untouched",
+    "reason": "ViT-g/14 at 518 with no identity file; not the live listing-check model (owner chose Option B on 2026-10-09)"
+  },
+  "validation_gate": {
+    "rule": "a model is selectable only when Triton reports it ready and every served instance kind is in validated_instance_kinds",
+    "unavailable_reasons": [
+      "TRITON_MODEL_NOT_READY",
+      "INSTANCE_KIND_UNKNOWN",
+      "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE"
+    ],
+    "how_a_kind_is_added": "a reviewed commit to backend/inference/model_router.py that cites a passing Triton parity result for that kind"
   }
 }

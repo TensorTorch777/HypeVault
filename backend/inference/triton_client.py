@@ -167,6 +167,20 @@ async def named_model_ready(model_name: str, model_version: str) -> bool:
         return False
 
 
+async def named_model_instance_kinds(model_name: str, model_version: str) -> frozenset[str] | None:
+    """Instance kinds Triton is serving for this model version, or None if the config is unreadable."""
+
+    def _check() -> frozenset[str]:
+        client = grpcclient.InferenceServerClient(url=f"{settings.triton_host}:{settings.triton_port}")
+        config = client.get_model_config(model_name, model_version, as_json=True)["config"]
+        return frozenset(group.get("kind", "KIND_AUTO") for group in config.get("instance_group", []))
+
+    try:
+        return await asyncio.to_thread(_check)
+    except Exception:
+        return None
+
+
 async def triton_server_status() -> dict[str, bool]:
     def _check() -> dict[str, bool]:
         client = grpcclient.InferenceServerClient(url=f"{settings.triton_host}:{settings.triton_port}")

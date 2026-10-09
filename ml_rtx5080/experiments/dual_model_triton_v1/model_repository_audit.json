@@ -8,8 +8,23 @@
     "fixture_byte_identical": true,
     "backend": "onnxruntime",
     "version": "1",
-    "input": {"name": "input__0", "dtype": "FP32", "dims": [3, 518, 518]},
-    "output": {"name": "output__0", "dtype": "FP32", "dims": [1], "meaning": "raw_logit"},
+    "input": {
+      "name": "input__0",
+      "dtype": "FP32",
+      "dims": [
+        3,
+        518,
+        518
+      ]
+    },
+    "output": {
+      "name": "output__0",
+      "dtype": "FP32",
+      "dims": [
+        1
+      ],
+      "meaning": "raw_logit"
+    },
     "onnx_ir_version": 10,
     "onnx_opset": 17,
     "external_initializers": 572,
@@ -17,7 +32,8 @@
     "architecture_inferred": "DINOv2 ViT-g/14 at 518",
     "artifact_dates": "model.onnx and model.onnx.data dated 2026-04-27",
     "triton_23_10_load": "UNAVAILABLE: Unsupported model IR version: 10, max supported IR version: 9",
-    "same_model_as_live_route": false
+    "same_model_as_live_route": false,
+    "routed_by_selector": false
   },
   "live_legacy_route": {
     "path": "POST /verify/authenticate",
@@ -49,12 +65,40 @@
     "version": "1",
     "backend": "onnxruntime",
     "instance_group": "KIND_CPU",
-    "input": {"name": "input__0", "dtype": "FP32", "dims": [3, 512, 512]},
-    "output": {"name": "output__0", "dtype": "FP32", "dims": [1], "meaning": "raw_logit"},
+    "input": {
+      "name": "input__0",
+      "dtype": "FP32",
+      "dims": [
+        3,
+        512,
+        512
+      ]
+    },
+    "output": {
+      "name": "output__0",
+      "dtype": "FP32",
+      "dims": [
+        1
+      ],
+      "meaning": "raw_logit"
+    },
     "artifact": "relative symlink to models/dinov3_authenticity_classifier/1/model.onnx",
     "artifact_resolves_to_single_export": true,
     "checkpoint_sha256_verified_today": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
     "triton_23_10_cpu_load": "READY",
+    "triton_gpu_load": "BLOCKED"
+  },
+  "dinov2_vitb14_live": {
+    "config_tracked_at": "infra/triton/dinov2_vitb14_live/config.pbtxt (KIND_CPU) and config.gpu.pbtxt (KIND_GPU, for the GPU run)",
+    "identity_tracked_at": "infra/triton/dinov2_vitb14_live/identity.json",
+    "local_repo": "models/dinov2_vitb14_live/1 (byte-identical copies of ml_rtx5080/checkpoints/dinov2_hypevault.onnx and .onnx.data)",
+    "copied_not_symlinked_because": "Triton mounts only models/, so a symlink into ml_rtx5080/ would not resolve inside the container",
+    "source_checkpoint_sha256": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66",
+    "model_onnx_sha256": "f367c2d4f96700e77dea5acffd7115150b79ad7c35301e627e8cdd7b47f3e17c",
+    "external_data_sha256": "b0a57707a63840974101f46020136e17c33d028aa2fbaffc8581e5936a63172c",
+    "onnx_ir_version": 10,
+    "export_parity": "PASS (dinov2_live_export_parity.json): strict checkpoint load, max logit error 1.62e-5 vs FP32, 0 verdict mismatches vs FP32 and live FP16",
+    "triton_23_10_cpu_load": "UNAVAILABLE: Unsupported model IR version: 10, max supported IR version: 9",
     "triton_gpu_load": "BLOCKED"
   }
 }

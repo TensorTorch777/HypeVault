@@ -44,6 +44,13 @@ type ModelReadiness = {
   architecture: string;
   same_model_as_live_route: boolean;
   ready: boolean;
+  unavailable_reason: string | null;
+};
+
+const UNAVAILABLE_REASONS: Record<string, string> = {
+  TRITON_MODEL_NOT_READY: "not loaded in Triton",
+  INSTANCE_KIND_UNKNOWN: "Triton instance kind unknown",
+  PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE: "Triton parity not validated for this instance",
 };
 
 type ReadinessReport = {
@@ -161,9 +168,12 @@ export default function ResearchDemoPage() {
                   const s = statusFor(id);
                   return (
                     <li key={id}>
-                      {MODEL_LABELS[id]}: {s?.ready ? "ready" : "unavailable"}
+                      {MODEL_LABELS[id]}:{" "}
+                      {s?.ready
+                        ? "ready"
+                        : `unavailable${s?.unavailable_reason ? ` (${UNAVAILABLE_REASONS[s.unavailable_reason] ?? s.unavailable_reason})` : ""}`}
                       {s ? ` · ${s.architecture}` : ""}
-                      {s && !s.same_model_as_live_route ? " · not the live listing-check model" : ""}
+                      {s ? (s.same_model_as_live_route ? " · same model as the live listing check" : " · not the live listing-check model") : ""}
                     </li>
                   );
                 })}

@@ -1,0 +1,37 @@
+{
+  "model_name": "dinov2_vitb14_live",
+  "version": "1",
+  "purpose": "Serve the live listing-check DINOv2 through Triton for the research selector. dinov2_classifier (ViT-g/14 at 518) is a different model and is left untouched.",
+  "backbone": "vit_base_patch14_dinov2.lvd142m",
+  "head": "LayerNorm -> Dropout -> Linear(768, 512) -> GELU -> Dropout -> Linear(512, 1), as backend/inference/dinov2_model.py",
+  "source_checkpoint": {
+    "path": "ml_rtx5080/checkpoints/best_model.pt",
+    "sha256": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66",
+    "loads_strictly_into_live_architecture": true
+  },
+  "training_config": {
+    "path": "ml_rtx5080/checkpoints/config.json",
+    "sha256": "d3c868b6a6421a24ed01240b54e349cd54aba8af9c59c8c15db6530d54c211ac",
+    "img_size": 504
+  },
+  "export": {
+    "script": "ml_rtx5080/export_onnx_for_triton.py",
+    "source_file": "ml_rtx5080/checkpoints/dinov2_hypevault.onnx (+ .onnx.data), 2026-05-15",
+    "re_exported_in_this_work": false,
+    "onnx_ir_version": 10,
+    "onnx_opset": 18,
+    "model_onnx_sha256": "f367c2d4f96700e77dea5acffd7115150b79ad7c35301e627e8cdd7b47f3e17c",
+    "external_data_file": "dinov2_hypevault.onnx.data",
+    "external_data_sha256": "b0a57707a63840974101f46020136e17c33d028aa2fbaffc8581e5936a63172c"
+  },
+  "contract": {
+    "input": {"name": "input__0", "dtype": "FP32", "dims": [3, 504, 504]},
+    "output": {"name": "output__0", "dtype": "FP32", "graph_shape": ["batch"], "triton_dims": [1], "meaning": "raw_logit"},
+    "preprocessing": "PIL convert('RGB'), np.array, backend preprocess_chw at side 504 (bicubic square resize, ImageNet mean/std)",
+    "verdict": "sigmoid(logit) >= 0.50 is FAKE; then apply_min_authentic_confidence with 0.88",
+    "temperature": null,
+    "live_route_precision": "float16 autocast on CUDA; Triton serves the FP32 export"
+  },
+  "identity_verified_by": "ml_rtx5080/experiments/dual_model_triton_v1/dinov2_live_export_parity.json",
+  "triton_parity": "pending; requires an IR-10-capable Triton on the GPU"
+}

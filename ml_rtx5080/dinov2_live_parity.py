@@ -4,9 +4,10 @@ The reference is the live route's own code: backend preprocess_chw at 504, the b
 DINOv2Classifier loaded from ml_rtx5080/checkpoints/best_model.pt, logits_to_verdict, and the
 0.88 minimum-authentic-confidence floor.
 
-  --write-protocol  freeze inputs, artifact hashes, and tolerances (run once, before measuring)
-  --stage export    host onnxruntime (CPU) on the exact Triton model bytes vs the references
-  --stage triton    Triton gRPC vs the references; --require-gpu refuses a CPU instance
+  --write-protocol      freeze inputs, artifact hashes, and tolerances (run once, before measuring)
+  --write-gpu-protocol  same inputs and tolerances, pinned to the reviewed KIND_GPU config
+  --stage export        host onnxruntime (CPU) on the exact Triton model bytes vs the references
+  --stage triton        Triton gRPC vs the references; --require-gpu uses the GPU protocol and refuses a CPU instance
 
 Reads only non-test images. Does not train, export, or change thresholds.
 """
@@ -30,6 +31,8 @@ for path in (_PKG, _REPO / "backend"):
 OUT = _PKG / "experiments" / "dual_model_triton_v1"
 PROTOCOL = OUT / "dinov2_live_parity_protocol_v1.json"
 PROTOCOL_SHA = OUT / "dinov2_live_parity_protocol_v1.sha256"
+GPU_PROTOCOL = OUT / "dinov2_live_triton_gpu_protocol_v1.json"
+GPU_PROTOCOL_SHA = OUT / "dinov2_live_triton_gpu_protocol_v1.sha256"
 RESULTS = {"export": OUT / "dinov2_live_export_parity.json", "triton": OUT / "dinov2_live_triton_parity.json"}
 INPUTS_FROM = OUT / "parity_protocol_v1.json"
 SPLIT_MANIFEST = _PKG / "experiments" / "dataset_audit" / "split_manifest_v2.json"
@@ -40,6 +43,7 @@ MODEL_DIR = _REPO / "models" / "dinov2_vitb14_live" / "1"
 ONNX = MODEL_DIR / "model.onnx"
 ONNX_DATA = MODEL_DIR / "dinov2_hypevault.onnx.data"
 TRACKED_CONFIG = _REPO / "infra" / "triton" / "dinov2_vitb14_live" / "config.pbtxt"
+TRACKED_GPU_CONFIG = _REPO / "infra" / "triton" / "dinov2_vitb14_live" / "config.gpu.pbtxt"
 
 MODEL_NAME = "dinov2_vitb14_live"
 MODEL_VERSION = "1"
@@ -64,13 +68,13 @@ def _test_membership() -> set[str]:
     return {str(Path(p).resolve()) for p in (payload.get("membership") or {}).get("test") or []}
 
 
-def _artifact_hashes() -> dict:
+def _artifact_hashes(triton_config: Path = TRACKED_CONFIG) -> dict:
     return {
         "source_checkpoint": {"path": str(CHECKPOINT.relative_to(_REPO)), "sha256": _sha256(CHECKPOINT)},
         "training_config": {"path": str(TRAIN_CONFIG.relative_to(_REPO)), "sha256": _sha256(TRAIN_CONFIG)},
         "onnx_graph": {"path": str(ONNX.relative_to(_REPO)), "sha256": _sha256(ONNX)},
         "onnx_external_data": {"path": str(ONNX_DATA.relative_to(_REPO)), "sha256": _sha256(ONNX_DATA)},
-        "triton_config": {"path": str(TRACKED_CONFIG.relative_to(_REPO)), "sha256": _sha256(TRACKED_CONFIG)},
+        "triton_config": {"path": str(triton_config.relative_to(_REPO)), "sha256": _sha256(triton_config)},
     }
 
 
@@ -111,14 +115,33 @@ def write_protocol() -> dict:
     return protocol
 
 
-def _load_protocol() -> dict:
-    raw = PROTOCOL.read_bytes()
-    if hashlib.sha256(raw).hexdigest() != PROTOCOL_SHA.read_text().split()[0]:
+def write_gpu_protocol() -> dict:
+    """Pin the GPU-stage run to the reviewed KIND_GPU config. Inputs, tolerances, and rule come from v1 unchanged."""
+    if GPU_PROTOCOL.exists():
+        raise RuntimeError(f"{GPU_PROTOCOL} already exists. A protocol is written once, before measurement.")
+    if RESULTS["triton"].exists():
+        raise RuntimeError("a Triton result already exists; the GPU protocol must precede it")
+    base = _load_protocol(PROTOCOL, PROTOCOL_SHA, TRACKED_CONFIG)
+    protocol = dict(base)
+    protocol["protocol"] = "dinov2_live_triton_gpu_parity_v1"
+    protocol["derived_from"] = {"protocol": PROTOCOL.name, "sha256": PROTOCOL_SHA.read_text().split()[0]}
+    protocol["artifacts"] = _artifact_hashes(TRACKED_GPU_CONFIG)
+    protocol["stage"] = "triton with --require-gpu"
+    protocol["why_separate"] = "v1 pins the KIND_CPU config used for the export stage; GPU serving needs the reviewed KIND_GPU config."
+    raw = (json.dumps(protocol, indent=2, ensure_ascii=False) + "\n").encode()
+    GPU_PROTOCOL.write_bytes(raw)
+    GPU_PROTOCOL_SHA.write_text(f"{hashlib.sha256(raw).hexdigest()}  {GPU_PROTOCOL.name}\n")
+    return protocol
+
+
+def _load_protocol(path: Path = PROTOCOL, sha_path: Path = PROTOCOL_SHA, config: Path = TRACKED_CONFIG) -> dict:
+    raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != sha_path.read_text().split()[0]:
         raise RuntimeError("protocol changed after it was hashed")
     protocol = json.loads(raw)
     if protocol["tolerances_vs_fp32"] != {"max_abs_logit_error": LOGIT_ATOL, "max_abs_probability_error": PROBABILITY_ATOL}:
         raise RuntimeError("tolerances differ from the pre-registered protocol")
-    current = _artifact_hashes()
+    current = _artifact_hashes(config)
     if current != protocol["artifacts"]:
         raise RuntimeError("an artifact changed since the protocol was written; parity not run")
     return protocol
@@ -219,7 +242,12 @@ def _compare(protocol, candidate_by_batch: dict, fp32, live, sizes) -> dict:
 def run(stage: str, url: str, require_gpu: bool) -> dict:
     import numpy as np
 
-    protocol = _load_protocol()
+    if stage == "triton" and require_gpu:
+        protocol_path, protocol_sha = GPU_PROTOCOL, GPU_PROTOCOL_SHA
+        protocol = _load_protocol(GPU_PROTOCOL, GPU_PROTOCOL_SHA, TRACKED_GPU_CONFIG)
+    else:
+        protocol_path, protocol_sha = PROTOCOL, PROTOCOL_SHA
+        protocol = _load_protocol()
     batch, sizes, fp32, live, reference_meta = _references(protocol)
     if reference_meta["missing_keys"] or reference_meta["unexpected_keys"]:
         raise RuntimeError(f"checkpoint does not load strictly into the live architecture: {reference_meta}")
@@ -266,8 +294,8 @@ def run(stage: str, url: str, require_gpu: bool) -> dict:
         "scope": {"export": "host ONNX Runtime CPU on the Triton model bytes", "triton": "GPU Triton" if gpu else "CPU Triton"}[stage],
         "gpu_inference_claimed": gpu,
         "routing_allowed_by_this_result": bool(passed and gpu),
-        "protocol": str(PROTOCOL.relative_to(_REPO)),
-        "protocol_sha256": PROTOCOL_SHA.read_text().split()[0],
+        "protocol": str(protocol_path.relative_to(_REPO)),
+        "protocol_sha256": protocol_sha.read_text().split()[0],
         "artifacts": protocol["artifacts"],
         "serving": serving,
         "reference": reference_meta,
@@ -285,6 +313,7 @@ def run(stage: str, url: str, require_gpu: bool) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write-protocol", action="store_true")
+    parser.add_argument("--write-gpu-protocol", action="store_true")
     parser.add_argument("--stage", choices=("export", "triton"))
     parser.add_argument("--url", default="localhost:18001")
     parser.add_argument("--require-gpu", action="store_true")
@@ -292,6 +321,10 @@ def main() -> int:
     if args.write_protocol:
         protocol = write_protocol()
         print(f"wrote {PROTOCOL.name}: {len(protocol['inputs'])} inputs, sha256 {PROTOCOL_SHA.read_text().split()[0]}")
+        return 0
+    if args.write_gpu_protocol:
+        protocol = write_gpu_protocol()
+        print(f"wrote {GPU_PROTOCOL.name}: {len(protocol['inputs'])} inputs, sha256 {GPU_PROTOCOL_SHA.read_text().split()[0]}")
         return 0
     if not args.stage:
         parser.error("--stage is required unless --write-protocol is given")

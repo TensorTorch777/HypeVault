@@ -53,10 +53,25 @@ Accept only if `nvidia-smi` inside the container lists the RTX 5080. Triton 26.0
 
 ## 5. Then the agent can continue
 
-1. Start Triton with `--gpus all`, explicit model control, and only `dinov2_classifier` and `dinov3_authenticity_candidate`.
-2. Change `instance_group` to `KIND_GPU` only in a new reviewed config, and only after step 4 passes.
-3. Run `python ml_rtx5080/triton_parity.py --require-gpu`. The protocol and tolerances are already frozen.
-4. Confirm GPU execution in Triton metrics (`nv_gpu_utilization`, `nv_gpu_memory_used_bytes`) during inference.
+The selector models are `dinov2_vitb14_live` (the live ViT-B/14 at 504) and `dinov3_authenticity_candidate`. `dinov2_classifier` is not routed and stays untouched. The reviewed GPU configs are already tracked as `infra/triton/*/config.gpu.pbtxt`. Install them only after step 4 passes.
+
+```bash
+IMAGE=nvcr.io/nvidia/tritonserver:26.01-py3@sha256:c9f2ede50ccc4a3ce66e22e26ed1b5adc0c68516b58edfaca738693719c2146b
+cp infra/triton/dinov2_vitb14_live/config.gpu.pbtxt models/dinov2_vitb14_live/config.pbtxt
+cp infra/triton/dinov3_authenticity_candidate/config.gpu.pbtxt models/dinov3_authenticity_candidate/config.pbtxt
+docker run -d --rm --name hv-triton-gpu --gpus all -p 18000:8000 -p 18001:8001 -p 18002:8002 \
+  -v "$PWD/models:/models:ro" "$IMAGE" tritonserver --model-repository=/models \
+  --model-control-mode=explicit --load-model=dinov2_vitb14_live --load-model=dinov3_authenticity_candidate
+.venv/bin/python ml_rtx5080/dinov2_live_parity.py --stage triton --require-gpu
+.venv/bin/python ml_rtx5080/triton_parity.py --require-gpu
+curl -s localhost:18002/metrics | rg 'nv_gpu_(utilization|memory_used_bytes)'
+```
+
+Both parity protocols are already frozen:
+- DINOv2: `dinov2_live_triton_gpu_protocol_v1.json`, SHA-256 `c4ec2851…e710`.
+- DINOv3: `parity_protocol_v1.json`, SHA-256 `858abd0c…e4cb`.
+
+A model becomes selectable on the GPU only in a reviewed commit that adds `KIND_GPU` to its `validated_instance_kinds` in `backend/inference/model_router.py` and cites the passing result. Restore the CPU configs from `infra/triton/*/config.pbtxt` to go back.
 
 ## Stop conditions
 
