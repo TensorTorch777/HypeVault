@@ -1,0 +1,29 @@
+{
+  "suite": "python -m unittest discover -s tests -v",
+  "ran": 379,
+  "skipped": 3,
+  "failures": 0,
+  "errors": 0,
+  "authenticity_model_production_approved": false,
+  "legacy_authentic_publication": "BLOCKED",
+  "legacy_authentic_status": "pending",
+  "dinov3_authentic_publication": "BLOCKED",
+  "fake_publication": "BLOCKED",
+  "fake_status": "rejected",
+  "model_error_publication": "BLOCKED",
+  "model_error_status": "pending",
+  "existing_live_rows_mutated": false,
+  "import_sets_live": false,
+  "database_integration": {
+    "postgres": "available",
+    "method": "rolled-back transaction",
+    "fixture_status_after_authentic_verdict": "pending",
+    "fixture_remaining_after_rollback": 0,
+    "live_count_before": 39,
+    "live_count_after": 39
+  },
+  "http_integration": {
+    "status": "not_run",
+    "blocker": "The API was not started. classify_image would execute the legacy model against a live request, and this phase does not run the model."
+  }
+}

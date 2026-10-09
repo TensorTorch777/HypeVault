@@ -10,11 +10,21 @@ from pydantic import BaseModel, EmailStr, Field, field_validator
 
 from database import UserRole
 
+# Roles a caller may pick at registration. A role added to UserRole later is not self-assignable.
+PUBLIC_REGISTRATION_ROLES = frozenset({UserRole.buyer, UserRole.seller})
+
 
 class UserRegister(BaseModel):
     email: EmailStr
     password: str = Field(min_length=8, max_length=128)
     role: UserRole = UserRole.buyer
+
+    @field_validator("role")
+    @classmethod
+    def public_role_only(cls, v: UserRole) -> UserRole:
+        if v not in PUBLIC_REGISTRATION_ROLES:
+            raise ValueError("This role cannot be self-assigned at registration")
+        return v
 
     @field_validator("password")
     @classmethod

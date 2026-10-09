@@ -98,7 +98,7 @@ export function PremiumHero() {
             <WobbleText text="REAL LUXURY." />
           </motion.span>
           <span className="hv-hero-accent-text mt-1 block">
-            <BouncyText text="VERIFIED." delay={0.7} stagger={0.07} bounce={0.65} />
+            <BouncyText text="FIVE BRANDS." delay={0.7} stagger={0.07} bounce={0.65} />
           </span>
         </h1>
 
@@ -109,8 +109,8 @@ export function PremiumHero() {
           transition={{ delay: 0.18, duration: 0.6 }}
           className="mx-auto mt-7 max-w-2xl text-[18px] leading-[1.45] text-[#FFEDF6]/75 md:text-[22px]"
         >
-          A vision-transformer inspects every listing before it&apos;s live.
-          Then we show you the truth across StockX, Chrono24 &amp; eBay.
+          Research prototype classification within five evaluated watch brands.
+          The selected brand is user-declared and is not independently verified from the image.
         </motion.p>
 
         {/* CTAs — magnetic hover */}
@@ -218,7 +218,7 @@ function HeroDeviceMock() {
                 "linear-gradient(180deg, rgba(11,1,24,0.15) 0%, rgba(11,1,24,0.55) 60%, rgba(11,1,24,0.92) 100%)",
             }}
           />
-          {/* Verified badge */}
+          {/* Declared-brand marker. Visibility is not authenticity verification. */}
           <div
             className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-white shadow-lg"
             style={{
@@ -229,11 +229,11 @@ function HeroDeviceMock() {
             <svg className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none">
               <path d="M5 10.5L8.5 14L15 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <span className="text-[12px] font-bold uppercase tracking-wide">AUTHENTIC</span>
+            <span className="text-[12px] font-bold uppercase tracking-wide">Declared brand</span>
           </div>
           {/* Confidence */}
           <div className="absolute right-5 top-5 rounded-full border border-[rgba(255,237,246,0.18)] bg-black/50 px-3 py-1.5 text-[11px] font-bold tracking-wider text-white backdrop-blur">
-            99.4% CONF
+            Research prototype
           </div>
           {/* Price strip */}
           <div className="absolute inset-x-5 bottom-5 flex items-end justify-between">

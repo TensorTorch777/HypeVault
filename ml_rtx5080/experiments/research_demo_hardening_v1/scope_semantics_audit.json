@@ -1,0 +1,11 @@
+{
+  "brand_input_mode": "USER_DECLARED",
+  "brand_identity_verified_by_model": false,
+  "brand_identity_verified_by_image": false,
+  "brand_scope_gate": "DECLARATION_ONLY",
+  "declared_brand_is_not_verified_brand": true,
+  "verified_brand_field_present": false,
+  "authenticity_probability_does_not_assign_brand": true,
+  "brand_verification_subsystem_added": false,
+  "warning": "The supplied brand is a user-declared scope parameter and is not independently verified from the image."
+}

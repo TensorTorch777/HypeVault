@@ -1,0 +1,10 @@
+{
+  "states": {
+    "pending": "Not in the customer catalog. Default for a new listing and for a legacy AUTHENTIC model result.",
+    "rejected": "Not in the customer catalog. Used when the legacy model decision is FAKE.",
+    "live": "Customer-visible. Not assigned by the legacy verifier or the DINOv3 research route."
+  },
+  "model_decision_values": ["AUTHENTIC", "FAKE", "REVIEW"],
+  "publication_decision_values": ["BLOCKED"],
+  "model_authentic_is_not_live": true
+}

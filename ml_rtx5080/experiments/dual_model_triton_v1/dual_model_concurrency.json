@@ -1,0 +1,348 @@
+{
+  "measured_at": "2026-10-09T12:19:52.302946+00:00",
+  "input": "Label_0_Watches/Audemars Piguet/b1a40ed1b5b9.jpg",
+  "brand": "Audemars Piguet",
+  "split": "non-test parity protocol image 0",
+  "triton": {
+    "name": "triton",
+    "version": "2.65.0",
+    "extensions": [
+      "classification",
+      "sequence",
+      "model_repository",
+      "model_repository(unload_dependents)",
+      "schedule_policy",
+      "model_configuration",
+      "system_shared_memory",
+      "cuda_shared_memory",
+      "binary_tensor_data",
+      "parameters",
+      "statistics",
+      "trace",
+      "logging"
+    ]
+  },
+  "gpu": "NVIDIA GeForce RTX 5080, GPU-b415f453-8f9a-ea64-7780-65d3d8086109, 580.178.04, 16303 MiB",
+  "memory": {
+    "idle_no_models_tritonserver_mib": 324,
+    "idle_gpu_used_mib": 843,
+    "after_dinov2_only_tritonserver_mib": 920,
+    "dual_loaded_idle_tritonserver_mib": 1506,
+    "dual_loaded_idle_gpu_used_mib": 2025,
+    "peak_during_mixed_tritonserver_mib": 2706,
+    "after_mixed_gpu_used_mib": 3222
+  },
+  "load": {
+    "dinov2_vitb14_live": {
+      "load_seconds": 0.1773677460005274,
+      "ready_wait_seconds": 0.000215047002711799,
+      "config": {
+        "name": "dinov2_vitb14_live",
+        "backend": "onnxruntime",
+        "kinds": [
+          "KIND_GPU"
+        ],
+        "gpus": [
+          0
+        ],
+        "cuda_parameters": {
+          "use_tf32": "0"
+        },
+        "use_tf32": "0"
+      },
+      "memory_tritonserver_mib": 920,
+      "gpu_used_mib": 1439,
+      "ready": true
+    },
+    "dinov3_authenticity_candidate": {
+      "load_seconds": 0.3575259200006258,
+      "ready_wait_seconds": 0.0002691770059755072,
+      "config": {
+        "name": "dinov3_authenticity_candidate",
+        "backend": "onnxruntime",
+        "kinds": [
+          "KIND_GPU"
+        ],
+        "gpus": [
+          0
+        ],
+        "cuda_parameters": {
+          "use_tf32": "0"
+        },
+        "use_tf32": "0"
+      },
+      "memory_tritonserver_mib": 1506,
+      "gpu_used_mib": 2025,
+      "ready": true
+    }
+  },
+  "both_ready": true,
+  "research_models": {
+    "server": {
+      "live": true,
+      "ready": true
+    },
+    "models": [
+      {
+        "logical_id": "dinov2_legacy",
+        "model": "LEGACY_DINOV2",
+        "triton_name": "dinov2_vitb14_live",
+        "version": "1",
+        "architecture": "DINOv2 ViT-B/14 (vit_base_patch14_dinov2.lvd142m), live listing-check checkpoint, 504 input",
+        "same_model_as_live_route": true,
+        "served_instance_kinds": [
+          "KIND_GPU"
+        ],
+        "validated_instance_kinds": [
+          "KIND_GPU"
+        ],
+        "ready": true,
+        "unavailable_reason": null,
+        "research_only": false
+      },
+      {
+        "logical_id": "dinov3_experimental",
+        "model": "DINOV3_RESEARCH_PROTOTYPE",
+        "triton_name": "dinov3_authenticity_candidate",
+        "version": "1",
+        "architecture": "DINOv3 ViT-B/16 cls_patch_attention ONNX export, 512 input",
+        "same_model_as_live_route": false,
+        "served_instance_kinds": [
+          "KIND_GPU"
+        ],
+        "validated_instance_kinds": [
+          "KIND_CPU",
+          "KIND_GPU"
+        ],
+        "ready": true,
+        "unavailable_reason": null,
+        "research_only": true
+      }
+    ],
+    "publication_decision": "BLOCKED",
+    "dinov3_checkpoint": {
+      "verified": true,
+      "sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+      "hash_calls": 1
+    }
+  },
+  "api_latency_both_loaded_sequential": {
+    "dinov2_legacy": {
+      "http_statuses": [
+        200
+      ],
+      "latency": {
+        "n": 30,
+        "mean_ms": 72.02568196710975,
+        "p50_ms": 50.14517399831675,
+        "p90_ms": 56.04992400185438,
+        "p99_ms": 671.1076539941132,
+        "max_ms": 671.1076539941132
+      },
+      "decisions": [
+        "AUTHENTIC"
+      ],
+      "models": [
+        "LEGACY_DINOV2"
+      ],
+      "checkpoint_shas": [
+        null
+      ],
+      "first_body": {
+        "status": "AUTHENTIC",
+        "decision": "AUTHENTIC",
+        "declared_brand": "Audemars Piguet",
+        "brand_verification": "NOT_PERFORMED",
+        "research_only": true,
+        "production_ready": false,
+        "publication_decision": "BLOCKED",
+        "checkpoint_sha": null,
+        "policy_version": "legacy_dinov2_logit_v1",
+        "model": "LEGACY_DINOV2",
+        "model_version": "1",
+        "model_scope": "LEGACY_DINOV2"
+      },
+      "last_body": {
+        "status": "AUTHENTIC",
+        "decision": "AUTHENTIC",
+        "declared_brand": "Audemars Piguet",
+        "brand_verification": "NOT_PERFORMED",
+        "research_only": true,
+        "production_ready": false,
+        "publication_decision": "BLOCKED",
+        "checkpoint_sha": null,
+        "policy_version": "legacy_dinov2_logit_v1",
+        "model": "LEGACY_DINOV2",
+        "model_version": "1",
+        "model_scope": "LEGACY_DINOV2"
+      },
+      "decision_consistent": true
+    },
+    "dinov3_experimental": {
+      "http_statuses": [
+        200
+      ],
+      "latency": {
+        "n": 30,
+        "mean_ms": 82.39668436654028,
+        "p50_ms": 44.332912999379914,
+        "p90_ms": 49.55566599528538,
+        "p99_ms": 1166.7247870063875,
+        "max_ms": 1166.7247870063875
+      },
+      "decisions": [
+        "AUTHENTIC"
+      ],
+      "models": [
+        "DINOV3_RESEARCH_PROTOTYPE"
+      ],
+      "checkpoint_shas": [
+        "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f"
+      ],
+      "first_body": {
+        "status": "AUTHENTIC",
+        "decision": "AUTHENTIC",
+        "declared_brand": "Audemars Piguet",
+        "brand_verification": "NOT_PERFORMED",
+        "research_only": true,
+        "production_ready": false,
+        "publication_decision": "BLOCKED",
+        "checkpoint_sha": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+        "policy_version": "shadow_v1",
+        "model": "DINOV3_RESEARCH_PROTOTYPE",
+        "model_version": "1",
+        "model_scope": "FIVE_BRAND_RESEARCH_PROTOTYPE"
+      },
+      "last_body": {
+        "status": "AUTHENTIC",
+        "decision": "AUTHENTIC",
+        "declared_brand": "Audemars Piguet",
+        "brand_verification": "NOT_PERFORMED",
+        "research_only": true,
+        "production_ready": false,
+        "publication_decision": "BLOCKED",
+        "checkpoint_sha": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+        "policy_version": "shadow_v1",
+        "model": "DINOV3_RESEARCH_PROTOTYPE",
+        "model_version": "1",
+        "model_scope": "FIVE_BRAND_RESEARCH_PROTOTYPE"
+      },
+      "decision_consistent": true
+    }
+  },
+  "triton_compute_during_api_latency": {
+    "dinov2_legacy": {
+      "inference_count_delta": 30,
+      "mean_compute_infer_ms": 37.7245447
+    },
+    "dinov3_experimental": {
+      "inference_count_delta": 30,
+      "mean_compute_infer_ms": 14.419633166666666
+    }
+  },
+  "mixed_concurrent_api": {
+    "workers": 8,
+    "requested_per_model": 200,
+    "wall_seconds": 7.58605186999921,
+    "combined_requests_per_second": 52.728350247892735,
+    "peak_tritonserver_mib": 2706,
+    "models": {
+      "dinov2_legacy": {
+        "completed_ok": 200,
+        "failed": 0,
+        "latency": {
+          "n": 200,
+          "mean_ms": 135.80793586490472,
+          "p50_ms": 125.95659300131956,
+          "p90_ms": 134.97282600292237,
+          "p99_ms": 395.3596699939226,
+          "max_ms": 442.6528180047171
+        },
+        "decisions": [
+          "AUTHENTIC"
+        ],
+        "error_samples": [],
+        "throughput_rps": 26.364175123946367
+      },
+      "dinov3_experimental": {
+        "completed_ok": 200,
+        "failed": 0,
+        "latency": {
+          "n": 200,
+          "mean_ms": 129.26082194495393,
+          "p50_ms": 116.68582400307059,
+          "p90_ms": 186.60274099966045,
+          "p99_ms": 238.7988190021133,
+          "max_ms": 264.95139799953904
+        },
+        "decisions": [
+          "AUTHENTIC"
+        ],
+        "error_samples": [],
+        "throughput_rps": 26.364175123946367
+      }
+    },
+    "inference_count_before": {
+      "dinov2_vitb14_live": 30,
+      "dinov3_authenticity_candidate": 30
+    },
+    "inference_count_after": {
+      "dinov2_vitb14_live": 230,
+      "dinov3_authenticity_candidate": 230
+    },
+    "inference_count_delta": {
+      "dinov2_vitb14_live": 200,
+      "dinov3_authenticity_candidate": 200
+    },
+    "triton_compute_mean_ms": {
+      "dinov2_vitb14_live": 17.636630265,
+      "dinov3_authenticity_candidate": 14.528899485
+    }
+  },
+  "reload_while_peer_loaded": {
+    "dinov2_vitb14_live": {
+      "ready_after_unload": false,
+      "other_stayed_ready": true,
+      "reload_seconds": 0.1295417159999488,
+      "both_ready_after": true
+    },
+    "dinov3_authenticity_candidate": {
+      "ready_after_unload": false,
+      "other_stayed_ready": true,
+      "reload_seconds": 0.2911322889995063,
+      "both_ready_after": true
+    }
+  },
+  "both_ready_finally": true,
+  "final_configs": {
+    "dinov2_vitb14_live": {
+      "name": "dinov2_vitb14_live",
+      "backend": "onnxruntime",
+      "kinds": [
+        "KIND_GPU"
+      ],
+      "gpus": [
+        0
+      ],
+      "cuda_parameters": {
+        "use_tf32": "0"
+      },
+      "use_tf32": "0"
+    },
+    "dinov3_authenticity_candidate": {
+      "name": "dinov3_authenticity_candidate",
+      "backend": "onnxruntime",
+      "kinds": [
+        "KIND_GPU"
+      ],
+      "gpus": [
+        0
+      ],
+      "cuda_parameters": {
+        "use_tf32": "0"
+      },
+      "use_tf32": "0"
+    }
+  },
+  "pass": true
+}

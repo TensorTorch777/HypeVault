@@ -1,0 +1,181 @@
+{
+  "protocol": "dinov2_live_triton_gpu_parity_v1",
+  "model": {
+    "triton_name": "dinov2_vitb14_live",
+    "version": "1",
+    "backbone": "vit_base_patch14_dinov2.lvd142m",
+    "input_side": 504
+  },
+  "artifacts": {
+    "source_checkpoint": {
+      "path": "ml_rtx5080/checkpoints/best_model.pt",
+      "sha256": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66"
+    },
+    "training_config": {
+      "path": "ml_rtx5080/checkpoints/config.json",
+      "sha256": "d3c868b6a6421a24ed01240b54e349cd54aba8af9c59c8c15db6530d54c211ac"
+    },
+    "onnx_graph": {
+      "path": "models/dinov2_vitb14_live/1/model.onnx",
+      "sha256": "f367c2d4f96700e77dea5acffd7115150b79ad7c35301e627e8cdd7b47f3e17c"
+    },
+    "onnx_external_data": {
+      "path": "models/dinov2_vitb14_live/1/dinov2_hypevault.onnx.data",
+      "sha256": "b0a57707a63840974101f46020136e17c33d028aa2fbaffc8581e5936a63172c"
+    },
+    "triton_config": {
+      "path": "infra/triton/dinov2_vitb14_live/config.gpu.pbtxt",
+      "sha256": "8beac4d92b9ab27a5a302fb217d1d754d4150c582efc46268388120392735147"
+    }
+  },
+  "preprocessing": "backend inference.triton_client.preprocess_chw(np.array(PIL.Image.open(path).convert('RGB')), side=504)",
+  "references": {
+    "fp32": "backend DINOv2Classifier(vit_base_patch14_dinov2.lvd142m) with best_model.pt model_state loaded strict, CPU, FP32, no autocast",
+    "live_path": "backend inference.local_torch._infer_sync on CUDA (float16 autocast), the code the live route runs"
+  },
+  "verdict_policy": "inference.verdict.logits_to_verdict then apply_min_authentic_confidence(min_authentic=0.88)",
+  "probability": "sigmoid(logit); no temperature",
+  "tolerances_vs_fp32": {
+    "max_abs_logit_error": 0.0001,
+    "max_abs_probability_error": 1e-05
+  },
+  "pass_rule": "every batch size within both FP32 tolerances, zero final-verdict mismatches vs the FP32 reference, and zero final-verdict mismatches vs the live FP16 path. Logit deltas vs the live FP16 path are reported, not toleranced.",
+  "batch_sizes": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "routing_rule": "the research selector may route to this model only after the triton stage passes with --require-gpu",
+  "inputs_source": "ml_rtx5080/experiments/dual_model_triton_v1/parity_protocol_v1.json",
+  "inputs": [
+    {
+      "sample_id": "Label_0_Watches/Audemars Piguet/b1a40ed1b5b9.jpg",
+      "split": "calibration",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/Patek Philippe/9ba50fea3805.jpg",
+      "split": "train",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/Patek Philippe/c2f778c66d15.jpg",
+      "split": "train",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/63d2c86b29d3.jpg",
+      "split": "train",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/Audemars Piguet/99fcd3b9051c.jpg",
+      "split": "train",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/Richard Mille/a11094843532.jpg",
+      "split": "train",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/Richard Mille/9eda705bd8c9.jpg",
+      "split": "validation",
+      "role": "phase22_source"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0003c0bd6ebe.jpg",
+      "split": "train",
+      "role": "authentic"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/002016510ba1.jpg",
+      "split": "train",
+      "role": "authentic"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/002bc8d03cd5.jpg",
+      "split": "train",
+      "role": "authentic"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00617b670111.jpg",
+      "split": "train",
+      "role": "authentic"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/001067d69616.jpg",
+      "split": "train",
+      "role": "fake"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/004c219b045c.jpg",
+      "split": "train",
+      "role": "fake"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/005442daf6b3.jpg",
+      "split": "train",
+      "role": "fake"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/005bb6357b99.jpg",
+      "split": "train",
+      "role": "fake"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00e7fec26604.jpg",
+      "split": "train",
+      "role": "low_resolution"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/033824530806.jpg",
+      "split": "train",
+      "role": "low_resolution"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0ce059828e7b.jpg",
+      "split": "train",
+      "role": "low_contrast"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0fcb6427bbbb.jpg",
+      "split": "train",
+      "role": "low_contrast"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/1f4e2e10b83b.jpg",
+      "split": "train",
+      "role": "both_quality_flags"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00a208f1d991.jpg",
+      "split": "train",
+      "role": "additional"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00b4fe2dd8d0.jpg",
+      "split": "train",
+      "role": "additional"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00ca5dec6dfd.jpg",
+      "split": "train",
+      "role": "additional"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00d5a56c2800.jpg",
+      "split": "train",
+      "role": "additional"
+    }
+  ],
+  "final_test_images_opened": 0,
+  "tolerances_may_change_after_results": false,
+  "derived_from": {
+    "protocol": "dinov2_live_parity_protocol_v1.json",
+    "sha256": "8b7f7bbfcf7b2e31945734279fcb131e6cf30ce2ef8f6fd2811b75ff5ce9854b"
+  },
+  "stage": "triton with --require-gpu",
+  "why_separate": "v1 pins the KIND_CPU config used for the export stage; GPU serving needs the reviewed KIND_GPU config."
+}

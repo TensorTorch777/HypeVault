@@ -1,8 +1,8 @@
 # HypeVault
 
 <p align="center">
-  <strong>The AI-Gated Marketplace for Authentic Ultra-Luxury Watches</strong><br/>
-  Buy-now experience with AI verification, price intelligence, and seller transparency.
+  <strong>Five-brand authenticity research prototype</strong><br/>
+  Not a universal luxury-watch authenticator, and not ready for production promotion.
 </p>
 
 <p align="center">
@@ -41,15 +41,49 @@
 
 ---
 
+## Current status
+
+`NOT_READY_FOR_PROMOTION`
+
+## Scope
+
+Five-brand authenticity research prototype.
+
+Supported brands:
+
+1. A. Lange & Söhne
+2. Audemars Piguet
+3. Patek Philippe
+4. Richard Mille
+5. Vacheron Constantin
+
+General luxury-watch authenticity is unsupported. Open-set rejection is not validated. `production_ood_threshold` is null.
+
+## Validation summary
+
+- Final test: 3,006 in-distribution samples, five brands, calibrated ROC-AUC 1.0, PR-AUC 1.0, F1 1.0, false-authentic 0, false-fake 0. This is not universal authenticity evidence.
+- Calibration: 2,998 samples, frozen temperature `0.24038200410185356`.
+- Robustness: clean false-authentic 0 and false-fake 0. Quality policy caught 8 of 9 known stress false-fake events. Resize/recompression remains uncovered.
+- OOD: Phase 35 is `OOD_FAIL` (337/408 authentic escape; unseen luxury about 88.1%). Phase 36 is `WATCH_OOD_UNRESOLVED` (25 holdout images).
+- Serving: live listing checks stay on DINOv2 (`dinov2_vitb14_live`, ViT-B/14 at 504). The frozen research candidate is DINOv3 (`dinov3_authenticity_candidate`). Both are served together on NVIDIA Triton 26.01 GPU with exact FP32 (`use_tf32=0`). The old ViT-G/14 `dinov2_classifier` is not routed. `AUTHENTICITY_MODEL_PRODUCTION_APPROVED` remains false.
+
+## Known blockers
+
+- OOD fail
+- Runtime parity between the live DINOv2 path and the frozen DINOv3 candidate
+- Serving infrastructure
+- Policy approval
+
 ## Overview
 
-HypeVault is a full-stack marketplace for **ultra-luxury watches**, focused on trust-first commerce.
-Each listing passes through AI verification and pricing intelligence before being surfaced to buyers.
+HypeVault is a marketplace codebase aimed at luxury-watch listings.
+The authenticity model is a research prototype for the five brands above.
+A declared brand outside that list returns `UNSUPPORTED_SCOPE` and no authentic or fake verdict.
 
 Core principles:
-- Verification before visibility
-- Comparable market context before purchase
-- Production-oriented APIs and operational checks
+- No authenticity verdict outside the five-brand scope
+- Comparable market context is separate from authenticity
+- Customer-facing production promotion is forbidden
 
 ---
 
@@ -212,7 +246,8 @@ export LOCAL_MODEL_PATH=models/hypevault_classifier.pt</code></pre>
 <details open>
   <summary><strong>Verification and Listings</strong></summary>
 
-- `POST /verify/authenticate`
+- `POST /verify/authenticate` — legacy DINOv2 listing check. `model = LEGACY_DINOV2`, `research_candidate = false`, `production_validation = NOT_ESTABLISHED`. It is not the DINOv3 research prototype. The brand field is user-declared. Unsupported brands return HTTP 422 `UNSUPPORTED_SCOPE` with `decision = null`.
+- `POST /research/verify` — frozen DINOv3 five-brand research prototype. Requires `HYPEVAULT_DEPLOYMENT_MODE=research` or `shadow`. Production, missing, and unknown modes return `POLICY_ERROR` with `decision = null`. `brand_verification = NOT_PERFORMED`, `research_only = true`, `production_ready = false`.
 - `POST /listings/`
 - `GET /listings/`
 - `GET /listings/recent`
@@ -256,15 +291,19 @@ curl -sS http://localhost:8000/metrics | sed -n '1,20p'
 
 ## Inference Modes
 
-### Triton mode (recommended path)
-- Model name: `dinov2_classifier`
-- Input tensor: `input__0` shape `[1,3,518,518]` FP32
-- See scripts:
-  - `scripts/export_tensorrt.py` (when present)
-  - optional local `scripts/setup_triton.sh` (not tracked)
+Two allowlisted Triton models, selected by a logical id. Triton model names are server-side and are rejected as client selectors.
+
+| Logical id | Triton model | Artifact | Input | Role |
+| --- | --- | --- | --- | --- |
+| `dinov2_legacy` | `dinov2_vitb14_live` v1 | live ViT-B/14 checkpoint `fe1daa0b…fa66` | `[1,3,504,504]` FP32 | live listing check and research selector |
+| `dinov3_experimental` | `dinov3_authenticity_candidate` v1 | frozen `epoch_018.pt` `5a38c93f…d28f`, temperature `0.24038200410185356` | `[1,3,512,512]` FP32 | research/shadow only |
+
+Validated GPU serving is `KIND_GPU` with `use_tf32=0`. The SHA-256 of the DINOv3 checkpoint is verified at API startup and cached; a mismatch fails closed (`decision = null`) and is not hashed again on every request. Production mode cannot select DINOv3. Neither model auto-publishes a listing.
+
+The unrouted `dinov2_classifier` ViT-G/14 518 artifact is not a substitute for either selector model.
 
 ### Local Torch fallback
-Use when Triton is unavailable:
+Use when Triton is unavailable for the live DINOv2 listing path:
 
 ```bash
 pip install -r requirements_inference.txt
@@ -330,6 +369,8 @@ Before each push:
 ---
 
 ## Production Notes
+
+Customer-facing promotion of the authenticity model is forbidden. The notes below are operational only.
 
 - Prefer S3 pre-signed uploads via `POST /listings/presign`
 - Ensure Redis is healthy for token rotation and cache paths

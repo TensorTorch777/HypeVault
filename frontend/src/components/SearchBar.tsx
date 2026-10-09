@@ -27,7 +27,7 @@ function saveRecent(q: string) {
 
 export function SearchBar({
   className,
-  placeholder = "Search watches — Rolex, AP, Patek…",
+  placeholder = "Search the five evaluated brands",
   initialQuery = "",
   variant = "light",
 }: {

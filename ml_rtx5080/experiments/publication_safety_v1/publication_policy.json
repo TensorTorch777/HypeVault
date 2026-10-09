@@ -1,0 +1,11 @@
+{
+  "AUTHENTICITY_MODEL_PRODUCTION_APPROVED": false,
+  "approval_is_explicit": true,
+  "automatic_promotion": false,
+  "legacy_authentic_publishes": false,
+  "dinov3_authentic_publishes": false,
+  "publication_decision_on_block": "BLOCKED",
+  "listing_status_when_model_authentic": "pending",
+  "listing_status_when_model_fake": "rejected",
+  "mechanism": "Option A. The existing pending status remains the unpublished state. No human-review workflow was added because the repository does not have one."
+}

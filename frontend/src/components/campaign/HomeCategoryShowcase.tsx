@@ -31,10 +31,10 @@ export function HomeCategoryShowcase() {
             <div>
               <p className="text-[13px] font-semibold text-[#C9A84C]">Watches</p>
               <p className="mt-4 font-[family-name:var(--font-display)] text-[32px] font-bold leading-[1.05] tracking-tight text-[#1D1D1F] md:text-[40px]">
-                Quiet luxury. Verified.
+                Five-brand research prototype.
               </p>
               <p className="mt-3 max-w-[32ch] text-[15px] leading-[1.5] text-[#6E6E73]">
-                Ultra-luxury timepieces with AI authenticity checks and market comparables in one view.
+                Authenticity research is limited to five evaluated brands. Market comparables stay in the same view.
               </p>
             </div>
             <span className="inline-flex w-fit items-center gap-1 text-[15px] font-medium text-[#0066CC]">

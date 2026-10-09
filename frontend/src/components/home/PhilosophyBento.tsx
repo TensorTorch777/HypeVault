@@ -45,12 +45,11 @@ export function PhilosophyBento() {
               <div>
                 <BadgeCheck className="h-10 w-10 text-[#FF3B00]" strokeWidth={1.65} />
                 <h3 className="mt-10 font-[family-name:var(--font-display)] text-[32px] font-bold leading-[1.05] text-[#1D1D1F] md:text-[40px]">
-                  Verified or it doesn&apos;t exist.
+                  Five brands, declared by the user.
                 </h3>
                 <p className="mt-5 max-w-md text-[16px] leading-[1.5] text-[#6E6E73]">
-                  Every listing passes a DINOv2-Giant classifier before it&apos;s
-                  visible to buyers. Below 95% confidence? It never goes live.
-                  There is no &ldquo;maybe&rdquo; on HypeVault.
+                  Research prototype classification within five evaluated watch brands.
+                  The selected brand is user-declared and is not independently verified from the image.
                 </p>
               </div>
               <div className="mt-10 inline-flex w-fit items-center gap-3 rounded-full bg-[#F5F5F7] px-4 py-2">
@@ -59,7 +58,7 @@ export function PhilosophyBento() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-[#00A652]" />
                 </span>
                 <span className="text-[13px] font-semibold text-[#1D1D1F]">
-                  99.8% Precision
+                  Not a guarantee
                 </span>
               </div>
             </div>
@@ -91,11 +90,10 @@ export function PhilosophyBento() {
             <div className="p-8">
               <Eye className="h-8 w-8 text-[#1D1D1F]" strokeWidth={1.65} />
               <h3 className="mt-6 font-[family-name:var(--font-display)] text-[22px] font-semibold text-[#1D1D1F]">
-                Geometry, not guesswork.
+                Classification, not identification.
               </h3>
               <p className="mt-3 text-[15px] leading-[1.5] text-[#6E6E73]">
-                The model inspects 3D structure — not colours a counterfeiter can
-                match in Photoshop.
+                The model scores authenticity inside a declared brand. It does not establish which brand is in the image.
               </p>
             </div>
           </motion.div>
@@ -111,19 +109,17 @@ export function PhilosophyBento() {
                 <Clock className="h-8 w-8 shrink-0 text-[#1D1D1F]" strokeWidth={1.65} />
                 <div>
                   <h3 className="font-[family-name:var(--font-display)] text-[22px] font-semibold text-[#1D1D1F]">
-                    Inference + pricing in under 5 seconds.
+                    Not a production deployment.
                   </h3>
                   <p className="mt-2 max-w-xl text-[15px] leading-[1.5] text-[#6E6E73]">
-                    TensorRT FP16 on NVIDIA Triton with dynamic batching. The
-                    tech stack the biggest marketplaces use — with none of the
-                    opacity.
+                    The live classifier is DINOv2. The DINOv3 candidate is a research shadow model and is blocked in production mode.
                   </p>
                 </div>
               </div>
               <div className="flex gap-10 md:gap-14">
-                <Stat label="Inference" value="<200ms" />
-                <Stat label="Full verdict" value="<5s" />
-                <Stat label="Uptime" value="99.9%" />
+                <Stat label="Scope" value="5 brands" />
+                <Stat label="Brand check" value="Declared" />
+                <Stat label="Production" value="No" />
               </div>
             </div>
           </motion.div>

@@ -24,15 +24,15 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: {
-    default: "HypeVault — Buy real. Every time.",
+    default: "HypeVault — Five-brand research prototype",
     template: "%s · HypeVault",
   },
   description:
-    "The AI-gated marketplace for authentic ultra-luxury watches. Every listing verified by DINOv2 before it goes live.",
+    "Research prototype for authenticity classification within five evaluated luxury-watch brands. Not a universal authenticity guarantee.",
   openGraph: {
     title: "HypeVault",
     description:
-      "The AI-gated marketplace for authentic ultra-luxury watches.",
+      "Research prototype for authenticity classification within five evaluated luxury-watch brands.",
     type: "website",
   },
 };

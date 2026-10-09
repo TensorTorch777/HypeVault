@@ -23,15 +23,15 @@ TIMEOUT_S = 5.0
 MAX_ATTEMPTS = 2
 
 
-def preprocess_chw(image_rgb: np.ndarray) -> np.ndarray:
+def preprocess_chw(image_rgb: np.ndarray, side: int | None = None) -> np.ndarray:
     """
     HWC RGB → NCHW float32 ImageNet normalized (batch 1).
-    Resizes to `settings.inference_img_size` (must match training + Triton model dims).
+    Resizes to `side`, or to `settings.inference_img_size` when omitted (must match the target model dims).
     """
     from PIL import Image as _PILImage
 
     try:
-        side = int(settings.inference_img_size)
+        side = int(side if side is not None else settings.inference_img_size)
         pil = _PILImage.fromarray(image_rgb.astype(np.uint8)).resize(
             (side, side),
             _PILImage.BICUBIC,
@@ -105,3 +105,94 @@ async def triton_ready() -> bool:
         return await asyncio.to_thread(_check)
     except Exception:
         return False
+
+
+def _named_infer_sync(
+    model_name: str,
+    model_version: str,
+    array_nchw: np.ndarray,
+    input_name: str,
+    output_name: str,
+    timeout_s: float,
+) -> np.ndarray:
+    """One request to one named model version. This function does not choose a substitute model."""
+    url = f"{settings.triton_host}:{settings.triton_port}"
+    client = grpcclient.InferenceServerClient(url=url)
+    inputs = [grpcclient.InferInput(input_name, array_nchw.shape, "FP32")]
+    inputs[0].set_data_from_numpy(array_nchw)
+    outputs = [grpcclient.InferRequestedOutput(output_name)]
+    result = client.infer(
+        model_name=model_name,
+        model_version=model_version,
+        inputs=inputs,
+        outputs=outputs,
+        client_timeout=timeout_s,
+    )
+    return result.as_numpy(output_name)
+
+
+async def infer_named_model(
+    model_name: str,
+    model_version: str,
+    array_nchw: np.ndarray,
+    input_name: str,
+    output_name: str,
+    timeout_s: float = TIMEOUT_S,
+) -> np.ndarray:
+    return await asyncio.to_thread(
+        _named_infer_sync,
+        model_name,
+        model_version,
+        array_nchw,
+        input_name,
+        output_name,
+        timeout_s,
+    )
+
+
+async def named_model_ready(model_name: str, model_version: str) -> bool:
+    """Server liveness plus this model version's readiness.
+
+    Triton reports the whole server not-ready when any requested model fails to load,
+    so one model's failure must not hide another model's readiness.
+    """
+
+    def _check() -> bool:
+        client = grpcclient.InferenceServerClient(url=f"{settings.triton_host}:{settings.triton_port}")
+        return bool(client.is_server_live() and client.is_model_ready(model_name, model_version))
+
+    try:
+        return await asyncio.to_thread(_check)
+    except Exception:
+        return False
+
+
+async def named_model_serving_profile(model_name: str, model_version: str) -> dict | None:
+    """Instance kinds and CUDA execution-provider parameters Triton is serving, or None if unreadable."""
+
+    def _check() -> dict:
+        client = grpcclient.InferenceServerClient(url=f"{settings.triton_host}:{settings.triton_port}")
+        config = client.get_model_config(model_name, model_version, as_json=True)["config"]
+        kinds = frozenset(group.get("kind", "KIND_AUTO") for group in config.get("instance_group", []))
+        cuda: dict[str, str] = {}
+        accelerators = (config.get("optimization") or {}).get("execution_accelerators") or {}
+        for accelerator in accelerators.get("gpu_execution_accelerator") or []:
+            if accelerator.get("name") == "cuda":
+                cuda.update({str(k): str(v) for k, v in (accelerator.get("parameters") or {}).items()})
+        return {"kinds": kinds, "cuda_parameters": cuda}
+
+    try:
+        return await asyncio.to_thread(_check)
+    except Exception:
+        return None
+
+
+async def triton_server_status() -> dict[str, bool]:
+    def _check() -> dict[str, bool]:
+        client = grpcclient.InferenceServerClient(url=f"{settings.triton_host}:{settings.triton_port}")
+        return {"live": bool(client.is_server_live()), "ready": bool(client.is_server_ready())}
+
+    try:
+        return await asyncio.to_thread(_check)
+    except Exception:
+        return {"live": False, "ready": False}

@@ -1,0 +1,121 @@
+{
+  "limitations": [
+    {
+      "id": "L1",
+      "title": "Five-brand catalog only.",
+      "severity": "high",
+      "evidence_phase": "16 and 21",
+      "current_status": "Locked by scope_lock_v1.",
+      "effect_on_deployment": "Requests that do not explicitly name a supported brand receive UNSUPPORTED_SCOPE and no authenticity verdict.",
+      "blocks_promotion": true
+    },
+    {
+      "id": "L2",
+      "title": "No verified product or SKU identity.",
+      "severity": "medium",
+      "evidence_phase": "16",
+      "current_status": "split_manifest_v2 records product_id_status as unavailable.",
+      "effect_on_deployment": "The same physical watch can appear in more than one split without being detectable as the same SKU.",
+      "blocks_promotion": false
+    },
+    {
+      "id": "L3",
+      "title": "No marketplace or source metadata.",
+      "severity": "medium",
+      "evidence_phase": "16",
+      "current_status": "Marketplace and source fields are UNKNOWN in the v2 manifest.",
+      "effect_on_deployment": "Marketplace shift cannot be measured from the training catalog.",
+      "blocks_promotion": false
+    },
+    {
+      "id": "L4",
+      "title": "No product-disjoint guarantee.",
+      "severity": "medium",
+      "evidence_phase": "16",
+      "current_status": "product_disjoint_guarantee is false.",
+      "effect_on_deployment": "In-distribution perfection can reflect repeated products as well as brand-level signal.",
+      "blocks_promotion": false
+    },
+    {
+      "id": "L5",
+      "title": "Real OOD validation failed in Phase 35.",
+      "severity": "high",
+      "evidence_phase": "35",
+      "current_status": "OOD_FAIL. 337/408 authentic escape. Unseen luxury 171/194.",
+      "effect_on_deployment": "Open-set rejection is not a supported behavior. production_ood_threshold stays null.",
+      "blocks_promotion": true
+    },
+    {
+      "id": "L6",
+      "title": "Independent watch-like OOD validation remains unresolved because of corpus constraints.",
+      "severity": "high",
+      "evidence_phase": "36 and 37",
+      "current_status": "WATCH_OOD_UNRESOLVED. Phase 37 admitted 0 images.",
+      "effect_on_deployment": "Phase 36 cannot clear Phase 35, and no replacement corpus is locked.",
+      "blocks_promotion": true
+    },
+    {
+      "id": "L7",
+      "title": "Resize/recompression false-fake limitation.",
+      "severity": "medium",
+      "evidence_phase": "23",
+      "current_status": "8 of 9 known stress false-fake events are caught. Label_0_Watches/Richard Mille/9eda705bd8c9.jpg resize_recompression remains uncovered.",
+      "effect_on_deployment": "Robustness is pass-with-limitations. One known false-fake stress case is still missed.",
+      "blocks_promotion": false
+    },
+    {
+      "id": "L8",
+      "title": "Production serving remains DINOv2 while the frozen candidate uses DINOv3.",
+      "severity": "high",
+      "evidence_phase": "34",
+      "current_status": "Live backend files were not switched.",
+      "effect_on_deployment": "Customer traffic does not run the frozen DINOv3 checkpoint.",
+      "blocks_promotion": true
+    },
+    {
+      "id": "L9",
+      "title": "ONNX CUDA unavailable.",
+      "severity": "high",
+      "evidence_phase": "26 and 34",
+      "current_status": "CPU ONNX is not the authoritative path. CUDA ONNX was not available.",
+      "effect_on_deployment": "No production ONNX CUDA parity for the frozen candidate.",
+      "blocks_promotion": true
+    },
+    {
+      "id": "L10",
+      "title": "TensorRT unavailable.",
+      "severity": "high",
+      "evidence_phase": "27 and 34",
+      "current_status": "No TensorRT engine is the authoritative runtime.",
+      "effect_on_deployment": "The planned TensorRT serving path is not in place.",
+      "blocks_promotion": true
+    },
+    {
+      "id": "L11",
+      "title": "Triton unavailable.",
+      "severity": "high",
+      "evidence_phase": "28 and 34",
+      "current_status": "Triton is not serving the frozen DINOv3 candidate.",
+      "effect_on_deployment": "The live Triton path, when used, is the DINOv2 stack, not this candidate.",
+      "blocks_promotion": true
+    },
+    {
+      "id": "L12",
+      "title": "Review workload not formally accepted.",
+      "severity": "high",
+      "evidence_phase": "34",
+      "current_status": "Expected review volume was reported and not accepted.",
+      "effect_on_deployment": "A shadow REVIEW state has no accepted operational owner.",
+      "blocks_promotion": true
+    },
+    {
+      "id": "L13",
+      "title": "Formal policy approval not obtained.",
+      "severity": "high",
+      "evidence_phase": "34 and 38",
+      "current_status": "POLICY_APPROVAL is PENDING. PRODUCTION_PROMOTION is FORBIDDEN.",
+      "effect_on_deployment": "No policy document authorizes customer-facing authenticity decisions.",
+      "blocks_promotion": true
+    }
+  ]
+}

@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 const NAV_LINKS = [
   { href: "/product/Luxury%20watches", label: "Watches" },
   { href: "/#how",                     label: "Method" },
+  { href: "/research",                 label: "Research demo" },
 ];
 
 export function TopNav() {
@@ -85,7 +86,7 @@ export function TopNav() {
                 href="/seller/upload"
                 className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#FFEDF6]/80 transition-colors hover:text-[#FFEDF6]"
               >
-                Authenticate
+                Legacy check
               </Link>
               <Link
                 href="/seller/dashboard"

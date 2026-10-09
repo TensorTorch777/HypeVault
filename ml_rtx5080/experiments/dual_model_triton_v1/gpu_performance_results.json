@@ -1,0 +1,161 @@
+{
+  "triton": "2.65.0",
+  "gpu": "NVIDIA GeForce RTX 5080, 580.178.04",
+  "method": "single client on the host over gRPC (localhost); client_round_trip includes serialization and transport; triton_compute_infer is Triton's own compute time",
+  "models": {
+    "dinov2_vitb14_live": {
+      "instance_kind": [
+        "KIND_GPU"
+      ],
+      "input": "first parity-protocol image (non-test), batch tiled for larger sizes",
+      "load_seconds": 0.10640393300127471,
+      "gpu_memory_mib_tritonserver": {
+        "no_model_loaded": 392,
+        "after_load_and_warmup": 1546,
+        "peak_after_batch8": 9738
+      },
+      "warm_batch1": {
+        "client_round_trip": {
+          "n": 100,
+          "mean_ms": 20.23368787002255,
+          "p50_ms": 20.114783001190517,
+          "p90_ms": 21.10230799735291,
+          "p99_ms": 21.729001000494463,
+          "max_ms": 21.755955000116955
+        },
+        "triton_compute_infer_mean_ms": 17.66753955
+      },
+      "throughput_by_batch_size": {
+        "1": {
+          "requests": 20,
+          "mean_request_ms": 20.270912449450407,
+          "images_per_second": 49.33177046142846,
+          "max_abs_deviation_from_batch1_output": 0.0
+        },
+        "2": {
+          "requests": 20,
+          "mean_request_ms": 39.663601349639066,
+          "images_per_second": 50.42406468262367,
+          "max_abs_deviation_from_batch1_output": 4.76837158203125e-07
+        },
+        "4": {
+          "requests": 20,
+          "mean_request_ms": 94.79249515025003,
+          "images_per_second": 42.19743339026823,
+          "max_abs_deviation_from_batch1_output": 7.152557373046875e-07
+        },
+        "8": {
+          "requests": 20,
+          "mean_request_ms": 199.36079130020516,
+          "images_per_second": 40.1282516377721,
+          "max_abs_deviation_from_batch1_output": 1.1920928955078125e-06
+        }
+      },
+      "sequential_stability": {
+        "requests": 200,
+        "errors": 0,
+        "max_abs_deviation": 0.0
+      },
+      "concurrent_stability": {
+        "threads": 8,
+        "requests_per_thread": 25,
+        "completed": 200,
+        "errors": 0,
+        "error_types": [],
+        "wall_seconds": 3.649580593999417,
+        "requests_per_second": 54.80081747717446,
+        "latency": {
+          "n": 200,
+          "mean_ms": 142.45615090001593,
+          "p50_ms": 145.64179800072452,
+          "p90_ms": 146.25605800029007,
+          "p99_ms": 147.64298699810752,
+          "max_ms": 147.89986699906876
+        },
+        "max_abs_deviation": 0.0
+      },
+      "reload": {
+        "ready_after_unload": false,
+        "reload_seconds": 0.2385986760018568,
+        "abs_deviation_after_reload": 0.0
+      }
+    },
+    "dinov3_authenticity_candidate": {
+      "instance_kind": [
+        "KIND_GPU"
+      ],
+      "input": "first parity-protocol image (non-test), batch tiled for larger sizes",
+      "load_seconds": 0.394647963999887,
+      "gpu_memory_mib_tritonserver": {
+        "no_model_loaded": 392,
+        "after_load_and_warmup": 1546,
+        "peak_after_batch8": 3594
+      },
+      "warm_batch1": {
+        "client_round_trip": {
+          "n": 100,
+          "mean_ms": 16.789297640025325,
+          "p50_ms": 16.730761002690997,
+          "p90_ms": 17.201498998474563,
+          "p99_ms": 17.31232100064517,
+          "max_ms": 17.490295998868532
+        },
+        "triton_compute_infer_mean_ms": 14.37757849
+      },
+      "throughput_by_batch_size": {
+        "1": {
+          "requests": 20,
+          "mean_request_ms": 16.890147599951888,
+          "images_per_second": 59.206113746622826,
+          "max_abs_deviation_from_batch1_output": 0.0
+        },
+        "2": {
+          "requests": 20,
+          "mean_request_ms": 31.03855780009326,
+          "images_per_second": 64.43598355571761,
+          "max_abs_deviation_from_batch1_output": 9.5367431640625e-06
+        },
+        "4": {
+          "requests": 20,
+          "mean_request_ms": 69.59739509984502,
+          "images_per_second": 57.473415409607874,
+          "max_abs_deviation_from_batch1_output": 2.3365020751953125e-05
+        },
+        "8": {
+          "requests": 20,
+          "mean_request_ms": 145.6194095495448,
+          "images_per_second": 54.93773134190687,
+          "max_abs_deviation_from_batch1_output": 1.0013580322265625e-05
+        }
+      },
+      "sequential_stability": {
+        "requests": 200,
+        "errors": 0,
+        "max_abs_deviation": 0.0
+      },
+      "concurrent_stability": {
+        "threads": 8,
+        "requests_per_thread": 25,
+        "completed": 200,
+        "errors": 0,
+        "error_types": [],
+        "wall_seconds": 2.926974257999973,
+        "requests_per_second": 68.32994839410092,
+        "latency": {
+          "n": 200,
+          "mean_ms": 113.99327028007974,
+          "p50_ms": 116.72139399888692,
+          "p90_ms": 117.82234199927188,
+          "p99_ms": 118.68643499838072,
+          "max_ms": 119.06650899982196
+        },
+        "max_abs_deviation": 0.0
+      },
+      "reload": {
+        "ready_after_unload": false,
+        "reload_seconds": 0.31259364200013806,
+        "abs_deviation_after_reload": 0.0
+      }
+    }
+  }
+}

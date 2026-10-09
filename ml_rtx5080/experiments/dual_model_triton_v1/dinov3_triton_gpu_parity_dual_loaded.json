@@ -1,0 +1,540 @@
+{
+  "status": "PASS",
+  "scope": "GPU Triton parity",
+  "gpu_inference_claimed": true,
+  "protocol": "ml_rtx5080/experiments/dual_model_triton_v1/dinov3_triton_gpu_protocol_v2.json",
+  "protocol_sha256": "4db6687472deed9a55693f069ae9208416ef0bd621f1535e41a147025eacbd1d",
+  "serving_config": {
+    "path": "infra/triton/dinov3_authenticity_candidate/config.gpu_fp32.pbtxt",
+    "sha256": "1debef329372c7e5c5fc227bcb36cf668eeecbfe3c76068e4864cbb5ddc7fe7c"
+  },
+  "tolerances": {
+    "max_abs_logit_error": 0.0001,
+    "max_abs_probability_error": 1e-05
+  },
+  "tolerances_widened_after_results": false,
+  "model": {
+    "triton_name": "dinov3_authenticity_candidate",
+    "version": "1",
+    "instance_kind": "KIND_GPU"
+  },
+  "triton_server": {
+    "version": "2.65.0",
+    "url": "localhost:18001"
+  },
+  "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "reference_checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "export_artifact_sha256": "d1d0c9bc010551b006b7cd57830d0d2511928832aefb4582bb71d70e02363edb",
+  "reference": {
+    "device": "cpu",
+    "dtype": "float32",
+    "torch": "2.11.0+cu130",
+    "seconds": 6.418761963999714
+  },
+  "host": {
+    "python": "3.12.3",
+    "machine": "x86_64"
+  },
+  "samples": 24,
+  "splits": [
+    "calibration",
+    "train",
+    "validation"
+  ],
+  "original_sizes": [
+    [
+      512,
+      512
+    ],
+    [
+      550,
+      550
+    ],
+    [
+      720,
+      480
+    ],
+    [
+      777,
+      918
+    ],
+    [
+      800,
+      640
+    ],
+    [
+      895,
+      960
+    ],
+    [
+      900,
+      900
+    ],
+    [
+      1024,
+      1149
+    ],
+    [
+      1500,
+      1001
+    ],
+    [
+      1526,
+      1080
+    ],
+    [
+      1600,
+      1158
+    ],
+    [
+      1700,
+      1214
+    ],
+    [
+      1766,
+      2048
+    ],
+    [
+      2000,
+      1126
+    ],
+    [
+      2048,
+      1363
+    ],
+    [
+      2048,
+      2048
+    ],
+    [
+      2560,
+      2560
+    ]
+  ],
+  "per_batch_size": {
+    "1": {
+      "samples": 24,
+      "max_abs_logit_error": 5.245208740234375e-06,
+      "mean_abs_logit_error": 8.344650268554688e-07,
+      "max_abs_probability_error": 5.330279128205016e-13,
+      "mean_abs_probability_error": 4.4477783049803205e-14,
+      "decision_mismatches": 0,
+      "within_tolerance": true
+    },
+    "2": {
+      "samples": 24,
+      "max_abs_logit_error": 4.2557716369628906e-05,
+      "mean_abs_logit_error": 2.8858582178751626e-06,
+      "max_abs_probability_error": 9.812591895965936e-07,
+      "mean_abs_probability_error": 4.088594885946876e-08,
+      "decision_mismatches": 0,
+      "within_tolerance": true
+    },
+    "4": {
+      "samples": 24,
+      "max_abs_logit_error": 3.647804260253906e-05,
+      "mean_abs_logit_error": 3.2683213551839194e-06,
+      "max_abs_probability_error": 8.409425871873377e-07,
+      "mean_abs_probability_error": 3.503958963820894e-08,
+      "decision_mismatches": 0,
+      "within_tolerance": true
+    },
+    "8": {
+      "samples": 24,
+      "max_abs_logit_error": 1.7881393432617188e-05,
+      "mean_abs_logit_error": 2.115964889526367e-06,
+      "max_abs_probability_error": 4.122425262429938e-07,
+      "mean_abs_probability_error": 1.7176910782736658e-08,
+      "decision_mismatches": 0,
+      "within_tolerance": true
+    }
+  },
+  "rows": [
+    {
+      "sample_id": "Label_0_Watches/Audemars Piguet/b1a40ed1b5b9.jpg",
+      "split": "calibration",
+      "original_size": [
+        550,
+        550
+      ],
+      "reference_logit": -3.9701318740844727,
+      "triton_logit": -3.9701337814331055,
+      "abs_logit_error": 1.9073486328125e-06,
+      "reference_probability": 6.717745916069519e-08,
+      "triton_probability": 6.717692613278237e-08,
+      "abs_probability_error": 5.330279128205016e-13,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/Patek Philippe/9ba50fea3805.jpg",
+      "split": "train",
+      "original_size": [
+        1024,
+        1149
+      ],
+      "reference_logit": -4.250921249389648,
+      "triton_logit": -4.250923156738281,
+      "abs_logit_error": 1.9073486328125e-06,
+      "reference_probability": 2.088938882177442e-08,
+      "triton_probability": 2.0889223072310562e-08,
+      "abs_probability_error": 1.657494638569925e-13,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/Patek Philippe/c2f778c66d15.jpg",
+      "split": "train",
+      "original_size": [
+        777,
+        918
+      ],
+      "reference_logit": -4.512345790863037,
+      "triton_logit": -4.512351036071777,
+      "abs_logit_error": 5.245208740234375e-06,
+      "reference_probability": 7.0406706303722325e-09,
+      "triton_probability": 7.040517002466106e-09,
+      "abs_probability_error": 1.5362790612678263e-13,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/63d2c86b29d3.jpg",
+      "split": "train",
+      "original_size": [
+        1526,
+        1080
+      ],
+      "reference_logit": -4.565155982971191,
+      "triton_logit": -4.565158367156982,
+      "abs_logit_error": 2.384185791015625e-06,
+      "reference_probability": 5.652006649676796e-09,
+      "triton_probability": 5.651950591540947e-09,
+      "abs_probability_error": 5.6058135848734846e-14,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/Audemars Piguet/99fcd3b9051c.jpg",
+      "split": "train",
+      "original_size": [
+        1700,
+        1214
+      ],
+      "reference_logit": -4.590450286865234,
+      "triton_logit": -4.590450763702393,
+      "abs_logit_error": 4.76837158203125e-07,
+      "reference_probability": 5.08749310073564e-09,
+      "triton_probability": 5.08748300886814e-09,
+      "abs_probability_error": 1.0091867500099478e-14,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/Richard Mille/a11094843532.jpg",
+      "split": "train",
+      "original_size": [
+        895,
+        960
+      ],
+      "reference_logit": -4.596809387207031,
+      "triton_logit": -4.596810340881348,
+      "abs_logit_error": 9.5367431640625e-07,
+      "reference_probability": 4.954672397162721e-09,
+      "triton_probability": 4.954652740390019e-09,
+      "abs_probability_error": 1.9656772702211908e-14,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/Richard Mille/9eda705bd8c9.jpg",
+      "split": "validation",
+      "original_size": [
+        2000,
+        1126
+      ],
+      "reference_logit": -1.246192216873169,
+      "triton_logit": -1.246192216873169,
+      "abs_logit_error": 0.0,
+      "reference_probability": 0.005573095573218122,
+      "triton_probability": 0.005573095573218122,
+      "abs_probability_error": 0.0,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0003c0bd6ebe.jpg",
+      "split": "train",
+      "original_size": [
+        2560,
+        2560
+      ],
+      "reference_logit": -4.6621904373168945,
+      "triton_logit": -4.6621904373168945,
+      "abs_logit_error": 0.0,
+      "reference_probability": 3.774783115192984e-09,
+      "triton_probability": 3.774783115192984e-09,
+      "abs_probability_error": 0.0,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/002016510ba1.jpg",
+      "split": "train",
+      "original_size": [
+        900,
+        900
+      ],
+      "reference_logit": -4.649194717407227,
+      "triton_logit": -4.649194717407227,
+      "abs_logit_error": 0.0,
+      "reference_probability": 3.984475599637879e-09,
+      "triton_probability": 3.984475599637879e-09,
+      "abs_probability_error": 0.0,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/002bc8d03cd5.jpg",
+      "split": "train",
+      "original_size": [
+        1600,
+        1158
+      ],
+      "reference_logit": -4.648166656494141,
+      "triton_logit": -4.648166656494141,
+      "abs_logit_error": 0.0,
+      "reference_probability": 4.001552816272562e-09,
+      "triton_probability": 4.001552816272562e-09,
+      "abs_probability_error": 0.0,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00617b670111.jpg",
+      "split": "train",
+      "original_size": [
+        800,
+        640
+      ],
+      "reference_logit": -4.663212299346924,
+      "triton_logit": -4.663212776184082,
+      "abs_logit_error": 4.76837158203125e-07,
+      "reference_probability": 3.758770600238125e-09,
+      "triton_probability": 3.758763144107146e-09,
+      "abs_probability_error": 7.456130979048305e-15,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/001067d69616.jpg",
+      "split": "train",
+      "original_size": [
+        512,
+        512
+      ],
+      "reference_logit": 4.595499038696289,
+      "triton_logit": 4.5954999923706055,
+      "abs_logit_error": 9.5367431640625e-07,
+      "reference_probability": 0.9999999950182454,
+      "triton_probability": 0.9999999950182652,
+      "abs_probability_error": 1.9761969838327786e-14,
+      "reference_decision": "FAKE",
+      "triton_decision": "FAKE"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/004c219b045c.jpg",
+      "split": "train",
+      "original_size": [
+        512,
+        512
+      ],
+      "reference_logit": 4.592047691345215,
+      "triton_logit": 4.592047691345215,
+      "abs_logit_error": 0.0,
+      "reference_probability": 0.9999999949462026,
+      "triton_probability": 0.9999999949462026,
+      "abs_probability_error": 0.0,
+      "reference_decision": "FAKE",
+      "triton_decision": "FAKE"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/005442daf6b3.jpg",
+      "split": "train",
+      "original_size": [
+        512,
+        512
+      ],
+      "reference_logit": 4.582615852355957,
+      "triton_logit": 4.582615852355957,
+      "abs_logit_error": 0.0,
+      "reference_probability": 0.9999999947439657,
+      "triton_probability": 0.9999999947439657,
+      "abs_probability_error": 0.0,
+      "reference_decision": "FAKE",
+      "triton_decision": "FAKE"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/005bb6357b99.jpg",
+      "split": "train",
+      "original_size": [
+        512,
+        512
+      ],
+      "reference_logit": 4.594904899597168,
+      "triton_logit": 4.594903945922852,
+      "abs_logit_error": 9.5367431640625e-07,
+      "reference_probability": 0.9999999950059171,
+      "triton_probability": 0.9999999950058971,
+      "abs_probability_error": 1.9984014443252818e-14,
+      "reference_decision": "FAKE",
+      "triton_decision": "FAKE"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00e7fec26604.jpg",
+      "split": "train",
+      "original_size": [
+        720,
+        480
+      ],
+      "reference_logit": -4.650574684143066,
+      "triton_logit": -4.650574207305908,
+      "abs_logit_error": 4.76837158203125e-07,
+      "reference_probability": 3.961667355652567e-09,
+      "triton_probability": 3.961675214277748e-09,
+      "abs_probability_error": 7.858625181012748e-15,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/033824530806.jpg",
+      "split": "train",
+      "original_size": [
+        720,
+        480
+      ],
+      "reference_logit": -4.636491298675537,
+      "triton_logit": -4.636491775512695,
+      "abs_logit_error": 4.76837158203125e-07,
+      "reference_probability": 4.200705577386143e-09,
+      "triton_probability": 4.20069724460548e-09,
+      "abs_probability_error": 8.332780663259563e-15,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0ce059828e7b.jpg",
+      "split": "train",
+      "original_size": [
+        1500,
+        1001
+      ],
+      "reference_logit": -4.635367393493652,
+      "triton_logit": -4.635367393493652,
+      "abs_logit_error": 0.0,
+      "reference_probability": 4.220391946793723e-09,
+      "triton_probability": 4.220391946793723e-09,
+      "abs_probability_error": 0.0,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0fcb6427bbbb.jpg",
+      "split": "train",
+      "original_size": [
+        1766,
+        2048
+      ],
+      "reference_logit": -4.63807487487793,
+      "triton_logit": -4.6380743980407715,
+      "abs_logit_error": 4.76837158203125e-07,
+      "reference_probability": 4.173123337547913e-09,
+      "triton_probability": 4.173131615631153e-09,
+      "abs_probability_error": 8.278083239375375e-15,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/1f4e2e10b83b.jpg",
+      "split": "train",
+      "original_size": [
+        720,
+        480
+      ],
+      "reference_logit": -4.6403093338012695,
+      "triton_logit": -4.640308380126953,
+      "abs_logit_error": 9.5367431640625e-07,
+      "reference_probability": 4.13451201082447e-09,
+      "triton_probability": 4.134528413823244e-09,
+      "abs_probability_error": 1.640299877400355e-14,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00a208f1d991.jpg",
+      "split": "train",
+      "original_size": [
+        800,
+        640
+      ],
+      "reference_logit": -4.670570373535156,
+      "triton_logit": -4.6705708503723145,
+      "abs_logit_error": 4.76837158203125e-07,
+      "reference_probability": 3.6454580209480638e-09,
+      "triton_probability": 3.6454507895909597e-09,
+      "abs_probability_error": 7.231357104099865e-15,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00b4fe2dd8d0.jpg",
+      "split": "train",
+      "original_size": [
+        2048,
+        2048
+      ],
+      "reference_logit": -4.64515495300293,
+      "triton_logit": -4.645155906677246,
+      "abs_logit_error": 9.5367431640625e-07,
+      "reference_probability": 4.052002941926002e-09,
+      "triton_probability": 4.051986866332212e-09,
+      "abs_probability_error": 1.6075593790523115e-14,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00ca5dec6dfd.jpg",
+      "split": "train",
+      "original_size": [
+        900,
+        900
+      ],
+      "reference_logit": -4.646763801574707,
+      "triton_logit": -4.646763801574707,
+      "abs_logit_error": 0.0,
+      "reference_probability": 4.024973913345768e-09,
+      "triton_probability": 4.024973913345768e-09,
+      "abs_probability_error": 0.0,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00d5a56c2800.jpg",
+      "split": "train",
+      "original_size": [
+        2048,
+        1363
+      ],
+      "reference_logit": -4.6196746826171875,
+      "triton_logit": -4.619675636291504,
+      "abs_logit_error": 9.5367431640625e-07,
+      "reference_probability": 4.505101350943227e-09,
+      "triton_probability": 4.5050834777629e-09,
+      "abs_probability_error": 1.7873180327050838e-14,
+      "reference_decision": "AUTHENTIC",
+      "triton_decision": "AUTHENTIC"
+    }
+  ],
+  "final_test_images_opened": 0,
+  "validated_equivalent": true
+}

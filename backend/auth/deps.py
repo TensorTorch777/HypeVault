@@ -77,6 +77,16 @@ async def get_current_user(
         )
 
 
+async def require_research_user(user: Annotated[User, Depends(get_current_user)]) -> User:
+    """Research access comes from the server-side allowlist, not from a role a user can pick."""
+    from config import research_user_allowlist
+
+    email = str(getattr(user, "email", "") or "").strip().casefold()
+    if not email or email not in research_user_allowlist():
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Research access required")
+    return user
+
+
 async def require_seller(user: Annotated[User, Depends(get_current_user)]) -> User:
     try:
         from database import UserRole

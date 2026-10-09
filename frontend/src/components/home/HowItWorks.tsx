@@ -33,8 +33,8 @@ export function HowItWorks() {
         index={1}
         flip={false}
         eyebrow="Inspection"
-        title="Every photo is read by DINOv2-Giant."
-        body="A 1.1-billion-parameter vision transformer reads each listing's structural geometry — lace threading, sole curvature, dial symmetry — long before a buyer sees it."
+        title="Five-brand research classification."
+        body="The live route is a DINOv2 classifier used as a research prototype. It does not identify the brand in the image. The DINOv3 candidate is a shadow model and is not the production model."
         cta={{ label: "Read the research", href: "/#how" }}
       >
         <ScanMockup />
@@ -58,8 +58,8 @@ export function HowItWorks() {
         flip={false}
         last
         eyebrow="The verdict"
-        title="Authentic. Confident. Or it doesn't ship."
-        body="A green AUTHENTIC badge means the model reached ≥95% confidence. Anything lower is flagged for human review — never quietly listed."
+        title="A result is not a guarantee."
+        body="Inside the five declared brands a model class can be stored as evidence. That class does not verify the listing or publish it. Brand verification is not performed. An unsupported brand returns no listing result."
         cta={{ label: "Read the policy", href: "/" }}
       >
         <VerdictMockup />
@@ -199,17 +199,17 @@ function ScanMockup() {
       <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-black/75 px-3 py-1.5 backdrop-blur-md">
         <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#FF3B00]" />
         <span className="text-[11px] font-semibold tracking-wide text-white">
-          DINOv2-G · 184ms
+          RESEARCH MODEL · not for production
         </span>
       </div>
 
       {/* HUD bottom-right */}
       <div className="absolute right-5 bottom-5 rounded-xl bg-white/95 px-3 py-2 backdrop-blur-md shadow-lg">
         <p className="text-[9px] font-semibold uppercase tracking-wider text-[#86868B]">
-          Confidence
+          Illustration
         </p>
         <p className="font-[family-name:var(--font-display)] text-[18px] font-bold tabular-nums text-[#1D1D1F]">
-          99.4%
+          Example
         </p>
       </div>
     </div>
@@ -410,7 +410,7 @@ function VerdictMockup() {
               Verdict
             </p>
             <p className="font-[family-name:var(--font-display)] text-[22px] font-bold text-[#1D1D1F]">
-              AUTHENTIC
+              Example result
             </p>
           </div>
         </div>
@@ -418,21 +418,21 @@ function VerdictMockup() {
         {/* Confidence meter */}
         <div className="mt-6">
           <div className="flex items-baseline justify-between">
-            <p className="text-[11px] font-semibold text-[#86868B]">Model confidence</p>
+            <p className="text-[11px] font-semibold text-[#86868B]">Illustration only</p>
             <p className="font-[family-name:var(--font-display)] text-[20px] font-bold tabular-nums text-[#1D1D1F]">
-              99.4<span className="text-[14px] text-[#86868B]">%</span>
+              Example
             </p>
           </div>
           <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#F5F5F7]">
             <div
               className="h-full rounded-full bg-gradient-to-r from-[#FF3B00] via-[#FFAA00] to-[#00A652]"
-              style={{ width: "99.4%" }}
+              style={{ width: "40%" }}
             />
           </div>
           <div className="mt-2 flex justify-between text-[9px] font-medium text-[#86868B]">
             <span>FAKE</span>
             <span>REVIEW</span>
-            <span>AUTHENTIC ›</span>
+            <span>not verified</span>
           </div>
         </div>
 

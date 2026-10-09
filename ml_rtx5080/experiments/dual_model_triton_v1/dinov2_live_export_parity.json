@@ -1,0 +1,432 @@
+{
+  "status": "PASS",
+  "stage": "export",
+  "scope": "host ONNX Runtime CPU on the Triton model bytes",
+  "gpu_inference_claimed": false,
+  "routing_allowed_by_this_result": false,
+  "protocol": "ml_rtx5080/experiments/dual_model_triton_v1/dinov2_live_parity_protocol_v1.json",
+  "protocol_sha256": "8b7f7bbfcf7b2e31945734279fcb131e6cf30ce2ef8f6fd2811b75ff5ce9854b",
+  "artifacts": {
+    "source_checkpoint": {
+      "path": "ml_rtx5080/checkpoints/best_model.pt",
+      "sha256": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66"
+    },
+    "training_config": {
+      "path": "ml_rtx5080/checkpoints/config.json",
+      "sha256": "d3c868b6a6421a24ed01240b54e349cd54aba8af9c59c8c15db6530d54c211ac"
+    },
+    "onnx_graph": {
+      "path": "models/dinov2_vitb14_live/1/model.onnx",
+      "sha256": "f367c2d4f96700e77dea5acffd7115150b79ad7c35301e627e8cdd7b47f3e17c"
+    },
+    "onnx_external_data": {
+      "path": "models/dinov2_vitb14_live/1/dinov2_hypevault.onnx.data",
+      "sha256": "b0a57707a63840974101f46020136e17c33d028aa2fbaffc8581e5936a63172c"
+    },
+    "triton_config": {
+      "path": "infra/triton/dinov2_vitb14_live/config.pbtxt",
+      "sha256": "bf48c14610f0c24447cafdc3735e0ac081f6c9f107d7b766695bfb2da87af246"
+    }
+  },
+  "serving": {
+    "runtime": "onnxruntime 1.26.0",
+    "provider": "CPUExecutionProvider"
+  },
+  "reference": {
+    "missing_keys": 0,
+    "unexpected_keys": 0,
+    "live_path_device": "cuda",
+    "torch": "2.11.0+cu130"
+  },
+  "host": {
+    "python": "3.12.3",
+    "machine": "x86_64"
+  },
+  "samples": 24,
+  "tolerances_vs_fp32": {
+    "max_abs_logit_error": 0.0001,
+    "max_abs_probability_error": 1e-05
+  },
+  "tolerances_widened_after_results": false,
+  "per_batch_size": {
+    "1": {
+      "samples": 24,
+      "max_abs_logit_error_vs_fp32": 1.621246337890625e-05,
+      "mean_abs_logit_error_vs_fp32": 5.23527463277181e-06,
+      "max_abs_probability_error_vs_fp32": 4.1410368896432903e-07,
+      "verdict_mismatches_vs_fp32": 0,
+      "verdict_mismatches_vs_live_fp16": 0,
+      "max_abs_logit_delta_vs_live_fp16": 0.005299568176269531,
+      "within_rule": true
+    },
+    "2": {
+      "samples": 24,
+      "max_abs_logit_error_vs_fp32": 1.621246337890625e-05,
+      "mean_abs_logit_error_vs_fp32": 5.23527463277181e-06,
+      "max_abs_probability_error_vs_fp32": 4.1410368896432903e-07,
+      "verdict_mismatches_vs_fp32": 0,
+      "verdict_mismatches_vs_live_fp16": 0,
+      "max_abs_logit_delta_vs_live_fp16": 0.005299568176269531,
+      "within_rule": true
+    },
+    "4": {
+      "samples": 24,
+      "max_abs_logit_error_vs_fp32": 1.621246337890625e-05,
+      "mean_abs_logit_error_vs_fp32": 5.23527463277181e-06,
+      "max_abs_probability_error_vs_fp32": 4.1410368896432903e-07,
+      "verdict_mismatches_vs_fp32": 0,
+      "verdict_mismatches_vs_live_fp16": 0,
+      "max_abs_logit_delta_vs_live_fp16": 0.005299568176269531,
+      "within_rule": true
+    },
+    "8": {
+      "samples": 24,
+      "max_abs_logit_error_vs_fp32": 1.621246337890625e-05,
+      "mean_abs_logit_error_vs_fp32": 5.23527463277181e-06,
+      "max_abs_probability_error_vs_fp32": 4.1410368896432903e-07,
+      "verdict_mismatches_vs_fp32": 0,
+      "verdict_mismatches_vs_live_fp16": 0,
+      "max_abs_logit_delta_vs_live_fp16": 0.005299568176269531,
+      "within_rule": true
+    }
+  },
+  "rows": [
+    {
+      "sample_id": "Label_0_Watches/Audemars Piguet/b1a40ed1b5b9.jpg",
+      "split": "calibration",
+      "original_size": [
+        550,
+        550
+      ],
+      "fp32_logit": -2.7681350708007812,
+      "live_fp16_logit": -2.767578125,
+      "candidate_logit": -2.7681403160095215,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/Patek Philippe/9ba50fea3805.jpg",
+      "split": "train",
+      "original_size": [
+        1024,
+        1149
+      ],
+      "fp32_logit": -5.726994037628174,
+      "live_fp16_logit": -5.7265625,
+      "candidate_logit": -5.726994037628174,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/Patek Philippe/c2f778c66d15.jpg",
+      "split": "train",
+      "original_size": [
+        777,
+        918
+      ],
+      "fp32_logit": -5.662903785705566,
+      "live_fp16_logit": -5.6640625,
+      "candidate_logit": -5.662904739379883,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/63d2c86b29d3.jpg",
+      "split": "train",
+      "original_size": [
+        1526,
+        1080
+      ],
+      "fp32_logit": -4.361064910888672,
+      "live_fp16_logit": -4.36328125,
+      "candidate_logit": -4.361063003540039,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/Audemars Piguet/99fcd3b9051c.jpg",
+      "split": "train",
+      "original_size": [
+        1700,
+        1214
+      ],
+      "fp32_logit": -3.9747419357299805,
+      "live_fp16_logit": -3.9765625,
+      "candidate_logit": -3.9747581481933594,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/Richard Mille/a11094843532.jpg",
+      "split": "train",
+      "original_size": [
+        895,
+        960
+      ],
+      "fp32_logit": -3.813154935836792,
+      "live_fp16_logit": -3.8125,
+      "candidate_logit": -3.8131566047668457,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/Richard Mille/9eda705bd8c9.jpg",
+      "split": "validation",
+      "original_size": [
+        2000,
+        1126
+      ],
+      "fp32_logit": -5.999972820281982,
+      "live_fp16_logit": -6.0,
+      "candidate_logit": -5.999974727630615,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0003c0bd6ebe.jpg",
+      "split": "train",
+      "original_size": [
+        2560,
+        2560
+      ],
+      "fp32_logit": -4.442245960235596,
+      "live_fp16_logit": -4.44140625,
+      "candidate_logit": -4.442244529724121,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/002016510ba1.jpg",
+      "split": "train",
+      "original_size": [
+        900,
+        900
+      ],
+      "fp32_logit": -5.960521221160889,
+      "live_fp16_logit": -5.9609375,
+      "candidate_logit": -5.960513591766357,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/002bc8d03cd5.jpg",
+      "split": "train",
+      "original_size": [
+        1600,
+        1158
+      ],
+      "fp32_logit": -6.080508708953857,
+      "live_fp16_logit": -6.078125,
+      "candidate_logit": -6.080510139465332,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00617b670111.jpg",
+      "split": "train",
+      "original_size": [
+        800,
+        640
+      ],
+      "fp32_logit": -5.292860507965088,
+      "live_fp16_logit": -5.2890625,
+      "candidate_logit": -5.2928619384765625,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/001067d69616.jpg",
+      "split": "train",
+      "original_size": [
+        512,
+        512
+      ],
+      "fp32_logit": 5.665219783782959,
+      "live_fp16_logit": 5.6640625,
+      "candidate_logit": 5.665215492248535,
+      "fp32_verdict": "FAKE",
+      "live_fp16_verdict": "FAKE",
+      "candidate_verdict": "FAKE"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/004c219b045c.jpg",
+      "split": "train",
+      "original_size": [
+        512,
+        512
+      ],
+      "fp32_logit": 3.8879506587982178,
+      "live_fp16_logit": 3.890625,
+      "candidate_logit": 3.8879590034484863,
+      "fp32_verdict": "FAKE",
+      "live_fp16_verdict": "FAKE",
+      "candidate_verdict": "FAKE"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/005442daf6b3.jpg",
+      "split": "train",
+      "original_size": [
+        512,
+        512
+      ],
+      "fp32_logit": 4.0602264404296875,
+      "live_fp16_logit": 4.0625,
+      "candidate_logit": 4.060242176055908,
+      "fp32_verdict": "FAKE",
+      "live_fp16_verdict": "FAKE",
+      "candidate_verdict": "FAKE"
+    },
+    {
+      "sample_id": "Label_1_Watches/A. Lange & Söhne/005bb6357b99.jpg",
+      "split": "train",
+      "original_size": [
+        512,
+        512
+      ],
+      "fp32_logit": 6.144399642944336,
+      "live_fp16_logit": 6.14453125,
+      "candidate_logit": 6.144399642944336,
+      "fp32_verdict": "FAKE",
+      "live_fp16_verdict": "FAKE",
+      "candidate_verdict": "FAKE"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00e7fec26604.jpg",
+      "split": "train",
+      "original_size": [
+        720,
+        480
+      ],
+      "fp32_logit": -3.015779733657837,
+      "live_fp16_logit": -3.017578125,
+      "candidate_logit": -3.015789031982422,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/033824530806.jpg",
+      "split": "train",
+      "original_size": [
+        720,
+        480
+      ],
+      "fp32_logit": -3.2606215476989746,
+      "live_fp16_logit": -3.26171875,
+      "candidate_logit": -3.260620594024658,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0ce059828e7b.jpg",
+      "split": "train",
+      "original_size": [
+        1500,
+        1001
+      ],
+      "fp32_logit": -5.155050277709961,
+      "live_fp16_logit": -5.15625,
+      "candidate_logit": -5.1550445556640625,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/0fcb6427bbbb.jpg",
+      "split": "train",
+      "original_size": [
+        1766,
+        2048
+      ],
+      "fp32_logit": -4.014242172241211,
+      "live_fp16_logit": -4.01953125,
+      "candidate_logit": -4.0142316818237305,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/1f4e2e10b83b.jpg",
+      "split": "train",
+      "original_size": [
+        720,
+        480
+      ],
+      "fp32_logit": -5.327114105224609,
+      "live_fp16_logit": -5.328125,
+      "candidate_logit": -5.327120780944824,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00a208f1d991.jpg",
+      "split": "train",
+      "original_size": [
+        800,
+        640
+      ],
+      "fp32_logit": -4.803418159484863,
+      "live_fp16_logit": -4.80078125,
+      "candidate_logit": -4.803403854370117,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00b4fe2dd8d0.jpg",
+      "split": "train",
+      "original_size": [
+        2048,
+        2048
+      ],
+      "fp32_logit": -6.20499849319458,
+      "live_fp16_logit": -6.203125,
+      "candidate_logit": -6.205001354217529,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00ca5dec6dfd.jpg",
+      "split": "train",
+      "original_size": [
+        900,
+        900
+      ],
+      "fp32_logit": -6.086525917053223,
+      "live_fp16_logit": -6.0859375,
+      "candidate_logit": -6.086523532867432,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    },
+    {
+      "sample_id": "Label_0_Watches/A. Lange & Söhne/00d5a56c2800.jpg",
+      "split": "train",
+      "original_size": [
+        2048,
+        1363
+      ],
+      "fp32_logit": -5.347448348999023,
+      "live_fp16_logit": -5.34765625,
+      "candidate_logit": -5.3474531173706055,
+      "fp32_verdict": "AUTHENTIC",
+      "live_fp16_verdict": "AUTHENTIC",
+      "candidate_verdict": "AUTHENTIC"
+    }
+  ],
+  "final_test_images_opened": 0
+}

@@ -1,0 +1,61 @@
+{
+  "purpose": "diagnose GPU parity failures; synthetic inputs only; not a parity result",
+  "inputs": {
+    "kind": "seeded uniform random pixels, ImageNet-normalized",
+    "samples": 8,
+    "seed": 51
+  },
+  "real_images_opened": 0,
+  "models": {
+    "dinov2": {
+      "reference": "FP32 CPU PyTorch",
+      "triton_default_model": "diag_dinov2_tf32on (reviewed GPU config, renamed)",
+      "triton_tf32_off_model": "diag_dinov2_tf32off (reviewed GPU config + use_tf32=0)",
+      "tf32_default_batch1": {
+        "max_abs_logit_error": 0.0003066062927246094,
+        "mean_abs_logit_error": 0.00015628337860107422
+      },
+      "tf32_default_batch8": {
+        "max_abs_logit_error": 0.0002689361572265625,
+        "mean_abs_logit_error": 0.00015926361083984375
+      },
+      "tf32_off_batch1": {
+        "max_abs_logit_error": 5.7220458984375e-06,
+        "mean_abs_logit_error": 4.0531158447265625e-06
+      },
+      "tf32_off_batch8": {
+        "max_abs_logit_error": 5.7220458984375e-06,
+        "mean_abs_logit_error": 3.874301910400391e-06
+      },
+      "reference_logit_range": [
+        -5.239607810974121,
+        -5.176157474517822
+      ]
+    },
+    "dinov3": {
+      "reference": "FP32 CPU PyTorch",
+      "triton_default_model": "diag_dinov3_tf32on (reviewed GPU config, renamed)",
+      "triton_tf32_off_model": "diag_dinov3_tf32off (reviewed GPU config + use_tf32=0)",
+      "tf32_default_batch1": {
+        "max_abs_logit_error": 0.0003814697265625,
+        "mean_abs_logit_error": 0.00019302964210510254
+      },
+      "tf32_default_batch8": {
+        "max_abs_logit_error": 0.0004942417144775391,
+        "mean_abs_logit_error": 0.00023102760314941406
+      },
+      "tf32_off_batch1": {
+        "max_abs_logit_error": 1.6689300537109375e-06,
+        "mean_abs_logit_error": 1.0728836059570312e-06
+      },
+      "tf32_off_batch8": {
+        "max_abs_logit_error": 2.6226043701171875e-06,
+        "mean_abs_logit_error": 1.0132789611816406e-06
+      },
+      "reference_logit_range": [
+        -3.937674045562744,
+        -3.896812677383423
+      ]
+    }
+  }
+}

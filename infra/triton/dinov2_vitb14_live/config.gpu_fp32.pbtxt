@@ -1,0 +1,35 @@
+name: "dinov2_vitb14_live"
+backend: "onnxruntime"
+max_batch_size: 8
+
+input [
+  {
+    name: "input__0"
+    data_type: TYPE_FP32
+    dims: [ 3, 504, 504 ]
+  }
+]
+
+output [
+  {
+    name: "output__0"
+    data_type: TYPE_FP32
+    dims: [ 1 ]
+    reshape: { shape: [ ] }
+  }
+]
+
+instance_group [
+  {
+    count: 1
+    kind: KIND_GPU
+    gpus: [ 0 ]
+  }
+]
+
+optimization { execution_accelerators {
+  gpu_execution_accelerator : [ {
+    name : "cuda"
+    parameters { key: "use_tf32" value: "0" }
+  } ]
+} }

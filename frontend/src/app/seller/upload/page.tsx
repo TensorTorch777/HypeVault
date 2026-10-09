@@ -14,7 +14,7 @@ import axios from "axios";
 
 import { api, fetchMe, getApiErrorMessage } from "@/lib/api";
 
-const steps = ["Images", "Details", "Verify", "Result"] as const;
+const steps = ["Images", "Details", "Legacy check", "Result"] as const;
 
 export default function SellerUploadPage() {
   const router = useRouter();
@@ -65,6 +65,7 @@ export default function SellerUploadPage() {
     fd.append("product_name", productName || "Untitled listing");
     fd.append("category", category);
     fd.append("listing_id", id);
+    if (brand.trim()) fd.append("brand", brand.trim());
     const { data } = await api.post<{
       verdict: "AUTHENTIC" | "FAKE";
       confidence: number;
@@ -85,7 +86,7 @@ export default function SellerUploadPage() {
             <h1 className="text-2xl font-semibold">Upload</h1>
           </CardHeader>
           <CardContent className="space-y-3">
-            <p className="text-sm text-primary/65">Log in to upload and verify listings.</p>
+            <p className="text-sm text-primary/65">Log in to upload a listing. The listing check uses legacy DINOv2, not the DINOv3 research demo.</p>
             <Button className="min-h-[44px]" onClick={() => router.push("/login")}>
               Log in
             </Button>
@@ -133,6 +134,9 @@ export default function SellerUploadPage() {
                   <div>
                     <label className="text-xs font-semibold text-primary/55">Brand</label>
                     <Input className="mt-2" value={brand} onChange={(e) => setBrand(e.target.value)} />
+                    <p className="mt-2 text-xs text-primary/55">
+                      Legacy DINOv2 listing check. The selected brand is user-declared and is not independently verified from the image. This is not the DINOv3 research prototype.
+                    </p>
                   </div>
                   <div>
                     <label className="text-xs font-semibold text-primary/55">Condition</label>
@@ -155,7 +159,9 @@ export default function SellerUploadPage() {
 
               {step === 2 ? (
                 <motion.div key="s2" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="space-y-4">
-                  <p className="text-sm text-primary/65">We’ll authenticate your lead image and update your listing.</p>
+                  <p className="text-sm text-primary/65">
+                    This runs the legacy DINOv2 classifier. It is not the frozen DINOv3 research prototype, and it is not a production authenticity guarantee. An unsupported brand returns no authentic or fake verdict.
+                  </p>
                   {err ? <p className="text-sm font-semibold text-danger">{err}</p> : null}
                   <div className="flex justify-between gap-3">
                     <Button variant="outline" className="min-h-[44px]" onClick={() => setStep(1)}>
@@ -184,7 +190,7 @@ export default function SellerUploadPage() {
                         })();
                       }}
                     >
-                      Run verification
+                      Run legacy check
                     </Button>
                   </div>
                 </motion.div>
@@ -192,7 +198,7 @@ export default function SellerUploadPage() {
 
               {step === 3 ? (
                 <motion.div key="s3" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="space-y-5">
-                  <AuthBadge verdict={verdict} confidence={confidence} />
+                  <AuthBadge verdict={verdict} confidence={confidence} declaredBrand={brand} lane="legacy" />
                   <div className="flex flex-wrap gap-3">
                     {listingId ? (
                       <Button className="min-h-[44px]" onClick={() => router.push(`/product/${listingId}`)}>

@@ -1,0 +1,129 @@
+{
+  "source": "backend/inference/model_router.py",
+  "allowlist": {
+    "dinov2_legacy": {
+      "response_model": "LEGACY_DINOV2",
+      "triton_name": "dinov2_vitb14_live",
+      "version": "1",
+      "input_name": "input__0",
+      "output_name": "output__0",
+      "input_dtype": "FP32",
+      "input_dims": [
+        3,
+        504,
+        504
+      ],
+      "output_meaning": "raw_logit",
+      "preprocessing": "live route path: PIL convert('RGB'), np.array, preprocess_chw at the adapter's 504 input, ImageNet normalization",
+      "temperature": null,
+      "decision_policy": "sigmoid(logit) at the legacy 0.50 threshold, then the live route's 0.88 minimum-authentic-confidence floor",
+      "checkpoint_sha_in_response": null,
+      "precision": "exact FP32 on GPU (ONNX Runtime CUDA EP use_tf32=0)",
+      "architecture": "DINOv2 ViT-B/14 (vit_base_patch14_dinov2.lvd142m), live listing-check checkpoint, 504 input",
+      "source_checkpoint_sha256": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66",
+      "same_model_as_live_route": true,
+      "research_only": false,
+      "production_route": true,
+      "validated_serving": {
+        "KIND_GPU": {
+          "use_tf32": "0"
+        }
+      }
+    },
+    "dinov3_experimental": {
+      "response_model": "DINOV3_RESEARCH_PROTOTYPE",
+      "triton_name": "dinov3_authenticity_candidate",
+      "version": "1",
+      "input_name": "input__0",
+      "output_name": "output__0",
+      "input_dtype": "FP32",
+      "input_dims": [
+        3,
+        512,
+        512
+      ],
+      "output_meaning": "raw_logit",
+      "preprocessing": "resize_pad_square_eval_v1 via dinov3_serving.preprocess_serving_image",
+      "temperature": 0.24038200410185356,
+      "decision_threshold": 0.5,
+      "decision_policy": "shadow_v1 PolicyEngine with fast_quality_gate on the raw logit",
+      "precision": "exact FP32 on GPU (ONNX Runtime CUDA EP use_tf32=0); FP32 on CPU",
+      "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+      "model_scope": "FIVE_BRAND_RESEARCH_PROTOTYPE",
+      "brand_verification": "NOT_PERFORMED",
+      "research_only": true,
+      "production_ready": false,
+      "production_route": false,
+      "validated_serving": {
+        "KIND_CPU": {},
+        "KIND_GPU": {
+          "use_tf32": "0"
+        }
+      }
+    }
+  },
+  "client_may_send_triton_name": false,
+  "client_field": "logical_model",
+  "default_when_omitted": "dinov3_experimental",
+  "silent_fallback": false,
+  "version_pinned_on_infer_and_ready": true,
+  "readiness": "server live plus model-version ready, per model; server-wide readiness reported separately",
+  "timeout_seconds": 5.0,
+  "non_finite_or_wrong_size_output": "INFERENCE_ERROR, decision null",
+  "missing_model_status": "MODEL_ERROR (HTTP 503)",
+  "missing_model_decision": null,
+  "unknown_logical_id_status": "POLICY_ERROR (HTTP 422)",
+  "production_or_unknown_mode_status": "POLICY_ERROR (HTTP 403)",
+  "live_route_dinov3_selector_status": "POLICY_ERROR (HTTP 403)",
+  "access_control": {
+    "dependency": "auth.deps.require_research_user",
+    "entitlement_source": "RESEARCH_USER_EMAILS server setting; empty means nobody",
+    "registration_roles": [
+      "buyer",
+      "seller"
+    ],
+    "unauthenticated": "HTTP 401",
+    "authenticated_without_entitlement": "HTTP 403"
+  },
+  "parity_tolerances_registered_before_measurement": {
+    "max_absolute_logit_error": 0.0001,
+    "max_absolute_probability_error": 1e-05,
+    "protocol": "ml_rtx5080/experiments/dual_model_triton_v1/parity_protocol_v1.json",
+    "protocol_sha256": "858abd0c03f27103d56625e0934d5886b7234770fffeff15c3c72d8e7020e4cb",
+    "committed_before_results_in": "b639dc3",
+    "dinov2_live": {
+      "export_stage_protocol": "dinov2_live_parity_protocol_v1.json",
+      "export_stage_protocol_sha256": "8b7f7bbfcf7b2e31945734279fcb131e6cf30ce2ef8f6fd2811b75ff5ce9854b",
+      "gpu_stage_protocol": "dinov2_live_triton_gpu_protocol_v1.json",
+      "gpu_stage_protocol_sha256": "c4ec2851d9dec0a3ac9ff77629cc1690f1fe6a5afd8c62d90a3593049266e710",
+      "max_absolute_logit_error_vs_fp32": 0.0001,
+      "max_absolute_probability_error_vs_fp32": 1e-05,
+      "verdict_mismatches_vs_fp32_and_live_fp16": 0
+    }
+  },
+  "previous_dinov2_target": {
+    "triton_name": "dinov2_classifier",
+    "status": "no longer routed; artifact and config left untouched",
+    "reason": "ViT-g/14 at 518 with no identity file; not the live listing-check model (owner chose Option B on 2026-10-09)"
+  },
+  "validation_gate": {
+    "rule": "selectable only when Triton reports the model ready, every served instance kind is in validated_serving, and GPU instances serve the validated CUDA EP settings",
+    "unavailable_reasons": [
+      "TRITON_MODEL_NOT_READY",
+      "INSTANCE_KIND_UNKNOWN",
+      "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE",
+      "SERVING_PRECISION_NOT_VALIDATED"
+    ],
+    "why_precision_is_checked": "GPU attempt 1 with ONNX Runtime's default TF32 math failed parity for both models; exact FP32 passed",
+    "evidence": {
+      "dinov2_KIND_GPU": "dinov2_live_triton_gpu_parity_attempt2.json (PASS)",
+      "dinov3_KIND_GPU": "dinov3_triton_gpu_parity_attempt2.json (PASS)",
+      "dinov3_KIND_CPU": "parity_results.json (PASS)"
+    }
+  },
+  "serving_configs": {
+    "dinov2_vitb14_live": "infra/triton/dinov2_vitb14_live/config.gpu_fp32.pbtxt",
+    "dinov3_authenticity_candidate": "infra/triton/dinov3_authenticity_candidate/config.gpu_fp32.pbtxt"
+  },
+  "triton_image": "nvcr.io/nvidia/tritonserver:26.01-py3@sha256:c9f2ede50ccc4a3ce66e22e26ed1b5adc0c68516b58edfaca738693719c2146b (Triton 2.65.0)"
+}

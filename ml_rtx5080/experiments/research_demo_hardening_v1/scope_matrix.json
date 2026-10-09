@@ -1,0 +1,18 @@
+{
+  "brand_input_mode": "USER_DECLARED",
+  "brand_scope_gate": "DECLARATION_ONLY",
+  "supported_brand_declared_research_mode": {
+    "classification": "allowed",
+    "live_route": "DINOv2",
+    "dinov3_shadow": "allowed"
+  },
+  "supported_brand_declared_production_mode": {
+    "live_route": "DINOv2 remains the HTTP classifier",
+    "dinov3_shadow": "blocked"
+  },
+  "unsupported_brand": "unsupported_scope",
+  "missing_brand": "unsupported_scope",
+  "unknown_brand": "unsupported_scope",
+  "partial_brand": "unsupported_scope",
+  "brand_identity_from_image": "not_available"
+}

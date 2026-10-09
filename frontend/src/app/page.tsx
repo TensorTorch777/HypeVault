@@ -27,14 +27,14 @@ const FEED_WATCH_IMAGES = [
 ];
 
 const GENERIC_RECENT_ITEMS = [
-  { name: "Rolex Submariner Date", brand: "Rolex", category: "watch", status: "live", verdict: "AUTHENTIC" },
-  { name: "Omega Speedmaster Moonwatch", brand: "Omega", category: "watch", status: "live", verdict: "AUTHENTIC" },
-  { name: "Audemars Piguet Royal Oak", brand: "Audemars Piguet", category: "watch", status: "live", verdict: "AUTHENTIC" },
-  { name: "Patek Philippe Nautilus", brand: "Patek Philippe", category: "watch", status: "live", verdict: "AUTHENTIC" },
-  { name: "Richard Mille RM 011", brand: "Richard Mille", category: "watch", status: "live", verdict: "AUTHENTIC" },
-  { name: "Vacheron Constantin Overseas", brand: "Vacheron Constantin", category: "watch", status: "live", verdict: "AUTHENTIC" },
-  { name: "A. Lange & Söhne Zeitwerk", brand: "A. Lange & Söhne", category: "watch", status: "live", verdict: "AUTHENTIC" },
-  { name: "Patek Philippe Aquanaut", brand: "Patek Philippe", category: "watch", status: "live", verdict: "AUTHENTIC" },
+  { name: "Rolex Submariner Date", brand: "Rolex", category: "watch", label: "Outside scope" },
+  { name: "Omega Speedmaster Moonwatch", brand: "Omega", category: "watch", label: "Outside scope" },
+  { name: "Audemars Piguet Royal Oak", brand: "Audemars Piguet", category: "watch", label: "Demo listing — not verified" },
+  { name: "Patek Philippe Nautilus", brand: "Patek Philippe", category: "watch", label: "Demo listing — not verified" },
+  { name: "Richard Mille RM 011", brand: "Richard Mille", category: "watch", label: "Demo listing — not verified" },
+  { name: "Vacheron Constantin Overseas", brand: "Vacheron Constantin", category: "watch", label: "Demo listing — not verified" },
+  { name: "A. Lange & Söhne Zeitwerk", brand: "A. Lange & Söhne", category: "watch", label: "Demo listing — not verified" },
+  { name: "Patek Philippe Aquanaut", brand: "Patek Philippe", category: "watch", label: "Demo listing — not verified" },
 ] as const;
 
 export default function HomePage() {
@@ -77,7 +77,7 @@ export default function HomePage() {
           <Reveal>
             <p className="hv-eyebrow">Find an item</p>
             <h2 className="mx-auto mt-3 max-w-md font-[family-name:var(--font-display)] hv-display-md text-[#FFEDF6]">
-              ANY WATCH. ANY GRAIL.
+              FIVE EVALUATED BRANDS.
             </h2>
           </Reveal>
           <Reveal delay={0.15} className="mt-8">
@@ -110,7 +110,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-[1080px] px-5">
           <div className="mb-14 flex items-end justify-between gap-4">
             <Reveal variant="slideLeft">
-              <p className="hv-eyebrow">Recently verified</p>
+              <p className="hv-eyebrow">Recent listings</p>
               <h2 className="mt-3 font-[family-name:var(--font-display)] hv-display-lg text-[#FFEDF6]">
                 FRESH IN THE VAULT.
               </h2>
@@ -141,14 +141,9 @@ export default function HomePage() {
                           whileHover={{ scale: 1.06 }}
                           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                         />
-                        {l.verdict === "AUTHENTIC" ? (
-                          <span
-                            className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase text-[#0B0118] shadow"
-                            style={{ background: "linear-gradient(95deg, #38EFA1, #00E1FF)" }}
-                          >
-                            ✓ Authentic
-                          </span>
-                        ) : null}
+                        <span className="absolute left-3 top-3 inline-flex max-w-[14rem] items-center gap-1 rounded-full bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase text-white">
+                          {l.label}
+                        </span>
                       </div>
                       <div className="p-5">
                         <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#FF1FA4]">
@@ -159,7 +154,7 @@ export default function HomePage() {
                         </p>
                         <div className="mt-4 flex items-center justify-between border-t border-[rgba(255,31,164,0.14)] pt-3">
                           <span className="text-[11px] font-bold uppercase tracking-wide text-[#00E1FF]">
-                            {l.status}
+                            {l.label}
                           </span>
                           <motion.span
                             className="inline-block text-[#FFEDF6]/55 group-hover:text-[#00E1FF]"

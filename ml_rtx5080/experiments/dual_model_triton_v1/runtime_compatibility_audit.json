@@ -1,0 +1,71 @@
+{
+  "captured_on": "2026-10-09",
+  "raw_diagnostics": "docs/engineering/runtime_diagnostics_2026-10-09.txt",
+  "host": {
+    "os": "Ubuntu 24.04.4 LTS",
+    "kernel": "7.0.0-38-generic",
+    "gpu": "NVIDIA GeForce RTX 5080",
+    "compute_capability": [12, 0],
+    "driver": "580.178.04",
+    "memory_mib": 16303,
+    "nvidia_kernel_modules_loaded": true,
+    "nvidia_device_nodes_present": true,
+    "host_pytorch": "2.11.0+cu130, CUDA 13.0, cuda available true",
+    "host_onnxruntime": "1.26.0"
+  },
+  "container_runtime": {
+    "docker_server": "29.4.3",
+    "runtimes": ["io.containerd.runc.v2", "runc"],
+    "default_runtime": "runc",
+    "nvidia_container_toolkit_packages": "none installed",
+    "nvidia_ctk_binary": false,
+    "daemon_json": "absent",
+    "cdi_spec_dirs_configured": ["/etc/cdi", "/var/run/cdi"],
+    "cdi_spec_dirs_exist": false,
+    "probe_gpus_all": "failed to discover GPU vendor from CDI: no known GPU vendor found",
+    "probe_cdi_device": "CDI device injection failed: unresolvable CDI devices nvidia.com/gpu=all"
+  },
+  "permissions": {"passwordless_sudo": false, "user_in_docker_group": true},
+  "disk": {
+    "root_available_at_diagnostics": "915M",
+    "root_available_later_same_day": "42G",
+    "change_note": "About 41 GB was freed outside this work during the session. The frozen checkpoint, both model repositories, and the live DINOv2 checkpoint were re-checked and are present; epoch_018.pt still hashes to the frozen SHA-256.",
+    "docker_images_reclaimable": "0B",
+    "docker_build_cache_reclaimable": "257.1MB"
+  },
+  "blocker_classification": {
+    "driver": "NOT_A_BLOCKER",
+    "container_runtime_cdi": "BLOCKER",
+    "permissions": "BLOCKER",
+    "disk_space": "NOT_A_BLOCKER after 42G became free",
+    "triton_image_version": "BLOCKER until a Blackwell-capable image is pulled after the runtime is fixed",
+    "dinov2_artifact_identity": "OWNER_DECISION: the Triton dinov2_classifier export (2026-04-27, ViT-g/14 at 518) has no identity file linking it to a checkpoint, and DEPLOY_INFERENCE.md describes serving the live ViT-B/14 export at 504 instead"
+  },
+  "image_pull_deferred_reason": "Pulling the 7.64 GB (compressed) 26.01 image would only enable CPU serving until the container runtime is fixed, and the DINOv2 artifact it would serve is not yet chosen.",
+  "triton_images": {
+    "local": {
+      "image": "nvcr.io/nvidia/tritonserver:23.10-py3",
+      "digest": "sha256:83513cb05c7e53ada093cab904daa8861d5b8bc67d75dd78237731411b744da9",
+      "triton": "2.39.0",
+      "onnxruntime": "1.16.0",
+      "max_onnx_ir_version": 9,
+      "suitable_for_rtx_5080_gpu": false
+    },
+    "selected_pin_not_pulled": {
+      "image": "nvcr.io/nvidia/tritonserver:26.01-py3",
+      "index_digest": "sha256:c9f2ede50ccc4a3ce66e22e26ed1b5adc0c68516b58edfaca738693719c2146b",
+      "linux_amd64_digest": "sha256:8a4ecd6bb4ac45386eb36c917adad864386d08acd2dfc41392ddd66637244be5",
+      "compressed_size_gb": 7.64,
+      "triton": "2.65.0",
+      "cuda": "13.1.1",
+      "onnxruntime": "1.24.1",
+      "documented_driver_requirement": "NVIDIA Driver release 575 or later",
+      "documented_gpu_support": "compute capability 7.5 and later, including Blackwell",
+      "source": "https://docs.nvidia.com/deeplearning/triton-inference-server/release-notes/rel-26-01.html",
+      "why_not_latest": "26.09 (CUDA 13.4.1, ONNX Runtime 1.28.0) does not state a minimum driver in its release notes. 26.01 states 575+, which the host driver 580.178.04 meets.",
+      "open_risk": "Public reports state that prebuilt ONNX Runtime CUDA packages lacked sm_120 kernels in early 2026. CUDA execution of the ONNX backend on the RTX 5080 must be proven on hardware before GPU serving is claimed."
+    }
+  },
+  "drivers_changed": false,
+  "packages_installed": ["eslint@8.57.1 and eslint-config-next@14.2.5 as frontend devDependencies only"]
+}

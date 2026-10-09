@@ -1,0 +1,27 @@
+{
+  "status": "BLOCKED",
+  "reason": "The plan measures latency and memory only after GPU execution and parity pass. GPU containers are blocked (no NVIDIA Container Toolkit, no CDI spec), and dinov2_classifier cannot load in Triton 23.10.",
+  "cpu_triton_numbers_recorded": false,
+  "dinov2_classifier": {
+    "warmed_single_image_latency_ms": null,
+    "end_to_end_latency_ms": null,
+    "batch_throughput": null,
+    "gpu_memory_mib": null,
+    "sequential_stability": null,
+    "concurrent_stability": null
+  },
+  "dinov3_authenticity_candidate": {
+    "warmed_single_image_latency_ms": null,
+    "end_to_end_latency_ms": null,
+    "batch_throughput": null,
+    "gpu_memory_mib": null,
+    "sequential_stability": null,
+    "concurrent_stability": null
+  },
+  "behaviour_checked_on_cpu_triton": {
+    "model_unavailable": "MODEL_ERROR, decision null (integration_test_results.json flow 5)",
+    "model_unload_and_reload": "readiness false while unloaded, same decision after reload (flow 5)",
+    "timeout": "not measured against a live server; covered only by a mocked unit test"
+  },
+  "invented_numbers": false
+}

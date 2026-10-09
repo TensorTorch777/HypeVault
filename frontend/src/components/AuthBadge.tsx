@@ -1,23 +1,31 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, XCircle } from "lucide-react";
 
 export function AuthBadge({
   verdict,
   confidence,
+  declaredBrand,
+  lane = "legacy",
 }: {
-  verdict: "AUTHENTIC" | "FAKE" | null;
+  verdict: "AUTHENTIC" | "FAKE" | "REVIEW" | null;
   confidence: number | null;
+  declaredBrand?: string | null;
+  lane?: "legacy" | "research";
 }) {
   const pct = confidence == null ? null : Math.min(100, Math.max(0, confidence * 100));
-  const isAuthentic = verdict === "AUTHENTIC";
+  const headline =
+    lane === "research" ? "Research result — not verified" : verdict === "FAKE" ? "Rejected" : "Pending";
 
   if (!verdict) {
     return (
       <div className="rounded-card border border-primary/10 bg-card p-6 text-primary/60">
-        <p className="text-sm font-semibold">Verification pending</p>
-        <p className="mt-2 text-sm text-primary/55">Upload images to run AI verification.</p>
+        <p className="text-sm font-semibold">{lane === "research" ? "Research demo pending" : "Pending"}</p>
+        <p className="mt-2 text-sm text-primary/55">
+          {lane === "research"
+            ? "DINOv3 research prototype. Not production. The brand is user-declared."
+            : "Legacy DINOv2 listing check. Not the DINOv3 research candidate."}
+        </p>
       </div>
     );
   }
@@ -27,36 +35,30 @@ export function AuthBadge({
       initial={{ opacity: 0, scale: 0.96, y: 10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 320, damping: 22 }}
-      className={
-        isAuthentic
-          ? "rounded-card border border-success/25 bg-success/10 p-6 text-primary"
-          : "rounded-card border border-danger/25 bg-danger/10 p-6 text-primary"
-      }
+      className="rounded-card border border-primary/15 bg-card p-6 text-primary"
     >
-      <div className="flex items-start gap-4">
-        {isAuthentic ? (
-          <CheckCircle2 className="h-12 w-12 text-success" aria-hidden />
-        ) : (
-          <XCircle className="h-12 w-12 text-danger" aria-hidden />
-        )}
-        <div className="min-w-0">
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary/55">AI verdict</p>
-          <p className={`mt-2 text-2xl font-semibold tracking-tight ${isAuthentic ? "text-success" : "text-danger"}`}>
-            {isAuthentic ? "AI Verified Authentic" : "AI detected — fake / rejected"}
+      <div className="min-w-0">
+        <p className="text-xs font-semibold uppercase tracking-wider text-primary/55">
+          {lane === "research" ? "Research model · not for production" : "Legacy DINOv2"}
+        </p>
+        <p className="mt-2 text-2xl font-semibold tracking-tight">{headline}</p>
+        <p className="mt-2 text-sm text-primary/70">
+          {lane === "research"
+            ? "Five-brand research prototype. This result cannot publish a listing."
+            : "A model result is stored as evidence. It does not authorize marketplace publication."}
+        </p>
+        <p className="mt-1 text-sm text-primary/70">
+          Declared brand: {declaredBrand?.trim() ? declaredBrand : "not supplied"}
+        </p>
+        <p className="mt-1 text-sm text-primary/70">Brand verification: not independently verified</p>
+        {pct != null && (
+          <p className="mt-2 text-sm text-primary/65">
+            <span className="font-semibold text-primary">{pct.toFixed(1)}%</span> historical model score
           </p>
-          {pct != null && (
-            <p className="mt-2 text-sm text-primary/65">
-              <span className="font-semibold text-primary">{pct.toFixed(1)}%</span>{" "}
-              {isAuthentic ? "authentic confidence" : "confidence (fake side)"}
-            </p>
-          )}
-          {!isAuthentic ? (
-            <p className="mt-2 text-xs text-primary/50">
-              Listings below the server&apos;s minimum authentic-confidence threshold are classified as fake and not
-              published.
-            </p>
-          ) : null}
-        </div>
+        )}
+        <p className="mt-2 text-xs text-primary/50">
+          The selected brand is user-declared and is not independently verified from the image. A model result is not marketplace approval and is not a guarantee of authenticity.
+        </p>
       </div>
     </motion.div>
   );

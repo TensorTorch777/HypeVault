@@ -15,7 +15,7 @@ export function AppleBentoPromo() {
           tone="light"
           eyebrow="HypeVault for Watches"
           title="Quiet luxury, loud trust."
-          subtitle="From Royal Oak to RM — every photo screened by AI before it goes live."
+          subtitle="Research prototype classification within five evaluated watch brands."
           ctaPrimary={{ label: "Shop watches", href: "/product/Luxury%20watches" }}
           ctaSecondary={{ label: "How AI sees ›", href: "/#how" }}
         >
@@ -26,7 +26,7 @@ export function AppleBentoPromo() {
           tone="dark"
           eyebrow="Price intelligence"
           title="Compare before you wire."
-          subtitle="Chrono24, StockX, and eBay asks in one view — with authenticity already gated."
+          subtitle="Chrono24, StockX, and eBay asks in one view. Authenticity research covers five brands only."
           ctaPrimary={{ label: "See pricing", href: "/product/Luxury%20watches" }}
           ctaSecondary={{ label: "List a watch ›", href: "/seller/upload" }}
         >

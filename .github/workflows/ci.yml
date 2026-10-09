@@ -1,0 +1,72 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main, "feature/**"]
+  workflow_dispatch:
+    inputs:
+      run_gpu_triton:
+        description: "Run the GPU Triton parity job on a self-hosted runner labelled gpu"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend-cpu:
+    name: backend unit tests (CPU only)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-ci.txt
+      - name: Install pinned dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install -r requirements-ci.txt --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+
+  frontend:
+    name: frontend lint, typecheck, build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit
+      - run: npm run build
+
+  gpu-triton-parity:
+    name: GPU Triton parity (self-hosted, manual)
+    if: github.event_name == 'workflow_dispatch' && inputs.run_gpu_triton
+    runs-on: [self-hosted, gpu]
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: GPU visible to containers
+        run: docker run --rm --gpus all "${TRITON_IMAGE:?set TRITON_IMAGE to the pinned Triton image}" nvidia-smi
+      - name: DINOv3 Triton parity
+        run: python ml_rtx5080/triton_parity.py --require-gpu

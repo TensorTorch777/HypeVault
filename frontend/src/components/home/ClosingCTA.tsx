@@ -42,12 +42,12 @@ export function ClosingCTA() {
           className="mt-4 font-[family-name:var(--font-display)] hv-display-xl"
         >
           <span className="hv-neon-title block">
-            <WobbleText text="AUTHENTICITY" />
+            <WobbleText text="RESEARCH" />
           </span>
           <span className="mt-1 block min-w-0">
             <BouncyText
               className="hv-gradient-text"
-              text="IS A STANDARD."
+              text="PROTOTYPE."
               delay={0.4}
               stagger={0.05}
               bounce={0.6}
@@ -62,8 +62,8 @@ export function ClosingCTA() {
           transition={{ delay: 0.1, duration: 0.7 }}
           className="mx-auto mt-7 max-w-xl text-[18px] leading-[1.45] text-[#FFEDF6]/70 md:text-[20px]"
         >
-          Join the buyers who refuse to gamble on luxury. Run your first
-          AI-verified listing today.
+          Research prototype for five evaluated brands. A listing outside that
+          scope is not an authenticity result.
         </motion.p>
 
         <motion.div
@@ -101,7 +101,7 @@ export function ClosingCTA() {
         </motion.div>
 
         <p className="mt-10 text-[11px] font-bold uppercase tracking-[0.28em] text-[#FFEDF6]/40">
-          No credit card · Free verifications while in beta
+          Research prototype · not an authenticity guarantee
         </p>
       </div>
     </section>

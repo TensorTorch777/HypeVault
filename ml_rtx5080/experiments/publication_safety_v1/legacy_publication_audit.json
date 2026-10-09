@@ -1,0 +1,25 @@
+{
+  "database_read": "local hypevault postgres",
+  "rows_mutated": false,
+  "publication_timestamp_available": false,
+  "publication_time_class_for_every_live_row": "PUBLICATION_TIME_UNKNOWN",
+  "pre_phase42_live": "unknown",
+  "post_phase42_live": "unknown",
+  "unknown_publication_provenance": 39,
+  "classification_rule": {
+    "SEED_DATA": "verdict AUTHENTIC, confidence exactly 0.965, no stored image, and one shared created_at. That matches the historical seed writer, not a model score.",
+    "LEGACY_MODEL_AUTOPUBLISH": "stored image plus a non-constant confidence. The legacy authenticate route is the only application writer that stores an image and a model verdict, and before Phase 42 it set status live for a non-FAKE verdict.",
+    "IMPORT": "No live row has the Chrono24 import signature of confidence exactly 0.94 and no image.",
+    "MANUAL_OR_ADMIN": "No admin publish endpoint exists. None were classified this way.",
+    "not_inferred_from_verdict_alone": true
+  },
+  "source_counts": {
+    "SEED_DATA": 20,
+    "LEGACY_MODEL_AUTOPUBLISH": 19,
+    "IMPORT": 0,
+    "MANUAL_OR_ADMIN": 0,
+    "UNKNOWN": 0
+  },
+  "current_publication_authorization": false,
+  "authenticity_model_production_approved": false
+}

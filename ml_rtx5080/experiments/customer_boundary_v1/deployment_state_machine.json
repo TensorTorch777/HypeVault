@@ -1,0 +1,12 @@
+{
+  "states": {
+    "RESEARCH": "HYPEVAULT_DEPLOYMENT_MODE=research. DINOv3 research route allowed. Legacy DINOv2 route remains DINOv2.",
+    "SHADOW": "HYPEVAULT_DEPLOYMENT_MODE=shadow. DINOv3 research route allowed. No fallback onto DINOv2.",
+    "LEGACY_PRODUCTION": "Unset or production. Legacy DINOv2 route may run. DINOv3 is blocked.",
+    "PRODUCTION_BLOCKED": "Empty, malformed, or unknown mode. DINOv3 is blocked. The mode is not treated as research."
+  },
+  "dinov3_allowed_states": ["RESEARCH", "SHADOW"],
+  "dinov3_blocked_states": ["LEGACY_PRODUCTION", "PRODUCTION_BLOCKED"],
+  "unknown_mode_defaults_to_research": false,
+  "missing_mode": "LEGACY_PRODUCTION"
+}
