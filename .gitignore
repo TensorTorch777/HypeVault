@@ -42,6 +42,8 @@ ml_rtx5080/experiments/**/*.onnx.data
 ml_rtx5080/experiments/**/*.safetensors
 ml_rtx5080/experiments/**/*.engine
 ml_rtx5080/experiments/**/*.plan
+# Phase 53 keeps per-image predictions and dataset paths local.
+ml_rtx5080/experiments/dinov2_vs_dinov3_full_scale/local_results/
 Label_0_Watches/
 Label_1_Watches/
 *.log

@@ -1,0 +1,2969 @@
+{
+  "data_readiness": "NO_GO_FOR_AUTHENTICITY_CLAIMS",
+  "descriptive_by_model_split": {
+    "dinov2": {
+      "train": {
+        "agreement": {
+          "agreement": 22470,
+          "both_binary_and_both_wrong": 0,
+          "both_successful": 24277,
+          "disagreement": 1807,
+          "samples": 24277
+        },
+        "models": {
+          "dinov2_legacy": {
+            "accuracy": 0.9873954772006426,
+            "authentic_labeled": 10777,
+            "balanced_accuracy": 0.9871600184205733,
+            "binary_denominator": 24277,
+            "brands": [
+              {
+                "brand": "A. Lange & S\u00f6hne",
+                "metrics": {
+                  "accuracy": 0.9966666666666667,
+                  "authentic_labeled": 0,
+                  "balanced_accuracy": null,
+                  "binary_denominator": 2700,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 0,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 9,
+                      "FAKE": 2691,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9983305509181971,
+                  "failed": 0,
+                  "fake_labeled": 2700,
+                  "false_authentic_count": 9,
+                  "false_authentic_rate": 0.0033333333333333335,
+                  "false_fake_count": 0,
+                  "false_fake_rate": null,
+                  "pr_auc_raw_logit": null,
+                  "precision_fake": 1.0,
+                  "recall_fake": 0.9966666666666667,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": null,
+                  "rows": 2700,
+                  "selective_accuracy": 0.9966666666666667,
+                  "successful": 2700
+                },
+                "sample_count": 2700
+              },
+              {
+                "brand": "Audemars Piguet",
+                "metrics": {
+                  "accuracy": 0.9844184752365053,
+                  "authentic_labeled": 2691,
+                  "balanced_accuracy": 0.9844233865972997,
+                  "binary_denominator": 5391,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2657,
+                      "FAKE": 34,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 50,
+                      "FAKE": 2650,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9843982169390787,
+                  "failed": 0,
+                  "fake_labeled": 2700,
+                  "false_authentic_count": 50,
+                  "false_authentic_rate": 0.018518518518518517,
+                  "false_fake_count": 34,
+                  "false_fake_rate": 0.0126347082868822,
+                  "pr_auc_raw_logit": 0.9985454869640175,
+                  "precision_fake": 0.9873323397913562,
+                  "recall_fake": 0.9814814814814815,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9982991315358465,
+                  "rows": 5391,
+                  "selective_accuracy": 0.9844184752365053,
+                  "successful": 5391
+                },
+                "sample_count": 5391
+              },
+              {
+                "brand": "Patek Philippe",
+                "metrics": {
+                  "accuracy": 0.9849554234769688,
+                  "authentic_labeled": 2684,
+                  "balanced_accuracy": 0.9849282441905394,
+                  "binary_denominator": 5384,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2619,
+                      "FAKE": 65,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 16,
+                      "FAKE": 2684,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9851348871352542,
+                  "failed": 0,
+                  "fake_labeled": 2700,
+                  "false_authentic_count": 16,
+                  "false_authentic_rate": 0.005925925925925926,
+                  "false_fake_count": 65,
+                  "false_fake_rate": 0.02421758569299553,
+                  "pr_auc_raw_logit": 0.9992745327818275,
+                  "precision_fake": 0.9763550381957076,
+                  "recall_fake": 0.9940740740740741,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9990572390572391,
+                  "rows": 5384,
+                  "selective_accuracy": 0.9849554234769688,
+                  "successful": 5384
+                },
+                "sample_count": 5384
+              },
+              {
+                "brand": "Richard Mille",
+                "metrics": {
+                  "accuracy": 0.9853757867456497,
+                  "authentic_labeled": 2702,
+                  "balanced_accuracy": 0.9853735230419168,
+                  "binary_denominator": 5402,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2679,
+                      "FAKE": 23,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 56,
+                      "FAKE": 2644,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.985280417365381,
+                  "failed": 0,
+                  "fake_labeled": 2700,
+                  "false_authentic_count": 56,
+                  "false_authentic_rate": 0.02074074074074074,
+                  "false_fake_count": 23,
+                  "false_fake_rate": 0.008512213175425611,
+                  "pr_auc_raw_logit": 0.9978785836050228,
+                  "precision_fake": 0.9913760779902512,
+                  "recall_fake": 0.9792592592592593,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.99729610439455,
+                  "rows": 5402,
+                  "selective_accuracy": 0.9853757867456497,
+                  "successful": 5402
+                },
+                "sample_count": 5402
+              },
+              {
+                "brand": "Vacheron Constantin",
+                "metrics": {
+                  "accuracy": 0.9901851851851852,
+                  "authentic_labeled": 2700,
+                  "balanced_accuracy": 0.9901851851851852,
+                  "binary_denominator": 5400,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2661,
+                      "FAKE": 39,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 14,
+                      "FAKE": 2686,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9902304147465438,
+                  "failed": 0,
+                  "fake_labeled": 2700,
+                  "false_authentic_count": 14,
+                  "false_authentic_rate": 0.005185185185185185,
+                  "false_fake_count": 39,
+                  "false_fake_rate": 0.014444444444444444,
+                  "pr_auc_raw_logit": 0.9996160853912371,
+                  "precision_fake": 0.9856880733944954,
+                  "recall_fake": 0.9948148148148148,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9995742112482853,
+                  "rows": 5400,
+                  "selective_accuracy": 0.9901851851851852,
+                  "successful": 5400
+                },
+                "sample_count": 5400
+              }
+            ],
+            "confusion": {
+              "authentic_labeled": {
+                "AUTHENTIC": 10616,
+                "FAKE": 161,
+                "REVIEW": 0
+              },
+              "fake_labeled": {
+                "AUTHENTIC": 145,
+                "FAKE": 13355,
+                "REVIEW": 0
+              }
+            },
+            "decision_coverage": 1.0,
+            "directory_labels_are_verified_authenticity": false,
+            "f1_fake": 0.9886733787385253,
+            "failed": 0,
+            "fake_labeled": 13500,
+            "false_authentic_count": 145,
+            "false_authentic_rate": 0.01074074074074074,
+            "false_fake_count": 161,
+            "false_fake_rate": 0.014939222418112647,
+            "latency": {
+              "images": 24277,
+              "p50_ms": 21.1347399999795,
+              "p95_ms": 22.377123499609297,
+              "throughput_images_per_s": 47.00605247365034,
+              "triton_seconds": 516.4654065262912
+            },
+            "pr_auc_raw_logit": 0.9990887507849917,
+            "precision_fake": 0.9880881917727138,
+            "recall_fake": 0.9892592592592593,
+            "review_count": 0,
+            "review_excluded_from_binary_metrics": true,
+            "review_rate": 0.0,
+            "roc_auc_raw_logit": 0.998640066808945,
+            "rows": 24277,
+            "selective_accuracy": 0.9873954772006426,
+            "successful": 24277
+          },
+          "dinov3_experimental": {
+            "accuracy": 1.0,
+            "authentic_labeled": 10777,
+            "balanced_accuracy": 1.0,
+            "binary_denominator": 22749,
+            "brands": [
+              {
+                "brand": "A. Lange & S\u00f6hne",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 0,
+                  "balanced_accuracy": null,
+                  "binary_denominator": 2644,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 0,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 2644,
+                      "REVIEW": 56
+                    }
+                  },
+                  "decision_coverage": 0.9792592592592593,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 2700,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": null,
+                  "pr_auc_raw_logit": null,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 56,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.02074074074074074,
+                  "roc_auc_raw_logit": null,
+                  "rows": 2700,
+                  "selective_accuracy": 1.0,
+                  "successful": 2700
+                },
+                "sample_count": 2700
+              },
+              {
+                "brand": "Audemars Piguet",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 2691,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 5014,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2340,
+                      "FAKE": 0,
+                      "REVIEW": 351
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 2674,
+                      "REVIEW": 26
+                    }
+                  },
+                  "decision_coverage": 0.9300686329066964,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 2700,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 377,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.06993136709330365,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 5391,
+                  "selective_accuracy": 1.0,
+                  "successful": 5391
+                },
+                "sample_count": 5391
+              },
+              {
+                "brand": "Patek Philippe",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 2684,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 5107,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2452,
+                      "FAKE": 0,
+                      "REVIEW": 232
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 2655,
+                      "REVIEW": 45
+                    }
+                  },
+                  "decision_coverage": 0.9485512630014858,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 2700,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 277,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.051448736998514114,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 5384,
+                  "selective_accuracy": 1.0,
+                  "successful": 5384
+                },
+                "sample_count": 5384
+              },
+              {
+                "brand": "Richard Mille",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 2702,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 4977,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2358,
+                      "FAKE": 0,
+                      "REVIEW": 344
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 2619,
+                      "REVIEW": 81
+                    }
+                  },
+                  "decision_coverage": 0.9213254350240652,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 2700,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 425,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.07867456497593484,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 5402,
+                  "selective_accuracy": 1.0,
+                  "successful": 5402
+                },
+                "sample_count": 5402
+              },
+              {
+                "brand": "Vacheron Constantin",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 2700,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 5007,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2377,
+                      "FAKE": 0,
+                      "REVIEW": 323
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 2630,
+                      "REVIEW": 70
+                    }
+                  },
+                  "decision_coverage": 0.9272222222222222,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 2700,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 393,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.07277777777777777,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 5400,
+                  "selective_accuracy": 1.0,
+                  "successful": 5400
+                },
+                "sample_count": 5400
+              }
+            ],
+            "confusion": {
+              "authentic_labeled": {
+                "AUTHENTIC": 9527,
+                "FAKE": 0,
+                "REVIEW": 1250
+              },
+              "fake_labeled": {
+                "AUTHENTIC": 0,
+                "FAKE": 13222,
+                "REVIEW": 278
+              }
+            },
+            "decision_coverage": 0.9370597685051695,
+            "directory_labels_are_verified_authenticity": false,
+            "f1_fake": 1.0,
+            "failed": 0,
+            "fake_labeled": 13500,
+            "false_authentic_count": 0,
+            "false_authentic_rate": 0.0,
+            "false_fake_count": 0,
+            "false_fake_rate": 0.0,
+            "latency": {
+              "images": 24277,
+              "p50_ms": 18.747288874692458,
+              "p95_ms": 19.519405374921917,
+              "throughput_images_per_s": 53.2950157121712,
+              "triton_seconds": 455.521021536274
+            },
+            "pr_auc_raw_logit": 1.0,
+            "precision_fake": 1.0,
+            "recall_fake": 1.0,
+            "review_count": 1528,
+            "review_excluded_from_binary_metrics": true,
+            "review_rate": 0.0629402314948305,
+            "roc_auc_raw_logit": 1.0,
+            "rows": 24277,
+            "selective_accuracy": 1.0,
+            "successful": 24277
+          }
+        },
+        "samples": 24277
+      },
+      "validation": {
+        "agreement": {
+          "agreement": 2349,
+          "both_binary_and_both_wrong": 0,
+          "both_successful": 2717,
+          "disagreement": 368,
+          "samples": 2717
+        },
+        "models": {
+          "dinov2_legacy": {
+            "accuracy": 0.9812292970187707,
+            "authentic_labeled": 2717,
+            "balanced_accuracy": null,
+            "binary_denominator": 2717,
+            "brands": [
+              {
+                "brand": "A. Lange & S\u00f6hne",
+                "metrics": {
+                  "accuracy": 0.9812292970187707,
+                  "authentic_labeled": 2717,
+                  "balanced_accuracy": null,
+                  "binary_denominator": 2717,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2666,
+                      "FAKE": 51,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 0,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": null,
+                  "failed": 0,
+                  "fake_labeled": 0,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": null,
+                  "false_fake_count": 51,
+                  "false_fake_rate": 0.018770702981229296,
+                  "pr_auc_raw_logit": null,
+                  "precision_fake": 0.0,
+                  "recall_fake": null,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": null,
+                  "rows": 2717,
+                  "selective_accuracy": 0.9812292970187707,
+                  "successful": 2717
+                },
+                "sample_count": 2717
+              }
+            ],
+            "confusion": {
+              "authentic_labeled": {
+                "AUTHENTIC": 2666,
+                "FAKE": 51,
+                "REVIEW": 0
+              },
+              "fake_labeled": {
+                "AUTHENTIC": 0,
+                "FAKE": 0,
+                "REVIEW": 0
+              }
+            },
+            "decision_coverage": 1.0,
+            "directory_labels_are_verified_authenticity": false,
+            "f1_fake": null,
+            "failed": 0,
+            "fake_labeled": 0,
+            "false_authentic_count": 0,
+            "false_authentic_rate": null,
+            "false_fake_count": 51,
+            "false_fake_rate": 0.018770702981229296,
+            "latency": {
+              "images": 2717,
+              "p50_ms": 21.24551125052676,
+              "p95_ms": 23.06246185034979,
+              "throughput_images_per_s": 46.672283602102326,
+              "triton_seconds": 58.21442171468152
+            },
+            "pr_auc_raw_logit": null,
+            "precision_fake": 0.0,
+            "recall_fake": null,
+            "review_count": 0,
+            "review_excluded_from_binary_metrics": true,
+            "review_rate": 0.0,
+            "roc_auc_raw_logit": null,
+            "rows": 2717,
+            "selective_accuracy": 0.9812292970187707,
+            "successful": 2717
+          },
+          "dinov3_experimental": {
+            "accuracy": 1.0,
+            "authentic_labeled": 2717,
+            "balanced_accuracy": null,
+            "binary_denominator": 2390,
+            "brands": [
+              {
+                "brand": "A. Lange & S\u00f6hne",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 2717,
+                  "balanced_accuracy": null,
+                  "binary_denominator": 2390,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2390,
+                      "FAKE": 0,
+                      "REVIEW": 327
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 0,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 0.8796466691203534,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": null,
+                  "failed": 0,
+                  "fake_labeled": 0,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": null,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": null,
+                  "precision_fake": null,
+                  "recall_fake": null,
+                  "review_count": 327,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.12035333087964667,
+                  "roc_auc_raw_logit": null,
+                  "rows": 2717,
+                  "selective_accuracy": 1.0,
+                  "successful": 2717
+                },
+                "sample_count": 2717
+              }
+            ],
+            "confusion": {
+              "authentic_labeled": {
+                "AUTHENTIC": 2390,
+                "FAKE": 0,
+                "REVIEW": 327
+              },
+              "fake_labeled": {
+                "AUTHENTIC": 0,
+                "FAKE": 0,
+                "REVIEW": 0
+              }
+            },
+            "decision_coverage": 0.8796466691203534,
+            "directory_labels_are_verified_authenticity": false,
+            "f1_fake": null,
+            "failed": 0,
+            "fake_labeled": 0,
+            "false_authentic_count": 0,
+            "false_authentic_rate": null,
+            "false_fake_count": 0,
+            "false_fake_rate": 0.0,
+            "latency": {
+              "images": 2717,
+              "p50_ms": 18.85203174970229,
+              "p95_ms": 19.624893687250733,
+              "throughput_images_per_s": 52.951647507391655,
+              "triton_seconds": 51.3109625082152
+            },
+            "pr_auc_raw_logit": null,
+            "precision_fake": null,
+            "recall_fake": null,
+            "review_count": 327,
+            "review_excluded_from_binary_metrics": true,
+            "review_rate": 0.12035333087964667,
+            "roc_auc_raw_logit": null,
+            "rows": 2717,
+            "selective_accuracy": 1.0,
+            "successful": 2717
+          }
+        },
+        "samples": 2717
+      }
+    },
+    "dinov3": {
+      "calibration": {
+        "agreement": {
+          "agreement": 2770,
+          "both_binary_and_both_wrong": 0,
+          "both_successful": 2998,
+          "disagreement": 228,
+          "samples": 2998
+        },
+        "models": {
+          "dinov2_legacy": {
+            "accuracy": 0.9896597731821214,
+            "authentic_labeled": 1498,
+            "balanced_accuracy": 0.9896595460614153,
+            "binary_denominator": 2998,
+            "brands": [
+              {
+                "brand": "A. Lange & S\u00f6hne",
+                "metrics": {
+                  "accuracy": 0.9916805324459235,
+                  "authentic_labeled": 301,
+                  "balanced_accuracy": 0.9916888150609081,
+                  "binary_denominator": 601,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 297,
+                      "FAKE": 4,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 1,
+                      "FAKE": 299,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9917081260364843,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 1,
+                  "false_authentic_rate": 0.0033333333333333335,
+                  "false_fake_count": 4,
+                  "false_fake_rate": 0.013289036544850499,
+                  "pr_auc_raw_logit": 0.9988693098384729,
+                  "precision_fake": 0.9867986798679867,
+                  "recall_fake": 0.9966666666666667,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9982945736434109,
+                  "rows": 601,
+                  "selective_accuracy": 0.9916805324459235,
+                  "successful": 601
+                },
+                "sample_count": 601
+              },
+              {
+                "brand": "Audemars Piguet",
+                "metrics": {
+                  "accuracy": 0.9849749582637729,
+                  "authentic_labeled": 299,
+                  "balanced_accuracy": 0.9849832775919732,
+                  "binary_denominator": 599,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 296,
+                      "FAKE": 3,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 6,
+                      "FAKE": 294,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9849246231155778,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 6,
+                  "false_authentic_rate": 0.02,
+                  "false_fake_count": 3,
+                  "false_fake_rate": 0.010033444816053512,
+                  "pr_auc_raw_logit": 0.9983890344820878,
+                  "precision_fake": 0.98989898989899,
+                  "recall_fake": 0.98,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9982497212931996,
+                  "rows": 599,
+                  "selective_accuracy": 0.9849749582637729,
+                  "successful": 599
+                },
+                "sample_count": 599
+              },
+              {
+                "brand": "Patek Philippe",
+                "metrics": {
+                  "accuracy": 0.9916107382550335,
+                  "authentic_labeled": 296,
+                  "balanced_accuracy": 0.9915540540540541,
+                  "binary_denominator": 596,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 291,
+                      "FAKE": 5,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 300,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9917355371900827,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 5,
+                  "false_fake_rate": 0.016891891891891893,
+                  "pr_auc_raw_logit": 0.9999554807374238,
+                  "precision_fake": 0.9836065573770492,
+                  "recall_fake": 1.0,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9999549549549549,
+                  "rows": 596,
+                  "selective_accuracy": 0.9916107382550335,
+                  "successful": 596
+                },
+                "sample_count": 596
+              },
+              {
+                "brand": "Richard Mille",
+                "metrics": {
+                  "accuracy": 0.9866666666666667,
+                  "authentic_labeled": 300,
+                  "balanced_accuracy": 0.9866666666666667,
+                  "binary_denominator": 600,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 299,
+                      "FAKE": 1,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 7,
+                      "FAKE": 293,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9865319865319866,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 7,
+                  "false_authentic_rate": 0.023333333333333334,
+                  "false_fake_count": 1,
+                  "false_fake_rate": 0.0033333333333333335,
+                  "pr_auc_raw_logit": 0.996877557877123,
+                  "precision_fake": 0.9965986394557823,
+                  "recall_fake": 0.9766666666666667,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9958111111111111,
+                  "rows": 600,
+                  "selective_accuracy": 0.9866666666666667,
+                  "successful": 600
+                },
+                "sample_count": 600
+              },
+              {
+                "brand": "Vacheron Constantin",
+                "metrics": {
+                  "accuracy": 0.9933554817275747,
+                  "authentic_labeled": 302,
+                  "balanced_accuracy": 0.9933664459161148,
+                  "binary_denominator": 602,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 299,
+                      "FAKE": 3,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 1,
+                      "FAKE": 299,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9933554817275748,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 1,
+                  "false_authentic_rate": 0.0033333333333333335,
+                  "false_fake_count": 3,
+                  "false_fake_rate": 0.009933774834437087,
+                  "pr_auc_raw_logit": 0.9997067122275914,
+                  "precision_fake": 0.9900662251655629,
+                  "recall_fake": 0.9966666666666667,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9996909492273731,
+                  "rows": 602,
+                  "selective_accuracy": 0.9933554817275747,
+                  "successful": 602
+                },
+                "sample_count": 602
+              }
+            ],
+            "confusion": {
+              "authentic_labeled": {
+                "AUTHENTIC": 1482,
+                "FAKE": 16,
+                "REVIEW": 0
+              },
+              "fake_labeled": {
+                "AUTHENTIC": 15,
+                "FAKE": 1485,
+                "REVIEW": 0
+              }
+            },
+            "decision_coverage": 1.0,
+            "directory_labels_are_verified_authenticity": false,
+            "f1_fake": 0.9896701099633456,
+            "failed": 0,
+            "fake_labeled": 1500,
+            "false_authentic_count": 15,
+            "false_authentic_rate": 0.01,
+            "false_fake_count": 16,
+            "false_fake_rate": 0.010680907877169559,
+            "latency": {
+              "images": 2998,
+              "p50_ms": 21.15217337541253,
+              "p95_ms": 22.540733376445132,
+              "throughput_images_per_s": 46.955450355221075,
+              "triton_seconds": 63.8477530791406
+            },
+            "pr_auc_raw_logit": 0.9986585408468793,
+            "precision_fake": 0.9893404397068621,
+            "recall_fake": 0.99,
+            "review_count": 0,
+            "review_excluded_from_binary_metrics": true,
+            "review_rate": 0.0,
+            "roc_auc_raw_logit": 0.9982469959946595,
+            "rows": 2998,
+            "selective_accuracy": 0.9896597731821214,
+            "successful": 2998
+          },
+          "dinov3_experimental": {
+            "accuracy": 1.0,
+            "authentic_labeled": 1498,
+            "balanced_accuracy": 1.0,
+            "binary_denominator": 2795,
+            "brands": [
+              {
+                "brand": "A. Lange & S\u00f6hne",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 301,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 564,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 270,
+                      "FAKE": 0,
+                      "REVIEW": 31
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 294,
+                      "REVIEW": 6
+                    }
+                  },
+                  "decision_coverage": 0.9384359400998337,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 37,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.06156405990016639,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 601,
+                  "selective_accuracy": 1.0,
+                  "successful": 601
+                },
+                "sample_count": 601
+              },
+              {
+                "brand": "Audemars Piguet",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 299,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 549,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 252,
+                      "FAKE": 0,
+                      "REVIEW": 47
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 297,
+                      "REVIEW": 3
+                    }
+                  },
+                  "decision_coverage": 0.9165275459098498,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 50,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.08347245409015025,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 599,
+                  "selective_accuracy": 1.0,
+                  "successful": 599
+                },
+                "sample_count": 599
+              },
+              {
+                "brand": "Patek Philippe",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 296,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 558,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 262,
+                      "FAKE": 0,
+                      "REVIEW": 34
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 296,
+                      "REVIEW": 4
+                    }
+                  },
+                  "decision_coverage": 0.9362416107382551,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 38,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.06375838926174497,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 596,
+                  "selective_accuracy": 1.0,
+                  "successful": 596
+                },
+                "sample_count": 596
+              },
+              {
+                "brand": "Richard Mille",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 300,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 563,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 271,
+                      "FAKE": 0,
+                      "REVIEW": 29
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 292,
+                      "REVIEW": 8
+                    }
+                  },
+                  "decision_coverage": 0.9383333333333334,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 37,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.06166666666666667,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 600,
+                  "selective_accuracy": 1.0,
+                  "successful": 600
+                },
+                "sample_count": 600
+              },
+              {
+                "brand": "Vacheron Constantin",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 302,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 561,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 267,
+                      "FAKE": 0,
+                      "REVIEW": 35
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 294,
+                      "REVIEW": 6
+                    }
+                  },
+                  "decision_coverage": 0.9318936877076412,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 41,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0681063122923588,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 602,
+                  "selective_accuracy": 1.0,
+                  "successful": 602
+                },
+                "sample_count": 602
+              }
+            ],
+            "confusion": {
+              "authentic_labeled": {
+                "AUTHENTIC": 1322,
+                "FAKE": 0,
+                "REVIEW": 176
+              },
+              "fake_labeled": {
+                "AUTHENTIC": 0,
+                "FAKE": 1473,
+                "REVIEW": 27
+              }
+            },
+            "decision_coverage": 0.9322881921280853,
+            "directory_labels_are_verified_authenticity": false,
+            "f1_fake": 1.0,
+            "failed": 0,
+            "fake_labeled": 1500,
+            "false_authentic_count": 0,
+            "false_authentic_rate": 0.0,
+            "false_fake_count": 0,
+            "false_fake_rate": 0.0,
+            "latency": {
+              "images": 2998,
+              "p50_ms": 18.75727381229808,
+              "p95_ms": 19.54999187546491,
+              "throughput_images_per_s": 53.27111969901902,
+              "triton_seconds": 56.27814877814944
+            },
+            "pr_auc_raw_logit": 1.0,
+            "precision_fake": 1.0,
+            "recall_fake": 1.0,
+            "review_count": 203,
+            "review_excluded_from_binary_metrics": true,
+            "review_rate": 0.06771180787191461,
+            "roc_auc_raw_logit": 1.0,
+            "rows": 2998,
+            "selective_accuracy": 1.0,
+            "successful": 2998
+          }
+        },
+        "samples": 2998
+      },
+      "train": {
+        "agreement": {
+          "agreement": 19281,
+          "both_binary_and_both_wrong": 0,
+          "both_successful": 20999,
+          "disagreement": 1718,
+          "samples": 20999
+        },
+        "models": {
+          "dinov2_legacy": {
+            "accuracy": 0.986142197247488,
+            "authentic_labeled": 10499,
+            "balanced_accuracy": 0.9861420634164705,
+            "binary_denominator": 20999,
+            "brands": [
+              {
+                "brand": "A. Lange & S\u00f6hne",
+                "metrics": {
+                  "accuracy": 0.9873839562009046,
+                  "authentic_labeled": 2101,
+                  "balanced_accuracy": 0.9873861653181025,
+                  "binary_denominator": 4201,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2055,
+                      "FAKE": 46,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 7,
+                      "FAKE": 2093,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9874970511913188,
+                  "failed": 0,
+                  "fake_labeled": 2100,
+                  "false_authentic_count": 7,
+                  "false_authentic_rate": 0.0033333333333333335,
+                  "false_fake_count": 46,
+                  "false_fake_rate": 0.021894336030461686,
+                  "pr_auc_raw_logit": 0.9995668042476387,
+                  "precision_fake": 0.978494623655914,
+                  "recall_fake": 0.9966666666666667,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9994957049930872,
+                  "rows": 4201,
+                  "selective_accuracy": 0.9873839562009046,
+                  "successful": 4201
+                },
+                "sample_count": 4201
+              },
+              {
+                "brand": "Audemars Piguet",
+                "metrics": {
+                  "accuracy": 0.9842669845053635,
+                  "authentic_labeled": 2095,
+                  "balanced_accuracy": 0.9842698033867485,
+                  "binary_denominator": 4195,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2067,
+                      "FAKE": 28,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 38,
+                      "FAKE": 2062,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9842482100238664,
+                  "failed": 0,
+                  "fake_labeled": 2100,
+                  "false_authentic_count": 38,
+                  "false_authentic_rate": 0.018095238095238095,
+                  "false_fake_count": 28,
+                  "false_fake_rate": 0.013365155131264916,
+                  "pr_auc_raw_logit": 0.9985728674991516,
+                  "precision_fake": 0.9866028708133971,
+                  "recall_fake": 0.981904761904762,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9983009432890101,
+                  "rows": 4195,
+                  "selective_accuracy": 0.9842669845053635,
+                  "successful": 4195
+                },
+                "sample_count": 4195
+              },
+              {
+                "brand": "Patek Philippe",
+                "metrics": {
+                  "accuracy": 0.9847437425506556,
+                  "authentic_labeled": 2095,
+                  "balanced_accuracy": 0.9847346289351062,
+                  "binary_denominator": 4195,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2047,
+                      "FAKE": 48,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 16,
+                      "FAKE": 2084,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9848771266540643,
+                  "failed": 0,
+                  "fake_labeled": 2100,
+                  "false_authentic_count": 16,
+                  "false_authentic_rate": 0.007619047619047619,
+                  "false_fake_count": 48,
+                  "false_fake_rate": 0.022911694510739856,
+                  "pr_auc_raw_logit": 0.9990652458483205,
+                  "precision_fake": 0.9774859287054409,
+                  "recall_fake": 0.9923809523809524,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9987853165132401,
+                  "rows": 4195,
+                  "selective_accuracy": 0.9847437425506556,
+                  "successful": 4195
+                },
+                "sample_count": 4195
+              },
+              {
+                "brand": "Richard Mille",
+                "metrics": {
+                  "accuracy": 0.9854831032841505,
+                  "authentic_labeled": 2102,
+                  "balanced_accuracy": 0.9854804947668887,
+                  "binary_denominator": 4202,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2083,
+                      "FAKE": 19,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 42,
+                      "FAKE": 2058,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9853962173808952,
+                  "failed": 0,
+                  "fake_labeled": 2100,
+                  "false_authentic_count": 42,
+                  "false_authentic_rate": 0.02,
+                  "false_fake_count": 19,
+                  "false_fake_rate": 0.009039010466222646,
+                  "pr_auc_raw_logit": 0.9980459727514753,
+                  "precision_fake": 0.9908521906596052,
+                  "recall_fake": 0.98,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9975397580535544,
+                  "rows": 4202,
+                  "selective_accuracy": 0.9854831032841505,
+                  "successful": 4202
+                },
+                "sample_count": 4202
+              },
+              {
+                "brand": "Vacheron Constantin",
+                "metrics": {
+                  "accuracy": 0.9888254873989539,
+                  "authentic_labeled": 2106,
+                  "balanced_accuracy": 0.9888325871659205,
+                  "binary_denominator": 4206,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 2072,
+                      "FAKE": 34,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 13,
+                      "FAKE": 2087,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9888651978204216,
+                  "failed": 0,
+                  "fake_labeled": 2100,
+                  "false_authentic_count": 13,
+                  "false_authentic_rate": 0.006190476190476191,
+                  "false_fake_count": 34,
+                  "false_fake_rate": 0.016144349477682812,
+                  "pr_auc_raw_logit": 0.9995438161344476,
+                  "precision_fake": 0.9839698255539839,
+                  "recall_fake": 0.9938095238095238,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9994950933839822,
+                  "rows": 4206,
+                  "selective_accuracy": 0.9888254873989539,
+                  "successful": 4206
+                },
+                "sample_count": 4206
+              }
+            ],
+            "confusion": {
+              "authentic_labeled": {
+                "AUTHENTIC": 10324,
+                "FAKE": 175,
+                "REVIEW": 0
+              },
+              "fake_labeled": {
+                "AUTHENTIC": 116,
+                "FAKE": 10384,
+                "REVIEW": 0
+              }
+            },
+            "decision_coverage": 1.0,
+            "directory_labels_are_verified_authenticity": false,
+            "f1_fake": 0.9861816800417873,
+            "failed": 0,
+            "fake_labeled": 10500,
+            "false_authentic_count": 116,
+            "false_authentic_rate": 0.011047619047619047,
+            "false_fake_count": 175,
+            "false_fake_rate": 0.016668254119439948,
+            "latency": {
+              "images": 20999,
+              "p50_ms": 21.144249625649536,
+              "p95_ms": 22.476133611417023,
+              "throughput_images_per_s": 46.975671489657486,
+              "triton_seconds": 447.01862334470934
+            },
+            "pr_auc_raw_logit": 0.9988773671219422,
+            "precision_fake": 0.9834264608390946,
+            "recall_fake": 0.9889523809523809,
+            "review_count": 0,
+            "review_excluded_from_binary_metrics": true,
+            "review_rate": 0.0,
+            "roc_auc_raw_logit": 0.9986244041382626,
+            "rows": 20999,
+            "selective_accuracy": 0.986142197247488,
+            "successful": 20999
+          },
+          "dinov3_experimental": {
+            "accuracy": 1.0,
+            "authentic_labeled": 10499,
+            "balanced_accuracy": 1.0,
+            "binary_denominator": 19543,
+            "brands": [
+              {
+                "brand": "A. Lange & S\u00f6hne",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 2101,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 3893,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 1838,
+                      "FAKE": 0,
+                      "REVIEW": 263
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 2055,
+                      "REVIEW": 45
+                    }
+                  },
+                  "decision_coverage": 0.9266841228278981,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 2100,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 308,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.07331587717210188,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 4201,
+                  "selective_accuracy": 1.0,
+                  "successful": 4201
+                },
+                "sample_count": 4201
+              },
+              {
+                "brand": "Audemars Piguet",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 2095,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 3914,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 1834,
+                      "FAKE": 0,
+                      "REVIEW": 261
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 2080,
+                      "REVIEW": 20
+                    }
+                  },
+                  "decision_coverage": 0.933015494636472,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 2100,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 281,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.06698450536352801,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 4195,
+                  "selective_accuracy": 1.0,
+                  "successful": 4195
+                },
+                "sample_count": 4195
+              },
+              {
+                "brand": "Patek Philippe",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 2095,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 3985,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 1920,
+                      "FAKE": 0,
+                      "REVIEW": 175
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 2065,
+                      "REVIEW": 35
+                    }
+                  },
+                  "decision_coverage": 0.9499404052443385,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 2100,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 210,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.050059594755661505,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 4195,
+                  "selective_accuracy": 1.0,
+                  "successful": 4195
+                },
+                "sample_count": 4195
+              },
+              {
+                "brand": "Richard Mille",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 2102,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 3859,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 1823,
+                      "FAKE": 0,
+                      "REVIEW": 279
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 2036,
+                      "REVIEW": 64
+                    }
+                  },
+                  "decision_coverage": 0.9183722037125178,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 2100,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 343,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.08162779628748215,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 4202,
+                  "selective_accuracy": 1.0,
+                  "successful": 4202
+                },
+                "sample_count": 4202
+              },
+              {
+                "brand": "Vacheron Constantin",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 2106,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 3892,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 1848,
+                      "FAKE": 0,
+                      "REVIEW": 258
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 2044,
+                      "REVIEW": 56
+                    }
+                  },
+                  "decision_coverage": 0.9253447456015217,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 2100,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 314,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.07465525439847837,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 4206,
+                  "selective_accuracy": 1.0,
+                  "successful": 4206
+                },
+                "sample_count": 4206
+              }
+            ],
+            "confusion": {
+              "authentic_labeled": {
+                "AUTHENTIC": 9263,
+                "FAKE": 0,
+                "REVIEW": 1236
+              },
+              "fake_labeled": {
+                "AUTHENTIC": 0,
+                "FAKE": 10280,
+                "REVIEW": 220
+              }
+            },
+            "decision_coverage": 0.9306633649221392,
+            "directory_labels_are_verified_authenticity": false,
+            "f1_fake": 1.0,
+            "failed": 0,
+            "fake_labeled": 10500,
+            "false_authentic_count": 0,
+            "false_authentic_rate": 0.0,
+            "false_fake_count": 0,
+            "false_fake_rate": 0.0,
+            "latency": {
+              "images": 20999,
+              "p50_ms": 18.760064062007586,
+              "p95_ms": 19.56141637492692,
+              "throughput_images_per_s": 53.25916361316532,
+              "triton_seconds": 394.2795675974375
+            },
+            "pr_auc_raw_logit": 1.0,
+            "precision_fake": 1.0,
+            "recall_fake": 1.0,
+            "review_count": 1456,
+            "review_excluded_from_binary_metrics": true,
+            "review_rate": 0.06933663507786085,
+            "roc_auc_raw_logit": 1.0,
+            "rows": 20999,
+            "selective_accuracy": 1.0,
+            "successful": 20999
+          }
+        },
+        "samples": 20999
+      },
+      "validation": {
+        "agreement": {
+          "agreement": 2768,
+          "both_binary_and_both_wrong": 0,
+          "both_successful": 2997,
+          "disagreement": 229,
+          "samples": 2997
+        },
+        "models": {
+          "dinov2_legacy": {
+            "accuracy": 0.9883216549883217,
+            "authentic_labeled": 1497,
+            "balanced_accuracy": 0.9883193052772211,
+            "binary_denominator": 2997,
+            "brands": [
+              {
+                "brand": "A. Lange & S\u00f6hne",
+                "metrics": {
+                  "accuracy": 0.9967479674796748,
+                  "authentic_labeled": 315,
+                  "balanced_accuracy": 0.9967460317460317,
+                  "binary_denominator": 615,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 314,
+                      "FAKE": 1,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 1,
+                      "FAKE": 299,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9966666666666667,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 1,
+                  "false_authentic_rate": 0.0033333333333333335,
+                  "false_fake_count": 1,
+                  "false_fake_rate": 0.0031746031746031746,
+                  "pr_auc_raw_logit": 0.9996340257171119,
+                  "precision_fake": 0.9966666666666667,
+                  "recall_fake": 0.9966666666666667,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9996084656084656,
+                  "rows": 615,
+                  "selective_accuracy": 0.9967479674796748,
+                  "successful": 615
+                },
+                "sample_count": 615
+              },
+              {
+                "brand": "Audemars Piguet",
+                "metrics": {
+                  "accuracy": 0.9849246231155779,
+                  "authentic_labeled": 297,
+                  "balanced_accuracy": 0.984949494949495,
+                  "binary_denominator": 597,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 294,
+                      "FAKE": 3,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 6,
+                      "FAKE": 294,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9849246231155778,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 6,
+                  "false_authentic_rate": 0.02,
+                  "false_fake_count": 3,
+                  "false_fake_rate": 0.010101010101010102,
+                  "pr_auc_raw_logit": 0.9983616484522058,
+                  "precision_fake": 0.98989898989899,
+                  "recall_fake": 0.98,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9981930415263749,
+                  "rows": 597,
+                  "selective_accuracy": 0.9849246231155779,
+                  "successful": 597
+                },
+                "sample_count": 597
+              },
+              {
+                "brand": "Patek Philippe",
+                "metrics": {
+                  "accuracy": 0.9797639123102867,
+                  "authentic_labeled": 293,
+                  "balanced_accuracy": 0.9795221843003412,
+                  "binary_denominator": 593,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 281,
+                      "FAKE": 12,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 300,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9803921568627451,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 12,
+                  "false_fake_rate": 0.040955631399317405,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 0.9615384615384616,
+                  "recall_fake": 1.0,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 593,
+                  "selective_accuracy": 0.9797639123102867,
+                  "successful": 593
+                },
+                "sample_count": 593
+              },
+              {
+                "brand": "Richard Mille",
+                "metrics": {
+                  "accuracy": 0.9833333333333333,
+                  "authentic_labeled": 300,
+                  "balanced_accuracy": 0.9833333333333334,
+                  "binary_denominator": 600,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 297,
+                      "FAKE": 3,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 7,
+                      "FAKE": 293,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9832214765100672,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 7,
+                  "false_authentic_rate": 0.023333333333333334,
+                  "false_fake_count": 3,
+                  "false_fake_rate": 0.01,
+                  "pr_auc_raw_logit": 0.9978706688573676,
+                  "precision_fake": 0.9898648648648649,
+                  "recall_fake": 0.9766666666666667,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 0.9973,
+                  "rows": 600,
+                  "selective_accuracy": 0.9833333333333333,
+                  "successful": 600
+                },
+                "sample_count": 600
+              },
+              {
+                "brand": "Vacheron Constantin",
+                "metrics": {
+                  "accuracy": 0.9966216216216216,
+                  "authentic_labeled": 292,
+                  "balanced_accuracy": 0.9965753424657534,
+                  "binary_denominator": 592,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 290,
+                      "FAKE": 2,
+                      "REVIEW": 0
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 300,
+                      "REVIEW": 0
+                    }
+                  },
+                  "decision_coverage": 1.0,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 0.9966777408637874,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 2,
+                  "false_fake_rate": 0.00684931506849315,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 0.9933774834437086,
+                  "recall_fake": 1.0,
+                  "review_count": 0,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.0,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 592,
+                  "selective_accuracy": 0.9966216216216216,
+                  "successful": 592
+                },
+                "sample_count": 592
+              }
+            ],
+            "confusion": {
+              "authentic_labeled": {
+                "AUTHENTIC": 1476,
+                "FAKE": 21,
+                "REVIEW": 0
+              },
+              "fake_labeled": {
+                "AUTHENTIC": 14,
+                "FAKE": 1486,
+                "REVIEW": 0
+              }
+            },
+            "decision_coverage": 1.0,
+            "directory_labels_are_verified_authenticity": false,
+            "f1_fake": 0.988360492184902,
+            "failed": 0,
+            "fake_labeled": 1500,
+            "false_authentic_count": 14,
+            "false_authentic_rate": 0.009333333333333334,
+            "false_fake_count": 21,
+            "false_fake_rate": 0.014028056112224449,
+            "latency": {
+              "images": 2997,
+              "p50_ms": 21.153459125343943,
+              "p95_ms": 22.461800201199367,
+              "throughput_images_per_s": 46.96501935969289,
+              "triton_seconds": 63.81345181712277
+            },
+            "pr_auc_raw_logit": 0.9990892874994085,
+            "precision_fake": 0.9860650298606503,
+            "recall_fake": 0.9906666666666667,
+            "review_count": 0,
+            "review_excluded_from_binary_metrics": true,
+            "review_rate": 0.0,
+            "roc_auc_raw_logit": 0.9988964595858384,
+            "rows": 2997,
+            "selective_accuracy": 0.9883216549883217,
+            "successful": 2997
+          },
+          "dinov3_experimental": {
+            "accuracy": 1.0,
+            "authentic_labeled": 1497,
+            "balanced_accuracy": 1.0,
+            "binary_denominator": 2801,
+            "brands": [
+              {
+                "brand": "A. Lange & S\u00f6hne",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 315,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 577,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 282,
+                      "FAKE": 0,
+                      "REVIEW": 33
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 295,
+                      "REVIEW": 5
+                    }
+                  },
+                  "decision_coverage": 0.9382113821138212,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 38,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.061788617886178863,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 615,
+                  "selective_accuracy": 1.0,
+                  "successful": 615
+                },
+                "sample_count": 615
+              },
+              {
+                "brand": "Audemars Piguet",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 297,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 551,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 254,
+                      "FAKE": 0,
+                      "REVIEW": 43
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 297,
+                      "REVIEW": 3
+                    }
+                  },
+                  "decision_coverage": 0.9229480737018425,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 46,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.07705192629815745,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 597,
+                  "selective_accuracy": 1.0,
+                  "successful": 597
+                },
+                "sample_count": 597
+              },
+              {
+                "brand": "Patek Philippe",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 293,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 564,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 270,
+                      "FAKE": 0,
+                      "REVIEW": 23
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 294,
+                      "REVIEW": 6
+                    }
+                  },
+                  "decision_coverage": 0.9510961214165261,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 29,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.048903878583473864,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 593,
+                  "selective_accuracy": 1.0,
+                  "successful": 593
+                },
+                "sample_count": 593
+              },
+              {
+                "brand": "Richard Mille",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 300,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 555,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 264,
+                      "FAKE": 0,
+                      "REVIEW": 36
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 291,
+                      "REVIEW": 9
+                    }
+                  },
+                  "decision_coverage": 0.925,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 45,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.075,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 600,
+                  "selective_accuracy": 1.0,
+                  "successful": 600
+                },
+                "sample_count": 600
+              },
+              {
+                "brand": "Vacheron Constantin",
+                "metrics": {
+                  "accuracy": 1.0,
+                  "authentic_labeled": 292,
+                  "balanced_accuracy": 1.0,
+                  "binary_denominator": 554,
+                  "confusion": {
+                    "authentic_labeled": {
+                      "AUTHENTIC": 262,
+                      "FAKE": 0,
+                      "REVIEW": 30
+                    },
+                    "fake_labeled": {
+                      "AUTHENTIC": 0,
+                      "FAKE": 292,
+                      "REVIEW": 8
+                    }
+                  },
+                  "decision_coverage": 0.9358108108108109,
+                  "directory_labels_are_verified_authenticity": false,
+                  "f1_fake": 1.0,
+                  "failed": 0,
+                  "fake_labeled": 300,
+                  "false_authentic_count": 0,
+                  "false_authentic_rate": 0.0,
+                  "false_fake_count": 0,
+                  "false_fake_rate": 0.0,
+                  "pr_auc_raw_logit": 1.0,
+                  "precision_fake": 1.0,
+                  "recall_fake": 1.0,
+                  "review_count": 38,
+                  "review_excluded_from_binary_metrics": true,
+                  "review_rate": 0.06418918918918919,
+                  "roc_auc_raw_logit": 1.0,
+                  "rows": 592,
+                  "selective_accuracy": 1.0,
+                  "successful": 592
+                },
+                "sample_count": 592
+              }
+            ],
+            "confusion": {
+              "authentic_labeled": {
+                "AUTHENTIC": 1332,
+                "FAKE": 0,
+                "REVIEW": 165
+              },
+              "fake_labeled": {
+                "AUTHENTIC": 0,
+                "FAKE": 1469,
+                "REVIEW": 31
+              }
+            },
+            "decision_coverage": 0.9346012679346013,
+            "directory_labels_are_verified_authenticity": false,
+            "f1_fake": 1.0,
+            "failed": 0,
+            "fake_labeled": 1500,
+            "false_authentic_count": 0,
+            "false_authentic_rate": 0.0,
+            "false_fake_count": 0,
+            "false_fake_rate": 0.0,
+            "latency": {
+              "images": 2997,
+              "p50_ms": 18.756639312414336,
+              "p95_ms": 19.50456212489371,
+              "throughput_images_per_s": 53.25702357662445,
+              "triton_seconds": 56.27426766890221
+            },
+            "pr_auc_raw_logit": 1.0,
+            "precision_fake": 1.0,
+            "recall_fake": 1.0,
+            "review_count": 196,
+            "review_excluded_from_binary_metrics": true,
+            "review_rate": 0.06539873206539873,
+            "roc_auc_raw_logit": 1.0,
+            "rows": 2997,
+            "selective_accuracy": 1.0,
+            "successful": 2997
+          }
+        },
+        "samples": 2997
+      }
+    },
+    "dinov3_validation_images_also_in_dinov2_train": 2682,
+    "note": "Includes each model's own train, calibration, and validation rows. Train and calibration are diagnostic. A model's own validation is not the paired held-out cohort when the other model used those images for training or calibration."
+  },
+  "diagnostic": {
+    "agreement": {
+      "agreement": 24538,
+      "both_binary_and_both_wrong": 0,
+      "both_successful": 26679,
+      "disagreement": 2141,
+      "samples": 26679
+    },
+    "models": {
+      "dinov2_legacy": {
+        "accuracy": 0.9866561715206716,
+        "authentic_labeled": 13179,
+        "balanced_accuracy": 0.9866244699058266,
+        "binary_denominator": 26679,
+        "brands": [
+          {
+            "brand": "A. Lange & S\u00f6hne",
+            "metrics": {
+              "accuracy": 0.9884359074872598,
+              "authentic_labeled": 2402,
+              "balanced_accuracy": 0.9879253399944491,
+              "binary_denominator": 5102,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 2352,
+                  "FAKE": 50,
+                  "REVIEW": 0
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 9,
+                  "FAKE": 2691,
+                  "REVIEW": 0
+                }
+              },
+              "decision_coverage": 1.0,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": 0.989156405072597,
+              "failed": 0,
+              "fake_labeled": 2700,
+              "false_authentic_count": 9,
+              "false_authentic_rate": 0.0033333333333333335,
+              "false_fake_count": 50,
+              "false_fake_rate": 0.020815986677768527,
+              "pr_auc_raw_logit": 0.9995571090517122,
+              "precision_fake": 0.9817584823057278,
+              "recall_fake": 0.9966666666666667,
+              "review_count": 0,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.0,
+              "roc_auc_raw_logit": 0.9993946402689117,
+              "rows": 5102,
+              "selective_accuracy": 0.9884359074872598,
+              "successful": 5102
+            },
+            "sample_count": 5102
+          },
+          {
+            "brand": "Audemars Piguet",
+            "metrics": {
+              "accuracy": 0.9844184752365053,
+              "authentic_labeled": 2691,
+              "balanced_accuracy": 0.9844233865972997,
+              "binary_denominator": 5391,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 2657,
+                  "FAKE": 34,
+                  "REVIEW": 0
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 50,
+                  "FAKE": 2650,
+                  "REVIEW": 0
+                }
+              },
+              "decision_coverage": 1.0,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": 0.9843982169390787,
+              "failed": 0,
+              "fake_labeled": 2700,
+              "false_authentic_count": 50,
+              "false_authentic_rate": 0.018518518518518517,
+              "false_fake_count": 34,
+              "false_fake_rate": 0.0126347082868822,
+              "pr_auc_raw_logit": 0.9985454869640175,
+              "precision_fake": 0.9873323397913562,
+              "recall_fake": 0.9814814814814815,
+              "review_count": 0,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.0,
+              "roc_auc_raw_logit": 0.9982991315358465,
+              "rows": 5391,
+              "selective_accuracy": 0.9844184752365053,
+              "successful": 5391
+            },
+            "sample_count": 5391
+          },
+          {
+            "brand": "Patek Philippe",
+            "metrics": {
+              "accuracy": 0.9849554234769688,
+              "authentic_labeled": 2684,
+              "balanced_accuracy": 0.9849282441905394,
+              "binary_denominator": 5384,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 2619,
+                  "FAKE": 65,
+                  "REVIEW": 0
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 16,
+                  "FAKE": 2684,
+                  "REVIEW": 0
+                }
+              },
+              "decision_coverage": 1.0,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": 0.9851348871352542,
+              "failed": 0,
+              "fake_labeled": 2700,
+              "false_authentic_count": 16,
+              "false_authentic_rate": 0.005925925925925926,
+              "false_fake_count": 65,
+              "false_fake_rate": 0.02421758569299553,
+              "pr_auc_raw_logit": 0.9992745327818275,
+              "precision_fake": 0.9763550381957076,
+              "recall_fake": 0.9940740740740741,
+              "review_count": 0,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.0,
+              "roc_auc_raw_logit": 0.9990572390572391,
+              "rows": 5384,
+              "selective_accuracy": 0.9849554234769688,
+              "successful": 5384
+            },
+            "sample_count": 5384
+          },
+          {
+            "brand": "Richard Mille",
+            "metrics": {
+              "accuracy": 0.9853757867456497,
+              "authentic_labeled": 2702,
+              "balanced_accuracy": 0.9853735230419168,
+              "binary_denominator": 5402,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 2679,
+                  "FAKE": 23,
+                  "REVIEW": 0
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 56,
+                  "FAKE": 2644,
+                  "REVIEW": 0
+                }
+              },
+              "decision_coverage": 1.0,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": 0.985280417365381,
+              "failed": 0,
+              "fake_labeled": 2700,
+              "false_authentic_count": 56,
+              "false_authentic_rate": 0.02074074074074074,
+              "false_fake_count": 23,
+              "false_fake_rate": 0.008512213175425611,
+              "pr_auc_raw_logit": 0.9978785836050228,
+              "precision_fake": 0.9913760779902512,
+              "recall_fake": 0.9792592592592593,
+              "review_count": 0,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.0,
+              "roc_auc_raw_logit": 0.99729610439455,
+              "rows": 5402,
+              "selective_accuracy": 0.9853757867456497,
+              "successful": 5402
+            },
+            "sample_count": 5402
+          },
+          {
+            "brand": "Vacheron Constantin",
+            "metrics": {
+              "accuracy": 0.9901851851851852,
+              "authentic_labeled": 2700,
+              "balanced_accuracy": 0.9901851851851852,
+              "binary_denominator": 5400,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 2661,
+                  "FAKE": 39,
+                  "REVIEW": 0
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 14,
+                  "FAKE": 2686,
+                  "REVIEW": 0
+                }
+              },
+              "decision_coverage": 1.0,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": 0.9902304147465438,
+              "failed": 0,
+              "fake_labeled": 2700,
+              "false_authentic_count": 14,
+              "false_authentic_rate": 0.005185185185185185,
+              "false_fake_count": 39,
+              "false_fake_rate": 0.014444444444444444,
+              "pr_auc_raw_logit": 0.9996160853912371,
+              "precision_fake": 0.9856880733944954,
+              "recall_fake": 0.9948148148148148,
+              "review_count": 0,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.0,
+              "roc_auc_raw_logit": 0.9995742112482853,
+              "rows": 5400,
+              "selective_accuracy": 0.9901851851851852,
+              "successful": 5400
+            },
+            "sample_count": 5400
+          }
+        ],
+        "confusion": {
+          "authentic_labeled": {
+            "AUTHENTIC": 12968,
+            "FAKE": 211,
+            "REVIEW": 0
+          },
+          "fake_labeled": {
+            "AUTHENTIC": 145,
+            "FAKE": 13355,
+            "REVIEW": 0
+          }
+        },
+        "decision_coverage": 1.0,
+        "directory_labels_are_verified_authenticity": false,
+        "f1_fake": 0.986846966674056,
+        "failed": 0,
+        "fake_labeled": 13500,
+        "false_authentic_count": 145,
+        "false_authentic_rate": 0.01074074074074074,
+        "false_fake_count": 211,
+        "false_fake_rate": 0.01601031944760604,
+        "latency": {
+          "images": 26679,
+          "p50_ms": 21.144841624845867,
+          "p95_ms": 22.46774412560626,
+          "throughput_images_per_s": 46.97629013198894,
+          "triton_seconds": 567.9247962118807
+        },
+        "pr_auc_raw_logit": 0.998893570491046,
+        "precision_fake": 0.9844464101430046,
+        "recall_fake": 0.9892592592592593,
+        "review_count": 0,
+        "review_excluded_from_binary_metrics": true,
+        "review_rate": 0.0,
+        "roc_auc_raw_logit": 0.9986072511543337,
+        "rows": 26679,
+        "selective_accuracy": 0.9866561715206716,
+        "successful": 26679
+      },
+      "dinov3_experimental": {
+        "accuracy": 1.0,
+        "authentic_labeled": 13179,
+        "balanced_accuracy": 1.0,
+        "binary_denominator": 24857,
+        "brands": [
+          {
+            "brand": "A. Lange & S\u00f6hne",
+            "metrics": {
+              "accuracy": 1.0,
+              "authentic_labeled": 2402,
+              "balanced_accuracy": 1.0,
+              "binary_denominator": 4752,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 2108,
+                  "FAKE": 0,
+                  "REVIEW": 294
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 0,
+                  "FAKE": 2644,
+                  "REVIEW": 56
+                }
+              },
+              "decision_coverage": 0.9313994511956095,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": 1.0,
+              "failed": 0,
+              "fake_labeled": 2700,
+              "false_authentic_count": 0,
+              "false_authentic_rate": 0.0,
+              "false_fake_count": 0,
+              "false_fake_rate": 0.0,
+              "pr_auc_raw_logit": 1.0,
+              "precision_fake": 1.0,
+              "recall_fake": 1.0,
+              "review_count": 350,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.06860054880439044,
+              "roc_auc_raw_logit": 1.0,
+              "rows": 5102,
+              "selective_accuracy": 1.0,
+              "successful": 5102
+            },
+            "sample_count": 5102
+          },
+          {
+            "brand": "Audemars Piguet",
+            "metrics": {
+              "accuracy": 1.0,
+              "authentic_labeled": 2691,
+              "balanced_accuracy": 1.0,
+              "binary_denominator": 5014,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 2340,
+                  "FAKE": 0,
+                  "REVIEW": 351
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 0,
+                  "FAKE": 2674,
+                  "REVIEW": 26
+                }
+              },
+              "decision_coverage": 0.9300686329066964,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": 1.0,
+              "failed": 0,
+              "fake_labeled": 2700,
+              "false_authentic_count": 0,
+              "false_authentic_rate": 0.0,
+              "false_fake_count": 0,
+              "false_fake_rate": 0.0,
+              "pr_auc_raw_logit": 1.0,
+              "precision_fake": 1.0,
+              "recall_fake": 1.0,
+              "review_count": 377,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.06993136709330365,
+              "roc_auc_raw_logit": 1.0,
+              "rows": 5391,
+              "selective_accuracy": 1.0,
+              "successful": 5391
+            },
+            "sample_count": 5391
+          },
+          {
+            "brand": "Patek Philippe",
+            "metrics": {
+              "accuracy": 1.0,
+              "authentic_labeled": 2684,
+              "balanced_accuracy": 1.0,
+              "binary_denominator": 5107,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 2452,
+                  "FAKE": 0,
+                  "REVIEW": 232
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 0,
+                  "FAKE": 2655,
+                  "REVIEW": 45
+                }
+              },
+              "decision_coverage": 0.9485512630014858,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": 1.0,
+              "failed": 0,
+              "fake_labeled": 2700,
+              "false_authentic_count": 0,
+              "false_authentic_rate": 0.0,
+              "false_fake_count": 0,
+              "false_fake_rate": 0.0,
+              "pr_auc_raw_logit": 1.0,
+              "precision_fake": 1.0,
+              "recall_fake": 1.0,
+              "review_count": 277,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.051448736998514114,
+              "roc_auc_raw_logit": 1.0,
+              "rows": 5384,
+              "selective_accuracy": 1.0,
+              "successful": 5384
+            },
+            "sample_count": 5384
+          },
+          {
+            "brand": "Richard Mille",
+            "metrics": {
+              "accuracy": 1.0,
+              "authentic_labeled": 2702,
+              "balanced_accuracy": 1.0,
+              "binary_denominator": 4977,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 2358,
+                  "FAKE": 0,
+                  "REVIEW": 344
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 0,
+                  "FAKE": 2619,
+                  "REVIEW": 81
+                }
+              },
+              "decision_coverage": 0.9213254350240652,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": 1.0,
+              "failed": 0,
+              "fake_labeled": 2700,
+              "false_authentic_count": 0,
+              "false_authentic_rate": 0.0,
+              "false_fake_count": 0,
+              "false_fake_rate": 0.0,
+              "pr_auc_raw_logit": 1.0,
+              "precision_fake": 1.0,
+              "recall_fake": 1.0,
+              "review_count": 425,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.07867456497593484,
+              "roc_auc_raw_logit": 1.0,
+              "rows": 5402,
+              "selective_accuracy": 1.0,
+              "successful": 5402
+            },
+            "sample_count": 5402
+          },
+          {
+            "brand": "Vacheron Constantin",
+            "metrics": {
+              "accuracy": 1.0,
+              "authentic_labeled": 2700,
+              "balanced_accuracy": 1.0,
+              "binary_denominator": 5007,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 2377,
+                  "FAKE": 0,
+                  "REVIEW": 323
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 0,
+                  "FAKE": 2630,
+                  "REVIEW": 70
+                }
+              },
+              "decision_coverage": 0.9272222222222222,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": 1.0,
+              "failed": 0,
+              "fake_labeled": 2700,
+              "false_authentic_count": 0,
+              "false_authentic_rate": 0.0,
+              "false_fake_count": 0,
+              "false_fake_rate": 0.0,
+              "pr_auc_raw_logit": 1.0,
+              "precision_fake": 1.0,
+              "recall_fake": 1.0,
+              "review_count": 393,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.07277777777777777,
+              "roc_auc_raw_logit": 1.0,
+              "rows": 5400,
+              "selective_accuracy": 1.0,
+              "successful": 5400
+            },
+            "sample_count": 5400
+          }
+        ],
+        "confusion": {
+          "authentic_labeled": {
+            "AUTHENTIC": 11635,
+            "FAKE": 0,
+            "REVIEW": 1544
+          },
+          "fake_labeled": {
+            "AUTHENTIC": 0,
+            "FAKE": 13222,
+            "REVIEW": 278
+          }
+        },
+        "decision_coverage": 0.9317065857041118,
+        "directory_labels_are_verified_authenticity": false,
+        "f1_fake": 1.0,
+        "failed": 0,
+        "fake_labeled": 13500,
+        "false_authentic_count": 0,
+        "false_authentic_rate": 0.0,
+        "false_fake_count": 0,
+        "false_fake_rate": 0.0,
+        "latency": {
+          "images": 26679,
+          "p50_ms": 18.758669999442645,
+          "p95_ms": 19.552970562472183,
+          "throughput_images_per_s": 53.262605857173206,
+          "triton_seconds": 500.89550765768576
+        },
+        "pr_auc_raw_logit": 1.0,
+        "precision_fake": 1.0,
+        "recall_fake": 1.0,
+        "review_count": 1822,
+        "review_excluded_from_binary_metrics": true,
+        "review_rate": 0.06829341429588816,
+        "roc_auc_raw_logit": 1.0,
+        "rows": 26679,
+        "selective_accuracy": 1.0,
+        "successful": 26679
+      }
+    },
+    "samples": 26679
+  },
+  "directory_labels_are_verified_authenticity": false,
+  "final_test_images_opened": 0,
+  "gpu_memory_mib_max": 13378.0,
+  "metrics_status": "exploratory",
+  "parity": {
+    "dinov2_max_abs_logit_error": 2.3603439331054688e-05,
+    "dinov3_max_abs_logit_error": 6.818771362304688e-05,
+    "final_test_images_opened": 0,
+    "gpu_inference": true,
+    "samples": 24,
+    "status": "PASS",
+    "tolerance": 0.0001
+  },
+  "primary_validation": {
+    "agreement": {
+      "agreement": 281,
+      "both_binary_and_both_wrong": 0,
+      "both_successful": 315,
+      "disagreement": 34,
+      "samples": 315
+    },
+    "models": {
+      "dinov2_legacy": {
+        "accuracy": 0.9968253968253968,
+        "authentic_labeled": 315,
+        "balanced_accuracy": null,
+        "binary_denominator": 315,
+        "brands": [
+          {
+            "brand": "A. Lange & S\u00f6hne",
+            "metrics": {
+              "accuracy": 0.9968253968253968,
+              "authentic_labeled": 315,
+              "balanced_accuracy": null,
+              "binary_denominator": 315,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 314,
+                  "FAKE": 1,
+                  "REVIEW": 0
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 0,
+                  "FAKE": 0,
+                  "REVIEW": 0
+                }
+              },
+              "decision_coverage": 1.0,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": null,
+              "failed": 0,
+              "fake_labeled": 0,
+              "false_authentic_count": 0,
+              "false_authentic_rate": null,
+              "false_fake_count": 1,
+              "false_fake_rate": 0.0031746031746031746,
+              "pr_auc_raw_logit": null,
+              "precision_fake": 0.0,
+              "recall_fake": null,
+              "review_count": 0,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.0,
+              "roc_auc_raw_logit": null,
+              "rows": 315,
+              "selective_accuracy": 0.9968253968253968,
+              "successful": 315
+            },
+            "sample_count": 315
+          }
+        ],
+        "confusion": {
+          "authentic_labeled": {
+            "AUTHENTIC": 314,
+            "FAKE": 1,
+            "REVIEW": 0
+          },
+          "fake_labeled": {
+            "AUTHENTIC": 0,
+            "FAKE": 0,
+            "REVIEW": 0
+          }
+        },
+        "decision_coverage": 1.0,
+        "directory_labels_are_verified_authenticity": false,
+        "f1_fake": null,
+        "failed": 0,
+        "fake_labeled": 0,
+        "false_authentic_count": 0,
+        "false_authentic_rate": null,
+        "false_fake_count": 1,
+        "false_fake_rate": 0.0031746031746031746,
+        "latency": {
+          "images": 315,
+          "p50_ms": 21.251769499940565,
+          "p95_ms": 23.118295450149162,
+          "throughput_images_per_s": 46.631903245370715,
+          "triton_seconds": 6.755032029092035
+        },
+        "pr_auc_raw_logit": null,
+        "precision_fake": 0.0,
+        "recall_fake": null,
+        "review_count": 0,
+        "review_excluded_from_binary_metrics": true,
+        "review_rate": 0.0,
+        "roc_auc_raw_logit": null,
+        "rows": 315,
+        "selective_accuracy": 0.9968253968253968,
+        "successful": 315
+      },
+      "dinov3_experimental": {
+        "accuracy": 1.0,
+        "authentic_labeled": 315,
+        "balanced_accuracy": null,
+        "binary_denominator": 282,
+        "brands": [
+          {
+            "brand": "A. Lange & S\u00f6hne",
+            "metrics": {
+              "accuracy": 1.0,
+              "authentic_labeled": 315,
+              "balanced_accuracy": null,
+              "binary_denominator": 282,
+              "confusion": {
+                "authentic_labeled": {
+                  "AUTHENTIC": 282,
+                  "FAKE": 0,
+                  "REVIEW": 33
+                },
+                "fake_labeled": {
+                  "AUTHENTIC": 0,
+                  "FAKE": 0,
+                  "REVIEW": 0
+                }
+              },
+              "decision_coverage": 0.8952380952380953,
+              "directory_labels_are_verified_authenticity": false,
+              "f1_fake": null,
+              "failed": 0,
+              "fake_labeled": 0,
+              "false_authentic_count": 0,
+              "false_authentic_rate": null,
+              "false_fake_count": 0,
+              "false_fake_rate": 0.0,
+              "pr_auc_raw_logit": null,
+              "precision_fake": null,
+              "recall_fake": null,
+              "review_count": 33,
+              "review_excluded_from_binary_metrics": true,
+              "review_rate": 0.10476190476190476,
+              "roc_auc_raw_logit": null,
+              "rows": 315,
+              "selective_accuracy": 1.0,
+              "successful": 315
+            },
+            "sample_count": 315
+          }
+        ],
+        "confusion": {
+          "authentic_labeled": {
+            "AUTHENTIC": 282,
+            "FAKE": 0,
+            "REVIEW": 33
+          },
+          "fake_labeled": {
+            "AUTHENTIC": 0,
+            "FAKE": 0,
+            "REVIEW": 0
+          }
+        },
+        "decision_coverage": 0.8952380952380953,
+        "directory_labels_are_verified_authenticity": false,
+        "f1_fake": null,
+        "failed": 0,
+        "fake_labeled": 0,
+        "false_authentic_count": 0,
+        "false_authentic_rate": null,
+        "false_fake_count": 0,
+        "false_fake_rate": 0.0,
+        "latency": {
+          "images": 315,
+          "p50_ms": 18.845739312382648,
+          "p95_ms": 19.592186999943806,
+          "throughput_images_per_s": 53.06177932421912,
+          "triton_seconds": 5.936476386803406
+        },
+        "pr_auc_raw_logit": null,
+        "precision_fake": null,
+        "recall_fake": null,
+        "review_count": 33,
+        "review_excluded_from_binary_metrics": true,
+        "review_rate": 0.10476190476190476,
+        "roc_auc_raw_logit": null,
+        "rows": 315,
+        "selective_accuracy": 1.0,
+        "successful": 315
+      }
+    },
+    "samples": 315
+  },
+  "protocol": "dinov2_vs_dinov3_full_scale_v1",
+  "sweep_wall_seconds": 2112.6211257480027,
+  "winner": null
+}
