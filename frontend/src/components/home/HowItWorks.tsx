@@ -23,8 +23,8 @@ export function HowItWorks() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mt-3 max-w-3xl font-[family-name:var(--font-display)] hv-display-lg text-[#FFEDF6]"
         >
-          A NEW STANDARD OF TRUST, BUILT AROUND A TRANSFORMER THAT{" "}
-          <span className="hv-gradient-text">SEES GEOMETRY</span>.
+          A RESEARCH PROTOTYPE FOR IN-SCOPE SCREENING, NOT A{" "}
+          <span className="hv-gradient-text">CERTIFICATE</span>.
         </motion.h2>
       </div>
 
@@ -44,9 +44,9 @@ export function HowItWorks() {
       <Step
         index={2}
         flip
-        eyebrow="Live market"
-        title="Three platforms. One transparent surface."
-        body="We pull real-time prices, delivery windows and seller ratings from StockX, Chrono24 and eBay. No tab-hopping, no hidden fees — just the truth."
+        eyebrow="Sample prices"
+        title="Illustrative prices, not a live feed."
+        body="The chart beside this text is sample data. It is not a live Chrono24, StockX, or eBay collection unless a listing page shows observations returned by the API."
         cta={{ label: "See the comparison", href: "/product/Luxury%20watches" }}
       >
         <PriceChartMockup />
@@ -191,17 +191,13 @@ function ScanMockup() {
       <ScanLine />
 
       {/* Targets */}
-      <Target x="22%" y="24%" label="Bezel" />
-      <Target x="68%" y="44%" label="Crown" />
-      <Target x="40%" y="68%" label="Tourbillon" />
+      <Target x="22%" y="24%" label="Example mark" />
+      <Target x="68%" y="44%" label="Example mark" />
+      <Target x="40%" y="68%" label="Example mark" />
 
-      {/* HUD top-left */}
-      <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-black/75 px-3 py-1.5 backdrop-blur-md">
-        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#FF3B00]" />
-        <span className="text-[11px] font-semibold tracking-wide text-white">
-          RESEARCH MODEL · not for production
-        </span>
-      </div>
+      <p className="absolute left-5 right-5 top-5 z-10 rounded-xl bg-black/80 px-3 py-2 text-[12px] font-semibold leading-snug text-white">
+        Illustration only — not a live scan or model-generated localization.
+      </p>
 
       {/* HUD bottom-right */}
       <div className="absolute right-5 bottom-5 rounded-xl bg-white/95 px-3 py-2 backdrop-blur-md shadow-lg">
@@ -287,7 +283,7 @@ function PriceChartMockup() {
       <div className="flex items-start justify-between">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-wider text-[#86868B]">
-            Royal Oak 15500ST · 30-day
+            Illustrative sample data — not live market prices
           </p>
           <p className="font-[family-name:var(--font-display)] text-[26px] font-bold text-[#1D1D1F] tabular-nums">
             $33,900
@@ -352,8 +348,8 @@ function PriceChartMockup() {
               <span className="h-7 w-7 rounded-md" style={{ backgroundColor: p.color }} />
               <span className="text-[13px] font-semibold text-[#1D1D1F]">{p.name}</span>
               {p.lowest ? (
-                <span className="rounded-full bg-[#00A652]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#00A652]">
-                  Lowest
+                <span className="rounded-full bg-[#86868B]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#86868B]">
+                  Sample
                 </span>
               ) : null}
             </div>
@@ -443,8 +439,8 @@ function VerdictMockup() {
             <p className="text-[14px] font-semibold text-[#1D1D1F]">Royal Oak 15500ST</p>
           </div>
           <div className="text-right">
-            <p className="text-[10px] font-medium text-[#86868B]">Status</p>
-            <p className="text-[13px] font-semibold text-[#00A652]">Live now ›</p>
+            <p className="text-[10px] font-medium text-[#86868B]">Example status</p>
+            <p className="text-[13px] font-semibold text-[#1D1D1F]">Not verified</p>
           </div>
         </div>
       </div>

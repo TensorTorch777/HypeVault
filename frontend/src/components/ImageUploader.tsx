@@ -90,7 +90,7 @@ export function ImageUploader({
     <div className="space-y-4">
       <div
         className={cn(
-          "group relative overflow-hidden rounded-[18px] border border-[rgba(255,31,164,0.28)] bg-[#120523]/85 p-8 text-center transition-all duration-300 hover:border-[rgba(0,225,255,0.55)] hover:shadow-[0_0_28px_rgba(255,31,164,0.28)]"
+          "group relative overflow-hidden rounded-2xl border border-white/10 bg-[#12081f] p-8 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors duration-200 hover:border-white/20"
         )}
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
@@ -103,12 +103,12 @@ export function ImageUploader({
           className="pointer-events-none absolute inset-0 opacity-70"
           style={{
             background:
-              "radial-gradient(120% 80% at 50% -20%, rgba(255,122,26,0.25) 0%, rgba(255,31,164,0.12) 35%, rgba(11,1,24,0.0) 68%)",
+              "radial-gradient(120% 80% at 50% 0%, rgba(255,122,26,0.12) 0%, transparent 60%)",
           }}
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-[10px] rounded-[14px] border border-dashed border-[rgba(255,237,246,0.18)] transition-colors duration-300 group-hover:border-[rgba(0,225,255,0.45)]"
+          className="pointer-events-none absolute inset-[10px] rounded-[14px] border border-dashed border-white/15 transition-colors duration-200 group-hover:border-white/30"
         />
         <p className="relative text-sm font-semibold uppercase tracking-[0.14em] text-[#FFEDF6]">Drag & drop images</p>
         <p className="relative mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#FFEDF6]/55">
@@ -126,7 +126,7 @@ export function ImageUploader({
           <Button
             type="button"
             variant="primary"
-            className="min-h-[44px] border border-[rgba(255,31,164,0.3)] shadow-[0_8px_22px_rgba(255,31,164,0.25)]"
+            className="min-h-[44px]"
             onClick={() => document.getElementById("hv-up")?.click()}
           >
             Choose files

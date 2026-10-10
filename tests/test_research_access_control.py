@@ -101,8 +101,14 @@ class ResearchAccessTests(unittest.TestCase):
                 data={"brand": "Patek Philippe", "logical_model": "dinov3_experimental"},
             )
             models = client.get("/research/models")
+            explain = client.post(
+                "/research/explain",
+                files={"image": ("a.jpg", _jpeg(), "image/jpeg")},
+                data={"brand": "Patek Philippe", "logical_model": "dinov2_legacy"},
+            )
         self.assertEqual(verify.status_code, 401)
         self.assertEqual(models.status_code, 401)
+        self.assertEqual(explain.status_code, 401)
         self.assertNotIn("decision", verify.json())
 
     def test_logged_in_user_without_entitlement_is_refused_in_research_mode(self) -> None:
@@ -122,9 +128,15 @@ class ResearchAccessTests(unittest.TestCase):
                     data={"brand": "Patek Philippe", "logical_model": "dinov3_experimental"},
                 )
                 models = client.get("/research/models")
+                explain = client.post(
+                    "/research/explain",
+                    files={"image": ("a.jpg", _jpeg(), "image/jpeg")},
+                    data={"brand": "Patek Philippe", "logical_model": "dinov2_legacy"},
+                )
             self.assertEqual(verify.status_code, 403, allowlist)
             self.assertEqual(verify.json(), {"detail": "Research access required"})
             self.assertEqual(models.status_code, 403, allowlist)
+            self.assertEqual(explain.status_code, 403, allowlist)
         infer.assert_not_awaited()
         readiness.assert_not_awaited()
 

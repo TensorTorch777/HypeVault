@@ -14,8 +14,12 @@ export function AuthBadge({
   lane?: "legacy" | "research";
 }) {
   const pct = confidence == null ? null : Math.min(100, Math.max(0, confidence * 100));
-  const headline =
-    lane === "research" ? "Research result — not verified" : verdict === "FAKE" ? "Rejected" : "Pending";
+  const workflow =
+    lane === "research"
+      ? "No listing was published. This is not a marketplace status."
+      : verdict === "FAKE"
+        ? "Listing workflow: Rejected by the legacy screening workflow. That is not independent proof of counterfeit status."
+        : "Listing workflow: pending. The model result does not publish the listing or verify authenticity.";
 
   if (!verdict) {
     return (
@@ -39,13 +43,14 @@ export function AuthBadge({
     >
       <div className="min-w-0">
         <p className="text-xs font-semibold uppercase tracking-wider text-primary/55">
-          {lane === "research" ? "Research model · not for production" : "Legacy DINOv2"}
+          {lane === "research" ? "Research result — not verified" : "Legacy DINOv2 screening result — not verified"}
         </p>
-        <p className="mt-2 text-2xl font-semibold tracking-tight">{headline}</p>
+        <p className="mt-2 text-2xl font-semibold tracking-tight">Model classification: {verdict}</p>
+        <p className="mt-2 text-sm text-primary/70">{workflow}</p>
         <p className="mt-2 text-sm text-primary/70">
           {lane === "research"
-            ? "Five-brand research prototype. This result cannot publish a listing."
-            : "A model result is stored as evidence. It does not authorize marketplace publication."}
+            ? "Five-brand research prototype. This classification cannot publish a listing. DINOv3 is not approved for production."
+            : "A model classification is stored as evidence. It does not authorize marketplace publication."}
         </p>
         <p className="mt-1 text-sm text-primary/70">
           Declared brand: {declaredBrand?.trim() ? declaredBrand : "not supplied"}

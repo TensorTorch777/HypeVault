@@ -109,7 +109,7 @@ export function PremiumHero() {
           transition={{ delay: 0.18, duration: 0.6 }}
           className="mx-auto mt-7 max-w-2xl text-[18px] leading-[1.45] text-[#FFEDF6]/75 md:text-[22px]"
         >
-          Research prototype classification within five evaluated watch brands.
+          Research prototype for in-scope watch-brand screening. Not a certificate and not a real-world authenticity guarantee.
           The selected brand is user-declared and is not independently verified from the image.
         </motion.p>
 
@@ -247,7 +247,7 @@ function HeroDeviceMock() {
             </div>
             <div className="text-right">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#00E1FF]">
-                Lowest ask
+                Sample ask
               </p>
               <p className="font-[family-name:var(--font-display)] text-[24px] font-extrabold italic tabular-nums text-white md:text-[30px]">
                 $33,900
@@ -256,6 +256,7 @@ function HeroDeviceMock() {
           </div>
         </div>
 
+        <p className="text-[12px] font-semibold text-[#FFEDF6]/80">Illustrative sample data — not live market prices.</p>
         {/* Comparison rows */}
         <div className="grid grid-rows-3 gap-3">
           {[

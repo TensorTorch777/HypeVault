@@ -235,18 +235,25 @@ export type Listing = {
   evidence_role?: "SEED_CONSTANT" | "HISTORICAL_MODEL_EVIDENCE" | "NONE" | string;
 };
 
+export type RecentListingsResult =
+  | { state: "ok"; listings: Listing[] }
+  | { state: "empty"; listings: [] }
+  | { state: "error"; message: string };
+
 export async function fetchRecentListings(
   limit = 6,
   opts?: { category?: "watch"; brand?: string }
-): Promise<Listing[]> {
+): Promise<RecentListingsResult> {
   try {
     const params: Record<string, string | number> = { limit };
     if (opts?.category) params.category = opts.category;
     if (opts?.brand?.trim()) params.brand = opts.brand.trim();
     const { data } = await api.get<Listing[]>(`/listings/recent`, { params });
-    return Array.isArray(data) ? data : [];
+    const listings = Array.isArray(data) ? data : [];
+    if (listings.length === 0) return { state: "empty", listings: [] };
+    return { state: "ok", listings };
   } catch {
-    return [];
+    return { state: "error", message: "Could not load recent listings." };
   }
 }
 

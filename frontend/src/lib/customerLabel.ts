@@ -31,3 +31,30 @@ export function customerLabel(listing: LabelSource): string {
   if (listing.status === "live") return PUBLISHED_UNVERIFIED_LABEL;
   return PENDING_LABEL;
 }
+
+/** Card, badge, and detail copy. Visibility is never an authenticity certificate. */
+export function customerStatusCopy(listing: LabelSource): { title: string; detail: string } {
+  const raw = listing.customer_label || customerLabel(listing);
+  if (raw === DEMO_LISTING_LABEL || isSeedConstant(listing)) {
+    return {
+      title: DEMO_LISTING_LABEL,
+      detail: "Demo data — not a live listing and not a verified authentic item.",
+    };
+  }
+  if (listing.status === "rejected" || raw === REJECTED_LABEL) {
+    return {
+      title: "Rejected by screening workflow",
+      detail: "This is a legacy workflow state, not independent proof that the item is counterfeit. Authenticity is not verified.",
+    };
+  }
+  if (listing.status === "live" || raw === PUBLISHED_UNVERIFIED_LABEL || raw === LEGACY_SCREENING_LABEL) {
+    return {
+      title: "Visible in marketplace — authenticity not verified",
+      detail: "A visible or published listing is not a certificate of authenticity.",
+    };
+  }
+  return {
+    title: "Pending — not verified",
+    detail: "The listing is not published as authentic. A model result does not authorize publication.",
+  };
+}

@@ -62,8 +62,8 @@ export function ClosingCTA() {
           transition={{ delay: 0.1, duration: 0.7 }}
           className="mx-auto mt-7 max-w-xl text-[18px] leading-[1.45] text-[#FFEDF6]/70 md:text-[20px]"
         >
-          Research prototype for five evaluated brands. A listing outside that
-          scope is not an authenticity result.
+          Research prototype for five in-scope brands. Not a verified authenticity service.
+          A listing outside that scope is not an authenticity result.
         </motion.p>
 
         <motion.div

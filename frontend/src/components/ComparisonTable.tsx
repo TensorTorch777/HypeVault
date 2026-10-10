@@ -8,7 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { PriceCard, type PlatformRow } from "@/components/PriceCard";
 import type { ComparisonPayload } from "@/lib/api";
-import { buildMockComparisonPayload, isComparisonEmpty } from "@/lib/mockComparison";
+import { comparisonView } from "@/lib/semanticCopy";
 import { cn } from "@/lib/utils";
 
 type SortKey = "price" | "delivery" | "rating";
@@ -98,7 +98,7 @@ export function ComparisonTable({
   isError,
   listingId,
   queryKey,
-  mockSeed,
+  mockSeed: _mockSeed,
 }: {
   data?: ComparisonPayload;
   isLoading: boolean;
@@ -109,14 +109,10 @@ export function ComparisonTable({
 }) {
   const qc = useQueryClient();
   const [sort, setSort] = useState<SortKey>("price");
+  void _mockSeed;
 
-  const usingMock = useMemo(() => Boolean(data && isComparisonEmpty(data)), [data]);
-
-  const effectiveData = useMemo(() => {
-    if (!data) return undefined;
-    if (isComparisonEmpty(data)) return buildMockComparisonPayload(mockSeed);
-    return data;
-  }, [data, mockSeed]);
+  const view = comparisonView(data);
+  const effectiveData = view === "data" ? data : undefined;
 
   const rows = useMemo(() => {
     if (!effectiveData) return [];
@@ -203,13 +199,29 @@ export function ComparisonTable({
     );
   }
 
-  if (isError) {
+  if (isError || view === "error") {
     return (
-      <div className="rounded-2xl border border-danger/25 bg-danger/10 p-6 text-primary">
-        <p className="font-extrabold text-danger">Price comparison unavailable</p>
+      <div className="rounded-2xl border border-danger/25 bg-danger/10 p-6 text-primary" role="alert">
+        <p className="font-extrabold text-danger">Could not load market data</p>
         <p className="mt-2 text-sm text-primary/65">
-          External market data could not be loaded. Retry, or check back after a few moments.
+          This is a request failure, not an empty market and not a live quote. No illustrative prices are shown in its place.
         </p>
+        <Button
+          className="mt-4 min-h-[44px]"
+          variant="outline"
+          onClick={() => void qc.invalidateQueries({ queryKey })}
+        >
+          Retry
+        </Button>
+      </div>
+    );
+  }
+
+  if (view === "empty") {
+    return (
+      <div className="rounded-2xl border border-white/[0.08] bg-[#111111] p-6 text-primary">
+        <p className="font-semibold">No market observations returned</p>
+        <p className="mt-2 text-sm text-primary/65">The request succeeded and included no comparable asks. This is not a live quote.</p>
       </div>
     );
   }
@@ -218,7 +230,7 @@ export function ComparisonTable({
     <div className="space-y-4">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.12em] text-[#888888]">Market snapshot</p>
+          <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.12em] text-[#888888]">Returned observations — not a recommendation</p>
           <p className="text-sm text-primary/65">
             Last updated:{" "}
             <span className="font-semibold text-primary">
@@ -227,9 +239,6 @@ export function ComparisonTable({
             <span className={cn("ml-2 text-xs font-semibold", freshness.tone)}>
               · {freshness.label} ({freshness.age})
             </span>
-            {usingMock ? (
-              <span className="ml-2 text-xs font-medium text-[#888888]">· illustrative data</span>
-            ) : null}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">

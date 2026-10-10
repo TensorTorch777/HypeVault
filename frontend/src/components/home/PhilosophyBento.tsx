@@ -30,8 +30,7 @@ export function PhilosophyBento() {
             transition={{ ...fadeUp.transition, delay: 0.1 }}
             className="max-w-sm text-[17px] leading-[1.45] text-[#6E6E73]"
           >
-            Four principles that separate a trustworthy resale platform from a
-            risky one.
+            Research-prototype principles. This is not an independently validated authenticator.
           </motion.p>
         </div>
 
@@ -48,7 +47,7 @@ export function PhilosophyBento() {
                   Five brands, declared by the user.
                 </h3>
                 <p className="mt-5 max-w-md text-[16px] leading-[1.5] text-[#6E6E73]">
-                  Research prototype classification within five evaluated watch brands.
+                  Research prototype for five in-scope brands. Not a validated real-world benchmark.
                   The selected brand is user-declared and is not independently verified from the image.
                 </p>
               </div>
@@ -76,7 +75,7 @@ export function PhilosophyBento() {
                 One surface, three markets.
               </h3>
               <p className="mt-3 text-[15px] leading-[1.5] text-[#6E6E73]">
-                StockX, Chrono24, eBay — compared side by side. No tab-hopping.
+                StockX, Chrono24, and eBay are sample names here. This card is not a live price feed.
               </p>
             </div>
           </motion.div>
