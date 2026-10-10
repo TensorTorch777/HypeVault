@@ -1,0 +1,82 @@
+{
+  "protocol": "phase54_data_readiness_audit_v1",
+  "phase": 54,
+  "inference_allowed": false,
+  "phase53_inputs": {
+    "protocol_commit": "888d97ebf0e9a41d1cadc873d2ed34f1254dc4d0",
+    "results_commit": "22d9384bb640f1537ceed9d499f3f6dea1f4987e",
+    "results_are_immutable": true,
+    "metrics_sha256": "a539cba9de7ef357514fd7ce768a25ac1c3667a4e67ab8fa9eb79e203b2768f0",
+    "predictions_sha256": "9d78ef55c989a87d333c32c8a9c7fba153fc19e98ce3a3f68b048ef477ad21f4",
+    "reported_primary_count": 315,
+    "reported_primary_authentic_labeled": 315,
+    "reported_primary_fake_labeled": 0,
+    "reported_primary_brand": "A. Lange & Söhne"
+  },
+  "checkpoints": {
+    "dinov2_legacy": {
+      "role": "live listing-check checkpoint",
+      "path": "ml_rtx5080/checkpoints/best_model.pt",
+      "sha256": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66",
+      "training_config": "ml_rtx5080/checkpoints/config.json",
+      "training_config_sha256": "d3c868b6a6421a24ed01240b54e349cd54aba8af9c59c8c15db6530d54c211ac",
+      "split_manifest": "ml_rtx5080/checkpoints/split_manifest.json",
+      "split_manifest_sha256": "d089249d33027bc50146e92f599c21354c2f8e8583e0cab2465993e4cffa1b9c",
+      "manifest_format": "product_folder_lists",
+      "provenance": "infra/triton/dinov2_vitb14_live/identity.json names this checkpoint path and hash, and names the training config hash. The split manifest beside that training output uses the same seed 42 and val_split 0.1 as the training config.",
+      "calibration_split": "NOT_RECORDED"
+    },
+    "dinov3_experimental": {
+      "role": "experimental frozen checkpoint",
+      "path": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+      "sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+      "training_config": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/config.json",
+      "training_config_sha256": "11d207fe364973627024ee85eac9d1950e586bd52de17173ecdcf79dac3c85f3",
+      "split_manifest": "ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+      "split_manifest_sha256": "4d0d20c17d12ac29cb299b7b4f369ebcce3c5acd7b2fd5430d61f952b9852eea",
+      "membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+      "manifest_format": "image_membership_with_samples",
+      "calibration_file": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/calibration/temperature.json",
+      "calibration_file_sha256": "ec39c55af270d3994170bed7aa89b474ba6f0ed342dd956810de132fddc3acab",
+      "provenance": "The training config names this manifest path and membership hash. calibration/temperature.json names epoch_018.pt and the same membership hash. The file hash is the frozen experimental identity."
+    },
+    "not_the_live_dinov2_checkpoint": {
+      "path": "ml_rtx5080/checkpoints_watches/best_model.pt",
+      "sha256": "19e832cea9295975bf798e0a0d372a3a5a20d3f12c949ad32eb82949afb8cf13",
+      "split_manifest": "ml_rtx5080/checkpoints_watches/split_manifest.json",
+      "why_recorded": "docs/ML_PRODUCTION_AUDIT.md describes this watches-only folder split. Its checkpoint hash is not the live DINOv2 hash, so its validation folders are not the live model's validation set."
+    }
+  },
+  "allowed_reads": [
+    "checkpoint bytes for SHA-256 only",
+    "split manifests, training configs, identity and calibration JSON",
+    "Phase 53 aggregate checksums"
+  ],
+  "forbidden": [
+    "model inference",
+    "opening locked final-test image files",
+    "opening excluded OOD image files",
+    "walking image directories to enumerate locked files",
+    "changing weights, thresholds, temperature, serving, production approval, or publication policy"
+  ],
+  "primary_eligibility": "Intersection of the two validation memberships, then remove any sample that is in either model's train or calibration membership. Do not promote another split to validation. Locked final-test and excluded OOD samples are not eligible and their files are not opened.",
+  "label_policy": "Directory names are historical labels, not AUTHENTIC or COUNTERFEIT ground truth. Missing provenance stays UNKNOWN or NOT_RECORDED.",
+  "go_rule": "GO is unreachable unless both binary classes are independently verified, product and source identities are known, the cohort is source/product-disjoint from both training and calibration sets, and the pre-registered product counts are met. Directory labels alone cannot produce GO.",
+  "expected_if_manifests_match": {
+    "watch_samples": 30000,
+    "locked_final_test": 3006,
+    "primary_count": 315,
+    "primary_authentic_labeled": 315,
+    "primary_fake_labeled": 0,
+    "primary_brands": ["A. Lange & Söhne"],
+    "data_readiness": "NO_GO_FOR_AUTHENTICITY_CLAIMS"
+  },
+  "stop_conditions": [
+    "A pinned checkpoint, config, or manifest hash differs.",
+    "A required manifest is missing.",
+    "A sample is listed in more than one split for the same model.",
+    "The recomputed primary cohort does not match the Phase 53 counts.",
+    "The audit would open a locked final-test or excluded OOD path.",
+    "Phase 53 aggregate hashes differ from this protocol."
+  ]
+}
