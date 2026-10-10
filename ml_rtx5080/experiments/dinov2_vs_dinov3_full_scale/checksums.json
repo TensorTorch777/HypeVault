@@ -1,0 +1,10 @@
+{
+  "environment_sha256": "a387862bb33abcd01a31740f620488b75aacaa995fe6afe4785aa66df808d055",
+  "final_test_images_opened": 0,
+  "metrics_sha256": "a539cba9de7ef357514fd7ce768a25ac1c3667a4e67ab8fa9eb79e203b2768f0",
+  "prediction_rows": 53988,
+  "predictions_sha256": "9d78ef55c989a87d333c32c8a9c7fba153fc19e98ce3a3f68b048ef477ad21f4",
+  "report_sha256": "523bcf65c75f8aaadc82a6d6ff519bdc34684a6f1ee3d033ef6dfac14358d73c",
+  "sample_list_sha256": "04295c9eae1bb3cbab7285b4ceae73c04ffbb70b967156e6380f050dc7fd1eed",
+  "sweep_images": 26994
+}
