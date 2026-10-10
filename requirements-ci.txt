@@ -2,3 +2,7 @@
 torch==2.11.0+cpu
 torchvision==0.26.0+cpu
 timm==1.0.26
+
+# Phase 55A evidence-ledger schema tests. Date-format checks need the validator extra.
+jsonschema==4.26.0
+rfc3339-validator==0.1.4
