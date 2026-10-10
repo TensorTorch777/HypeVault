@@ -38,6 +38,10 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install -r requirements-ci.txt --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
       - name: Unit tests
+        # Credentialed browser E2E skips when HYPEVAULT_E2E_RESEARCH_PASSWORD is unset.
+        # That skip is not a successful browser validation. A real run needs
+        # HYPEVAULT_E2E_BROWSER_E2E=1, the password, an allowlisted research account,
+        # the frontend, the API, Playwright Chromium, and an eligible non-test image.
         run: python -m unittest discover -s tests -v
 
   frontend:

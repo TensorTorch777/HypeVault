@@ -1,7 +1,22 @@
 """Browser validation for the research explanation panel.
 
-Credentials come from the environment. This file does not contain a password.
-The image is a non-test parity-protocol sample, not the locked final test set.
+A skipped run is not a successful browser validation.
+
+Generic CI, including `python -m unittest discover`, does not provide an
+authorized account, a password, a running frontend and API, or Playwright
+Chromium. When `HYPEVAULT_E2E_RESEARCH_PASSWORD` is unset and the run was not
+explicitly requested, this module skips.
+
+An explicit local run sets `HYPEVAULT_E2E_BROWSER_E2E=1`. That run fails if the
+password is missing. A real browser E2E also needs:
+
+- `HYPEVAULT_E2E_RESEARCH_PASSWORD` in the environment only, never in the repo
+- `HYPEVAULT_E2E_RESEARCH_EMAIL` (default `e2e-research@example.com`) on the API research allowlist
+- the frontend (`HYPEVAULT_E2E_FRONTEND`, default `http://localhost:3000`) and its API
+- Playwright Chromium
+- an eligible non-test image from the parity protocol on disk, not the locked final test set
+
+This file does not contain a password.
 """
 
 from __future__ import annotations
@@ -10,6 +25,7 @@ import json
 import os
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from playwright.sync_api import sync_playwright
 
@@ -18,6 +34,29 @@ PROTOCOL = REPO / "ml_rtx5080" / "experiments" / "dual_model_triton_v1" / "parit
 SHOTS = Path("/tmp/hypevault-xai-browser")
 FRONTEND = os.environ.get("HYPEVAULT_E2E_FRONTEND", "http://localhost:3000")
 UNAVAILABLE_REASON = "The explanation timed out before every region was measured."
+NOT_VALIDATION = "This skip is not a successful browser validation."
+
+
+def browser_e2e_gate() -> str | None:
+    """Return a skip reason, or None when the credentialed browser E2E should run.
+
+    An explicit request without a password fails. A generic run without a password skips.
+    """
+    explicit = os.environ.get("HYPEVAULT_E2E_BROWSER_E2E", "").strip().lower() in {"1", "true", "yes"}
+    password = os.environ.get("HYPEVAULT_E2E_RESEARCH_PASSWORD", "").strip()
+    if password:
+        return None
+    if explicit:
+        raise AssertionError(
+            "HYPEVAULT_E2E_RESEARCH_PASSWORD is required for an explicitly requested browser E2E run. "
+            "This failure is not a successful browser validation."
+        )
+    return (
+        f"{NOT_VALIDATION} Generic CI does not run this credentialed browser E2E. "
+        "Set HYPEVAULT_E2E_BROWSER_E2E=1 and HYPEVAULT_E2E_RESEARCH_PASSWORD, "
+        "and provide an allowlisted research account, the frontend, the API, Playwright Chromium, "
+        "and an eligible non-test image."
+    )
 
 
 def _eligible_image() -> tuple[Path, str]:
@@ -75,12 +114,33 @@ def _explain_body(status: str, *, model: str, decision: str, reason: str | None 
     }
 
 
+class BrowserE2EGateTests(unittest.TestCase):
+    def test_generic_run_without_a_password_skips_and_does_not_claim_validation(self) -> None:
+        env = os.environ.copy()
+        env.pop("HYPEVAULT_E2E_RESEARCH_PASSWORD", None)
+        env.pop("HYPEVAULT_E2E_BROWSER_E2E", None)
+        with mock.patch.dict(os.environ, env, clear=True):
+            reason = browser_e2e_gate()
+        self.assertIsNotNone(reason)
+        self.assertIn(NOT_VALIDATION, reason or "")
+
+    def test_explicit_run_without_a_password_fails(self) -> None:
+        env = os.environ.copy()
+        env.pop("HYPEVAULT_E2E_RESEARCH_PASSWORD", None)
+        env["HYPEVAULT_E2E_BROWSER_E2E"] = "1"
+        with mock.patch.dict(os.environ, env, clear=True):
+            with self.assertRaises(AssertionError) as caught:
+                browser_e2e_gate()
+        self.assertIn("not a successful browser validation", str(caught.exception))
+
+
 class ResearchExplanationBrowserTests(unittest.TestCase):
     def test_research_explanation_end_to_end(self) -> None:
+        reason = browser_e2e_gate()
+        if reason is not None:
+            self.skipTest(reason)
         email = os.environ.get("HYPEVAULT_E2E_RESEARCH_EMAIL", "e2e-research@example.com")
-        password = os.environ.get("HYPEVAULT_E2E_RESEARCH_PASSWORD", "")
-        if not password:
-            self.fail("HYPEVAULT_E2E_RESEARCH_PASSWORD is required and is not stored in the repository")
+        password = os.environ["HYPEVAULT_E2E_RESEARCH_PASSWORD"]
         image, brand = _eligible_image()
         self.assertNotIn("final_test", str(image))
         SHOTS.mkdir(parents=True, exist_ok=True)
