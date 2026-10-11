@@ -43,6 +43,20 @@ def pending_record() -> dict:
     }
 
 
+def adjudicated_record() -> dict:
+    """Synthetic disagreement resolved to one label. Reviewer identities are role codes only."""
+    row = eligible_record()
+    row.update({
+        "sample_id": "sample_SYNTHETIC_003",
+        "reviewer_a_outcome": "AUTHENTIC",
+        "reviewer_b_outcome": "COUNTERFEIT",
+        "adjudication_status": "ADJUDICATED",
+        "adjudication_outcome": "COUNTERFEIT",
+        "verified_label": "COUNTERFEIT",
+    })
+    return row
+
+
 def eligible_record() -> dict:
     row = pending_record()
     row.update({
@@ -142,6 +156,33 @@ class EvidenceLedgerSchemaTests(unittest.TestCase):
     def test_retention_date_must_be_a_real_date(self) -> None:
         row = pending_record()
         row["retention_until"] = "2027-99-77"
+        self.assert_invalid(row)
+
+    def test_eligible_record_rejects_unknown_brand_retention_or_deletion(self) -> None:
+        unknown_brand = eligible_record()
+        unknown_brand["verified_brand"] = "UNKNOWN"
+        self.assert_invalid(unknown_brand)
+        unknown_retention = eligible_record()
+        unknown_retention["retention_until"] = "UNKNOWN"
+        self.assert_invalid(unknown_retention)
+        unrecorded_deletion = eligible_record()
+        unrecorded_deletion["deletion_status"] = "NOT_RECORDED"
+        self.assert_invalid(unrecorded_deletion)
+
+    def test_adjudication_requires_opposite_reviewers_and_a_matching_label(self) -> None:
+        self.assert_valid(adjudicated_record())
+        agreed_but_marked_adjudicated = adjudicated_record()
+        agreed_but_marked_adjudicated["reviewer_b_outcome"] = "AUTHENTIC"
+        agreed_but_marked_adjudicated["adjudication_outcome"] = "AUTHENTIC"
+        agreed_but_marked_adjudicated["verified_label"] = "AUTHENTIC"
+        self.assert_invalid(agreed_but_marked_adjudicated)
+        mismatched_label = adjudicated_record()
+        mismatched_label["verified_label"] = "AUTHENTIC"
+        self.assert_invalid(mismatched_label)
+
+    def test_invalid_reviewer_enum_is_rejected(self) -> None:
+        row = pending_record()
+        row["reviewer_a_outcome"] = "FAKE"
         self.assert_invalid(row)
 
 

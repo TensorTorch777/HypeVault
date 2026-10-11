@@ -22,7 +22,8 @@ Phase 53/54 established `DATA_READINESS = NO_GO_FOR_AUTHENTICITY_CLAIMS`. The co
 - Do not send messages or forms, create accounts, accept terms, or spend money from this phase.
 - Do not open locked final-test or excluded OOD image files, enumerate them, or run inference.
 - Do not alter checkpoints, weights, thresholds, temperature, calibration, serving, production flags, access control, or publication policy.
-- `eligible_primary_benchmark` must remain `false` until independent review establishes every gate in the Phase 54 plan.
+- Source tracker rows are leads. None is approved, licensed, or independently verified, and every outreach status stays `NOT_SENT`.
+- `eligible_primary_benchmark` stays `false` until a later, separately authorized phase. A true value is valid only with a verified brand, a real retention date, `deletion_status` of `RETENTION_ACTIVE`, approved image-use rights, independent evidence, a resolved label, and `PASS` disjointness from both frozen models. `ADJUDICATED` requires the two reviewers to disagree and the adjudication outcome to match `verified_label`. Pending records may still use `UNKNOWN` and `NOT_RECORDED`.
 
 ## Tests
 

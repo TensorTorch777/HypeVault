@@ -6,7 +6,7 @@ Do not mark Phase 55A complete until all are checked:
 - [ ] Source tracker entries all say `NOT_SENT`; no partner response or licensing approval is implied.
 - [ ] `WatchCSA` is held because its published Member Content clause asserts ownership/IP over submitted material; no uploads/accounts are allowed.
 - [ ] No images, certificates, serial numbers, customer data, reviewer names, credentials, or private correspondence exist in committed fixtures.
-- [ ] Evidence ledger schema rejects missing, malformed, or ineligible records; primary eligibility is false by default.
+- [ ] Evidence ledger schema rejects missing, malformed, or ineligible records. Pending records may use `UNKNOWN` and `NOT_RECORDED`. A primary-eligible record must have a verified brand, a real retention date, `RETENTION_ACTIVE`, and, when adjudicated, opposite reviewer outcomes whose resolution matches `verified_label`.
 - [ ] Directory labels do not become verified labels by transformation or assumption.
 - [ ] Written image-use rights for non-public ML evaluation, consent/legal basis, retention/deletion, reviewer qualifications, conflicts, and adjudication must be approved before collection.
 - [ ] Source/product disjointness from both frozen checkpoints is auditable before any item can enter a future primary benchmark.
