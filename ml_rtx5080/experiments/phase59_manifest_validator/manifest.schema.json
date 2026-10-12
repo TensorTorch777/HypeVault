@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hypevault.example/schemas/phase59-evaluation-manifest.schema.json",
+  "title": "HypeVault Phase 59 evaluation manifest record",
+  "description": "Pseudonymous metadata contract. A schema-valid record is not proof that a real label or source is trustworthy. This schema does not authorize acquisition or inference.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "sample_id", "image_sha256", "duplicate_group_id", "product_id", "verified_brand",
+    "reference_family", "verified_label", "evidence_record_id", "source_id", "seller_id",
+    "marketplace_id", "license_status", "permitted_purposes", "consent_status",
+    "retention_until", "deletion_status", "partition", "protocol_version",
+    "frozen_model_ids", "reviewer_a_outcome", "reviewer_b_outcome",
+    "evidence_category_a", "evidence_category_b", "adjudication_status",
+    "adjudication_outcome", "declared_disjointness", "eligible_primary_benchmark"
+  ],
+  "properties": {
+    "sample_id": {"type": "string", "pattern": "^sample_[A-Za-z0-9_-]{8,64}$"},
+    "image_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "duplicate_group_id": {"type": "string", "minLength": 1},
+    "product_id": {"type": "string", "minLength": 1},
+    "verified_brand": {"type": "string", "minLength": 1},
+    "reference_family": {"type": "string", "minLength": 1},
+    "verified_label": {"enum": ["AUTHENTIC", "COUNTERFEIT", "INDETERMINATE"]},
+    "evidence_record_id": {"type": "string", "minLength": 1},
+    "source_id": {"type": "string", "minLength": 1},
+    "seller_id": {"type": "string", "minLength": 1},
+    "marketplace_id": {"type": "string", "minLength": 1},
+    "license_status": {"enum": ["APPROVED", "DENIED", "PENDING", "NOT_RECORDED"]},
+    "permitted_purposes": {"type": "array", "uniqueItems": true, "items": {"enum": ["ML_EVALUATION", "NONPUBLIC_RESEARCH", "PUBLICATION_OF_AGGREGATES", "OTHER"]}},
+    "consent_status": {"enum": ["APPROVED", "DENIED", "NOT_REQUIRED", "PENDING", "NOT_RECORDED"]},
+    "retention_until": {"anyOf": [{"type": "string", "format": "date"}, {"const": "UNKNOWN"}]},
+    "deletion_status": {"enum": ["NOT_APPLICABLE", "RETENTION_ACTIVE", "PENDING_DELETION", "DELETED", "NOT_RECORDED"]},
+    "partition": {"enum": ["training", "calibration", "development", "locked_evaluation"]},
+    "protocol_version": {"const": "phase56_validation_protocol_v1"},
+    "frozen_model_ids": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dinov2_legacy", "dinov3_experimental"],
+      "properties": {
+        "dinov2_legacy": {"type": "string", "minLength": 8},
+        "dinov3_experimental": {"type": "string", "minLength": 8}
+      }
+    },
+    "reviewer_a_outcome": {"enum": ["AUTHENTIC", "COUNTERFEIT", "INDETERMINATE", "NOT_REVIEWED"]},
+    "reviewer_b_outcome": {"enum": ["AUTHENTIC", "COUNTERFEIT", "INDETERMINATE", "NOT_REVIEWED"]},
+    "evidence_category_a": {"enum": ["MANUFACTURER_PROVENANCE", "AUTHORIZED_SERVICE_RECORD", "QUALIFIED_PHYSICAL_EXAMINATION", "DOCUMENTED_CHAIN_OF_PROVENANCE", "OTHER_DOCUMENTED", "NOT_RECORDED"]},
+    "evidence_category_b": {"enum": ["MANUFACTURER_PROVENANCE", "AUTHORIZED_SERVICE_RECORD", "QUALIFIED_PHYSICAL_EXAMINATION", "DOCUMENTED_CHAIN_OF_PROVENANCE", "OTHER_DOCUMENTED", "NOT_RECORDED"]},
+    "adjudication_status": {"enum": ["NOT_STARTED", "PENDING", "AGREED", "ADJUDICATED", "UNRESOLVED"]},
+    "adjudication_outcome": {"enum": ["AUTHENTIC", "COUNTERFEIT", "INDETERMINATE", "NOT_ADJUDICATED"]},
+    "declared_disjointness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dinov2_legacy", "dinov3_experimental"],
+      "properties": {
+        "dinov2_legacy": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "dinov3_experimental": {"enum": ["PASS", "FAIL", "UNKNOWN"]}
+      }
+    },
+    "eligible_primary_benchmark": {"type": "boolean"}
+  }
+}
