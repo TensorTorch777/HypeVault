@@ -45,6 +45,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -v
           python -m unittest discover -s ml_rtx5080/experiments/phase55_ground_truth_acquisition/tests -v
+          python -m unittest discover -s ml_rtx5080/experiments/phase59_manifest_validator/tests -v
 
   frontend:
     name: frontend lint, typecheck, build
