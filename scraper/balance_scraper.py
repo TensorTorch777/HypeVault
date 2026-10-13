@@ -1,15 +1,54 @@
-import pandas as pd
-import requests
-import os
-import time
-import random
-import json
-import hashlib
-from duckduckgo_search import DDGS
+"""Balance unverified web watch coverage via DuckDuckGo image search.
 
-csv_file = "Watches.csv"
-output_dir = "Label_0_Watches"
-progress_file = "balance_progress.json"
+Writes only under local_data/scraper_artifacts/unverified_web_images/watches/.
+Never maps into Label_0_Watches. Never assigns verified authenticity labels.
+Importing this module does not start downloads.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+import sys
+
+
+def _ensure_repo_import_path() -> None:
+    """Prefer the repo package path over the script directory shadowing the package name."""
+    repo = Path(__file__).resolve().parents[1]
+    script_dir = Path(__file__).resolve().parent
+    sys.path[:] = [p for p in sys.path if Path(p).resolve() != script_dir]
+    if str(repo) not in sys.path:
+        sys.path.insert(0, str(repo))
+
+
+
+_ensure_repo_import_path()
+
+import argparse
+import logging
+import random
+import time
+
+from scraper.common import (
+    ARTIFACT_ROOT_REL,
+    DEFAULT_MAX_BYTES,
+    DEFAULT_TIMEOUT_SECONDS,
+    STATUS_UNVERIFIED_WEB,
+    STATE_REL,
+    ContentIndex,
+    StoreStats,
+    assert_not_legacy_training_dir,
+    count_valid_images,
+    download_bounded,
+    load_resume_state,
+    mark_query_completed,
+    require_network_opt_in,
+    resolve_under_repo,
+    save_resume_state,
+    store_validated_image,
+    safe_brand_name,
+)
+
+LOGGER = logging.getLogger("hypevault.scraper.balance")
 
 TARGET_PER_CLASS = 1500
 BASE_DELAY = 3.5
@@ -24,173 +63,190 @@ BRANDS_TO_BALANCE = [
     "Vacheron Constantin",
 ]
 
-def load_progress():
-    if os.path.exists(progress_file):
-        with open(progress_file, "r") as f:
-            return json.load(f)
-    return {"done_queries": [], "downloaded": 0, "failed": 0}
 
-def save_progress(prog):
-    with open(progress_file, "w") as f:
-        json.dump(prog, f)
-
-def download_image(url, path):
-    try:
-        resp = requests.get(url, timeout=15, headers={
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
-        })
-        if resp.status_code == 200 and len(resp.content) > 2000:
-            with open(path, "wb") as f:
-                f.write(resp.content)
-            return True
-    except Exception:
-        pass
-    return False
-
-def count_existing(brand_folder):
-    if not os.path.exists(brand_folder):
-        return 0
-    return len([f for f in os.listdir(brand_folder) if f.endswith(".jpg")])
-
-def build_search_queries(brand, models):
-    queries = []
+def build_search_queries(brand: str, models: list[str]) -> list[str]:
+    queries: list[str] = []
     for model in models:
         queries.append(f"{brand} {model} watch")
         queries.append(f"{brand} {model} wristwatch official")
         queries.append(f"{brand} {model} watch dial closeup")
-    queries.append(f"{brand} watch collection")
-    queries.append(f"{brand} watches official")
-    queries.append(f"{brand} timepiece")
+    queries.extend(
+        [
+            f"{brand} watch collection",
+            f"{brand} watches official",
+            f"{brand} timepiece",
+        ]
+    )
     return queries
 
-# --- Main ---
-print("Loading CSV to get model names...")
-df = pd.read_csv(csv_file, low_memory=False)
-df = df.dropna(subset=["brand", "ref"])
 
-progress = load_progress()
-done_queries = set(progress["done_queries"])
-total_downloaded = progress["downloaded"]
-total_failed = progress["failed"]
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Download unverified DuckDuckGo image results to fill shortfall brands. "
+            "Outputs are research-only and unlabeled for authenticity."
+        )
+    )
+    parser.add_argument("--csv", default="Watches.csv")
+    parser.add_argument("--artifact-root", default=str(ARTIFACT_ROOT_REL))
+    parser.add_argument("--target-per-class", type=int, default=TARGET_PER_CLASS)
+    parser.add_argument("--images-per-query", type=int, default=IMAGES_PER_QUERY)
+    parser.add_argument("--max-retries", type=int, default=MAX_RETRIES)
+    parser.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT_SECONDS)
+    parser.add_argument("--max-bytes", type=int, default=DEFAULT_MAX_BYTES)
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--allow-network", action="store_true")
+    return parser.parse_args(argv)
 
-ddgs = DDGS()
-consecutive_ratelimits = 0
-query_count = 0
 
-for brand in BRANDS_TO_BALANCE:
-    safe_brand = brand.replace("/", "_")
-    brand_folder = os.path.join(output_dir, safe_brand)
-    os.makedirs(brand_folder, exist_ok=True)
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+    artifact_root = resolve_under_repo(args.artifact_root, ARTIFACT_ROOT_REL)
+    csv_path = resolve_under_repo(args.csv, "Watches.csv")
+    state_path = resolve_under_repo(
+        STATE_REL / "balance_scraper_resume.json",
+        STATE_REL / "balance_scraper_resume.json",
+    )
 
-    current_count = count_existing(brand_folder)
-    needed = TARGET_PER_CLASS - current_count
+    if args.dry_run:
+        print("DRY-RUN: no network and no image writes.")
+        print(f"CSV: {csv_path}")
+        print(f"Artifact root: {artifact_root}")
+        print(f"Brands: {', '.join(BRANDS_TO_BALANCE)}")
+        return 0
 
-    if needed <= 0:
-        print(f"\n[{brand}] Already has {current_count}/{TARGET_PER_CLASS} images. Skipping.")
-        continue
+    require_network_opt_in(args.allow_network)
 
-    models = df[df["brand"] == brand]["model"].dropna().unique().tolist()
-    queries = build_search_queries(brand, models)
+    import pandas as pd
+    import requests
+    from duckduckgo_search import DDGS
 
-    print(f"\n{'='*60}")
-    print(f"[{brand}] Current: {current_count} | Target: {TARGET_PER_CLASS} | Need: {needed}")
-    print(f"[{brand}] {len(queries)} search queries from {len(models)} models")
-    print(f"{'='*60}")
+    if not csv_path.exists():
+        LOGGER.error("CSV not found: %s", csv_path)
+        return 2
 
-    brand_downloaded = 0
+    df = pd.read_csv(csv_path, low_memory=False).dropna(subset=["brand", "ref"])
+    state = load_resume_state(state_path)
+    completed = set(state.get("completed_queries") or [])
+    stats = StoreStats(**(state.get("stats") or {})) if isinstance(state.get("stats"), dict) else StoreStats()
+    session = requests.Session()
+    session.headers.update({"User-Agent": "HypeVaultResearchCollector/1.0"})
+    ddgs = DDGS()
+    consecutive_ratelimits = 0
+    query_count = 0
 
-    for q_idx, query in enumerate(queries):
-        if query in done_queries:
+    for brand in BRANDS_TO_BALANCE:
+        dest_dir = artifact_root / "unverified_web_images" / "watches" / safe_brand_name(brand)
+        dest_dir.mkdir(parents=True, exist_ok=True)
+        assert_not_legacy_training_dir(dest_dir)
+        index = ContentIndex.load(dest_dir / "content_index.json")
+        current = count_valid_images(dest_dir)
+        if current >= args.target_per_class:
+            print(f"[{brand}] Already at {current}/{args.target_per_class}. Skipping.")
             continue
 
-        current_count = count_existing(brand_folder)
-        if current_count >= TARGET_PER_CLASS:
-            print(f"[{brand}] Reached target ({current_count}/{TARGET_PER_CLASS}). Moving on.")
-            break
+        models = df[df["brand"] == brand]["model"].dropna().unique().tolist()
+        queries = build_search_queries(brand, models)
+        print(f"[{brand}] current={current} need={args.target_per_class - current} queries={len(queries)}")
 
-        success = False
-        for attempt in range(MAX_RETRIES):
-            try:
-                results = list(ddgs.images(
-                    query,
-                    safesearch="off",
-                    size="Large",
-                    max_results=IMAGES_PER_QUERY,
-                ))
-
-                img_count = 0
-                for r in results:
-                    image_url = r["image"]
-                    url_hash = hashlib.md5(image_url.encode()).hexdigest()[:12]
-                    file_path = os.path.join(brand_folder, f"web_{url_hash}.jpg")
-
-                    if os.path.exists(file_path):
-                        continue
-
-                    if download_image(image_url, file_path):
-                        img_count += 1
-                        brand_downloaded += 1
-                        total_downloaded += 1
-
-                consecutive_ratelimits = 0
-                remaining = TARGET_PER_CLASS - count_existing(brand_folder)
-                print(f"  [{q_idx+1}/{len(queries)}] \"{query}\" -> {img_count} new images (need {remaining} more)")
-                success = True
+        for query in queries:
+            if query in completed:
+                continue
+            current = count_valid_images(dest_dir)
+            if current >= args.target_per_class:
                 break
 
-            except Exception as e:
-                err_str = str(e)
-                if "Ratelimit" in err_str or "403" in err_str:
-                    consecutive_ratelimits += 1
-                    backoff = min(MAX_DELAY, BASE_DELAY * (2 ** consecutive_ratelimits)) + random.uniform(2, 8)
-                    print(f"  Rate limited (attempt {attempt+1}/{MAX_RETRIES}), waiting {backoff:.0f}s...")
-                    time.sleep(backoff)
-                    ddgs = DDGS()
-                else:
-                    print(f"  Error on \"{query}\": {e}")
-                    total_failed += 1
+            success = False
+            for attempt in range(args.max_retries):
+                try:
+                    results = list(
+                        ddgs.images(
+                            query,
+                            safesearch="off",
+                            size="Large",
+                            max_results=args.images_per_query,
+                        )
+                    )
+                    added = 0
+                    for result in results:
+                        image_url = result.get("image") or result.get("url")
+                        page_url = result.get("url") or result.get("source")
+                        if not image_url:
+                            stats.invalid += 1
+                            continue
+                        try:
+                            data, content_type = download_bounded(
+                                session,
+                                image_url,
+                                timeout=args.timeout,
+                                max_bytes=args.max_bytes,
+                            )
+                        except Exception as exc:  # noqa: BLE001
+                            LOGGER.warning("download failed url=%s err=%s", image_url, exc)
+                            stats.errors += 1
+                            continue
+                        before = stats.stored
+                        store_validated_image(
+                            data,
+                            dest_dir=dest_dir,
+                            artifact_root=artifact_root,
+                            family="watches",
+                            claimed_brand=brand,
+                            claimed_model=None,
+                            label_status=STATUS_UNVERIFIED_WEB,
+                            search_query=query,
+                            search_provider="duckduckgo",
+                            source_image_url=image_url,
+                            source_page_url=page_url if isinstance(page_url, str) else "UNKNOWN",
+                            content_type=content_type,
+                            max_bytes=args.max_bytes,
+                            index=index,
+                            stats=stats,
+                        )
+                        if stats.stored > before:
+                            added += 1
+                    consecutive_ratelimits = 0
+                    print(
+                        f"  [{query_count + 1}] {query!r} stored=+{added} "
+                        f"total={count_valid_images(dest_dir)} stats={stats.as_dict()}"
+                    )
                     success = True
                     break
+                except Exception as exc:  # noqa: BLE001
+                    err = str(exc)
+                    if "Ratelimit" in err or "403" in err or "429" in err:
+                        consecutive_ratelimits += 1
+                        backoff = min(MAX_DELAY, BASE_DELAY * (2 ** consecutive_ratelimits)) + random.uniform(2, 8)
+                        LOGGER.warning("rate limited attempt=%s backoff=%.0fs", attempt + 1, backoff)
+                        time.sleep(backoff)
+                        ddgs = DDGS()
+                        continue
+                    LOGGER.error("query error %r: %s", query, exc)
+                    break
 
-        if not success:
-            total_failed += 1
-            print(f"  Gave up on \"{query}\" after {MAX_RETRIES} retries")
+            mark_query_completed(state, query, success=success)
+            query_count += 1
+            state["stats"] = stats.as_dict()
+            save_resume_state(state_path, state)
 
-        done_queries.add(query)
-        query_count += 1
+            delay = BASE_DELAY + random.uniform(1.0, 3.0)
+            if consecutive_ratelimits > 0:
+                delay = min(MAX_DELAY, delay * (2 ** min(consecutive_ratelimits, 5)))
+            time.sleep(delay)
+            if query_count % BATCH_SIZE == 0:
+                pause = random.uniform(15, 30)
+                print(f"  --- batch pause {pause:.0f}s ---")
+                time.sleep(pause)
+                ddgs = DDGS()
+                consecutive_ratelimits = 0
 
-        if query_count % 5 == 0:
-            progress["done_queries"] = list(done_queries)
-            progress["downloaded"] = total_downloaded
-            progress["failed"] = total_failed
-            save_progress(progress)
+        final = count_valid_images(dest_dir)
+        print(f"[{brand}] final={final}/{args.target_per_class} shortfall={max(0, args.target_per_class - final)}")
 
-        delay = BASE_DELAY + random.uniform(1.0, 3.0)
-        if consecutive_ratelimits > 0:
-            delay = min(MAX_DELAY, delay * (2 ** min(consecutive_ratelimits, 5)))
-        time.sleep(delay)
+    print(f"BALANCE COMPLETE stats={stats.as_dict()}")
+    return 0
 
-        if query_count % BATCH_SIZE == 0:
-            pause = random.uniform(15, 30)
-            print(f"  --- Batch pause {pause:.0f}s ---")
-            time.sleep(pause)
-            ddgs = DDGS()
-            consecutive_ratelimits = 0
 
-    final_count = count_existing(brand_folder)
-    print(f"\n[{brand}] Done: {final_count}/{TARGET_PER_CLASS} images (+{brand_downloaded} new)")
-
-progress["done_queries"] = list(done_queries)
-progress["downloaded"] = total_downloaded
-progress["failed"] = total_failed
-save_progress(progress)
-
-print(f"\n{'='*60}")
-print("BALANCE COMPLETE")
-print(f"{'='*60}")
-for brand in BRANDS_TO_BALANCE:
-    safe_brand = brand.replace("/", "_")
-    brand_folder = os.path.join(output_dir, safe_brand)
-    cnt = count_existing(brand_folder)
-    print(f"  {brand:<25} {cnt:>5}/{TARGET_PER_CLASS}")
-print(f"\nTotal new downloads: {total_downloaded} | Failed: {total_failed}")
+if __name__ == "__main__":
+    raise SystemExit(main())

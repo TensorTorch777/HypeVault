@@ -1,0 +1,7 @@
+# Lightweight collection + image validation for scraper/*.py (CPU).
+# Does not install Torch, Diffusers, or CUDA builds.
+Pillow==10.2.0
+requests>=2.31.0,<3
+pandas>=2.0.0,<3
+icrawler>=0.6.7,<0.7
+duckduckgo-search>=6.0.0,<8

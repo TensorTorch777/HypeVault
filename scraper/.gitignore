@@ -1,13 +1,15 @@
-# Keep scraper scripts only; never commit downloaded images or local crawl state.
+# Never commit downloaded or generated research artifacts from this folder.
 venv/
 .cache/
+__pycache__/
+*.pyc
 *.csv
 *.json
+*.jsonl
 Label_*/
 **/Label_*/
 *.jpg
 *.jpeg
 *.png
 *.webp
-__pycache__/
-*.pyc
+*.partial
