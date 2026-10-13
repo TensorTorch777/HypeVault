@@ -46,6 +46,13 @@ ml_rtx5080/experiments/**/*.plan
 ml_rtx5080/experiments/dinov2_vs_dinov3_full_scale/local_results/
 Label_0_Watches/
 Label_1_Watches/
+Label_0_Sneakers/
+Label_1_Sneakers/
+# Scraper / generator research artifacts stay local (never authenticity labels).
+local_data/
+local_data/scraper_artifacts/
+Watches.csv
+**/balance_progress.json
 *.log
 .DS_Store
 *.pem

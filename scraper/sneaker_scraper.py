@@ -1,18 +1,53 @@
-import hashlib
+"""Collect unverified web sneaker images into research-only artifact directories.
+
+Outputs: local_data/scraper_artifacts/unverified_web_images/sneakers/<brand>/.
+Never writes Label_0_Sneakers and never assigns verified authenticity labels.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+import sys
+
+
+def _ensure_repo_import_path() -> None:
+    """Prefer the repo package path over the script directory shadowing the package name."""
+    repo = Path(__file__).resolve().parents[1]
+    script_dir = Path(__file__).resolve().parent
+    sys.path[:] = [p for p in sys.path if Path(p).resolve() != script_dir]
+    if str(repo) not in sys.path:
+        sys.path.insert(0, str(repo))
+
+
+
+_ensure_repo_import_path()
+
+import argparse
 import logging
-import os
 import random
 import shutil
 import time
 
-from icrawler.builtin import BingImageCrawler
+from hypevault_scraper.common import (
+    ARTIFACT_ROOT_REL,
+    STATUS_UNVERIFIED_WEB,
+    STATE_REL,
+    ContentIndex,
+    load_corpus_index,
+    StoreStats,
+    assert_not_legacy_training_dir,
+    count_valid_images,
+    load_resume_state,
+    mark_query_completed,
+    require_network_opt_in,
+    resolve_under_repo,
+    safe_brand_name,
+    save_resume_state,
+    store_validated_image,
+)
 
-logging.getLogger("icrawler").setLevel(logging.CRITICAL)
+LOGGER = logging.getLogger("hypevault.scraper.sneakers")
 
-output_dir = "Label_0_Sneakers"
-temp_dir = "/tmp/sneaker_crawl_tmp"
-
-# Ultra-luxury sneaker classes
 ULTRA_LUXURY_SNEAKERS = {
     "Dior": [
         "B27", "B22", "B30", "B23", "D-Connect", "Walk'n'Dior",
@@ -38,7 +73,6 @@ ULTRA_LUXURY_SNEAKERS = {
 TARGET_PER_CLASS = 3000
 IMAGES_PER_QUERY = 100
 MAX_ROUNDS_PER_BRAND = 4
-# Do not bail on "low yield" when we are still short of the target (fixes 2994/3000 cases).
 EARLY_STOP_MIN_GAIN = 25
 EARLY_STOP_ONLY_IF_STILL_NEED_GT = 80
 TOPUP_MAX_QUERIES = 120
@@ -49,68 +83,23 @@ SEARCH_ALIASES = {
     "Dior": ["Dior", "Christian Dior"],
 }
 
-
-def count_images(folder):
-    if not os.path.exists(folder):
-        return 0
-    return len(
-        [f for f in os.listdir(folder) if f.lower().endswith((".jpg", ".jpeg", ".png"))]
-    )
-
-
-def move_new_images(src_folder, dest_folder):
-    """Move downloaded images to class folder with content-hash names."""
-    if not os.path.exists(src_folder):
-        return 0
-
-    moved = 0
-    for fname in os.listdir(src_folder):
-        if not fname.lower().endswith((".jpg", ".jpeg", ".png")):
-            continue
-
-        src_path = os.path.join(src_folder, fname)
-        with open(src_path, "rb") as f:
-            file_hash = hashlib.md5(f.read()).hexdigest()[:12]
-
-        ext = os.path.splitext(fname)[1].lower() or ".jpg"
-        dest_path = os.path.join(dest_folder, f"{file_hash}{ext}")
-        if not os.path.exists(dest_path):
-            shutil.move(src_path, dest_path)
-            moved += 1
-
-    return moved
+ICRAWLER_PROVENANCE_NOTE = (
+    "icrawler BingImageCrawler exposes task['file_url'] while downloading, but "
+    "post-crawl ingestion from the temp directory cannot reliably recover that URL "
+    "from the numbered filename alone; source_image_url is UNKNOWN unless captured "
+    "another way."
+)
 
 
-def crawl_bing(query, tmp_folder, max_num):
-    if os.path.exists(tmp_folder):
-        shutil.rmtree(tmp_folder)
-    os.makedirs(tmp_folder, exist_ok=True)
-
-    crawler = BingImageCrawler(
-        storage={"root_dir": tmp_folder},
-        downloader_threads=4,
-        log_level=logging.CRITICAL,
-    )
-    crawler.crawl(keyword=query, max_num=max_num, filters={"type": "photo", "size": "large"})
-
-
-def build_queries(brand, models, round_idx):
+def build_queries(brand: str, models: list[str], round_idx: int) -> list[str]:
     brand_names = SEARCH_ALIASES.get(brand, [brand])
     scene_terms = [
-        "on feet",
-        "street style",
-        "side view",
-        "close up",
-        "product photo",
-        "editorial",
-        "lookbook",
-        "retail listing",
+        "on feet", "street style", "side view", "close up", "product photo",
+        "editorial", "lookbook", "retail listing",
     ]
-    # Rotate scene terms each round to force broader coverage.
     shift = round_idx % len(scene_terms)
     scene_terms = scene_terms[shift:] + scene_terms[:shift]
-
-    queries = []
+    queries: list[str] = []
     for brand_name in brand_names:
         for model in models:
             queries.append(f"{brand_name} {model} sneakers")
@@ -122,7 +111,6 @@ def build_queries(brand, models, round_idx):
             queries.append(f"{brand_name} {model} womens")
             queries.append(f"{brand_name} {model} low top")
             queries.append(f"{brand_name} {model} high top")
-
         queries.extend(
             [
                 f"{brand_name} luxury sneakers",
@@ -140,130 +128,207 @@ def build_queries(brand, models, round_idx):
                 f"{brand_name} sneakers dark background",
             ]
         )
-
     random.shuffle(queries)
     return queries
 
 
-def build_topup_queries(brand, models):
-    """Extra diverse queries to grab the last few unique images."""
+def build_topup_queries(brand: str, models: list[str]) -> list[str]:
     brand_names = SEARCH_ALIASES.get(brand, [brand])
-    queries = []
+    queries: list[str] = []
     extras = ["white", "black", "cream", "grey", "2023", "2024", "2025", "SS", "FW"]
     for bn in brand_names:
         for model in models:
-            for x in extras:
-                queries.append(f"{bn} {model} sneakers {x}")
-                queries.append(f"{bn} {model} sneaker {x} black background")
+            for extra in extras:
+                queries.append(f"{bn} {model} sneakers {extra}")
+                queries.append(f"{bn} {model} sneaker {extra} black background")
             queries.append(f"{bn} {model} trainers")
             queries.append(f"{bn} {model} trainers product photo")
-        for x in extras:
-            queries.append(f"{bn} {x} sneakers black background")
-            queries.append(f"{bn} luxury {x} sneakers")
+        for extra in extras:
+            queries.append(f"{bn} {extra} sneakers black background")
+            queries.append(f"{bn} luxury {extra} sneakers")
     random.shuffle(queries)
     return queries
 
 
-def main():
-    os.makedirs(output_dir, exist_ok=True)
-    start_time = time.time()
+def _crawl_bing(query: str, tmp_folder: Path, max_num: int) -> None:
+    from icrawler.builtin import BingImageCrawler
 
-    print(f"Ultra-luxury sneaker classes: {len(ULTRA_LUXURY_SNEAKERS)}")
-    for brand in ULTRA_LUXURY_SNEAKERS:
-        print(f"  - {brand}")
-    print()
+    if tmp_folder.exists():
+        shutil.rmtree(tmp_folder)
+    tmp_folder.mkdir(parents=True, exist_ok=True)
+    crawler = BingImageCrawler(
+        storage={"root_dir": str(tmp_folder)},
+        downloader_threads=4,
+        log_level=logging.CRITICAL,
+    )
+    crawler.crawl(keyword=query, max_num=max_num, filters={"type": "photo", "size": "large"})
+
+
+def ingest_temp_dir(
+    tmp_folder: Path,
+    *,
+    dest_dir: Path,
+    artifact_root: Path,
+    brand: str,
+    query: str,
+    stats: StoreStats,
+    index: ContentIndex,
+) -> int:
+    if not tmp_folder.exists():
+        return 0
+    before = stats.stored
+    for path in sorted(tmp_folder.iterdir()):
+        if not path.is_file():
+            continue
+        try:
+            data = path.read_bytes()
+        except OSError:
+            stats.errors += 1
+            continue
+        store_validated_image(
+            data,
+            dest_dir=dest_dir,
+            artifact_root=artifact_root,
+            family="sneakers",
+            claimed_brand=brand,
+            claimed_model=None,
+            label_status=STATUS_UNVERIFIED_WEB,
+            search_query=query,
+            search_provider="bing_icrawler",
+            source_image_url="UNKNOWN",
+            source_page_url="UNKNOWN",
+            provenance_note=ICRAWLER_PROVENANCE_NOTE,
+            index=index,
+            stats=stats,
+        )
+    return stats.stored - before
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Download unverified Bing sneaker images into "
+            "local_data/scraper_artifacts/unverified_web_images/sneakers/."
+        )
+    )
+    parser.add_argument("--artifact-root", default=str(ARTIFACT_ROOT_REL))
+    parser.add_argument("--target-per-class", type=int, default=TARGET_PER_CLASS)
+    parser.add_argument("--images-per-query", type=int, default=IMAGES_PER_QUERY)
+    parser.add_argument("--temp-dir", default="/tmp/hypevault_sneaker_crawl_tmp")
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--allow-network", action="store_true")
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+    artifact_root = resolve_under_repo(args.artifact_root, ARTIFACT_ROOT_REL)
+    temp_dir = Path(args.temp_dir)
+    state_path = resolve_under_repo(
+        STATE_REL / "sneaker_scraper_resume.json",
+        STATE_REL / "sneaker_scraper_resume.json",
+    )
+
+    if args.dry_run:
+        print("DRY-RUN: no network and no image writes.")
+        print(f"Artifact root: {artifact_root}")
+        print(f"Brands: {', '.join(ULTRA_LUXURY_SNEAKERS)}")
+        return 0
+
+    require_network_opt_in(args.allow_network)
+    state = load_resume_state(state_path)
+    completed = set(state.get("completed_queries") or [])
+    stats = StoreStats(**(state.get("stats") or {})) if isinstance(state.get("stats"), dict) else StoreStats()
+    start = time.time()
 
     for brand, models in ULTRA_LUXURY_SNEAKERS.items():
-        safe_brand = brand.replace("/", "_")
-        brand_folder = os.path.join(output_dir, safe_brand)
-        os.makedirs(brand_folder, exist_ok=True)
-
-        current = count_images(brand_folder)
-        needed = TARGET_PER_CLASS - current
-        if needed <= 0:
-            print(f"[{brand}] Already at {current}/{TARGET_PER_CLASS}. Skipping.")
+        dest_dir = artifact_root / "unverified_web_images" / "sneakers" / safe_brand_name(brand)
+        dest_dir.mkdir(parents=True, exist_ok=True)
+        assert_not_legacy_training_dir(dest_dir)
+        index = load_corpus_index(artifact_root)
+        current = count_valid_images(dest_dir)
+        if current >= args.target_per_class:
+            print(f"[{brand}] Already at {current}/{args.target_per_class}. Skipping.")
             continue
 
-        print(f"\n{'=' * 60}")
-        print(f"[{brand}] Current: {current} | Target: {TARGET_PER_CLASS} | Need: {needed}")
-        print(f"{'=' * 60}")
-
+        print(f"[{brand}] current={current} target={args.target_per_class}")
         for round_idx in range(MAX_ROUNDS_PER_BRAND):
-            current = count_images(brand_folder)
-            if current >= TARGET_PER_CLASS:
-                print(f"  Target reached ({current}/{TARGET_PER_CLASS})!")
+            current = count_valid_images(dest_dir)
+            if current >= args.target_per_class:
                 break
-
+            start_round = current
             queries = build_queries(brand, models, round_idx)
-            print(f"  Round {round_idx + 1}/{MAX_ROUNDS_PER_BRAND}: {len(queries)} queries")
-            start_round_count = current
-
-            for q_idx, query in enumerate(queries):
-                current = count_images(brand_folder)
-                still_needed = TARGET_PER_CLASS - current
-                if still_needed <= 0:
-                    print(f"  Target reached ({current}/{TARGET_PER_CLASS})!")
+            for query in queries:
+                if count_valid_images(dest_dir) >= args.target_per_class:
                     break
-
-                fetch_count = min(IMAGES_PER_QUERY, still_needed)
-                print(f'    [{q_idx + 1}/{len(queries)}] "{query}" ...', end=" ", flush=True)
-
+                if query in completed:
+                    continue
+                fetch_count = min(args.images_per_query, args.target_per_class - count_valid_images(dest_dir))
+                success = False
                 try:
-                    crawl_bing(query, temp_dir, fetch_count)
-                    moved = move_new_images(temp_dir, brand_folder)
-                    new_total = count_images(brand_folder)
-                    print(f"+{moved} images -> {new_total}/{TARGET_PER_CLASS}")
-                except Exception as e:
-                    print(f"Error: {e}")
-
+                    _crawl_bing(query, temp_dir, fetch_count)
+                    added = ingest_temp_dir(
+                        temp_dir,
+                        dest_dir=dest_dir,
+                        artifact_root=artifact_root,
+                        brand=brand,
+                        query=query,
+                        stats=stats,
+                        index=index,
+                    )
+                    print(f"  +{added} -> {count_valid_images(dest_dir)}/{args.target_per_class}")
+                    success = True
+                except Exception as exc:  # noqa: BLE001
+                    LOGGER.error("query failed %r: %s", query, exc)
+                finally:
+                    if temp_dir.exists():
+                        shutil.rmtree(temp_dir, ignore_errors=True)
+                mark_query_completed(state, query, success=success)
+                state["stats"] = stats.as_dict()
+                save_resume_state(state_path, state)
                 time.sleep(1)
 
-            end_round_count = count_images(brand_folder)
-            gained = end_round_count - start_round_count
-            print(f"  Round {round_idx + 1} gained: {gained} images")
-
-            still_short = TARGET_PER_CLASS - end_round_count
+            gained = count_valid_images(dest_dir) - start_round
+            still_short = args.target_per_class - count_valid_images(dest_dir)
             if gained < EARLY_STOP_MIN_GAIN and still_short > EARLY_STOP_ONLY_IF_STILL_NEED_GT:
-                print("  Early stop: low new-image yield and still far from target.")
+                print("  Early stop: low yield while still far from target.")
                 break
 
-        # Top-up pass: never leave a class a few images short because of duplicate saturation.
-        short = TARGET_PER_CLASS - count_images(brand_folder)
+        short = args.target_per_class - count_valid_images(dest_dir)
         if short > 0:
-            print(f"  Top-up: need {short} more images...")
-            top_queries = build_topup_queries(brand, models)
-            for q_idx, query in enumerate(top_queries[:TOPUP_MAX_QUERIES]):
-                current = count_images(brand_folder)
-                if current >= TARGET_PER_CLASS:
+            for query in build_topup_queries(brand, models)[:TOPUP_MAX_QUERIES]:
+                if count_valid_images(dest_dir) >= args.target_per_class:
                     break
-                still_needed = TARGET_PER_CLASS - current
-                fetch_count = min(IMAGES_PER_QUERY, still_needed)
-                print(f'    [top-up {q_idx + 1}] "{query}" ...', end=" ", flush=True)
+                if query in completed:
+                    continue
                 try:
-                    crawl_bing(query, temp_dir, fetch_count)
-                    moved = move_new_images(temp_dir, brand_folder)
-                    print(f"+{moved} -> {count_images(brand_folder)}/{TARGET_PER_CLASS}")
-                except Exception as e:
-                    print(f"Error: {e}")
-                time.sleep(1)
+                    _crawl_bing(query, temp_dir, min(args.images_per_query, short))
+                    ingest_temp_dir(
+                        temp_dir,
+                        dest_dir=dest_dir,
+                        artifact_root=artifact_root,
+                        brand=brand,
+                        query=query,
+                        stats=stats,
+                        index=index,
+                    )
+                    mark_query_completed(state, query, success=True)
+                except Exception as exc:  # noqa: BLE001
+                    LOGGER.error("top-up failed %r: %s", query, exc)
+                    mark_query_completed(state, query, success=False)
+                finally:
+                    if temp_dir.exists():
+                        shutil.rmtree(temp_dir, ignore_errors=True)
+                state["stats"] = stats.as_dict()
+                save_resume_state(state_path, state)
 
-        if os.path.exists(temp_dir):
-            shutil.rmtree(temp_dir)
+        final = count_valid_images(dest_dir)
+        print(f"[{brand}] final={final}/{args.target_per_class} shortfall={max(0, args.target_per_class - final)}")
 
-        final = count_images(brand_folder)
-        print(f"\n  [{brand}] Final: {final}/{TARGET_PER_CLASS}")
-
-    elapsed = time.time() - start_time
-    print(f"\n{'=' * 60}")
-    print(f"DONE in {elapsed / 60:.1f} minutes")
-    print(f"{'=' * 60}")
-    for brand in ULTRA_LUXURY_SNEAKERS:
-        safe_brand = brand.replace("/", "_")
-        folder = os.path.join(output_dir, safe_brand)
-        cnt = count_images(folder)
-        status = "OK" if cnt >= TARGET_PER_CLASS else f"need {TARGET_PER_CLASS - cnt} more"
-        print(f"  {brand:<25} {cnt:>5}/{TARGET_PER_CLASS}  {status}")
+    print(f"DONE in {(time.time() - start) / 60:.1f}m stats={stats.as_dict()}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
