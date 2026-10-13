@@ -1,0 +1,21 @@
+{
+  "report_class": "SYNTHETIC_DEMO",
+  "dataset_status": "NOT_FROZEN",
+  "real_cohort": "NOT_AUDITABLE_UNDER_CURRENT_AUTHORIZATION",
+  "overall": "PASS",
+  "record_count": 2,
+  "eligibility_counts": {
+    "PASS": 2,
+    "FAIL": 0,
+    "UNKNOWN": 0,
+    "NOT_ELIGIBLE": 0
+  },
+  "finding_count": 0,
+  "exclusion_reason_codes": [],
+  "data_readiness": "NO_GO_FOR_AUTHENTICITY_CLAIMS",
+  "acquisition_authorized": false,
+  "inference_authorized": false,
+  "minimum_counts_approved": false,
+  "acceptance_criteria_approved": false,
+  "aggregate_sha256": "8861c3c6b574138ad458eb7997b2628458e9251a5abbecb8476ff163d8e9af27"
+}
