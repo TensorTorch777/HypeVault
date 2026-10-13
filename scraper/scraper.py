@@ -28,12 +28,13 @@ import logging
 import shutil
 import time
 
-from scraper.common import (
+from hypevault_scraper.common import (
     ARTIFACT_ROOT_REL,
     STATUS_UNVERIFIED_WEB,
     STATE_REL,
     StoreStats,
     ContentIndex,
+    load_corpus_index,
     assert_not_legacy_training_dir,
     count_valid_images,
     load_resume_state,
@@ -227,7 +228,7 @@ def main(argv: list[str] | None = None) -> int:
         dest_dir = artifact_root / "unverified_web_images" / "watches" / safe_brand_name(brand)
         dest_dir.mkdir(parents=True, exist_ok=True)
         assert_not_legacy_training_dir(dest_dir)
-        index = ContentIndex.load(dest_dir / "content_index.json")
+        index = load_corpus_index(artifact_root)
         current = count_valid_images(dest_dir)
         needed = args.target_per_class - current
         if needed <= 0:

@@ -28,11 +28,11 @@ import logging
 import random
 import time
 
-from scraper.common import (
+from hypevault_scraper.common import (
     ARTIFACT_ROOT_REL,
     STATUS_SYNTHETIC,
     STATE_REL,
-    ContentIndex,
+    load_corpus_index,
     OOMRetryController,
     StoreStats,
     assert_not_legacy_training_dir,
@@ -168,7 +168,7 @@ def main(argv: list[str] | None = None) -> int:
         dest_dir = artifact_root / "synthetic_research_only" / "sneakers" / safe_brand_name(brand)
         dest_dir.mkdir(parents=True, exist_ok=True)
         assert_not_legacy_training_dir(dest_dir)
-        index = ContentIndex.load(dest_dir / "content_index.json")
+        index = load_corpus_index(artifact_root)
         current = count_valid_images(dest_dir)
         if current >= args.target_per_class:
             print(f"[{brand}] Already at {current}/{args.target_per_class}. Skipping.")

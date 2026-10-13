@@ -55,6 +55,8 @@ SYNTHETIC_REL = ARTIFACT_ROOT_REL / "synthetic_research_only"
 STATE_REL = ARTIFACT_ROOT_REL / "state"
 MANIFEST_NAME = "manifest.jsonl"
 INDEX_NAME = "content_index.json"
+CORPUS_INDEX_NAME = "corpus_content_index.json"
+EXACT_DUP_LOG_NAME = "exact_duplicate_events.jsonl"
 
 LOGGER = logging.getLogger("hypevault.scraper")
 
@@ -393,6 +395,48 @@ def relative_to_artifact_root(path: Path, artifact_root: Path) -> str:
     return path.resolve().relative_to(artifact_root.resolve()).as_posix()
 
 
+def corpus_index_path(artifact_root: Path) -> Path:
+    """Shared exact/near-duplicate index for the entire artifact root."""
+    return artifact_root / CORPUS_INDEX_NAME
+
+
+def load_corpus_index(artifact_root: Path) -> ContentIndex:
+    return ContentIndex.load(corpus_index_path(artifact_root))
+
+
+def _safe_relpath(path: Path, root: Path) -> str:
+    try:
+        return path.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return str(path)
+
+
+def _record_exact_duplicate_event(
+    artifact_root: Path,
+    *,
+    stored_sha: str,
+    original_sha: str,
+    existing_path: str,
+    claimed_brand: str,
+    family: str,
+    dest_dir: Path,
+) -> dict[str, Any]:
+    event = {
+        "schema_version": SCHEMA_VERSION,
+        "outcome": "EXACT_DUPLICATE",
+        "created_at_utc": utc_now_iso(),
+        "stored_sha256": stored_sha,
+        "original_sha256": original_sha,
+        "exact_duplicate_of": existing_path,
+        "claimed_brand": claimed_brand,
+        "family": family,
+        "attempted_dest_dir": _safe_relpath(dest_dir, artifact_root),
+        "newly_stored": False,
+    }
+    append_jsonl(artifact_root / "state" / EXACT_DUP_LOG_NAME, event)
+    return event
+
+
 def store_validated_image(
     data: bytes,
     *,
@@ -413,21 +457,42 @@ def store_validated_image(
     index: ContentIndex | None = None,
     stats: StoreStats | None = None,
 ) -> dict[str, Any] | None:
-    """Validate, normalize, dedupe, and store one image with a manifest row."""
+    """Validate, normalize, dedupe corpus-wide, and store one image with a manifest row.
+
+    Exact duplicates anywhere under the artifact root are not written again. The
+    returned event remains traceable via ``exact_duplicate_of``. Near-duplicates
+    are still stored with their own provenance and flagged for review.
+    """
     stats = stats or StoreStats()
     stats.attempted += 1
     try:
         image, fmt = decode_image(data, max_bytes=max_bytes, content_type=content_type)
+        del fmt
         original_sha = sha256_bytes(data)
         normalized = normalize_image_bytes(image)
         stored_sha = sha256_bytes(normalized)
         phash = average_hash(image)
         ensure_dir(dest_dir)
-        index = index or ContentIndex.load(dest_dir / INDEX_NAME)
-        if stored_sha in index.sha256_to_path or original_sha in index.sha256_to_path:
+        ensure_dir(artifact_root)
+        index = index or load_corpus_index(artifact_root)
+        existing = index.sha256_to_path.get(stored_sha) or index.sha256_to_path.get(original_sha)
+        if existing:
             stats.exact_duplicates += 1
-            LOGGER.info("exact duplicate skipped sha256=%s", stored_sha[:12])
-            return None
+            LOGGER.info(
+                "exact duplicate skipped sha256=%s existing=%s attempted_brand=%s",
+                stored_sha[:12],
+                existing,
+                claimed_brand,
+            )
+            return _record_exact_duplicate_event(
+                artifact_root,
+                stored_sha=stored_sha,
+                original_sha=original_sha,
+                existing_path=existing,
+                claimed_brand=claimed_brand,
+                family=family,
+                dest_dir=dest_dir,
+            )
         near_of = index.find_near_duplicate(phash)
         duplicate_status = "NEAR_DUPLICATE_CANDIDATE" if near_of else "UNIQUE"
         if near_of:
@@ -436,7 +501,16 @@ def store_validated_image(
         dest_path = dest_dir / filename
         if dest_path.exists():
             stats.exact_duplicates += 1
-            return None
+            rel_existing = relative_to_artifact_root(dest_path, artifact_root)
+            return _record_exact_duplicate_event(
+                artifact_root,
+                stored_sha=stored_sha,
+                original_sha=original_sha,
+                existing_path=rel_existing,
+                claimed_brand=claimed_brand,
+                family=family,
+                dest_dir=dest_dir,
+            )
         atomic_write_bytes(dest_path, normalized)
         # Re-decode saved bytes so a partial write cannot count as success.
         with dest_path.open("rb") as handle:
@@ -464,6 +538,8 @@ def store_validated_image(
             generation=generation,
             provenance_note=provenance_note,
         )
+        record["outcome"] = "STORED"
+        record["newly_stored"] = True
         append_jsonl(dest_dir / MANIFEST_NAME, record)
         index.sha256_to_path[stored_sha] = rel_path
         index.sha256_to_path[original_sha] = rel_path
@@ -532,31 +608,48 @@ def download_bounded(
     timeout: float = DEFAULT_TIMEOUT_SECONDS,
     max_bytes: int = DEFAULT_MAX_BYTES,
 ) -> tuple[bytes, str | None]:
-    """Download with size bound. Rejects oversized streams without full buffering when possible."""
+    """Download with size bound. Always closes the streaming response.
+
+    Rejects non-200 responses and oversized bodies. Timeouts and read failures
+    propagate after the response is closed.
+    """
     response = session.get(url, timeout=timeout, stream=True)
-    status = getattr(response, "status_code", None)
-    if status is not None and status != 200:
-        raise ValidationError(f"HTTP status {status}")
-    content_type = None
-    headers = getattr(response, "headers", {}) or {}
-    content_type = headers.get("Content-Type") or headers.get("content-type")
-    length = headers.get("Content-Length") or headers.get("content-length")
-    if length is not None:
+    try:
+        status = getattr(response, "status_code", None)
+        if status is not None and status != 200:
+            raise ValidationError(f"HTTP status {status} for url={url}")
+        headers = getattr(response, "headers", {}) or {}
+        content_type = headers.get("Content-Type") or headers.get("content-type")
+        length = headers.get("Content-Length") or headers.get("content-length")
+        if length is not None:
+            try:
+                if int(length) > max_bytes:
+                    raise ValidationError(
+                        f"Content-Length {length} exceeds max_bytes={max_bytes} for url={url}"
+                    )
+            except ValueError:
+                pass
+        chunks: list[bytes] = []
+        total = 0
         try:
-            if int(length) > max_bytes:
-                raise ValidationError(f"Content-Length {length} exceeds max_bytes={max_bytes}")
-        except ValueError:
-            pass
-    chunks: list[bytes] = []
-    total = 0
-    for chunk in response.iter_content(chunk_size=64 * 1024):
-        if not chunk:
-            continue
-        total += len(chunk)
-        if total > max_bytes:
-            raise ValidationError(f"download exceeded max_bytes={max_bytes}")
-        chunks.append(chunk)
-    return b"".join(chunks), content_type
+            for chunk in response.iter_content(chunk_size=64 * 1024):
+                if not chunk:
+                    continue
+                total += len(chunk)
+                if total > max_bytes:
+                    raise ValidationError(
+                        f"download exceeded max_bytes={max_bytes} for url={url}"
+                    )
+                chunks.append(chunk)
+        except ValidationError:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            raise ValidationError(f"download read failed for url={url}: {exc}") from exc
+        return b"".join(chunks), content_type
+    finally:
+        close = getattr(response, "close", None)
+        if callable(close):
+            close()
 
 
 def require_network_opt_in(allow_network: bool) -> None:

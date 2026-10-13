@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import importlib
+import importlib.util
 import json
 import subprocess
 import sys
 import tempfile
 import unittest
+from io import BytesIO
 from pathlib import Path
-from unittest import mock
 
 from PIL import Image
 
@@ -17,13 +18,16 @@ REPO = Path(__file__).resolve().parents[1]
 if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
-from scraper import common
-from scraper.common import (
+# Ensure backend.scraper (also imported as ``scraper``) cannot shadow this package.
+sys.modules.pop("scraper", None)
+sys.modules.pop("scraper.common", None)
+
+from hypevault_scraper import common
+from hypevault_scraper.common import (
     STATUS_SYNTHETIC,
     STATUS_UNVERIFIED_WEB,
     STATUS_VERIFIED_AUTHENTIC,
     STATUS_VERIFIED_COUNTERFEIT,
-    ContentIndex,
     OOMRetryController,
     ResumeStateError,
     StoreStats,
@@ -33,6 +37,8 @@ from scraper.common import (
     build_manifest_record,
     count_valid_images,
     decode_image,
+    download_bounded,
+    load_corpus_index,
     load_resume_state,
     make_tiny_jpeg_bytes,
     mark_query_completed,
@@ -49,21 +55,56 @@ from scraper.common import (
 
 class ImportSafetyTests(unittest.TestCase):
     def test_importing_scripts_does_not_start_collection_or_generation(self) -> None:
-        modules = [
-            "scraper.scraper",
-            "scraper.balance_scraper",
-            "scraper.sneaker_scraper",
-            "scraper.generate_label1",
-            "scraper.generate_label1_sneakers",
+        # CLI scripts live under scraper/ as file entry points, not as backend.scraper.
+        script_files = [
+            REPO / "scraper" / "scraper.py",
+            REPO / "scraper" / "balance_scraper.py",
+            REPO / "scraper" / "sneaker_scraper.py",
+            REPO / "scraper" / "generate_label1.py",
+            REPO / "scraper" / "generate_label1_sneakers.py",
         ]
-        for name in modules:
-            with self.subTest(module=name):
-                with mock.patch.dict(sys.modules):
-                    # Ensure heavy deps are not required at import for collectors;
-                    # generators must not call load_pipeline on import.
-                    mod = importlib.import_module(name)
+        for path in script_files:
+            with self.subTest(script=path.name):
+                # Importing hypevault_scraper must succeed even if backend scraper is loaded.
+                sys.path.insert(0, str(REPO / "backend"))
+                try:
+                    sys.modules.pop("scraper", None)
+                    import scraper as backend_scraper  # noqa: F401
+
+                    self.assertFalse(hasattr(backend_scraper, "common"))
+                    self.assertTrue(hasattr(common, "store_validated_image"))
+                    spec = importlib.util.spec_from_file_location(
+                        f"hv_cli_{path.stem}", path
+                    )
+                    assert spec and spec.loader
+                    mod = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(mod)
                     self.assertTrue(hasattr(mod, "main"))
                     self.assertTrue(hasattr(mod, "parse_args"))
+                finally:
+                    while str(REPO / "backend") in sys.path:
+                        sys.path.remove(str(REPO / "backend"))
+                    sys.modules.pop("scraper", None)
+
+    def test_package_name_does_not_collide_with_backend_scraper(self) -> None:
+        sys.path.insert(0, str(REPO / "backend"))
+        try:
+            sys.modules.pop("scraper", None)
+            import scraper as backend_scraper
+
+            self.assertEqual(
+                Path(backend_scraper.__file__).resolve().parent,
+                (REPO / "backend" / "scraper").resolve(),
+            )
+            from hypevault_scraper import common as hv_common
+
+            self.assertIs(hv_common.STATUS_UNVERIFIED_WEB, STATUS_UNVERIFIED_WEB)
+            self.assertTrue(hasattr(hv_common, "store_validated_image"))
+            self.assertFalse(hasattr(backend_scraper, "store_validated_image"))
+        finally:
+            while str(REPO / "backend") in sys.path:
+                sys.path.remove(str(REPO / "backend"))
+            sys.modules.pop("scraper", None)
 
 
 class PathAndLabelTests(unittest.TestCase):
@@ -73,7 +114,6 @@ class PathAndLabelTests(unittest.TestCase):
             outside = Path(tmp)
             resolved = resolve_under_repo("local_data/scraper_artifacts", "local_data/scraper_artifacts")
             self.assertTrue(str(resolved).startswith(str(REPO)))
-            # Changing cwd must not change repo-relative resolution.
             old = Path.cwd()
             try:
                 import os
@@ -146,7 +186,7 @@ class ImageValidationTests(unittest.TestCase):
             dest = root / "unverified_web_images" / "watches" / "Demo"
             dest.mkdir(parents=True)
             stats = StoreStats()
-            index = ContentIndex.load(dest / "content_index.json")
+            index = load_corpus_index(root)
             first = store_validated_image(
                 data,
                 dest_dir=dest,
@@ -170,10 +210,58 @@ class ImageValidationTests(unittest.TestCase):
                 stats=stats,
             )
             self.assertIsNotNone(first)
-            self.assertIsNone(second)
+            self.assertTrue(first["newly_stored"])
+            self.assertEqual(second["outcome"], "EXACT_DUPLICATE")
+            self.assertFalse(second["newly_stored"])
             self.assertEqual(stats.stored, 1)
             self.assertEqual(stats.exact_duplicates, 1)
             self.assertEqual(count_valid_images(dest), 1)
+
+    def test_exact_duplicate_across_brand_folders_is_corpus_wide(self) -> None:
+        data = make_tiny_jpeg_bytes((44, 55, 66))
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            brand_a = root / "unverified_web_images" / "watches" / "BrandA"
+            brand_b = root / "unverified_web_images" / "watches" / "BrandB"
+            brand_a.mkdir(parents=True)
+            brand_b.mkdir(parents=True)
+            stats = StoreStats()
+            index = load_corpus_index(root)
+            first = store_validated_image(
+                data,
+                dest_dir=brand_a,
+                artifact_root=root,
+                family="watches",
+                claimed_brand="BrandA",
+                claimed_model=None,
+                label_status=STATUS_UNVERIFIED_WEB,
+                index=index,
+                stats=stats,
+            )
+            second = store_validated_image(
+                data,
+                dest_dir=brand_b,
+                artifact_root=root,
+                family="watches",
+                claimed_brand="BrandB",
+                claimed_model=None,
+                label_status=STATUS_UNVERIFIED_WEB,
+                index=index,
+                stats=stats,
+            )
+            self.assertTrue(first["newly_stored"])
+            self.assertEqual(stats.stored, 1)
+            self.assertEqual(stats.exact_duplicates, 1)
+            self.assertEqual(second["outcome"], "EXACT_DUPLICATE")
+            self.assertEqual(second["exact_duplicate_of"], first["image_path"])
+            self.assertEqual(second["claimed_brand"], "BrandB")
+            self.assertEqual(count_valid_images(brand_a), 1)
+            self.assertEqual(count_valid_images(brand_b), 0)
+            dup_log = root / "state" / "exact_duplicate_events.jsonl"
+            self.assertTrue(dup_log.exists())
+            events = [json.loads(line) for line in dup_log.read_text(encoding="utf-8").splitlines() if line]
+            self.assertEqual(len(events), 1)
+            self.assertEqual(events[0]["exact_duplicate_of"], first["image_path"])
 
     def test_near_duplicate_flagged_not_auto_identical(self) -> None:
         data_a = make_tiny_jpeg_bytes((10, 20, 30))
@@ -184,7 +272,7 @@ class ImageValidationTests(unittest.TestCase):
             dest = root / "unverified_web_images" / "watches" / "Demo"
             dest.mkdir(parents=True)
             stats = StoreStats()
-            index = ContentIndex.load(dest / "content_index.json")
+            index = load_corpus_index(root)
             first = store_validated_image(
                 data_a,
                 dest_dir=dest,
@@ -197,10 +285,6 @@ class ImageValidationTests(unittest.TestCase):
                 stats=stats,
             )
             self.assertIsNotNone(first)
-            # Seed a perceptual hash equal to the second image so it is flagged for review
-            # without being treated as an exact duplicate.
-            from io import BytesIO
-
             phash_b = average_hash(Image.open(BytesIO(data_b)))
             index.perceptual_hashes[phash_b] = first["image_path"]
             record = store_validated_image(
@@ -215,6 +299,7 @@ class ImageValidationTests(unittest.TestCase):
                 stats=stats,
             )
             self.assertIsNotNone(record)
+            self.assertTrue(record["newly_stored"])
             self.assertEqual(record["duplicate_status"], "NEAR_DUPLICATE_CANDIDATE")
             self.assertEqual(record["near_duplicate_of"], first["image_path"])
             self.assertEqual(stats.near_duplicate_candidates, 1)
@@ -298,6 +383,7 @@ class ManifestAndResumeTests(unittest.TestCase):
 
     def test_oom_retry_terminates_without_gpu(self) -> None:
         controller = OOMRetryController(max_retries=2)
+
         class OutOfMemoryError(RuntimeError):
             pass
 
@@ -317,7 +403,7 @@ class ManifestAndResumeTests(unittest.TestCase):
             dest.mkdir(parents=True)
             data = make_tiny_jpeg_bytes((9, 9, 9))
             stats = StoreStats()
-            index = ContentIndex.load(dest / "content_index.json")
+            index = load_corpus_index(root)
             first = store_validated_image(
                 data,
                 dest_dir=dest,
@@ -354,6 +440,55 @@ class ManifestAndResumeTests(unittest.TestCase):
             with self.assertRaises(common.ScraperError):
                 assert_not_legacy_training_dir(banned)
 
+    def test_download_bounded_closes_response(self) -> None:
+        class FakeResponse:
+            def __init__(self, status: int, body: bytes, headers: dict | None = None) -> None:
+                self.status_code = status
+                self.headers = headers or {"Content-Type": "image/jpeg"}
+                self._body = body
+                self.closed = False
+
+            def iter_content(self, chunk_size: int = 64 * 1024):
+                del chunk_size
+                yield self._body
+
+            def close(self) -> None:
+                self.closed = True
+
+        class FakeSession:
+            def __init__(self, response: FakeResponse) -> None:
+                self.response = response
+
+            def get(self, url: str, timeout: float = 0, stream: bool = False):
+                del url, timeout, stream
+                return self.response
+
+        ok = FakeResponse(200, make_tiny_jpeg_bytes())
+        data, ctype = download_bounded(FakeSession(ok), "http://example.test/a.jpg")
+        self.assertTrue(ok.closed)
+        self.assertTrue(data)
+        self.assertIn("image/jpeg", ctype or "")
+
+        bad_status = FakeResponse(403, b"nope")
+        with self.assertRaises(ValidationError):
+            download_bounded(FakeSession(bad_status), "http://example.test/b.jpg")
+        self.assertTrue(bad_status.closed)
+
+        oversized = FakeResponse(200, b"x" * 100, headers={"Content-Length": "100"})
+        with self.assertRaises(ValidationError):
+            download_bounded(FakeSession(oversized), "http://example.test/c.jpg", max_bytes=10)
+        self.assertTrue(oversized.closed)
+
+        class BoomResponse(FakeResponse):
+            def iter_content(self, chunk_size: int = 64 * 1024):
+                del chunk_size
+                raise OSError("read failed")
+
+        boom = BoomResponse(200, b"")
+        with self.assertRaises(ValidationError):
+            download_bounded(FakeSession(boom), "http://example.test/d.jpg")
+        self.assertTrue(boom.closed)
+
     def test_cli_dry_run_and_help(self) -> None:
         for script in (
             "scraper/scraper.py",
@@ -388,7 +523,6 @@ class ManifestAndResumeTests(unittest.TestCase):
         self.assertIn("local_data/scraper_artifacts/", root_ignore)
         self.assertIn("Watches.csv", root_ignore)
         self.assertIn("*.jpg", scraper_ignore)
-        # Verify git check-ignore behavior for intended paths.
         sample = "local_data/scraper_artifacts/unverified_web_images/watches/Demo/a.jpg"
         proc = subprocess.run(
             ["git", "check-ignore", "-v", sample],

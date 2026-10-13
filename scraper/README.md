@@ -25,7 +25,11 @@ Unverified and synthetic records always use `target_label: null` and `intended_u
 | `generate_label1.py` | SDXL synthetic watches | `.../synthetic_research_only/watches/<brand>/` |
 | `generate_label1_sneakers.py` | SDXL synthetic sneakers | `.../synthetic_research_only/sneakers/<brand>/` |
 
-Shared helpers live in `common.py` (validation, SHA-256, manifests, resume, atomic writes).
+Shared helpers live in the **`hypevault_scraper`** package (`hypevault_scraper/common.py`).
+That name is intentional: the backend already owns the Python package name `scraper`
+(`backend/scraper/`). CLI scripts under `scraper/*.py` remain the entry points and import
+`hypevault_scraper.common` so they never collide with backend imports during
+`unittest discover`.
 
 ## Installation
 
@@ -75,7 +79,13 @@ Each brand folder stores:
 
 - Normalized JPEG files named by content SHA-256 prefix
 - `manifest.jsonl` — one provenance record per stored image
-- `content_index.json` — exact SHA map and perceptual-hash review candidates
+
+Artifact root also stores:
+
+- `corpus_content_index.json` — corpus-wide exact SHA map and perceptual-hash review candidates (shared across brands)
+- `state/exact_duplicate_events.jsonl` — traceable skips when identical bytes are offered under another brand folder
+
+Exact duplicates are counted once corpus-wide. Near-duplicates are still stored with their own provenance and flagged for review (never auto-deleted).
 
 Resume / failure state lives under `local_data/scraper_artifacts/state/` (also ignored).
 
