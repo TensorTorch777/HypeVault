@@ -1,7 +1,9 @@
 # Manifest audit report
 
-**Report class:** `SYNTHETIC_DEMO`  
-**Dataset status:** `NOT_FROZEN`  
+**Report class:** `SYNTHETIC_DEMO`
+
+**Dataset status:** `NOT_FROZEN`
+
 **Real cohort:** `NOT_AUDITABLE_UNDER_CURRENT_AUTHORIZATION`
 
 ## What was checked
