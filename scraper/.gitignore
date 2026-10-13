@@ -1,0 +1,13 @@
+# Keep scraper scripts only; never commit downloaded images or local crawl state.
+venv/
+.cache/
+*.csv
+*.json
+Label_*/
+**/Label_*/
+*.jpg
+*.jpeg
+*.png
+*.webp
+__pycache__/
+*.pyc
