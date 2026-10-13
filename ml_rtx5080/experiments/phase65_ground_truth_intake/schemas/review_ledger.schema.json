@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hypevault.example/schemas/phase65-review-ledger.schema.json",
+  "title": "Phase 65 append-only review ledger row",
+  "description": "Human review decision referencing a scraper manifest record. Does not replace Phase 55 evidence_ledger.schema.json. Verified authenticity proposals must attach a schema-valid phase55_evidence_record.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "record_id",
+    "authenticity_decision",
+    "rights_review_status",
+    "recorded_at_utc"
+  ],
+  "properties": {
+    "schema_version": {"const": "phase65_review_ledger_v1"},
+    "decision_id": {"type": "string", "minLength": 1},
+    "record_id": {"type": "string", "minLength": 1},
+    "recorded_at_utc": {"type": "string", "minLength": 1},
+    "reviewer_ref": {"type": "string"},
+    "authenticity_decision": {
+      "enum": [
+        "UNREVIEWED",
+        "INSUFFICIENT_EVIDENCE",
+        "REJECTED",
+        "AUTHENTIC",
+        "COUNTERFEIT",
+        "NOT_STARTED"
+      ]
+    },
+    "rights_review_status": {
+      "enum": ["UNREVIEWED", "APPROVED", "DENIED", "PENDING", "NOT_RECORDED"]
+    },
+    "adjudication_status": {
+      "enum": ["NOT_STARTED", "PENDING", "AGREED", "ADJUDICATED", "UNRESOLVED"]
+    },
+    "evidence_references": {"type": "array", "items": {"type": "string"}},
+    "product_id": {"type": "string"},
+    "rationale": {"type": "string"},
+    "phase55_evidence_record": {
+      "type": "object",
+      "description": "Must validate against Phase 55 evidence_ledger.schema.json when authenticity_decision is AUTHENTIC or COUNTERFEIT."
+    },
+    "candidate_image_record_v2": {
+      "type": "object",
+      "description": "Optional payload for ml_rtx5080.data_admission.admission_decision."
+    }
+  }
+}
