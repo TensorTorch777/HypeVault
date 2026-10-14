@@ -81,3 +81,27 @@ Passing validators does **not** mean the dataset is frozen or claim-ready.
 ```bash
 python -m unittest discover -s ml_rtx5080/experiments/phase65_ground_truth_intake/tests -v
 ```
+
+## Governance gate crosswalk
+
+Descriptive names in reports are not always executable symbols. Authoritative runtime
+enforcement for this repository is:
+
+| Concern | Authoritative source | Runtime enforcement | Notes |
+|---|---|---|---|
+| Data readiness / authenticity claims | `DATA_READINESS = "NO_GO_FOR_AUTHENTICITY_CLAIMS"` in `intake.py` (and related phase READMEs) | Emitted into Phase 65 readiness/intake reports; does not authorize claims | Remains NO_GO until an explicit later governance change |
+| Acquisition | `ACQUISITION_AUTHORIZED = False` in `intake.py` | Report field only in Phase 65; scraper network still requires separate CLI opt-in | Not flipped by tests or merges |
+| Inference authorization (research intake) | `INFERENCE_AUTHORIZED = False` in `intake.py` | Report field; intake never runs inference | Separate from Triton serving availability |
+| Marketplace publication / production authenticity model | `AUTHENTICITY_MODEL_PRODUCTION_APPROVED = False` in `backend/inference/publication_gate.py` and `ml_rtx5080/experiments/publication_safety_v1/publication_policy.json` | `can_publish_listing()` returns false while the flag is false | Source of truth for listing go-live |
+| Research prototype promotion scope | `PRODUCTION_PROMOTION: "FORBIDDEN"` in `ml_rtx5080/experiments/scope_lock_v1/scope_contract.json` | Scope-lock / research gating docs and tests assert `FORBIDDEN` | Not the same key as descriptive `PRODUCTION_PROMOTION_ALLOWED` |
+| Descriptive `DINOv3_PRODUCTION_ALLOWED` / `PRODUCTION_PROMOTION_ALLOWED` | Appear in historical reports (`docs/engineering/*`, dual-model reports) | **Not** standalone Python/JSON constants | Treat as documentation aliases for the closed state above; do not invent a bypass |
+
+Human approvals, website terms, licenses, consent, and faculty permission remain external requirements. They are not satisfied by schema validity, CI green, or a readiness report.
+
+### Review-ledger append durability (Phase 67)
+
+`append_review_decision` requires a non-empty `protected_inputs` list and commits each new
+row via a same-directory temp file + `os.replace` so readers do not observe a truncated
+final line from that writer. Prior ledger bytes are preserved if the commit fails before
+replace. Concurrent multi-writer appends are not locked; last successful replace wins.
+Single-writer use is assumed.

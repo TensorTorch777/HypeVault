@@ -13,7 +13,9 @@ import argparse
 import csv
 import hashlib
 import json
+import os
 import sys
+import tempfile
 from collections import Counter
 from copy import deepcopy
 from datetime import date, datetime, timezone
@@ -531,22 +533,87 @@ def preflight_inputs_before_append(
         )
 
 
+def _require_protected_inputs(protected_inputs: Iterable[Path | str] | None) -> list[Path | str]:
+    """Fail closed unless callers supply non-empty collision-protection context."""
+    if protected_inputs is None:
+        raise IntakeError(
+            "append_review_decision requires protected_inputs; omitting them is not allowed. "
+            "Pass every path that must not be overwritten (manifests, decision JSON, etc.)."
+        )
+    protected = list(protected_inputs)
+    if not protected:
+        raise IntakeError(
+            "append_review_decision requires a non-empty protected_inputs list; "
+            "an empty list cannot establish collision protection."
+        )
+    return protected
+
+
+def durable_append_jsonl_line(ledger_path: Path, line: str) -> None:
+    """Commit one JSONL line by rewriting through a same-directory temp file.
+
+    Behavior:
+    - Validates nothing about JSON here; callers must validate first.
+    - Reads any existing ledger bytes and writes ``previous + line`` to a temp file
+      in the same directory, fsyncs the temp file, then ``os.replace``s onto the
+      ledger path so readers do not observe a truncated final line from this writer.
+    - On failure before ``os.replace``, the previous ledger file is left unchanged.
+    - Concurrent writers are NOT locked. Last successful ``os.replace`` wins; a
+      concurrent writer may lose an update. Single-writer use is assumed.
+
+    This does not introduce a database or external dependency.
+    """
+    if not line.endswith("\n"):
+        raise IntakeError("durable_append_jsonl_line requires a trailing newline")
+    ledger_path.parent.mkdir(parents=True, exist_ok=True)
+    previous = ledger_path.read_bytes() if ledger_path.is_file() else b""
+    fd, tmp_name = tempfile.mkstemp(
+        prefix=f".{ledger_path.name}.",
+        suffix=".tmp",
+        dir=str(ledger_path.parent),
+    )
+    try:
+        with os.fdopen(fd, "wb") as handle:
+            if previous:
+                handle.write(previous)
+            handle.write(line.encode("utf-8"))
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp_name, ledger_path)
+        # Best-effort directory fsync so the rename itself is durable on supporting FS.
+        try:
+            dir_fd = os.open(str(ledger_path.parent), os.O_RDONLY)
+            try:
+                os.fsync(dir_fd)
+            finally:
+                os.close(dir_fd)
+        except OSError:
+            pass
+    except Exception:
+        try:
+            os.unlink(tmp_name)
+        except OSError:
+            pass
+        raise
+
+
 def append_review_decision(
     ledger_path: Path,
     decision: Mapping[str, Any],
     *,
-    protected_inputs: Iterable[Path | str] | None = None,
+    protected_inputs: Iterable[Path | str],
 ) -> dict[str, Any]:
     """Append one human decision. Never rewrites prior rows or source manifests.
 
-    ``protected_inputs`` must include every path that must not be appended to
-    (manifests, decision JSON, images). An empty/omitted set only applies the
-    generic protected-component and image-extension guards; call sites that
-    have other inputs MUST pass them.
+    ``protected_inputs`` is required and must be non-empty. It must list every
+    path that must not be overwritten by this append (manifests, decision JSON,
+    and any other caller-supplied protected artifacts). Omitting it or passing
+    an empty list fails closed before any write.
     """
+    protected = _require_protected_inputs(protected_inputs)
     resolved_ledger = assert_ledger_append_path(
         ledger_path,
-        protected_inputs=list(protected_inputs or ()),
+        protected_inputs=protected,
     )
     payload = dict(decision)
     payload["schema_version"] = REVIEW_LEDGER_SCHEMA
@@ -559,10 +626,8 @@ def append_review_decision(
         hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()[:32],
     )
     validate_ledger_row(payload)
-    resolved_ledger.parent.mkdir(parents=True, exist_ok=True)
     line = json.dumps(payload, sort_keys=True, ensure_ascii=False) + "\n"
-    with resolved_ledger.open("a", encoding="utf-8") as handle:
-        handle.write(line)
+    durable_append_jsonl_line(resolved_ledger, line)
     return payload
 
 
