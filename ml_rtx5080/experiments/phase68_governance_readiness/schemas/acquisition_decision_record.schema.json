@@ -478,18 +478,47 @@
     "recorded_string": {
       "type": "string",
       "minLength": 1,
-      "not": {"const": "NOT_RECORDED"},
-      "description": "Non-placeholder recorded value. NOT_RECORDED is rejected for GO recommendations."
+      "not": {
+        "enum": [
+          "NOT_RECORDED",
+          "NOT_STARTED",
+          "PENDING",
+          "VACANT",
+          "PLACEHOLDER",
+          "UNKNOWN",
+          "TBD",
+          "NOT_APPLICABLE"
+        ]
+      },
+      "description": "Non-placeholder recorded value for GO recommendations. Rejects exact unfinished-state sentinels only; explanatory prose that mentions pending work remains valid when the field value is not itself a sentinel."
     },
     "assigned_actor_ref": {
       "type": "string",
       "minLength": 8,
       "allOf": [
-        {"not": {"const": "NOT_RECORDED"}},
+        {
+          "not": {
+            "enum": [
+              "NOT_RECORDED",
+              "NOT_STARTED",
+              "PENDING",
+              "VACANT",
+              "PLACEHOLDER",
+              "UNKNOWN",
+              "TBD",
+              "NOT_APPLICABLE"
+            ]
+          }
+        },
         {"not": {"pattern": "VACANT"}},
-        {"not": {"pattern": "PLACEHOLDER"}}
+        {"not": {"pattern": "PLACEHOLDER"}},
+        {"not": {"pattern": "PENDING"}},
+        {"not": {"pattern": "NOT_STARTED"}},
+        {"not": {"pattern": "NOT_RECORDED"}},
+        {"not": {"pattern": "UNKNOWN"}},
+        {"not": {"pattern": "TBD"}}
       ],
-      "description": "Assigned role reference; vacant/placeholder refs cannot satisfy a GO recommendation."
+      "description": "Assigned role reference for GO recommendations. Vacant, placeholder, and unfinished-state tokens cannot satisfy required reviewer or owner seats."
     },
     "evidence_ref": {
       "type": "object",

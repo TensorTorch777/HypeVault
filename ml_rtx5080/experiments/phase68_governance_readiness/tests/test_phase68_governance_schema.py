@@ -384,6 +384,87 @@ class Phase68GovernanceSchemaTests(unittest.TestCase):
         self.assertIs(row["acquisition_authorized_by_this_record"], False)
         self.assert_valid(row)
 
+    def test_go_rejects_exact_unfinished_state_sentinels_in_recorded_fields(self) -> None:
+        for sentinel in (
+            "NOT_RECORDED",
+            "NOT_STARTED",
+            "PENDING",
+            "VACANT",
+            "PLACEHOLDER",
+            "UNKNOWN",
+            "TBD",
+            "NOT_APPLICABLE",
+        ):
+            row = complete_go_recommendation()
+            row["proposed_sources"][0]["canonical_name"] = sentinel
+            self.assert_invalid(row)
+            row = complete_go_recommendation()
+            row["dataset_design_and_leakage_plan"]["identity_scheme"] = sentinel
+            self.assert_invalid(row)
+            row = complete_go_recommendation()
+            row["created_at_utc"] = sentinel
+            self.assert_invalid(row)
+
+    def test_go_rejects_placeholder_source_url_or_identity(self) -> None:
+        row = complete_go_recommendation()
+        row["proposed_sources"][0]["public_urls"] = ["PENDING"]
+        self.assert_invalid(row)
+        row = complete_go_recommendation()
+        row["proposed_sources"][0]["canonical_name"] = "NOT_STARTED"
+        self.assert_invalid(row)
+        row = complete_go_recommendation()
+        row["proposed_sources"][0]["intended_acquisition_method"] = "TBD"
+        self.assert_invalid(row)
+
+    def test_go_rejects_placeholder_evidence_title_uri_or_timestamp(self) -> None:
+        row = complete_go_recommendation()
+        row["rights_and_license_review"]["evidence_refs"][0]["title"] = "PENDING"
+        self.assert_invalid(row)
+        row = complete_go_recommendation()
+        row["rights_and_license_review"]["evidence_refs"][0]["uri_or_path"] = "UNKNOWN"
+        self.assert_invalid(row)
+        row = complete_go_recommendation()
+        row["rights_and_license_review"]["evidence_refs"][0][
+            "retrieved_at_utc"
+        ] = "NOT_STARTED"
+        self.assert_invalid(row)
+
+    def test_go_rejects_reserved_tokens_in_reviewer_or_owner_refs(self) -> None:
+        row = complete_go_recommendation()
+        row["reviewers"][0]["reviewer_ref"] = "reviewer_role_preparer_VACANT"
+        self.assert_invalid(row)
+        row = complete_go_recommendation()
+        row["reviewers"][1]["reviewer_ref"] = "reviewer_role_rights_PENDING"
+        self.assert_invalid(row)
+        row = complete_go_recommendation()
+        row["budget_and_ownership"]["accountable_owner_ref"] = "owner_budget_TBD"
+        self.assert_invalid(row)
+        row = complete_go_recommendation()
+        row["security_storage_retention_plan"][
+            "incident_owner_ref"
+        ] = "owner_security_NOT_STARTED"
+        self.assert_invalid(row)
+        row = complete_go_recommendation()
+        row["reviewers"][0]["reviewer_ref"] = "PENDING"
+        self.assert_invalid(row)
+
+    def test_go_allows_explanatory_prose_mentioning_pending_work(self) -> None:
+        row = complete_go_recommendation()
+        row["proposed_sources"][0]["copyright_redistribution_notes"] = (
+            "Public visibility does not grant a license; publication remains pending "
+            "a separate authorization decision and is out of scope for this recommendation."
+        )
+        row["research_purpose"]["publication_boundaries"] = (
+            "No public authenticity claims. Aggregate reporting stays PENDING only as a "
+            "future separate decision; this field records that boundary in prose."
+        )
+        row["dataset_design_and_leakage_plan"]["missing_metadata_reporting"] = (
+            "Missing brand/seller/source fields are reported separately; UNKNOWN label "
+            "rates are tallied without treating them as verified ground truth."
+        )
+        self.assertIs(row["acquisition_authorized_by_this_record"], False)
+        self.assert_valid(row)
+
     def test_unknown_overall_outcome_rejected(self) -> None:
         row = minimal_draft()
         row["overall_outcome"] = "ACQUISITION_AUTHORIZED"

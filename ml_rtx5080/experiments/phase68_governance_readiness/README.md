@@ -50,7 +50,7 @@ Scraper network access still requires an explicit CLI opt-in (`hypevault_scraper
    - `DRAFT` — incomplete.
    - `NO_GO` — mandatory condition fails.
    - `CONDITIONAL_NO_GO` — remediation required before reconsideration.
-   - `GO_RECOMMENDED_SEPARATE_AUTHORIZATION_REQUIRED` — reviewers recommend a *separate* authorization decision; **acquisition remains unauthorized**. Schema validation rejects this outcome unless applicable reviews, sources, ground-truth procedure, leakage/security/budget plans, required reviewer roles, and completed evidence refs are structurally populated. Clearing `unresolved_blockers` alone is not enough. Placeholders such as `NOT_RECORDED`, `NOT_STARTED`, `PENDING`, and vacant reviewer refs cannot satisfy a GO recommendation.
+   - `GO_RECOMMENDED_SEPARATE_AUTHORIZATION_REQUIRED` — reviewers recommend a *separate* authorization decision; **acquisition remains unauthorized**. Schema validation rejects this outcome unless applicable reviews, sources, ground-truth procedure, leakage/security/budget plans, required reviewer roles, and completed evidence refs are structurally populated. Clearing `unresolved_blockers` alone is not enough. Exact unfinished-state sentinels (`NOT_RECORDED`, `NOT_STARTED`, `PENDING`, `VACANT`, `PLACEHOLDER`, `UNKNOWN`, `TBD`, `NOT_APPLICABLE`) and vacant/unfinished actor-ref tokens cannot satisfy GO recorded fields; explanatory prose that discusses pending work remains allowed when the field value is not itself a sentinel.
 4. **Separate authorization:** Only a later, explicit human/institutional phase may consider changing `ACQUISITION_AUTHORIZED` or related gates. Filling this package never flips those gates.
 
 ### Roles (proposed; require human confirmation)
