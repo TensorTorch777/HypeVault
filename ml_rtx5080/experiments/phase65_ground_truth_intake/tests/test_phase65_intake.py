@@ -23,6 +23,7 @@ from intake import (  # noqa: E402
     ImageAccessBlocked,
     IntakeError,
     append_review_decision,
+    durable_append_jsonl_line,
     assess_review_against_contracts,
     assert_ledger_append_path,
     assert_metadata_only_path,
@@ -43,6 +44,20 @@ from hypevault_scraper.common import (  # noqa: E402
     STATUS_UNVERIFIED_WEB,
     STATUS_VERIFIED_AUTHENTIC,
 )
+
+
+def _protect(ledger: Path, *extra: Path) -> list[Path]:
+    """Required non-empty protected-input context that does not collide with ledger."""
+    marker = ledger.parent / "_phase65_protected_context.marker"
+    return [marker, *extra]
+
+
+def _append(ledger: Path, decision: dict, *extra_protect: Path):
+    """Test helper: append with mandatory protected_inputs."""
+    return append_review_decision(
+        ledger, decision, protected_inputs=_protect(ledger, *extra_protect)
+    )
+
 
 
 def _sha(n: int = 1) -> str:
@@ -325,7 +340,7 @@ class Phase65IntakeTests(unittest.TestCase):
             ledger = Path(tmp) / "ledger.jsonl"
             write_manifest(manifest, [scraper_row()])
             before = manifest.read_bytes()
-            append_review_decision(
+            _append(
                 ledger,
                 {
                     "record_id": "rec_web_001",
@@ -527,7 +542,7 @@ class Phase65IntakeTests(unittest.TestCase):
             manifest = Path(tmp) / "manifest.jsonl"
             ledger = Path(tmp) / "ledger.jsonl"
             write_manifest(manifest, [scraper_row()])
-            append_review_decision(
+            _append(
                 ledger,
                 {
                     "record_id": "rec_web_001",
@@ -593,7 +608,7 @@ class Phase65IntakeTests(unittest.TestCase):
                 load_review_ledger(ledger)
 
             with self.assertRaises(IntakeError):
-                append_review_decision(
+                _append(
                     Path(tmp) / "ledger2.jsonl",
                     {
                         "record_id": "rec_web_001",
@@ -603,7 +618,7 @@ class Phase65IntakeTests(unittest.TestCase):
                 )
 
             with self.assertRaises(IntakeError):
-                append_review_decision(
+                _append(
                     Path(tmp) / "ledger3.jsonl",
                     {
                         "record_id": "rec_web_001",
@@ -623,7 +638,7 @@ class Phase65IntakeTests(unittest.TestCase):
             write_manifest(a, [scraper_row(record_id="one", stored_sha256=_sha(7))])
             write_manifest(b, [scraper_row(record_id="two", stored_sha256=_sha(7))])
             for rid in ("one", "two"):
-                append_review_decision(
+                _append(
                     ledger,
                     {
                         "record_id": rid,
@@ -826,7 +841,7 @@ class Phase65IntakeTests(unittest.TestCase):
             )
             # Evidence/candidate pairs that would otherwise pass for each hash.
             for sha in (_sha(11), _sha(22)):
-                append_review_decision(
+                _append(
                     ledger,
                     {
                         "record_id": "shared",
@@ -860,7 +875,7 @@ class Phase65IntakeTests(unittest.TestCase):
                 # missing required Phase 55 fields
             }
             with self.assertRaises(IntakeError) as ctx:
-                append_review_decision(
+                _append(
                     ledger,
                     {
                         "record_id": "rec_web_001",
@@ -898,7 +913,7 @@ class Phase65IntakeTests(unittest.TestCase):
             # Conflicting label in otherwise schema-shaped evidence rejected on append.
             conflict = phase55_eligible(sha=_sha(1), label="COUNTERFEIT")
             with self.assertRaises(IntakeError):
-                append_review_decision(
+                _append(
                     Path(tmp) / "ledger2.jsonl",
                     {
                         "record_id": "rec_web_001",
@@ -929,7 +944,7 @@ class Phase65IntakeTests(unittest.TestCase):
             )
             # Schema-valid Phase 55 evidence, rights approved, but no candidate →
             # authenticity verified without admission ADMIT.
-            append_review_decision(
+            _append(
                 ledger,
                 {
                     "record_id": "auth_v",
@@ -939,7 +954,7 @@ class Phase65IntakeTests(unittest.TestCase):
                     "phase55_evidence_record": phase55_eligible(sha=_sha(31), label="AUTHENTIC"),
                 },
             )
-            append_review_decision(
+            _append(
                 ledger,
                 {
                     "record_id": "cf_v",
@@ -960,7 +975,7 @@ class Phase65IntakeTests(unittest.TestCase):
 
             # With full admission for both classes, the metric becomes true.
             ledger2 = Path(tmp) / "ledger_admit.jsonl"
-            append_review_decision(
+            _append(
                 ledger2,
                 {
                     "record_id": "auth_v",
@@ -971,7 +986,7 @@ class Phase65IntakeTests(unittest.TestCase):
                     "candidate_image_record_v2": candidate_admissible(sha=_sha(31), label="authentic"),
                 },
             )
-            append_review_decision(
+            _append(
                 ledger2,
                 {
                     "record_id": "cf_v",
@@ -1100,7 +1115,7 @@ class Phase65IntakeTests(unittest.TestCase):
                 manifest,
                 [scraper_row(duplicate_status="NEAR_DUPLICATE_CANDIDATE", stored_sha256=_sha(41))],
             )
-            append_review_decision(
+            _append(
                 ledger,
                 {
                     "record_id": "rec_web_001",
@@ -1151,7 +1166,7 @@ class Phase65IntakeTests(unittest.TestCase):
             manifest = Path(tmp) / "manifest.jsonl"
             ledger = Path(tmp) / "ledger.jsonl"
             write_manifest(manifest, [scraper_row(stored_sha256=_sha(55))])
-            append_review_decision(
+            _append(
                 ledger,
                 {
                     "record_id": "rec_web_001",
@@ -1219,6 +1234,78 @@ class Phase65IntakeTests(unittest.TestCase):
             self.assertEqual(ledger.read_bytes(), before_l)
             self.assertEqual(decision.read_bytes(), before_d)
             self.assertEqual(preexisting.read_bytes(), before_o)
+
+    def test_append_requires_non_empty_protected_inputs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = Path(tmp) / "ledger.jsonl"
+            decision = {
+                "record_id": "rec_web_001",
+                "authenticity_decision": "INSUFFICIENT_EVIDENCE",
+                "rights_review_status": "UNREVIEWED",
+            }
+            with self.assertRaises(TypeError):
+                append_review_decision(ledger, decision)  # type: ignore[call-arg]
+            with self.assertRaises(IntakeError):
+                append_review_decision(ledger, decision, protected_inputs=None)  # type: ignore[arg-type]
+            with self.assertRaises(IntakeError):
+                append_review_decision(ledger, decision, protected_inputs=[])
+            self.assertFalse(ledger.exists())
+            # Valid context still works.
+            _append(ledger, decision)
+            self.assertTrue(ledger.is_file())
+            self.assertEqual(len(ledger.read_text(encoding="utf-8").splitlines()), 1)
+
+    def test_durable_append_preserves_prior_records_on_replace_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = Path(tmp) / "ledger.jsonl"
+            first = {
+                "record_id": "rec_web_001",
+                "authenticity_decision": "INSUFFICIENT_EVIDENCE",
+                "rights_review_status": "UNREVIEWED",
+            }
+            _append(ledger, first)
+            before = ledger.read_bytes()
+            second = {
+                "record_id": "rec_web_002",
+                "authenticity_decision": "REJECTED",
+                "rights_review_status": "DENIED",
+            }
+
+            def boom(*_args, **_kwargs):
+                raise OSError("simulated replace failure")
+
+            with mock.patch("intake.os.replace", side_effect=boom):
+                with self.assertRaises(OSError):
+                    _append(ledger, second)
+            self.assertEqual(ledger.read_bytes(), before)
+            # No orphan temp commit files left behind after failure cleanup.
+            leftovers = list(Path(tmp).glob(".ledger.jsonl.*.tmp"))
+            self.assertEqual(leftovers, [])
+
+    def test_durable_append_sequential_records_both_visible(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = Path(tmp) / "ledger.jsonl"
+            _append(
+                ledger,
+                {
+                    "record_id": "rec_a",
+                    "authenticity_decision": "INSUFFICIENT_EVIDENCE",
+                    "rights_review_status": "UNREVIEWED",
+                },
+            )
+            _append(
+                ledger,
+                {
+                    "record_id": "rec_b",
+                    "authenticity_decision": "REJECTED",
+                    "rights_review_status": "DENIED",
+                },
+            )
+            rows = [json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines()]
+            self.assertEqual([r["record_id"] for r in rows], ["rec_a", "rec_b"])
+            # Direct durable helper also refuses lines without trailing newline.
+            with self.assertRaises(IntakeError):
+                durable_append_jsonl_line(ledger, '{"x":1}')
 
 
 if __name__ == "__main__":

@@ -17,7 +17,7 @@ Your three decisions are applied.
 | `DUAL_MODEL_E2E_TESTED` | `false` | DINOv2 has never served through Triton. The earlier 13-flow E2E run predates the remap and must be repeated on the GPU stack. |
 | `DATASET_READY_FOR_TRAINING` | `false` | Data `NO_GO`. |
 | `CROSS_BRAND_VALIDATION_COMPLETE` | `false` | Gated on verified data. |
-| `PRODUCTION_PROMOTION_ALLOWED` | `false` | `AUTHENTICITY_MODEL_PRODUCTION_APPROVED = False`. `DINOv3_PRODUCTION_ALLOWED = false`. |
+| `PRODUCTION_PROMOTION` (authoritative) | `FORBIDDEN` | Live key in `ml_rtx5080/experiments/scope_lock_v1/scope_contract.json`. Descriptive aliases such as `PRODUCTION_PROMOTION_ALLOWED` / `DINOv3_PRODUCTION_ALLOWED` in older reports are not executable constants; marketplace go-live is enforced by `AUTHENTICITY_MODEL_PRODUCTION_APPROVED = False` in `backend/inference/publication_gate.py`. |
 
 ## Evidence for Option B
 
