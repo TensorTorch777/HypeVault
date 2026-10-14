@@ -1074,6 +1074,152 @@ class Phase65IntakeTests(unittest.TestCase):
             self.assertEqual(decision.read_bytes(), before_d)
             self.assertEqual(preexisting.read_bytes(), before_o)
 
+    def test_source_near_duplicate_blocks_admission_despite_candidate_unique(self) -> None:
+        record = scraper_row(duplicate_status="NEAR_DUPLICATE_CANDIDATE")
+        assessment = assess_review_against_contracts(
+            record,
+            {
+                "authenticity_decision": "AUTHENTIC",
+                "rights_review_status": "APPROVED",
+                "adjudication_status": "AGREED",
+                "phase55_evidence_record": phase55_eligible(sha=_sha(1)),
+                "candidate_image_record_v2": candidate_admissible(sha=_sha(1)),
+            },
+        )
+        self.assertTrue(assessment["authenticity_verified"])
+        self.assertFalse(assessment["ml_use_eligible"])
+        self.assertTrue(
+            any(b.startswith("source_duplicate_status_not_unique") for b in assessment["blockers"])
+        )
+        self.assertIn("candidate_cannot_override_source_duplicate_status", assessment["blockers"])
+
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "manifest.jsonl"
+            ledger = Path(tmp) / "ledger.jsonl"
+            write_manifest(
+                manifest,
+                [scraper_row(duplicate_status="NEAR_DUPLICATE_CANDIDATE", stored_sha256=_sha(41))],
+            )
+            append_review_decision(
+                ledger,
+                {
+                    "record_id": "rec_web_001",
+                    "authenticity_decision": "AUTHENTIC",
+                    "rights_review_status": "APPROVED",
+                    "adjudication_status": "AGREED",
+                    "phase55_evidence_record": phase55_eligible(sha=_sha(41)),
+                    "candidate_image_record_v2": candidate_admissible(sha=_sha(41)),
+                },
+            )
+            result = ingest_manifests([manifest], ledger_path=ledger)
+            report = build_readiness_report(result)
+            self.assertEqual(result["queue"][0]["eligibility_decision"], "VERIFIED_NOT_ML_ELIGIBLE")
+            self.assertEqual(report["admitted_under_existing_contracts"], 0)
+            self.assertFalse(report["both_classes_have_admissible_support"])
+            self.assertEqual(report["verified_authentic_count"], 1)
+
+    def test_unsupported_source_duplicate_status_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "manifest.jsonl"
+            write_manifest(manifest, [scraper_row(duplicate_status="MAYBE_DUP")])
+            result = ingest_manifests([manifest])
+            self.assertEqual(len(result["invalid"]), 1)
+            self.assertTrue(
+                any(
+                    "DUPLICATE_STATUS_INVALID" in e
+                    for e in result["invalid"][0]["queue"]["validation_errors"]
+                )
+            )
+
+    def test_unique_source_still_admits_when_contracts_pass(self) -> None:
+        record = scraper_row(duplicate_status="UNIQUE", stored_sha256=_sha(55))
+        assessment = assess_review_against_contracts(
+            record,
+            {
+                "authenticity_decision": "AUTHENTIC",
+                "rights_review_status": "APPROVED",
+                "adjudication_status": "AGREED",
+                "phase55_evidence_record": phase55_eligible(sha=_sha(55)),
+                "candidate_image_record_v2": candidate_admissible(sha=_sha(55)),
+            },
+        )
+        self.assertTrue(assessment["authenticity_verified"])
+        self.assertTrue(assessment["ml_use_eligible"])
+        self.assertEqual(assessment["admission_status"], "ADMIT")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "manifest.jsonl"
+            ledger = Path(tmp) / "ledger.jsonl"
+            write_manifest(manifest, [scraper_row(stored_sha256=_sha(55))])
+            append_review_decision(
+                ledger,
+                {
+                    "record_id": "rec_web_001",
+                    "authenticity_decision": "AUTHENTIC",
+                    "rights_review_status": "APPROVED",
+                    "adjudication_status": "AGREED",
+                    "phase55_evidence_record": phase55_eligible(sha=_sha(55)),
+                    "candidate_image_record_v2": candidate_admissible(sha=_sha(55)),
+                },
+            )
+            report = build_readiness_report(ingest_manifests([manifest], ledger_path=ledger))
+            self.assertEqual(report["admitted_under_existing_contracts"], 1)
+            self.assertEqual(report["verified_authentic_count"], 1)
+
+    def test_append_preflight_rejects_cross_manifest_duplicate_record_ids(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            a = Path(tmp) / "a.jsonl"
+            b = Path(tmp) / "b.jsonl"
+            ledger = Path(tmp) / "ledger.jsonl"
+            decision = Path(tmp) / "decision.json"
+            out = Path(tmp) / "out"
+            out.mkdir()
+            preexisting = out / "intake_report.json"
+            preexisting.write_text('{"preexisting": true}\n', encoding="utf-8")
+            write_manifest(a, [scraper_row(record_id="shared", stored_sha256=_sha(71))])
+            write_manifest(b, [scraper_row(record_id="shared", stored_sha256=_sha(72))])
+            ledger.write_text("", encoding="utf-8")
+            decision.write_text(
+                json.dumps(
+                    {
+                        "record_id": "shared",
+                        "authenticity_decision": "INSUFFICIENT_EVIDENCE",
+                        "rights_review_status": "UNREVIEWED",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            before_a = a.read_bytes()
+            before_b = b.read_bytes()
+            before_l = ledger.read_bytes()
+            before_d = decision.read_bytes()
+            before_o = preexisting.read_bytes()
+
+            with self.assertRaises(IntakeError) as ctx:
+                preflight_inputs_before_append([a, b], ledger)
+            self.assertIn("DUPLICATE_RECORD_ID", str(ctx.exception))
+
+            with self.assertRaises(IntakeError):
+                main(
+                    [
+                        "--manifest",
+                        str(a),
+                        "--manifest",
+                        str(b),
+                        "--review-ledger",
+                        str(ledger),
+                        "--append-decision",
+                        str(decision),
+                        "--output-dir",
+                        str(out),
+                    ]
+                )
+            self.assertEqual(a.read_bytes(), before_a)
+            self.assertEqual(b.read_bytes(), before_b)
+            self.assertEqual(ledger.read_bytes(), before_l)
+            self.assertEqual(decision.read_bytes(), before_d)
+            self.assertEqual(preexisting.read_bytes(), before_o)
+
 
 if __name__ == "__main__":
     unittest.main()

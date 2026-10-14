@@ -92,6 +92,9 @@ AUTHENTICITY_DECISIONS = frozenset({
 })
 VERIFIED_DECISIONS = frozenset({"AUTHENTIC", "COUNTERFEIT"})
 
+# Matches hypevault_scraper.common assignment contract (UNIQUE or near-dup flag).
+SCRAPER_DUPLICATE_STATUSES = frozenset({"UNIQUE", "NEAR_DUPLICATE_CANDIDATE"})
+
 DATA_READINESS = "NO_GO_FOR_AUTHENTICITY_CLAIMS"
 ACQUISITION_AUTHORIZED = False
 INFERENCE_AUTHORIZED = False
@@ -300,6 +303,9 @@ def validate_scraper_record(record: Mapping[str, Any], *, source_path: str, inde
         errors.append("IMAGE_PATH_INVALID")
     else:
         errors.extend(image_path_reference_errors(image_path))
+    duplicate_status = record.get("duplicate_status")
+    if duplicate_status not in SCRAPER_DUPLICATE_STATUSES:
+        errors.append(f"DUPLICATE_STATUS_INVALID:{duplicate_status!r}")
     _ = source_path, index
     return errors
 
@@ -437,6 +443,61 @@ def load_review_ledger(path: Path | None) -> dict[str, list[dict[str, Any]]]:
     return grouped
 
 
+def scan_manifest_inputs(
+    manifest_paths: Iterable[Path],
+    *,
+    fingerprint: bool = True,
+) -> dict[str, Any]:
+    """Shared no-write scan of scraper manifests with cross-record uniqueness.
+
+    Returns resolved paths, per-row structural errors, duplicate record IDs,
+    duplicate hash groups, and optional content fingerprints. Never opens images.
+    """
+    resolved_manifests = [assert_readable_metadata_path(path) for path in manifest_paths]
+    seen_ids: dict[str, list[str]] = {}
+    seen_hashes: dict[str, list[str]] = {}
+    source_fingerprints: list[str] = []
+    items: list[dict[str, Any]] = []
+
+    for path in resolved_manifests:
+        before = path.read_bytes() if fingerprint else b""
+        if fingerprint:
+            source_fingerprints.append(hashlib.sha256(before).hexdigest())
+        rows = load_jsonl(path)
+        for index, record in enumerate(rows):
+            errors = validate_scraper_record(record, source_path=str(path), index=index)
+            record_id = str(record.get("record_id") or f"missing-{path.name}-{index}")
+            seen_ids.setdefault(record_id, []).append(str(path))
+            stored = record.get("stored_sha256")
+            if isinstance(stored, str) and _sha256_hex(stored):
+                seen_hashes.setdefault(stored, []).append(record_id)
+            items.append(
+                {
+                    "record": record,
+                    "manifest_path": str(path),
+                    "index": index,
+                    "record_id": record_id,
+                    "errors": list(errors),
+                }
+            )
+        if fingerprint:
+            after = path.read_bytes()
+            if after != before:
+                raise IntakeError(f"source manifest mutated during intake: {path}")
+
+    duplicate_record_ids = sorted({rid for rid, paths in seen_ids.items() if len(paths) > 1})
+    duplicate_hashes = {sha: ids for sha, ids in seen_hashes.items() if len(ids) > 1}
+    return {
+        "resolved_manifests": resolved_manifests,
+        "items": items,
+        "seen_ids": seen_ids,
+        "seen_hashes": seen_hashes,
+        "duplicate_record_ids": duplicate_record_ids,
+        "duplicate_hashes": duplicate_hashes,
+        "manifest_sha256": source_fingerprints,
+    }
+
+
 def preflight_inputs_before_append(
     manifest_paths: Iterable[Path],
     ledger_path: Path | None,
@@ -444,20 +505,24 @@ def preflight_inputs_before_append(
     """No-write validation of manifests and the existing ledger before any append.
 
     Raises IntakeError if any manifest is unreadable/malformed, any scraper
-    record fails structural validation, or any existing ledger row fails
-    schema/Phase 55 validation. Never opens images and never writes.
+    record fails structural validation, any existing ledger row fails
+    schema/Phase 55 validation, or cross-manifest duplicate record IDs / hashes
+    violate uniqueness. Never opens images and never writes.
     """
-    resolved_manifests = [assert_readable_metadata_path(path) for path in manifest_paths]
     # Validate existing ledger rows first (fail closed on bad history).
     load_review_ledger(ledger_path)
+    scan = scan_manifest_inputs(manifest_paths, fingerprint=False)
     invalid: list[str] = []
-    for path in resolved_manifests:
-        rows = load_jsonl(path)
-        for index, record in enumerate(rows):
-            errors = validate_scraper_record(record, source_path=str(path), index=index)
-            if errors:
-                record_id = record.get("record_id") or f"index-{index}"
-                invalid.append(f"{path}:{record_id}:{','.join(errors)}")
+    for item in scan["items"]:
+        if item["errors"]:
+            invalid.append(
+                f"{item['manifest_path']}:{item['record_id']}:{','.join(item['errors'])}"
+            )
+    for record_id in scan["duplicate_record_ids"]:
+        first_path = scan["seen_ids"][record_id][0]
+        invalid.append(f"DUPLICATE_RECORD_ID:{record_id}:{first_path}")
+    for sha, ids in sorted(scan["duplicate_hashes"].items()):
+        invalid.append(f"DUPLICATE_HASH_GROUP:{sha}:{','.join(ids)}")
     if invalid:
         raise IntakeError(
             "append preflight failed; refusing to mutate review ledger while "
@@ -594,6 +659,13 @@ def assess_review_against_contracts(
     if disputed and proposing_verified:
         blockers.append("adjudication_incomplete")
 
+    # Source-manifest uniqueness is authoritative for ML eligibility. A candidate
+    # payload claiming UNIQUE cannot override NEAR_DUPLICATE_CANDIDATE (or other
+    # non-unique) status on the scraper record.
+    source_duplicate_status = scraper_record.get("duplicate_status")
+    if source_duplicate_status != "UNIQUE":
+        blockers.append(f"source_duplicate_status_not_unique:{source_duplicate_status}")
+
     candidate = decision.get("candidate_image_record_v2")
     admission_status = "NOT_EVALUATED"
     admission_reasons: list[str] = []
@@ -609,8 +681,11 @@ def assess_review_against_contracts(
             expected = "authentic" if authenticity == "AUTHENTIC" else "counterfeit"
             if candidate_label != expected:
                 blockers.append(f"candidate_label_mismatch:{candidate_label}!={expected}")
-            if (candidate.get("image") or {}).get("duplicate_status") != "UNIQUE":
+            candidate_dup = (candidate.get("image") or {}).get("duplicate_status")
+            if candidate_dup != "UNIQUE":
                 blockers.append("candidate_duplicate_status_not_unique")
+            if candidate_dup == "UNIQUE" and source_duplicate_status != "UNIQUE":
+                blockers.append("candidate_cannot_override_source_duplicate_status")
             admission_status, admission_reasons = evaluate_data_admission(
                 candidate, today=today
             )
@@ -639,10 +714,13 @@ def assess_review_against_contracts(
         authenticity_verified
         and rights_ok
         and admission_status == "ADMIT"
+        and source_duplicate_status == "UNIQUE"
         and "missing_candidate_image_record_v2" not in blockers
         and "candidate_image_sha256_mismatch" not in blockers
         and not any(b.startswith("candidate_label_mismatch") for b in blockers)
         and "candidate_duplicate_status_not_unique" not in blockers
+        and "candidate_cannot_override_source_duplicate_status" not in blockers
+        and not any(b.startswith("source_duplicate_status_not_unique") for b in blockers)
         and "admission_rejected" not in blockers
     )
 
@@ -690,69 +768,58 @@ def ingest_manifests(
     ledger_path: Path | None = None,
     today: date | None = None,
 ) -> dict[str, Any]:
-    resolved_manifests = [assert_readable_metadata_path(path) for path in manifest_paths]
+    scan = scan_manifest_inputs(manifest_paths, fingerprint=True)
+    resolved_manifests = scan["resolved_manifests"]
+    seen_ids = scan["seen_ids"]
+    seen_hashes = scan["seen_hashes"]
+    duplicate_record_ids = scan["duplicate_record_ids"]
+    duplicate_hashes = scan["duplicate_hashes"]
     ledger = load_review_ledger(ledger_path)
     valid: list[dict[str, Any]] = []
     invalid: list[dict[str, Any]] = []
     queue: list[dict[str, Any]] = []
-    seen_ids: dict[str, list[str]] = {}
-    seen_hashes: dict[str, list[str]] = {}
-    source_fingerprints: list[str] = []
     pending_items: list[dict[str, Any]] = []
 
-    for path in resolved_manifests:
-        # Path already guarded; fingerprint before parsing.
-        before = path.read_bytes()
-        source_fingerprints.append(hashlib.sha256(before).hexdigest())
-        rows = load_jsonl(path)
-        for index, record in enumerate(rows):
-            errors = validate_scraper_record(record, source_path=str(path), index=index)
-            record_id = str(record.get("record_id") or f"missing-{path.name}-{index}")
-            seen_ids.setdefault(record_id, []).append(str(path))
-            stored = record.get("stored_sha256")
-            if isinstance(stored, str) and _sha256_hex(stored):
-                seen_hashes.setdefault(stored, []).append(record_id)
-            entries = ledger.get(record_id, [])
-            row = build_queue_row(
+    for item in scan["items"]:
+        record = item["record"]
+        record_id = item["record_id"]
+        errors = list(item["errors"])
+        path = item["manifest_path"]
+        stored = record.get("stored_sha256")
+        entries = ledger.get(record_id, [])
+        row = build_queue_row(
+            record,
+            manifest_path=path,
+            validation_errors=list(errors),
+            ledger_entries=entries,
+        )
+        # Provisional assessment; duplicate-ID/hash demotion happens in a second pass
+        # so the first conflicting row cannot remain verified/admitted.
+        if not errors and entries:
+            dup_ids = seen_hashes.get(str(stored), [record_id])
+            assessment = assess_review_against_contracts(
                 record,
-                manifest_path=str(path),
-                validation_errors=list(errors),
-                ledger_entries=entries,
+                entries[-1],
+                today=today,
+                duplicate_hash_ids=dup_ids,
             )
-            # Provisional assessment; duplicate-ID/hash demotion happens in a second pass
-            # so the first conflicting row cannot remain verified/admitted.
-            if not errors and entries:
-                dup_ids = seen_hashes.get(str(stored), [record_id])
-                assessment = assess_review_against_contracts(
-                    record,
-                    entries[-1],
-                    today=today,
-                    duplicate_hash_ids=dup_ids,
+            if assessment["authenticity_verified"]:
+                row["eligibility_decision"] = (
+                    "ADMITTED" if assessment["ml_use_eligible"] else "VERIFIED_NOT_ML_ELIGIBLE"
                 )
-                if assessment["authenticity_verified"]:
-                    row["eligibility_decision"] = (
-                        "ADMITTED" if assessment["ml_use_eligible"] else "VERIFIED_NOT_ML_ELIGIBLE"
-                    )
-                    label = (entries[-1].get("phase55_evidence_record") or {}).get("verified_label")
-                    row["verified_label"] = label or "UNKNOWN"
-                    row["eligibility_reason"] = (
-                        f"phase55_verified:{label};ml_use_eligible={assessment['ml_use_eligible']}"
-                    )
-                else:
-                    row["eligibility_decision"] = "BLOCKED"
-                    row["eligibility_reason"] = ",".join(assessment["blockers"]) or "blocked"
-                row["admission_status"] = assessment["admission_status"]
-                row["assessment_blockers"] = assessment["blockers"]
-            pending_items.append({"record": record, "queue": row, "manifest_path": str(path)})
+                label = (entries[-1].get("phase55_evidence_record") or {}).get("verified_label")
+                row["verified_label"] = label or "UNKNOWN"
+                row["eligibility_reason"] = (
+                    f"phase55_verified:{label};ml_use_eligible={assessment['ml_use_eligible']}"
+                )
+            else:
+                row["eligibility_decision"] = "BLOCKED"
+                row["eligibility_reason"] = ",".join(assessment["blockers"]) or "blocked"
+            row["admission_status"] = assessment["admission_status"]
+            row["assessment_blockers"] = assessment["blockers"]
+        pending_items.append({"record": record, "queue": row, "manifest_path": path})
 
-        after = path.read_bytes()
-        if after != before:
-            raise IntakeError(f"source manifest mutated during intake: {path}")
-
-    duplicate_record_ids = sorted({rid for rid, paths in seen_ids.items() if len(paths) > 1})
     duplicate_id_set = set(duplicate_record_ids)
-    duplicate_hashes = {sha: ids for sha, ids in seen_hashes.items() if len(ids) > 1}
-
     for item in pending_items:
         row = item["queue"]
         record_id = str(row.get("record_id") or "")
@@ -783,7 +850,7 @@ def ingest_manifests(
         "schema_version": PHASE65_SCHEMA,
         "generated_at_utc": utc_now_iso(),
         "manifest_paths": [str(p) for p in resolved_manifests],
-        "manifest_sha256": source_fingerprints,
+        "manifest_sha256": scan["manifest_sha256"],
         "valid": valid,
         "invalid": invalid,
         "queue": queue,
