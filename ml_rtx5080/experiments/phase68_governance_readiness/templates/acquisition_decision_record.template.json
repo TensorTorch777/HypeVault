@@ -1,0 +1,212 @@
+{
+  "schema_version": "phase68_acquisition_decision_record_v1",
+  "decision_record_id": "acqdec_DRAFT_TEMPLATE_0001",
+  "created_at_utc": "NOT_RECORDED",
+  "updated_at_utc": "NOT_RECORDED",
+  "research_purpose": {
+    "research_questions": [
+      "NOT_RECORDED — replace with actual research questions before review"
+    ],
+    "permitted_model_development_purpose": "NOT_RECORDED",
+    "product_category_scope": [
+      "NOT_RECORDED — replace with explicit product/category scope"
+    ],
+    "intended_audience": "NOT_RECORDED",
+    "publication_boundaries": "NOT_RECORDED — no publication authorized by this draft",
+    "explicit_out_of_scope_uses": [
+      "Any image acquisition, seller contact, paid API use, or production authenticity claims",
+      "Treating scraper, directory, seller, synthetic, or model labels as independent ground truth"
+    ]
+  },
+  "proposed_sources": [
+    {
+      "source_id": "source_PLACEHOLDER_0001",
+      "canonical_name": "NOT_RECORDED — no provider fabricated in this template",
+      "public_urls": [
+        "NOT_RECORDED"
+      ],
+      "intended_acquisition_method": "NOT_RECORDED — desk review only until a separate authorization exists",
+      "scope_limit": "NOT_RECORDED — volume/date/content limits required before any GO recommendation",
+      "terms_evidence_refs": [
+        {
+          "ref_id": "eref_PLACEHOLDER_TERMS_0001",
+          "title": "Terms/license evidence not yet attached",
+          "uri_or_path": "NOT_RECORDED",
+          "retrieved_at_utc": "NOT_RECORDED",
+          "sha256": "NOT_RECORDED",
+          "notes": "Missing terms evidence is a blocker"
+        }
+      ],
+      "copyright_redistribution_notes": "NOT_RECORDED — publicly visible images are not automatically licensed for research use",
+      "provider_permission_status": "NOT_RECORDED",
+      "storage_transformation_publication_restrictions": "NOT_RECORDED",
+      "reviewer_ref": "reviewer_role_rights_VACANT",
+      "reviewed_at_utc": "NOT_RECORDED",
+      "evidence_refs": [
+        {
+          "ref_id": "eref_PLACEHOLDER_SOURCE_0001",
+          "title": "Source desk-review evidence not yet attached",
+          "uri_or_path": "NOT_RECORDED",
+          "retrieved_at_utc": "NOT_RECORDED",
+          "sha256": "NOT_RECORDED"
+        }
+      ],
+      "expiration_or_review_by": "NOT_RECORDED"
+    }
+  ],
+  "rights_and_license_review": {
+    "applicability": "NOT_RECORDED",
+    "status": "NOT_STARTED",
+    "reviewer_ref": "reviewer_role_rights_VACANT",
+    "reviewed_at_utc": "NOT_RECORDED",
+    "evidence_refs": [
+      {
+        "ref_id": "eref_PLACEHOLDER_RIGHTS_0001",
+        "title": "Rights/license review evidence missing",
+        "uri_or_path": "NOT_RECORDED",
+        "retrieved_at_utc": "NOT_RECORDED",
+        "sha256": "NOT_RECORDED"
+      }
+    ]
+  },
+  "privacy_consent_ethics_review": {
+    "applicability": "NOT_RECORDED",
+    "status": "NOT_STARTED",
+    "reviewer_ref": "reviewer_role_privacy_VACANT",
+    "reviewed_at_utc": "NOT_RECORDED",
+    "evidence_refs": [
+      {
+        "ref_id": "eref_PLACEHOLDER_PRIVACY_0001",
+        "title": "Privacy/consent/ethics evidence missing",
+        "uri_or_path": "NOT_RECORDED",
+        "retrieved_at_utc": "NOT_RECORDED",
+        "sha256": "NOT_RECORDED"
+      }
+    ]
+  },
+  "faculty_or_institutional_review": {
+    "applicability": "NOT_RECORDED",
+    "status": "NOT_STARTED",
+    "reviewer_ref": "reviewer_role_institutional_VACANT",
+    "reviewed_at_utc": "NOT_RECORDED",
+    "evidence_refs": [
+      {
+        "ref_id": "eref_PLACEHOLDER_FACULTY_0001",
+        "title": "Institutional/faculty review evidence missing",
+        "uri_or_path": "NOT_RECORDED",
+        "retrieved_at_utc": "NOT_RECORDED",
+        "sha256": "NOT_RECORDED",
+        "notes": "Faculty approval is not a substitute for licenses or website terms"
+      }
+    ]
+  },
+  "ground_truth_requirements": {
+    "independent_verification_procedure_ref": "NOT_RECORDED — see Phase 55 schema / Phase 61 SOP; procedure not approved by this draft",
+    "reviewer_qualification_requirements": "NOT_RECORDED",
+    "dual_review_and_adjudication_defined": false,
+    "excludes_filename_directory_scraper_seller_model_synthetic_as_gt": true,
+    "distinction_review_eligibility_vs_ml_admission_documented": false,
+    "evidence_refs": [
+      {
+        "ref_id": "eref_PLACEHOLDER_GT_0001",
+        "title": "Ground-truth procedure evidence missing",
+        "uri_or_path": "NOT_RECORDED",
+        "retrieved_at_utc": "NOT_RECORDED",
+        "sha256": "NOT_RECORDED"
+      }
+    ]
+  },
+  "dataset_design_and_leakage_plan": {
+    "identity_scheme": "NOT_RECORDED",
+    "duplicate_detection_policy": "NOT_RECORDED",
+    "disjointness_rules": "NOT_RECORDED",
+    "split_separation_policy_level_only": "NOT_RECORDED — policy-level only; no final-test/OOD inspection",
+    "final_test_ood_inspection_prohibited": true,
+    "missing_metadata_reporting": "NOT_RECORDED",
+    "proposed_thresholds_require_human_approval": true,
+    "evidence_refs": [
+      {
+        "ref_id": "eref_PLACEHOLDER_LEAK_0001",
+        "title": "Dataset design/leakage plan evidence missing",
+        "uri_or_path": "NOT_RECORDED",
+        "retrieved_at_utc": "NOT_RECORDED",
+        "sha256": "NOT_RECORDED"
+      }
+    ]
+  },
+  "security_storage_retention_plan": {
+    "storage_designation": "NOT_RECORDED",
+    "access_control_summary": "NOT_RECORDED",
+    "checksum_and_audit_requirements": "NOT_RECORDED",
+    "retention_and_backup_policy": "NOT_RECORDED",
+    "deletion_takedown_quarantine_procedures": "NOT_RECORDED",
+    "incident_owner_ref": "owner_security_VACANT",
+    "evidence_refs": [
+      {
+        "ref_id": "eref_PLACEHOLDER_SEC_0001",
+        "title": "Security/retention plan evidence missing",
+        "uri_or_path": "NOT_RECORDED",
+        "retrieved_at_utc": "NOT_RECORDED",
+        "sha256": "NOT_RECORDED"
+      }
+    ]
+  },
+  "budget_and_ownership": {
+    "budget_mode": "ZERO_BUDGET_DESK_ONLY",
+    "accountable_owner_ref": "owner_budget_VACANT",
+    "time_window": "NOT_RECORDED",
+    "volume_or_rate_limits": "NOT_RECORDED — Phase 68 incurs no expenditure",
+    "stop_condition_before_expenditure": "Any non-zero spend requires a separate approved ceiling and owner before reconsideration",
+    "evidence_refs": [
+      {
+        "ref_id": "eref_PLACEHOLDER_BUDGET_0001",
+        "title": "Budget/ownership evidence missing beyond desk-only mode",
+        "uri_or_path": "NOT_RECORDED",
+        "retrieved_at_utc": "NOT_RECORDED",
+        "sha256": "NOT_RECORDED"
+      }
+    ]
+  },
+  "reviewers": [
+    {
+      "reviewer_ref": "reviewer_role_preparer_VACANT",
+      "role": "PREPARER",
+      "decision": "NOT_STARTED",
+      "decided_at_utc": "NOT_RECORDED",
+      "evidence_refs": [
+        {
+          "ref_id": "eref_PLACEHOLDER_REV_0001",
+          "title": "Preparer decision evidence missing",
+          "uri_or_path": "NOT_RECORDED",
+          "retrieved_at_utc": "NOT_RECORDED",
+          "sha256": "NOT_RECORDED"
+        }
+      ],
+      "notes": "Vacant seats keep overall_outcome at DRAFT"
+    }
+  ],
+  "unresolved_blockers": [
+    {
+      "blocker_id": "blocker_MISSING_EVIDENCE_PACKAGE",
+      "severity": "CRITICAL",
+      "description": "Template placeholders remain; rights, privacy, ground-truth, leakage, security, and named reviewers are incomplete",
+      "remediation_owner_ref": "owner_preparer_VACANT",
+      "status": "OPEN",
+      "evidence_refs": [
+        {
+          "ref_id": "eref_PLACEHOLDER_BLOCK_0001",
+          "title": "Blocker tracking placeholder",
+          "uri_or_path": "NOT_RECORDED",
+          "retrieved_at_utc": "NOT_RECORDED",
+          "sha256": "NOT_RECORDED"
+        }
+      ]
+    }
+  ],
+  "exceptions_requested": [],
+  "expiration_or_next_review_utc": "NOT_RECORDED",
+  "overall_outcome": "DRAFT",
+  "overall_rationale": "Blank Phase 68 template. No providers, licenses, consent, verified labels, budget authorizations, or approvals are asserted. Completing this file does not authorize acquisition.",
+  "acquisition_authorized_by_this_record": false,
+  "gates_unchanged_acknowledgment": true
+}
