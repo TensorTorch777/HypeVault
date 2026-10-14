@@ -437,6 +437,35 @@ def load_review_ledger(path: Path | None) -> dict[str, list[dict[str, Any]]]:
     return grouped
 
 
+def preflight_inputs_before_append(
+    manifest_paths: Iterable[Path],
+    ledger_path: Path | None,
+) -> None:
+    """No-write validation of manifests and the existing ledger before any append.
+
+    Raises IntakeError if any manifest is unreadable/malformed, any scraper
+    record fails structural validation, or any existing ledger row fails
+    schema/Phase 55 validation. Never opens images and never writes.
+    """
+    resolved_manifests = [assert_readable_metadata_path(path) for path in manifest_paths]
+    # Validate existing ledger rows first (fail closed on bad history).
+    load_review_ledger(ledger_path)
+    invalid: list[str] = []
+    for path in resolved_manifests:
+        rows = load_jsonl(path)
+        for index, record in enumerate(rows):
+            errors = validate_scraper_record(record, source_path=str(path), index=index)
+            if errors:
+                record_id = record.get("record_id") or f"index-{index}"
+                invalid.append(f"{path}:{record_id}:{','.join(errors)}")
+    if invalid:
+        raise IntakeError(
+            "append preflight failed; refusing to mutate review ledger while "
+            f"inputs are invalid: {'; '.join(invalid[:5])}"
+            + (" ..." if len(invalid) > 5 else "")
+        )
+
+
 def append_review_decision(
     ledger_path: Path,
     decision: Mapping[str, Any],
@@ -782,6 +811,8 @@ def build_readiness_report(intake: Mapping[str, Any]) -> dict[str, Any]:
     verified_authentic = 0
     verified_counterfeit = 0
     admitted = 0
+    admitted_authentic = 0
+    admitted_counterfeit = 0
     for row in queue:
         decision = row.get("eligibility_decision")
         verified_label = row.get("verified_label")
@@ -792,10 +823,15 @@ def build_readiness_report(intake: Mapping[str, Any]) -> dict[str, Any]:
         elif decision in {"ADMITTED", "VERIFIED_NOT_ML_ELIGIBLE"} and verified_label == "COUNTERFEIT":
             verified_counterfeit += 1
         # Admitted requires actual data_admission ADMIT (eligibility_decision ADMITTED).
+        # VERIFIED_NOT_ML_ELIGIBLE never counts as ML-admissible class support.
         if decision == "ADMITTED" and row.get("admission_status") == "ADMIT":
             admitted += 1
+            if verified_label == "AUTHENTIC":
+                admitted_authentic += 1
+            elif verified_label == "COUNTERFEIT":
+                admitted_counterfeit += 1
 
-    both_classes = verified_authentic > 0 and verified_counterfeit > 0
+    both_classes = admitted_authentic > 0 and admitted_counterfeit > 0
     blockers = [
         "independently_verified_labels_remain_zero" if verified_authentic + verified_counterfeit == 0 else None,
         "acquisition_authorized_false",
@@ -950,6 +986,10 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit("--append-decision requires --review-ledger")
         # Re-check collision immediately before write (resolved paths, incl. symlinks).
         assert_ledger_append_path(ledger, protected_inputs=[*manifests, decision_path])
+        # No-write preflight: abort before mutating the ledger if manifests or
+        # the existing ledger are malformed/invalid. Leaves all inputs and any
+        # pre-existing outputs untouched.
+        preflight_inputs_before_append(manifests, ledger)
         decision = load_json_object(decision_path)
         append_review_decision(
             ledger,

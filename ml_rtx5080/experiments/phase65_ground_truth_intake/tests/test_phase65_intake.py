@@ -35,6 +35,7 @@ from intake import (  # noqa: E402
     load_review_ledger,
     main,
     normalize_authenticity_decision,
+    preflight_inputs_before_append,
 )
 from hypevault_scraper.common import (  # noqa: E402
     SCHEMA_VERSION,
@@ -913,6 +914,165 @@ class Phase65IntakeTests(unittest.TestCase):
             write_manifest(manifest, [scraper_row()])
             with self.assertRaises(IntakeError):
                 ingest_manifests([manifest], ledger_path=ledger)
+
+    def test_both_classes_requires_admitted_not_verified_only(self) -> None:
+        """VERIFIED_NOT_ML_ELIGIBLE must not satisfy both_classes_have_admissible_support."""
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "manifest.jsonl"
+            ledger = Path(tmp) / "ledger.jsonl"
+            write_manifest(
+                manifest,
+                [
+                    scraper_row(record_id="auth_v", stored_sha256=_sha(31)),
+                    scraper_row(record_id="cf_v", stored_sha256=_sha(32)),
+                ],
+            )
+            # Schema-valid Phase 55 evidence, rights approved, but no candidate →
+            # authenticity verified without admission ADMIT.
+            append_review_decision(
+                ledger,
+                {
+                    "record_id": "auth_v",
+                    "authenticity_decision": "AUTHENTIC",
+                    "rights_review_status": "APPROVED",
+                    "adjudication_status": "AGREED",
+                    "phase55_evidence_record": phase55_eligible(sha=_sha(31), label="AUTHENTIC"),
+                },
+            )
+            append_review_decision(
+                ledger,
+                {
+                    "record_id": "cf_v",
+                    "authenticity_decision": "COUNTERFEIT",
+                    "rights_review_status": "APPROVED",
+                    "adjudication_status": "AGREED",
+                    "phase55_evidence_record": phase55_eligible(sha=_sha(32), label="COUNTERFEIT"),
+                },
+            )
+            result = ingest_manifests([manifest], ledger_path=ledger)
+            report = build_readiness_report(result)
+            self.assertEqual(report["verified_authentic_count"], 1)
+            self.assertEqual(report["verified_counterfeit_count"], 1)
+            self.assertEqual(report["admitted_under_existing_contracts"], 0)
+            self.assertFalse(report["both_classes_have_admissible_support"])
+            for row in result["queue"]:
+                self.assertEqual(row["eligibility_decision"], "VERIFIED_NOT_ML_ELIGIBLE")
+
+            # With full admission for both classes, the metric becomes true.
+            ledger2 = Path(tmp) / "ledger_admit.jsonl"
+            append_review_decision(
+                ledger2,
+                {
+                    "record_id": "auth_v",
+                    "authenticity_decision": "AUTHENTIC",
+                    "rights_review_status": "APPROVED",
+                    "adjudication_status": "AGREED",
+                    "phase55_evidence_record": phase55_eligible(sha=_sha(31), label="AUTHENTIC"),
+                    "candidate_image_record_v2": candidate_admissible(sha=_sha(31), label="authentic"),
+                },
+            )
+            append_review_decision(
+                ledger2,
+                {
+                    "record_id": "cf_v",
+                    "authenticity_decision": "COUNTERFEIT",
+                    "rights_review_status": "APPROVED",
+                    "adjudication_status": "AGREED",
+                    "phase55_evidence_record": phase55_eligible(sha=_sha(32), label="COUNTERFEIT"),
+                    "candidate_image_record_v2": candidate_admissible(sha=_sha(32), label="counterfeit"),
+                },
+            )
+            admitted_report = build_readiness_report(
+                ingest_manifests([manifest], ledger_path=ledger2)
+            )
+            self.assertGreaterEqual(admitted_report["admitted_under_existing_contracts"], 2)
+            self.assertTrue(admitted_report["both_classes_have_admissible_support"])
+
+    def test_append_decision_preflight_aborts_before_ledger_mutation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "manifest.jsonl"
+            ledger = Path(tmp) / "ledger.jsonl"
+            decision = Path(tmp) / "decision.json"
+            out = Path(tmp) / "out"
+            out.mkdir()
+            preexisting = out / "readiness_report.json"
+            preexisting.write_text('{"preexisting": true}\n', encoding="utf-8")
+            # Invalid scraper record (verified label not allowed in scraper manifest).
+            write_manifest(manifest, [scraper_row(label_status=STATUS_VERIFIED_AUTHENTIC)])
+            ledger.write_text("", encoding="utf-8")
+            decision.write_text(
+                json.dumps(
+                    {
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "INSUFFICIENT_EVIDENCE",
+                        "rights_review_status": "UNREVIEWED",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            before_m = manifest.read_bytes()
+            before_l = ledger.read_bytes()
+            before_d = decision.read_bytes()
+            before_o = preexisting.read_bytes()
+
+            with self.assertRaises(IntakeError):
+                preflight_inputs_before_append([manifest], ledger)
+
+            with self.assertRaises(IntakeError):
+                main(
+                    [
+                        "--manifest",
+                        str(manifest),
+                        "--review-ledger",
+                        str(ledger),
+                        "--append-decision",
+                        str(decision),
+                        "--output-dir",
+                        str(out),
+                    ]
+                )
+            self.assertEqual(manifest.read_bytes(), before_m)
+            self.assertEqual(ledger.read_bytes(), before_l)
+            self.assertEqual(decision.read_bytes(), before_d)
+            self.assertEqual(preexisting.read_bytes(), before_o)
+
+            # Malformed existing ledger entry also aborts before append.
+            write_manifest(manifest, [scraper_row()])
+            ledger.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "phase65_review_ledger_v1",
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "AUTHENTIC",
+                        "rights_review_status": "APPROVED",
+                        "recorded_at_utc": "2026-10-14T00:00:00Z",
+                        "phase55_evidence_record": {"sample_id": "incomplete"},
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            before_m = manifest.read_bytes()
+            before_l = ledger.read_bytes()
+            before_d = decision.read_bytes()
+            before_o = preexisting.read_bytes()
+            with self.assertRaises(IntakeError):
+                main(
+                    [
+                        "--manifest",
+                        str(manifest),
+                        "--review-ledger",
+                        str(ledger),
+                        "--append-decision",
+                        str(decision),
+                        "--output-dir",
+                        str(out),
+                    ]
+                )
+            self.assertEqual(manifest.read_bytes(), before_m)
+            self.assertEqual(ledger.read_bytes(), before_l)
+            self.assertEqual(decision.read_bytes(), before_d)
+            self.assertEqual(preexisting.read_bytes(), before_o)
 
 
 if __name__ == "__main__":
