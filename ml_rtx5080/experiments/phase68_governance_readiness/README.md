@@ -50,7 +50,7 @@ Scraper network access still requires an explicit CLI opt-in (`hypevault_scraper
    - `DRAFT` — incomplete.
    - `NO_GO` — mandatory condition fails.
    - `CONDITIONAL_NO_GO` — remediation required before reconsideration.
-   - `GO_RECOMMENDED_SEPARATE_AUTHORIZATION_REQUIRED` — reviewers recommend a *separate* authorization decision; **acquisition remains unauthorized**.
+   - `GO_RECOMMENDED_SEPARATE_AUTHORIZATION_REQUIRED` — reviewers recommend a *separate* authorization decision; **acquisition remains unauthorized**. Schema validation rejects this outcome unless applicable reviews, sources, ground-truth procedure, leakage/security/budget plans, required reviewer roles, and completed evidence refs are structurally populated. Clearing `unresolved_blockers` alone is not enough. Placeholders such as `NOT_RECORDED`, `NOT_STARTED`, `PENDING`, and vacant reviewer refs cannot satisfy a GO recommendation.
 4. **Separate authorization:** Only a later, explicit human/institutional phase may consider changing `ACQUISITION_AUTHORIZED` or related gates. Filling this package never flips those gates.
 
 ### Roles (proposed; require human confirmation)
@@ -73,7 +73,7 @@ Until named individuals are assigned in a completed record, roles remain vacant 
 - Prefer durable references: document title, URI or repository path, retrieval date, and SHA-256 of retained copies where retained.
 - Do not commit watch images, certificates, raw serials, customer PII, credentials, or private correspondence to Git (aligned with Phase 55 / 61).
 - Incomplete, contradictory, expired, or withdrawn approvals → fail closed (`NO_GO` or `CONDITIONAL_NO_GO`).
-- Schema validity proves structure only—not legal rights, ethical clearance, or factual truth.
+- Schema validity proves structure only—not legal rights, ethical clearance, or factual truth. A schema-valid `GO_RECOMMENDED_SEPARATE_AUTHORIZATION_REQUIRED` record still cannot prove that attached evidence is authentic, that licenses were correctly interpreted, or that institutional approval was actually granted.
 
 ## Why completion does not authorize
 

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://hypevault.example/schemas/phase68-acquisition-decision-record.schema.json",
   "title": "HypeVault Phase 68 Acquisition Decision Record",
-  "description": "Human-reviewed recommendation package for considering future acquisition authorization. Schema-valid records do not authorize acquisition, inference, authenticity claims, or production promotion. overall_outcome never toggles ACQUISITION_AUTHORIZED.",
+  "description": "Human-reviewed recommendation package for considering future acquisition authorization. Schema-valid records do not authorize acquisition, inference, authenticity claims, or production promotion. overall_outcome never toggles ACQUISITION_AUTHORIZED. GO_RECOMMENDED_SEPARATE_AUTHORIZATION_REQUIRED requires structurally complete applicable reviews and evidence; JSON Schema cannot prove legal rights, ethical clearance, or factual authenticity of approvals.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -458,21 +458,7 @@
         "required": ["overall_outcome"]
       },
       "then": {
-        "properties": {
-          "acquisition_authorized_by_this_record": {"const": false},
-          "unresolved_blockers": {
-            "type": "array",
-            "items": {
-              "not": {
-                "properties": {
-                  "severity": {"const": "CRITICAL"},
-                  "status": {"enum": ["OPEN", "IN_PROGRESS"]}
-                },
-                "required": ["severity", "status"]
-              }
-            }
-          }
-        }
+        "$ref": "#/$defs/go_recommendation_requirements"
       }
     },
     {
@@ -489,6 +475,22 @@
     }
   ],
   "$defs": {
+    "recorded_string": {
+      "type": "string",
+      "minLength": 1,
+      "not": {"const": "NOT_RECORDED"},
+      "description": "Non-placeholder recorded value. NOT_RECORDED is rejected for GO recommendations."
+    },
+    "assigned_actor_ref": {
+      "type": "string",
+      "minLength": 8,
+      "allOf": [
+        {"not": {"const": "NOT_RECORDED"}},
+        {"not": {"pattern": "VACANT"}},
+        {"not": {"pattern": "PLACEHOLDER"}}
+      ],
+      "description": "Assigned role reference; vacant/placeholder refs cannot satisfy a GO recommendation."
+    },
     "evidence_ref": {
       "type": "object",
       "additionalProperties": false,
@@ -504,6 +506,32 @@
         "sha256": {
           "type": "string",
           "pattern": "^([a-f0-9]{64}|NOT_RECORDED)$"
+        },
+        "notes": {"type": "string"}
+      }
+    },
+    "completed_evidence_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref_id",
+        "title",
+        "uri_or_path",
+        "retrieved_at_utc",
+        "sha256"
+      ],
+      "properties": {
+        "ref_id": {
+          "type": "string",
+          "pattern": "^eref_[A-Za-z0-9_-]{4,64}$"
+        },
+        "title": {"$ref": "#/$defs/recorded_string"},
+        "uri_or_path": {"$ref": "#/$defs/recorded_string"},
+        "retrieved_at_utc": {"$ref": "#/$defs/recorded_string"},
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "Required 64-hex checksum for GO-path evidence; NOT_RECORDED is rejected."
         },
         "notes": {"type": "string"}
       }
@@ -550,6 +578,512 @@
           }
         }
       ]
+    },
+    "go_applicability_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "applicability",
+        "status",
+        "reviewer_ref",
+        "reviewed_at_utc",
+        "evidence_refs"
+      ],
+      "properties": {
+        "applicability": {
+          "enum": ["APPLICABLE", "NOT_APPLICABLE"]
+        },
+        "status": {
+          "const": "COMPLETE_PASS"
+        },
+        "not_applicable_rationale": {"type": "string"},
+        "reviewer_ref": {"$ref": "#/$defs/assigned_actor_ref"},
+        "reviewed_at_utc": {"$ref": "#/$defs/recorded_string"},
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/completed_evidence_ref"}
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "applicability": {"const": "APPLICABLE"},
+            "status": {"const": "COMPLETE_PASS"}
+          },
+          "required": ["applicability", "status"]
+        },
+        {
+          "properties": {
+            "applicability": {"const": "NOT_APPLICABLE"},
+            "status": {"const": "COMPLETE_PASS"},
+            "not_applicable_rationale": {
+              "type": "string",
+              "minLength": 16
+            }
+          },
+          "required": [
+            "applicability",
+            "status",
+            "not_applicable_rationale"
+          ]
+        }
+      ],
+      "description": "Structurally complete applicability determination for a GO recommendation. Does not prove legal or ethical truth."
+    },
+    "go_complete_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "canonical_name",
+        "public_urls",
+        "intended_acquisition_method",
+        "scope_limit",
+        "terms_evidence_refs",
+        "copyright_redistribution_notes",
+        "provider_permission_status",
+        "storage_transformation_publication_restrictions",
+        "reviewer_ref",
+        "reviewed_at_utc",
+        "evidence_refs",
+        "expiration_or_review_by"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "pattern": "^source_[A-Za-z0-9_-]{4,64}$"
+        },
+        "canonical_name": {"$ref": "#/$defs/recorded_string"},
+        "public_urls": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/recorded_string"}
+        },
+        "intended_acquisition_method": {"$ref": "#/$defs/recorded_string"},
+        "scope_limit": {"$ref": "#/$defs/recorded_string"},
+        "terms_evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/completed_evidence_ref"}
+        },
+        "copyright_redistribution_notes": {"$ref": "#/$defs/recorded_string"},
+        "provider_permission_status": {
+          "enum": ["REQUIRED_OBTAINED", "NOT_REQUIRED"]
+        },
+        "provider_permission_rationale": {"type": "string"},
+        "storage_transformation_publication_restrictions": {
+          "$ref": "#/$defs/recorded_string"
+        },
+        "reviewer_ref": {"$ref": "#/$defs/assigned_actor_ref"},
+        "reviewed_at_utc": {"$ref": "#/$defs/recorded_string"},
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/completed_evidence_ref"}
+        },
+        "expiration_or_review_by": {"$ref": "#/$defs/recorded_string"}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "provider_permission_status": {"const": "NOT_REQUIRED"}
+            },
+            "required": ["provider_permission_status"]
+          },
+          "then": {
+            "required": ["provider_permission_rationale"],
+            "properties": {
+              "provider_permission_rationale": {
+                "type": "string",
+                "minLength": 16
+              }
+            }
+          }
+        }
+      ]
+    },
+    "go_required_reviewer": {
+      "type": "object",
+      "required": [
+        "reviewer_ref",
+        "role",
+        "decision",
+        "decided_at_utc",
+        "evidence_refs"
+      ],
+      "properties": {
+        "reviewer_ref": {"$ref": "#/$defs/assigned_actor_ref"},
+        "decision": {"const": "APPROVE_FOR_RECOMMENDATION_REVIEW"},
+        "decided_at_utc": {"$ref": "#/$defs/recorded_string"},
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/completed_evidence_ref"}
+        }
+      }
+    },
+    "go_recommendation_requirements": {
+      "description": "Structural completeness gate for GO_RECOMMENDED_SEPARATE_AUTHORIZATION_REQUIRED. Empty unresolved_blockers alone is insufficient. Schema validity is not authorization and cannot prove rights or approval authenticity.",
+      "type": "object",
+      "required": [
+        "created_at_utc",
+        "research_purpose",
+        "proposed_sources",
+        "rights_and_license_review",
+        "privacy_consent_ethics_review",
+        "faculty_or_institutional_review",
+        "ground_truth_requirements",
+        "dataset_design_and_leakage_plan",
+        "security_storage_retention_plan",
+        "budget_and_ownership",
+        "reviewers",
+        "unresolved_blockers",
+        "overall_rationale",
+        "acquisition_authorized_by_this_record",
+        "gates_unchanged_acknowledgment"
+      ],
+      "properties": {
+        "acquisition_authorized_by_this_record": {"const": false},
+        "gates_unchanged_acknowledgment": {"const": true},
+        "created_at_utc": {"$ref": "#/$defs/recorded_string"},
+        "overall_rationale": {
+          "type": "string",
+          "minLength": 32
+        },
+        "research_purpose": {
+          "type": "object",
+          "required": [
+            "research_questions",
+            "permitted_model_development_purpose",
+            "product_category_scope",
+            "intended_audience",
+            "publication_boundaries",
+            "explicit_out_of_scope_uses"
+          ],
+          "properties": {
+            "research_questions": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"$ref": "#/$defs/recorded_string"}
+            },
+            "permitted_model_development_purpose": {
+              "enum": [
+                "ML_EVALUATION_ONLY",
+                "NONPUBLIC_RESEARCH",
+                "PUBLICATION_OF_AGGREGATES",
+                "OTHER_DOCUMENTED"
+              ]
+            },
+            "product_category_scope": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"$ref": "#/$defs/recorded_string"}
+            },
+            "intended_audience": {"$ref": "#/$defs/recorded_string"},
+            "publication_boundaries": {"$ref": "#/$defs/recorded_string"},
+            "explicit_out_of_scope_uses": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"$ref": "#/$defs/recorded_string"}
+            }
+          }
+        },
+        "proposed_sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/go_complete_source"}
+        },
+        "rights_and_license_review": {
+          "$ref": "#/$defs/go_applicability_block"
+        },
+        "privacy_consent_ethics_review": {
+          "$ref": "#/$defs/go_applicability_block"
+        },
+        "faculty_or_institutional_review": {
+          "$ref": "#/$defs/go_applicability_block"
+        },
+        "ground_truth_requirements": {
+          "type": "object",
+          "required": [
+            "independent_verification_procedure_ref",
+            "reviewer_qualification_requirements",
+            "dual_review_and_adjudication_defined",
+            "excludes_filename_directory_scraper_seller_model_synthetic_as_gt",
+            "distinction_review_eligibility_vs_ml_admission_documented",
+            "evidence_refs"
+          ],
+          "properties": {
+            "independent_verification_procedure_ref": {
+              "$ref": "#/$defs/recorded_string"
+            },
+            "reviewer_qualification_requirements": {
+              "$ref": "#/$defs/recorded_string"
+            },
+            "dual_review_and_adjudication_defined": {"const": true},
+            "excludes_filename_directory_scraper_seller_model_synthetic_as_gt": {
+              "const": true
+            },
+            "distinction_review_eligibility_vs_ml_admission_documented": {
+              "const": true
+            },
+            "evidence_refs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"$ref": "#/$defs/completed_evidence_ref"}
+            }
+          }
+        },
+        "dataset_design_and_leakage_plan": {
+          "type": "object",
+          "required": [
+            "identity_scheme",
+            "duplicate_detection_policy",
+            "disjointness_rules",
+            "split_separation_policy_level_only",
+            "final_test_ood_inspection_prohibited",
+            "missing_metadata_reporting",
+            "proposed_thresholds_require_human_approval",
+            "evidence_refs"
+          ],
+          "properties": {
+            "identity_scheme": {"$ref": "#/$defs/recorded_string"},
+            "duplicate_detection_policy": {"$ref": "#/$defs/recorded_string"},
+            "disjointness_rules": {"$ref": "#/$defs/recorded_string"},
+            "split_separation_policy_level_only": {
+              "$ref": "#/$defs/recorded_string"
+            },
+            "final_test_ood_inspection_prohibited": {"const": true},
+            "missing_metadata_reporting": {"$ref": "#/$defs/recorded_string"},
+            "proposed_thresholds_require_human_approval": {"const": true},
+            "evidence_refs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"$ref": "#/$defs/completed_evidence_ref"}
+            }
+          }
+        },
+        "security_storage_retention_plan": {
+          "type": "object",
+          "required": [
+            "storage_designation",
+            "access_control_summary",
+            "checksum_and_audit_requirements",
+            "retention_and_backup_policy",
+            "deletion_takedown_quarantine_procedures",
+            "incident_owner_ref",
+            "evidence_refs"
+          ],
+          "properties": {
+            "storage_designation": {"$ref": "#/$defs/recorded_string"},
+            "access_control_summary": {"$ref": "#/$defs/recorded_string"},
+            "checksum_and_audit_requirements": {
+              "$ref": "#/$defs/recorded_string"
+            },
+            "retention_and_backup_policy": {"$ref": "#/$defs/recorded_string"},
+            "deletion_takedown_quarantine_procedures": {
+              "$ref": "#/$defs/recorded_string"
+            },
+            "incident_owner_ref": {"$ref": "#/$defs/assigned_actor_ref"},
+            "evidence_refs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"$ref": "#/$defs/completed_evidence_ref"}
+            }
+          }
+        },
+        "budget_and_ownership": {
+          "type": "object",
+          "required": [
+            "budget_mode",
+            "accountable_owner_ref",
+            "time_window",
+            "volume_or_rate_limits",
+            "stop_condition_before_expenditure",
+            "evidence_refs"
+          ],
+          "properties": {
+            "budget_mode": {
+              "enum": ["ZERO_BUDGET_DESK_ONLY", "CEILING_DOCUMENTED"]
+            },
+            "budget_ceiling": {"type": "string"},
+            "funding_source": {"type": "string"},
+            "accountable_owner_ref": {"$ref": "#/$defs/assigned_actor_ref"},
+            "time_window": {"$ref": "#/$defs/recorded_string"},
+            "volume_or_rate_limits": {"$ref": "#/$defs/recorded_string"},
+            "stop_condition_before_expenditure": {
+              "$ref": "#/$defs/recorded_string"
+            },
+            "evidence_refs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"$ref": "#/$defs/completed_evidence_ref"}
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "budget_mode": {"const": "CEILING_DOCUMENTED"}
+                },
+                "required": ["budget_mode"]
+              },
+              "then": {
+                "required": ["budget_ceiling", "funding_source"],
+                "properties": {
+                  "budget_ceiling": {"$ref": "#/$defs/recorded_string"},
+                  "funding_source": {"$ref": "#/$defs/recorded_string"}
+                }
+              }
+            }
+          ]
+        },
+        "reviewers": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "reviewer_ref",
+              "role",
+              "decision",
+              "decided_at_utc",
+              "evidence_refs"
+            ],
+            "properties": {
+              "reviewer_ref": {"$ref": "#/$defs/assigned_actor_ref"},
+              "role": {
+                "enum": [
+                  "PREPARER",
+                  "RIGHTS_LICENSE",
+                  "PRIVACY_ETHICS",
+                  "GROUND_TRUTH",
+                  "DATASET_INTEGRITY",
+                  "SECURITY_RETENTION",
+                  "BUDGET_OWNER",
+                  "LEAD_REVIEWER",
+                  "OTHER"
+                ]
+              },
+              "decision": {
+                "const": "APPROVE_FOR_RECOMMENDATION_REVIEW"
+              },
+              "not_applicable_rationale": {"type": "string"},
+              "decided_at_utc": {"$ref": "#/$defs/recorded_string"},
+              "evidence_refs": {
+                "type": "array",
+                "minItems": 1,
+                "items": {"$ref": "#/$defs/completed_evidence_ref"}
+              },
+              "notes": {"type": "string"}
+            }
+          },
+          "allOf": [
+            {
+              "contains": {
+                "allOf": [
+                  {"$ref": "#/$defs/go_required_reviewer"},
+                  {
+                    "properties": {"role": {"const": "PREPARER"}},
+                    "required": ["role"]
+                  }
+                ]
+              }
+            },
+            {
+              "contains": {
+                "allOf": [
+                  {"$ref": "#/$defs/go_required_reviewer"},
+                  {
+                    "properties": {"role": {"const": "RIGHTS_LICENSE"}},
+                    "required": ["role"]
+                  }
+                ]
+              }
+            },
+            {
+              "contains": {
+                "allOf": [
+                  {"$ref": "#/$defs/go_required_reviewer"},
+                  {
+                    "properties": {"role": {"const": "PRIVACY_ETHICS"}},
+                    "required": ["role"]
+                  }
+                ]
+              }
+            },
+            {
+              "contains": {
+                "allOf": [
+                  {"$ref": "#/$defs/go_required_reviewer"},
+                  {
+                    "properties": {"role": {"const": "GROUND_TRUTH"}},
+                    "required": ["role"]
+                  }
+                ]
+              }
+            },
+            {
+              "contains": {
+                "allOf": [
+                  {"$ref": "#/$defs/go_required_reviewer"},
+                  {
+                    "properties": {"role": {"const": "DATASET_INTEGRITY"}},
+                    "required": ["role"]
+                  }
+                ]
+              }
+            },
+            {
+              "contains": {
+                "allOf": [
+                  {"$ref": "#/$defs/go_required_reviewer"},
+                  {
+                    "properties": {"role": {"const": "SECURITY_RETENTION"}},
+                    "required": ["role"]
+                  }
+                ]
+              }
+            },
+            {
+              "contains": {
+                "allOf": [
+                  {"$ref": "#/$defs/go_required_reviewer"},
+                  {
+                    "properties": {"role": {"const": "BUDGET_OWNER"}},
+                    "required": ["role"]
+                  }
+                ]
+              }
+            },
+            {
+              "contains": {
+                "allOf": [
+                  {"$ref": "#/$defs/go_required_reviewer"},
+                  {
+                    "properties": {"role": {"const": "LEAD_REVIEWER"}},
+                    "required": ["role"]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "unresolved_blockers": {
+          "type": "array",
+          "items": {
+            "not": {
+              "properties": {
+                "severity": {"const": "CRITICAL"},
+                "status": {"enum": ["OPEN", "IN_PROGRESS"]}
+              },
+              "required": ["severity", "status"]
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -43,9 +43,11 @@
 ### 4. `GO_RECOMMENDED_SEPARATE_AUTHORIZATION_REQUIRED`
 
 - Reviewers recommend that a **separate** authorization review be scheduled based on assembled evidence.
+- Structurally requires completed applicable rights/privacy/faculty reviews, non-placeholder source terms and scope, documented ground-truth and leakage/security/budget plans, and the full required reviewer role set with `APPROVE_FOR_RECOMMENDATION_REVIEW` outcomes and completed evidence refs.
+- An empty `unresolved_blockers` list does **not** by itself unlock this outcome.
 - **Acquisition remains unauthorized.**
 - Does not set `ACQUISITION_AUTHORIZED`, scraper `--allow-network`, `DATA_READINESS`, inference, publication, or promotion gates.
-- Consuming systems and humans must treat this as a recommendation token only.
+- Consuming systems and humans must treat this as a recommendation token only. Schema checks structure only—not legal rights or approval authenticity.
 
 ## Participants
 
