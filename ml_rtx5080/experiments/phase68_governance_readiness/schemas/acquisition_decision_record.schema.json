@@ -516,7 +516,8 @@
         {"not": {"pattern": "NOT_STARTED"}},
         {"not": {"pattern": "NOT_RECORDED"}},
         {"not": {"pattern": "UNKNOWN"}},
-        {"not": {"pattern": "TBD"}}
+        {"not": {"pattern": "TBD"}},
+        {"not": {"pattern": "NOT_APPLICABLE"}}
       ],
       "description": "Assigned role reference for GO recommendations. Vacant, placeholder, and unfinished-state tokens cannot satisfy required reviewer or owner seats."
     },

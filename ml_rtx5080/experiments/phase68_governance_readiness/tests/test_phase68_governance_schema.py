@@ -448,6 +448,16 @@ class Phase68GovernanceSchemaTests(unittest.TestCase):
         row["reviewers"][0]["reviewer_ref"] = "PENDING"
         self.assert_invalid(row)
 
+    def test_go_rejects_not_applicable_substring_in_actor_refs(self) -> None:
+        row = complete_go_recommendation()
+        row["reviewers"][0]["reviewer_ref"] = "reviewer_role_NOT_APPLICABLE_assigned"
+        self.assert_invalid(row)
+        row = complete_go_recommendation()
+        row["budget_and_ownership"][
+            "accountable_owner_ref"
+        ] = "owner_NOT_APPLICABLE_budget"
+        self.assert_invalid(row)
+
     def test_go_allows_explanatory_prose_mentioning_pending_work(self) -> None:
         row = complete_go_recommendation()
         row["proposed_sources"][0]["copyright_redistribution_notes"] = (
