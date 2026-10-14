@@ -68,6 +68,30 @@ REQUIRED_MANIFEST_FIELDS = (
 
 UNKNOWNISH = frozenset({"", "UNKNOWN", "NOT_RECORDED", "NOT_APPLICABLE"})
 
+PROTECTED_PATH_COMPONENTS = frozenset({
+    "final_test",
+    "final-test",
+    "ood",
+    "excluded_ood",
+    "locked_evaluation",
+    "label_0_watches",
+    "label_1_watches",
+    "label_0_sneakers",
+    "label_1_sneakers",
+})
+
+IMAGE_EXTENSIONS = frozenset({".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp", ".tif", ".tiff"})
+
+AUTHENTICITY_DECISIONS = frozenset({
+    "UNREVIEWED",
+    "INSUFFICIENT_EVIDENCE",
+    "REJECTED",
+    "AUTHENTIC",
+    "COUNTERFEIT",
+    "NOT_STARTED",
+})
+VERIFIED_DECISIONS = frozenset({"AUTHENTIC", "COUNTERFEIT"})
+
 DATA_READINESS = "NO_GO_FOR_AUTHENTICITY_CLAIMS"
 ACQUISITION_AUTHORIZED = False
 INFERENCE_AUTHORIZED = False
@@ -79,6 +103,7 @@ PHASE55_SCHEMA_PATH = (
     / "phase55_ground_truth_acquisition"
     / "evidence_ledger.schema.json"
 )
+LEDGER_SCHEMA_PATH = Path(__file__).resolve().parent / "schemas" / "review_ledger.schema.json"
 
 
 class IntakeError(Exception):
@@ -101,43 +126,109 @@ def _is_unknown(value: object) -> bool:
     return value is None or (isinstance(value, str) and value.strip().upper() in UNKNOWNISH)
 
 
-def assert_metadata_only_path(path: Path) -> None:
-    """Refuse image binaries and locked evaluation paths."""
-    lowered = {part.lower() for part in path.parts}
-    banned = {
-        "final_test",
-        "final-test",
-        "ood",
-        "excluded_ood",
-        "locked_evaluation",
-        "label_0_watches",
-        "label_1_watches",
-        "label_0_sneakers",
-        "label_1_sneakers",
-    }
-    if lowered & banned:
-        raise ImageAccessBlocked(f"refusing protected or legacy training path: {path}")
-    if path.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp", ".tif", ".tiff"}:
-        raise ImageAccessBlocked(f"intake is metadata-only; refusing image path open: {path}")
+def path_has_protected_component(path: Path) -> bool:
+    """True when any path component is a protected cohort or legacy training directory."""
+    return bool({part.lower() for part in path.parts} & PROTECTED_PATH_COMPONENTS)
+
+
+def resolve_input_path(path: Path | str) -> Path:
+    """Resolve symlinks and refuse protected components before any read."""
+    candidate = Path(path)
+    # Inspect unresolved parts first (covers string-only claims).
+    if path_has_protected_component(candidate):
+        raise ImageAccessBlocked(f"refusing protected or legacy training path: {candidate}")
+    try:
+        resolved = candidate.resolve(strict=False)
+    except OSError as exc:
+        raise IntakeError(f"cannot resolve path {candidate}: {exc}") from exc
+    if path_has_protected_component(resolved):
+        raise ImageAccessBlocked(f"refusing protected or legacy training path: {resolved}")
+    return resolved
+
+
+def assert_readable_metadata_path(path: Path | str) -> Path:
+    """Guard CLI/input metadata files before read_bytes/read_text."""
+    resolved = resolve_input_path(path)
+    if resolved.suffix.lower() in IMAGE_EXTENSIONS:
+        raise ImageAccessBlocked(f"intake is metadata-only; refusing image path open: {resolved}")
+    return resolved
+
+
+# Back-compat alias used by tests and callers that mean "guard before open".
+assert_metadata_only_path = assert_readable_metadata_path
+
+
+def assert_writable_output_path(path: Path | str, *, protected_inputs: Iterable[Path]) -> Path:
+    """Refuse writes that would overwrite inputs or land in protected locations."""
+    resolved = resolve_input_path(path)
+    if resolved.suffix.lower() in IMAGE_EXTENSIONS:
+        raise ImageAccessBlocked(f"refusing image output path: {resolved}")
+    protected = {p.resolve(strict=False) for p in protected_inputs}
+    if resolved in protected:
+        raise IntakeError(f"refusing to overwrite input path: {resolved}")
+    # Also refuse writing inside a protected directory component tree already checked by resolve.
+    return resolved
+
+
+def image_path_reference_errors(image_path: str) -> list[str]:
+    """String-only checks for manifest image_path. Never opens the file."""
+    errors: list[str] = []
+    if not isinstance(image_path, str) or not image_path.strip():
+        return ["IMAGE_PATH_INVALID"]
+    candidate = Path(image_path)
+    if path_has_protected_component(candidate):
+        errors.append("PROTECTED_PATH_REFERENCE")
+    # Image extensions are expected as references; they are not opened here.
+    return errors
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
-    assert_metadata_only_path(path)
-    if not path.is_file():
-        raise IntakeError(f"manifest not found: {path}")
+    resolved = assert_readable_metadata_path(path)
+    if not resolved.is_file():
+        raise IntakeError(f"manifest not found: {resolved}")
     rows: list[dict[str, Any]] = []
-    text = path.read_text(encoding="utf-8")
+    text = resolved.read_text(encoding="utf-8")
     for line_no, line in enumerate(text.splitlines(), start=1):
         if not line.strip():
             continue
         try:
             payload = json.loads(line)
         except json.JSONDecodeError as exc:
-            raise IntakeError(f"{path}:{line_no}: malformed JSONL ({exc})") from exc
+            raise IntakeError(f"{resolved}:{line_no}: malformed JSONL ({exc})") from exc
         if not isinstance(payload, dict):
-            raise IntakeError(f"{path}:{line_no}: record must be a JSON object")
+            raise IntakeError(f"{resolved}:{line_no}: record must be a JSON object")
         rows.append(payload)
     return rows
+
+
+def load_json_object(path: Path) -> dict[str, Any]:
+    resolved = assert_readable_metadata_path(path)
+    if not resolved.is_file():
+        raise IntakeError(f"json file not found: {resolved}")
+    try:
+        payload = json.loads(resolved.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise IntakeError(f"malformed JSON in {resolved}: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise IntakeError(f"{resolved}: expected a JSON object")
+    return payload
+
+
+def normalize_authenticity_decision(value: object) -> str:
+    """Map review decisions to AUTHENTIC/COUNTERFEIT or pass through ledger enums."""
+    if not isinstance(value, str) or not value.strip():
+        return "UNREVIEWED"
+    raw = value.strip().upper()
+    aliases = {
+        STATUS_VERIFIED_AUTHENTIC: "AUTHENTIC",
+        STATUS_VERIFIED_COUNTERFEIT: "COUNTERFEIT",
+        "VERIFIED_AUTHENTIC": "AUTHENTIC",
+        "VERIFIED_COUNTERFEIT": "COUNTERFEIT",
+    }
+    normalized = aliases.get(raw, raw)
+    if normalized not in AUTHENTICITY_DECISIONS:
+        raise IntakeError(f"unsupported authenticity_decision: {value!r}")
+    return normalized
 
 
 def validate_scraper_record(record: Mapping[str, Any], *, source_path: str, index: int) -> list[str]:
@@ -172,7 +263,6 @@ def validate_scraper_record(record: Mapping[str, Any], *, source_path: str, inde
         if eligibility.get("model_training_as_verified_class") is not False:
             errors.append("TRAINING_AS_VERIFIED_CLASS_MUST_BE_FALSE")
     if record.get("provenance_completeness") not in {"COMPLETE", "PARTIAL", "INCOMPLETE"}:
-        # scraper emits PARTIAL/INCOMPLETE; COMPLETE reserved if ever filled later
         if record.get("provenance_completeness") not in {"PARTIAL", "INCOMPLETE"}:
             errors.append(f"PROVENANCE_COMPLETENESS_INVALID:{record.get('provenance_completeness')!r}")
     for dim in ("width", "height", "byte_size"):
@@ -182,17 +272,8 @@ def validate_scraper_record(record: Mapping[str, Any], *, source_path: str, inde
     image_path = record.get("image_path")
     if not isinstance(image_path, str) or not image_path.strip():
         errors.append("IMAGE_PATH_INVALID")
-    # Never open the referenced image; only check the string is not a protected absolute path claim.
-    if isinstance(image_path, str):
-        try:
-            assert_metadata_only_path(Path(image_path))
-        except ImageAccessBlocked:
-            # Relative artifact paths ending in .jpg are expected references; do not open them.
-            # Block only when the path claims a protected cohort directory.
-            parts = {part.lower() for part in Path(image_path).parts}
-            banned = {"final_test", "final-test", "excluded_ood", "locked_evaluation"}
-            if parts & banned:
-                errors.append("PROTECTED_PATH_REFERENCE")
+    else:
+        errors.extend(image_path_reference_errors(image_path))
     _ = source_path, index
     return errors
 
@@ -267,35 +348,60 @@ def build_queue_row(
     }
 
 
+def _ledger_schema_validator():
+    try:
+        from jsonschema import Draft202012Validator
+    except ImportError as exc:  # pragma: no cover
+        raise IntakeError("jsonschema is required to validate review ledger rows") from exc
+    schema = json.loads(LEDGER_SCHEMA_PATH.read_text(encoding="utf-8"))
+    return Draft202012Validator(schema)
+
+
+def validate_ledger_row(row: Mapping[str, Any]) -> None:
+    """Fail closed on malformed ledger rows using the Phase 65 schema."""
+    validator = _ledger_schema_validator()
+    errors = sorted(validator.iter_errors(dict(row)), key=lambda e: list(e.path))
+    if errors:
+        messages = "; ".join(e.message for e in errors)
+        raise IntakeError(f"review ledger schema validation failed: {messages}")
+    decision = normalize_authenticity_decision(row.get("authenticity_decision"))
+    if decision in VERIFIED_DECISIONS and not isinstance(row.get("phase55_evidence_record"), dict):
+        raise IntakeError("verified authenticity decisions require phase55_evidence_record")
+
+
 def load_review_ledger(path: Path | None) -> dict[str, list[dict[str, Any]]]:
-    if path is None or not path.exists():
+    if path is None:
         return {}
-    assert_metadata_only_path(path)
+    resolved = assert_readable_metadata_path(path)
+    if not resolved.exists():
+        return {}
     grouped: dict[str, list[dict[str, Any]]] = {}
-    for row in load_jsonl(path):
-        if row.get("schema_version") != REVIEW_LEDGER_SCHEMA:
-            raise IntakeError(f"unsupported review ledger schema: {row.get('schema_version')!r}")
+    for row in load_jsonl(resolved):
+        validate_ledger_row(row)
         record_id = row.get("record_id")
         if not isinstance(record_id, str):
             raise IntakeError("review ledger row missing record_id")
-        grouped.setdefault(record_id, []).append(row)
+        grouped.setdefault(record_id, []).append(dict(row))
     return grouped
 
 
 def append_review_decision(ledger_path: Path, decision: Mapping[str, Any]) -> dict[str, Any]:
     """Append one human decision. Never rewrites prior rows or source manifests."""
-    assert_metadata_only_path(ledger_path)
+    resolved_ledger = resolve_input_path(ledger_path)
     payload = dict(decision)
     payload["schema_version"] = REVIEW_LEDGER_SCHEMA
-    payload.setdefault("decision_id", hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()[:32])
+    payload["authenticity_decision"] = normalize_authenticity_decision(
+        payload.get("authenticity_decision")
+    )
     payload.setdefault("recorded_at_utc", utc_now_iso())
-    if payload.get("authenticity_decision") in VERIFIED_STATUSES:
-        # Ledger may propose verified outcomes only with Phase 55 evidence attached.
-        if not payload.get("phase55_evidence_record"):
-            raise IntakeError("verified authenticity decisions require phase55_evidence_record")
-    ledger_path.parent.mkdir(parents=True, exist_ok=True)
+    payload.setdefault(
+        "decision_id",
+        hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()[:32],
+    )
+    validate_ledger_row(payload)
+    resolved_ledger.parent.mkdir(parents=True, exist_ok=True)
     line = json.dumps(payload, sort_keys=True, ensure_ascii=False) + "\n"
-    with ledger_path.open("a", encoding="utf-8") as handle:
+    with resolved_ledger.open("a", encoding="utf-8") as handle:
         handle.write(line)
     return payload
 
@@ -304,7 +410,7 @@ def evaluate_phase55_eligibility(evidence: Mapping[str, Any]) -> tuple[bool, lis
     """Validate a proposed Phase 55 evidence-ledger record with the authoritative schema."""
     try:
         from jsonschema import Draft202012Validator, FormatChecker
-    except ImportError as exc:  # pragma: no cover - exercised in CI with jsonschema installed
+    except ImportError as exc:  # pragma: no cover
         raise IntakeError("jsonschema is required to evaluate Phase 55 eligibility") from exc
     schema = json.loads(PHASE55_SCHEMA_PATH.read_text(encoding="utf-8"))
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
@@ -318,37 +424,52 @@ def evaluate_phase55_eligibility(evidence: Mapping[str, Any]) -> tuple[bool, lis
     return True, []
 
 
-def evaluate_data_admission(candidate: Mapping[str, Any], *, purpose: str = "evaluation") -> tuple[str, list[str]]:
-    return admission_decision(dict(candidate), purpose=purpose, today=date(2026, 10, 14))
+def evaluate_data_admission(
+    candidate: Mapping[str, Any],
+    *,
+    purpose: str = "evaluation",
+    today: date | None = None,
+) -> tuple[str, list[str]]:
+    return admission_decision(dict(candidate), purpose=purpose, today=today or date.today())
 
 
 def assess_review_against_contracts(
     scraper_record: Mapping[str, Any],
     decision: Mapping[str, Any],
+    *,
+    today: date | None = None,
+    duplicate_hash_ids: list[str] | None = None,
 ) -> dict[str, Any]:
     """Fail-closed assessment: scraper status alone never verifies a class."""
     blockers: list[str] = []
     label_status = scraper_record.get("label_status")
-    if label_status in AUTO_ASSIGNABLE_STATUSES:
-        # Expected starting state.
-        pass
-    else:
+    if label_status not in AUTO_ASSIGNABLE_STATUSES:
         blockers.append(f"unexpected_scraper_label_status:{label_status}")
 
-    authenticity = decision.get("authenticity_decision") or "UNREVIEWED"
+    try:
+        authenticity = normalize_authenticity_decision(decision.get("authenticity_decision"))
+    except IntakeError as exc:
+        return {
+            "authenticity_verified": False,
+            "ml_use_eligible": False,
+            "blockers": [str(exc)],
+            "admission_status": "NOT_EVALUATED",
+            "admission_reasons": [],
+            "normalized_authenticity_decision": "UNREVIEWED",
+            "scraper_label_status_unchanged": label_status,
+        }
+
     rights_ok = decision.get("rights_review_status") == "APPROVED"
-    proposing_verified = authenticity in {
-        STATUS_VERIFIED_AUTHENTIC,
-        STATUS_VERIFIED_COUNTERFEIT,
-        "AUTHENTIC",
-        "COUNTERFEIT",
-    }
+    proposing_verified = authenticity in VERIFIED_DECISIONS
 
     if label_status == STATUS_SYNTHETIC and proposing_verified:
         blockers.append("synthetic_not_physical_ground_truth")
 
+    if duplicate_hash_ids and len(duplicate_hash_ids) > 1:
+        blockers.append("duplicate_hash_group")
+
+    evidence = decision.get("phase55_evidence_record")
     if proposing_verified:
-        evidence = decision.get("phase55_evidence_record")
         if not isinstance(evidence, dict):
             blockers.append("missing_phase55_evidence_record")
         else:
@@ -357,39 +478,77 @@ def assess_review_against_contracts(
                 blockers.extend(f"phase55:{e}" for e in errs)
             if evidence.get("image_sha256") != scraper_record.get("stored_sha256"):
                 blockers.append("phase55_image_sha256_mismatch")
+            verified_label = evidence.get("verified_label")
+            if verified_label != authenticity:
+                blockers.append(
+                    f"decision_evidence_label_mismatch:{authenticity}!={verified_label}"
+                )
+            adjudication_outcome = evidence.get("adjudication_outcome")
+            if adjudication_outcome != authenticity:
+                blockers.append(
+                    f"decision_adjudication_outcome_mismatch:{authenticity}!={adjudication_outcome}"
+                )
         if not rights_ok:
             blockers.append("rights_not_approved")
     elif authenticity in {"UNREVIEWED", "INSUFFICIENT_EVIDENCE", "REJECTED", "NOT_STARTED"}:
-        blockers.append(f"authenticity_{str(authenticity).lower()}")
+        blockers.append(f"authenticity_{authenticity.lower()}")
     else:
         blockers.append(f"authenticity_decision_unsupported:{authenticity!r}")
-
-    candidate = decision.get("candidate_image_record_v2")
-    admission_status = "NOT_EVALUATED"
-    admission_reasons: list[str] = []
-    if isinstance(candidate, dict):
-        admission_status, admission_reasons = evaluate_data_admission(candidate)
-        if admission_status != "ADMIT":
-            blockers.append("admission_rejected")
 
     disputed = decision.get("adjudication_status") in {"UNRESOLVED", "PENDING", "NOT_STARTED"}
     if disputed and proposing_verified:
         blockers.append("adjudication_incomplete")
 
-    # Authenticity may be evidence-backed while rights/admission still block ML use.
+    candidate = decision.get("candidate_image_record_v2")
+    admission_status = "NOT_EVALUATED"
+    admission_reasons: list[str] = []
+    if proposing_verified:
+        if not isinstance(candidate, dict):
+            blockers.append("missing_candidate_image_record_v2")
+            admission_status = "MISSING"
+        else:
+            candidate_sha = ((candidate.get("image") or {}).get("sha256"))
+            if candidate_sha != scraper_record.get("stored_sha256"):
+                blockers.append("candidate_image_sha256_mismatch")
+            candidate_label = ((candidate.get("label") or {}).get("value") or "").lower()
+            expected = "authentic" if authenticity == "AUTHENTIC" else "counterfeit"
+            if candidate_label != expected:
+                blockers.append(f"candidate_label_mismatch:{candidate_label}!={expected}")
+            if (candidate.get("image") or {}).get("duplicate_status") != "UNIQUE":
+                blockers.append("candidate_duplicate_status_not_unique")
+            admission_status, admission_reasons = evaluate_data_admission(
+                candidate, today=today
+            )
+            if admission_status != "ADMIT":
+                blockers.append("admission_rejected")
+                blockers.extend(f"admission:{r}" for r in admission_reasons)
+
     authenticity_hard_blockers = {
         "missing_phase55_evidence_record",
         "phase55_image_sha256_mismatch",
         "synthetic_not_physical_ground_truth",
         "adjudication_incomplete",
+        "duplicate_hash_group",
     }
     authenticity_verified = proposing_verified and not (
         authenticity_hard_blockers.intersection(blockers)
-        or any(b.startswith("phase55:") for b in blockers)
+        or any(
+            b.startswith("phase55:")
+            or b.startswith("decision_evidence_label_mismatch")
+            or b.startswith("decision_adjudication_outcome_mismatch")
+            for b in blockers
+        )
     )
 
-    ml_eligible = authenticity_verified and rights_ok and (
-        admission_status == "ADMIT" if isinstance(candidate, dict) else True
+    ml_eligible = (
+        authenticity_verified
+        and rights_ok
+        and admission_status == "ADMIT"
+        and "missing_candidate_image_record_v2" not in blockers
+        and "candidate_image_sha256_mismatch" not in blockers
+        and not any(b.startswith("candidate_label_mismatch") for b in blockers)
+        and "candidate_duplicate_status_not_unique" not in blockers
+        and "admission_rejected" not in blockers
     )
 
     return {
@@ -398,6 +557,7 @@ def assess_review_against_contracts(
         "blockers": blockers,
         "admission_status": admission_status,
         "admission_reasons": admission_reasons,
+        "normalized_authenticity_decision": authenticity,
         "scraper_label_status_unchanged": label_status,
     }
 
@@ -406,7 +566,9 @@ def ingest_manifests(
     manifest_paths: Iterable[Path],
     *,
     ledger_path: Path | None = None,
+    today: date | None = None,
 ) -> dict[str, Any]:
+    resolved_manifests = [assert_readable_metadata_path(path) for path in manifest_paths]
     ledger = load_review_ledger(ledger_path)
     valid: list[dict[str, Any]] = []
     invalid: list[dict[str, Any]] = []
@@ -414,8 +576,10 @@ def ingest_manifests(
     seen_ids: dict[str, str] = {}
     seen_hashes: dict[str, list[str]] = {}
     source_fingerprints: list[str] = []
+    duplicate_record_ids: list[str] = []
 
-    for path in manifest_paths:
+    for path in resolved_manifests:
+        # Path already guarded; fingerprint before parsing.
         before = path.read_bytes()
         source_fingerprints.append(hashlib.sha256(before).hexdigest())
         rows = load_jsonl(path)
@@ -424,10 +588,11 @@ def ingest_manifests(
             record_id = str(record.get("record_id") or f"missing-{path.name}-{index}")
             if record_id in seen_ids:
                 errors.append(f"DUPLICATE_RECORD_ID:{seen_ids[record_id]}")
+                duplicate_record_ids.append(record_id)
             else:
                 seen_ids[record_id] = str(path)
             stored = record.get("stored_sha256")
-            if isinstance(stored, str):
+            if isinstance(stored, str) and _sha256_hex(stored):
                 seen_hashes.setdefault(stored, []).append(record_id)
             entries = ledger.get(record_id, [])
             row = build_queue_row(
@@ -437,9 +602,17 @@ def ingest_manifests(
                 ledger_entries=entries,
             )
             if not errors and entries:
-                assessment = assess_review_against_contracts(record, entries[-1])
+                dup_ids = seen_hashes.get(str(stored), [record_id])
+                assessment = assess_review_against_contracts(
+                    record,
+                    entries[-1],
+                    today=today,
+                    duplicate_hash_ids=dup_ids,
+                )
                 if assessment["authenticity_verified"]:
-                    row["eligibility_decision"] = "ADMITTED" if assessment["ml_use_eligible"] else "VERIFIED_LABEL_RIGHTS_BLOCKED"
+                    row["eligibility_decision"] = (
+                        "ADMITTED" if assessment["ml_use_eligible"] else "VERIFIED_NOT_ML_ELIGIBLE"
+                    )
                     label = (entries[-1].get("phase55_evidence_record") or {}).get("verified_label")
                     row["verified_label"] = label or "UNKNOWN"
                     row["eligibility_reason"] = (
@@ -458,16 +631,28 @@ def ingest_manifests(
         if after != before:
             raise IntakeError(f"source manifest mutated during intake: {path}")
 
+    # Second pass: mark duplicate-hash groups that were incomplete during first-seen processing.
     duplicate_hashes = {sha: ids for sha, ids in seen_hashes.items() if len(ids) > 1}
+    if duplicate_hashes:
+        for item in valid:
+            stored = item["record"].get("stored_sha256")
+            if stored in duplicate_hashes:
+                row = item["queue"]
+                if row.get("eligibility_decision") in {"ADMITTED", "VERIFIED_NOT_ML_ELIGIBLE"}:
+                    row["eligibility_decision"] = "BLOCKED"
+                    row["eligibility_reason"] = "duplicate_hash_group"
+                    row.setdefault("assessment_blockers", []).append("duplicate_hash_group")
+                    row.pop("verified_label", None)
+
     return {
         "schema_version": PHASE65_SCHEMA,
         "generated_at_utc": utc_now_iso(),
-        "manifest_paths": [str(p) for p in manifest_paths],
+        "manifest_paths": [str(p) for p in resolved_manifests],
         "manifest_sha256": source_fingerprints,
         "valid": valid,
         "invalid": invalid,
         "queue": queue,
-        "duplicate_record_ids": [],  # encoded in invalid errors
+        "duplicate_record_ids": sorted(set(duplicate_record_ids)),
         "duplicate_hashes": duplicate_hashes,
         "ledger_path": str(ledger_path) if ledger_path else None,
     }
@@ -494,11 +679,14 @@ def build_readiness_report(intake: Mapping[str, Any]) -> dict[str, Any]:
     for row in queue:
         decision = row.get("eligibility_decision")
         verified_label = row.get("verified_label")
-        if decision in {"ADMITTED", "VERIFIED_LABEL_RIGHTS_BLOCKED"} and verified_label == "AUTHENTIC":
+        # Only count verified authenticity when assessment succeeded (ADMITTED or
+        # verified-but-not-ML-eligible). Duplicates demoted to BLOCKED are excluded.
+        if decision in {"ADMITTED", "VERIFIED_NOT_ML_ELIGIBLE"} and verified_label == "AUTHENTIC":
             verified_authentic += 1
-        elif decision in {"ADMITTED", "VERIFIED_LABEL_RIGHTS_BLOCKED"} and verified_label == "COUNTERFEIT":
+        elif decision in {"ADMITTED", "VERIFIED_NOT_ML_ELIGIBLE"} and verified_label == "COUNTERFEIT":
             verified_counterfeit += 1
-        if decision == "ADMITTED":
+        # Admitted requires actual data_admission ADMIT (eligibility_decision ADMITTED).
+        if decision == "ADMITTED" and row.get("admission_status") == "ADMIT":
             admitted += 1
 
     both_classes = verified_authentic > 0 and verified_counterfeit > 0
@@ -526,6 +714,7 @@ def build_readiness_report(intake: Mapping[str, Any]) -> dict[str, Any]:
         "incomplete_or_partial_provenance_count": incomplete_provenance,
         "exact_duplicate_hash_groups": exact_dup_groups,
         "near_duplicate_candidates": near_dups,
+        "duplicate_record_ids": list(intake.get("duplicate_record_ids") or []),
         "awaiting_evidence_review": evidence_counts.get("UNREVIEWED", 0),
         "awaiting_rights_review": rights_counts.get("UNREVIEWED", 0),
         "verified_authentic_count": verified_authentic,
@@ -616,14 +805,26 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
-    manifests = [Path(p) for p in args.manifest]
-    ledger = Path(args.review_ledger) if args.review_ledger else None
-    output_dir = Path(args.output_dir)
+    # Guard every input before any read.
+    manifests = [assert_readable_metadata_path(Path(p)) for p in args.manifest]
+    ledger = assert_readable_metadata_path(Path(args.review_ledger)) if args.review_ledger else None
+    decision_path = (
+        assert_readable_metadata_path(Path(args.append_decision)) if args.append_decision else None
+    )
+    protected_inputs = list(manifests)
+    if ledger is not None:
+        protected_inputs.append(ledger)
+    if decision_path is not None:
+        protected_inputs.append(decision_path)
 
-    if args.append_decision:
+    output_dir = resolve_input_path(Path(args.output_dir))
+    for name in ("intake_report.json", "review_queue.jsonl", "review_queue.csv", "readiness_report.json"):
+        assert_writable_output_path(output_dir / name, protected_inputs=protected_inputs)
+
+    if decision_path is not None:
         if ledger is None:
             raise SystemExit("--append-decision requires --review-ledger")
-        decision = json.loads(Path(args.append_decision).read_text(encoding="utf-8"))
+        decision = load_json_object(decision_path)
         append_review_decision(ledger, decision)
 
     intake = ingest_manifests(manifests, ledger_path=ledger)
@@ -637,6 +838,7 @@ def main(argv: list[str] | None = None) -> int:
         "valid_count": len(intake["valid"]),
         "invalid_count": len(intake["invalid"]),
         "duplicate_hashes": intake["duplicate_hashes"],
+        "duplicate_record_ids": intake["duplicate_record_ids"],
         "invalid": [
             {
                 "record_id": item["queue"]["record_id"],
@@ -658,6 +860,7 @@ def main(argv: list[str] | None = None) -> int:
         "invalid": len(intake["invalid"]),
         "verified_authentic": report["verified_authentic_count"],
         "verified_counterfeit": report["verified_counterfeit_count"],
+        "admitted": report["admitted_under_existing_contracts"],
         "data_readiness": report["data_readiness"],
         "output_dir": str(output_dir),
     }, indent=2))

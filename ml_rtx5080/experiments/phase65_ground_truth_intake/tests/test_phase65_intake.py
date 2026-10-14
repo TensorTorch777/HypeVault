@@ -6,6 +6,7 @@ import json
 import sys
 import tempfile
 import unittest
+from datetime import date
 from pathlib import Path
 from unittest import mock
 
@@ -20,12 +21,19 @@ from intake import (  # noqa: E402
     DATA_READINESS,
     INFERENCE_AUTHORIZED,
     ImageAccessBlocked,
+    IntakeError,
     append_review_decision,
     assess_review_against_contracts,
     assert_metadata_only_path,
+    assert_readable_metadata_path,
+    assert_writable_output_path,
     build_readiness_report,
+    image_path_reference_errors,
     ingest_manifests,
+    load_json_object,
+    load_review_ledger,
     main,
+    normalize_authenticity_decision,
 )
 from hypevault_scraper.common import (  # noqa: E402
     SCHEMA_VERSION,
@@ -111,6 +119,57 @@ def phase55_eligible(*, sha: str, label: str = "AUTHENTIC") -> dict:
     }
 
 
+def candidate_admissible(*, sha: str, label: str = "authentic", retention_until: str = "2028-12-31") -> dict:
+    return {
+        "record_id": "synthetic-candidate-1",
+        "image": {
+            "sha256": sha,
+            "uri": "store://synthetic/1.jpg",
+            "width": 2000,
+            "height": 1500,
+            "format": "JPEG",
+            "file_size_bytes": 812345,
+            "exif_location_stripped": True,
+            "derivative_of": None,
+            "duplicate_status": "UNIQUE",
+            "duplicate_of": None,
+        },
+        "source": {
+            "source_type": "QUALIFIED_EXAMINER",
+            "source_reference": "private:partner-ref-1",
+            "product_or_listing_id": "item-1",
+            "source_group_id": "group-1",
+            "chain_of_custody": [
+                {"step": "captured", "actor_ref": "examiner-ref-1", "date": "2026-09-01"}
+            ],
+        },
+        "rights": {
+            "permission_id": "perm-1",
+            "permission_status": "EFFECTIVE",
+            "research_use": "GRANTED",
+            "training_use": "GRANTED",
+            "public_display": "DENIED",
+            "retention_until": retention_until,
+        },
+        "brand": {
+            "value": "Demo Brand",
+            "basis": "case-back engraving and movement calibre",
+            "evidence_id": "ev-1",
+        },
+        "label": {
+            "value": label,
+            "method": ["movement_inspection", "serial_verification"],
+            "verifier_ref": "examiner-ref-1",
+            "verifier_qualification_evidence_id": "qual-1",
+            "verifier_independent": True,
+            "confidence": "certain",
+            "evidence_id": "ev-1",
+            "evidence_date": "2026-09-01",
+        },
+        "disposition": {"status": "PENDING", "reason": "awaiting admission check"},
+    }
+
+
 def write_manifest(path: Path, rows: list[dict]) -> None:
     path.write_text(
         "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows),
@@ -166,6 +225,7 @@ class Phase65IntakeTests(unittest.TestCase):
                 "rights_review_status": "APPROVED",
                 "adjudication_status": "AGREED",
                 "phase55_evidence_record": phase55_eligible(sha=_sha(9), label="COUNTERFEIT"),
+                "candidate_image_record_v2": candidate_admissible(sha=_sha(9), label="counterfeit"),
             },
         )
         self.assertFalse(forced["authenticity_verified"])
@@ -213,10 +273,12 @@ class Phase65IntakeTests(unittest.TestCase):
                 "rights_review_status": "APPROVED",
                 "adjudication_status": "AGREED",
                 "phase55_evidence_record": phase55_eligible(sha=_sha(1)),
+                "candidate_image_record_v2": candidate_admissible(sha=_sha(1)),
             },
         )
         self.assertTrue(strong["authenticity_verified"])
         self.assertTrue(strong["ml_use_eligible"])
+        self.assertEqual(strong["admission_status"], "ADMIT")
 
     def test_verified_label_does_not_imply_ml_eligibility_without_rights(self) -> None:
         record = scraper_row()
@@ -227,6 +289,7 @@ class Phase65IntakeTests(unittest.TestCase):
                 "rights_review_status": "UNREVIEWED",
                 "adjudication_status": "AGREED",
                 "phase55_evidence_record": phase55_eligible(sha=_sha(1)),
+                "candidate_image_record_v2": candidate_admissible(sha=_sha(1)),
             },
         )
         self.assertTrue(assessment["authenticity_verified"])
@@ -242,6 +305,7 @@ class Phase65IntakeTests(unittest.TestCase):
                 "rights_review_status": "APPROVED",
                 "adjudication_status": "UNRESOLVED",
                 "phase55_evidence_record": phase55_eligible(sha=_sha(1)),
+                "candidate_image_record_v2": candidate_admissible(sha=_sha(1)),
             },
         )
         self.assertFalse(assessment["authenticity_verified"])
@@ -298,7 +362,6 @@ class Phase65IntakeTests(unittest.TestCase):
             self.assertTrue(
                 any("PROTECTED_PATH_REFERENCE" in e for e in result["invalid"][0]["queue"]["validation_errors"])
             )
-            # Ensure intake never opens a referenced .jpg during a normal run.
             image = Path(tmp) / "fake.jpg"
             image.write_bytes(b"not-opened")
             write_manifest(manifest, [scraper_row(image_path=str(image))])
@@ -352,6 +415,270 @@ class Phase65IntakeTests(unittest.TestCase):
                     for e in result["invalid"][0]["queue"]["validation_errors"]
                 )
             )
+
+    # --- Review finding regressions (A–F) ---
+
+    def test_protected_manifest_path_rejected_before_read(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            protected = Path(tmp) / "final_test" / "manifest.jsonl"
+            protected.parent.mkdir(parents=True)
+            write_manifest(protected, [scraper_row()])
+            opened: list[str] = []
+            real_read_bytes = Path.read_bytes
+
+            def tracking_read_bytes(self):
+                opened.append(str(self))
+                return real_read_bytes(self)
+
+            with mock.patch.object(Path, "read_bytes", tracking_read_bytes):
+                with self.assertRaises(ImageAccessBlocked):
+                    ingest_manifests([protected])
+            self.assertEqual(opened, [])
+
+    def test_protected_append_decision_rejected_before_read(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            decision = Path(tmp) / "ood" / "decision.json"
+            decision.parent.mkdir(parents=True)
+            decision.write_text("{}", encoding="utf-8")
+            opened: list[str] = []
+            real_read_text = Path.read_text
+
+            def tracking_read_text(self, *args, **kwargs):
+                opened.append(str(self))
+                return real_read_text(self, *args, **kwargs)
+
+            with mock.patch.object(Path, "read_text", tracking_read_text):
+                with self.assertRaises(ImageAccessBlocked):
+                    assert_readable_metadata_path(decision)
+                with self.assertRaises(ImageAccessBlocked):
+                    load_json_object(decision)
+            self.assertEqual(opened, [])
+
+    def test_ood_and_legacy_image_path_flagged_without_open(self) -> None:
+        for ref in (
+            "excluded_ood/watch.jpg",
+            "label_0_watches/x.png",
+            "datasets/locked_evaluation/y.jpg",
+            "final-test/z.webp",
+        ):
+            errors = image_path_reference_errors(ref)
+            self.assertIn("PROTECTED_PATH_REFERENCE", errors, ref)
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "manifest.jsonl"
+            write_manifest(manifest, [scraper_row(image_path="ood/never_open.jpg")])
+            opened: list[str] = []
+            real_open = Path.open
+
+            def tracking_open(self, *args, **kwargs):
+                if "never_open" in str(self):
+                    opened.append(str(self))
+                return real_open(self, *args, **kwargs)
+
+            with mock.patch.object(Path, "open", tracking_open):
+                result = ingest_manifests([manifest])
+            self.assertEqual(opened, [])
+            self.assertTrue(
+                any("PROTECTED_PATH_REFERENCE" in e for e in result["invalid"][0]["queue"]["validation_errors"])
+            )
+
+    def test_decision_conflicts_with_phase55_verified_label(self) -> None:
+        record = scraper_row()
+        assessment = assess_review_against_contracts(
+            record,
+            {
+                "authenticity_decision": "AUTHENTIC",
+                "rights_review_status": "APPROVED",
+                "adjudication_status": "AGREED",
+                "phase55_evidence_record": phase55_eligible(sha=_sha(1), label="COUNTERFEIT"),
+                "candidate_image_record_v2": candidate_admissible(sha=_sha(1), label="authentic"),
+            },
+        )
+        self.assertFalse(assessment["authenticity_verified"])
+        self.assertFalse(assessment["ml_use_eligible"])
+        self.assertTrue(
+            any(b.startswith("decision_evidence_label_mismatch") for b in assessment["blockers"])
+        )
+
+    def test_verified_without_candidate_not_ml_eligible_or_admitted(self) -> None:
+        record = scraper_row()
+        assessment = assess_review_against_contracts(
+            record,
+            {
+                "authenticity_decision": "AUTHENTIC",
+                "rights_review_status": "APPROVED",
+                "adjudication_status": "AGREED",
+                "phase55_evidence_record": phase55_eligible(sha=_sha(1)),
+            },
+        )
+        self.assertTrue(assessment["authenticity_verified"])
+        self.assertFalse(assessment["ml_use_eligible"])
+        self.assertIn("missing_candidate_image_record_v2", assessment["blockers"])
+        self.assertEqual(assessment["admission_status"], "MISSING")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "manifest.jsonl"
+            ledger = Path(tmp) / "ledger.jsonl"
+            write_manifest(manifest, [scraper_row()])
+            append_review_decision(
+                ledger,
+                {
+                    "record_id": "rec_web_001",
+                    "authenticity_decision": "AUTHENTIC",
+                    "rights_review_status": "APPROVED",
+                    "adjudication_status": "AGREED",
+                    "phase55_evidence_record": phase55_eligible(sha=_sha(1)),
+                },
+            )
+            result = ingest_manifests([manifest], ledger_path=ledger)
+            report = build_readiness_report(result)
+            self.assertEqual(result["queue"][0]["eligibility_decision"], "VERIFIED_NOT_ML_ELIGIBLE")
+            self.assertEqual(report["verified_authentic_count"], 1)
+            self.assertEqual(report["admitted_under_existing_contracts"], 0)
+
+    def test_candidate_hash_and_label_mismatches_blocked(self) -> None:
+        record = scraper_row()
+        hash_mismatch = assess_review_against_contracts(
+            record,
+            {
+                "authenticity_decision": "AUTHENTIC",
+                "rights_review_status": "APPROVED",
+                "adjudication_status": "AGREED",
+                "phase55_evidence_record": phase55_eligible(sha=_sha(1)),
+                "candidate_image_record_v2": candidate_admissible(sha=_sha(99)),
+            },
+        )
+        self.assertFalse(hash_mismatch["ml_use_eligible"])
+        self.assertIn("candidate_image_sha256_mismatch", hash_mismatch["blockers"])
+
+        label_mismatch = assess_review_against_contracts(
+            record,
+            {
+                "authenticity_decision": "AUTHENTIC",
+                "rights_review_status": "APPROVED",
+                "adjudication_status": "AGREED",
+                "phase55_evidence_record": phase55_eligible(sha=_sha(1)),
+                "candidate_image_record_v2": candidate_admissible(sha=_sha(1), label="counterfeit"),
+            },
+        )
+        self.assertFalse(label_mismatch["ml_use_eligible"])
+        self.assertTrue(
+            any(b.startswith("candidate_label_mismatch") for b in label_mismatch["blockers"])
+        )
+
+    def test_malformed_ledger_rows_and_invalid_enums_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = Path(tmp) / "ledger.jsonl"
+            ledger.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "phase65_review_ledger_v1",
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "TOTALLY_FAKE",
+                        "rights_review_status": "APPROVED",
+                        "recorded_at_utc": "2026-10-14T00:00:00Z",
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            with self.assertRaises(IntakeError):
+                load_review_ledger(ledger)
+
+            with self.assertRaises(IntakeError):
+                append_review_decision(
+                    Path(tmp) / "ledger2.jsonl",
+                    {
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "MAYBE",
+                        "rights_review_status": "APPROVED",
+                    },
+                )
+
+            with self.assertRaises(IntakeError):
+                append_review_decision(
+                    Path(tmp) / "ledger3.jsonl",
+                    {
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "AUTHENTIC",
+                        "rights_review_status": "APPROVED",
+                        # verified decision without phase55 evidence
+                    },
+                )
+
+            self.assertEqual(normalize_authenticity_decision(STATUS_VERIFIED_AUTHENTIC), "AUTHENTIC")
+
+    def test_duplicate_hashes_cannot_inflate_admitted_counts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            a = Path(tmp) / "a.jsonl"
+            b = Path(tmp) / "b.jsonl"
+            ledger = Path(tmp) / "ledger.jsonl"
+            write_manifest(a, [scraper_row(record_id="one", stored_sha256=_sha(7))])
+            write_manifest(b, [scraper_row(record_id="two", stored_sha256=_sha(7))])
+            for rid in ("one", "two"):
+                append_review_decision(
+                    ledger,
+                    {
+                        "record_id": rid,
+                        "authenticity_decision": "AUTHENTIC",
+                        "rights_review_status": "APPROVED",
+                        "adjudication_status": "AGREED",
+                        "phase55_evidence_record": phase55_eligible(sha=_sha(7)),
+                        "candidate_image_record_v2": candidate_admissible(sha=_sha(7)),
+                    },
+                )
+            result = ingest_manifests([a, b], ledger_path=ledger)
+            report = build_readiness_report(result)
+            self.assertEqual(report["verified_authentic_count"], 0)
+            self.assertEqual(report["admitted_under_existing_contracts"], 0)
+            for row in result["queue"]:
+                self.assertEqual(row["eligibility_decision"], "BLOCKED")
+                self.assertIn("duplicate_hash_group", row.get("assessment_blockers") or [row["eligibility_reason"]])
+
+    def test_retention_uses_injected_or_current_date(self) -> None:
+        record = scraper_row()
+        decision = {
+            "authenticity_decision": "AUTHENTIC",
+            "rights_review_status": "APPROVED",
+            "adjudication_status": "AGREED",
+            "phase55_evidence_record": phase55_eligible(sha=_sha(1)),
+            "candidate_image_record_v2": candidate_admissible(
+                sha=_sha(1), retention_until="2020-01-01"
+            ),
+        }
+        expired = assess_review_against_contracts(record, decision, today=date(2026, 10, 14))
+        self.assertFalse(expired["ml_use_eligible"])
+        self.assertEqual(expired["admission_status"], "REJECT")
+        self.assertIn("admission:RETENTION_EXPIRED", expired["blockers"])
+
+        still_valid = assess_review_against_contracts(
+            record,
+            {
+                **decision,
+                "candidate_image_record_v2": candidate_admissible(
+                    sha=_sha(1), retention_until="2099-01-01"
+                ),
+            },
+            today=date.today(),
+        )
+        self.assertTrue(still_valid["ml_use_eligible"])
+        self.assertEqual(still_valid["admission_status"], "ADMIT")
+
+    def test_output_cannot_overwrite_input_manifest_or_ledger(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "manifest.jsonl"
+            write_manifest(manifest, [scraper_row()])
+            with self.assertRaises(IntakeError):
+                assert_writable_output_path(manifest, protected_inputs=[manifest])
+            ledger = Path(tmp) / "ledger.jsonl"
+            ledger.write_text("", encoding="utf-8")
+            with self.assertRaises(IntakeError):
+                assert_writable_output_path(ledger, protected_inputs=[manifest, ledger])
+            # CLI: output-dir whose intake_report.json would overwrite the manifest
+            collide_dir = Path(tmp)
+            collide_manifest = collide_dir / "intake_report.json"
+            write_manifest(collide_manifest, [scraper_row()])
+            with self.assertRaises(IntakeError):
+                main(["--manifest", str(collide_manifest), "--output-dir", str(collide_dir)])
 
 
 if __name__ == "__main__":

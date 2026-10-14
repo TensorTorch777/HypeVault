@@ -11,7 +11,7 @@ This package connects merged `hypevault_scraper` manifests to the existing Phase
 | `hypevault_scraper.common` (`scraper_manifest_v1`) | Source manifest validation; `UNVERIFIED_WEB_IMAGE` / `SYNTHETIC_AI_GENERATED` |
 | Phase 55 `evidence_ledger.schema.json` | Authoritative eligibility for evidence-backed labels |
 | Phase 61 label/evidence SOP | Physical-product linkage and “no sensitive data in Git” |
-| `ml_rtx5080/data_admission.py` | Optional candidate_image_record_v2 admission check |
+| `ml_rtx5080/data_admission.py` | Required ADMIT for ML-use eligibility (candidate_image_record_v2) |
 | Phase 62 readiness invariants | `DATA_READINESS=NO_GO_FOR_AUTHENTICITY_CLAIMS` preserved |
 
 No competing authenticity schema is introduced. Review decisions live in a **separate append-only ledger**.
@@ -22,9 +22,10 @@ No competing authenticity schema is introduced. Review decisions live in a **sep
 - `UNVERIFIED_WEB_IMAGE` and `SYNTHETIC_AI_GENERATED` never become verified by metadata alone.
 - Synthetic imagery cannot become counterfeit (or authentic) ground truth.
 - Rights review is independent of authenticity adjudication.
-- A verified authenticity outcome can still be ML-ineligible without approved rights / admission.
+- A verified authenticity outcome can still be ML-ineligible without approved rights / `admission_decision` ADMIT.
+- Review authenticity decisions must match Phase 55 `verified_label` and adjudication outcome.
 - No mapping into `Label_0_*` / `Label_1_*`.
-- Intake never opens image files or locked final-test / OOD paths.
+- Intake guards all CLI paths (including symlinks) before any read/write; never opens image files or locked final-test / OOD paths.
 
 ## CLI
 
@@ -61,7 +62,7 @@ Append-only JSONL (`phase65_review_ledger_v1`). A proposal to treat a record as 
 - Matches the scraper’s `stored_sha256`
 - Uses agreed/adjudicated reviewer outcomes
 
-Rights must be `APPROVED` before ML-use eligibility. Optional `candidate_image_record_v2` payloads are checked with `admission_decision`.
+Rights must be `APPROVED` and `candidate_image_record_v2` must receive `admission_decision` → `ADMIT` before ML-use eligibility. Schema-valid evidence alone does not count as admitted.
 
 ## Readiness meaning
 
