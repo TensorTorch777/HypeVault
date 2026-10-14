@@ -158,15 +158,41 @@ def assert_readable_metadata_path(path: Path | str) -> Path:
 assert_metadata_only_path = assert_readable_metadata_path
 
 
+def _resolved_set(paths: Iterable[Path | str]) -> set[Path]:
+    return {resolve_input_path(p) for p in paths}
+
+
 def assert_writable_output_path(path: Path | str, *, protected_inputs: Iterable[Path]) -> Path:
     """Refuse writes that would overwrite inputs or land in protected locations."""
     resolved = resolve_input_path(path)
     if resolved.suffix.lower() in IMAGE_EXTENSIONS:
         raise ImageAccessBlocked(f"refusing image output path: {resolved}")
-    protected = {p.resolve(strict=False) for p in protected_inputs}
+    protected = _resolved_set(protected_inputs)
     if resolved in protected:
         raise IntakeError(f"refusing to overwrite input path: {resolved}")
     # Also refuse writing inside a protected directory component tree already checked by resolve.
+    return resolved
+
+
+def assert_ledger_append_path(
+    ledger_path: Path | str,
+    *,
+    protected_inputs: Iterable[Path | str],
+) -> Path:
+    """Resolve ledger destination and refuse collisions with protected inputs.
+
+    Callers must pass every path that must not be appended to or overwritten
+    (manifests, --append-decision JSON, existing decision files, images).
+    Comparisons use symlink-resolved paths.
+    """
+    resolved = resolve_input_path(ledger_path)
+    if resolved.suffix.lower() in IMAGE_EXTENSIONS:
+        raise ImageAccessBlocked(f"refusing image path as review ledger: {resolved}")
+    protected = _resolved_set(protected_inputs)
+    if resolved in protected:
+        raise IntakeError(
+            f"refusing review-ledger path colliding with a protected input: {resolved}"
+        )
     return resolved
 
 
@@ -358,15 +384,41 @@ def _ledger_schema_validator():
 
 
 def validate_ledger_row(row: Mapping[str, Any]) -> None:
-    """Fail closed on malformed ledger rows using the Phase 65 schema."""
+    """Fail closed on malformed ledger rows using the Phase 65 schema.
+
+    Verified authenticity proposals must embed a Phase 55 evidence record that
+    validates against evidence_ledger.schema.json. Invalid evidence is rejected;
+    historical rows are never rewritten.
+    """
     validator = _ledger_schema_validator()
     errors = sorted(validator.iter_errors(dict(row)), key=lambda e: list(e.path))
     if errors:
         messages = "; ".join(e.message for e in errors)
         raise IntakeError(f"review ledger schema validation failed: {messages}")
     decision = normalize_authenticity_decision(row.get("authenticity_decision"))
-    if decision in VERIFIED_DECISIONS and not isinstance(row.get("phase55_evidence_record"), dict):
+    if decision not in VERIFIED_DECISIONS:
+        return
+    evidence = row.get("phase55_evidence_record")
+    if not isinstance(evidence, dict):
         raise IntakeError("verified authenticity decisions require phase55_evidence_record")
+    ok, errs = evaluate_phase55_eligibility(evidence)
+    if not ok:
+        raise IntakeError(
+            "embedded phase55_evidence_record failed schema/eligibility validation: "
+            + "; ".join(errs)
+        )
+    verified_label = evidence.get("verified_label")
+    if verified_label != decision:
+        raise IntakeError(
+            f"phase55 verified_label {verified_label!r} does not match "
+            f"authenticity_decision {decision!r}"
+        )
+    adjudication_outcome = evidence.get("adjudication_outcome")
+    if adjudication_outcome != decision:
+        raise IntakeError(
+            f"phase55 adjudication_outcome {adjudication_outcome!r} does not match "
+            f"authenticity_decision {decision!r}"
+        )
 
 
 def load_review_ledger(path: Path | None) -> dict[str, list[dict[str, Any]]]:
@@ -385,9 +437,23 @@ def load_review_ledger(path: Path | None) -> dict[str, list[dict[str, Any]]]:
     return grouped
 
 
-def append_review_decision(ledger_path: Path, decision: Mapping[str, Any]) -> dict[str, Any]:
-    """Append one human decision. Never rewrites prior rows or source manifests."""
-    resolved_ledger = resolve_input_path(ledger_path)
+def append_review_decision(
+    ledger_path: Path,
+    decision: Mapping[str, Any],
+    *,
+    protected_inputs: Iterable[Path | str] | None = None,
+) -> dict[str, Any]:
+    """Append one human decision. Never rewrites prior rows or source manifests.
+
+    ``protected_inputs`` must include every path that must not be appended to
+    (manifests, decision JSON, images). An empty/omitted set only applies the
+    generic protected-component and image-extension guards; call sites that
+    have other inputs MUST pass them.
+    """
+    resolved_ledger = assert_ledger_append_path(
+        ledger_path,
+        protected_inputs=list(protected_inputs or ()),
+    )
     payload = dict(decision)
     payload["schema_version"] = REVIEW_LEDGER_SCHEMA
     payload["authenticity_decision"] = normalize_authenticity_decision(
@@ -562,6 +628,33 @@ def assess_review_against_contracts(
     }
 
 
+def _block_from_verified_admitted(
+    row: dict[str, Any],
+    *,
+    reason: str,
+    as_validation_error: bool = False,
+) -> None:
+    """Block a queue row from verified/admitted counts with an explicit reason.
+
+    Duplicate record IDs are structural validation failures (as_validation_error=True).
+    Exact duplicate hashes remain distinct: they demote eligibility without that flag.
+    """
+    if as_validation_error and reason not in (row.get("validation_errors") or []):
+        row.setdefault("validation_errors", []).append(reason)
+    row["eligibility_decision"] = "BLOCKED"
+    existing = row.get("eligibility_reason") or ""
+    if reason not in existing.split(","):
+        row["eligibility_reason"] = (
+            f"{existing},{reason}" if existing and existing != reason else reason
+        )
+    blockers = row.setdefault("assessment_blockers", [])
+    if reason not in blockers:
+        blockers.append(reason)
+    row.pop("verified_label", None)
+    if row.get("admission_status") == "ADMIT":
+        row["admission_status"] = "BLOCKED_DUPLICATE"
+
+
 def ingest_manifests(
     manifest_paths: Iterable[Path],
     *,
@@ -573,10 +666,10 @@ def ingest_manifests(
     valid: list[dict[str, Any]] = []
     invalid: list[dict[str, Any]] = []
     queue: list[dict[str, Any]] = []
-    seen_ids: dict[str, str] = {}
+    seen_ids: dict[str, list[str]] = {}
     seen_hashes: dict[str, list[str]] = {}
     source_fingerprints: list[str] = []
-    duplicate_record_ids: list[str] = []
+    pending_items: list[dict[str, Any]] = []
 
     for path in resolved_manifests:
         # Path already guarded; fingerprint before parsing.
@@ -586,11 +679,7 @@ def ingest_manifests(
         for index, record in enumerate(rows):
             errors = validate_scraper_record(record, source_path=str(path), index=index)
             record_id = str(record.get("record_id") or f"missing-{path.name}-{index}")
-            if record_id in seen_ids:
-                errors.append(f"DUPLICATE_RECORD_ID:{seen_ids[record_id]}")
-                duplicate_record_ids.append(record_id)
-            else:
-                seen_ids[record_id] = str(path)
+            seen_ids.setdefault(record_id, []).append(str(path))
             stored = record.get("stored_sha256")
             if isinstance(stored, str) and _sha256_hex(stored):
                 seen_hashes.setdefault(stored, []).append(record_id)
@@ -598,9 +687,11 @@ def ingest_manifests(
             row = build_queue_row(
                 record,
                 manifest_path=str(path),
-                validation_errors=errors,
+                validation_errors=list(errors),
                 ledger_entries=entries,
             )
+            # Provisional assessment; duplicate-ID/hash demotion happens in a second pass
+            # so the first conflicting row cannot remain verified/admitted.
             if not errors and entries:
                 dup_ids = seen_hashes.get(str(stored), [record_id])
                 assessment = assess_review_against_contracts(
@@ -623,26 +714,41 @@ def ingest_manifests(
                     row["eligibility_reason"] = ",".join(assessment["blockers"]) or "blocked"
                 row["admission_status"] = assessment["admission_status"]
                 row["assessment_blockers"] = assessment["blockers"]
-            queue.append(row)
-            bucket = invalid if errors else valid
-            bucket.append({"record": record, "queue": row, "manifest_path": str(path)})
+            pending_items.append({"record": record, "queue": row, "manifest_path": str(path)})
 
         after = path.read_bytes()
         if after != before:
             raise IntakeError(f"source manifest mutated during intake: {path}")
 
-    # Second pass: mark duplicate-hash groups that were incomplete during first-seen processing.
+    duplicate_record_ids = sorted({rid for rid, paths in seen_ids.items() if len(paths) > 1})
+    duplicate_id_set = set(duplicate_record_ids)
     duplicate_hashes = {sha: ids for sha, ids in seen_hashes.items() if len(ids) > 1}
-    if duplicate_hashes:
-        for item in valid:
-            stored = item["record"].get("stored_sha256")
-            if stored in duplicate_hashes:
-                row = item["queue"]
-                if row.get("eligibility_decision") in {"ADMITTED", "VERIFIED_NOT_ML_ELIGIBLE"}:
-                    row["eligibility_decision"] = "BLOCKED"
-                    row["eligibility_reason"] = "duplicate_hash_group"
-                    row.setdefault("assessment_blockers", []).append("duplicate_hash_group")
-                    row.pop("verified_label", None)
+
+    for item in pending_items:
+        row = item["queue"]
+        record_id = str(row.get("record_id") or "")
+        if record_id in duplicate_id_set:
+            first_path = seen_ids[record_id][0]
+            _block_from_verified_admitted(
+                row,
+                reason=f"DUPLICATE_RECORD_ID:{first_path}",
+                as_validation_error=True,
+            )
+        stored = item["record"].get("stored_sha256")
+        if stored in duplicate_hashes:
+            _block_from_verified_admitted(
+                row,
+                reason="duplicate_hash_group",
+                as_validation_error=False,
+            )
+
+        if row.get("validation_errors"):
+            if row.get("eligibility_decision") not in {"BLOCKED", "INVALID"}:
+                row["eligibility_decision"] = "INVALID"
+            invalid.append(item)
+        else:
+            valid.append(item)
+        queue.append(row)
 
     return {
         "schema_version": PHASE65_SCHEMA,
@@ -652,7 +758,7 @@ def ingest_manifests(
         "valid": valid,
         "invalid": invalid,
         "queue": queue,
-        "duplicate_record_ids": sorted(set(duplicate_record_ids)),
+        "duplicate_record_ids": duplicate_record_ids,
         "duplicate_hashes": duplicate_hashes,
         "ledger_path": str(ledger_path) if ledger_path else None,
     }
@@ -807,10 +913,28 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     # Guard every input before any read.
     manifests = [assert_readable_metadata_path(Path(p)) for p in args.manifest]
-    ledger = assert_readable_metadata_path(Path(args.review_ledger)) if args.review_ledger else None
     decision_path = (
         assert_readable_metadata_path(Path(args.append_decision)) if args.append_decision else None
     )
+
+    # Ledger destination must not collide with manifests, decision JSON, images,
+    # or protected paths. Check before reading decision content or appending.
+    ledger: Path | None = None
+    if args.review_ledger:
+        collision_inputs: list[Path] = list(manifests)
+        if decision_path is not None:
+            collision_inputs.append(decision_path)
+        if args.append_decision:
+            # Enforce collision before any append that could modify a file.
+            ledger = assert_ledger_append_path(
+                Path(args.review_ledger),
+                protected_inputs=collision_inputs,
+            )
+        else:
+            ledger = assert_readable_metadata_path(Path(args.review_ledger))
+            # Still refuse a ledger path that is the same resolved file as a manifest.
+            assert_ledger_append_path(ledger, protected_inputs=collision_inputs)
+
     protected_inputs = list(manifests)
     if ledger is not None:
         protected_inputs.append(ledger)
@@ -824,8 +948,14 @@ def main(argv: list[str] | None = None) -> int:
     if decision_path is not None:
         if ledger is None:
             raise SystemExit("--append-decision requires --review-ledger")
+        # Re-check collision immediately before write (resolved paths, incl. symlinks).
+        assert_ledger_append_path(ledger, protected_inputs=[*manifests, decision_path])
         decision = load_json_object(decision_path)
-        append_review_decision(ledger, decision)
+        append_review_decision(
+            ledger,
+            decision,
+            protected_inputs=[*manifests, decision_path],
+        )
 
     intake = ingest_manifests(manifests, ledger_path=ledger)
     report = build_readiness_report(intake)

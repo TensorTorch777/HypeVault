@@ -24,6 +24,7 @@ from intake import (  # noqa: E402
     IntakeError,
     append_review_decision,
     assess_review_against_contracts,
+    assert_ledger_append_path,
     assert_metadata_only_path,
     assert_readable_metadata_path,
     assert_writable_output_path,
@@ -247,12 +248,18 @@ class Phase65IntakeTests(unittest.TestCase):
             write_manifest(a, [scraper_row(record_id="dup")])
             write_manifest(b, [scraper_row(record_id="dup", stored_sha256=_sha(1))])
             result = ingest_manifests([a, b])
-            self.assertTrue(any("DUPLICATE_RECORD_ID" in e for e in result["invalid"][0]["queue"]["validation_errors"]))
+            self.assertEqual(len(result["invalid"]), 2)
+            self.assertEqual(result["duplicate_record_ids"], ["dup"])
+            for item in result["invalid"]:
+                self.assertTrue(
+                    any("DUPLICATE_RECORD_ID" in e for e in item["queue"]["validation_errors"])
+                )
             write_manifest(a, [scraper_row(record_id="one", stored_sha256=_sha(7))])
             write_manifest(b, [scraper_row(record_id="two", stored_sha256=_sha(7))])
             result = ingest_manifests([a, b])
             self.assertIn(_sha(7), result["duplicate_hashes"])
             self.assertEqual(sorted(result["duplicate_hashes"][_sha(7)]), ["one", "two"])
+            self.assertEqual(result["duplicate_record_ids"], [])
 
     def test_human_review_cannot_bypass_evidence_and_rights(self) -> None:
         record = scraper_row()
@@ -679,6 +686,233 @@ class Phase65IntakeTests(unittest.TestCase):
             write_manifest(collide_manifest, [scraper_row()])
             with self.assertRaises(IntakeError):
                 main(["--manifest", str(collide_manifest), "--output-dir", str(collide_dir)])
+
+    def test_review_ledger_colliding_with_manifest_rejected_before_write(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "manifest.jsonl"
+            write_manifest(manifest, [scraper_row()])
+            before = manifest.read_bytes()
+            out = Path(tmp) / "out"
+            with self.assertRaises(IntakeError):
+                main(
+                    [
+                        "--manifest",
+                        str(manifest),
+                        "--review-ledger",
+                        str(manifest),
+                        "--append-decision",
+                        str(Path(tmp) / "decision.json"),
+                        "--output-dir",
+                        str(out),
+                    ]
+                )
+            self.assertEqual(manifest.read_bytes(), before)
+            self.assertFalse(out.exists())
+
+            with self.assertRaises(IntakeError):
+                append_review_decision(
+                    manifest,
+                    {
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "INSUFFICIENT_EVIDENCE",
+                        "rights_review_status": "UNREVIEWED",
+                    },
+                    protected_inputs=[manifest],
+                )
+            self.assertEqual(manifest.read_bytes(), before)
+
+    def test_review_ledger_colliding_with_append_decision_rejected_before_write(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "manifest.jsonl"
+            decision = Path(tmp) / "decision.json"
+            write_manifest(manifest, [scraper_row()])
+            decision.write_text(
+                json.dumps(
+                    {
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "INSUFFICIENT_EVIDENCE",
+                        "rights_review_status": "UNREVIEWED",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            before_m = manifest.read_bytes()
+            before_d = decision.read_bytes()
+            out = Path(tmp) / "out"
+            with self.assertRaises(IntakeError):
+                main(
+                    [
+                        "--manifest",
+                        str(manifest),
+                        "--review-ledger",
+                        str(decision),
+                        "--append-decision",
+                        str(decision),
+                        "--output-dir",
+                        str(out),
+                    ]
+                )
+            self.assertEqual(manifest.read_bytes(), before_m)
+            self.assertEqual(decision.read_bytes(), before_d)
+
+            with self.assertRaises(IntakeError):
+                assert_ledger_append_path(decision, protected_inputs=[manifest, decision])
+            self.assertEqual(decision.read_bytes(), before_d)
+
+    def test_review_ledger_symlink_alias_collisions_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "manifest.jsonl"
+            write_manifest(manifest, [scraper_row()])
+            before_m = manifest.read_bytes()
+            alias = Path(tmp) / "ledger_alias.jsonl"
+            alias.symlink_to(manifest)
+            decision = Path(tmp) / "decision.json"
+            decision.write_text(
+                json.dumps(
+                    {
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "INSUFFICIENT_EVIDENCE",
+                        "rights_review_status": "UNREVIEWED",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            before_d = decision.read_bytes()
+            out = Path(tmp) / "out"
+            with self.assertRaises(IntakeError):
+                main(
+                    [
+                        "--manifest",
+                        str(manifest),
+                        "--review-ledger",
+                        str(alias),
+                        "--append-decision",
+                        str(decision),
+                        "--output-dir",
+                        str(out),
+                    ]
+                )
+            self.assertEqual(manifest.read_bytes(), before_m)
+            self.assertEqual(decision.read_bytes(), before_d)
+
+            # Symlink of decision used as ledger target.
+            decision_alias = Path(tmp) / "decision_as_ledger.json"
+            decision_alias.symlink_to(decision)
+            with self.assertRaises(IntakeError):
+                append_review_decision(
+                    decision_alias,
+                    {
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "INSUFFICIENT_EVIDENCE",
+                        "rights_review_status": "UNREVIEWED",
+                    },
+                    protected_inputs=[manifest, decision],
+                )
+            self.assertEqual(decision.read_bytes(), before_d)
+
+    def test_duplicate_record_ids_block_all_verified_admitted_counts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            a = Path(tmp) / "a.jsonl"
+            b = Path(tmp) / "b.jsonl"
+            ledger = Path(tmp) / "ledger.jsonl"
+            write_manifest(
+                a,
+                [scraper_row(record_id="shared", stored_sha256=_sha(11))],
+            )
+            write_manifest(
+                b,
+                [scraper_row(record_id="shared", stored_sha256=_sha(22))],
+            )
+            # Evidence/candidate pairs that would otherwise pass for each hash.
+            for sha in (_sha(11), _sha(22)):
+                append_review_decision(
+                    ledger,
+                    {
+                        "record_id": "shared",
+                        "authenticity_decision": "AUTHENTIC",
+                        "rights_review_status": "APPROVED",
+                        "adjudication_status": "AGREED",
+                        "phase55_evidence_record": phase55_eligible(sha=sha),
+                        "candidate_image_record_v2": candidate_admissible(sha=sha),
+                    },
+                )
+            result = ingest_manifests([a, b], ledger_path=ledger)
+            report = build_readiness_report(result)
+            self.assertEqual(result["duplicate_record_ids"], ["shared"])
+            self.assertEqual(len(result["invalid"]), 2)
+            self.assertEqual(report["verified_authentic_count"], 0)
+            self.assertEqual(report["verified_counterfeit_count"], 0)
+            self.assertEqual(report["admitted_under_existing_contracts"], 0)
+            for row in result["queue"]:
+                self.assertEqual(row["eligibility_decision"], "BLOCKED")
+                self.assertTrue(
+                    any("DUPLICATE_RECORD_ID" in e for e in row["validation_errors"])
+                )
+                self.assertNotIn(row.get("verified_label"), {"AUTHENTIC", "COUNTERFEIT"})
+
+    def test_malformed_phase55_evidence_rejected_on_append_and_load(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = Path(tmp) / "ledger.jsonl"
+            malformed = {
+                "sample_id": "bad",
+                "image_sha256": _sha(1),
+                # missing required Phase 55 fields
+            }
+            with self.assertRaises(IntakeError) as ctx:
+                append_review_decision(
+                    ledger,
+                    {
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "AUTHENTIC",
+                        "rights_review_status": "APPROVED",
+                        "adjudication_status": "AGREED",
+                        "phase55_evidence_record": malformed,
+                    },
+                )
+            self.assertIn("phase55_evidence_record", str(ctx.exception).lower())
+            self.assertFalse(ledger.exists())
+
+            # Pre-written malformed verified row must fail on load (no silent repair).
+            ledger.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "phase65_review_ledger_v1",
+                        "decision_id": "deadbeef",
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "AUTHENTIC",
+                        "rights_review_status": "APPROVED",
+                        "recorded_at_utc": "2026-10-14T00:00:00Z",
+                        "phase55_evidence_record": malformed,
+                    },
+                    sort_keys=True,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            before = ledger.read_bytes()
+            with self.assertRaises(IntakeError):
+                load_review_ledger(ledger)
+            self.assertEqual(ledger.read_bytes(), before)
+
+            # Conflicting label in otherwise schema-shaped evidence rejected on append.
+            conflict = phase55_eligible(sha=_sha(1), label="COUNTERFEIT")
+            with self.assertRaises(IntakeError):
+                append_review_decision(
+                    Path(tmp) / "ledger2.jsonl",
+                    {
+                        "record_id": "rec_web_001",
+                        "authenticity_decision": "AUTHENTIC",
+                        "rights_review_status": "APPROVED",
+                        "adjudication_status": "AGREED",
+                        "phase55_evidence_record": conflict,
+                    },
+                )
+
+            # Malformed evidence must never contribute to verified/admitted counts.
+            manifest = Path(tmp) / "manifest.jsonl"
+            write_manifest(manifest, [scraper_row()])
+            with self.assertRaises(IntakeError):
+                ingest_manifests([manifest], ledger_path=ledger)
 
 
 if __name__ == "__main__":
