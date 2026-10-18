@@ -77,10 +77,7 @@ data_unseen_generator_v1/
 ml_rtx5080/experiments/normalized_cross_brand_v1/fold_manifest.json
 # Large local manifests and inventories (full local image paths); kept on disk, not in git.
 ml_rtx5080/experiments/v3_cross_brand/fold_manifest.json
-ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json
 ml_rtx5080/experiments/dataset_audit/sample_inventory.csv
-ml_rtx5080/experiments/dataset_rebuild_v1/source_label_audit.json
-ml_rtx5080/experiments/dataset_rebuild_v1/rebuild_candidate_manifest.json
 ml_rtx5080/experiments/image_quality_v1/quality_features_nontest.csv
 # Third-party OOD corpus images (license terms); their manifests are tracked.
 ml_rtx5080/experiments/*/corpus/
