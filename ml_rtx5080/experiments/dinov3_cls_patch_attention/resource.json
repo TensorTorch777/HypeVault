@@ -1,0 +1,12 @@
+{
+  "gpu_name": "NVIDIA GeForce RTX 5080",
+  "amp_dtype": "bf16",
+  "batch_size": 16,
+  "accumulate_grad": 2,
+  "effective_batch": 32,
+  "peak_allocated_bytes": 8963593216,
+  "peak_reserved_bytes": 10326376448,
+  "test_root": null,
+  "test_set_used_for_selection": false,
+  "production_threshold": null
+}

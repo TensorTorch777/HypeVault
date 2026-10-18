@@ -1,0 +1,664 @@
+{
+  "facts": {
+    "gates": [
+      {
+        "authentic_escape": {
+          "A_unrelated": 0.0,
+          "B_product_non_watch": 0.0,
+          "C_watch_outside_scope": 0.3111111111111111,
+          "D_unseen_luxury_brand": 0.8247422680412371,
+          "E_structurally_different": 0.0
+        },
+        "calibration_review_increase": 0.010006671114076049,
+        "name": "conservative"
+      },
+      {
+        "authentic_escape": {
+          "A_unrelated": 0.0,
+          "B_product_non_watch": 0.0,
+          "C_watch_outside_scope": 0.15555555555555556,
+          "D_unseen_luxury_brand": 0.6907216494845361,
+          "E_structurally_different": 0.0
+        },
+        "calibration_review_increase": 0.038358905937291535,
+        "name": "moderate"
+      },
+      {
+        "authentic_escape": {
+          "A_unrelated": 0.0,
+          "B_product_non_watch": 0.0,
+          "C_watch_outside_scope": 0.044444444444444446,
+          "D_unseen_luxury_brand": 0.18556701030927836,
+          "E_structurally_different": 0.0
+        },
+        "calibration_review_increase": 0.16110740493662443,
+        "name": "aggressive"
+      }
+    ],
+    "group_counts": {
+      "A_unrelated": 68,
+      "B_product_non_watch": 83,
+      "C_watch_outside_scope": 45,
+      "D_unseen_luxury_brand": 194,
+      "E_structurally_different": 18
+    },
+    "holdout_authentic_escape": {
+      "aggressive": {
+        "A_unrelated": 0.0,
+        "B_product_non_watch": 0.0,
+        "C_watch_outside_scope": 0.1111111111111111,
+        "D_unseen_luxury_brand": 0.2708333333333333,
+        "E_structurally_different": 0.0
+      },
+      "conservative": {
+        "A_unrelated": 0.0,
+        "B_product_non_watch": 0.0,
+        "C_watch_outside_scope": 0.5555555555555556,
+        "D_unseen_luxury_brand": 0.8958333333333334,
+        "E_structurally_different": 0.0
+      },
+      "moderate": {
+        "A_unrelated": 0.0,
+        "B_product_non_watch": 0.0,
+        "C_watch_outside_scope": 0.3333333333333333,
+        "D_unseen_luxury_brand": 0.75,
+        "E_structurally_different": 0.0
+      },
+      "none": {
+        "A_unrelated": 0.7222222222222222,
+        "B_product_non_watch": 0.8,
+        "C_watch_outside_scope": 0.7777777777777778,
+        "D_unseen_luxury_brand": 0.9375,
+        "E_structurally_different": 0.4
+      }
+    },
+    "holdout_counts": {
+      "A_unrelated": 18,
+      "B_product_non_watch": 20,
+      "C_watch_outside_scope": 9,
+      "D_unseen_luxury_brand": 48,
+      "E_structurally_different": 5
+    },
+    "independent_photo_count_known": false,
+    "no_gate_authentic_rate": {
+      "A_unrelated": 0.75,
+      "B_product_non_watch": 0.8433734939759037,
+      "C_watch_outside_scope": 0.6888888888888889,
+      "D_unseen_luxury_brand": 0.8814432989690721,
+      "E_structurally_different": 0.7777777777777778
+    },
+    "provenance_failures": 0,
+    "real_corpus": true,
+    "scored_count": 408,
+    "scored_license_unknown_count": 40,
+    "unseen_luxury_mahalanobis_auroc": 0.8709775589224431
+  },
+  "groups": {
+    "A_unrelated": {
+      "authentic_fraction_at_0_50": 1.0,
+      "categories": {
+        "animals": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 12,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 1.4197715355098578e-06,
+          "median_p_fake": 4.5312069045553407e-08,
+          "percentiles": {
+            "25": 3.528740221803499e-08,
+            "5": 3.130720577311649e-08,
+            "50": 4.5312069045553407e-08,
+            "75": 7.271016672251427e-08,
+            "95": 7.481965524716779e-06
+          },
+          "split_counts": {
+            "development": 4,
+            "holdout": 1,
+            "validation": 7
+          }
+        },
+        "buildings": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 12,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 3.193986094401294e-08,
+          "median_p_fake": 2.092964818643124e-08,
+          "percentiles": {
+            "25": 1.560122841152755e-08,
+            "5": 1.4082843512314038e-08,
+            "50": 2.092964818643124e-08,
+            "75": 2.6617222365588976e-08,
+            "95": 9.05375470605342e-08
+          },
+          "split_counts": {
+            "development": 4,
+            "holdout": 3,
+            "validation": 5
+          }
+        },
+        "consumer_products": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 12,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 1.821589627225035e-08,
+          "median_p_fake": 1.0849242721207286e-08,
+          "percentiles": {
+            "25": 9.660616153490737e-09,
+            "5": 7.66273412703796e-09,
+            "50": 1.0849242721207286e-08,
+            "75": 2.0822729051699526e-08,
+            "95": 4.457088844359687e-08
+          },
+          "split_counts": {
+            "development": 2,
+            "holdout": 6,
+            "validation": 4
+          }
+        },
+        "food": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 12,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 6.381062218821555e-08,
+          "median_p_fake": 4.6414501379749e-08,
+          "percentiles": {
+            "25": 2.661779477286495e-08,
+            "5": 1.9720694151769775e-08,
+            "50": 4.6414501379749e-08,
+            "75": 8.071196162400283e-08,
+            "95": 1.45681462629485e-07
+          },
+          "split_counts": {
+            "development": 6,
+            "holdout": 3,
+            "validation": 3
+          }
+        },
+        "landscapes": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 12,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 3.063254377638269e-07,
+          "median_p_fake": 7.255258660974478e-08,
+          "percentiles": {
+            "25": 5.601725672343642e-08,
+            "5": 3.491838850130975e-08,
+            "50": 7.255258660974478e-08,
+            "75": 2.6274077023680714e-07,
+            "95": 1.1638700838135993e-06
+          },
+          "split_counts": {
+            "development": 6,
+            "holdout": 2,
+            "validation": 4
+          }
+        },
+        "people": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 8,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 4.924668346388582e-06,
+          "median_p_fake": 4.466753963777783e-08,
+          "percentiles": {
+            "25": 1.763574748423696e-08,
+            "5": 1.1972946004318662e-08,
+            "50": 4.466753963777783e-08,
+            "75": 4.407324201056359e-06,
+            "95": 2.0254578050978272e-05
+          },
+          "split_counts": {
+            "development": 3,
+            "holdout": 3,
+            "validation": 2
+          }
+        }
+      },
+      "count": 68,
+      "detectors": {
+        "cosine": {
+          "average_precision": 0.9983158466369149,
+          "fpr_at_95_tpr": 0.0,
+          "fpr_status": "ok",
+          "id_reference": "calibration",
+          "id_score_mean": 0.48301367842178206,
+          "id_score_median": 0.3802385880401835,
+          "ood_score_mean": 0.995937572756884,
+          "ood_score_median": 0.99870120394121,
+          "roc_auc": 0.9999607581524939
+        },
+        "mahalanobis": {
+          "average_precision": 0.9995706082944688,
+          "fpr_at_95_tpr": 0.0,
+          "fpr_status": "ok",
+          "id_reference": "calibration",
+          "id_score_mean": 26.86137226504061,
+          "id_score_median": 25.16261050630716,
+          "ood_score_mean": 44.67770022765918,
+          "ood_score_median": 44.71616695988471,
+          "roc_auc": 0.9999901895381236
+        }
+      },
+      "fake_fraction_at_0_50": 0.0,
+      "mean_p_fake": 9.040898088712738e-07,
+      "median_p_fake": 3.552419301161081e-08,
+      "percentiles": {
+        "25": 1.7318726314472377e-08,
+        "5": 1.0098720663347538e-08,
+        "50": 3.552419301161081e-08,
+        "75": 6.862161855087225e-08,
+        "95": 1.2671027315121711e-06
+      },
+      "split_counts": {
+        "development": 25,
+        "holdout": 18,
+        "validation": 25
+      }
+    },
+    "B_product_non_watch": {
+      "authentic_fraction_at_0_50": 1.0,
+      "categories": {
+        "accessories": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 7,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 3.013699451678593e-08,
+          "median_p_fake": 9.662252405915534e-09,
+          "percentiles": {
+            "25": 8.08316189994317e-09,
+            "5": 7.825631184952346e-09,
+            "50": 9.662252405915534e-09,
+            "75": 2.02947560643509e-08,
+            "95": 1.0329094653370529e-07
+          },
+          "split_counts": {
+            "development": 3,
+            "holdout": 2,
+            "validation": 2
+          }
+        },
+        "handbags": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 12,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 1.1626812608376891e-08,
+          "median_p_fake": 9.173960945272512e-09,
+          "percentiles": {
+            "25": 7.37740156913104e-09,
+            "5": 6.137212783569226e-09,
+            "50": 9.173960945272512e-09,
+            "75": 1.2954859586300942e-08,
+            "95": 2.2990087574907404e-08
+          },
+          "split_counts": {
+            "development": 9,
+            "holdout": 1,
+            "validation": 2
+          }
+        },
+        "jewelry": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 12,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 1.8697909854938726e-08,
+          "median_p_fake": 1.063047710923612e-08,
+          "percentiles": {
+            "25": 8.20723128419045e-09,
+            "5": 7.00899543067813e-09,
+            "50": 1.063047710923612e-08,
+            "75": 1.3997480996045616e-08,
+            "95": 5.8322547483691425e-08
+          },
+          "split_counts": {
+            "development": 6,
+            "holdout": 2,
+            "validation": 4
+          }
+        },
+        "phones": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 12,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 1.506793567401237e-08,
+          "median_p_fake": 1.281732519929906e-08,
+          "percentiles": {
+            "25": 9.819736240278352e-09,
+            "5": 7.754245809526856e-09,
+            "50": 1.281732519929906e-08,
+            "75": 1.64814576920641e-08,
+            "95": 3.0580837444211704e-08
+          },
+          "split_counts": {
+            "development": 6,
+            "holdout": 3,
+            "validation": 3
+          }
+        },
+        "shoes": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 40,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 5.883647365350399e-08,
+          "median_p_fake": 8.187149282733953e-09,
+          "percentiles": {
+            "25": 7.477632067367362e-09,
+            "5": 5.937978311668989e-09,
+            "50": 8.187149282733953e-09,
+            "75": 9.712341097850792e-09,
+            "95": 1.4949343294132185e-08
+          },
+          "split_counts": {
+            "development": 19,
+            "holdout": 12,
+            "validation": 9
+          }
+        }
+      },
+      "count": 83,
+      "detectors": {
+        "cosine": {
+          "average_precision": 0.9997165131112686,
+          "fpr_at_95_tpr": 0.0,
+          "fpr_status": "ok",
+          "id_reference": "calibration",
+          "id_score_mean": 0.48301367842178206,
+          "id_score_median": 0.3802385880401835,
+          "ood_score_mean": 0.9911914948184322,
+          "ood_score_median": 0.9911207755504501,
+          "roc_auc": 0.9999919625131612
+        },
+        "mahalanobis": {
+          "average_precision": 0.9995713541622193,
+          "fpr_at_95_tpr": 0.0,
+          "fpr_status": "ok",
+          "id_reference": "calibration",
+          "id_score_mean": 26.86137226504061,
+          "id_score_median": 25.16261050630716,
+          "ood_score_mean": 43.2884190379981,
+          "ood_score_median": 43.15364795260693,
+          "roc_auc": 0.9999879437697421
+        }
+      },
+      "fake_fraction_at_0_50": 0.0,
+      "mean_p_fake": 3.7459395245850573e-08,
+      "median_p_fake": 8.56740742310782e-09,
+      "percentiles": {
+        "25": 7.714201484401033e-09,
+        "5": 6.272041327213773e-09,
+        "50": 8.56740742310782e-09,
+        "75": 1.2638800715844874e-08,
+        "95": 3.99492906350539e-08
+      },
+      "split_counts": {
+        "development": 43,
+        "holdout": 20,
+        "validation": 20
+      }
+    },
+    "C_watch_outside_scope": {
+      "authentic_fraction_at_0_50": 1.0,
+      "categories": {
+        "digital_watches": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 9,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 1.7736462827792037e-08,
+          "median_p_fake": 6.432692234109402e-09,
+          "percentiles": {
+            "25": 5.7128411626799205e-09,
+            "5": 5.618712982516222e-09,
+            "50": 6.432692234109402e-09,
+            "75": 1.2110861004458011e-08,
+            "95": 6.047106402941395e-08
+          },
+          "split_counts": {
+            "development": 6,
+            "validation": 3
+          }
+        },
+        "fashion_watches": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 12,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 1.00712860976043e-08,
+          "median_p_fake": 4.2360126585708854e-09,
+          "percentiles": {
+            "25": 4.092515416831704e-09,
+            "5": 3.676074922343338e-09,
+            "50": 4.2360126585708854e-09,
+            "75": 5.1719971647179624e-09,
+            "95": 3.5587599964399886e-08
+          },
+          "split_counts": {
+            "development": 6,
+            "holdout": 3,
+            "validation": 3
+          }
+        },
+        "inexpensive_or_fashion_watches": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 10,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 2.0427256814634804e-08,
+          "median_p_fake": 4.391094917147808e-09,
+          "percentiles": {
+            "25": 4.033685697370858e-09,
+            "5": 3.822701067690242e-09,
+            "50": 4.391094917147808e-09,
+            "75": 5.414737847450134e-09,
+            "95": 9.231746030205806e-08
+          },
+          "split_counts": {
+            "development": 4,
+            "holdout": 2,
+            "validation": 4
+          }
+        },
+        "smartwatches": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 14,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 6.665721223728726e-07,
+          "median_p_fake": 5.692273207975727e-09,
+          "percentiles": {
+            "25": 4.589344102805321e-09,
+            "5": 4.117403151809222e-09,
+            "50": 5.692273207975727e-09,
+            "75": 1.6416775043568647e-08,
+            "95": 3.244371412011738e-06
+          },
+          "split_counts": {
+            "development": 6,
+            "holdout": 4,
+            "validation": 4
+          }
+        }
+      },
+      "count": 45,
+      "detectors": {
+        "cosine": {
+          "average_precision": 0.5028498654403835,
+          "fpr_at_95_tpr": 0.3669112741827885,
+          "fpr_status": "ok",
+          "id_reference": "calibration",
+          "id_score_mean": 0.48301367842178206,
+          "id_score_median": 0.3802385880401835,
+          "ood_score_mean": 0.8275837990806654,
+          "ood_score_median": 0.8108795228555147,
+          "roc_auc": 0.9368245496997998
+        },
+        "mahalanobis": {
+          "average_precision": 0.6178150919825669,
+          "fpr_at_95_tpr": 0.16644429619746498,
+          "fpr_status": "ok",
+          "id_reference": "calibration",
+          "id_score_mean": 26.86137226504061,
+          "id_score_median": 25.16261050630716,
+          "ood_score_mean": 38.898331608542804,
+          "ood_score_median": 39.13547113129476,
+          "roc_auc": 0.9614261359424802
+        }
+      },
+      "fake_fraction_at_0_50": 0.0,
+      "mean_p_fake": 2.1815035288862103e-07,
+      "median_p_fake": 5.5169863462439305e-09,
+      "percentiles": {
+        "25": 4.297676644630511e-09,
+        "5": 3.820262838002284e-09,
+        "50": 5.5169863462439305e-09,
+        "75": 7.90414060433444e-09,
+        "95": 8.067719752486471e-08
+      },
+      "split_counts": {
+        "development": 22,
+        "holdout": 9,
+        "validation": 14
+      }
+    },
+    "D_unseen_luxury_brand": {
+      "authentic_fraction_at_0_50": 1.0,
+      "categories": {
+        "unseen_luxury_brand": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 194,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 4.3559058348691635e-09,
+          "median_p_fake": 3.963435940159085e-09,
+          "percentiles": {
+            "25": 3.847678382896546e-09,
+            "5": 3.6327923914894648e-09,
+            "50": 3.963435940159085e-09,
+            "75": 4.115756998457415e-09,
+            "95": 4.688204455907319e-09
+          },
+          "split_counts": {
+            "development": 98,
+            "holdout": 48,
+            "validation": 48
+          }
+        }
+      },
+      "count": 194,
+      "detectors": {
+        "cosine": {
+          "average_precision": 0.24251918738770073,
+          "fpr_at_95_tpr": 0.3125416944629753,
+          "fpr_status": "ok",
+          "id_reference": "calibration",
+          "id_score_mean": 0.48301367842178206,
+          "id_score_median": 0.3802385880401835,
+          "ood_score_mean": 0.7241777099726039,
+          "ood_score_median": 0.7163337164767097,
+          "roc_auc": 0.8752415699813623
+        },
+        "mahalanobis": {
+          "average_precision": 0.2604377980513462,
+          "fpr_at_95_tpr": 0.3609072715143429,
+          "fpr_status": "ok",
+          "id_reference": "calibration",
+          "id_score_mean": 26.86137226504061,
+          "id_score_median": 25.16261050630716,
+          "ood_score_mean": 34.910778809094886,
+          "ood_score_median": 34.54317621097556,
+          "roc_auc": 0.8709775589224431
+        }
+      },
+      "fake_fraction_at_0_50": 0.0,
+      "mean_p_fake": 4.3559058348691635e-09,
+      "median_p_fake": 3.963435940159085e-09,
+      "percentiles": {
+        "25": 3.847678382896546e-09,
+        "5": 3.6327923914894648e-09,
+        "50": 3.963435940159085e-09,
+        "75": 4.115756998457415e-09,
+        "95": 4.688204455907319e-09
+      },
+      "split_counts": {
+        "development": 98,
+        "holdout": 48,
+        "validation": 48
+      }
+    },
+    "E_structurally_different": {
+      "authentic_fraction_at_0_50": 1.0,
+      "categories": {
+        "store_photographs": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 8,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 1.040715869342876e-06,
+          "median_p_fake": 4.736457518326925e-08,
+          "percentiles": {
+            "25": 2.3082058266292686e-08,
+            "5": 1.3377084231017513e-08,
+            "50": 4.736457518326925e-08,
+            "75": 1.8026738129559395e-07,
+            "95": 5.117244750257739e-06
+          },
+          "split_counts": {
+            "development": 3,
+            "holdout": 1,
+            "validation": 4
+          }
+        },
+        "wrist_shots": {
+          "authentic_fraction_at_0_50": 1.0,
+          "count": 10,
+          "fake_fraction_at_0_50": 0.0,
+          "mean_p_fake": 4.503686452522525e-08,
+          "median_p_fake": 2.2339043209799635e-08,
+          "percentiles": {
+            "25": 5.587096943411019e-09,
+            "5": 4.007595867212607e-09,
+            "50": 2.2339043209799635e-08,
+            "75": 4.276043222417283e-08,
+            "95": 1.644461396892085e-07
+          },
+          "split_counts": {
+            "development": 3,
+            "holdout": 4,
+            "validation": 3
+          }
+        }
+      },
+      "count": 18,
+      "detectors": {
+        "cosine": {
+          "average_precision": 0.8783255903987611,
+          "fpr_at_95_tpr": null,
+          "fpr_status": "too_few_samples",
+          "id_reference": "calibration",
+          "id_score_mean": 0.48301367842178206,
+          "id_score_median": 0.3802385880401835,
+          "ood_score_mean": 0.9485693351866679,
+          "ood_score_median": 0.9755132758820066,
+          "roc_auc": 0.9944407382699578
+        },
+        "mahalanobis": {
+          "average_precision": 0.9033176033176034,
+          "fpr_at_95_tpr": null,
+          "fpr_status": "too_few_samples",
+          "id_reference": "calibration",
+          "id_score_mean": 26.86137226504061,
+          "id_score_median": 25.16261050630716,
+          "ood_score_mean": 43.26041947172654,
+          "ood_score_median": 44.327853017502854,
+          "roc_auc": 0.9971277147728115
+        }
+      },
+      "fake_fraction_at_0_50": 0.0,
+      "mean_p_fake": 4.875608666664034e-07,
+      "median_p_fake": 2.5895686047666265e-08,
+      "percentiles": {
+        "25": 1.3008257199059002e-08,
+        "5": 4.332014924298538e-09,
+        "50": 2.5895686047666265e-08,
+        "75": 6.422740186269981e-08,
+        "95": 1.5683735799740655e-06
+      },
+      "split_counts": {
+        "development": 6,
+        "holdout": 5,
+        "validation": 7
+      }
+    }
+  }
+}

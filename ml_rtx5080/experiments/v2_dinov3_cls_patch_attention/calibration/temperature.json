@@ -1,0 +1,23 @@
+{
+  "checkpoint": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+  "model_family": "dinov3",
+  "model_architecture": "cls_patch_attention",
+  "head": "cls_patch_attention",
+  "input_size": 512,
+  "manifest_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+  "preprocessing_version": "resize_pad_square_eval_v1",
+  "calibration_sample_count": 2998,
+  "authentic_count": 1498,
+  "fake_count": 1500,
+  "temperature": 0.24038200410185356,
+  "initial_temperature": 1.0,
+  "baseline_nll": 0.009811311960220337,
+  "calibrated_nll": 2.5221722488311116e-09,
+  "temperature_improved_nll": true,
+  "fitting_method": "lbfgs_log_temperature_nll",
+  "fitting_status": "fitted",
+  "checkpoint_selection_completed": true,
+  "calibration_fitted_after_selection": true,
+  "production_threshold": null,
+  "architecture_ranking_affected": false
+}

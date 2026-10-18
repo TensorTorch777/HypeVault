@@ -1,0 +1,436 @@
+{
+  "admitted_count": 28,
+  "download_failure_count": 1146,
+  "download_failures_sample": [
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:11-11-24-basel-by-ralfr-085.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:11-11-24-basel-by-ralfr-086.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Beyrouth (9861385474).jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Beyrouth (9861386745).jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Haus f\u00fcr Mozart, Salzburg - Foyer (6).jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Haus f\u00fcr Mozart, Salzburg - Karl-B\u00f6hm-Saal (08).jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Muslim pride mosque Shali Chechnya 12.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rhodos003.JPG"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex Herrenuhr Oyster Perpetual Datejust mit Turn-O-Graph L\u00fcnette Gold (1992).jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex Le Mans Daytona 126528LN.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex mural watch, Dubai airport.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex pocket watch in box.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex-watches-Helsinki2.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:The Real Thing (22119277278).jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:The Rolex Clock.jpeg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Wasted Time - Flickr - Kinchan1.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "non_watch_or_part_marker",
+      "title": "File:Calibrorolex.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:CongressionalClock.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Fingerpost Lindos Faliraki at Diagoras Stadium in Rhodes 7 September 2019.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Inserzione pubblicitaria Rolex dei primi anni Settanta.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Macro photography of a Rolex watch.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Montegrappa Extra 1930 Black Bamboo and Turtle Brown Fountain Pens.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Movimento Rolex 5035 al quarzo.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Nothing less than \u00a310,000 - geograph.org.uk - 8228193.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Particolare della valvola di sfogo dell'elio del Rolex Sea-Dweller ref. 1665, met\u00e0 anni Settanta circa.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Particolare di un Exclamation point dial su un Rolex GMT-Master ref. 1675. La ghiera sbiadita \u00e8 detta anche faded o ghost..jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Quadrante Day Date con spade dell'Oman ref. 18078.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Quadrante tropical di Rolex GMT-Master ref. 1675 Long E.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Raro Rolex ref. 6284 con quadrante in smalto cloisonn\u00e9 prodotto dalla Stern Fr\u00e8res. Risale agli anni Cinquanta.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Air King ref. 114234, circa 2010.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex bubbleback ref. 2940 anni Quaranta.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex cronografo monopulsante da tasca con cassa oro, ref. 6372 risalente ai primi anni Trenta.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex cronografo P.O.W. ref. 3525 risalente agli anni Quaranta.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust ref. 16220 tapestry dial.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Daytona ref. 6263, primi anni Settanta.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Daytona ref. 6265 in oro, primi anni Settanta.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Daytona ref. 6269, primo Daytona con pietre preziose. Risalente al 1984..jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Explorer II ref. 16550 Pannone, met\u00e0 anni Ottanta.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Explorer ref. 5500 con quadrante Gilt.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex footfrog.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex GMT Master II ref. 16710T.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex GMT-Master II ref. 126713GRNR.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex GMT-Master ref. 16700.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Oyster Perpetual con quadrante Celebration.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Oyster Perpetual ref. 116000 con quadrante Explorer.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex ref. 6062 soprannominato Stelline per via dei suoi indici.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex ref. 8206 cronografo con cassa quadrata, noto anche con il soprannome di Gabus, in quanto la cassa era prodotta dall'azienda Gabus Fr\u00e8res. Risale agli anni Quaranta..jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Sky-Dweller in oro bianco.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Submariner ref. 6538 detto \"Coroncione\" per via della corona di carica di dimensioni maggiorate, risalente alla fine degli anni Cinquanta..jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Yacht-Master II ref. 116688 risalente al 2007.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Steelstamp.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:US Open - 2008 - Putting Green at Torrey Pines (2579139936).jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Vetta Dry oro e acciaio al quarzo, il cui design omaggia il Rolex Datejust.jpg"
+    },
+    {
+      "category": "Rolex watches",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:\u017d\u00e1ba s rolexkami - panoramio.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:DatejustII in showcase.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Fake Rolex Datejust.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex Datejust 126234.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex Datejust 36 - At an Angle (50826143003).jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex Datejust 36 - Black Sunburst Dial (50826887656).jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex Datejust 36 - On Display (50826140918).jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex Datejust 36 - Presentation Ready (50826141683).jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex Datejust 36 - Ready in the Box (50826141328).jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "original_outside_byte_cap_or_mime",
+      "title": "File:Rolex Datejust 36 - Rolex Crown (50826142188).jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Quadrante in radica di un Rolex Datejust in oro risalente agli anni Ottanta.png"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust 116234.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust 16013 close-up.webp"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust 16013.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust 1603.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust 16200.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust 36 126200-0006.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust con quadrante Wimbledon.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust II 116334 - 1.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust II 116334 - 2.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust II 116334 - 3.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust Oysterquartz.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust ref. 16013, seconda met\u00e0 anni '70-primi '80.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust ref. 16030, fine anni Settanta.jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust ref. 1611 con lavorazione Morelli sulla ghiera. Anni Settanta..jpg"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust Terminology.png"
+    },
+    {
+      "category": "Rolex Datejust",
+      "error": "HTTP Error 429: Too many requests - please contact noc@wikimedia.org to discuss a less disruptive approach or instead use thumbnail images in sizes listed on https://w.wiki/GHai. (0c640b1)",
+      "title": "File:Rolex Datejust.JPG"
+    }
+  ],
+  "final_test_images_opened": false,
+  "final_test_samples_used": 0,
+  "protocol_sha256": "babaaf2b5c30d252c39765886ee5db032c09c4e3f25cf0e9eacc63f17128dde9",
+  "rejected_count": 0,
+  "rejection_counts": {},
+  "roboflow_admitted": 0,
+  "targets": {
+    "achieved": {
+      "ordinary_watch": 11,
+      "smart_digital": 2,
+      "unseen_luxury": 15,
+      "wrist_store": 0
+    },
+    "confirmed_original_uploads": 28,
+    "distinct_source_urls": 28,
+    "known_independent_photograph_count": 28,
+    "shortfall": {
+      "ordinary_watch": 189,
+      "smart_digital": 98,
+      "unseen_luxury": 285,
+      "wrist_store": 50
+    },
+    "target": {
+      "ordinary_watch": 200,
+      "smart_digital": 100,
+      "unseen_luxury": 300,
+      "wrist_store": 50
+    },
+    "unknown_original_status": 0
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "protocol_id": "unseen_generator_v1",
+  "question": "Do the Phase 56 and frozen production models detect images from generators outside the training folders?",
+  "claim_scope": "detection of generated images only; real photos are not re-scored here",
+  "generators": {
+    "sdxl_base_1_0": {
+      "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
+      "size": 1024,
+      "steps": 30,
+      "guidance": 6.0,
+      "variant": "fp16"
+    },
+    "sd_1_5": {
+      "model_id": "runwayml/stable-diffusion-v1-5",
+      "size": 512,
+      "steps": 30,
+      "guidance": 7.5,
+      "variant": null
+    }
+  },
+  "training_generator": "not recorded; every Label_1 file is 512x512",
+  "prompt_template": "photo of a {brand} {model line} luxury wristwatch, {scene}",
+  "model_lines": {
+    "A. Lange & Söhne": [
+      "Lange 1",
+      "Saxonia",
+      "Zeitwerk",
+      "Datograph",
+      "Odysseus"
+    ],
+    "Audemars Piguet": [
+      "Royal Oak",
+      "Royal Oak Offshore",
+      "Code 11.59",
+      "Royal Oak Concept",
+      "Jules Audemars"
+    ],
+    "Patek Philippe": [
+      "Nautilus",
+      "Aquanaut",
+      "Calatrava",
+      "Grand Complications",
+      "Annual Calendar"
+    ],
+    "Richard Mille": [
+      "RM 011",
+      "RM 035",
+      "RM 055",
+      "RM 67-01",
+      "RM 027"
+    ],
+    "Vacheron Constantin": [
+      "Overseas",
+      "Patrimony",
+      "Traditionnelle",
+      "Fiftysix",
+      "Historiques"
+    ]
+  },
+  "scenes": [
+    "professional studio product photo on a seamless white background, soft box lighting",
+    "worn on a wrist outdoors, smartphone photo, natural daylight",
+    "inside a jewelry store display case, glass reflections, warm spotlights",
+    "flat lay on a wooden table, marketplace listing photo, slightly off-center",
+    "macro close-up of the dial and hands, shallow depth of field",
+    "held in a hand against a plain wall, indoor lighting, phone camera",
+    "next to its presentation box and papers, top-down photo",
+    "side profile of the case and crown on a watch stand, studio lighting",
+    "on a leather watch roll under a warm desk lamp at night",
+    "on a dark slate surface, dramatic rim light, luxury catalog style"
+  ],
+  "negative_prompt": "cartoon, illustration, drawing, render, text, watermark, logo overlay, blurry, deformed",
+  "images_per_prompt": 2,
+  "images_per_generator": 500,
+  "seed_rule": "seed = 57 * 100000 + prompt_index * 2 + repeat",
+  "normalization": "normalize_surface.normalize_image then save_jpeg (448x448, baseline JPEG q90, no EXIF)",
+  "scorers": {
+    "random_split": "Phase 56 random_split_cls_patch_attention.pt on normalized images (primary)",
+    "held_out_fold": "Phase 56 fold model whose held-out brand is the image's prompt brand, normalized images",
+    "frozen_raw": "frozen epoch_018.pt on the raw PNG with the production eval transform",
+    "frozen_norm": "frozen epoch_018.pt on the normalized image"
+  },
+  "frozen_checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "decision": "P(generated) >= 0.50, equivalently logit >= 0",
+  "interval": "Clopper-Pearson 95% on the image-level detection rate",
+  "not_claimed": [
+    "authentic versus counterfeit watch",
+    "generators other than the two named",
+    "independence between images of the same prompt"
+  ]
+}

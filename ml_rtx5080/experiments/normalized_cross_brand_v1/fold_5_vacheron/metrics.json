@@ -1,0 +1,361 @@
+{
+  "initialization": "timm pretrained vit_base_patch16_dinov3.lvd1689m. The frozen epoch_018.pt checkpoint is not loaded.",
+  "loaded_frozen_checkpoint": false,
+  "classifier_arch": "cls_patch_attention",
+  "selected_epoch": 8,
+  "selected_checkpoint": "epoch_008",
+  "temperature": 0.42658515406614583,
+  "calibration": {
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 0.9995835068721366,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0008605851979345956,
+    "nll": 0.0007181453984230757,
+    "brier": 0.00025865263887681067,
+    "ece": 0.00041036682548813657,
+    "sample_count": 2362,
+    "authentic_count": 1162,
+    "fake_count": 1200,
+    "temperature": 0.42658515406614583
+  },
+  "in_domain": {
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 0.9995835068721366,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0008620689655172414,
+    "nll": 0.002890891395509243,
+    "brier": 0.00042334714089520276,
+    "ece": 0.00038439035415649414,
+    "sample_count": 2360,
+    "authentic_count": 1160,
+    "fake_count": 1200,
+    "temperature": 0.42658515406614583
+  },
+  "unseen": {
+    "roc_auc": 1.0,
+    "pr_auc": 0.9999999999999999,
+    "f1": 0.999814849102018,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0003745318352059925,
+    "nll": 0.00024669570848345757,
+    "brier": 6.823581497883424e-05,
+    "ece": 0.00019423915021246372,
+    "sample_count": 5370,
+    "authentic_count": 2670,
+    "fake_count": 2700,
+    "temperature": 0.42658515406614583
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.2189270821058382,
+      "val_loss": 0.026987064629793167,
+      "val_pr_auc": 0.9999783967427222,
+      "val_f1": 0.9921455146754858,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.05976979867429347,
+      "val_loss": 0.016221294179558754,
+      "val_pr_auc": 0.9999965248770114,
+      "val_f1": 0.9983361064891847,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.05781623661791381,
+      "val_loss": 0.014391428790986538,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9987515605493134,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.056867506200426104,
+      "val_loss": 0.013632740825414658,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9983361064891847,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.05668104968921903,
+      "val_loss": 0.01263157557696104,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9991673605328892,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.05621787768691548,
+      "val_loss": 0.011026989668607712,
+      "val_pr_auc": 0.9999993061337774,
+      "val_f1": 0.9991666666666666,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "increment"
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.05624171779365153,
+      "val_loss": 0.010944979265332222,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995831596498541,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "reset"
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.05635375566205233,
+      "val_loss": 0.011609368026256561,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995835068721366,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.05607687804891106,
+      "val_loss": 0.011789899319410324,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995835068721366,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.058009634182777645,
+      "val_loss": 0.012321239337325096,
+      "val_pr_auc": 0.9999993061337774,
+      "val_f1": 0.9995835068721366,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.0561673017038917,
+      "val_loss": 0.011685634031891823,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995835068721366,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.05637498535072021,
+      "val_loss": 0.013096611015498638,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9991673605328892,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.056073520397299965,
+      "val_loss": 0.013054003939032555,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9991673605328892,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.05621610482270078,
+      "val_loss": 0.015028106980025768,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9983361064891847,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    }
+  ],
+  "features": {
+    "production_ood_threshold": null,
+    "train_mahalanobis": {
+      "minimum": 18.388766283510858,
+      "p5": 19.676005508533994,
+      "p25": 20.769918265476818,
+      "median": 24.354223554038708,
+      "p75": 32.85686022664652,
+      "p95": 35.57272765292002,
+      "maximum": 48.955420067400055
+    },
+    "held_out_mahalanobis": {
+      "minimum": 18.82430962970554,
+      "p5": 19.649745468759235,
+      "p25": 20.724676704184553,
+      "median": 25.29501946932315,
+      "p75": 33.619445568894164,
+      "p95": 36.50924639061417,
+      "maximum": 53.58619308343166
+    },
+    "train_cosine_distance": {
+      "minimum": 0.17069375110459473,
+      "p5": 0.225633890910242,
+      "p25": 0.2515369925585077,
+      "median": 0.3207614590680684,
+      "p75": 0.5523752807108859,
+      "p95": 0.6239113878850318,
+      "maximum": 1.014423233706791
+    },
+    "held_out_cosine_distance": {
+      "minimum": 0.19305335726165296,
+      "p5": 0.2289696427048878,
+      "p25": 0.2540402196627999,
+      "median": 0.3615794982798848,
+      "p75": 0.5640488834979327,
+      "p95": 0.644465490464734,
+      "maximum": 1.0167994601973946
+    },
+    "held_out_fraction_above_train_mahalanobis_p95": 0.09013035381750466,
+    "mean_p_fake_above_train_mahalanobis_p95": 0.0021020015701651573,
+    "mean_p_fake_below_train_mahalanobis_median": 0.9999784827232361
+  },
+  "confidence": {
+    "all_images_p_fake": {
+      "minimum": 1.5714182154624723e-05,
+      "p5": 2.0014446727145695e-05,
+      "p25": 2.2504269509227015e-05,
+      "median": 0.9999730587005615,
+      "p75": 0.9999786615371704,
+      "p95": 0.9999798536300659,
+      "maximum": 0.9999834299087524
+    },
+    "authentic_images_p_fake": {
+      "minimum": 1.5714182154624723e-05,
+      "p5": 1.9281600270915077e-05,
+      "p25": 2.1128595562913688e-05,
+      "median": 2.2491210074804258e-05,
+      "p75": 2.3908483854029328e-05,
+      "p95": 2.8510543143056562e-05,
+      "maximum": 0.5449807643890381
+    },
+    "fake_images_p_fake": {
+      "minimum": 0.9999539852142334,
+      "p5": 0.999976634979248,
+      "p25": 0.9999779462814331,
+      "median": 0.9999786615371704,
+      "p75": 0.9999792575836182,
+      "p95": 0.9999802112579346,
+      "maximum": 0.9999834299087524
+    },
+    "mean_p_fake": 0.5029658675193787,
+    "median_p_fake": 0.9999730587005615,
+    "most_confident_false_authentic_examples": [
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/441a1d00a483.jpg",
+        "label": 1,
+        "p_fake": 0.9999539852142334,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/3b39ccb78a20.jpg",
+        "label": 1,
+        "p_fake": 0.9999592304229736,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/10164d93398a.jpg",
+        "label": 1,
+        "p_fake": 0.9999659061431885,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/79182f387e3c.jpg",
+        "label": 1,
+        "p_fake": 0.9999678134918213,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/77475d070907.jpg",
+        "label": 1,
+        "p_fake": 0.9999678134918213,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/2f3dc536612e.jpg",
+        "label": 1,
+        "p_fake": 0.9999687671661377,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/e484ab846109.jpg",
+        "label": 1,
+        "p_fake": 0.9999690055847168,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/53920f88098d.jpg",
+        "label": 1,
+        "p_fake": 0.9999697208404541,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/53ce2c5c3254.jpg",
+        "label": 1,
+        "p_fake": 0.9999711513519287,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/b9f72f9cb160.jpg",
+        "label": 1,
+        "p_fake": 0.9999712705612183,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/4556b1294ccb.jpg",
+        "label": 1,
+        "p_fake": 0.9999716281890869,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/910ec93b7fdc.jpg",
+        "label": 1,
+        "p_fake": 0.9999719858169556,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/1ca4968bffa0.jpg",
+        "label": 1,
+        "p_fake": 0.9999721050262451,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/2452d4fbb17a.jpg",
+        "label": 1,
+        "p_fake": 0.9999725818634033,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/data_normalized_v1/Label_1_Watches/Vacheron Constantin/24c779a39a85.jpg",
+        "label": 1,
+        "p_fake": 0.9999725818634033,
+        "error": "fake image received a low P(fake)"
+      }
+    ]
+  },
+  "gap": {
+    "roc_auc": 0.0,
+    "roc_auc_relative_degradation": 0.0,
+    "pr_auc": 1.1102230246251565e-16,
+    "pr_auc_relative_degradation": 1.1102230246251565e-16,
+    "f1": -0.00023134222988141495,
+    "f1_relative_degradation": -0.00023143862247719887,
+    "false_authentic_rate": 0.0,
+    "false_authentic_rate_relative_degradation": null,
+    "false_fake_rate": 0.00048753713031124884,
+    "false_fake_rate_relative_degradation": 0.5655430711610486,
+    "nll": 0.0026441956870257854,
+    "nll_relative_degradation": 0.9146644841564513,
+    "brier": 0.0003551113259163685,
+    "brier_relative_degradation": 0.8388182926320373,
+    "ece": 0.00019015120394403042,
+    "ece_relative_degradation": 0.4946825587267871
+  }
+}

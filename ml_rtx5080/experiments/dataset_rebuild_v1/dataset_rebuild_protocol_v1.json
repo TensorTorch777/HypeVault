@@ -1,0 +1,123 @@
+{
+  "admitted_label_requirements": {
+    "authentic": "A recorded source identifies the physical watch or the capturing organization, and a named verifier independent of this repository's folder names and independent of any model states that the watch is authentic, with the method and evidence identifier stored.",
+    "counterfeit": "A recorded source identifies the item, and a named verifier independent of folder names and of any model states that it is counterfeit, with the method and evidence identifier stored.",
+    "not_sufficient": [
+      "directory name",
+      "readable wordmark",
+      "model prediction",
+      "visual suspicion alone"
+    ],
+    "otherwise": "UNVERIFIED. Do not assign either class."
+  },
+  "census_measurements_non_test_only": [
+    "width, height, mode, file bytes",
+    "sha256 of the JPEG luminance and chrominance quantization tables",
+    "IJG quality estimate: for qualities 1 through 100, scale is 5000/q when q < 50 else 200-2*q; the estimate is the q whose scaled standard luminance table is closest in L1 distance to the file table. No quality cutoff is chosen from the labels.",
+    "JPEG progressive flag when Pillow exposes it"
+  ],
+  "frozen": {
+    "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "decision_threshold": 0.5,
+    "locked_final_test_unopened": true,
+    "no_fine_tuning": true,
+    "no_label_changes": true,
+    "no_new_splits": true,
+    "no_source_deletion": true,
+    "no_training": true,
+    "phase45_artifacts_unchanged": true,
+    "phase47_artifacts_unchanged": true,
+    "production_routes_unchanged": true,
+    "temperature": 0.24038200410185356
+  },
+  "future_geometry_policy": {
+    "exclusion": "Collages, component-only images, non-watch placeholders, and ambiguous brand identity stay in expert review and are not admitted.",
+    "grouping": "A source group is the listing or product identifier. Exact SHA-256 duplicates stay in one group. Near-duplicates with no listing id stay unverified rather than being split apart.",
+    "loader": "Apply ResizePadToSquare, long side 512, bicubic, centered ImageNet-mean padding, identically to every class and every brand.",
+    "policy_id": "shared_original_plus_resize_pad_square_v1",
+    "splits": "No train, calibration, validation, or test split is created in this phase.",
+    "storage": "Keep each admitted file at the geometry it had at acquisition. Do not pre-resize one class."
+  },
+  "inputs": {
+    "catalog_manifest": "ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+    "phase47_duplicate_audit": "ml_rtx5080/experiments/dataset_integrity_v1/duplicate_and_leakage_audit.json",
+    "phase47_visual_audit": "ml_rtx5080/experiments/dataset_integrity_v1/visual_integrity_audit.json"
+  },
+  "phase": 48,
+  "previously_identified_quarantine": {
+    "expert_review_image_ids": [
+      "3b5748de7b1b.jpg",
+      "e12883ada111.jpg",
+      "18730ea81b18.jpg",
+      "ff49bf4ac8ab.jpg",
+      "a6d20a112797.jpg",
+      "debeefd1cdee.jpg",
+      "7be465bc1cf6.jpg",
+      "5d747fb6eba2.jpg",
+      "d14367e7ccfe.jpg",
+      "2e1772b508d6.jpg",
+      "267c000fb564.jpg",
+      "ba5b1ed6ae3f.jpg",
+      "ed92b146a8b4.jpg",
+      "4a2db43eaeff.jpg",
+      "529c5d297085.jpg",
+      "98b47c0efe1d.jpg",
+      "a24d72629fb9.jpg",
+      "7addfa559e3e.jpg",
+      "b08d2a4112ff.jpg",
+      "2979ceb28538.jpg",
+      "8466ac71b1b6.jpg",
+      "159e4f8cd9bc.jpg",
+      "39d507d32f61.jpg",
+      "2a649ca43011.jpg",
+      "5e402b01cb9f.jpg",
+      "c2ea9a6b890a.jpg",
+      "785e918d0f2c.jpg",
+      "15621471094a.jpg",
+      "f95ef56a8c14.jpg",
+      "467a2fc488be.jpg",
+      "a16f59f01fb2.jpg"
+    ],
+    "js_placeholder_sha256": [
+      "f034c2a27ee217bdb701089282b7e4b017616930c4d39ea89c6ef623782438b8",
+      "79adac471e4ff324a26dcdf2fe6b7a9df67b5921d34b992eb286029e0968499b"
+    ],
+    "source": "Phase 47 artifacts. These identities are not part of the Phase 48 draw."
+  },
+  "protocol_id": "dataset_rebuild_v1",
+  "provenance_statuses": [
+    "INDEPENDENTLY_VERIFIED",
+    "UNVERIFIED",
+    "REQUIRES_EXPERT_REVIEW"
+  ],
+  "purpose": "Define label verification and a class-independent dataset policy before any new training.",
+  "sample_measurements": [
+    "mean and standard deviation of RGB",
+    "variance of the grayscale Laplacian as a sharpness statistic",
+    "standard deviation of the outer 8-pixel frame",
+    "visual notes on borders, padding, resizing, and interpolation"
+  ],
+  "shortcut_test": {
+    "forbidden": "Do not fit a classifier, threshold, or quality cutoff on the labels.",
+    "name": "pre_specified_512_square_rule",
+    "rule": "Call the directory counterfeit label if and only if width is 512 and height is 512. This rule is fixed before the census is read. It is a measurement of association, not a trained classifier."
+  },
+  "visual_sample": {
+    "algorithm": "Create random.Random(seed) once. For each brand in brands_in_order, then each label in labels_in_order, take eligible rows of that brand and label, sort by sha256 ascending, and draw per_cell rows with Random.sample.",
+    "brands_in_order": [
+      "A. Lange & S\u00f6hne",
+      "Audemars Piguet",
+      "Patek Philippe",
+      "Richard Mille",
+      "Vacheron Constantin"
+    ],
+    "eligible_rule": "split is train, calibration, or validation. split == test is excluded and those image files are not opened.",
+    "labels_in_order": [
+      0,
+      1
+    ],
+    "per_cell": 3,
+    "seed": 48
+  },
+  "written_before_sample_and_candidate_manifest": true
+}

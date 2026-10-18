@@ -1,0 +1,59 @@
+{
+  "admission": {
+    "authentic": "Credible provenance of the physical watch or examination by a qualified verifier who is independent of this repository's folder names and of any model.",
+    "counterfeit": "Affirmative evidence from a qualified independent verifier or an institutional record that the item is counterfeit. Visual suspicion is not enough.",
+    "image_rights": "A recorded license or owner permission that allows research use. Rights are recorded separately from the authenticity label.",
+    "insufficient_label_evidence": "Do not admit. Use REJECTED or REQUIRES_EXPERT_REVIEW.",
+    "missing_field": "UNKNOWN",
+    "not_sufficient": [
+      "seller assertion",
+      "directory name",
+      "readable wordmark",
+      "online listing label",
+      "model prediction",
+      "visual suspicion",
+      "scraped image of uncertain provenance"
+    ],
+    "verifier_must_not_be_the_model": true
+  },
+  "decision_rule": {
+    "CONDITIONAL_GO": "A named source has documented label methodology and a concrete outstanding permission or data commitment. Admitted counts may be below the target.",
+    "GO": "At least 30 admitted authentic and 30 admitted counterfeit images, at least three brands, at least two source groups, and every admitted row has both a research-use right and complete independent label evidence. A count by itself is not enough.",
+    "NO_GO": "No admitted image meets the evidence rule, and no named source has a concrete outstanding commitment."
+  },
+  "feasibility_target": {
+    "authentic_verified": 30,
+    "brands": 3,
+    "counterfeit_verified": 30,
+    "independent_source_groups": 2,
+    "target_is_not_evidence_of_generalization": true
+  },
+  "frozen": {
+    "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "decision_threshold": 0.5,
+    "locked_final_test_unopened": true,
+    "no_inference": true,
+    "no_invented_images_labels_permissions_or_verifiers": true,
+    "no_training": true,
+    "phase45_through_48_unchanged": true,
+    "production_unchanged": true,
+    "temperature": 0.24038200410185356
+  },
+  "integrity": {
+    "compare_against": [
+      "ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json metadata",
+      "Phase 35 and Phase 36 manifests by recorded path or hash"
+    ],
+    "do_not_open_locked_final_test_images": true,
+    "handling_policy_id": "shared_original_plus_resize_pad_square_v1"
+  },
+  "phase": 49,
+  "protocol_id": "verified_data_pilot_v1",
+  "purpose": "Decide whether a small legally usable set of independently verified authentic and counterfeit watch images can be acquired. This phase does not train or score a model.",
+  "search_scope": [
+    "Re-read Phase 46 data_audit.json and apply this protocol's admission rule. Do not treat the earlier rejection text as a new label.",
+    "Search public dataset documentation for watch authenticity ground truth with a stated image license.",
+    "Record whether any qualified-watchmaker, dealer, or owner-permission agreement exists in this repository."
+  ],
+  "written_before_admission": true
+}

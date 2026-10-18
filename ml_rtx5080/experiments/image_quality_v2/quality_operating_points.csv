@@ -1,0 +1,8 @@
+review_budget,rule_id,review_rate,absolute_gap,within_budget,stress_failures_caught,stress_failures_missed,false_authentic_count,false_fake_count,hidden_false_authentic_count,label,production_quality_gate,production_optimal
+0.01,min_dimension_below_384,0.002482033044380233,0.007517966955619767,true,5,4,0,0,0,research_quality_gate_candidate,,false
+0.02,low_resolution,0.020115581240275616,0.0001155812402756154,false,7,2,0,0,0,research_quality_gate_candidate,,false
+0.05,three_or_more_flags,0.05060383788990146,0.000603837889901454,false,1,8,0,0,0,research_quality_gate_candidate,,false
+0.1,low_resolution_or_extreme_aspect,0.09635474549899978,0.003645254501000228,true,9,0,0,0,0,research_quality_gate_candidate,,false
+0.15,two_or_more_flags,0.10954286137660221,0.04045713862339778,true,2,7,0,0,0,research_quality_gate_candidate,,false
+0.2,any_flag,0.27924724012743574,0.07924724012743573,false,9,0,0,0,0,research_quality_gate_candidate,,false
+0.25,any_flag,0.27924724012743574,0.029247240127435736,false,9,0,0,0,0,research_quality_gate_candidate,,false

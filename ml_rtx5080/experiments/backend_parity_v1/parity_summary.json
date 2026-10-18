@@ -1,0 +1,108 @@
+{
+  "batch_parity": {
+    "atol": 0.0001,
+    "batch_1_logit": -4.6621904373168945,
+    "batch_2_max_abs_logit_delta": 0.0,
+    "batch_4_max_abs_logit_delta": 0.0,
+    "batch_8_max_abs_logit_delta": 0.0,
+    "max_abs_logit_delta": 0.0
+  },
+  "calibration_performed": false,
+  "checkpoint_changed": false,
+  "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "customer_traffic_used": false,
+  "final_test_opened": false,
+  "final_test_samples_used": 0,
+  "forward": "evaluation.collect_logits fp32, no autocast",
+  "latency": {
+    "device_note": "shadow cache",
+    "measured": 30,
+    "model_ms": {
+      "p50": 13.758909000898711,
+      "p95": 14.131332239776384,
+      "p99": 14.174430282146204
+    },
+    "policy_ms": {
+      "p50": 0.029196016839705408,
+      "p95": 0.03056290152017027,
+      "p99": 0.03066590492380783
+    },
+    "preprocess_ms": {
+      "p50": 26.245291010127403,
+      "p95": 27.315527453902178,
+      "p99": 27.440060674853157
+    },
+    "quality_ms": {
+      "p50": 178.34958599996753,
+      "p95": 194.9402653524885,
+      "p99": 198.63842759194085
+    },
+    "total_ms": {
+      "p50": 218.78482100146357,
+      "p95": 234.82679155131336,
+      "p99": 238.64157006057212
+    },
+    "warmup": 3
+  },
+  "live_backend_modified": false,
+  "local_parity": {
+    "decisions_match": true,
+    "images": 9,
+    "max_abs_logit_delta": 0.0,
+    "max_abs_probability_delta": 0.0,
+    "production_local_torch_executed": false,
+    "quality_flags_match": true
+  },
+  "manifest_file_sha256": "4d0d20c17d12ac29cb299b7b4f369ebcce3c5acd7b2fd5430d61f952b9852eea",
+  "membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+  "ood_evaluation_performed": false,
+  "phase": 28,
+  "phase22_live_logit_check": {
+    "fresh_fp32_reference_logit": -1.2462576627731323,
+    "note": "A fresh fp32 evaluation.collect_logits forward of this image does not reproduce the stored Phase 22 bf16 logit. A fresh hard_negative bf16 forward in this environment is also -1.40625, not the stored -0.83984375. Shadow matches the current fp32 reference. Nothing was retuned.",
+    "policy_regression_uses": "stored phase 22 probabilities and flags",
+    "reproduced_stored_logit": false,
+    "sample_id": "Label_0_Watches/Richard Mille/9eda705bd8c9.jpg",
+    "stored_phase22_bf16_logit": -0.83984375
+  },
+  "phase22_regression": {
+    "events": 9,
+    "fake": 1,
+    "false_authentic_count": 0,
+    "missed_ids": [
+      "Label_0_Watches/Richard Mille/9eda705bd8c9.jpg|resize_recompression"
+    ],
+    "named_cases": {
+      "ap_mild_crop": "REVIEW",
+      "ap_partial_crop": "REVIEW",
+      "patek_lower_resolution_9ba50fea3805": "REVIEW",
+      "patek_lower_resolution_c2f778c66d15": "REVIEW",
+      "rm_darker": "REVIEW",
+      "rm_resize_recompression": "FAKE"
+    },
+    "review": 8
+  },
+  "policy_version": "shadow_v1",
+  "preprocessing_version": "resize_pad_square_eval_v1",
+  "production_policy_status": "not_promoted",
+  "production_response_modified": false,
+  "shadow_comparison": {
+    "agreement_rate": 0.4444444444444444,
+    "agreements": 4,
+    "disagreement_is_error": false,
+    "disagreements": 5,
+    "rows": 9
+  },
+  "shadow_mode_default": false,
+  "temperature": 0.24038200410185356,
+  "tolerances": {
+    "batch_logit_atol": 0.0001,
+    "bitwise_equality_across_engines": false,
+    "logit_atol": 0.0001,
+    "preprocess_tensor_atol": 1e-05,
+    "probability_atol": 1e-05
+  },
+  "training_performed": false,
+  "triton_parity_status": "skipped",
+  "triton_reason": "Triton model repository config is dinov2_classifier at 518x518. That is not the frozen DINOv3 512 contract, so Triton parity was not run. Nothing accepted a connection on port 8001."
+}

@@ -1,0 +1,10 @@
+case_id,sample_id,existing_verdict,existing_confidence,shadow_decision,shadow_reason_codes,model_probability,quality_flags,agreement,disagreement_is_error
+clean_authentic,Label_0_Watches/A. Lange & Söhne/0003c0bd6ebe.jpg,AUTHENTIC,0.990643,AUTHENTIC,AUTHENTICITY_BELOW_THRESHOLD,3.774783115192984e-09,,true,false
+clean_fake,Label_1_Watches/A. Lange & Söhne/001067d69616.jpg,FAKE,0.990004,FAKE,AUTHENTICITY_THRESHOLD,0.9999999950182552,,true,false
+low_resolution,Label_0_Watches/A. Lange & Söhne/00e7fec26604.jpg,AUTHENTIC,0.990534,REVIEW,QUALITY_LOW_RESOLUTION,3.961667355652568e-09,LOW_RESOLUTION,false,false
+low_contrast,Label_0_Watches/A. Lange & Söhne/074c056bbf39.jpg,AUTHENTIC,0.990544,REVIEW,QUALITY_LOW_CONTRAST,3.944134399403939e-09,LOW_CONTRAST,false,false
+both_quality_flags,Label_0_Watches/A. Lange & Söhne/1f4e2e10b83b.jpg,AUTHENTIC,0.990438,REVIEW,QUALITY_MULTIPLE_FLAGS|QUALITY_LOW_RESOLUTION|QUALITY_LOW_CONTRAST,4.134528413823243e-09,LOW_RESOLUTION|LOW_CONTRAST,false,false
+closest_cached_probability,Label_0_Watches/Richard Mille/9eda705bd8c9.jpg,FAKE,0.223349,AUTHENTIC,AUTHENTICITY_BELOW_THRESHOLD,0.005571586913171242,EXTREME_ASPECT_RATIO,false,false
+strong_authentic_probability,Label_0_Watches/Patek Philippe/c0d2eb84a449.jpg,AUTHENTIC,0.991089,AUTHENTIC,AUTHENTICITY_BELOW_THRESHOLD,3.074593041318214e-09,,true,false
+strong_fake_probability,Label_1_Watches/A. Lange & Söhne/001067d69616.jpg,FAKE,0.990004,FAKE,AUTHENTICITY_THRESHOLD,0.9999999950182552,,true,false
+phase22_resize_source,Label_0_Watches/Richard Mille/9eda705bd8c9.jpg,FAKE,0.223349,AUTHENTIC,AUTHENTICITY_BELOW_THRESHOLD,0.005571586913171242,EXTREME_ASPECT_RATIO,false,false

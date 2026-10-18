@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "LOW_RESOLUTION": "min_dimension strictly below the reference 5th percentile",
+    "BLURRY": "Laplacian variance strictly below the reference 5th percentile",
+    "TOO_DARK": "mean luminance strictly below the reference 5th percentile",
+    "TOO_BRIGHT": "mean luminance strictly above the reference 95th percentile",
+    "LOW_CONTRAST": "luminance standard deviation strictly below the reference 5th percentile",
+    "EXTREME_ASPECT_RATIO": "width/height strictly outside the reference 5th to 95th percentile",
+    "EXCESSIVE_CLIPPING": "near-black or near-white fraction strictly above its reference 95th percentile",
+    "SUSPICIOUS_FRAMING": "foreground-occupancy proxy strictly below the reference 5th percentile",
+    "percentile_method": "linear",
+    "std_ddof": 0,
+    "comparison": "strict inequality, so a value equal to the percentile is not flagged",
+    "not_fit_to_f1": true,
+    "final_test_used": false
+  },
+  "reference_sample_count": 26994,
+  "final_test_used": false,
+  "production_threshold": null,
+  "cutoffs": {
+    "min_dimension_p5": 512.0,
+    "sharpness_p5": 0.0017845827011386734,
+    "mean_luminance_p5": 0.2075038491796002,
+    "mean_luminance_p95": 0.8228318202094357,
+    "luminance_std_p5": 0.1933616647502347,
+    "aspect_ratio_p5": 0.75,
+    "aspect_ratio_p95": 1.5009380863039399,
+    "near_black_fraction_p95": 0.5198648164223238,
+    "near_white_fraction_p95": 0.6175287543402778,
+    "foreground_occupancy_p5": 0.2854902433757662
+  }
+}

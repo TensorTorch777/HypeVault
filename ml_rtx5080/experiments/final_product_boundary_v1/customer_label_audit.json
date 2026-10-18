@@ -1,0 +1,21 @@
+{
+  "live_is_visibility_only": true,
+  "certification_badges_removed_from_listing_displays": [
+    "Verified Authentic",
+    "Authenticated",
+    "Certified",
+    "Guaranteed Authentic",
+    "Live · Authentic"
+  ],
+  "surfaces": {
+    "GET /listings/recent": "ListingRead.customer_label. status remains the publication filter.",
+    "GET /listings/{id}": "Same customer_label. verdict stays stored evidence.",
+    "listing detail page": "Shows the customer label. It does not render a model class as a badge.",
+    "product visual panel": "Image-backed live rows show Legacy screening — not verified. Seed rows show Demo listing — not verified.",
+    "homepage cards": "Static examples use Demo listing — not verified or Outside scope.",
+    "seller dashboard": "Each row shows the customer label.",
+    "search": "Opens a market comparison. It does not attach an authenticity badge.",
+    "legacy check result": "Headline is Pending or Rejected.",
+    "research demo result": "Headline is Research result — not verified. Publication stays blocked."
+  }
+}

@@ -1,0 +1,510 @@
+{
+  "protocol_sha256": "db3fd5034850021f4841168e93c30fcdf7199af5698c6679843bb5a6a8b0d45c",
+  "drawn_after_protocol_hash": true,
+  "seed": 47,
+  "per_cell": 4,
+  "eligible_rule": "split is train, calibration, or validation. split == test is excluded and those image files are not opened.",
+  "eligible_non_test_count": 26994,
+  "stratified_draws": 40,
+  "mandatory_preidentified": 15,
+  "unique_images": 55,
+  "overlap_between_mandatory_and_stratified": 0,
+  "final_test_images_included": 0,
+  "images": [
+    {
+      "image_id": "3b5748de7b1b.jpg",
+      "sha256": "5b0ad9c61d9b57b2f958f666f20e7b3ee15c34a3486ea8fa6dec53b9fa37200b",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/3b5748de7b1b.jpg"
+    },
+    {
+      "image_id": "e12883ada111.jpg",
+      "sha256": "bffe48bc616fcd973132d66d42ffc77cfe2dd5d6e4a2eb47b39e23398ab47658",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/e12883ada111.jpg"
+    },
+    {
+      "image_id": "4daef03931ff.jpg",
+      "sha256": "808bc5f2a4930b785d51e92d8a8e995a312d0f1d6fa0d31f61e2ad02e2a6760c",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/4daef03931ff.jpg"
+    },
+    {
+      "image_id": "d07c3aa1998f.jpg",
+      "sha256": "d0ce5d6bbc33111bc0496a626e1f5a4bdcd56f4ba438686e348e9c2d9a76ae4a",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d07c3aa1998f.jpg"
+    },
+    {
+      "image_id": "d5266fb5ab9a.jpg",
+      "sha256": "374b2be27e8cbec7b9a8d6ef21e02dd52d8c840f320b6b75b995ae45bfcab99a",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "validation",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d5266fb5ab9a.jpg"
+    },
+    {
+      "image_id": "18730ea81b18.jpg",
+      "sha256": "3e54eed1c9fc3e7bb86a5718aec6c8c7f859db38eaad4015fd57361906b02f61",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/18730ea81b18.jpg"
+    },
+    {
+      "image_id": "ff49bf4ac8ab.jpg",
+      "sha256": "9fae408bcaa2dd1a9e8a9c9d713dbcc73a7447e1ce7a66369718fd1ae91e473b",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/ff49bf4ac8ab.jpg"
+    },
+    {
+      "image_id": "d6ca042cb997.jpg",
+      "sha256": "050b1f1e73faf749a1c0759fffd43a92dccb78cc8e773aa918e38deb2efaa9cc",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d6ca042cb997.jpg"
+    },
+    {
+      "image_id": "a6d20a112797.jpg",
+      "sha256": "308c7a2a441fdf6b4fb0b7fbf52f5871d3416d200d37f6c49afc225e78dc3271",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/a6d20a112797.jpg"
+    },
+    {
+      "image_id": "debeefd1cdee.jpg",
+      "sha256": "0fe16122f6d9e6a9f7c7e6182a3e08d662312d56ffc291e7f99339f990fed86d",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/debeefd1cdee.jpg"
+    },
+    {
+      "image_id": "7be465bc1cf6.jpg",
+      "sha256": "67ebb267900e3afebef6bd9ab87db2c83e5abe69f0954b2cb700480b99027760",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/7be465bc1cf6.jpg"
+    },
+    {
+      "image_id": "896a73ac8355.jpg",
+      "sha256": "9eba086558210031fd0284d996f55d45f49c5d419cc223ecbb1bb3331aa9c11b",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "validation",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/896a73ac8355.jpg"
+    },
+    {
+      "image_id": "5d747fb6eba2.jpg",
+      "sha256": "ed2bf20c073e5559ecb26a7aaf797b17ad1036df1488ddb42c74e9d234c24734",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/5d747fb6eba2.jpg"
+    },
+    {
+      "image_id": "d14367e7ccfe.jpg",
+      "sha256": "e24adeb9de071452c8328f64fba6129fba03e340d67af6e10e99012512d935b2",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d14367e7ccfe.jpg"
+    },
+    {
+      "image_id": "4e3b5554ef77.jpg",
+      "sha256": "5aef320f3f8ccf3409279ebe5d55432fde004c2db68949a2184604f8acc684d2",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "preidentified_rm_false_authentic",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/4e3b5554ef77.jpg"
+    },
+    {
+      "image_id": "1e92959defde.jpg",
+      "sha256": "8a5d62d54f7cb9e517000541c433f2e1f281708c7b046c0f420c76af4d79a486",
+      "brand": "A. Lange & S\u00f6hne",
+      "label": 0,
+      "split": "validation",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/1e92959defde.jpg"
+    },
+    {
+      "image_id": "ab79ea259824.jpg",
+      "sha256": "185b3ad496dc679cabd5ca25ac95e2fafd679c57bbcb5944f8ba944f500b75bf",
+      "brand": "A. Lange & S\u00f6hne",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/ab79ea259824.jpg"
+    },
+    {
+      "image_id": "2e1772b508d6.jpg",
+      "sha256": "a6708d927d13fca541a37802ee4d9a6c8c76ebc79b3e6b0cd128a3d21c3fafed",
+      "brand": "A. Lange & S\u00f6hne",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/2e1772b508d6.jpg"
+    },
+    {
+      "image_id": "667985b1c755.jpg",
+      "sha256": "d2fc32643a4dbb86da510ee44236c2a85ac37593713a02b605712dace0b79cfb",
+      "brand": "A. Lange & S\u00f6hne",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/667985b1c755.jpg"
+    },
+    {
+      "image_id": "267c000fb564.jpg",
+      "sha256": "aa225c99db6033995e632e276152f51dfdc6b6283eca35440e2f90c0193c70b7",
+      "brand": "A. Lange & S\u00f6hne",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/267c000fb564.jpg"
+    },
+    {
+      "image_id": "17593775469f.jpg",
+      "sha256": "d7dd038984b42edd5ed1fbf920ba886fd3f9b4c3ce6e990bcb3f2a363fdc8501",
+      "brand": "A. Lange & S\u00f6hne",
+      "label": 1,
+      "split": "validation",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/17593775469f.jpg"
+    },
+    {
+      "image_id": "22f1e161fdaa.jpg",
+      "sha256": "817d33fee73790daeeed214a8efe5fc28a07c01e22cc64fe1466bd1937dd5b6c",
+      "brand": "A. Lange & S\u00f6hne",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/22f1e161fdaa.jpg"
+    },
+    {
+      "image_id": "ba5b1ed6ae3f.jpg",
+      "sha256": "615b94c77a1065619f1fc2926751d79ab6e4a28c6fca445b4d351f4110b4921b",
+      "brand": "A. Lange & S\u00f6hne",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/ba5b1ed6ae3f.jpg"
+    },
+    {
+      "image_id": "3da9f74e59f8.jpg",
+      "sha256": "c4440832cca24de84d3f5bec1ef32673868621e3e58274d268b333b9818e8b1b",
+      "brand": "Audemars Piguet",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/3da9f74e59f8.jpg"
+    },
+    {
+      "image_id": "ed92b146a8b4.jpg",
+      "sha256": "934f10e0d3f890202f11b645c93f4c66c19c532351a2e7e3387610cb16e0a1f5",
+      "brand": "Audemars Piguet",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/ed92b146a8b4.jpg"
+    },
+    {
+      "image_id": "0756362ea8be.jpg",
+      "sha256": "95272bbad1378f5ff51a2e8d68f562fdee539da1b2e20288e434aa13ce2f817c",
+      "brand": "Audemars Piguet",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/0756362ea8be.jpg"
+    },
+    {
+      "image_id": "0daa4c7d3d5d.jpg",
+      "sha256": "eede16320b7a26e849695685ddfa28e971c5a383c662bd1bab1f207aac2a4693",
+      "brand": "Audemars Piguet",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/0daa4c7d3d5d.jpg"
+    },
+    {
+      "image_id": "4a2db43eaeff.jpg",
+      "sha256": "115602c9b74976fa0883a09373bb0c8a0f282e1b5a6ec8b28c3d66e3704860af",
+      "brand": "Audemars Piguet",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/4a2db43eaeff.jpg"
+    },
+    {
+      "image_id": "529c5d297085.jpg",
+      "sha256": "a72e9100d795322ff0a786819544aaa8f0b0a4d41843f5628f3398a06695ccca",
+      "brand": "Audemars Piguet",
+      "label": 1,
+      "split": "calibration",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/529c5d297085.jpg"
+    },
+    {
+      "image_id": "98b47c0efe1d.jpg",
+      "sha256": "ffb9824084a3d962c875b522e670d874abe1dd5f83cdcdb49775e526e1a89742",
+      "brand": "Audemars Piguet",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/98b47c0efe1d.jpg"
+    },
+    {
+      "image_id": "a24d72629fb9.jpg",
+      "sha256": "0a2c653ef45374ed034e7e4c57152b8f71d6b7036c0d1ad997dcdfb8c88678aa",
+      "brand": "Audemars Piguet",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/a24d72629fb9.jpg"
+    },
+    {
+      "image_id": "0ad33247b8ea.jpg",
+      "sha256": "2775949b329133edb022a5806dfcf050cfb7ecdb71128587400190ce880d00fe",
+      "brand": "Patek Philippe",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/0ad33247b8ea.jpg"
+    },
+    {
+      "image_id": "c3cdb6dc32cb.jpg",
+      "sha256": "0007eaff194dffa2701a1190c7acb4c2615ada3eb262730a43e11f368d334f5a",
+      "brand": "Patek Philippe",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/c3cdb6dc32cb.jpg"
+    },
+    {
+      "image_id": "7addfa559e3e.jpg",
+      "sha256": "636ea1558e33641152e6a10c58c75795fa705078561a7f2b2038de60f1e89a94",
+      "brand": "Patek Philippe",
+      "label": 0,
+      "split": "calibration",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/7addfa559e3e.jpg"
+    },
+    {
+      "image_id": "c68262817c89.jpg",
+      "sha256": "bd7ae0abaa34a06349692f9e9ee32c1160aa2614058225b28c968e2a2836b428",
+      "brand": "Patek Philippe",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/c68262817c89.jpg"
+    },
+    {
+      "image_id": "b08d2a4112ff.jpg",
+      "sha256": "d539ecf0abb48e80a2eaa26cc24c5a8e094e8f46886487ce1a3cba1af60a8094",
+      "brand": "Patek Philippe",
+      "label": 1,
+      "split": "calibration",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/b08d2a4112ff.jpg"
+    },
+    {
+      "image_id": "2979ceb28538.jpg",
+      "sha256": "0485e1c792f0632f14b947f6498b32b7a158de0c0989a4940ff047da5e944f87",
+      "brand": "Patek Philippe",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/2979ceb28538.jpg"
+    },
+    {
+      "image_id": "05f024af038c.jpg",
+      "sha256": "795920335049e3a259c3bca6dcc67c9b204e0bb238bfa7af8e1f89235198661b",
+      "brand": "Patek Philippe",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/05f024af038c.jpg"
+    },
+    {
+      "image_id": "8466ac71b1b6.jpg",
+      "sha256": "dc035879265905c590ce573c4f887e33c933f0cfe345bb6ccb12638f7edd6f3c",
+      "brand": "Patek Philippe",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/8466ac71b1b6.jpg"
+    },
+    {
+      "image_id": "159e4f8cd9bc.jpg",
+      "sha256": "a4589f2673e45c86e6dbaf5613faf4e2a7b2446d3b3ad8918a46000eae8ea0b9",
+      "brand": "Richard Mille",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/159e4f8cd9bc.jpg"
+    },
+    {
+      "image_id": "39d507d32f61.jpg",
+      "sha256": "5881cd867b5b3efdbfe01ce155a21a3fe300c716416f880f5223782197980558",
+      "brand": "Richard Mille",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/39d507d32f61.jpg"
+    },
+    {
+      "image_id": "8887bd3cb3b3.jpg",
+      "sha256": "5bba31fa6e70704b344e53d67ed1e7375bef38e20709fb5e5db60aacbf17ea6a",
+      "brand": "Richard Mille",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/8887bd3cb3b3.jpg"
+    },
+    {
+      "image_id": "2a649ca43011.jpg",
+      "sha256": "cafadfaf46669d0963453de2db1aa76d1fb0b179fd987a15d3ba87b68a11aeb2",
+      "brand": "Richard Mille",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/2a649ca43011.jpg"
+    },
+    {
+      "image_id": "5e402b01cb9f.jpg",
+      "sha256": "c5140ac2306bc670fe4f23fb0c4827bc2531c1a450ecd3693335131071808f68",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "validation",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/5e402b01cb9f.jpg"
+    },
+    {
+      "image_id": "c2ea9a6b890a.jpg",
+      "sha256": "857e8fdc249f82218327e68b82e2fa8cd82383f6cc1b0592e507467b77c667d9",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/c2ea9a6b890a.jpg"
+    },
+    {
+      "image_id": "785e918d0f2c.jpg",
+      "sha256": "a7e9b6794eab57d08f45ab6cac4d6a597444bf1b578557600e6b9201136cd546",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/785e918d0f2c.jpg"
+    },
+    {
+      "image_id": "8b2710bd5273.jpg",
+      "sha256": "58ff2508f282ca00bf71caef0b89759ef4a6b7f8c77de33d9f0609dc3b0aa282",
+      "brand": "Richard Mille",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/8b2710bd5273.jpg"
+    },
+    {
+      "image_id": "a1846bebf496.jpg",
+      "sha256": "0cdb82bb0fe050df5e9db928662c72a92c520860efdd12e911ae2d3ffb95c810",
+      "brand": "Vacheron Constantin",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/a1846bebf496.jpg"
+    },
+    {
+      "image_id": "8ce369eb5c49.jpg",
+      "sha256": "d9e35b1de5681d9d2fe3bc6289e8d6173ecd8c50fc5883535781551e213b1c03",
+      "brand": "Vacheron Constantin",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/8ce369eb5c49.jpg"
+    },
+    {
+      "image_id": "48d712149e75.jpg",
+      "sha256": "90d9da78f4155dab92d77dd0763160698c95cfbc81fd4dc49aae913ae06496b0",
+      "brand": "Vacheron Constantin",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/48d712149e75.jpg"
+    },
+    {
+      "image_id": "cc743b1de75b.jpg",
+      "sha256": "8a0cbbada29771027b071876a4fd939eb860f77e6fc36008fb32dec84da343d4",
+      "brand": "Vacheron Constantin",
+      "label": 0,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/cc743b1de75b.jpg"
+    },
+    {
+      "image_id": "15621471094a.jpg",
+      "sha256": "ea9afe4511d5330b63c82925f47872914805c0d1cbf7ca370f1795d972a6ccb4",
+      "brand": "Vacheron Constantin",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/15621471094a.jpg"
+    },
+    {
+      "image_id": "f95ef56a8c14.jpg",
+      "sha256": "85bd752ea00c2a12ce7123ba358316b8a1a9f407a699aa332ef52dd5a116839f",
+      "brand": "Vacheron Constantin",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/f95ef56a8c14.jpg"
+    },
+    {
+      "image_id": "467a2fc488be.jpg",
+      "sha256": "da6360173cefb831e3b5ffbd8a9a9643507f240ed128de4fe48aeaea3815a632",
+      "brand": "Vacheron Constantin",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/467a2fc488be.jpg"
+    },
+    {
+      "image_id": "a16f59f01fb2.jpg",
+      "sha256": "e057243eb433751e8b855b467c9df3656c88e24c694038aa77bacc43c6d890b9",
+      "brand": "Vacheron Constantin",
+      "label": 1,
+      "split": "train",
+      "stratum": "stratified_brand_label",
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/a16f59f01fb2.jpg"
+    }
+  ]
+}

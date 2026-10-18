@@ -1,0 +1,319 @@
+{
+  "generated_at": "2026-10-04T23:16:39+05:30",
+  "threshold": 0.5,
+  "threshold_policy": "fixed_not_calibrated",
+  "max_false_authentic_rate": 0.02,
+  "minimum_brand_samples": 20,
+  "low_sample_rule": "sample_count < 20",
+  "far_diagnostic_policy": "brand_far_eligible compares a brand's validation false-authentic rate with max_false_authentic_rate. It is an analysis flag. It does not change checkpoint selection, early stopping, the FAR limit, or the decision threshold.",
+  "far_gap_to_limit_definition": "max_false_authentic_rate - brand_false_authentic_rate",
+  "far_gap_versus_global_definition": "brand_false_authentic_rate - global_false_authentic_rate",
+  "macro_definition": "Unweighted mean across sample-eligible brands for which the metric is defined. Undefined metrics are omitted rather than filled with zero. This is not the micro/global metric.",
+  "checkpoint_selection_affected": false,
+  "threshold_affected": false,
+  "analysis_only": true,
+  "global_scope": "micro",
+  "global": {
+    "positive_class": "fake",
+    "negative_class": "authentic",
+    "threshold": 0.5,
+    "threshold_policy": "fixed_not_calibrated",
+    "sample_count": 6000,
+    "authentic_count": 3000,
+    "fake_count": 3000,
+    "roc_auc": 0.9999886666666666,
+    "pr_auc": 0.9999887458377718,
+    "accuracy": 0.9986666666666667,
+    "precision": 0.9989993328885924,
+    "recall": 0.9983333333333333,
+    "f1": 0.9986662220740248,
+    "false_authentic": 5,
+    "false_fake": 3,
+    "false_authentic_rate": 0.0016666666666666668,
+    "false_fake_rate": 0.001,
+    "confusion_matrix": {
+      "labels": [
+        "authentic",
+        "fake"
+      ],
+      "matrix": [
+        [
+          2997,
+          3
+        ],
+        [
+          5,
+          2995
+        ]
+      ],
+      "true_negative": 2997,
+      "false_fake": 3,
+      "false_authentic": 5,
+      "true_positive": 2995
+    }
+  },
+  "macro": {
+    "scope": "macro-brand",
+    "definition": "Unweighted mean across sample-eligible brands for which the metric is defined. Undefined metrics are omitted rather than filled with zero. This is not the micro/global metric.",
+    "eligible_brand_count": 2,
+    "roc_auc": null,
+    "roc_auc_macro_n": 0,
+    "roc_auc_macro_brands": [],
+    "pr_auc": null,
+    "pr_auc_macro_n": 0,
+    "pr_auc_macro_brands": [],
+    "accuracy": 0.9986666666666666,
+    "accuracy_macro_n": 2,
+    "accuracy_macro_brands": [
+      "Richard Mille",
+      "Vacheron Constantin"
+    ],
+    "precision": 0.5,
+    "precision_macro_n": 2,
+    "precision_macro_brands": [
+      "Richard Mille",
+      "Vacheron Constantin"
+    ],
+    "recall": 0.9983333333333333,
+    "recall_macro_n": 1,
+    "recall_macro_brands": [
+      "Richard Mille"
+    ],
+    "f1": 0.9991659716430359,
+    "f1_macro_n": 1,
+    "f1_macro_brands": [
+      "Richard Mille"
+    ],
+    "false_authentic_rate": 0.0016666666666666668,
+    "false_authentic_rate_macro_n": 1,
+    "false_authentic_rate_macro_brands": [
+      "Richard Mille"
+    ],
+    "false_fake_rate": 0.001,
+    "false_fake_rate_macro_n": 1,
+    "false_fake_rate_macro_brands": [
+      "Vacheron Constantin"
+    ]
+  },
+  "diagnostics": {
+    "far_limit": 0.02,
+    "far_limit_role": "diagnostic_only",
+    "eligible_brands": 2,
+    "low_sample_brands": 0,
+    "brands_above_far_limit": 0,
+    "brands_at_or_below_far_limit": 1,
+    "eligible_brands_with_undefined_far": 1,
+    "unknown_brand_groups": 0,
+    "unknown_brand_samples": 0,
+    "median_brand_far": 0.0016666666666666668,
+    "mean_brand_far": 0.0016666666666666668,
+    "max_eligible_brand_far": 0.0016666666666666668,
+    "min_eligible_brand_far": 0.0016666666666666668,
+    "far_spread": 0.0,
+    "brand_far_std": null,
+    "brand_far_std_definition": "Population standard deviation of false-authentic rate over eligible brands with a defined rate. Null when fewer than two such brands.",
+    "median_brand_far_definition": "statistics.median of eligible-brand false-authentic rates. An even count averages the two central values."
+  },
+  "rankings": {
+    "scope": "eligible",
+    "highest_false_authentic_rate": [
+      {
+        "brand": "Richard Mille",
+        "brand_status": "KNOWN_BRAND",
+        "sample_status": "eligible",
+        "metrics_reliable": true,
+        "sample_count": 3000,
+        "authentic_count": 0,
+        "fake_count": 3000,
+        "false_authentic": 5,
+        "false_authentic_rate": 0.0016666666666666668,
+        "false_fake": 0,
+        "false_fake_rate": null,
+        "recall": 0.9983333333333333,
+        "f1": 0.9991659716430359,
+        "brand_far_eligible": true,
+        "far_gap_to_limit": 0.018333333333333333,
+        "far_gap_versus_global": 0.0
+      }
+    ],
+    "highest_false_authentic_count": [
+      {
+        "brand": "Richard Mille",
+        "brand_status": "KNOWN_BRAND",
+        "sample_status": "eligible",
+        "metrics_reliable": true,
+        "sample_count": 3000,
+        "authentic_count": 0,
+        "fake_count": 3000,
+        "false_authentic": 5,
+        "false_authentic_rate": 0.0016666666666666668,
+        "false_fake": 0,
+        "false_fake_rate": null,
+        "recall": 0.9983333333333333,
+        "f1": 0.9991659716430359,
+        "brand_far_eligible": true,
+        "far_gap_to_limit": 0.018333333333333333,
+        "far_gap_versus_global": 0.0
+      },
+      {
+        "brand": "Vacheron Constantin",
+        "brand_status": "KNOWN_BRAND",
+        "sample_status": "eligible",
+        "metrics_reliable": true,
+        "sample_count": 3000,
+        "authentic_count": 3000,
+        "fake_count": 0,
+        "false_authentic": 0,
+        "false_authentic_rate": null,
+        "false_fake": 3,
+        "false_fake_rate": 0.001,
+        "recall": null,
+        "f1": null,
+        "brand_far_eligible": null,
+        "far_gap_to_limit": null,
+        "far_gap_versus_global": null
+      }
+    ],
+    "lowest_recall": [
+      {
+        "brand": "Richard Mille",
+        "brand_status": "KNOWN_BRAND",
+        "sample_status": "eligible",
+        "metrics_reliable": true,
+        "sample_count": 3000,
+        "authentic_count": 0,
+        "fake_count": 3000,
+        "false_authentic": 5,
+        "false_authentic_rate": 0.0016666666666666668,
+        "false_fake": 0,
+        "false_fake_rate": null,
+        "recall": 0.9983333333333333,
+        "f1": 0.9991659716430359,
+        "brand_far_eligible": true,
+        "far_gap_to_limit": 0.018333333333333333,
+        "far_gap_versus_global": 0.0
+      }
+    ],
+    "lowest_f1": [
+      {
+        "brand": "Richard Mille",
+        "brand_status": "KNOWN_BRAND",
+        "sample_status": "eligible",
+        "metrics_reliable": true,
+        "sample_count": 3000,
+        "authentic_count": 0,
+        "fake_count": 3000,
+        "false_authentic": 5,
+        "false_authentic_rate": 0.0016666666666666668,
+        "false_fake": 0,
+        "false_fake_rate": null,
+        "recall": 0.9983333333333333,
+        "f1": 0.9991659716430359,
+        "brand_far_eligible": true,
+        "far_gap_to_limit": 0.018333333333333333,
+        "far_gap_versus_global": 0.0
+      }
+    ],
+    "largest_far_gap_versus_global": [
+      {
+        "brand": "Richard Mille",
+        "brand_status": "KNOWN_BRAND",
+        "sample_status": "eligible",
+        "metrics_reliable": true,
+        "sample_count": 3000,
+        "authentic_count": 0,
+        "fake_count": 3000,
+        "false_authentic": 5,
+        "false_authentic_rate": 0.0016666666666666668,
+        "false_fake": 0,
+        "false_fake_rate": null,
+        "recall": 0.9983333333333333,
+        "f1": 0.9991659716430359,
+        "brand_far_eligible": true,
+        "far_gap_to_limit": 0.018333333333333333,
+        "far_gap_versus_global": 0.0
+      }
+    ]
+  },
+  "low_sample_rankings": {
+    "scope": "low_sample",
+    "highest_false_authentic_rate": [],
+    "highest_false_authentic_count": [],
+    "lowest_recall": [],
+    "lowest_f1": [],
+    "largest_far_gap_versus_global": []
+  },
+  "brands": [
+    {
+      "brand": "Richard Mille",
+      "brand_status": "KNOWN_BRAND",
+      "sample_status": "eligible",
+      "metrics_reliable": true,
+      "sample_count": 3000,
+      "authentic_count": 0,
+      "fake_count": 3000,
+      "fake_rate": 1.0,
+      "zero_authentic": true,
+      "zero_fake": false,
+      "roc_auc": null,
+      "roc_auc_status": "unavailable",
+      "pr_auc": null,
+      "pr_auc_status": "unavailable",
+      "accuracy": 0.9983333333333333,
+      "precision": 1.0,
+      "recall": 0.9983333333333333,
+      "f1": 0.9991659716430359,
+      "false_authentic": 5,
+      "false_authentic_rate": 0.0016666666666666668,
+      "false_fake": 0,
+      "false_fake_rate": null,
+      "brand_far_eligible": true,
+      "far_gap_to_limit": 0.018333333333333333,
+      "far_gap_versus_global": 0.0,
+      "analysis_only": true
+    },
+    {
+      "brand": "Vacheron Constantin",
+      "brand_status": "KNOWN_BRAND",
+      "sample_status": "eligible",
+      "metrics_reliable": true,
+      "sample_count": 3000,
+      "authentic_count": 3000,
+      "fake_count": 0,
+      "fake_rate": 0.0,
+      "zero_authentic": false,
+      "zero_fake": true,
+      "roc_auc": null,
+      "roc_auc_status": "unavailable",
+      "pr_auc": null,
+      "pr_auc_status": "unavailable",
+      "accuracy": 0.999,
+      "precision": 0.0,
+      "recall": null,
+      "f1": null,
+      "false_authentic": 0,
+      "false_authentic_rate": null,
+      "false_fake": 3,
+      "false_fake_rate": 0.001,
+      "brand_far_eligible": null,
+      "far_gap_to_limit": null,
+      "far_gap_versus_global": null,
+      "analysis_only": true
+    }
+  ],
+  "experiment_name": "dinov3_cls_only",
+  "checkpoint": "best_model.pt",
+  "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dinov3_cls_only/best_model.pt",
+  "model_family": "dinov3",
+  "model_architecture": "cls_only",
+  "input_size": 512,
+  "split": "validation",
+  "augmentation_profile": "conservative",
+  "evaluation_transform": "resize_pad_square_eval_v1",
+  "plots": {
+    "status": "written",
+    "far_by_brand": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dinov3_cls_only/evaluation/brand_far.png",
+    "f1_by_brand": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dinov3_cls_only/evaluation/brand_f1.png",
+    "sample_count_by_brand": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dinov3_cls_only/evaluation/brand_sample_counts.png"
+  }
+}

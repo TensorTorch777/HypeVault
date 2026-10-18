@@ -1,0 +1,6 @@
+brand,brand_status,sample_status,sample_count,authentic_count,fake_count,false_authentic,false_authentic_rate,false_fake,false_fake_rate,recall,f1,brand_far_eligible,far_gap_to_limit,far_gap_versus_global
+A. Lange & Söhne,KNOWN_BRAND,eligible,615,315,300,0,0.0,0,0.0,1.0,1.0,True,0.02,0.0
+Audemars Piguet,KNOWN_BRAND,eligible,597,297,300,0,0.0,0,0.0,1.0,1.0,True,0.02,0.0
+Patek Philippe,KNOWN_BRAND,eligible,593,293,300,0,0.0,0,0.0,1.0,1.0,True,0.02,0.0
+Richard Mille,KNOWN_BRAND,eligible,600,300,300,0,0.0,0,0.0,1.0,1.0,True,0.02,0.0
+Vacheron Constantin,KNOWN_BRAND,eligible,592,292,300,0,0.0,0,0.0,1.0,1.0,True,0.02,0.0

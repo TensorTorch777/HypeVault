@@ -1,0 +1,115 @@
+{
+  "definition": "in_domain_metric - unseen_brand_metric",
+  "folds": [
+    {
+      "fold": "fold_1_lange",
+      "held_out_brand": "A. Lange & S\u00f6hne",
+      "gap": {
+        "roc_auc": 0.0,
+        "roc_auc_relative_degradation": 0.0,
+        "pr_auc": 1.1102230246251565e-16,
+        "pr_auc_relative_degradation": 1.1102230246251565e-16,
+        "f1": 0.0005558643690939391,
+        "f1_relative_degradation": 0.0005558643690939391,
+        "false_authentic_rate": -0.0011111111111111111,
+        "false_authentic_rate_relative_degradation": null,
+        "false_fake_rate": 0.0,
+        "false_fake_rate_relative_degradation": null,
+        "nll": -0.001226081367349252,
+        "nll_relative_degradation": -6.3822462025350015,
+        "brier": -0.0003962574509159822,
+        "brier_relative_degradation": -2968.45675851761,
+        "ece": -9.608960842676919e-05,
+        "ece_relative_degradation": -0.5005017435365808
+      }
+    },
+    {
+      "fold": "fold_2_ap",
+      "held_out_brand": "Audemars Piguet",
+      "gap": {
+        "roc_auc": 2.7526597579097256e-07,
+        "roc_auc_relative_degradation": 2.7526597579097256e-07,
+        "pr_auc": 2.741453518639858e-07,
+        "pr_auc_relative_degradation": 2.741453518639858e-07,
+        "f1": 0.000926784059314123,
+        "f1_relative_degradation": 0.000926784059314123,
+        "false_authentic_rate": -0.001851851851851852,
+        "false_authentic_rate_relative_degradation": null,
+        "false_fake_rate": 0.0,
+        "false_fake_rate_relative_degradation": null,
+        "nll": -0.0065731458877147375,
+        "nll_relative_degradation": -8351440.703802591,
+        "brier": -0.0008282923954538223,
+        "brier_relative_degradation": -10635968097690.852,
+        "ece": -0.000873837847365583,
+        "ece_relative_degradation": null
+      }
+    },
+    {
+      "fold": "fold_3_patek",
+      "held_out_brand": "Patek Philippe",
+      "gap": {
+        "roc_auc": 2.759838825250327e-07,
+        "roc_auc_relative_degradation": 2.759838825250327e-07,
+        "pr_auc": 2.7429763604924773e-07,
+        "pr_auc_relative_degradation": 2.7429763604924773e-07,
+        "f1": 0.0016638935108153063,
+        "f1_relative_degradation": 0.0016638935108153063,
+        "false_authentic_rate": 0.0,
+        "false_authentic_rate_relative_degradation": null,
+        "false_fake_rate": -0.0033532041728763042,
+        "false_fake_rate_relative_degradation": null,
+        "nll": -0.005000669771106914,
+        "nll_relative_degradation": -33.398567969454476,
+        "brier": -0.0013362252147999243,
+        "brier_relative_degradation": -547.9374744295625,
+        "ece": -0.0011320865725514438,
+        "ece_relative_degradation": -7.624753495943494
+      }
+    },
+    {
+      "fold": "fold_4_rm",
+      "held_out_brand": "Richard Mille",
+      "gap": {
+        "roc_auc": 1.4940921676642738e-05,
+        "roc_auc_relative_degradation": 1.4940921676642738e-05,
+        "pr_auc": 1.4862120954473035e-05,
+        "pr_auc_relative_degradation": 1.4862120954473035e-05,
+        "f1": 0.0037174721189590088,
+        "f1_relative_degradation": 0.0037174721189590088,
+        "false_authentic_rate": -0.007407407407407408,
+        "false_authentic_rate_relative_degradation": null,
+        "false_fake_rate": 0.0,
+        "false_fake_rate_relative_degradation": null,
+        "nll": -0.01578110507398378,
+        "nll_relative_degradation": -101.2808144048652,
+        "brier": -0.003304146720418899,
+        "brier_relative_degradation": -125703.09118460144,
+        "ece": -0.0027141190323287673,
+        "ece_relative_degradation": -17.413140059308112
+      }
+    },
+    {
+      "fold": "fold_5_vacheron",
+      "held_out_brand": "Vacheron Constantin",
+      "gap": {
+        "roc_auc": 0.0,
+        "roc_auc_relative_degradation": 0.0,
+        "pr_auc": 0.0,
+        "pr_auc_relative_degradation": 0.0,
+        "f1": 0.0,
+        "f1_relative_degradation": 0.0,
+        "false_authentic_rate": 0.0,
+        "false_authentic_rate_relative_degradation": null,
+        "false_fake_rate": 0.0,
+        "false_fake_rate_relative_degradation": null,
+        "nll": 4.849532775352827e-07,
+        "nll_relative_degradation": 0.9907425680269838,
+        "brier": 5.633723379891773e-10,
+        "brier_relative_degradation": 0.9999848069040729,
+        "ece": 5.364418029785156e-07,
+        "ece_relative_degradation": 1.0
+      }
+    }
+  ]
+}

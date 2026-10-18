@@ -1,0 +1,1771 @@
+{
+  "fold_1_lange": {
+    "initialization": "timm pretrained vit_base_patch16_dinov3.lvd1689m. The frozen epoch_018.pt checkpoint is not loaded.",
+    "loaded_frozen_checkpoint": false,
+    "classifier_arch": "cls_patch_attention",
+    "selected_epoch": 6,
+    "selected_checkpoint": "epoch_006",
+    "temperature": 0.5423683233287325,
+    "calibration": {
+      "roc_auc": 1.0,
+      "pr_auc": 0.9999999999999999,
+      "f1": 0.9995831596498541,
+      "false_authentic_rate": 0.0008333333333333334,
+      "false_fake_rate": 0.0,
+      "nll": 0.002163424389436841,
+      "brier": 0.0004675641539506614,
+      "ece": 0.00037201694559019585,
+      "sample_count": 2381,
+      "authentic_count": 1181,
+      "fake_count": 1200,
+      "temperature": 0.5423683233287325
+    },
+    "in_domain": {
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "false_fake_rate": 0.0,
+      "nll": 0.00019210812752135098,
+      "brier": 1.3348937955015572e-07,
+      "ece": 0.0001919865608215332,
+      "sample_count": 2379,
+      "authentic_count": 1179,
+      "fake_count": 1200,
+      "temperature": 0.5423683233287325
+    },
+    "unseen": {
+      "roc_auc": 1.0,
+      "pr_auc": 0.9999999999999999,
+      "f1": 0.9994441356309061,
+      "false_authentic_rate": 0.0011111111111111111,
+      "false_fake_rate": 0.0,
+      "nll": 0.001418189494870603,
+      "brier": 0.00039639094029553235,
+      "ece": 0.0002880761692483024,
+      "sample_count": 5417,
+      "authentic_count": 2717,
+      "fake_count": 2700,
+      "temperature": 0.5423683233287325
+    },
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.2094,
+        "val_loss": 0.0108,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset",
+        "precision": "training_log_four_decimals"
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.0606,
+        "val_loss": 0.011,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset",
+        "precision": "training_log_four_decimals"
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.0581,
+        "val_loss": 0.0103,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "reset",
+        "precision": "training_log_four_decimals"
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.0568,
+        "val_loss": 0.0098,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset",
+        "precision": "training_log_four_decimals"
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.0566,
+        "val_loss": 0.0104,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment",
+        "precision": "training_log_four_decimals"
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.0579,
+        "val_loss": 0.0094,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset",
+        "precision": "training_log_four_decimals"
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.0569,
+        "val_loss": 0.0099,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment",
+        "precision": "training_log_four_decimals"
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.0565,
+        "val_loss": 0.0105,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment",
+        "precision": "training_log_four_decimals"
+      },
+      {
+        "epoch": 9,
+        "train_loss": 0.0569,
+        "val_loss": 0.0105,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment",
+        "precision": "training_log_four_decimals"
+      },
+      {
+        "epoch": 10,
+        "train_loss": 0.0565,
+        "val_loss": 0.0114,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment",
+        "precision": "training_log_four_decimals"
+      },
+      {
+        "epoch": 11,
+        "train_loss": 0.0563,
+        "val_loss": 0.0105,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment",
+        "precision": "training_log_four_decimals"
+      },
+      {
+        "epoch": 12,
+        "train_loss": 0.0571,
+        "val_loss": 0.0105,
+        "val_pr_auc": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment",
+        "precision": "training_log_four_decimals"
+      }
+    ],
+    "features": {
+      "production_ood_threshold": null,
+      "train_mahalanobis": {
+        "minimum": 18.85833750722954,
+        "p5": 20.03127040555205,
+        "p25": 20.931534427985184,
+        "median": 27.296861193522844,
+        "p75": 32.579766453038474,
+        "p95": 35.45335669685794,
+        "maximum": 51.44062106481855
+      },
+      "held_out_mahalanobis": {
+        "minimum": 18.865613033085854,
+        "p5": 19.945844245067594,
+        "p25": 20.869922936440634,
+        "median": 30.432681557515085,
+        "p75": 33.3527098357019,
+        "p95": 35.98128457986269,
+        "maximum": 54.046561513776055
+      },
+      "train_cosine_distance": {
+        "minimum": 0.16902667573807917,
+        "p5": 0.21773887913464024,
+        "p25": 0.2440111431170813,
+        "median": 0.35374750658644505,
+        "p75": 0.5368822690170245,
+        "p95": 0.6196145282104205,
+        "maximum": 1.098818788887627
+      },
+      "held_out_cosine_distance": {
+        "minimum": 0.18301046612964356,
+        "p5": 0.2201516328445681,
+        "p25": 0.244227994178426,
+        "median": 0.4539587788373214,
+        "p75": 0.5370570711140237,
+        "p95": 0.6125917902728649,
+        "maximum": 1.0165003216029878
+      },
+      "held_out_fraction_above_train_mahalanobis_p95": 0.07107254938157652,
+      "mean_p_fake_above_train_mahalanobis_p95": 0.00022043024364393204,
+      "mean_p_fake_below_train_mahalanobis_median": 0.9998385310173035
+    },
+    "confidence": {
+      "all_images_p_fake": {
+        "minimum": 0.00011196120613021776,
+        "p5": 0.0001684865797869861,
+        "p25": 0.00019611793686635792,
+        "median": 0.0004363046318758279,
+        "p75": 0.9998388290405273,
+        "p95": 0.999858021736145,
+        "maximum": 0.9998832941055298
+      },
+      "authentic_images_p_fake": {
+        "minimum": 0.00011196120613021776,
+        "p5": 0.0001624682452529669,
+        "p25": 0.00018051340884994715,
+        "median": 0.00019621315004769713,
+        "p75": 0.0002138697891496122,
+        "p95": 0.0002448805025778711,
+        "maximum": 0.0027935702819377184
+      },
+      "fake_images_p_fake": {
+        "minimum": 0.024076716974377632,
+        "p5": 0.9998142123222351,
+        "p25": 0.9998291730880737,
+        "median": 0.9998389482498169,
+        "p75": 0.9998493194580078,
+        "p95": 0.9998631477355957,
+        "maximum": 0.9998832941055298
+      },
+      "mean_p_fake": 0.49798592925071716,
+      "median_p_fake": 0.0004363046318758279,
+      "most_confident_false_authentic_examples": [
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/26f47a0270b3.jpg",
+          "label": 1,
+          "p_fake": 0.024076716974377632,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/5350b50a3231.jpg",
+          "label": 1,
+          "p_fake": 0.22109971940517426,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/c31f08ca77a8.jpg",
+          "label": 1,
+          "p_fake": 0.23323851823806763,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/5d8fded6f656.jpg",
+          "label": 1,
+          "p_fake": 0.9970749616622925,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/d98980e1daa8.jpg",
+          "label": 1,
+          "p_fake": 0.9993589520454407,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/5dde58ed0bc2.jpg",
+          "label": 1,
+          "p_fake": 0.9994010925292969,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/6f4470fdc132.jpg",
+          "label": 1,
+          "p_fake": 0.9994896650314331,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/adeab1447a96.jpg",
+          "label": 1,
+          "p_fake": 0.9994933605194092,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/9ff990349e4c.jpg",
+          "label": 1,
+          "p_fake": 0.9995513558387756,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/08c8fc6fa17b.jpg",
+          "label": 1,
+          "p_fake": 0.9996402263641357,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/702503b49ca6.jpg",
+          "label": 1,
+          "p_fake": 0.9996809959411621,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/e991d83e8fca.jpg",
+          "label": 1,
+          "p_fake": 0.9996950626373291,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/7d78d12bab37.jpg",
+          "label": 1,
+          "p_fake": 0.9997015595436096,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/325866349899.jpg",
+          "label": 1,
+          "p_fake": 0.9997021555900574,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/fe08823dfece.jpg",
+          "label": 1,
+          "p_fake": 0.9997149109840393,
+          "error": "fake image received a low P(fake)"
+        }
+      ]
+    },
+    "gap": {
+      "roc_auc": 0.0,
+      "roc_auc_relative_degradation": 0.0,
+      "pr_auc": 1.1102230246251565e-16,
+      "pr_auc_relative_degradation": 1.1102230246251565e-16,
+      "f1": 0.0005558643690939391,
+      "f1_relative_degradation": 0.0005558643690939391,
+      "false_authentic_rate": -0.0011111111111111111,
+      "false_authentic_rate_relative_degradation": null,
+      "false_fake_rate": 0.0,
+      "false_fake_rate_relative_degradation": null,
+      "nll": -0.001226081367349252,
+      "nll_relative_degradation": -6.3822462025350015,
+      "brier": -0.0003962574509159822,
+      "brier_relative_degradation": -2968.45675851761,
+      "ece": -9.608960842676919e-05,
+      "ece_relative_degradation": -0.5005017435365808
+    }
+  },
+  "fold_2_ap": {
+    "initialization": "timm pretrained vit_base_patch16_dinov3.lvd1689m. The frozen epoch_018.pt checkpoint is not loaded.",
+    "loaded_frozen_checkpoint": false,
+    "classifier_arch": "cls_patch_attention",
+    "selected_epoch": 9,
+    "selected_checkpoint": "epoch_009",
+    "temperature": 0.23093190498503388,
+    "calibration": {
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "false_fake_rate": 0.0,
+      "nll": 5.99785510146944e-09,
+      "brier": 6.440908326436554e-14,
+      "ece": 0.0,
+      "sample_count": 2383,
+      "authentic_count": 1183,
+      "fake_count": 1200,
+      "temperature": 0.23093190498503388
+    },
+    "in_domain": {
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "false_fake_rate": 0.0,
+      "nll": 7.870673002230433e-10,
+      "brier": 7.78765400428054e-17,
+      "ece": 0.0,
+      "sample_count": 2382,
+      "authentic_count": 1182,
+      "fake_count": 1200,
+      "temperature": 0.23093190498503388
+    },
+    "unseen": {
+      "roc_auc": 0.9999997247340242,
+      "pr_auc": 0.9999997258546481,
+      "f1": 0.9990732159406859,
+      "false_authentic_rate": 0.001851851851851852,
+      "false_fake_rate": 0.0,
+      "nll": 0.006573146674782038,
+      "brier": 0.0008282923954539001,
+      "ece": 0.000873837847365583,
+      "sample_count": 5391,
+      "authentic_count": 2691,
+      "fake_count": 2700,
+      "temperature": 0.23093190498503388
+    },
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.20634805451460675,
+        "val_loss": 0.011167783290147781,
+        "val_pr_auc": 0.9999979189776299,
+        "val_f1": 0.9991673605328892,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.059876916153233206,
+        "val_loss": 0.011822910979390144,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9991673605328892,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.05683701972576253,
+        "val_loss": 0.011402880772948265,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995835068721366,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.057079874979169574,
+        "val_loss": 0.010203883983194828,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.05672139709427853,
+        "val_loss": 0.011112499982118607,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.0565822284850841,
+        "val_loss": 0.010886413976550102,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.05636523341472517,
+        "val_loss": 0.009903141297399998,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.056134021075751384,
+        "val_loss": 0.015583225525915623,
+        "val_pr_auc": 0.999998611689333,
+        "val_f1": 0.9983305509181971,
+        "val_false_authentic_rate": 0.0033333333333333335,
+        "action": "increment"
+      },
+      {
+        "epoch": 9,
+        "train_loss": 0.05689199390255936,
+        "val_loss": 0.00943270605057478,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 10,
+        "train_loss": 0.056485153156067475,
+        "val_loss": 0.00960083119571209,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 11,
+        "train_loss": 0.05606823992109139,
+        "val_loss": 0.010486681945621967,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 12,
+        "train_loss": 0.056323121618818806,
+        "val_loss": 0.010017412714660168,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 13,
+        "train_loss": 0.05606783173213983,
+        "val_loss": 0.009704001247882843,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 14,
+        "train_loss": 0.05694008990407905,
+        "val_loss": 0.010144386440515518,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 15,
+        "train_loss": 0.05606725091902202,
+        "val_loss": 0.010982850566506386,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      }
+    ],
+    "features": {
+      "production_ood_threshold": null,
+      "train_mahalanobis": {
+        "minimum": 18.390452542151316,
+        "p5": 19.789746870445256,
+        "p25": 20.698749397246186,
+        "median": 24.866497144025047,
+        "p75": 32.72571771399787,
+        "p95": 35.77043188214518,
+        "maximum": 50.692059001178905
+      },
+      "held_out_mahalanobis": {
+        "minimum": 18.86700400404791,
+        "p5": 19.824043727732818,
+        "p25": 20.847518801643467,
+        "median": 28.52213347916904,
+        "p75": 31.948815779881055,
+        "p95": 34.557536253320336,
+        "maximum": 54.146983204383076
+      },
+      "train_cosine_distance": {
+        "minimum": 0.18854523685272073,
+        "p5": 0.22379352209126713,
+        "p25": 0.24771508814546844,
+        "median": 0.3291924469704926,
+        "p75": 0.5398693556006783,
+        "p95": 0.6188645649313832,
+        "maximum": 1.0121269046604158
+      },
+      "held_out_cosine_distance": {
+        "minimum": 0.14942555054159712,
+        "p5": 0.2045766913165637,
+        "p25": 0.23763798679551906,
+        "median": 0.37762174180934416,
+        "p75": 0.5182834660811888,
+        "p95": 0.5820056895601913,
+        "maximum": 1.0244410592220197
+      },
+      "held_out_fraction_above_train_mahalanobis_p95": 0.03171953255425709,
+      "mean_p_fake_above_train_mahalanobis_p95": 5.179010642564208e-08,
+      "mean_p_fake_below_train_mahalanobis_median": 1.0
+    },
+    "confidence": {
+      "all_images_p_fake": {
+        "minimum": 9.314744531252472e-10,
+        "p5": 1.5558211385879872e-09,
+        "p25": 1.9335012479970715e-09,
+        "median": 0.16902261972427368,
+        "p75": 1.0,
+        "p95": 1.0,
+        "maximum": 1.0
+      },
+      "authentic_images_p_fake": {
+        "minimum": 9.314744531252472e-10,
+        "p5": 1.4659000124872534e-09,
+        "p25": 1.720267261973163e-09,
+        "median": 1.9333628031859007e-09,
+        "p75": 2.1797647020704858e-09,
+        "p95": 2.723337222398925e-09,
+        "maximum": 4.211978193779942e-06
+      },
+      "fake_images_p_fake": {
+        "minimum": 3.453014187471126e-06,
+        "p5": 1.0,
+        "p25": 1.0,
+        "median": 1.0,
+        "p75": 1.0,
+        "p95": 1.0,
+        "maximum": 1.0
+      },
+      "mean_p_fake": 0.49996063113212585,
+      "median_p_fake": 0.16902261972427368,
+      "most_confident_false_authentic_examples": [
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/f7a36e945557.jpg",
+          "label": 1,
+          "p_fake": 3.453014187471126e-06,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/d3050eca93f7.jpg",
+          "label": 1,
+          "p_fake": 1.3229635442257859e-05,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/5ce30192067b.jpg",
+          "label": 1,
+          "p_fake": 0.0004431945853866637,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/a840b90b2749.jpg",
+          "label": 1,
+          "p_fake": 0.11925004422664642,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/b6f8ceca6503.jpg",
+          "label": 1,
+          "p_fake": 0.16902261972427368,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/93db5a321482.jpg",
+          "label": 1,
+          "p_fake": 0.9996110796928406,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/108dcb554a40.jpg",
+          "label": 1,
+          "p_fake": 0.9998716115951538,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/f8cedf4b47e8.jpg",
+          "label": 1,
+          "p_fake": 0.9998917579650879,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/f1efb82417a3.jpg",
+          "label": 1,
+          "p_fake": 0.9999440908432007,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/8b6ee17b00c5.jpg",
+          "label": 1,
+          "p_fake": 0.999958872795105,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/75bf6d75b1a0.jpg",
+          "label": 1,
+          "p_fake": 0.9999895095825195,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/f0486c9c1aa5.jpg",
+          "label": 1,
+          "p_fake": 0.9999921321868896,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/7278fd9e1297.jpg",
+          "label": 1,
+          "p_fake": 0.9999951124191284,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/27fc749bf810.jpg",
+          "label": 1,
+          "p_fake": 0.9999988079071045,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/6bdaaa2df41c.jpg",
+          "label": 1,
+          "p_fake": 0.9999990463256836,
+          "error": "fake image received a low P(fake)"
+        }
+      ]
+    },
+    "gap": {
+      "roc_auc": 2.7526597579097256e-07,
+      "roc_auc_relative_degradation": 2.7526597579097256e-07,
+      "pr_auc": 2.741453518639858e-07,
+      "pr_auc_relative_degradation": 2.741453518639858e-07,
+      "f1": 0.000926784059314123,
+      "f1_relative_degradation": 0.000926784059314123,
+      "false_authentic_rate": -0.001851851851851852,
+      "false_authentic_rate_relative_degradation": null,
+      "false_fake_rate": 0.0,
+      "false_fake_rate_relative_degradation": null,
+      "nll": -0.0065731458877147375,
+      "nll_relative_degradation": -8351440.703802591,
+      "brier": -0.0008282923954538223,
+      "brier_relative_degradation": -10635968097690.852,
+      "ece": -0.000873837847365583,
+      "ece_relative_degradation": null
+    }
+  },
+  "fold_3_patek": {
+    "initialization": "timm pretrained vit_base_patch16_dinov3.lvd1689m. The frozen epoch_018.pt checkpoint is not loaded.",
+    "loaded_frozen_checkpoint": false,
+    "classifier_arch": "cls_patch_attention",
+    "selected_epoch": 2,
+    "selected_checkpoint": "epoch_002",
+    "temperature": 0.49929335363560123,
+    "calibration": {
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "f1": 0.9991673605328892,
+      "false_authentic_rate": 0.0,
+      "false_fake_rate": 0.001694915254237288,
+      "nll": 0.0014197075506672263,
+      "brier": 0.00046166693209670484,
+      "ece": 0.0005007678470691713,
+      "sample_count": 2380,
+      "authentic_count": 1180,
+      "fake_count": 1200,
+      "temperature": 0.49929335363560123
+    },
+    "in_domain": {
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "false_fake_rate": 0.0,
+      "nll": 0.00014972707140259445,
+      "brier": 2.438645424263086e-06,
+      "ece": 0.00014847517013549805,
+      "sample_count": 2379,
+      "authentic_count": 1179,
+      "fake_count": 1200,
+      "temperature": 0.49929335363560123
+    },
+    "unseen": {
+      "roc_auc": 0.9999997240161175,
+      "pr_auc": 0.999999725702364,
+      "f1": 0.9983361064891847,
+      "false_authentic_rate": 0.0,
+      "false_fake_rate": 0.0033532041728763042,
+      "nll": 0.005150396842509508,
+      "brier": 0.0013386638602241874,
+      "ece": 0.0012805617426869418,
+      "sample_count": 5384,
+      "authentic_count": 2684,
+      "fake_count": 2700,
+      "temperature": 0.49929335363560123
+    },
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.2122754274789641,
+        "val_loss": 0.014437871985137463,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9983361064891847,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.05979707521117157,
+        "val_loss": 0.00985677633434534,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.05765613231818683,
+        "val_loss": 0.009948923252522945,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.05651472321748161,
+        "val_loss": 0.01021239161491394,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.05730004994400869,
+        "val_loss": 0.010674821212887764,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.05649205726302094,
+        "val_loss": 0.010276567190885544,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.05648022762693887,
+        "val_loss": 0.010378398001194,
+        "val_pr_auc": 0.9999999999999999,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.05678622878365054,
+        "val_loss": 0.01056036725640297,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      }
+    ],
+    "features": {
+      "production_ood_threshold": null,
+      "train_mahalanobis": {
+        "minimum": 17.22522858554203,
+        "p5": 19.565788454303586,
+        "p25": 21.73302236637008,
+        "median": 27.357972835409637,
+        "p75": 31.989042219212983,
+        "p95": 35.36855380927332,
+        "maximum": 51.45212742569964
+      },
+      "held_out_mahalanobis": {
+        "minimum": 18.34798363005293,
+        "p5": 20.189650121682703,
+        "p25": 22.24772132031438,
+        "median": 27.26795231665067,
+        "p75": 32.288939870163496,
+        "p95": 35.201931733273774,
+        "maximum": 54.777426477225156
+      },
+      "train_cosine_distance": {
+        "minimum": 0.09530650155748566,
+        "p5": 0.1606072728912516,
+        "p25": 0.22371721985614793,
+        "median": 0.3332660220523151,
+        "p75": 0.42321214146515534,
+        "p95": 0.5209278675682512,
+        "maximum": 0.9911998643736669
+      },
+      "held_out_cosine_distance": {
+        "minimum": 0.1206413025811639,
+        "p5": 0.18697295778315168,
+        "p25": 0.24344362496924984,
+        "median": 0.3325991913235143,
+        "p75": 0.42396502412878706,
+        "p95": 0.5033109534578329,
+        "maximum": 1.0049912541770478
+      },
+      "held_out_fraction_above_train_mahalanobis_p95": 0.04699108469539376,
+      "mean_p_fake_above_train_mahalanobis_p95": 0.000436693022493273,
+      "mean_p_fake_below_train_mahalanobis_median": 0.9936180114746094
+    },
+    "confidence": {
+      "all_images_p_fake": {
+        "minimum": 3.5301640309626237e-05,
+        "p5": 6.918955114088021e-05,
+        "p25": 0.00010290067075402476,
+        "median": 0.9997602701187134,
+        "p75": 0.999922513961792,
+        "p95": 0.9999418079853057,
+        "maximum": 0.9999690055847168
+      },
+      "authentic_images_p_fake": {
+        "minimum": 3.5301640309626237e-05,
+        "p5": 6.214905552042183e-05,
+        "p25": 8.419273399340454e-05,
+        "median": 0.00010285965981893241,
+        "p75": 0.00012783492275048047,
+        "p95": 0.00026671989762689903,
+        "maximum": 0.9995299577713013
+      },
+      "fake_images_p_fake": {
+        "minimum": 0.9993446469306946,
+        "p5": 0.999873161315918,
+        "p25": 0.9999091625213623,
+        "median": 0.999922513961792,
+        "p75": 0.9999330043792725,
+        "p95": 0.9999457657337188,
+        "maximum": 0.9999690055847168
+      },
+      "mean_p_fake": 0.5031929612159729,
+      "median_p_fake": 0.9997602701187134,
+      "most_confident_false_authentic_examples": [
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/38c9c3817e27.jpg",
+          "label": 1,
+          "p_fake": 0.9993446469306946,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/872698387403.jpg",
+          "label": 1,
+          "p_fake": 0.9994939565658569,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/3d072ddd818b.jpg",
+          "label": 1,
+          "p_fake": 0.9995782971382141,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/753f8eaa978e.jpg",
+          "label": 1,
+          "p_fake": 0.9996201992034912,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/ffd079d8dd23.jpg",
+          "label": 1,
+          "p_fake": 0.9997132420539856,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/4a78d4ed8689.jpg",
+          "label": 1,
+          "p_fake": 0.9997460246086121,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/5064e2f4155f.jpg",
+          "label": 1,
+          "p_fake": 0.9997461438179016,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/3ee10bc579c4.jpg",
+          "label": 1,
+          "p_fake": 0.9997565150260925,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/5a7a59a57b6d.jpg",
+          "label": 1,
+          "p_fake": 0.9997640252113342,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/f6a2a7c3226e.jpg",
+          "label": 1,
+          "p_fake": 0.999775230884552,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/4392e3fe0b3c.jpg",
+          "label": 1,
+          "p_fake": 0.9997770190238953,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/303fd62558c5.jpg",
+          "label": 1,
+          "p_fake": 0.9997804760932922,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/e2b9bab5f0d2.jpg",
+          "label": 1,
+          "p_fake": 0.9997817873954773,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/5fd84e4e2494.jpg",
+          "label": 1,
+          "p_fake": 0.9997826218605042,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/381127c6ed0e.jpg",
+          "label": 1,
+          "p_fake": 0.9997848868370056,
+          "error": "fake image received a low P(fake)"
+        }
+      ]
+    },
+    "gap": {
+      "roc_auc": 2.759838825250327e-07,
+      "roc_auc_relative_degradation": 2.759838825250327e-07,
+      "pr_auc": 2.7429763604924773e-07,
+      "pr_auc_relative_degradation": 2.7429763604924773e-07,
+      "f1": 0.0016638935108153063,
+      "f1_relative_degradation": 0.0016638935108153063,
+      "false_authentic_rate": 0.0,
+      "false_authentic_rate_relative_degradation": null,
+      "false_fake_rate": -0.0033532041728763042,
+      "false_fake_rate_relative_degradation": null,
+      "nll": -0.005000669771106914,
+      "nll_relative_degradation": -33.398567969454476,
+      "brier": -0.0013362252147999243,
+      "brier_relative_degradation": -547.9374744295625,
+      "ece": -0.0011320865725514438,
+      "ece_relative_degradation": -7.624753495943494
+    }
+  },
+  "fold_4_rm": {
+    "initialization": "timm pretrained vit_base_patch16_dinov3.lvd1689m. The frozen epoch_018.pt checkpoint is not loaded.",
+    "loaded_frozen_checkpoint": false,
+    "classifier_arch": "cls_patch_attention",
+    "selected_epoch": 4,
+    "selected_checkpoint": "epoch_004",
+    "temperature": 0.5261506220372356,
+    "calibration": {
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "f1": 0.9995831596498541,
+      "false_authentic_rate": 0.0008333333333333334,
+      "false_fake_rate": 0.0,
+      "nll": 0.001596258021891117,
+      "brier": 0.00039202134939841926,
+      "ece": 0.00024497509002685547,
+      "sample_count": 2389,
+      "authentic_count": 1189,
+      "fake_count": 1200,
+      "temperature": 0.5261506220372356
+    },
+    "in_domain": {
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "false_fake_rate": 0.0,
+      "nll": 0.00015581534535158426,
+      "brier": 2.6285325915864632e-08,
+      "ece": 0.00015586614608764648,
+      "sample_count": 2387,
+      "authentic_count": 1187,
+      "fake_count": 1200,
+      "temperature": 0.5261506220372356
+    },
+    "unseen": {
+      "roc_auc": 0.9999850590783234,
+      "pr_auc": 0.9999851378790455,
+      "f1": 0.996282527881041,
+      "false_authentic_rate": 0.007407407407407408,
+      "false_fake_rate": 0.0,
+      "nll": 0.015936920419335365,
+      "brier": 0.003304173005744815,
+      "ece": 0.002869985178416414,
+      "sample_count": 5402,
+      "authentic_count": 2702,
+      "fake_count": 2700,
+      "temperature": 0.5261506220372356
+    },
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.19590955479293348,
+        "val_loss": 0.011395066976547241,
+        "val_pr_auc": 0.9999993061337774,
+        "val_f1": 0.9991666666666666,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "reset"
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.05939285709527121,
+        "val_loss": 0.01045260764658451,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995835068721366,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.05776626659494838,
+        "val_loss": 0.010407479479908943,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.056869003529611384,
+        "val_loss": 0.009838270023465157,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.057626838265566166,
+        "val_loss": 0.010361412540078163,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.05644149752110956,
+        "val_loss": 0.010014381259679794,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.05716734641547979,
+        "val_loss": 0.010180936194956303,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.0570978731772546,
+        "val_loss": 0.010889560915529728,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995835068721366,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 9,
+        "train_loss": 0.0566401432041061,
+        "val_loss": 0.010234703309834003,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 10,
+        "train_loss": 0.05659583861534105,
+        "val_loss": 0.01001695729792118,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      }
+    ],
+    "features": {
+      "production_ood_threshold": null,
+      "train_mahalanobis": {
+        "minimum": 18.16883777060801,
+        "p5": 19.76904168441447,
+        "p25": 21.155087846470874,
+        "median": 25.645002632437212,
+        "p75": 32.33159639329251,
+        "p95": 35.770677758851235,
+        "maximum": 46.75647990551474
+      },
+      "held_out_mahalanobis": {
+        "minimum": 19.32311483075691,
+        "p5": 21.10095040431595,
+        "p25": 22.639833461678855,
+        "median": 32.18292832720026,
+        "p75": 36.067529770515954,
+        "p95": 38.54471397654456,
+        "maximum": 53.575643029651694
+      },
+      "train_cosine_distance": {
+        "minimum": 0.15532819365076445,
+        "p5": 0.2006117995184524,
+        "p25": 0.24002285107716415,
+        "median": 0.332216343531917,
+        "p75": 0.4998763082720151,
+        "p95": 0.5916964537218251,
+        "maximum": 0.9752020930663349
+      },
+      "held_out_cosine_distance": {
+        "minimum": 0.1805309650183584,
+        "p5": 0.21795203606042554,
+        "p25": 0.2552060734222081,
+        "median": 0.47431632227431536,
+        "p75": 0.5995270482806889,
+        "p95": 0.6941446596715282,
+        "maximum": 1.005572460449894
+      },
+      "held_out_fraction_above_train_mahalanobis_p95": 0.2934098482043688,
+      "mean_p_fake_above_train_mahalanobis_p95": 0.00017749865946825594,
+      "mean_p_fake_below_train_mahalanobis_median": 0.9998329281806946
+    },
+    "confidence": {
+      "all_images_p_fake": {
+        "minimum": 8.151139627443627e-05,
+        "p5": 0.00011520949738041963,
+        "p25": 0.00013883496649214067,
+        "median": 0.004589357180520892,
+        "p75": 0.999839186668396,
+        "p95": 0.9998644530773163,
+        "maximum": 0.9999185800552368
+      },
+      "authentic_images_p_fake": {
+        "minimum": 8.151139627443627e-05,
+        "p5": 0.00010877194108616095,
+        "p25": 0.0001253742702829186,
+        "median": 0.00013883681822335348,
+        "p75": 0.00015524464470217936,
+        "p95": 0.00019183600597898472,
+        "maximum": 0.03812306746840477
+      },
+      "fake_images_p_fake": {
+        "minimum": 0.00027359931846149266,
+        "p5": 0.9996365129947662,
+        "p25": 0.9998175203800201,
+        "median": 0.9998392462730408,
+        "p75": 0.999853253364563,
+        "p95": 0.9998724460601807,
+        "maximum": 0.9999185800552368
+      },
+      "mean_p_fake": 0.4959072768688202,
+      "median_p_fake": 0.004589357413351536,
+      "most_confident_false_authentic_examples": [
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/3b5748de7b1b.jpg",
+          "label": 1,
+          "p_fake": 0.00027359931846149266,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/e12883ada111.jpg",
+          "label": 1,
+          "p_fake": 0.0009082261240109801,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/4daef03931ff.jpg",
+          "label": 1,
+          "p_fake": 0.0012016670079901814,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d07c3aa1998f.jpg",
+          "label": 1,
+          "p_fake": 0.001299011637456715,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d5266fb5ab9a.jpg",
+          "label": 1,
+          "p_fake": 0.001818253891542554,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/18730ea81b18.jpg",
+          "label": 1,
+          "p_fake": 0.00481198076158762,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/ff49bf4ac8ab.jpg",
+          "label": 1,
+          "p_fake": 0.005608499050140381,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d6ca042cb997.jpg",
+          "label": 1,
+          "p_fake": 0.005861436016857624,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/a6d20a112797.jpg",
+          "label": 1,
+          "p_fake": 0.00886253360658884,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/debeefd1cdee.jpg",
+          "label": 1,
+          "p_fake": 0.01097421906888485,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/7be465bc1cf6.jpg",
+          "label": 1,
+          "p_fake": 0.013311536982655525,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/896a73ac8355.jpg",
+          "label": 1,
+          "p_fake": 0.0478254072368145,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/5d747fb6eba2.jpg",
+          "label": 1,
+          "p_fake": 0.06581775099039078,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d14367e7ccfe.jpg",
+          "label": 1,
+          "p_fake": 0.07353265583515167,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/4e3b5554ef77.jpg",
+          "label": 1,
+          "p_fake": 0.07532397657632828,
+          "error": "fake image received a low P(fake)"
+        }
+      ]
+    },
+    "gap": {
+      "roc_auc": 1.4940921676642738e-05,
+      "roc_auc_relative_degradation": 1.4940921676642738e-05,
+      "pr_auc": 1.4862120954473035e-05,
+      "pr_auc_relative_degradation": 1.4862120954473035e-05,
+      "f1": 0.0037174721189590088,
+      "f1_relative_degradation": 0.0037174721189590088,
+      "false_authentic_rate": -0.007407407407407408,
+      "false_authentic_rate_relative_degradation": null,
+      "false_fake_rate": 0.0,
+      "false_fake_rate_relative_degradation": null,
+      "nll": -0.01578110507398378,
+      "nll_relative_degradation": -101.2808144048652,
+      "brier": -0.003304146720418899,
+      "brier_relative_degradation": -125703.09118460144,
+      "ece": -0.0027141190323287673,
+      "ece_relative_degradation": -17.413140059308112
+    }
+  },
+  "fold_5_vacheron": {
+    "initialization": "timm pretrained vit_base_patch16_dinov3.lvd1689m. The frozen epoch_018.pt checkpoint is not loaded.",
+    "loaded_frozen_checkpoint": false,
+    "classifier_arch": "cls_patch_attention",
+    "selected_epoch": 15,
+    "selected_checkpoint": "epoch_015",
+    "temperature": 0.24041931721640536,
+    "calibration": {
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "false_fake_rate": 0.0,
+      "nll": 2.4617570204554795e-09,
+      "brier": 9.05014255009266e-18,
+      "ece": 0.0,
+      "sample_count": 2381,
+      "authentic_count": 1181,
+      "fake_count": 1200,
+      "temperature": 0.24041931721640536
+    },
+    "in_domain": {
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "false_fake_rate": 0.0,
+      "nll": 4.894846483693982e-07,
+      "brier": 5.633808974891963e-10,
+      "ece": 5.364418029785156e-07,
+      "sample_count": 2378,
+      "authentic_count": 1178,
+      "fake_count": 1200,
+      "temperature": 0.24041931721640536
+    },
+    "unseen": {
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "false_fake_rate": 0.0,
+      "nll": 4.531370834115478e-09,
+      "brier": 8.559500019032253e-15,
+      "ece": 0.0,
+      "sample_count": 5400,
+      "authentic_count": 2700,
+      "fake_count": 2700,
+      "temperature": 0.24041931721640536
+    },
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.2094741507134831,
+        "val_loss": 0.0145933972671628,
+        "val_pr_auc": 0.9999944467534786,
+        "val_f1": 0.9987515605493134,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.06051150094109968,
+        "val_loss": 0.010932871140539646,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995835068721366,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.057589079176510134,
+        "val_loss": 0.012102054432034492,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9987515605493134,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.05688842789997524,
+        "val_loss": 0.011019221507012844,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.05664050633413092,
+        "val_loss": 0.010946211405098438,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.05668630361585608,
+        "val_loss": 0.013012899085879326,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9991673605328892,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.05638084320383658,
+        "val_loss": 0.011082276701927185,
+        "val_pr_auc": 0.9999993061337774,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.056363064166508804,
+        "val_loss": 0.01037503406405449,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 9,
+        "train_loss": 0.056805289209232224,
+        "val_loss": 0.010044533759355545,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 10,
+        "train_loss": 0.05612904833354442,
+        "val_loss": 0.010538571514189243,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 11,
+        "train_loss": 0.05606955697763561,
+        "val_loss": 0.010861217975616455,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 12,
+        "train_loss": 0.0575763531522593,
+        "val_loss": 0.01121265348047018,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9991673605328892,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 13,
+        "train_loss": 0.056353638091637626,
+        "val_loss": 0.012067543342709541,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 14,
+        "train_loss": 0.057077578292183594,
+        "val_loss": 0.01186319999396801,
+        "val_pr_auc": 0.9999993061337774,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 15,
+        "train_loss": 0.056358531707336484,
+        "val_loss": 0.009876317344605923,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "reset"
+      },
+      {
+        "epoch": 16,
+        "train_loss": 0.057117270741919184,
+        "val_loss": 0.01014457643032074,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 17,
+        "train_loss": 0.05608630143535,
+        "val_loss": 0.010309438221156597,
+        "val_pr_auc": 1.0,
+        "val_f1": 1.0,
+        "val_false_authentic_rate": 0.0,
+        "action": "increment"
+      },
+      {
+        "epoch": 18,
+        "train_loss": 0.056247861841389635,
+        "val_loss": 0.013398034498095512,
+        "val_pr_auc": 0.9999993061337774,
+        "val_f1": 0.9991659716430359,
+        "val_false_authentic_rate": 0.0016666666666666668,
+        "action": "increment"
+      },
+      {
+        "epoch": 19,
+        "train_loss": 0.05628336571342886,
+        "val_loss": 0.011283420026302338,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 20,
+        "train_loss": 0.05606091596300565,
+        "val_loss": 0.012113183736801147,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9995831596498541,
+        "val_false_authentic_rate": 0.0008333333333333334,
+        "action": "increment"
+      },
+      {
+        "epoch": 21,
+        "train_loss": 0.05605965657177562,
+        "val_loss": 0.012346482835710049,
+        "val_pr_auc": 1.0,
+        "val_f1": 0.9991659716430359,
+        "val_false_authentic_rate": 0.0016666666666666668,
+        "action": "increment"
+      }
+    ],
+    "features": {
+      "production_ood_threshold": null,
+      "train_mahalanobis": {
+        "minimum": 19.042609562417656,
+        "p5": 20.008800340401628,
+        "p25": 20.768214899829243,
+        "median": 24.631596764925042,
+        "p75": 32.75791811961138,
+        "p95": 35.65205455216458,
+        "maximum": 49.14113608415295
+      },
+      "held_out_mahalanobis": {
+        "minimum": 19.286589973616866,
+        "p5": 19.991014366131665,
+        "p25": 20.722561160460387,
+        "median": 29.29683431051304,
+        "p75": 33.456264281440696,
+        "p95": 36.586635641966744,
+        "maximum": 52.71825069731996
+      },
+      "train_cosine_distance": {
+        "minimum": 0.23575714808600123,
+        "p5": 0.2635574106779639,
+        "p25": 0.2803206527485762,
+        "median": 0.3660266616606118,
+        "p75": 0.6040511528879499,
+        "p95": 0.6837769301552935,
+        "maximum": 1.0316122858705716
+      },
+      "held_out_cosine_distance": {
+        "minimum": 0.235332155894852,
+        "p5": 0.26516823900333986,
+        "p25": 0.28240299640472427,
+        "median": 0.5024677618018785,
+        "p75": 0.6192666896030067,
+        "p95": 0.7005857068306853,
+        "maximum": 1.1226330823048483
+      },
+      "held_out_fraction_above_train_mahalanobis_p95": 0.08314814814814815,
+      "mean_p_fake_above_train_mahalanobis_p95": 1.5014109067124082e-08,
+      "mean_p_fake_below_train_mahalanobis_median": 1.0
+    },
+    "confidence": {
+      "all_images_p_fake": {
+        "minimum": 2.833456580475513e-09,
+        "p5": 3.810105608792469e-09,
+        "p25": 4.2403086597531114e-09,
+        "median": 0.5000030994415283,
+        "p75": 1.0,
+        "p95": 1.0,
+        "maximum": 1.0
+      },
+      "authentic_images_p_fake": {
+        "minimum": 2.833456580475513e-09,
+        "p5": 3.664616010645716e-09,
+        "p25": 4.01662159088545e-09,
+        "median": 4.240185313975076e-09,
+        "p75": 4.5049451946610475e-09,
+        "p95": 5.247092738080993e-09,
+        "maximum": 6.211787876964081e-06
+      },
+      "fake_images_p_fake": {
+        "minimum": 1.0,
+        "p5": 1.0,
+        "p25": 1.0,
+        "median": 1.0,
+        "p75": 1.0,
+        "p95": 1.0,
+        "maximum": 1.0
+      },
+      "mean_p_fake": 0.5,
+      "median_p_fake": 0.5000030994415283,
+      "most_confident_false_authentic_examples": [
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/0018ab896546.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/aabf116d4f57.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/aaf8c2a414c7.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/aafbbb1f31fe.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ab03676b2315.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ab05f714d264.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ab298786497c.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ab2fc5544cc3.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ab93e87f5cf6.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/abb2c7fb5bd0.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ac0b0914dde2.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ac133c858041.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ac15f208788a.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ac1d03bc3a8b.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        },
+        {
+          "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ac1ed0db3ea3.jpg",
+          "label": 1,
+          "p_fake": 1.0,
+          "error": "fake image received a low P(fake)"
+        }
+      ]
+    },
+    "gap": {
+      "roc_auc": 0.0,
+      "roc_auc_relative_degradation": 0.0,
+      "pr_auc": 0.0,
+      "pr_auc_relative_degradation": 0.0,
+      "f1": 0.0,
+      "f1_relative_degradation": 0.0,
+      "false_authentic_rate": 0.0,
+      "false_authentic_rate_relative_degradation": null,
+      "false_fake_rate": 0.0,
+      "false_fake_rate_relative_degradation": null,
+      "nll": 4.849532775352827e-07,
+      "nll_relative_degradation": 0.9907425680269838,
+      "brier": 5.633723379891773e-10,
+      "brier_relative_degradation": 0.9999848069040729,
+      "ece": 5.364418029785156e-07,
+      "ece_relative_degradation": 1.0
+    }
+  }
+}

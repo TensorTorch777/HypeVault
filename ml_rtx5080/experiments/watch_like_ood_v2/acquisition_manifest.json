@@ -1,0 +1,34 @@
+{
+  "methodology": "acquisition_and_provenance_only",
+  "model_scored": false,
+  "phase": 37,
+  "protocol_sha256": "babaaf2b5c30d252c39765886ee5db032c09c4e3f25cf0e9eacc63f17128dde9",
+  "sample_count": 1,
+  "samples": [
+    {
+      "admission_status": "rejected",
+      "brand": "UNKNOWN",
+      "brand_verification": "unknown",
+      "category": "UNKNOWN",
+      "collection_timestamp": "2026-10-07T13:01:36.984101+00:00",
+      "file_size": 972467,
+      "format": "JPEG",
+      "image_height": 3600,
+      "image_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v2/pilot/pixnio_2017-06-22-20-53-09.jpg",
+      "image_width": 5400,
+      "independent_source_group": "pixnio:2017-06-22-20-53-09",
+      "is_original_or_derivative": "original_photo",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "phase": 37,
+      "rejection_reason": "ambiguous_category",
+      "sha256": "46fd73540f31c34d522e271616327eaf95ed4254d659074c82e32eae6dc3395e",
+      "source": "Pixnio",
+      "source_declared_brand": "UNKNOWN",
+      "source_declared_category": "wristwatch",
+      "source_id": "pixnio:2017-06-22-20-53-09",
+      "source_url": "https://pixnio.com/free-images/2017/06/22/2017-06-22-20-53-09.jpg",
+      "subcategory": "UNKNOWN"
+    }
+  ]
+}

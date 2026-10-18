@@ -1,0 +1,11 @@
+id,failure_mode,evidence,severity,current_mitigation,residual_risk,status
+R1,Resize/recompression false-fake,Phase 22/26 missed id Label_0_Watches/Richard Mille/9eda705bd8c9.jpg|resize_recompression. Coverage 8/9.,high,Quality candidate catches the other eight demonstrated events.,One authentic stress image remains FAKE.,open
+R2,OOD unvalidated,Phase 25 REAL_OOD_CORPUS_AVAILABLE is false and production_ood_threshold is null.,high,OOD status stays unavailable. Unavailable is not recorded as false.,The system is not open-set protected.,open
+R3,Triton unavailable,Phase 30 triton_status is unavailable.,high,Shadow serving uses the PyTorch CUDA path.,No validated Triton production runtime.,open
+R4,TensorRT unavailable,Phase 30 tensorrt_status is unavailable.,high,No TensorRT engine is claimed.,No validated TensorRT runtime.,open
+R5,ONNX CUDA unavailable,Phase 30 onnx_cuda_provider is unavailable. CPU ONNX is functional and slow.,high,FP32 PyTorch CUDA is the shadow path. CPU ONNX is not treated as production.,No validated GPU ONNX runtime.,open
+R6,Quality review workload,Phase 26 review rate 0.06871897458694524 on 26994 images. Workload acceptance is false.,medium,"The rate is measured and reported at 100, 1000, and 10000 requests per day.",Operations has not accepted the review burden.,open
+R7,Five-brand dataset limitation,"Locked test brands: A. Lange & Söhne, Audemars Piguet, Patek Philippe, Richard Mille, Vacheron Constantin.",medium,Brand metrics are reported separately. No brand is treated as OOD.,Results do not establish universal luxury-watch performance.,residual
+R8,Missing product/SKU metadata,The catalog has no verified product or SKU identity.,medium,Evaluation stays at brand and authenticity-label level.,Product-disjoint evaluation is unavailable.,residual
+R9,Missing marketplace/source metadata,Images have no verified marketplace or source field.,medium,No source is used as a feature or a gate.,Source shift cannot be measured.,residual
+R10,Live backend remains DINOv2,Customer verdicts still come from the DINOv2 production path.,high,DINOv3 stays opt-in shadow and does not replace the live verdict.,Promotion has not happened. The live model is a different stack.,open

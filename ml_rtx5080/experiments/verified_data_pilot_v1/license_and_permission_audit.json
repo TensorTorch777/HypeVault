@@ -1,0 +1,14 @@
+{
+  "protocol_sha256": "42d03f08827a7657028e1cf0d44973ec779f79e7dd4a271b10deb80aa48f7112",
+  "rule": "Image-use rights are recorded separately from authenticity evidence. A license without a verifier does not admit a label. A verifier without a research-use right does not admit an image.",
+  "confirmed_for_an_admitted_image": false,
+  "sources": [
+    {"source": "hypevault_five_brand_catalog", "image_license": "UNKNOWN", "permission_evidence": "UNKNOWN", "label_evidence": "directory name only"},
+    {"source": "kaggle_chrono_analyzer", "image_license": "Apache 2.0", "permission_evidence": "dataset card", "label_evidence": "brand folders, not authenticity"},
+    {"source": "roboflow_watches_nge4k", "image_license": "CC BY 4.0", "permission_evidence": "dataset card", "label_evidence": "detection boxes, not authenticity"},
+    {"source": "goldnet", "image_license": "CC BY 4.0", "permission_evidence": "repository README", "label_evidence": "gold items, not watches"},
+    {"source": "trustwatch_hoken", "image_license": "UNKNOWN", "permission_evidence": "UNKNOWN", "label_evidence": "private model description, no released labels"},
+    {"source": "qualified_watchmaker_or_dealer_partnership", "image_license": "UNKNOWN", "permission_evidence": "none in repository", "label_evidence": "UNKNOWN"},
+    {"source": "owner_permission_photography", "image_license": "UNKNOWN", "permission_evidence": "none in repository", "label_evidence": "UNKNOWN"}
+  ]
+}

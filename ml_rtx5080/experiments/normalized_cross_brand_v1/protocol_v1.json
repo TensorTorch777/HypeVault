@@ -1,0 +1,35 @@
+{
+  "protocol_id": "normalized_cross_brand_v1",
+  "question": "Does the Phase 45 leave-one-brand-out result survive when both folder classes share one size, encoder, and metadata state?",
+  "claim_scope": "real photograph versus AI-generated image. Not authentic versus counterfeit watch.",
+  "source_manifest": "ml_rtx5080/experiments/v3_cross_brand/fold_manifest.json",
+  "normalization": {
+    "steps": [
+      "decode",
+      "EXIF transpose",
+      "alpha composited on white; other modes converted to RGB",
+      "center crop to the short side",
+      "Lanczos downscale to 448x448",
+      "baseline JPEG quality 90, 4:2:0, no EXIF, no ICC"
+    ],
+    "size": 448,
+    "jpeg_quality": 90,
+    "exclusion": "short side below 448 after EXIF transpose; never upscaled"
+  },
+  "unchanged_from_phase45": [
+    "role assignment per fold and for the random-split control",
+    "duplicate and leakage quarantine",
+    "locked final test excluded",
+    "DINOv3 cls_patch_attention, 512 input, hyperparameters, checkpoint selection, calibration, threshold 0.50",
+    "generalization bands"
+  ],
+  "not_run": [
+    "CLS-only ablation",
+    "DINOv2"
+  ],
+  "residual_risks": [
+    "Every Label_1 file is scaled by the same factor (512 to 448); Label_0 factors vary.",
+    "Prompt style and scene content can still differ between folders.",
+    "Folder labels are not verified ground truth."
+  ]
+}

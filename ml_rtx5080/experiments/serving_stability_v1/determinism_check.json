@@ -1,0 +1,39 @@
+{
+  "bf16": {
+    "authoritative": false,
+    "label": "research_only",
+    "logit_max": -4.21875,
+    "logit_min": -4.21875,
+    "logit_span": 0.0,
+    "repeats": 20,
+    "used_for_shadow_contract": false
+  },
+  "determinism": {
+    "decisions": [
+      "AUTHENTIC"
+    ],
+    "logit_span": 0.0,
+    "max_batch_position_logit_delta": 1.8596649169921875e-05,
+    "passed": true,
+    "probability_span": 0.0,
+    "quality_flags": "",
+    "reference_logit": -3.970158100128174,
+    "repeats": 100
+  },
+  "isolation": {
+    "max_logit_delta": 0.0,
+    "passed": true
+  },
+  "order": {
+    "flag_mismatches": 0,
+    "max_logit_delta": 0.0,
+    "passed": true
+  },
+  "parity": {
+    "decision_mismatches": 0,
+    "images": 10,
+    "max_logit_delta": 0.0,
+    "max_probability_delta": 0.0,
+    "passed": true
+  }
+}

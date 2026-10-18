@@ -1,0 +1,274 @@
+{
+  "baseline": {
+    "nll": 0.009812315925955772,
+    "brier": 9.54300194280222e-05,
+    "ece": 0.009764313697814941,
+    "ece_bins": [
+      {
+        "bin": 0,
+        "lower": 0.0,
+        "upper": 0.1,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 1,
+        "lower": 0.1,
+        "upper": 0.2,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 2,
+        "lower": 0.2,
+        "upper": 0.3,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 3,
+        "lower": 0.3,
+        "upper": 0.4,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 4,
+        "lower": 0.4,
+        "upper": 0.5,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 5,
+        "lower": 0.5,
+        "upper": 0.6,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 6,
+        "lower": 0.6,
+        "upper": 0.7,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 7,
+        "lower": 0.7,
+        "upper": 0.8,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 8,
+        "lower": 0.8,
+        "upper": 0.9,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 9,
+        "lower": 0.9,
+        "upper": 1.0,
+        "sample_count": 3006,
+        "confidence_mean": 0.9902356863021851,
+        "observed_accuracy": 1.0,
+        "absolute_gap": 0.009764313697814941
+      }
+    ],
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "sample_count": 3006,
+    "authentic_count": 1506,
+    "fake_count": 1500,
+    "threshold_0_50": {
+      "threshold": 0.5,
+      "threshold_role": "fixed_evaluation_threshold",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_authentic_count": 0,
+      "false_authentic_rate": 0.0,
+      "false_fake_count": 0,
+      "false_fake_rate": 0.0
+    },
+    "confusion_matrix": {
+      "labels": [
+        "authentic",
+        "fake"
+      ],
+      "matrix": [
+        [
+          1506,
+          0
+        ],
+        [
+          0,
+          1500
+        ]
+      ],
+      "true_negative": 1506,
+      "false_fake": 0,
+      "false_authentic": 0,
+      "true_positive": 1500
+    }
+  },
+  "calibrated": {
+    "nll": 2.5181943197338796e-09,
+    "brier": 8.239571724239698e-18,
+    "ece": 0.0,
+    "ece_bins": [
+      {
+        "bin": 0,
+        "lower": 0.0,
+        "upper": 0.1,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 1,
+        "lower": 0.1,
+        "upper": 0.2,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 2,
+        "lower": 0.2,
+        "upper": 0.3,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 3,
+        "lower": 0.3,
+        "upper": 0.4,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 4,
+        "lower": 0.4,
+        "upper": 0.5,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 5,
+        "lower": 0.5,
+        "upper": 0.6,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 6,
+        "lower": 0.6,
+        "upper": 0.7,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 7,
+        "lower": 0.7,
+        "upper": 0.8,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 8,
+        "lower": 0.8,
+        "upper": 0.9,
+        "sample_count": 0,
+        "confidence_mean": null,
+        "observed_accuracy": null,
+        "absolute_gap": null
+      },
+      {
+        "bin": 9,
+        "lower": 0.9,
+        "upper": 1.0,
+        "sample_count": 3006,
+        "confidence_mean": 1.0,
+        "observed_accuracy": 1.0,
+        "absolute_gap": 0.0
+      }
+    ],
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "sample_count": 3006,
+    "authentic_count": 1506,
+    "fake_count": 1500,
+    "threshold_0_50": {
+      "threshold": 0.5,
+      "threshold_role": "fixed_evaluation_threshold",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_authentic_count": 0,
+      "false_authentic_rate": 0.0,
+      "false_fake_count": 0,
+      "false_fake_rate": 0.0
+    },
+    "confusion_matrix": {
+      "labels": [
+        "authentic",
+        "fake"
+      ],
+      "matrix": [
+        [
+          1506,
+          0
+        ],
+        [
+          0,
+          1500
+        ]
+      ],
+      "true_negative": 1506,
+      "false_fake": 0,
+      "false_authentic": 0,
+      "true_positive": 1500
+    }
+  },
+  "evaluation_threshold": 0.5,
+  "production_threshold": null,
+  "temperature": 0.24038200410185356,
+  "temperature_refit": false
+}

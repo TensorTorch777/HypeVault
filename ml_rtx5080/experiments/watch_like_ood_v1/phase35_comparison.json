@@ -1,0 +1,45 @@
+{
+  "independence_note": "Phase 36 excludes Phase 35 hashes, source URLs, and Roboflow derivatives.",
+  "rows": [
+    {
+      "category": "unseen_luxury",
+      "difference": -0.09572901325478644,
+      "phase35_count": 194,
+      "phase35_escape": 0.8814432989690721,
+      "phase36_count": 14,
+      "phase36_escape": 0.7857142857142857
+    },
+    {
+      "category": "ordinary_watch",
+      "difference": -0.3818181818181818,
+      "phase35_count": 22,
+      "phase35_escape": 0.6818181818181818,
+      "phase36_count": 10,
+      "phase36_escape": 0.3
+    },
+    {
+      "category": "smart_digital",
+      "difference": 0.30434782608695654,
+      "phase35_count": 23,
+      "phase35_escape": 0.6956521739130435,
+      "phase36_count": 1,
+      "phase36_escape": 1.0
+    },
+    {
+      "category": "wrist_store",
+      "difference": null,
+      "phase35_count": 18,
+      "phase35_escape": 0.7777777777777778,
+      "phase36_count": 0,
+      "phase36_escape": null
+    },
+    {
+      "category": "overall_watch_like",
+      "difference": -0.24046692607003894,
+      "phase35_count": 257,
+      "phase35_escape": 0.8404669260700389,
+      "phase36_count": 25,
+      "phase36_escape": 0.6
+    }
+  ]
+}

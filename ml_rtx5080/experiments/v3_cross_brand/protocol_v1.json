@@ -1,0 +1,86 @@
+{
+  "architecture": {
+    "backbone": "vit_base_patch16_dinov3.lvd1689m",
+    "evaluation_precision": "fp32",
+    "family": "dinov3",
+    "head": "cls_patch_attention",
+    "input_size": 512,
+    "training_precision": "bf16"
+  },
+  "calibration_rule": "Fit one temperature on the four training brands' calibration split only. Freeze that temperature. Apply it unchanged to in-domain validation and to the held-out brand.",
+  "checkpoint_selection_rule": "Select only on the four training brands' validation split. Maximum validation PR-AUC subject to false_authentic_rate <= 0.02. Ties prefer higher F1, then lower false-authentic rate, then lower validation loss, then the earlier epoch. The held-out brand and the locked final test are not inputs. The decision threshold stays 0.50 and is not tuned.",
+  "dinov2_baseline": "deferred; a second backbone family would materially expand this phase",
+  "duplicate_policy": "Exact SHA-256 copies and the audited dHash groups stay in one role. A group that touches the locked final test is excluded. A training-brand image that shares a duplicate group with the held-out brand is quarantined.",
+  "folds": [
+    {
+      "directory": "fold_1_lange",
+      "held_out_brand": "A. Lange & S\u00f6hne"
+    },
+    {
+      "directory": "fold_2_ap",
+      "held_out_brand": "Audemars Piguet"
+    },
+    {
+      "directory": "fold_3_patek",
+      "held_out_brand": "Patek Philippe"
+    },
+    {
+      "directory": "fold_4_rm",
+      "held_out_brand": "Richard Mille"
+    },
+    {
+      "directory": "fold_5_vacheron",
+      "held_out_brand": "Vacheron Constantin"
+    }
+  ],
+  "frozen_checkpoint_not_used_for_initialization": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+  "frozen_checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "generalization_bands": {
+    "moderate": {
+      "max_mean_unseen_false_authentic_rate": 0.15,
+      "min_mean_unseen_pr_auc": 0.75
+    },
+    "strong": {
+      "max_fold_unseen_false_authentic_rate": 0.1,
+      "max_mean_pr_auc_gap": 0.05,
+      "max_mean_unseen_false_authentic_rate": 0.05,
+      "min_mean_unseen_pr_auc": 0.9
+    },
+    "weak": {
+      "min_mean_unseen_pr_auc": 0.6
+    }
+  },
+  "hyperparameters": {
+    "accumulate_grad": 2,
+    "backbone_lr": 1e-05,
+    "batch_size": 16,
+    "early_stop_patience": 6,
+    "effective_batch": 32,
+    "grad_clip": 1.0,
+    "head_lr": 0.0001,
+    "label_smoothing": 0.02,
+    "layer_decay": 0.75,
+    "max_epochs": 30,
+    "mixup_alpha": 0.0,
+    "schedule": "cosine",
+    "seed": 45,
+    "warmup_epochs": 2,
+    "weight_decay": 0.05
+  },
+  "initialization": "timm pretrained vit_base_patch16_dinov3.lvd1689m. The frozen epoch_018.pt checkpoint is not loaded.",
+  "locked_final_test_used": false,
+  "mean_generalization_gap_definition": "mean over folds of in-domain PR-AUC minus unseen-brand PR-AUC",
+  "ood_images_used_for_training_or_thresholds": false,
+  "phase35_ood_thresholds_reused": false,
+  "production_ood_threshold": null,
+  "protocol_id": "v3_cross_brand_v1",
+  "research_question": "Can DINOv3 learn authenticity cues that generalize to a luxury-watch brand that was completely unseen during training?",
+  "secondary_ablation": "cls_only versus cls_patch_attention on the same fold manifests",
+  "source_identity": "UNKNOWN on every catalog row, so source-family disjointness is not claimed",
+  "validation_threshold": 0.5,
+  "within_fold_fractions": {
+    "calibration": 0.11111111111111112,
+    "train": 0.7777777777777777,
+    "validation": 0.11111111111111112
+  }
+}

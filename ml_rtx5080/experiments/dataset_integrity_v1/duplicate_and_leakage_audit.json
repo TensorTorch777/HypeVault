@@ -1,0 +1,74 @@
+{
+  "method": "Census of split_manifest_v2 duplicate_group_id and sha256 fields, including the locked test rows as metadata only. Test image files were not opened.",
+  "group_count": 27556,
+  "multi_member_groups": 1799,
+  "images_in_multi_member_groups": 4243,
+  "mixed_label_groups": 0,
+  "groups_spanning_splits": 0,
+  "groups_touching_test_and_another_split": 0,
+  "split_leakage_under_the_stored_duplicate_rule": false,
+  "multi_member_groups_by_label": {
+    "authentic_only": 1799,
+    "counterfeit_only": 0,
+    "mixed": 0
+  },
+  "mixed_brand_groups": {
+    "count": 118,
+    "images": 495,
+    "label": "all authentic",
+    "exact_sha256_overlap": 0,
+    "interpretation": "These groups share a dHash at Hamming 0 across brand directories. They are source-family candidates. They are not proof of the same physical watch."
+  },
+  "exact_sha256_groups": {
+    "count": 2,
+    "mixed_label": 0,
+    "span_splits": 0,
+    "groups": [
+      {
+        "sha256": "f034c2a27ee217bdb701089282b7e4b017616930c4d39ea89c6ef623782438b8",
+        "filename": "134681818e00.jpg",
+        "copies": 4,
+        "brands": [
+          "A. Lange & S\u00f6hne",
+          "Audemars Piguet",
+          "Richard Mille",
+          "Vacheron Constantin"
+        ],
+        "label": 0,
+        "split": "train",
+        "width": 1000,
+        "height": 1000,
+        "observed_subject": "A gray field with a white JS monogram. No watch is present."
+      },
+      {
+        "sha256": "79adac471e4ff324a26dcdf2fe6b7a9df67b5921d34b992eb286029e0968499b",
+        "filename": "2889a285fade.jpg",
+        "copies": 5,
+        "brands": [
+          "A. Lange & S\u00f6hne",
+          "Audemars Piguet",
+          "Patek Philippe",
+          "Richard Mille",
+          "Vacheron Constantin"
+        ],
+        "label": 0,
+        "split": "train",
+        "width": 1000,
+        "height": 1000,
+        "observed_subject": "A gray field with a white JS monogram. No watch is present. The bytes differ from 134681818e00.jpg, and both files share one dHash group."
+      }
+    ]
+  },
+  "audited_sample_membership": {
+    "images_in_a_multi_member_group": 5,
+    "all_authentic": true,
+    "image_ids": [
+      "1e92959defde.jpg",
+      "ab79ea259824.jpg",
+      "667985b1c755.jpg",
+      "0756362ea8be.jpg",
+      "0daa4c7d3d5d.jpg"
+    ]
+  },
+  "source_family_independence": "Not established. Source, marketplace, and product id are unavailable, so images that share a seller or listing can remain in different splits."
+}

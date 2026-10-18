@@ -1,0 +1,128 @@
+{
+  "existing_thresholds_not_selected": {
+    "aggressive": {
+      "groups": {
+        "ordinary_watch": {
+          "authentic_escape_rate": 0.1,
+          "count": 10
+        },
+        "smart_digital": {
+          "authentic_escape_rate": 0.0,
+          "count": 1
+        },
+        "unseen_luxury": {
+          "authentic_escape_rate": 0.14285714285714285,
+          "count": 14
+        },
+        "wrist_store": {
+          "authentic_escape_rate": null,
+          "count": 0
+        }
+      },
+      "threshold": 33.5842585568423,
+      "used_for_selection": false
+    },
+    "conservative": {
+      "groups": {
+        "ordinary_watch": {
+          "authentic_escape_rate": 0.3,
+          "count": 10
+        },
+        "smart_digital": {
+          "authentic_escape_rate": 0.0,
+          "count": 1
+        },
+        "unseen_luxury": {
+          "authentic_escape_rate": 0.42857142857142855,
+          "count": 14
+        },
+        "wrist_store": {
+          "authentic_escape_rate": null,
+          "count": 0
+        }
+      },
+      "threshold": 37.69066974303325,
+      "used_for_selection": false
+    },
+    "current": {
+      "groups": {
+        "ordinary_watch": {
+          "authentic_escape_rate": 0.3,
+          "count": 10
+        },
+        "smart_digital": {
+          "authentic_escape_rate": 1.0,
+          "count": 1
+        },
+        "unseen_luxury": {
+          "authentic_escape_rate": 0.7857142857142857,
+          "count": 14
+        },
+        "wrist_store": {
+          "authentic_escape_rate": null,
+          "count": 0
+        }
+      },
+      "threshold": null,
+      "used_for_selection": false
+    },
+    "moderate": {
+      "groups": {
+        "ordinary_watch": {
+          "authentic_escape_rate": 0.2,
+          "count": 10
+        },
+        "smart_digital": {
+          "authentic_escape_rate": 0.0,
+          "count": 1
+        },
+        "unseen_luxury": {
+          "authentic_escape_rate": 0.35714285714285715,
+          "count": 14
+        },
+        "wrist_store": {
+          "authentic_escape_rate": null,
+          "count": 0
+        }
+      },
+      "threshold": 35.753779125719554,
+      "used_for_selection": false
+    }
+  },
+  "geometry": {
+    "authenticity_probability": {
+      "average_precision": 0.18838102719367358,
+      "fpr_at_95_tpr": 0.9292389853137517,
+      "fpr_status": "ok",
+      "id_mean": 4.110056672996139e-09,
+      "id_median": 4.0447593170555835e-09,
+      "ood_mean": 5.382749636739296e-09,
+      "ood_median": 4.199414193642488e-09,
+      "roc_auc": 0.637196261682243
+    },
+    "cosine": {
+      "average_precision": 0.22437725073115986,
+      "fpr_at_95_tpr": 0.5687583444592791,
+      "fpr_status": "ok",
+      "id_mean": 0.6818381851087267,
+      "id_median": 0.6751364127474717,
+      "ood_mean": 0.7810352997414758,
+      "ood_median": 0.734469999928973,
+      "roc_auc": 0.8351401869158879
+    },
+    "holdout_count": 25,
+    "id_reference": "calibration authentic images from the frozen checkpoint cache",
+    "mahalanobis": {
+      "average_precision": 0.3631965364272238,
+      "fpr_at_95_tpr": 0.6748998664886515,
+      "fpr_status": "ok",
+      "id_mean": 33.32768349801957,
+      "id_median": 33.076613294689686,
+      "ood_mean": 36.968866438962955,
+      "ood_median": 36.18087356538323,
+      "roc_auc": 0.8279038718291054
+    },
+    "score_direction": "larger score is treated as more OOD for all three columns",
+    "threshold_selected": false
+  }
+}

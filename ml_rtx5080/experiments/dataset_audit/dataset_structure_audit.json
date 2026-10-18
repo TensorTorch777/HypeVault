@@ -1,0 +1,322 @@
+{
+  "verified_metadata": {
+    "label": "top-level directory Label_0_Watches (authentic, 0) or Label_1_Watches (fake, 1)",
+    "brand": "immediate parent directory name",
+    "filename": "12-character hexadecimal stem plus .jpg; not documented as a SKU",
+    "image_bytes": "present"
+  },
+  "unavailable_metadata": {
+    "product_id": true,
+    "marketplace": true,
+    "source": true,
+    "physical_watch_identity": "not on disk",
+    "capture_time": "not read; no timestamp is treated as identity"
+  },
+  "current_group_meaning": "load_records sets split_group and product_group_key to the resolved parent directory. Each such directory is one brand inside one label folder. It is a brand-and-label bucket of many files, not a product or SKU.",
+  "product_disjoint_possible": false,
+  "product_disjoint_reason": "No product or SKU field exists. A parent directory holds thousands of images, and nothing on disk proves which of those images are the same physical watch.",
+  "directory_contains_multiple_products": "unknown; each brand directory contains many images and no product key",
+  "same_physical_watch_possible": "unknown; filenames and folders do not identify a physical watch",
+  "brand_count": 5,
+  "brands": [
+    "A. Lange & S\u00f6hne",
+    "Audemars Piguet",
+    "Patek Philippe",
+    "Richard Mille",
+    "Vacheron Constantin"
+  ],
+  "current_group_count": 10,
+  "images_per_current_group_min": 3000,
+  "images_per_current_group_max": 3000,
+  "sample_count": 30000,
+  "filename_stems_shared_across_groups": 2,
+  "exact_duplicate_groups": 2,
+  "largest_exact_duplicate_group": 5,
+  "exact_image_counts_by_label_brand": [
+    {
+      "label": 0,
+      "brand": "A. Lange & S\u00f6hne",
+      "images": 2
+    },
+    {
+      "label": 0,
+      "brand": "Audemars Piguet",
+      "images": 2
+    },
+    {
+      "label": 0,
+      "brand": "Patek Philippe",
+      "images": 1
+    },
+    {
+      "label": 0,
+      "brand": "Richard Mille",
+      "images": 2
+    },
+    {
+      "label": 0,
+      "brand": "Vacheron Constantin",
+      "images": 2
+    }
+  ],
+  "near_duplicate_groups": 1799,
+  "largest_near_duplicate_group": 23,
+  "near_duplicate_examples": [
+    {
+      "size": 23,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Audemars Piguet",
+        "Patek Philippe",
+        "Richard Mille",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/283f996fc0d6.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/3e6af9f1d3dc.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/994ff6fdd336.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/b62ad5d696c9.jpg"
+      ]
+    },
+    {
+      "size": 22,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Patek Philippe",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/04e67bb86768.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/6b4d3c3188cc.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/a5b86491d608.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/af21d5c6c4d0.jpg"
+      ]
+    },
+    {
+      "size": 18,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Audemars Piguet",
+        "Patek Philippe",
+        "Richard Mille",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/68318f7b1cae.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/f4d6da85fc76.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/10849df0ec9c.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/12b8e1f9e673.jpg"
+      ]
+    },
+    {
+      "size": 17,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "Audemars Piguet",
+        "Patek Philippe",
+        "Richard Mille",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/0697648af15b.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/088255e29f4b.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/f280da510b19.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/555e6985193b.jpg"
+      ]
+    },
+    {
+      "size": 16,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "Audemars Piguet",
+        "Patek Philippe",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/93e7080ba0d8.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/b2cb5b85704c.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/b4daece02e3a.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/e11e97c8620d.jpg"
+      ]
+    },
+    {
+      "size": 11,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Audemars Piguet",
+        "Patek Philippe",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/03f3009d769e.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/4bae4ef23584.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/b3c8b59a7f0c.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/b755b4295fe5.jpg"
+      ]
+    },
+    {
+      "size": 9,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Audemars Piguet",
+        "Patek Philippe",
+        "Richard Mille",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/134681818e00.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/2889a285fade.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/134681818e00.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/2889a285fade.jpg"
+      ]
+    },
+    {
+      "size": 9,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Audemars Piguet",
+        "Patek Philippe",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/3b8dd319562b.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/4085d4d46834.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/ab79ea259824.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/4dab0ca6a5c8.jpg"
+      ]
+    },
+    {
+      "size": 9,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "Audemars Piguet",
+        "Patek Philippe",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/5099a8caad98.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/92e1195816fb.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/f398936237fb.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/0b7a03ee9520.jpg"
+      ]
+    },
+    {
+      "size": 8,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Patek Philippe",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/34501082ce72.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/bc1d7e5f3b30.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/24fbd668bf1b.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/353a2f8999e8.jpg"
+      ]
+    },
+    {
+      "size": 8,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "Patek Philippe",
+        "Richard Mille"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/578cdc722bdb.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/04e958e34c68.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/1549d005b58f.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/3348ee717c42.jpg"
+      ]
+    },
+    {
+      "size": 7,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Patek Philippe",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/2564b313e845.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/508d1630f187.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/61c5fd212caf.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/787b8f6ba9ed.jpg"
+      ]
+    }
+  ],
+  "exact_duplicate_examples": [
+    {
+      "size": 5,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Audemars Piguet",
+        "Patek Philippe",
+        "Richard Mille",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/2889a285fade.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/2889a285fade.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/2889a285fade.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/2889a285fade.jpg"
+      ]
+    },
+    {
+      "size": 4,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Audemars Piguet",
+        "Richard Mille",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/134681818e00.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/134681818e00.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/134681818e00.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/134681818e00.jpg"
+      ]
+    }
+  ],
+  "hamming_threshold": 0,
+  "threshold_reason": "Hamming 0 keeps identical dHash values together. Hamming 1 was rejected because its transitive component contains 826 authentic images from all five brands with pairwise median distance 6, which is not an obvious copy.",
+  "perceptual_method": "dhash",
+  "manual_review_images": 0,
+  "rows_missing_perceptual_hash": 0
+}

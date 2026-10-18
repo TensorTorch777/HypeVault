@@ -1,0 +1,143 @@
+{
+  "abort_if": [
+    "protocol file hash does not match the registered sha256",
+    "checkpoint sha256 differs from the frozen digest",
+    "Triton model is not READY, not KIND_GPU, not GPU 0, or use_tf32 is not 0",
+    "a selected path resolves into the test membership"
+  ],
+  "endpoints": {
+    "delta_logit": "variant logit minus original logit",
+    "delta_p_fake": "variant P(fake) minus original P(fake)",
+    "largest_changes": "15 content-variant rows with the largest absolute delta_p_fake. The repeat row is excluded.",
+    "near_threshold_slice": "original abs(P(fake) - 0.50) < 0.05, pre-specified, not a filter that drops rows from the main table",
+    "pixel_changed": "size differs, or max absolute RGB difference is greater than 0",
+    "policy_flip": "secondary shadow decision differs from the original",
+    "threshold_flip": "primary decision differs from the original"
+  },
+  "frozen": {
+    "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "final_test_unopened": true,
+    "no_checkpoint_change": true,
+    "no_label_change": true,
+    "no_production_route_change": true,
+    "no_temperature_change": true,
+    "no_threshold_change": true,
+    "no_training": true,
+    "precision": "KIND_GPU on GPU 0 with use_tf32=0. Any other serving config aborts before images are opened.",
+    "preprocessing": "resize_pad_square_eval_v1 via preprocess_serving_image after the variant is applied",
+    "primary_decision": "threshold only. Quality flags do not move the primary decision to REVIEW.",
+    "probability": "P(fake) = sigmoid(logit / temperature). Threshold 0.50: P(fake) >= 0.50 is FAKE, otherwise AUTHENTIC.",
+    "secondary_decision": "shadow policy, where LOW_RESOLUTION or LOW_CONTRAST forces REVIEW. Downscales can trip that rule by definition.",
+    "temperature": 0.24038200410185356,
+    "threshold": 0.5,
+    "triton_model": "dinov3_authenticity_candidate",
+    "triton_version": "1"
+  },
+  "name": "dinov3_shortcut_sensitivity_v1",
+  "not_a_claim": "A measured shift is sensitivity of this serving path. It is not evidence that the network learned JPEG tables, 512-square geometry, or padding as an authenticity feature, and it is not a cross-brand or real-world authenticity result. Folder labels stay unverified.",
+  "phase": 52,
+  "population": {
+    "brands": [
+      "A. Lange & S\u00f6hne",
+      "Audemars Piguet",
+      "Patek Philippe",
+      "Richard Mille",
+      "Vacheron Constantin"
+    ],
+    "draw": "Sort eligible paths within each brand x folder_label cell. Shuffle with random.Random(52) in brand-then-label order, one generator. Keep the first 4 files that decode as RGB. A decode failure takes the next file in that cell only. Do not borrow from the test split. A short cell is recorded and not filled.",
+    "eligible_splits": [
+      "train",
+      "calibration",
+      "validation"
+    ],
+    "excluded_splits": [
+      "test"
+    ],
+    "folder_label_rule": "Label_0_Watches -> folder_authentic; Label_1_Watches -> folder_fake. This is the directory name, not a verified class.",
+    "manifest": "ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+    "per_cell": 4,
+    "secondary_stratum": "source_file_is_512_square, measured from the file before any variant. Descriptive only.",
+    "seed": 52
+  },
+  "question": "On eligible non-test catalog images, how much do the frozen DINOv3 raw logit, calibrated P(fake), and threshold decision change when only encoding, JPEG compression, resize, or padding is changed before the frozen resize_pad_square_eval_v1 preprocess?",
+  "variant_rules": {
+    "decode": "PIL convert RGB. Variants start from that image, not from a second catalog file.",
+    "jpeg": "quality as specified, subsampling 0, progressive false, optimize false, then decode RGB",
+    "long_side_256": "bicubic; the long side is forced to 256; no codec round-trip",
+    "original_repeat": "second Triton call on the same preprocessed original tensor. Not a content variant.",
+    "pad_border_32": "32 px ImageNet-mean border (124, 116, 104) on every side",
+    "pad_square": "center the image on a square canvas of side max(width, height). Already-square images are unchanged.",
+    "png": "compress_level 6, then decode RGB",
+    "stretch_512": "bicubic resize to 512x512, aspect not preserved, no codec round-trip",
+    "webp": "quality 90, method 4, then decode RGB"
+  },
+  "variants": [
+    {
+      "family": "encoding",
+      "id": "jpeg_q95",
+      "jpeg_quality": 95
+    },
+    {
+      "family": "encoding",
+      "id": "png"
+    },
+    {
+      "family": "encoding",
+      "id": "webp_q90",
+      "webp_quality": 90
+    },
+    {
+      "family": "compression",
+      "id": "jpeg_q75",
+      "jpeg_quality": 75
+    },
+    {
+      "family": "compression",
+      "id": "jpeg_q50",
+      "jpeg_quality": 50
+    },
+    {
+      "family": "compression",
+      "id": "jpeg_q30",
+      "jpeg_quality": 30
+    },
+    {
+      "family": "resizing",
+      "id": "long_side_256",
+      "long_side": 256
+    },
+    {
+      "family": "resizing",
+      "id": "stretch_512",
+      "size": 512
+    },
+    {
+      "family": "padding",
+      "fill": [
+        0,
+        0,
+        0
+      ],
+      "id": "pad_square_black"
+    },
+    {
+      "family": "padding",
+      "fill": [
+        255,
+        255,
+        255
+      ],
+      "id": "pad_square_white"
+    },
+    {
+      "border": 32,
+      "family": "padding",
+      "fill": [
+        124,
+        116,
+        104
+      ],
+      "id": "pad_border_32_imagenet_mean"
+    }
+  ]
+}

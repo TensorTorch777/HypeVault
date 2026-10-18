@@ -1,0 +1,79 @@
+{
+  "protocol_sha256": "9417fd388deccee29165f49bd6e9261c4731eaa124463f8defa7eeb2d364c490",
+  "control_sources": {
+    "random_split": "Phase 56 random_test Label_0, normalized",
+    "held_out_fold": "each fold's cross_brand_test Label_0 (brand unseen by that model), normalized",
+    "frozen_raw": "split_manifest_v2 validation Label_0, original files (used for epoch selection, not training)",
+    "frozen_norm": "the same rows, normalized"
+  },
+  "scorers": {
+    "random_split": {
+      "real_n": 500,
+      "real_called_generated": 0,
+      "false_fake_rate": 0.0,
+      "ffr_ci95": [
+        0.0,
+        0.007350610051907784
+      ],
+      "sdxl_base_1_0": {
+        "detection_rate": 0.906,
+        "roc_auc_vs_real_control": 0.999052
+      },
+      "sd_1_5": {
+        "detection_rate": 0.524,
+        "roc_auc_vs_real_control": 0.985768
+      }
+    },
+    "held_out_fold": {
+      "real_n": 500,
+      "real_called_generated": 0,
+      "false_fake_rate": 0.0,
+      "ffr_ci95": [
+        0.0,
+        0.007350610051907784
+      ],
+      "sdxl_base_1_0": {
+        "detection_rate": 0.904,
+        "roc_auc_vs_real_control": 0.987184
+      },
+      "sd_1_5": {
+        "detection_rate": 0.58,
+        "roc_auc_vs_real_control": 0.94234
+      }
+    },
+    "frozen_raw": {
+      "real_n": 500,
+      "real_called_generated": 0,
+      "false_fake_rate": 0.0,
+      "ffr_ci95": [
+        0.0,
+        0.007350610051907784
+      ],
+      "sdxl_base_1_0": {
+        "detection_rate": 0.962,
+        "roc_auc_vs_real_control": 0.998368
+      },
+      "sd_1_5": {
+        "detection_rate": 0.804,
+        "roc_auc_vs_real_control": 0.976616
+      }
+    },
+    "frozen_norm": {
+      "real_n": 500,
+      "real_called_generated": 2,
+      "false_fake_rate": 0.004,
+      "ffr_ci95": [
+        0.0004847861762900009,
+        0.014374078562200309
+      ],
+      "sdxl_base_1_0": {
+        "detection_rate": 0.994,
+        "roc_auc_vs_real_control": 0.998072
+      },
+      "sd_1_5": {
+        "detection_rate": 0.866,
+        "roc_auc_vs_real_control": 0.99434
+      }
+    }
+  }
+}

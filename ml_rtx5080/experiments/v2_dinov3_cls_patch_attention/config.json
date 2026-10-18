@@ -1,0 +1,136 @@
+{
+  "data_root": "/home/tensortorch26/Desktop/HypeVault",
+  "output_dir": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention",
+  "family": "dinov3",
+  "classifier_arch": "cls_patch_attention",
+  "model_name": "vit_base_patch16_dinov3.lvd1689m",
+  "img_size": 512,
+  "batch_size": 16,
+  "accumulate_grad": 2,
+  "num_epochs": 30,
+  "backbone_lr": 1e-05,
+  "head_lr": 0.0001,
+  "layer_decay": 0.75,
+  "weight_decay": 0.05,
+  "warmup_epochs": 2,
+  "label_smoothing": 0.02,
+  "dropout": 0.15,
+  "val_split": 0.1,
+  "num_workers": 6,
+  "seed": 42,
+  "grad_clip": 1.0,
+  "amp_dtype": "bf16",
+  "save_every": 2,
+  "resume_from": null,
+  "start_epoch": 1,
+  "early_stop_patience": 6,
+  "max_false_authentic_rate": 0.02,
+  "metric_tolerance": 1e-06,
+  "validation_threshold": 0.5,
+  "mixup_alpha": 0.0,
+  "augmentation_profile": "conservative",
+  "weighted_sampler": 0,
+  "split_strategy": "brand_stratified_duplicate_safe",
+  "test_fraction": 0.1,
+  "calibration_fraction": 0.1,
+  "test_root": null,
+  "fixed_split_manifest": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+  "confidence_threshold": 0.5,
+  "threshold_policy": "fixed_not_calibrated",
+  "model_family": "dinov3",
+  "model_architecture": "cls_patch_attention",
+  "input_size": 512,
+  "normalization_mean": [
+    0.485,
+    0.456,
+    0.406
+  ],
+  "normalization_std": [
+    0.229,
+    0.224,
+    0.225
+  ],
+  "training_transform": "conservative_train_v1",
+  "evaluation_transform": "resize_pad_square_eval_v1",
+  "python_seed": 42,
+  "numpy_seed": 42,
+  "torch_seed": 42,
+  "cuda_seed": 42,
+  "deterministic_algorithms": false,
+  "cudnn_benchmark": true,
+  "gpu_name": "NVIDIA GeForce RTX 5080",
+  "manifest_membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+  "calibration_membership_source": "split_manifest_v2",
+  "product_disjoint_guarantee": false,
+  "effective_batch": 32,
+  "sampler": "none",
+  "shuffle": true,
+  "class_counts": {
+    "authentic": 10499,
+    "deepfake": 10500
+  },
+  "minority_ratio": 0.9999047619047619,
+  "preprocessing_version": "resize_pad_square_eval_v1",
+  "dataset_counts": {
+    "train": {
+      "split": "train",
+      "samples": 20999,
+      "authentic": 10499,
+      "fake": 10500,
+      "group_count": 10,
+      "brand_counts": {
+        "A. Lange & S\u00f6hne": 4201,
+        "Audemars Piguet": 4195,
+        "Patek Philippe": 4195,
+        "Richard Mille": 4202,
+        "Vacheron Constantin": 4206
+      }
+    },
+    "calibration": {
+      "split": "calibration",
+      "samples": 2998,
+      "authentic": 1498,
+      "fake": 1500,
+      "group_count": 10,
+      "brand_counts": {
+        "A. Lange & S\u00f6hne": 601,
+        "Audemars Piguet": 599,
+        "Patek Philippe": 596,
+        "Richard Mille": 600,
+        "Vacheron Constantin": 602
+      }
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 2997,
+      "authentic": 1497,
+      "fake": 1500,
+      "group_count": 10,
+      "brand_counts": {
+        "A. Lange & S\u00f6hne": 615,
+        "Audemars Piguet": 597,
+        "Patek Philippe": 593,
+        "Richard Mille": 600,
+        "Vacheron Constantin": 592
+      }
+    },
+    "test": {
+      "split": "test",
+      "samples": 3006,
+      "authentic": 1506,
+      "fake": 1500,
+      "group_count": 10,
+      "brand_counts": {
+        "A. Lange & S\u00f6hne": 583,
+        "Audemars Piguet": 609,
+        "Patek Philippe": 616,
+        "Richard Mille": 598,
+        "Vacheron Constantin": 600
+      }
+    }
+  },
+  "val_batch_size": 32,
+  "amp_dtype_requested": "bf16",
+  "amp_scaler": false,
+  "amp_fallback": null
+}

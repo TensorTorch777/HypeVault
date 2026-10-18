@@ -1,0 +1,12 @@
+rank,source,legal_clarity,original_image_availability,provenance_quality,brand_label_reliability,category_label_reliability,independent_image_count,source_diversity,low_derivative_risk,technical_accessibility,reproducibility,total,max_total,meets_registered_package,note
+1,researcher_owned_new_photographs,3,3,3,3,3,1,2,4,2,1,25,40,false,Route B. No photographs were collected. Quality can be high. Count is unproven and a single researcher is not evidenced to reach 60 unseen-luxury holdout images across 4 brands.
+2,wikimedia_commons_originals,3,2,3,3,2,1,2,3,1,3,23,40,false,"Route A. Per-file licenses exist. Bulk original delivery returned 531 HTTP 429 responses. Size-eligible ceiling after the Rolex brand cap is 216 unseen, 149 ordinary, 104 smart, 14 wrist."
+3,pixnio_cc0,4,3,2,0,1,0,1,3,3,2,19,40,false,Route A. One CC0 original was verified at 5400x3600 and 972467 bytes. The page does not declare a brand.
+4,roboflow_rolex_exports,3,0,2,2,2,1,1,0,3,3,17,40,false,Route D. Three local exports contain 1648 .rf. files under CC BY 4.0 dataset terms. Phase 35 already scored a 180-file cap. These are derivative families.
+5,flickr_cc_originals,3,2,2,1,1,0,1,2,1,2,15,40,false,"Route A. One CC BY-SA original was 2475875 bytes, above the frozen 1500000-byte cap. No API key is configured for bulk search."
+6,openverse,2,0,2,1,1,1,2,0,3,3,15,40,false,"Route A. The sampled API URLs were Flickr _b.jpg renditions. An Omega query reported 49 results, not original files."
+7,museum_open_access_apis,1,1,2,2,2,0,2,3,0,1,14,40,false,"Route A. Met returned HTTP 410, Smithsonian HTTP 403, Europeana HTTP 401. No image bytes were established."
+8,timepiecepedia_watchbase_urls,1,0,1,3,2,0,2,1,2,2,14,40,false,Route D. Metadata may be CC0. Example image URLs are cdn.watchbase.com/watch/lg renditions. Image license is unknown and is not upgraded to CC0.
+9,public_copyrighted_watch_photos,0,1,1,2,2,0,2,2,2,1,13,40,false,Route C. LEGAL_BASIS = UNKNOWN. REQUIRES_INSTITUTIONAL_APPROVAL. Not a usable source.
+10,internet_archive_image_search,1,1,1,0,0,0,1,1,2,2,9,40,false,Route A/D. 52 hits for wristwatch. Samples were an Instagram dump and a matchbox label.
+11,local_unlabeled_numeric_archive,0,1,0,0,0,0,0,0,3,1,5,40,false,"Route D. Already rejected in Phase 35. Numeric names, augmentation suffixes, no license, no source URL."

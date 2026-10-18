@@ -1,0 +1,48 @@
+{
+  "experiment_name": "dinov2_cls_patch_attention",
+  "checkpoint": "best_model.pt",
+  "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dinov2_cls_patch_attention/best_model.pt",
+  "model_family": "dinov2",
+  "model_architecture": "cls_patch_attention",
+  "input_size": 504,
+  "split": "validation",
+  "augmentation_profile": "conservative",
+  "evaluation_transform": "resize_pad_square_eval_v1",
+  "positive_class": "fake",
+  "negative_class": "authentic",
+  "threshold": 0.5,
+  "threshold_policy": "fixed_not_calibrated",
+  "sample_count": 6000,
+  "authentic_count": 3000,
+  "fake_count": 3000,
+  "roc_auc": 1.0,
+  "pr_auc": 1.0,
+  "accuracy": 0.9993333333333333,
+  "precision": 1.0,
+  "recall": 0.9986666666666667,
+  "f1": 0.9993328885923949,
+  "false_authentic": 4,
+  "false_fake": 0,
+  "false_authentic_rate": 0.0013333333333333333,
+  "false_fake_rate": 0.0,
+  "confusion_matrix": {
+    "labels": [
+      "authentic",
+      "fake"
+    ],
+    "matrix": [
+      [
+        3000,
+        0
+      ],
+      [
+        4,
+        2996
+      ]
+    ],
+    "true_negative": 3000,
+    "false_fake": 0,
+    "false_authentic": 4,
+    "true_positive": 2996
+  }
+}

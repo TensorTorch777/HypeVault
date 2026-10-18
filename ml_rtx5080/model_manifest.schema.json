@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hypevault/model_manifest.schema.json",
+  "title": "HypeVault authenticity model manifest",
+  "description": "Authoritative model contract. Inference must read this document instead of unrelated backend defaults.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "model_version",
+    "model_family",
+    "backbone",
+    "backbone_revision",
+    "architecture_version",
+    "classifier_version",
+    "image_size",
+    "patch_size",
+    "normalization",
+    "calibration_version",
+    "fake_threshold",
+    "review_thresholds",
+    "git_sha",
+    "dataset_hash",
+    "training_config_hash",
+    "checkpoint_sha256"
+  ],
+  "properties": {
+    "model_version": { "type": "string", "minLength": 1 },
+    "model_family": { "type": "string", "enum": ["dinov2", "dinov3"] },
+    "backbone": { "type": "string", "minLength": 1 },
+    "backbone_revision": { "type": ["string", "null"] },
+    "architecture_version": { "type": "string", "minLength": 1 },
+    "classifier_version": { "type": "string", "minLength": 1 },
+    "image_size": { "type": "integer", "minimum": 1 },
+    "patch_size": { "type": "integer", "enum": [14, 16] },
+    "normalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mean", "std"],
+      "properties": {
+        "mean": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "type": "number" }
+        },
+        "std": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "type": "number" }
+        }
+      }
+    },
+    "calibration_version": { "type": ["string", "null"] },
+    "fake_threshold": { "type": ["number", "null"] },
+    "review_thresholds": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["authentic_below", "fake_at_or_above"],
+      "properties": {
+        "authentic_below": { "type": "number" },
+        "fake_at_or_above": { "type": "number" }
+      }
+    },
+    "git_sha": { "type": ["string", "null"] },
+    "dataset_hash": { "type": ["string", "null"] },
+    "training_config_hash": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "checkpoint_sha256": { "type": ["string", "null"] }
+  }
+}

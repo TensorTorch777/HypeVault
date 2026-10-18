@@ -1,0 +1,18 @@
+{
+  "protocol_sha256": "42d03f08827a7657028e1cf0d44973ec779f79e7dd4a271b10deb80aa48f7112",
+  "candidate_manifest_sha256": "bfb27c410b5c608fec8a0ba1d452a67d33ce26f459795ef33168d6607b3a0c92",
+  "decision": "NO_GO",
+  "reason": "No image met the independent-label and image-rights rule, and no named organization has an outstanding data commitment to this project.",
+  "DATA_PILOT_STATUS": "NO_GO",
+  "AUTHENTIC_VERIFIED_COUNT": 0,
+  "COUNTERFEIT_VERIFIED_COUNT": 0,
+  "INDEPENDENT_SOURCE_GROUPS": 0,
+  "LICENSE_AND_PERMISSION_CONFIRMED": false,
+  "LABEL_PROVENANCE_COMPLETE": false,
+  "DATASET_READY_FOR_TRAINING": false,
+  "MODEL_CHANGED": false,
+  "CALIBRATION_CHANGED": false,
+  "FINAL_TEST_TOUCHED": false,
+  "PRODUCTION_PROMOTION_ALLOWED": false,
+  "model_development_should_resume": false
+}

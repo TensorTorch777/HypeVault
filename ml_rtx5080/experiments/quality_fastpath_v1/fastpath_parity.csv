@@ -1,0 +1,89 @@
+sample_id,role,split,width,height,reference_min_dimension,fast_min_dimension,abs_luminance_std_delta,reference_decision_flags,fast_flags,flags_match,reference_decision,fast_decision,decision_match,ood_status
+Label_0_Watches/Audemars Piguet/b1a40ed1b5b9.jpg,phase22_source,calibration,550,550,550,550,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/Patek Philippe/9ba50fea3805.jpg,phase22_source,train,1024,1149,1024,1024,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/Patek Philippe/c2f778c66d15.jpg,phase22_source,train,777,918,777,777,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/63d2c86b29d3.jpg,phase22_source,train,1526,1080,1080,1080,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/Audemars Piguet/99fcd3b9051c.jpg,phase22_source,train,1700,1214,1214,1214,0.0,LOW_CONTRAST,LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/Richard Mille/a11094843532.jpg,phase22_source,train,895,960,895,895,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/Richard Mille/9eda705bd8c9.jpg,phase22_source,validation,2000,1126,1126,1126,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/0003c0bd6ebe.jpg,authentic,train,2560,2560,2560,2560,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/002016510ba1.jpg,authentic,train,900,900,900,900,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/002bc8d03cd5.jpg,authentic,train,1600,1158,1158,1158,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/00617b670111.jpg,authentic,train,800,640,640,640,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/00a208f1d991.jpg,authentic,train,800,640,640,640,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/00ca5dec6dfd.jpg,authentic,train,900,900,900,900,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/0105a0230857.jpg,authentic,train,768,513,513,513,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/0111e0722c1d.jpg,authentic,train,1500,1000,1000,1000,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_1_Watches/A. Lange & Söhne/001067d69616.jpg,fake,train,512,512,512,512,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_1_Watches/A. Lange & Söhne/004c219b045c.jpg,fake,train,512,512,512,512,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_1_Watches/A. Lange & Söhne/005442daf6b3.jpg,fake,train,512,512,512,512,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_1_Watches/A. Lange & Söhne/005bb6357b99.jpg,fake,train,512,512,512,512,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_1_Watches/A. Lange & Söhne/00620a3d102e.jpg,fake,train,512,512,512,512,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_1_Watches/A. Lange & Söhne/006ef6078c95.jpg,fake,train,512,512,512,512,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_1_Watches/A. Lange & Söhne/00cb3b67c58e.jpg,fake,train,512,512,512,512,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_1_Watches/A. Lange & Söhne/00cf1c7120fb.jpg,fake,train,512,512,512,512,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/00e7fec26604.jpg,low_resolution,train,720,480,480,480,0.0,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/033824530806.jpg,low_resolution,train,720,480,480,480,0.0,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/03cedf2a03bd.jpg,low_resolution,train,500,500,500,500,0.0,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/04fd0733e28c.jpg,low_resolution,train,500,500,500,500,0.0,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/0ce059828e7b.jpg,low_contrast,train,1500,1001,1001,1001,0.0,LOW_CONTRAST,LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/0fcb6427bbbb.jpg,low_contrast,train,1766,2048,1766,1766,0.0,LOW_CONTRAST,LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/1394fb7cc18f.jpg,low_contrast,train,1500,1500,1500,1500,0.0,LOW_CONTRAST,LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/1aa69c0d0ccd.jpg,low_contrast,train,1600,1067,1067,1067,0.0,LOW_CONTRAST,LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/1f4e2e10b83b.jpg,both_quality_flags,train,720,480,480,480,0.0,LOW_RESOLUTION|LOW_CONTRAST,LOW_RESOLUTION|LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/2b7a6f987f64.jpg,both_quality_flags,train,736,491,491,491,0.0,LOW_RESOLUTION|LOW_CONTRAST,LOW_RESOLUTION|LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/00ef95346cfe.jpg,tall,train,667,1000,667,667,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/02dd2779d39b.jpg,tall,train,720,1080,720,720,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/058108d19e72.jpg,tall,train,1400,2100,1400,1400,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/00d5a56c2800.jpg,wide,train,2048,1363,1363,1363,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/00e61c5366de.jpg,wide,train,1536,960,960,960,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/0178e5f9a257.jpg,wide,train,2100,1400,1400,1400,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/00b4fe2dd8d0.jpg,square,train,2048,2048,2048,2048,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/015fec2a8afd.jpg,square,train,1600,1600,1600,1600,0.0,LOW_CONTRAST,LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/03b851699e9d.jpg,square,train,546,546,546,546,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/04119301b59d.jpg,square,train,800,800,800,800,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/Richard Mille/136349ce075a.jpg,near_cached_margin,train,1920,1080,1080,1080,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/Richard Mille/fc18848241f4.jpg,near_cached_margin,calibration,1024,1024,1024,1024,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/Vacheron Constantin/7e38a78e5dc8.jpg,near_cached_margin,validation,80,80,80,80,0.0,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/134681818e00.jpg,near_cached_margin,train,1000,1000,1000,1000,0.0,LOW_CONTRAST,LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/2889a285fade.jpg,near_cached_margin,train,1000,1000,1000,1000,0.0,LOW_CONTRAST,LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/014007c78014.jpg,additional,train,1422,1600,1422,1422,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/01d6e405351b.jpg,additional,train,2100,1397,1397,1397,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/01f6cc116895.jpg,additional,train,1023,1280,1023,1023,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/020ffcb8a029.jpg,additional,train,1600,1067,1067,1067,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/022d402b04b2.jpg,representative,train,1500,2100,1500,1500,0.0,LOW_CONTRAST,LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/026195bbab02.jpg,representative,train,1080,864,864,864,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/027d1213fe2b.jpg,representative,train,1080,864,864,864,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/02839fc82bb2.jpg,representative,train,1232,986,986,986,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/02b2d243a93c.jpg,representative,train,2048,1365,1365,1365,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/031cd70e418d.jpg,representative,train,1536,1022,1022,1022,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/034a7f21eefd.jpg,representative,train,2100,1400,1400,1400,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/03e22fb33cbc.jpg,representative,train,1280,720,720,720,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/03f3009d769e.jpg,representative,train,720,480,480,480,0.0,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/03f4e4dba40d.jpg,representative,train,1080,864,864,864,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/041398e6088f.jpg,representative,train,546,546,546,546,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/04193935bf3a.jpg,representative,train,1280,853,853,853,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/00ba9493e877.jpg,representative,calibration,800,547,547,547,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/01271a5c3911.jpg,representative,calibration,3840,3072,3072,3072,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/021bdcf917dc.jpg,representative,calibration,720,480,480,480,0.0,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/038a2c5c2a25.jpg,representative,calibration,823,1500,823,823,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/044a8c25511b.jpg,representative,calibration,800,641,641,641,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/04ab50cf2fc5.jpg,representative,calibration,1024,1024,1024,1024,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/05036c28ac36.jpg,representative,calibration,1200,800,800,800,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/059ad8815407.jpg,representative,calibration,900,900,900,900,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/05e050fa4526.jpg,representative,calibration,400,600,400,400,0.0,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/066653a6f8d7.jpg,representative,calibration,720,480,480,480,0.0,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/074c056bbf39.jpg,representative,calibration,1500,1001,1001,1001,0.0,LOW_CONTRAST,LOW_CONTRAST,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/08fb90894802.jpg,representative,calibration,1024,768,768,768,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/00472dd996ed.jpg,representative,validation,1813,1209,1209,1209,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/006e47b9f108.jpg,representative,validation,1280,1280,1280,1280,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/00f8b2b613c7.jpg,representative,validation,1100,1100,1100,1100,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/019f94d72b65.jpg,representative,validation,960,960,960,960,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/01dafa0d7ed4.jpg,representative,validation,720,480,480,480,0.0,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/036505556ace.jpg,representative,validation,2518,2518,2518,2518,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/03eeec26e9a1.jpg,representative,validation,960,960,960,960,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/049e5739b972.jpg,representative,validation,640,574,574,574,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/04b85c405289.jpg,representative,validation,350,620,350,350,0.0,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,unavailable
+Label_0_Watches/A. Lange & Söhne/052174d47e9d.jpg,representative,validation,546,546,546,546,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/060d5b562a4b.jpg,representative,validation,960,960,960,960,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable
+Label_0_Watches/A. Lange & Söhne/0803b2046ba2.jpg,representative,validation,800,800,800,800,0.0,,,True,AUTHENTIC,AUTHENTIC,True,unavailable

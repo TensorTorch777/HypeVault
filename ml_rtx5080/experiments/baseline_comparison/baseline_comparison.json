@@ -1,0 +1,514 @@
+{
+  "winner": "dinov2_cls_patch_attention",
+  "winner_selection_rule": "Among safety-qualified validation checkpoints, highest PR-AUC, then higher F1, then lower false-authentic rate. The final test set is not used.",
+  "winner_status": "safety-qualified validation checkpoint selected",
+  "test_set_used": false,
+  "production_threshold": null,
+  "ood_used_for_selection": false,
+  "experiments": [
+    {
+      "directory": "dinov2_cls_only",
+      "family": "dinov2",
+      "backbone": "vit_base_patch14_dinov2.lvd142m",
+      "head": "cls_only",
+      "input_size": 504,
+      "completed": true,
+      "safety_validated": true,
+      "checkpoint": "epoch_004",
+      "epoch": 4,
+      "pr_auc": 0.9999961198364505,
+      "f1": 0.9983311081441922,
+      "false_authentic_rate": 0.003,
+      "roc_auc": 0.9999964444444445,
+      "validation_loss": 0.01662719759475836,
+      "peak_allocated_bytes": 9624837632,
+      "peak_reserved_bytes": 10372513792,
+      "runtime_seconds": 2907.5321221351624,
+      "seed": 42,
+      "split_manifest": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dinov2_cls_only/split_manifest.json",
+      "brand_summary": {
+        "global_false_authentic_rate": 0.003,
+        "macro_false_authentic_rate": 0.003,
+        "brands_above_far_limit": [],
+        "low_sample_brands": 0,
+        "unknown_brand_groups": 0,
+        "unknown_brand_samples": 0,
+        "checkpoint_selection_affected": false,
+        "brands": [
+          {
+            "brand": "Richard Mille",
+            "sample_count": 3000,
+            "sample_status": "eligible",
+            "false_authentic_rate": 0.003,
+            "brand_far_eligible": true
+          },
+          {
+            "brand": "Vacheron Constantin",
+            "sample_count": 3000,
+            "sample_status": "eligible",
+            "false_authentic_rate": null,
+            "brand_far_eligible": null
+          }
+        ]
+      },
+      "test_set_used_for_selection": false,
+      "production_threshold": null,
+      "hyperparameters": {
+        "batch_size": 16,
+        "accumulate_grad": 2,
+        "effective_batch": 32,
+        "amp_dtype": "bf16",
+        "backbone_lr": 1e-05,
+        "head_lr": 0.0001,
+        "layer_decay": 0.75,
+        "weight_decay": 0.05,
+        "warmup_epochs": 2,
+        "num_epochs": 30,
+        "early_stop_patience": 6,
+        "grad_clip": 1.0,
+        "label_smoothing": 0.02,
+        "mixup_alpha": 0.0,
+        "weighted_sampler": 0,
+        "max_false_authentic_rate": 0.02,
+        "validation_threshold": 0.5,
+        "augmentation_profile": "conservative",
+        "split_strategy": "product_disjoint",
+        "seed": 42
+      },
+      "test_root": null,
+      "dataset": {
+        "total_samples": 30000,
+        "seed": 42,
+        "split_strategy": "product_disjoint",
+        "calibration_fraction": 0.1,
+        "splits": {
+          "train": {
+            "split": "train",
+            "samples": 18000,
+            "authentic": 9000,
+            "fake": 9000,
+            "group_count": 6,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 6000,
+              "Audemars Piguet": 6000,
+              "Patek Philippe": 6000
+            }
+          },
+          "calibration": {
+            "split": "calibration",
+            "samples": 6000,
+            "authentic": 3000,
+            "fake": 3000,
+            "group_count": 2,
+            "brand_counts": {
+              "Richard Mille": 3000,
+              "Vacheron Constantin": 3000
+            }
+          },
+          "validation": {
+            "split": "validation",
+            "samples": 6000,
+            "authentic": 3000,
+            "fake": 3000,
+            "group_count": 2,
+            "brand_counts": {
+              "Richard Mille": 3000,
+              "Vacheron Constantin": 3000
+            }
+          },
+          "test": {
+            "split": "test",
+            "samples": 0,
+            "authentic": 0,
+            "fake": 0,
+            "group_count": 0,
+            "brand_counts": {}
+          }
+        }
+      },
+      "gpu_name": "NVIDIA GeForce RTX 5080",
+      "threshold": 0.5,
+      "threshold_policy": "fixed_not_calibrated",
+      "best_validation_loss": 0.01662719759475836,
+      "history_contains_test": false
+    },
+    {
+      "directory": "dinov2_cls_patch_attention",
+      "family": "dinov2",
+      "backbone": "vit_base_patch14_dinov2.lvd142m",
+      "head": "cls_patch_attention",
+      "input_size": 504,
+      "completed": true,
+      "safety_validated": true,
+      "checkpoint": "epoch_007",
+      "epoch": 7,
+      "pr_auc": 1.0,
+      "f1": 0.9993328885923949,
+      "false_authentic_rate": 0.0013333333333333333,
+      "roc_auc": 0.9999999999999999,
+      "validation_loss": 0.01284252025900369,
+      "peak_allocated_bytes": 9764825600,
+      "peak_reserved_bytes": 10477371392,
+      "runtime_seconds": 3794.292811393738,
+      "seed": 42,
+      "split_manifest": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dinov2_cls_patch_attention/split_manifest.json",
+      "brand_summary": {
+        "global_false_authentic_rate": 0.0013333333333333333,
+        "macro_false_authentic_rate": 0.0013333333333333333,
+        "brands_above_far_limit": [],
+        "low_sample_brands": 0,
+        "unknown_brand_groups": 0,
+        "unknown_brand_samples": 0,
+        "checkpoint_selection_affected": false,
+        "brands": [
+          {
+            "brand": "Richard Mille",
+            "sample_count": 3000,
+            "sample_status": "eligible",
+            "false_authentic_rate": 0.0013333333333333333,
+            "brand_far_eligible": true
+          },
+          {
+            "brand": "Vacheron Constantin",
+            "sample_count": 3000,
+            "sample_status": "eligible",
+            "false_authentic_rate": null,
+            "brand_far_eligible": null
+          }
+        ]
+      },
+      "test_set_used_for_selection": false,
+      "production_threshold": null,
+      "hyperparameters": {
+        "batch_size": 16,
+        "accumulate_grad": 2,
+        "effective_batch": 32,
+        "amp_dtype": "bf16",
+        "backbone_lr": 1e-05,
+        "head_lr": 0.0001,
+        "layer_decay": 0.75,
+        "weight_decay": 0.05,
+        "warmup_epochs": 2,
+        "num_epochs": 30,
+        "early_stop_patience": 6,
+        "grad_clip": 1.0,
+        "label_smoothing": 0.02,
+        "mixup_alpha": 0.0,
+        "weighted_sampler": 0,
+        "max_false_authentic_rate": 0.02,
+        "validation_threshold": 0.5,
+        "augmentation_profile": "conservative",
+        "split_strategy": "product_disjoint",
+        "seed": 42
+      },
+      "test_root": null,
+      "dataset": {
+        "total_samples": 30000,
+        "seed": 42,
+        "split_strategy": "product_disjoint",
+        "calibration_fraction": 0.1,
+        "splits": {
+          "train": {
+            "split": "train",
+            "samples": 18000,
+            "authentic": 9000,
+            "fake": 9000,
+            "group_count": 6,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 6000,
+              "Audemars Piguet": 6000,
+              "Patek Philippe": 6000
+            }
+          },
+          "calibration": {
+            "split": "calibration",
+            "samples": 6000,
+            "authentic": 3000,
+            "fake": 3000,
+            "group_count": 2,
+            "brand_counts": {
+              "Richard Mille": 3000,
+              "Vacheron Constantin": 3000
+            }
+          },
+          "validation": {
+            "split": "validation",
+            "samples": 6000,
+            "authentic": 3000,
+            "fake": 3000,
+            "group_count": 2,
+            "brand_counts": {
+              "Richard Mille": 3000,
+              "Vacheron Constantin": 3000
+            }
+          },
+          "test": {
+            "split": "test",
+            "samples": 0,
+            "authentic": 0,
+            "fake": 0,
+            "group_count": 0,
+            "brand_counts": {}
+          }
+        }
+      },
+      "gpu_name": "NVIDIA GeForce RTX 5080",
+      "threshold": 0.5,
+      "threshold_policy": "fixed_not_calibrated",
+      "best_validation_loss": 0.010873692754180507,
+      "history_contains_test": false
+    },
+    {
+      "directory": "dinov3_cls_only",
+      "family": "dinov3",
+      "backbone": "vit_base_patch16_dinov3.lvd1689m",
+      "head": "cls_only",
+      "input_size": 512,
+      "completed": true,
+      "safety_validated": true,
+      "checkpoint": "epoch_002",
+      "epoch": 2,
+      "pr_auc": 0.9999890642552324,
+      "f1": 0.9984992496248123,
+      "false_authentic_rate": 0.002,
+      "roc_auc": 0.9999890555555556,
+      "validation_loss": 0.015202509110516056,
+      "peak_allocated_bytes": 8864069632,
+      "peak_reserved_bytes": 10093592576,
+      "runtime_seconds": 2181.3063657283783,
+      "seed": 42,
+      "split_manifest": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dinov3_cls_only/split_manifest.json",
+      "brand_summary": {
+        "global_false_authentic_rate": 0.0016666666666666668,
+        "macro_false_authentic_rate": 0.0016666666666666668,
+        "brands_above_far_limit": [],
+        "low_sample_brands": 0,
+        "unknown_brand_groups": 0,
+        "unknown_brand_samples": 0,
+        "checkpoint_selection_affected": false,
+        "brands": [
+          {
+            "brand": "Richard Mille",
+            "sample_count": 3000,
+            "sample_status": "eligible",
+            "false_authentic_rate": 0.0016666666666666668,
+            "brand_far_eligible": true
+          },
+          {
+            "brand": "Vacheron Constantin",
+            "sample_count": 3000,
+            "sample_status": "eligible",
+            "false_authentic_rate": null,
+            "brand_far_eligible": null
+          }
+        ]
+      },
+      "test_set_used_for_selection": false,
+      "production_threshold": null,
+      "hyperparameters": {
+        "batch_size": 16,
+        "accumulate_grad": 2,
+        "effective_batch": 32,
+        "amp_dtype": "bf16",
+        "backbone_lr": 1e-05,
+        "head_lr": 0.0001,
+        "layer_decay": 0.75,
+        "weight_decay": 0.05,
+        "warmup_epochs": 2,
+        "num_epochs": 30,
+        "early_stop_patience": 6,
+        "grad_clip": 1.0,
+        "label_smoothing": 0.02,
+        "mixup_alpha": 0.0,
+        "weighted_sampler": 0,
+        "max_false_authentic_rate": 0.02,
+        "validation_threshold": 0.5,
+        "augmentation_profile": "conservative",
+        "split_strategy": "product_disjoint",
+        "seed": 42
+      },
+      "test_root": null,
+      "dataset": {
+        "total_samples": 30000,
+        "seed": 42,
+        "split_strategy": "product_disjoint",
+        "calibration_fraction": 0.1,
+        "splits": {
+          "train": {
+            "split": "train",
+            "samples": 18000,
+            "authentic": 9000,
+            "fake": 9000,
+            "group_count": 6,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 6000,
+              "Audemars Piguet": 6000,
+              "Patek Philippe": 6000
+            }
+          },
+          "calibration": {
+            "split": "calibration",
+            "samples": 6000,
+            "authentic": 3000,
+            "fake": 3000,
+            "group_count": 2,
+            "brand_counts": {
+              "Richard Mille": 3000,
+              "Vacheron Constantin": 3000
+            }
+          },
+          "validation": {
+            "split": "validation",
+            "samples": 6000,
+            "authentic": 3000,
+            "fake": 3000,
+            "group_count": 2,
+            "brand_counts": {
+              "Richard Mille": 3000,
+              "Vacheron Constantin": 3000
+            }
+          },
+          "test": {
+            "split": "test",
+            "samples": 0,
+            "authentic": 0,
+            "fake": 0,
+            "group_count": 0,
+            "brand_counts": {}
+          }
+        }
+      },
+      "gpu_name": "NVIDIA GeForce RTX 5080",
+      "threshold": 0.5,
+      "threshold_policy": "fixed_not_calibrated",
+      "best_validation_loss": 0.014897276166866117,
+      "history_contains_test": false
+    },
+    {
+      "directory": "dinov3_cls_patch_attention",
+      "family": "dinov3",
+      "backbone": "vit_base_patch16_dinov3.lvd1689m",
+      "head": "cls_patch_attention",
+      "input_size": 512,
+      "completed": true,
+      "safety_validated": true,
+      "checkpoint": "epoch_007",
+      "epoch": 7,
+      "pr_auc": 0.9999977773257707,
+      "f1": 0.9984982479559485,
+      "false_authentic_rate": 0.0026666666666666666,
+      "roc_auc": 0.9999978333333333,
+      "validation_loss": 0.013612267060918695,
+      "peak_allocated_bytes": 8963593216,
+      "peak_reserved_bytes": 10326376448,
+      "runtime_seconds": 3560.6176252365112,
+      "seed": 42,
+      "split_manifest": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dinov3_cls_patch_attention/split_manifest.json",
+      "brand_summary": {
+        "global_false_authentic_rate": 0.0023333333333333335,
+        "macro_false_authentic_rate": 0.0023333333333333335,
+        "brands_above_far_limit": [],
+        "low_sample_brands": 0,
+        "unknown_brand_groups": 0,
+        "unknown_brand_samples": 0,
+        "checkpoint_selection_affected": false,
+        "brands": [
+          {
+            "brand": "Richard Mille",
+            "sample_count": 3000,
+            "sample_status": "eligible",
+            "false_authentic_rate": 0.0023333333333333335,
+            "brand_far_eligible": true
+          },
+          {
+            "brand": "Vacheron Constantin",
+            "sample_count": 3000,
+            "sample_status": "eligible",
+            "false_authentic_rate": null,
+            "brand_far_eligible": null
+          }
+        ]
+      },
+      "test_set_used_for_selection": false,
+      "production_threshold": null,
+      "hyperparameters": {
+        "batch_size": 16,
+        "accumulate_grad": 2,
+        "effective_batch": 32,
+        "amp_dtype": "bf16",
+        "backbone_lr": 1e-05,
+        "head_lr": 0.0001,
+        "layer_decay": 0.75,
+        "weight_decay": 0.05,
+        "warmup_epochs": 2,
+        "num_epochs": 30,
+        "early_stop_patience": 6,
+        "grad_clip": 1.0,
+        "label_smoothing": 0.02,
+        "mixup_alpha": 0.0,
+        "weighted_sampler": 0,
+        "max_false_authentic_rate": 0.02,
+        "validation_threshold": 0.5,
+        "augmentation_profile": "conservative",
+        "split_strategy": "product_disjoint",
+        "seed": 42
+      },
+      "test_root": null,
+      "dataset": {
+        "total_samples": 30000,
+        "seed": 42,
+        "split_strategy": "product_disjoint",
+        "calibration_fraction": 0.1,
+        "splits": {
+          "train": {
+            "split": "train",
+            "samples": 18000,
+            "authentic": 9000,
+            "fake": 9000,
+            "group_count": 6,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 6000,
+              "Audemars Piguet": 6000,
+              "Patek Philippe": 6000
+            }
+          },
+          "calibration": {
+            "split": "calibration",
+            "samples": 6000,
+            "authentic": 3000,
+            "fake": 3000,
+            "group_count": 2,
+            "brand_counts": {
+              "Richard Mille": 3000,
+              "Vacheron Constantin": 3000
+            }
+          },
+          "validation": {
+            "split": "validation",
+            "samples": 6000,
+            "authentic": 3000,
+            "fake": 3000,
+            "group_count": 2,
+            "brand_counts": {
+              "Richard Mille": 3000,
+              "Vacheron Constantin": 3000
+            }
+          },
+          "test": {
+            "split": "test",
+            "samples": 0,
+            "authentic": 0,
+            "fake": 0,
+            "group_count": 0,
+            "brand_counts": {}
+          }
+        }
+      },
+      "gpu_name": "NVIDIA GeForce RTX 5080",
+      "threshold": 0.5,
+      "threshold_policy": "fixed_not_calibrated",
+      "best_validation_loss": 0.013612267060918695,
+      "history_contains_test": false
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "authoritative_precision": "fp32",
+  "benchmark_scope": "100 timed iterations after 20 warmup iterations on one resident image, disk I/O excluded",
+  "bf16_supported": true,
+  "cuda12_libraries_remapped": false,
+  "cuda_available": true,
+  "device_name": "NVIDIA GeForce RTX 5080",
+  "ollama_cuda_used": false,
+  "onnx_cuda_used": false,
+  "policy_p50_ms": 0.00343850115314126,
+  "policy_timing_logit": 0.0,
+  "preprocess_p50_ms": 3.2845094974618405,
+  "quality_p50_ms": 5.468205999932252,
+  "timed_iterations": 100,
+  "torch_cuda": "13.0",
+  "torch_version": "2.11.0+cu130",
+  "total_gpu_bytes": 16587751424,
+  "warmup_iterations": 20
+}

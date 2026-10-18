@@ -1,0 +1,16 @@
+{
+  "PROTOCOL_DECISION": "SCOPE_REDUCTION_RECOMMENDED",
+  "SCIENTIFIC_FEASIBILITY": true,
+  "DATA_GOVERNANCE_FEASIBILITY": false,
+  "RECOMMENDED_SCOPE": "five_brand_authenticity_research_prototype",
+  "PHASE35_STATUS": "OOD_FAIL",
+  "PHASE36_STATUS": "WATCH_OOD_UNRESOLVED",
+  "PRODUCTION_OOD_THRESHOLD": null,
+  "PROMOTION_ALLOWED": false,
+  "MODEL_CHANGED": false,
+  "CALIBRATION_CHANGED": false,
+  "FINAL_TEST_TOUCHED": false,
+  "protocol_sha256": "babaaf2b5c30d252c39765886ee5db032c09c4e3f25cf0e9eacc63f17128dde9",
+  "protocol_v1_edited": false,
+  "phase39": "Record the supported domain as a five-brand authenticity research prototype for A. Lange & Söhne, Audemars Piguet, Patek Philippe, Richard Mille, and Vacheron Constantin. Do not scrape, score, retrain, recalibrate, or set an OOD threshold. Leave protocol v1 frozen. Do not treat Phase 36 or the empty Phase 37 corpus as safety evidence."
+}

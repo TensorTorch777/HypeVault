@@ -1,0 +1,61 @@
+{
+  "per_class": {
+    "0": {
+      "count": 13334,
+      "sizes": {
+        "448x448": 13334
+      },
+      "modes": {
+        "RGB": 13334
+      },
+      "formats": {
+        "JPEG": 13334
+      },
+      "progressive": 0,
+      "exif": 0,
+      "icc": 0,
+      "quantization_tables": 1,
+      "median_bytes": 48069.5
+    },
+    "1": {
+      "count": 13500,
+      "sizes": {
+        "448x448": 13500
+      },
+      "modes": {
+        "RGB": 13500
+      },
+      "formats": {
+        "JPEG": 13500
+      },
+      "progressive": 0,
+      "exif": 0,
+      "icc": 0,
+      "quantization_tables": 1,
+      "median_bytes": 60038.5
+    }
+  },
+  "identical_container": true,
+  "file_size_roc_auc_for_label_1": 0.6777979906560228,
+  "file_size_separability": 0.6777979906560228,
+  "file_size_note": "JPEG size at a fixed quality tracks high-frequency detail. It is a pixel-content property, not a container field, and it is reported as the remaining one-number baseline.",
+  "excluded_short_side": {
+    "total": 160,
+    "by_label": {
+      "0": 160
+    }
+  },
+  "source_formats": {
+    "0": {
+      "JPEG": 13252,
+      "WEBP": 211,
+      "PNG": 28,
+      "MPO": 2,
+      "TIFF": 1
+    },
+    "1": {
+      "JPEG": 13500
+    }
+  },
+  "protocol_sha256": "ef4936c502f905d4bb70af7dfab62d083e7cb1e36471be3047b349e556d3ddf4"
+}

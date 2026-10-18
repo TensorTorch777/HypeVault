@@ -1,0 +1,50 @@
+{
+  "total_samples": 30000,
+  "seed": 42,
+  "split_strategy": "product_disjoint",
+  "calibration_fraction": 0.1,
+  "splits": {
+    "train": {
+      "split": "train",
+      "samples": 18000,
+      "authentic": 9000,
+      "fake": 9000,
+      "group_count": 6,
+      "brand_counts": {
+        "A. Lange & S\u00f6hne": 6000,
+        "Audemars Piguet": 6000,
+        "Patek Philippe": 6000
+      }
+    },
+    "calibration": {
+      "split": "calibration",
+      "samples": 6000,
+      "authentic": 3000,
+      "fake": 3000,
+      "group_count": 2,
+      "brand_counts": {
+        "Richard Mille": 3000,
+        "Vacheron Constantin": 3000
+      }
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 6000,
+      "authentic": 3000,
+      "fake": 3000,
+      "group_count": 2,
+      "brand_counts": {
+        "Richard Mille": 3000,
+        "Vacheron Constantin": 3000
+      }
+    },
+    "test": {
+      "split": "test",
+      "samples": 0,
+      "authentic": 0,
+      "fake": 0,
+      "group_count": 0,
+      "brand_counts": {}
+    }
+  }
+}

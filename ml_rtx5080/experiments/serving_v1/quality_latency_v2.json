@@ -1,0 +1,177 @@
+{
+  "double_decode": {
+    "preprocess": {
+      "p50": 5.559746496146545,
+      "p95": 17.715094001323443,
+      "p99": 24.22537940641632
+    },
+    "quality": {
+      "p50": 18.501948507037014,
+      "p95": 118.1535886484198,
+      "p99": 233.5426780788111
+    },
+    "second_decode": {
+      "p50": 3.210444003343582,
+      "p95": 14.755375610548064,
+      "p99": 47.50406569219193
+    },
+    "total_without_model": {
+      "p50": 26.180870001553558,
+      "p95": 145.84661420667544,
+      "p99": 303.8465010662911
+    }
+  },
+  "flags_match": true,
+  "images": 24,
+  "resized_512_used_for_quality": false,
+  "rows": [
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/Audemars Piguet/b1a40ed1b5b9.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/Patek Philippe/9ba50fea3805.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/Patek Philippe/c2f778c66d15.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/63d2c86b29d3.jpg"
+    },
+    {
+      "flags": "TOO_DARK|LOW_CONTRAST",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/Audemars Piguet/99fcd3b9051c.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/Richard Mille/a11094843532.jpg"
+    },
+    {
+      "flags": "EXTREME_ASPECT_RATIO",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/Richard Mille/9eda705bd8c9.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/0003c0bd6ebe.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/002016510ba1.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/002bc8d03cd5.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/00617b670111.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_1_Watches/A. Lange & S\u00f6hne/001067d69616.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_1_Watches/A. Lange & S\u00f6hne/004c219b045c.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_1_Watches/A. Lange & S\u00f6hne/005442daf6b3.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_1_Watches/A. Lange & S\u00f6hne/005bb6357b99.jpg"
+    },
+    {
+      "flags": "LOW_RESOLUTION",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/00e7fec26604.jpg"
+    },
+    {
+      "flags": "LOW_RESOLUTION",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/033824530806.jpg"
+    },
+    {
+      "flags": "LOW_CONTRAST",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/0ce059828e7b.jpg"
+    },
+    {
+      "flags": "LOW_CONTRAST",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/0fcb6427bbbb.jpg"
+    },
+    {
+      "flags": "LOW_RESOLUTION|LOW_CONTRAST",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/1f4e2e10b83b.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/00a208f1d991.jpg"
+    },
+    {
+      "flags": "TOO_BRIGHT|EXCESSIVE_CLIPPING|SUSPICIOUS_FRAMING",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/00b4fe2dd8d0.jpg"
+    },
+    {
+      "flags": "",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/00ca5dec6dfd.jpg"
+    },
+    {
+      "flags": "EXTREME_ASPECT_RATIO",
+      "flags_match": true,
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/00d5a56c2800.jpg"
+    }
+  ],
+  "rule_changed": false,
+  "single_decode": {
+    "decode": {
+      "p50": 3.0455555097432807,
+      "p95": 14.912711991928512,
+      "p99": 47.37966713670174
+    },
+    "policy": {
+      "p50": 0.04251900827512145,
+      "p95": 0.05510190239874645,
+      "p99": 0.07230793882627039
+    },
+    "preprocess": {
+      "p50": 5.752140481490642,
+      "p95": 17.779017906286747,
+      "p99": 24.513790460478045
+    },
+    "quality": {
+      "p50": 17.141283504315652,
+      "p95": 107.30857979215213,
+      "p99": 188.29042428289537
+    },
+    "total_without_model": {
+      "p50": 24.545074498746544,
+      "p95": 135.2627876520273,
+      "p99": 258.8068689583451
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "rows_mutated": false,
+  "verdicts_rewritten": false,
+  "confidence_values_changed": false,
+  "statuses_changed": false,
+  "total_listings": 53,
+  "live": 39,
+  "pending": 1,
+  "rejected": 13,
+  "legacy_image_backed_live": 19,
+  "seed_live": 20,
+  "legacy_customer_label": "Legacy screening — not verified",
+  "seed_customer_label": "Demo listing — not verified",
+  "legacy_evidence_role": "HISTORICAL_MODEL_EVIDENCE",
+  "seed_evidence_role": "SEED_CONSTANT",
+  "seed_verdict_retained": "AUTHENTIC",
+  "seed_confidence_retained": 0.965,
+  "label_application": "computed at read time from status, verdict, confidence, and image presence",
+  "phase43_snapshot_unchanged": true
+}

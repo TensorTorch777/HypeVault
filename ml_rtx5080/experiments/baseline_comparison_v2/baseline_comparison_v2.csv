@@ -1,0 +1,5 @@
+directory,family,head,input_size,safety_validated,checkpoint,epoch,pr_auc,f1,false_authentic_rate,roc_auc,worst_brand_far,peak_allocated_bytes,runtime_seconds,phase15_pr_auc,phase15_false_authentic_rate,delta_pr_auc,delta_f1,delta_false_authentic_rate,winner
+v2_dinov2_cls_only,dinov2,cls_only,504,True,epoch_030,30,1.0,1.0,0.0,1.0,0.0,9625030144,9643.44720005989,0.9999961198364505,0.003,3.880163549463411e-06,0.0016688918558077637,-0.003,False
+v2_dinov2_cls_patch_attention,dinov2,cls_patch_attention,504,True,epoch_030,30,1.0,1.0,0.0,1.0,0.0,9765018112,9763.929130077362,1.0,0.0013333333333333333,0.0,0.0006671114076051143,-0.0013333333333333333,False
+v2_dinov3_cls_only,dinov3,cls_only,512,True,epoch_030,30,1.0,1.0,0.0,1.0,0.0,8864262144,8903.282101631165,0.9999890642552324,0.002,1.0935744767626154e-05,0.0015007503751877094,-0.002,False
+v2_dinov3_cls_patch_attention,dinov3,cls_patch_attention,512,True,epoch_030,30,1.0,1.0,0.0,1.0,0.0,8963785728,9006.169022798538,0.9999977773257707,0.0026666666666666666,2.2226742293351975e-06,0.001501752044051452,-0.0026666666666666666,False

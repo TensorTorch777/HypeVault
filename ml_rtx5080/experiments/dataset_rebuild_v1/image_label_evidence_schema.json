@@ -1,0 +1,44 @@
+{
+  "schema_id": "image_label_evidence_v1",
+  "protocol_sha256": "0c04b6e182db916936142c3fd539148641778e0d10041b40cdb3def7c49473bc",
+  "purpose": "Fields required before an image can leave UNVERIFIED and receive an admitted authentic or counterfeit label.",
+  "admitted_record": {
+    "required": [
+      "image_id",
+      "sha256",
+      "brand",
+      "admitted_label",
+      "source_identifier",
+      "product_or_listing_identifier",
+      "verifier_name",
+      "verifier_independence",
+      "verification_method",
+      "evidence_identifier",
+      "evidence_location",
+      "verified_on"
+    ],
+    "admitted_label": ["authentic", "counterfeit"],
+    "verifier_independence": {
+      "must_be_independent_of": [
+        "directory names in this repository",
+        "any model prediction",
+        "a readable wordmark by itself"
+      ]
+    },
+    "authenticity_evidence": {
+      "authentic": "The source identifies the physical watch or the capturing organization, and the verifier records why the item is authentic.",
+      "counterfeit": "The source identifies the item, and the verifier records why the item is counterfeit."
+    },
+    "brand_evidence": "A brand value stored separately from the folder name, with the basis recorded. A readable wordmark may be cited as supporting observation. It is not sufficient alone."
+  },
+  "if_evidence_is_missing": "Keep provenance_status UNVERIFIED. Do not assign either class.",
+  "review_status": "REQUIRES_EXPERT_REVIEW is for placeholders, collages, component-only images, cross-brand copies, and visual disputes. It is not an admitted label.",
+  "not_sufficient": [
+    "directory name",
+    "filename",
+    "readable wordmark",
+    "model prediction",
+    "visual suspicion alone",
+    "file dimensions or JPEG quantization"
+  ]
+}

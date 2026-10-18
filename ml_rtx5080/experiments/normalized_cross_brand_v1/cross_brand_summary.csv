@@ -1,0 +1,6 @@
+held_out_brand,phase45_unseen_pr_auc,normalized_unseen_pr_auc,phase45_unseen_far,normalized_unseen_far,normalized_unseen_ffr,normalized_unseen_f1
+A. Lange & Söhne,1.000000,0.997046,0.001111,0.000000,0.003361,0.998336
+Audemars Piguet,1.000000,0.999995,0.001852,0.001111,0.001125,0.998889
+Patek Philippe,1.000000,0.997968,0.000000,0.000370,0.001878,0.998890
+Richard Mille,0.999985,0.999256,0.007407,0.001852,0.000753,0.998703
+Vacheron Constantin,1.000000,1.000000,0.000000,0.000000,0.000375,0.999815

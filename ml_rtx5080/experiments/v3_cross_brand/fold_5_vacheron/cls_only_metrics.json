@@ -1,0 +1,329 @@
+{
+  "initialization": "timm pretrained vit_base_patch16_dinov3.lvd1689m. The frozen epoch_018.pt checkpoint is not loaded.",
+  "loaded_frozen_checkpoint": false,
+  "classifier_arch": "cls_only",
+  "selected_epoch": 9,
+  "selected_checkpoint": "epoch_009",
+  "temperature": 0.5567478854674672,
+  "calibration": {
+    "roc_auc": 0.9999992943832909,
+    "pr_auc": 0.9999993061337773,
+    "f1": 0.9995831596498541,
+    "false_authentic_rate": 0.0008333333333333334,
+    "false_fake_rate": 0.0,
+    "nll": 0.0025165334809571505,
+    "brier": 0.0004160711250733584,
+    "ece": 0.00014477968215942383,
+    "sample_count": 2381,
+    "authentic_count": 1181,
+    "fake_count": 1200,
+    "temperature": 0.5567478854674672
+  },
+  "in_domain": {
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 1.0,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0,
+    "nll": 0.00027137063443660736,
+    "brier": 7.914427158084436e-08,
+    "ece": 0.00027126073837280273,
+    "sample_count": 2378,
+    "authentic_count": 1178,
+    "fake_count": 1200,
+    "temperature": 0.5567478854674672
+  },
+  "unseen": {
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 1.0,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0,
+    "nll": 0.0003005113103426993,
+    "brier": 1.451299681320961e-06,
+    "ece": 0.00029981136322021484,
+    "sample_count": 5400,
+    "authentic_count": 2700,
+    "fake_count": 2700,
+    "temperature": 0.5567478854674672
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.279736298306232,
+      "val_loss": 0.016394158825278282,
+      "val_pr_auc": 0.9999770736122267,
+      "val_f1": 0.9975020815986677,
+      "val_false_authentic_rate": 0.0016666666666666668,
+      "action": "reset"
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.06413972827886551,
+      "val_loss": 0.011989248916506767,
+      "val_pr_auc": 0.9999979218620116,
+      "val_f1": 0.9987505206164099,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "reset"
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.058233648942579694,
+      "val_loss": 0.010561298578977585,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.057826092802774655,
+      "val_loss": 0.01050892099738121,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995831596498541,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "increment"
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.05638498229451921,
+      "val_loss": 0.010858711786568165,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995831596498541,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "increment"
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.056834225398050386,
+      "val_loss": 0.010964898392558098,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.05708580890995756,
+      "val_loss": 0.017324315384030342,
+      "val_pr_auc": 0.999998611689333,
+      "val_f1": 0.9966555183946488,
+      "val_false_authentic_rate": 0.006666666666666667,
+      "action": "increment"
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.05649803983558849,
+      "val_loss": 0.0111079728230834,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9987484355444306,
+      "val_false_authentic_rate": 0.0025,
+      "action": "increment"
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.0563762766521803,
+      "val_loss": 0.01024810504168272,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.05678428409553192,
+      "val_loss": 0.010259036906063557,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.057002466826229545,
+      "val_loss": 0.010486050508916378,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.05627483133433991,
+      "val_loss": 0.010656053200364113,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995831596498541,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "increment"
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.05633963091073704,
+      "val_loss": 0.011560413055121899,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9991659716430359,
+      "val_false_authentic_rate": 0.0016666666666666668,
+      "action": "increment"
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.05716416778511255,
+      "val_loss": 0.011665286496281624,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995831596498541,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "increment"
+    },
+    {
+      "epoch": 15,
+      "train_loss": 0.056073016456673334,
+      "val_loss": 0.01328867394477129,
+      "val_pr_auc": 0.9999993061337774,
+      "val_f1": 0.9991659716430359,
+      "val_false_authentic_rate": 0.0016666666666666668,
+      "action": "increment"
+    }
+  ],
+  "features": null,
+  "confidence": {
+    "all_images_p_fake": {
+      "minimum": 0.000135526861413382,
+      "p5": 0.00023532772538601421,
+      "p25": 0.00027132194372825325,
+      "median": 0.526287317276001,
+      "p75": 0.9997382760047913,
+      "p95": 0.9997586667537689,
+      "maximum": 0.9997923970222473
+    },
+    "authentic_images_p_fake": {
+      "minimum": 0.000135526861413382,
+      "p5": 0.00022713444486726074,
+      "p25": 0.0002521076312405057,
+      "median": 0.00027132168179377913,
+      "p75": 0.0002933526411652565,
+      "p95": 0.0003367219032952562,
+      "maximum": 0.053682874888181686
+    },
+    "fake_images_p_fake": {
+      "minimum": 0.9988917708396912,
+      "p5": 0.9997036755084991,
+      "p25": 0.9997262060642242,
+      "median": 0.9997382760047913,
+      "p75": 0.9997492432594299,
+      "p95": 0.999764621257782,
+      "maximum": 0.9997923970222473
+    },
+    "mean_p_fake": 0.5000358819961548,
+    "median_p_fake": 0.526287317276001,
+    "most_confident_false_authentic_examples": [
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/4fbcd887e347.jpg",
+        "label": 1,
+        "p_fake": 0.9988917708396912,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/441a1d00a483.jpg",
+        "label": 1,
+        "p_fake": 0.9994988441467285,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/9122eae09d56.jpg",
+        "label": 1,
+        "p_fake": 0.9995468258857727,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/8e95b7164b65.jpg",
+        "label": 1,
+        "p_fake": 0.9996273517608643,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/f5d227685cba.jpg",
+        "label": 1,
+        "p_fake": 0.9996274709701538,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/65e06b9dc39e.jpg",
+        "label": 1,
+        "p_fake": 0.9996436834335327,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/a19a4614da7c.jpg",
+        "label": 1,
+        "p_fake": 0.9996441602706909,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/77475d070907.jpg",
+        "label": 1,
+        "p_fake": 0.999646782875061,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/e5a43976dacd.jpg",
+        "label": 1,
+        "p_fake": 0.9996554851531982,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/bec5bcaeadee.jpg",
+        "label": 1,
+        "p_fake": 0.9996556043624878,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/3821dc83af37.jpg",
+        "label": 1,
+        "p_fake": 0.9996577501296997,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/53bac4b237eb.jpg",
+        "label": 1,
+        "p_fake": 0.9996618032455444,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/10164d93398a.jpg",
+        "label": 1,
+        "p_fake": 0.9996660947799683,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/9f95022bf194.jpg",
+        "label": 1,
+        "p_fake": 0.9996675252914429,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/e6b31d546ffe.jpg",
+        "label": 1,
+        "p_fake": 0.9996695518493652,
+        "error": "fake image received a low P(fake)"
+      }
+    ]
+  },
+  "gap": {
+    "roc_auc": 0.0,
+    "roc_auc_relative_degradation": 0.0,
+    "pr_auc": 0.0,
+    "pr_auc_relative_degradation": 0.0,
+    "f1": 0.0,
+    "f1_relative_degradation": 0.0,
+    "false_authentic_rate": 0.0,
+    "false_authentic_rate_relative_degradation": null,
+    "false_fake_rate": 0.0,
+    "false_fake_rate_relative_degradation": null,
+    "nll": -2.914067590609193e-05,
+    "nll_relative_degradation": -0.1073833061067602,
+    "brier": -1.3721554097401167e-06,
+    "brier_relative_degradation": -17.337393879966235,
+    "ece": -2.855062484741211e-05,
+    "ece_relative_degradation": -0.10525159305647111
+  }
+}

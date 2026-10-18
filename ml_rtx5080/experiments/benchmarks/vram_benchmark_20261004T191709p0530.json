@@ -1,0 +1,562 @@
+{
+  "benchmark_version": "phase10-vram-v2",
+  "timestamp": "2026-10-04T19:17:09+05:30",
+  "seed": 42,
+  "gpu_name": "NVIDIA GeForce RTX 5080",
+  "total_vram_bytes": 16587751424,
+  "driver_total_vram_bytes": 16587751424,
+  "baseline_free_bytes": 15461646336,
+  "cuda_version": "13.0",
+  "pytorch_version": "2.11.0+cu130",
+  "cuda_available": true,
+  "bf16_supported": true,
+  "precision": "bf16",
+  "amp_scaler": false,
+  "amp_fallback": null,
+  "batch_sizes": [
+    2,
+    4,
+    6,
+    8,
+    10,
+    12,
+    16
+  ],
+  "measured_steps": 2,
+  "loss": "BCEWithLogitsLoss",
+  "label_smoothing": 0.02,
+  "optimizer": {
+    "name": "AdamW",
+    "backbone_lr": 1e-05,
+    "head_lr": 0.0001,
+    "layer_decay": 0.75,
+    "weight_decay": 0.05
+  },
+  "preprocessing_profile": "conservative",
+  "model_names": {
+    "dinov2": "vit_base_patch14_dinov2.lvd142m",
+    "dinov3": "vit_base_patch16_dinov3.lvd1689m"
+  },
+  "catalog_sample": [
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/0003c0bd6ebe.jpg",
+      "label": 0
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/a200902c3e57.jpg",
+      "label": 0
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/42607c5053da.jpg",
+      "label": 0
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/e21729239150.jpg",
+      "label": 0
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/84eecd9f8df2.jpg",
+      "label": 0
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/202777b8f5df.jpg",
+      "label": 0
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/bf519ffe026c.jpg",
+      "label": 0
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/62361bc82478.jpg",
+      "label": 0
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/001067d69616.jpg",
+      "label": 1
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/9eb8df5edccd.jpg",
+      "label": 1
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/3f74a6c33959.jpg",
+      "label": 1
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/e08006de1e88.jpg",
+      "label": 1
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/7e0a881d1773.jpg",
+      "label": 1
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/1fc385005c25.jpg",
+      "label": 1
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/bffb6a1483d4.jpg",
+      "label": 1
+    },
+    {
+      "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/603e2b5b00cf.jpg",
+      "label": 1
+    }
+  ],
+  "cases": [
+    {
+      "model_family": "dinov2",
+      "model_architecture": "cls_only",
+      "input_size": 504,
+      "free_after_bytes": 14974320640,
+      "results": [
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_only",
+          "input_size": 504,
+          "batch_size": 2,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 2355742720,
+          "peak_reserved_bytes": 2533359616,
+          "step_time_seconds": 0.03660123450026731,
+          "images_per_sec": 54.64296566241211,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_only",
+          "input_size": 504,
+          "batch_size": 4,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 3326804992,
+          "peak_reserved_bytes": 3598712832,
+          "step_time_seconds": 0.05840912599978765,
+          "images_per_sec": 68.4824491298593,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_only",
+          "input_size": 504,
+          "batch_size": 6,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 4343798272,
+          "peak_reserved_bytes": 4701814784,
+          "step_time_seconds": 0.08524630749980133,
+          "images_per_sec": 70.38428028116037,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_only",
+          "input_size": 504,
+          "batch_size": 8,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 5344799232,
+          "peak_reserved_bytes": 5670699008,
+          "step_time_seconds": 0.1135978359998262,
+          "images_per_sec": 70.4238767366329,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_only",
+          "input_size": 504,
+          "batch_size": 10,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 6296243712,
+          "peak_reserved_bytes": 6568280064,
+          "step_time_seconds": 0.14315008449966626,
+          "images_per_sec": 69.8567523376021,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_only",
+          "input_size": 504,
+          "batch_size": 12,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 7307494912,
+          "peak_reserved_bytes": 7625244672,
+          "step_time_seconds": 0.17295560400043541,
+          "images_per_sec": 69.38196694667256,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_only",
+          "input_size": 504,
+          "batch_size": 16,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 9267244544,
+          "peak_reserved_bytes": 9663676416,
+          "step_time_seconds": 0.23310552050043043,
+          "images_per_sec": 68.63844307784403,
+          "error": null
+        }
+      ]
+    },
+    {
+      "model_family": "dinov2",
+      "model_architecture": "cls_patch_attention",
+      "input_size": 504,
+      "free_after_bytes": 14978514944,
+      "results": [
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 504,
+          "batch_size": 2,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 2375715840,
+          "peak_reserved_bytes": 2552233984,
+          "step_time_seconds": 0.036793884499729756,
+          "images_per_sec": 54.35685922248002,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 504,
+          "batch_size": 4,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 3359867904,
+          "peak_reserved_bytes": 3672113152,
+          "step_time_seconds": 0.058637009999984,
+          "images_per_sec": 68.2163022978336,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 504,
+          "batch_size": 6,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 4380097024,
+          "peak_reserved_bytes": 4756340736,
+          "step_time_seconds": 0.08597536400020545,
+          "images_per_sec": 69.78743352555811,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 504,
+          "batch_size": 8,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 5388847616,
+          "peak_reserved_bytes": 5798625280,
+          "step_time_seconds": 0.11497506899968357,
+          "images_per_sec": 69.58030179587905,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 504,
+          "batch_size": 10,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 6364530176,
+          "peak_reserved_bytes": 6694109184,
+          "step_time_seconds": 0.14447360750045846,
+          "images_per_sec": 69.21679449285065,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 504,
+          "batch_size": 12,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 7400345088,
+          "peak_reserved_bytes": 7769948160,
+          "step_time_seconds": 0.1750777365000431,
+          "images_per_sec": 68.54098207967776,
+          "error": null
+        },
+        {
+          "model_family": "dinov2",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 504,
+          "batch_size": 16,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 9406126592,
+          "peak_reserved_bytes": 9848225792,
+          "step_time_seconds": 0.2363470254999811,
+          "images_per_sec": 67.69706522073949,
+          "error": null
+        }
+      ]
+    },
+    {
+      "model_family": "dinov3",
+      "model_architecture": "cls_only",
+      "input_size": 512,
+      "free_after_bytes": 15003680768,
+      "results": [
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_only",
+          "input_size": 512,
+          "batch_size": 2,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 2233348608,
+          "peak_reserved_bytes": 2510290944,
+          "step_time_seconds": 0.03720841049971568,
+          "images_per_sec": 53.75128830121035,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_only",
+          "input_size": 512,
+          "batch_size": 4,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 3117683712,
+          "peak_reserved_bytes": 3523215360,
+          "step_time_seconds": 0.05415238099976705,
+          "images_per_sec": 73.86563482808276,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_only",
+          "input_size": 512,
+          "batch_size": 6,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 4033320960,
+          "peak_reserved_bytes": 4756340736,
+          "step_time_seconds": 0.0744225220005319,
+          "images_per_sec": 80.62075617320679,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_only",
+          "input_size": 512,
+          "batch_size": 8,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 4927474688,
+          "peak_reserved_bytes": 5874122752,
+          "step_time_seconds": 0.10124565799969787,
+          "images_per_sec": 79.01573418609095,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_only",
+          "input_size": 512,
+          "batch_size": 10,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 5880271872,
+          "peak_reserved_bytes": 6853492736,
+          "step_time_seconds": 0.12653691900050035,
+          "images_per_sec": 79.02831899961511,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_only",
+          "input_size": 512,
+          "batch_size": 12,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 6734977024,
+          "peak_reserved_bytes": 7891582976,
+          "step_time_seconds": 0.15416722300005858,
+          "images_per_sec": 77.83755694941355,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_only",
+          "input_size": 512,
+          "batch_size": 16,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 8526521344,
+          "peak_reserved_bytes": 9932111872,
+          "step_time_seconds": 0.21423952150007608,
+          "images_per_sec": 74.6827657566175,
+          "error": null
+        }
+      ]
+    },
+    {
+      "model_family": "dinov3",
+      "model_architecture": "cls_patch_attention",
+      "input_size": 512,
+      "free_after_bytes": 14982709248,
+      "results": [
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 512,
+          "batch_size": 2,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 2255012352,
+          "peak_reserved_bytes": 2535456768,
+          "step_time_seconds": 0.03395395899997311,
+          "images_per_sec": 58.90329313296231,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 512,
+          "batch_size": 4,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 3148099584,
+          "peak_reserved_bytes": 3579838464,
+          "step_time_seconds": 0.054954122999788524,
+          "images_per_sec": 72.78798717278033,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 512,
+          "batch_size": 6,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 4071373824,
+          "peak_reserved_bytes": 4829741056,
+          "step_time_seconds": 0.07517944499932128,
+          "images_per_sec": 79.80904887039493,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 512,
+          "batch_size": 8,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 4974064640,
+          "peak_reserved_bytes": 5960105984,
+          "step_time_seconds": 0.10218693700016956,
+          "images_per_sec": 78.28789309916125,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 512,
+          "batch_size": 10,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 5932265472,
+          "peak_reserved_bytes": 7019167744,
+          "step_time_seconds": 0.12699275149998357,
+          "images_per_sec": 78.74465181582661,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 512,
+          "batch_size": 12,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 6803183616,
+          "peak_reserved_bytes": 8080326656,
+          "step_time_seconds": 0.15520923149961163,
+          "images_per_sec": 77.31498883189836,
+          "error": null
+        },
+        {
+          "model_family": "dinov3",
+          "model_architecture": "cls_patch_attention",
+          "input_size": 512,
+          "batch_size": 16,
+          "accumulate_grad": 1,
+          "status": "FIT",
+          "peak_allocated_bytes": 8632308736,
+          "peak_reserved_bytes": 10190061568,
+          "step_time_seconds": 0.21654078750043482,
+          "images_per_sec": 73.88908198169304,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "recommendation": {
+    "microbatch": 16,
+    "accumulate_grad": 2,
+    "effective_batch": 32,
+    "target_effective_batch": 32,
+    "per_case": {
+      "dinov2:cls_only": {
+        "batch_size": 16,
+        "headroom_rule": 0.15,
+        "peak_allocated_bytes": 9267244544,
+        "peak_reserved_bytes": 9663676416,
+        "headroom_bytes": 7320506880,
+        "headroom_fraction": 0.4413200254139521
+      },
+      "dinov2:cls_patch_attention": {
+        "batch_size": 16,
+        "headroom_rule": 0.15,
+        "peak_allocated_bytes": 9406126592,
+        "peak_reserved_bytes": 9848225792,
+        "headroom_bytes": 7181624832,
+        "headroom_fraction": 0.43294745914803506
+      },
+      "dinov3:cls_only": {
+        "batch_size": 16,
+        "headroom_rule": 0.15,
+        "peak_allocated_bytes": 8526521344,
+        "peak_reserved_bytes": 9932111872,
+        "headroom_bytes": 8061230080,
+        "headroom_fraction": 0.48597485421300707
+      },
+      "dinov3:cls_patch_attention": {
+        "batch_size": 16,
+        "headroom_rule": 0.15,
+        "peak_allocated_bytes": 8632308736,
+        "peak_reserved_bytes": 10190061568,
+        "headroom_bytes": 7955442688,
+        "headroom_fraction": 0.4795974140587652
+      }
+    },
+    "reason": "minimum safe microbatch across architectures",
+    "accumulation_confirmation": {
+      "model_family": "dinov2",
+      "model_architecture": "cls_patch_attention",
+      "input_size": 504,
+      "batch_size": 16,
+      "accumulate_grad": 2,
+      "status": "FIT",
+      "peak_allocated_bytes": 9765635584,
+      "peak_reserved_bytes": 9976152064,
+      "step_time_seconds": 0.46608627449995765,
+      "images_per_sec": 68.65681688295008,
+      "error": null,
+      "comparison": "accumulate_grad_2",
+      "single_step_peak_allocated_bytes": 9406126592,
+      "allocated_ratio_vs_single_step": 1.038220726510928
+    }
+  },
+  "cuda_healthy_at_end": true
+}

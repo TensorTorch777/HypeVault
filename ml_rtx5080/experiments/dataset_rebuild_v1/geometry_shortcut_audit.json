@@ -1,0 +1,1233 @@
+{
+  "protocol_sha256": "0c04b6e182db916936142c3fd539148641778e0d10041b40cdb3def7c49473bc",
+  "classifier_trained": false,
+  "non_test_images_measured": 26994,
+  "final_test_files_opened": 0,
+  "pre_specified_512_rule": {
+    "rule": "Call the directory counterfeit label if and only if width is 512 and height is 512. This rule is fixed before the census is read. It is a measurement of association, not a trained classifier.",
+    "counterfeit_and_512": 13500,
+    "authentic_and_512": 1,
+    "authentic_other_size": 13493,
+    "counterfeit_other_size": 0,
+    "agreement_with_directory_label": "26993/26994"
+  },
+  "formats_non_test": {
+    "0|JPEG": 13252,
+    "0|WEBP": 211,
+    "0|PNG": 28,
+    "0|MPO": 2,
+    "0|TIFF": 1,
+    "1|JPEG": 13500
+  },
+  "progressive_jpeg": {
+    "authentic": 5663,
+    "counterfeit": 0
+  },
+  "quantization": {
+    "counterfeit_unique_tables": 1,
+    "counterfeit_table_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+    "counterfeit_ijg_quality": 95,
+    "counterfeit_ijg_l1_to_standard_table": 0,
+    "authentic_signatures_including_no_table": 624,
+    "authentic_files_without_a_jpeg_table": 240,
+    "authentic_ijg_quality_median": 82,
+    "same_counterfeit_table_on_authentic_files": 127,
+    "authentic_512_uses_counterfeit_table": false,
+    "authentic_512_is_progressive": true,
+    "statement": "Every non-test counterfeit file is a baseline JPEG with one shared quantization table at IJG quality 95. That table also appears on 127 authentic files of other sizes. The table by itself does not separate the folders. The 512 square size does, with one authentic exception that uses a different progressive table."
+  },
+  "per_brand": {
+    "A. Lange & S\u00f6hne|label0": {
+      "n": 2717,
+      "width": {
+        "n": 2717,
+        "median": 1200.0,
+        "p25": 900.0,
+        "p75": 1860.0
+      },
+      "height": {
+        "n": 2717,
+        "median": 1000.0,
+        "p25": 800.0,
+        "p75": 1428.0
+      },
+      "bytes": {
+        "n": 2717,
+        "median": 204080.0,
+        "p25": 95102.0,
+        "p75": 397372.0
+      },
+      "exactly_512": 1,
+      "unique_quantization_tables": 221,
+      "ijg_quality": {
+        "n": 2698,
+        "median": 85.0,
+        "p25": 81.0,
+        "p75": 93.0
+      },
+      "ijg_exact_match_l1_0": 1489
+    },
+    "A. Lange & S\u00f6hne|label1": {
+      "n": 2700,
+      "width": {
+        "n": 2700,
+        "median": 512.0,
+        "p25": 512.0,
+        "p75": 512.0
+      },
+      "height": {
+        "n": 2700,
+        "median": 512.0,
+        "p25": 512.0,
+        "p75": 512.0
+      },
+      "bytes": {
+        "n": 2700,
+        "median": 98342.0,
+        "p25": 78539.25,
+        "p75": 113656.0
+      },
+      "exactly_512": 2700,
+      "unique_quantization_tables": 1,
+      "ijg_quality": {
+        "n": 2700,
+        "median": 95.0,
+        "p25": 95.0,
+        "p75": 95.0
+      },
+      "ijg_exact_match_l1_0": 2700
+    },
+    "Audemars Piguet|label0": {
+      "n": 2691,
+      "width": {
+        "n": 2691,
+        "median": 1288.0,
+        "p25": 1000.0,
+        "p75": 1920.0
+      },
+      "height": {
+        "n": 2691,
+        "median": 1154.0,
+        "p25": 900.0,
+        "p75": 1500.0
+      },
+      "bytes": {
+        "n": 2691,
+        "median": 225783.0,
+        "p25": 122290.5,
+        "p75": 432617.0
+      },
+      "exactly_512": 0,
+      "unique_quantization_tables": 222,
+      "ijg_quality": {
+        "n": 2668,
+        "median": 82.0,
+        "p25": 81.0,
+        "p75": 92.0
+      },
+      "ijg_exact_match_l1_0": 1300
+    },
+    "Audemars Piguet|label1": {
+      "n": 2700,
+      "width": {
+        "n": 2700,
+        "median": 512.0,
+        "p25": 512.0,
+        "p75": 512.0
+      },
+      "height": {
+        "n": 2700,
+        "median": 512.0,
+        "p25": 512.0,
+        "p75": 512.0
+      },
+      "bytes": {
+        "n": 2700,
+        "median": 108139.5,
+        "p25": 90090.0,
+        "p75": 122661.25
+      },
+      "exactly_512": 2700,
+      "unique_quantization_tables": 1,
+      "ijg_quality": {
+        "n": 2700,
+        "median": 95.0,
+        "p25": 95.0,
+        "p75": 95.0
+      },
+      "ijg_exact_match_l1_0": 2700
+    },
+    "Patek Philippe|label0": {
+      "n": 2684,
+      "width": {
+        "n": 2684,
+        "median": 1400.0,
+        "p25": 1000.0,
+        "p75": 2000.0
+      },
+      "height": {
+        "n": 2684,
+        "median": 1200.0,
+        "p25": 900.0,
+        "p75": 1633.0
+      },
+      "bytes": {
+        "n": 2684,
+        "median": 240786.5,
+        "p25": 127539.5,
+        "p75": 459966.25
+      },
+      "exactly_512": 0,
+      "unique_quantization_tables": 204,
+      "ijg_quality": {
+        "n": 2650,
+        "median": 82.0,
+        "p25": 81.0,
+        "p75": 93.0
+      },
+      "ijg_exact_match_l1_0": 1348
+    },
+    "Patek Philippe|label1": {
+      "n": 2700,
+      "width": {
+        "n": 2700,
+        "median": 512.0,
+        "p25": 512.0,
+        "p75": 512.0
+      },
+      "height": {
+        "n": 2700,
+        "median": 512.0,
+        "p25": 512.0,
+        "p75": 512.0
+      },
+      "bytes": {
+        "n": 2700,
+        "median": 109356.5,
+        "p25": 86846.0,
+        "p75": 126626.25
+      },
+      "exactly_512": 2700,
+      "unique_quantization_tables": 1,
+      "ijg_quality": {
+        "n": 2700,
+        "median": 95.0,
+        "p25": 95.0,
+        "p75": 95.0
+      },
+      "ijg_exact_match_l1_0": 2700
+    },
+    "Richard Mille|label0": {
+      "n": 2702,
+      "width": {
+        "n": 2702,
+        "median": 1080.0,
+        "p25": 804.25,
+        "p75": 1589.5
+      },
+      "height": {
+        "n": 2702,
+        "median": 1001.0,
+        "p25": 811.25,
+        "p75": 1377.5
+      },
+      "bytes": {
+        "n": 2702,
+        "median": 153429.5,
+        "p25": 92473.25,
+        "p75": 292905.5
+      },
+      "exactly_512": 0,
+      "unique_quantization_tables": 232,
+      "ijg_quality": {
+        "n": 2589,
+        "median": 82.0,
+        "p25": 80.0,
+        "p75": 90.0
+      },
+      "ijg_exact_match_l1_0": 1462
+    },
+    "Richard Mille|label1": {
+      "n": 2700,
+      "width": {
+        "n": 2700,
+        "median": 512.0,
+        "p25": 512.0,
+        "p75": 512.0
+      },
+      "height": {
+        "n": 2700,
+        "median": 512.0,
+        "p25": 512.0,
+        "p75": 512.0
+      },
+      "bytes": {
+        "n": 2700,
+        "median": 100450.0,
+        "p25": 79782.25,
+        "p75": 118584.5
+      },
+      "exactly_512": 2700,
+      "unique_quantization_tables": 1,
+      "ijg_quality": {
+        "n": 2700,
+        "median": 95.0,
+        "p25": 95.0,
+        "p75": 95.0
+      },
+      "ijg_exact_match_l1_0": 2700
+    },
+    "Vacheron Constantin|label0": {
+      "n": 2700,
+      "width": {
+        "n": 2700,
+        "median": 1200.0,
+        "p25": 1000.0,
+        "p75": 1800.0
+      },
+      "height": {
+        "n": 2700,
+        "median": 1067.5,
+        "p25": 864.0,
+        "p75": 1530.75
+      },
+      "bytes": {
+        "n": 2700,
+        "median": 229050.5,
+        "p25": 117110.5,
+        "p75": 419997.0
+      },
+      "exactly_512": 0,
+      "unique_quantization_tables": 253,
+      "ijg_quality": {
+        "n": 2649,
+        "median": 86.0,
+        "p25": 81.0,
+        "p75": 93.0
+      },
+      "ijg_exact_match_l1_0": 1476
+    },
+    "Vacheron Constantin|label1": {
+      "n": 2700,
+      "width": {
+        "n": 2700,
+        "median": 512.0,
+        "p25": 512.0,
+        "p75": 512.0
+      },
+      "height": {
+        "n": 2700,
+        "median": 512.0,
+        "p25": 512.0,
+        "p75": 512.0
+      },
+      "bytes": {
+        "n": 2700,
+        "median": 99755.0,
+        "p25": 78820.0,
+        "p75": 118472.25
+      },
+      "exactly_512": 2700,
+      "unique_quantization_tables": 1,
+      "ijg_quality": {
+        "n": 2700,
+        "median": 95.0,
+        "p25": 95.0,
+        "p75": 95.0
+      },
+      "ijg_exact_match_l1_0": 2700
+    }
+  },
+  "sample": {
+    "seed": 48,
+    "per_cell": 3,
+    "images": 30,
+    "viewed": 29,
+    "view_blocked": [
+      "32b179d61ea5.jpg"
+    ],
+    "laplacian_variance_median": {
+      "authentic": 1046.818,
+      "counterfeit": 2479.342
+    },
+    "outer_8px_std_median": {
+      "authentic": 36.509,
+      "counterfeit": 69.852
+    },
+    "padding_bars_observed": 0,
+    "statement": "These sharpness and border figures are for the 30-image sample. They are not catalog rates. Viewed counterfeit images fill the square without a letterbox. Several authentic images use a white or black studio field or a feathered cutout.",
+    "records": [
+      {
+        "image_id": "1d34b3cc159b.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/1d34b3cc159b.jpg",
+        "sha256": "d180433e390f617e9333ac9e710db36f09a1f13881ddf1fc72f353b35336dfe3",
+        "brand": "A. Lange & S\u00f6hne",
+        "label": 0,
+        "split": "train",
+        "width": 1200,
+        "height": 1200,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 139877,
+        "rgb_mean": [
+          223.737,
+          220.462,
+          218.141
+        ],
+        "rgb_std": [
+          67.711,
+          70.116,
+          72.624
+        ],
+        "laplacian_variance": 554.886,
+        "outer_8px_std": 0.0,
+        "quantization_sha256": "4e9737b7ae17e2454215816f40e425b09980d4de15707130b80237ad4ba6e167",
+        "ijg_quality": 81,
+        "ijg_l1": 530,
+        "visual_note": "Caseback on a white field. No letterbox. Soft reflection under the watch."
+      },
+      {
+        "image_id": "f2f1f3f056a3.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/f2f1f3f056a3.jpg",
+        "sha256": "7c8d46c7a7bdf6d9241cb00b52562610560a187f3f35e0eeeb33207e371e3aeb",
+        "brand": "A. Lange & S\u00f6hne",
+        "label": 0,
+        "split": "validation",
+        "width": 1500,
+        "height": 1500,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 250356,
+        "rgb_mean": [
+          178.826,
+          178.707,
+          182.716
+        ],
+        "rgb_std": [
+          67.575,
+          68.546,
+          70.682
+        ],
+        "laplacian_variance": 1562.535,
+        "outer_8px_std": 62.95,
+        "quantization_sha256": "752938774705b431f3003e7405ba244a37429e39078d32c8f75b9a15e49792ca",
+        "ijg_quality": 71,
+        "ijg_l1": 423,
+        "visual_note": "Caseback close-up filling the frame. No padding bar."
+      },
+      {
+        "image_id": "179aca9ab499.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/179aca9ab499.jpg",
+        "sha256": "3350a49cbd156f4cb903e82ed954e9c0564d7d97c0ba08b0b8b28eb5c1e1dc97",
+        "brand": "A. Lange & S\u00f6hne",
+        "label": 0,
+        "split": "train",
+        "width": 1000,
+        "height": 1000,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 872356,
+        "rgb_mean": [
+          126.631,
+          105.633,
+          96.309
+        ],
+        "rgb_std": [
+          79.919,
+          68.01,
+          59.512
+        ],
+        "laplacian_variance": 1046.818,
+        "outer_8px_std": 79.864,
+        "quantization_sha256": "4cb0bb2d17ca3d449b60d1e8057a5470ea8745d419444130a9b49d258534c027",
+        "ijg_quality": 99,
+        "ijg_l1": 15,
+        "visual_note": "Movement close-up filling the frame. Engraving is readable. No padding bar."
+      },
+      {
+        "image_id": "62ee7b6a9a01.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/62ee7b6a9a01.jpg",
+        "sha256": "d23b498f13cb9a6042d65afd773e7e91e4763cbfa6ad0f6fb96769c5da77b6e5",
+        "brand": "A. Lange & S\u00f6hne",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 124930,
+        "rgb_mean": [
+          141.702,
+          138.415,
+          133.314
+        ],
+        "rgb_std": [
+          61.274,
+          60.126,
+          58.371
+        ],
+        "laplacian_variance": 3201.084,
+        "outer_8px_std": 72.687,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square crop filled by a dial. No padding. Lettering is irregular."
+      },
+      {
+        "image_id": "597ad6a3fb9b.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/597ad6a3fb9b.jpg",
+        "sha256": "c9eb1985cf0768c03c96472658b4130d44743b3787df03617c0c14f4ca1d33b3",
+        "brand": "A. Lange & S\u00f6hne",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 117012,
+        "rgb_mean": [
+          136.218,
+          130.496,
+          124.885
+        ],
+        "rgb_std": [
+          68.543,
+          67.309,
+          66.637
+        ],
+        "laplacian_variance": 3477.433,
+        "outer_8px_std": 84.578,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square crop filled by a dial. No padding. The brand line is broken."
+      },
+      {
+        "image_id": "ac4158c3af89.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/ac4158c3af89.jpg",
+        "sha256": "7324ec83cc4cb1f8b68b9e4b660c3e9d5e2c15fb5b255087f426d9f33469ed20",
+        "brand": "A. Lange & S\u00f6hne",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 63844,
+        "rgb_mean": [
+          134.228,
+          120.024,
+          107.307
+        ],
+        "rgb_std": [
+          65.85,
+          64.276,
+          64.179
+        ],
+        "laplacian_variance": 964.252,
+        "outer_8px_std": 57.359,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square lifestyle photograph. The watch does not touch every edge. No flat color bar."
+      },
+      {
+        "image_id": "bf89ae799a5a.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/bf89ae799a5a.jpg",
+        "sha256": "c1b40bef6e1a50145fc0d137021a05e0b5081a0158381a59db301deb7efa98d3",
+        "brand": "Audemars Piguet",
+        "label": 0,
+        "split": "train",
+        "width": 2000,
+        "height": 1399,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 430179,
+        "rgb_mean": [
+          76.596,
+          64.374,
+          53.818
+        ],
+        "rgb_std": [
+          81.627,
+          72.597,
+          65.26
+        ],
+        "laplacian_variance": 4016.668,
+        "outer_8px_std": 13.633,
+        "quantization_sha256": "cc69e8e624be625ecc92c70cf47f2eaaa07ca3faeba90b6bcd4f9109fd778670",
+        "ijg_quality": 73,
+        "ijg_l1": 0,
+        "visual_note": "Wide studio photograph on black. Openworked dial, no padding bar."
+      },
+      {
+        "image_id": "32b179d61ea5.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/32b179d61ea5.jpg",
+        "sha256": "465dad97d56b1381258b50387f0f95557ee7b971b4a944b6e41900955e38d15b",
+        "brand": "Audemars Piguet",
+        "label": 0,
+        "split": "train",
+        "width": 1280,
+        "height": 1281,
+        "mode": "RGB",
+        "format": "WEBP",
+        "bytes": 137376,
+        "rgb_mean": [
+          202.493,
+          197.197,
+          196.502
+        ],
+        "rgb_std": [
+          67.293,
+          76.596,
+          77.055
+        ],
+        "laplacian_variance": 1256.304,
+        "outer_8px_std": 34.146,
+        "quantization_sha256": "NO_QUANTIZATION",
+        "ijg_quality": null,
+        "ijg_l1": null,
+        "visual_note": "WebP file. The image viewer could not decode it. Appearance is UNKNOWN. Measurements come from Pillow."
+      },
+      {
+        "image_id": "2065f386b2a1.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/2065f386b2a1.jpg",
+        "sha256": "a6d7d7c2bcaf0a414084bfff1fdbee00e09522bc26f7d3aba47ecccd60fe0a2b",
+        "brand": "Audemars Piguet",
+        "label": 0,
+        "split": "train",
+        "width": 1024,
+        "height": 683,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 164971,
+        "rgb_mean": [
+          104.328,
+          90.684,
+          84.619
+        ],
+        "rgb_std": [
+          69.136,
+          58.432,
+          53.576
+        ],
+        "laplacian_variance": 1189.455,
+        "outer_8px_std": 20.225,
+        "quantization_sha256": "4e9737b7ae17e2454215816f40e425b09980d4de15707130b80237ad4ba6e167",
+        "ijg_quality": 81,
+        "ijg_l1": 530,
+        "visual_note": "Wide studio photograph with a mirror reflection. No padding bar."
+      },
+      {
+        "image_id": "808a51b66175.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/808a51b66175.jpg",
+        "sha256": "4135110116a58ddbbb42eb00233e93631a8677b094256a064f78143c8d4f4629",
+        "brand": "Audemars Piguet",
+        "label": 1,
+        "split": "validation",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 82740,
+        "rgb_mean": [
+          111.23,
+          94.22,
+          81.612
+        ],
+        "rgb_std": [
+          67.126,
+          62.371,
+          58.495
+        ],
+        "laplacian_variance": 1210.015,
+        "outer_8px_std": 58.471,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square crop. Fabric background reaches the edges. Dial lettering is irregular."
+      },
+      {
+        "image_id": "747047f98092.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/747047f98092.jpg",
+        "sha256": "3ccb95ddfcab56573b9481ed92f8b38cc91272160e67450f0a9744435401e1ab",
+        "brand": "Audemars Piguet",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 120440,
+        "rgb_mean": [
+          135.663,
+          128.265,
+          123.823
+        ],
+        "rgb_std": [
+          78.33,
+          73.086,
+          71.004
+        ],
+        "laplacian_variance": 3196.676,
+        "outer_8px_std": 69.852,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square crop filled by the watch. A corner mark is cut off. No padding bar."
+      },
+      {
+        "image_id": "a059d9845f94.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/a059d9845f94.jpg",
+        "sha256": "ff1cc5e907a0354c08b634c2717b7c8880a65488e3b32d8019d499e1fb50d426",
+        "brand": "Audemars Piguet",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 120010,
+        "rgb_mean": [
+          147.234,
+          138.267,
+          132.078
+        ],
+        "rgb_std": [
+          67.386,
+          66.936,
+          69.334
+        ],
+        "laplacian_variance": 1854.147,
+        "outer_8px_std": 54.711,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square crop filled by the watch. Dial lettering is irregular."
+      },
+      {
+        "image_id": "911d43e127e8.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/911d43e127e8.jpg",
+        "sha256": "29c5d4486e69f5eea97ccee5d0c4435f1665e0b80ee8e6a98ffda3a49e94045b",
+        "brand": "Patek Philippe",
+        "label": 0,
+        "split": "calibration",
+        "width": 736,
+        "height": 736,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 53019,
+        "rgb_mean": [
+          191.154,
+          192.998,
+          192.373
+        ],
+        "rgb_std": [
+          77.172,
+          75.583,
+          76.414
+        ],
+        "laplacian_variance": 948.257,
+        "outer_8px_std": 0.0,
+        "quantization_sha256": "14384313185573a1f9bd314cdf9205cc08c95761b9c575e215191038db477133",
+        "ijg_quality": 80,
+        "ijg_l1": 0,
+        "visual_note": "Watch centered on a uniform white field. The white is a studio background, not a resize pad."
+      },
+      {
+        "image_id": "b1436c018c99.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/b1436c018c99.jpg",
+        "sha256": "c2d02f729295c66e06ee924b87b4efbeb555e0f5b737e6252599a9b3a77361d9",
+        "brand": "Patek Philippe",
+        "label": 0,
+        "split": "train",
+        "width": 1500,
+        "height": 844,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 163506,
+        "rgb_mean": [
+          152.176,
+          153.614,
+          164.461
+        ],
+        "rgb_std": [
+          61.95,
+          60.69,
+          65.895
+        ],
+        "laplacian_variance": 1506.893,
+        "outer_8px_std": 66.539,
+        "quantization_sha256": "c47f7a8cae571dad320b969cd1b998765bce3980a8359454ea304f294ffe4a7c",
+        "ijg_quality": 75,
+        "ijg_l1": 2,
+        "visual_note": "Wide photograph with props around the watch. No padding bar."
+      },
+      {
+        "image_id": "92750b8f161f.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/92750b8f161f.jpg",
+        "sha256": "fe1ac7b443b830dfab1754b244596c172c4777b7b71d2d531ff07873bd3e0519",
+        "brand": "Patek Philippe",
+        "label": 0,
+        "split": "train",
+        "width": 2100,
+        "height": 1400,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 425805,
+        "rgb_mean": [
+          94.763,
+          100.747,
+          106.325
+        ],
+        "rgb_std": [
+          78.531,
+          76.941,
+          75.978
+        ],
+        "laplacian_variance": 1150.148,
+        "outer_8px_std": 70.531,
+        "quantization_sha256": "188c48dddd69704cab2a1932ce3d8e157b38b45bff9860599bae7374318763ad",
+        "ijg_quality": 93,
+        "ijg_l1": 535,
+        "visual_note": "Caseback on a blue gradient. No padding bar."
+      },
+      {
+        "image_id": "d4f1a6602b98.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/d4f1a6602b98.jpg",
+        "sha256": "543e683ac066410822b841b7e06fa0e476a765e7598ebea76a578110742dabb7",
+        "brand": "Patek Philippe",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 115174,
+        "rgb_mean": [
+          140.482,
+          129.778,
+          121.001
+        ],
+        "rgb_std": [
+          65.952,
+          67.8,
+          70.413
+        ],
+        "laplacian_variance": 1775.286,
+        "outer_8px_std": 68.077,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square macro filling the frame. Lettering is fragmented."
+      },
+      {
+        "image_id": "b5b2d856951d.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/b5b2d856951d.jpg",
+        "sha256": "53863e0a590920c05364229ccdcd6b9fbda2bc0256b2009bf19d1afa61ae3684",
+        "brand": "Patek Philippe",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 128503,
+        "rgb_mean": [
+          164.562,
+          149.178,
+          134.288
+        ],
+        "rgb_std": [
+          66.546,
+          65.174,
+          66.488
+        ],
+        "laplacian_variance": 3417.064,
+        "outer_8px_std": 78.393,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square dial crop. Text is garbled. No padding bar."
+      },
+      {
+        "image_id": "bc26e4d101a4.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/bc26e4d101a4.jpg",
+        "sha256": "c5870650c198b780754db756682431187e84d0a74e6a6bf0fecb086c4f306883",
+        "brand": "Patek Philippe",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 112739,
+        "rgb_mean": [
+          147.857,
+          141.231,
+          136.255
+        ],
+        "rgb_std": [
+          71.074,
+          71.95,
+          72.881
+        ],
+        "laplacian_variance": 1832.657,
+        "outer_8px_std": 76.1,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square dial crop. Text is garbled. No padding bar."
+      },
+      {
+        "image_id": "62676b04a9c2.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/62676b04a9c2.jpg",
+        "sha256": "d8624c8622c053086a924c9a1507b7cc43b1a400e7dba333614b8413146a1739",
+        "brand": "Richard Mille",
+        "label": 0,
+        "split": "validation",
+        "width": 1920,
+        "height": 2713,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 392513,
+        "rgb_mean": [
+          193.572,
+          188.081,
+          184.9
+        ],
+        "rgb_std": [
+          91.451,
+          92.721,
+          93.708
+        ],
+        "laplacian_variance": 180.167,
+        "outer_8px_std": 0.022,
+        "quantization_sha256": "39c72572c9775e05469fb55b4a09c4ad9cb2e713cc0bb17338e7c0f9cbb6428f",
+        "ijg_quality": 82,
+        "ijg_l1": 0,
+        "visual_note": "Tall product cutout. The lower edge fades into white rather than ending in a hard pad."
+      },
+      {
+        "image_id": "c1304c4b8152.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/c1304c4b8152.jpg",
+        "sha256": "c4b67c57e87dcd802376860930bcb90ffd30b6252e48047b25ad2c2a6f3fa244",
+        "brand": "Richard Mille",
+        "label": 0,
+        "split": "train",
+        "width": 640,
+        "height": 640,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 41753,
+        "rgb_mean": [
+          65.455,
+          58.815,
+          55.072
+        ],
+        "rgb_std": [
+          39.828,
+          38.573,
+          36.386
+        ],
+        "laplacian_variance": 797.998,
+        "outer_8px_std": 24.266,
+        "quantization_sha256": "14384313185573a1f9bd314cdf9205cc08c95761b9c575e215191038db477133",
+        "ijg_quality": 80,
+        "ijg_l1": 0,
+        "visual_note": "Small dark snapshot. The watch is centered. No hard padding bar."
+      },
+      {
+        "image_id": "a25714f714ad.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/a25714f714ad.jpg",
+        "sha256": "3adb0e2a0cd3a26c172eec63ae3f525479881e0957de5a3f446d049b4dd753e6",
+        "brand": "Richard Mille",
+        "label": 0,
+        "split": "train",
+        "width": 768,
+        "height": 930,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 143393,
+        "rgb_mean": [
+          98.55,
+          98.441,
+          98.434
+        ],
+        "rgb_std": [
+          88.007,
+          88.028,
+          88.035
+        ],
+        "laplacian_variance": 1706.594,
+        "outer_8px_std": 103.537,
+        "quantization_sha256": "39c72572c9775e05469fb55b4a09c4ad9cb2e713cc0bb17338e7c0f9cbb6428f",
+        "ijg_quality": 82,
+        "ijg_l1": 0,
+        "visual_note": "Close three-quarter crop on white. The white field is the background."
+      },
+      {
+        "image_id": "efd15306f7e0.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/efd15306f7e0.jpg",
+        "sha256": "b47d52f9e700ad04c33cca37861ced7e8fd9455f37983be82f63e06c61cc665b",
+        "brand": "Richard Mille",
+        "label": 1,
+        "split": "validation",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 119685,
+        "rgb_mean": [
+          64.497,
+          60.982,
+          59.325
+        ],
+        "rgb_std": [
+          63.318,
+          60.605,
+          58.769
+        ],
+        "laplacian_variance": 2968.315,
+        "outer_8px_std": 48.493,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square crop filled by the case. Brand lettering is broken."
+      },
+      {
+        "image_id": "e67513a04b64.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/e67513a04b64.jpg",
+        "sha256": "4f6938314185e750ad63d3b891085f6bc9b98650e9f37843a543becdc0478011",
+        "brand": "Richard Mille",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 135287,
+        "rgb_mean": [
+          97.748,
+          95.294,
+          92.72
+        ],
+        "rgb_std": [
+          72.56,
+          71.217,
+          70.419
+        ],
+        "laplacian_variance": 3782.453,
+        "outer_8px_std": 80.627,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square dial crop of a round watch. Dial text is garbled."
+      },
+      {
+        "image_id": "1351418f9030.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/1351418f9030.jpg",
+        "sha256": "0973298d816882c38cd01f8c75bec637c9bafab66adba3a9e7c3fe92abfc71d1",
+        "brand": "Richard Mille",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 131071,
+        "rgb_mean": [
+          114.317,
+          108.396,
+          104.344
+        ],
+        "rgb_std": [
+          78.078,
+          75.937,
+          75.668
+        ],
+        "laplacian_variance": 2422.384,
+        "outer_8px_std": 77.56,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square crop filled by the case. Dial lettering is irregular."
+      },
+      {
+        "image_id": "73a9c4bc243a.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/73a9c4bc243a.jpg",
+        "sha256": "1c69fca723152480aac25f16e0491f1189d6d84db4a96db92ccfbd2cf1ffcdad",
+        "brand": "Vacheron Constantin",
+        "label": 0,
+        "split": "train",
+        "width": 1280,
+        "height": 1280,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 367751,
+        "rgb_mean": [
+          196.899,
+          196.211,
+          198.284
+        ],
+        "rgb_std": [
+          93.865,
+          91.033,
+          85.691
+        ],
+        "laplacian_variance": 849.662,
+        "outer_8px_std": 55.274,
+        "quantization_sha256": "c1d1d1b1bf59735cd2830b2e186a0181f7d5e850793de7e8d5c7913cb944de2d",
+        "ijg_quality": 100,
+        "ijg_l1": 0,
+        "visual_note": "Wide catalog photograph on white. No hard padding bar."
+      },
+      {
+        "image_id": "15ed239c783c.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/15ed239c783c.jpg",
+        "sha256": "a36500a4eddcec5b300b6a8943ceb103ed732eca1fe9ea3666fd73b2634bba46",
+        "brand": "Vacheron Constantin",
+        "label": 0,
+        "split": "train",
+        "width": 1365,
+        "height": 1426,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 286054,
+        "rgb_mean": [
+          46.741,
+          46.357,
+          43.728
+        ],
+        "rgb_std": [
+          68.747,
+          56.556,
+          41.344
+        ],
+        "laplacian_variance": 366.923,
+        "outer_8px_std": 51.309,
+        "quantization_sha256": "6e2c34446864fbf2a29fb64afd602544962b5bfd51d21625ea979fe714fb758e",
+        "ijg_quality": 85,
+        "ijg_l1": 0,
+        "visual_note": "Dial crop filling the frame. The wordmark is readable. No padding bar."
+      },
+      {
+        "image_id": "1e7b059b0feb.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/1e7b059b0feb.jpg",
+        "sha256": "18a529809ea1e561174487ce8d4f5b569e1a1f4d5750ac66290ad18d5fe21b0a",
+        "brand": "Vacheron Constantin",
+        "label": 0,
+        "split": "train",
+        "width": 4549,
+        "height": 3033,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 986609,
+        "rgb_mean": [
+          135.99,
+          124.247,
+          111.898
+        ],
+        "rgb_std": [
+          48.036,
+          43.471,
+          47.635
+        ],
+        "laplacian_variance": 71.415,
+        "outer_8px_std": 36.509,
+        "quantization_sha256": "cc69e8e624be625ecc92c70cf47f2eaaa07ca3faeba90b6bcd4f9109fd778670",
+        "ijg_quality": 73,
+        "ijg_l1": 0,
+        "visual_note": "Large photograph of a full watch over a map. No padding bar."
+      },
+      {
+        "image_id": "eaa2264db958.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/eaa2264db958.jpg",
+        "sha256": "326d6bc122d74d27fcbcd7e4866da949d5c3d47b4f0d015641cddbb3be263c1f",
+        "brand": "Vacheron Constantin",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 77435,
+        "rgb_mean": [
+          125.622,
+          107.903,
+          95.915
+        ],
+        "rgb_std": [
+          53.173,
+          52.723,
+          51.702
+        ],
+        "laplacian_variance": 841.498,
+        "outer_8px_std": 41.029,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square product photograph. Brand lettering is broken. Background reaches the corners."
+      },
+      {
+        "image_id": "9a940f1e64cb.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/9a940f1e64cb.jpg",
+        "sha256": "c28fb280625733ee4dd6f65911b78ccc5fda8a5132e915d877747ea3c803ac8b",
+        "brand": "Vacheron Constantin",
+        "label": 1,
+        "split": "calibration",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 110065,
+        "rgb_mean": [
+          140.356,
+          137.057,
+          133.271
+        ],
+        "rgb_std": [
+          65.402,
+          65.732,
+          66.285
+        ],
+        "laplacian_variance": 2479.342,
+        "outer_8px_std": 96.651,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square dial crop. The brand name is duplicated and broken."
+      },
+      {
+        "image_id": "7575336f5fbd.jpg",
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/7575336f5fbd.jpg",
+        "sha256": "3d8f195e19228d8bcdb7ffb4e427e1b27d3e30ae0aa203fa2b2a91bccbe569fb",
+        "brand": "Vacheron Constantin",
+        "label": 1,
+        "split": "train",
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 94783,
+        "rgb_mean": [
+          136.184,
+          135.392,
+          135.57
+        ],
+        "rgb_std": [
+          64.067,
+          64.16,
+          64.573
+        ],
+        "laplacian_variance": 2673.798,
+        "outer_8px_std": 60.152,
+        "quantization_sha256": "391587dc3aab123f6fb5cae111dde313360197cc578d677f324de10954c337bf",
+        "ijg_quality": 95,
+        "ijg_l1": 0,
+        "visual_note": "Square product photograph. Brand lettering is broken."
+      }
+    ]
+  },
+  "interpretation": "The directory label is associated with a class-wide export convention. This measurement does not show that the trained network uses the convention. The loader resizes every image to 512 before the forward pass, so raw width is not a numeric input."
+}

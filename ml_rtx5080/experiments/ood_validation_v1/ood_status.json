@@ -1,0 +1,59 @@
+{
+  "OOD_STATUS": "OOD_FAIL",
+  "OOD_VALIDATED": false,
+  "REAL_OOD_CORPUS_AVAILABLE": true,
+  "calibration_changed": false,
+  "corpus_counts_by_taxonomy": {
+    "A_unrelated": 68,
+    "B_product_non_watch": 83,
+    "C_watch_outside_scope": 45,
+    "D_unseen_luxury_brand": 194,
+    "E_structurally_different": 18
+  },
+  "final_test_samples_used": 0,
+  "frozen_checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "frozen_temperature": 0.24038200410185356,
+  "methodology_version": "phase35_real_ood_v1",
+  "model_changed": false,
+  "ood_escape_rate": {
+    "A_unrelated": 0.75,
+    "B_product_non_watch": 0.8433734939759037,
+    "C_watch_outside_scope": 0.6888888888888889,
+    "D_unseen_luxury_brand": 0.8814432989690721,
+    "E_structurally_different": 0.7777777777777778
+  },
+  "ood_review_rate_impact": {
+    "aggressive": 0.16110740493662443,
+    "conservative": 0.010006671114076049,
+    "moderate": 0.038358905937291535
+  },
+  "policy_changed": false,
+  "policy_version": "shadow_v1",
+  "production_ood_threshold": null,
+  "promoted": false,
+  "provenance_summary": {
+    "licenses": {
+      "CC BY 2.0": 24,
+      "CC BY 2.5": 1,
+      "CC BY 3.0": 4,
+      "CC BY 4.0": 189,
+      "CC BY-SA 2.0": 4,
+      "CC BY-SA 3.0": 10,
+      "CC BY-SA 4.0": 91,
+      "CC0": 19,
+      "Public domain": 26,
+      "UNKNOWN": 40
+    },
+    "sources": {
+      "local_scraper_directory": 40,
+      "roboflow": 180,
+      "wikimedia_commons": 188
+    },
+    "unknown_license_count": 40
+  },
+  "status_reasons": [
+    "authentic escape stays at or above 0.15 on B_product_non_watch, C_watch_outside_scope, D_unseen_luxury_brand, and no research gate brings those groups to 0.05 without raising calibration review by more than 0.10"
+  ],
+  "threshold_status": "research_candidate_only",
+  "timestamp": "2026-10-07T07:38:47.944269+00:00"
+}

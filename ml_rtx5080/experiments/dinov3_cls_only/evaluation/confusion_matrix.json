@@ -1,0 +1,20 @@
+{
+  "labels": [
+    "authentic",
+    "fake"
+  ],
+  "matrix": [
+    [
+      2997,
+      3
+    ],
+    [
+      5,
+      2995
+    ]
+  ],
+  "true_negative": 2997,
+  "false_fake": 3,
+  "false_authentic": 5,
+  "true_positive": 2995
+}

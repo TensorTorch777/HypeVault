@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "limitations": [],
+  "splits": [
+    "train",
+    "calibration",
+    "validation",
+    "test"
+  ]
+}

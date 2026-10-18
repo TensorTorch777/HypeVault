@@ -1,0 +1,9 @@
+{
+  "inclusion_decisions_frozen_before_inference": true,
+  "inference_performed": false,
+  "protocol_sha256": "2f97e1f5c42e4366154980ec9d1b1ea41bfdd8abd1dc35017a588c22d7ac87aa",
+  "reason": "No corpus met the admission rules. No external images were collected or scored.",
+  "samples": [],
+  "status": "BLOCKED",
+  "target_brand": null
+}

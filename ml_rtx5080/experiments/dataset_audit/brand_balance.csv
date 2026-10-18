@@ -1,0 +1,21 @@
+split,brand,authentic,fake,total
+train,A. Lange & Söhne,2101,2100,4201
+train,Audemars Piguet,2095,2100,4195
+train,Patek Philippe,2095,2100,4195
+train,Richard Mille,2102,2100,4202
+train,Vacheron Constantin,2106,2100,4206
+calibration,A. Lange & Söhne,301,300,601
+calibration,Audemars Piguet,299,300,599
+calibration,Patek Philippe,296,300,596
+calibration,Richard Mille,300,300,600
+calibration,Vacheron Constantin,302,300,602
+validation,A. Lange & Söhne,315,300,615
+validation,Audemars Piguet,297,300,597
+validation,Patek Philippe,293,300,593
+validation,Richard Mille,300,300,600
+validation,Vacheron Constantin,292,300,592
+test,A. Lange & Söhne,283,300,583
+test,Audemars Piguet,309,300,609
+test,Patek Philippe,316,300,616
+test,Richard Mille,298,300,598
+test,Vacheron Constantin,300,300,600

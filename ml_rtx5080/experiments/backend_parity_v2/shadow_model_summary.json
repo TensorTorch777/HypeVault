@@ -1,0 +1,130 @@
+{
+  "authoritative_forward": "fp32 reference, no autocast",
+  "batch_parity": {
+    "atol": 0.0001,
+    "decision_mismatches": 0,
+    "max_logit_deviation": 1.9550323486328125e-05,
+    "max_probability_deviation": 5.4631838906983984e-12,
+    "rows": [
+      {
+        "batch_size": 1,
+        "onnx_max_abs_logit_delta": 4.5299530029296875e-06,
+        "pytorch_max_abs_logit_delta": 0.0
+      },
+      {
+        "batch_size": 2,
+        "onnx_max_abs_logit_delta": 1.9550323486328125e-05,
+        "pytorch_max_abs_logit_delta": 1.7642974853515625e-05
+      },
+      {
+        "batch_size": 4,
+        "onnx_max_abs_logit_delta": 1.9550323486328125e-05,
+        "pytorch_max_abs_logit_delta": 1.8596649169921875e-05
+      },
+      {
+        "batch_size": 8,
+        "onnx_max_abs_logit_delta": 1.9550323486328125e-05,
+        "pytorch_max_abs_logit_delta": 1.8596649169921875e-05
+      },
+      {
+        "batch_size": 16,
+        "onnx_max_abs_logit_delta": 1.9550323486328125e-05,
+        "pytorch_max_abs_logit_delta": 1.8596649169921875e-05
+      }
+    ]
+  },
+  "calibration_performed": false,
+  "checkpoint_changed": false,
+  "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "customer_traffic_used": false,
+  "determinism": {
+    "onnx_span": 0.0,
+    "pytorch_span": 0.0,
+    "repeats": 5,
+    "tolerance": 1e-05,
+    "triton_span": null,
+    "triton_status": "unavailable"
+  },
+  "export_artifact_sha256": "d1d0c9bc010551b006b7cd57830d0d2511928832aefb4582bb71d70e02363edb",
+  "final_test_opened": false,
+  "final_test_samples_used": 0,
+  "input_dims": [
+    3,
+    512,
+    512
+  ],
+  "latency": {
+    "images": 24,
+    "model": {
+      "p50": 47.47479151410516,
+      "p95": 83.79314946796511,
+      "p99": 92.04392159037525
+    },
+    "onnx_model": {
+      "p50": 362.79443302191794,
+      "p95": 397.51499610574683,
+      "p99": 750.6323884651645
+    },
+    "policy": {
+      "p50": 0.03025999467354268,
+      "p95": 0.03540520556271076,
+      "p99": 0.03671319893328473
+    },
+    "preprocess": {
+      "p50": 92.78199649997987,
+      "p95": 109.67060219845733,
+      "p99": 135.79212804324925
+    },
+    "quality": {
+      "p50": 18.98615699610673,
+      "p95": 128.63934489287197,
+      "p99": 202.62687651440498
+    },
+    "scope": "one forward per golden image, not a capacity claim",
+    "total": {
+      "p50": 480.5703129968606,
+      "p95": 611.0697620169957,
+      "p99": 809.149375076813
+    }
+  },
+  "live_backend_modified": false,
+  "model_name": "dinov3_authenticity_classifier",
+  "numerical_reproducibility": {
+    "authoritative": "frozen checkpoint + resize_pad_square_eval_v1 + fp32 reference forward + frozen temperature + shadow_v1",
+    "reproduced_stored_phase22_logit": false
+  },
+  "old_model_untouched": true,
+  "onnx_parity": {
+    "decision_disagreements": 0,
+    "images": 24,
+    "max_abs_logit_error": 7.975101470947266e-05,
+    "max_abs_probability_error": 1.8384759017395572e-06,
+    "mean_abs_logit_error": 4.803140958150228e-06,
+    "status": "passed"
+  },
+  "onnx_providers": [
+    "CPUExecutionProvider"
+  ],
+  "ood_evaluation_performed": false,
+  "phase": 29,
+  "policy_version": "shadow_v1",
+  "preprocessing_version": "resize_pad_square_eval_v1",
+  "production_policy_status": "not_promoted",
+  "quality_profile_note": "Quality flags are computed from the original image. A single decode can feed both preprocess and quality, and the shadow path already does that. The resized 512 model tensor is not a valid quality input. The authoritative feature function was not replaced.",
+  "shadow_mode_default": false,
+  "shadow_serving_default": "pytorch",
+  "source_checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "temperature": 0.24038200410185356,
+  "temperature_in_graph": false,
+  "tensorrt_status": "unavailable",
+  "tolerances": {
+    "bitwise_equality_across_engines": false,
+    "determinism_atol": 1e-05,
+    "logit_atol": 0.0001,
+    "preprocess_tensor_atol": 1e-05,
+    "probability_atol": 1e-05
+  },
+  "training_performed": false,
+  "triton_parity_status": "blocked",
+  "triton_reason": "Triton is not accepting connections on port 8001. Parity was not fabricated."
+}

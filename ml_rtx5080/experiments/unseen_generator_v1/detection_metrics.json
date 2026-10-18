@@ -1,0 +1,562 @@
+{
+  "protocol_sha256": "9417fd388deccee29165f49bd6e9261c4731eaa124463f8defa7eeb2d364c490",
+  "threshold": 0.5,
+  "generators": {
+    "sdxl_base_1_0": {
+      "random_split": {
+        "n": 500,
+        "detected": 453,
+        "detection_rate": 0.906,
+        "ci95": [
+          0.8769623921104394,
+          0.9301137660812188
+        ],
+        "missed": 47,
+        "median_logit": 4.61701774597168
+      },
+      "held_out_fold": {
+        "n": 500,
+        "detected": 452,
+        "detection_rate": 0.904,
+        "ci95": [
+          0.8747352534366691,
+          0.9283673060246592
+        ],
+        "missed": 48,
+        "median_logit": 4.5749359130859375
+      },
+      "frozen_raw": {
+        "n": 500,
+        "detected": 481,
+        "detection_rate": 0.962,
+        "ci95": [
+          0.9412927095367715,
+          0.9769692291937524
+        ],
+        "missed": 19,
+        "median_logit": 4.588492393493652
+      },
+      "frozen_norm": {
+        "n": 500,
+        "detected": 497,
+        "detection_rate": 0.994,
+        "ci95": [
+          0.9825663262740865,
+          0.9987609424564593
+        ],
+        "missed": 3,
+        "median_logit": 4.591440200805664
+      },
+      "by_brand": {
+        "A. Lange & Söhne": {
+          "random_split": {
+            "n": 100,
+            "detected": 88,
+            "detection_rate": 0.88,
+            "ci95": [
+              0.7997643163800312,
+              0.9364310974388407
+            ],
+            "missed": 12,
+            "median_logit": 4.565133094787598
+          },
+          "held_out_fold": {
+            "n": 100,
+            "detected": 89,
+            "detection_rate": 0.89,
+            "ci95": [
+              0.8116988678035574,
+              0.9437929797145125
+            ],
+            "missed": 11,
+            "median_logit": 4.658612966537476
+          },
+          "frozen_raw": {
+            "n": 100,
+            "detected": 98,
+            "detection_rate": 0.98,
+            "ci95": [
+              0.9296160675289299,
+              0.9975686631760574
+            ],
+            "missed": 2,
+            "median_logit": 4.588213920593262
+          },
+          "frozen_norm": {
+            "n": 100,
+            "detected": 99,
+            "detection_rate": 0.99,
+            "ci95": [
+              0.9455406146079194,
+              0.9997468539670226
+            ],
+            "missed": 1,
+            "median_logit": 4.591928005218506
+          }
+        },
+        "Audemars Piguet": {
+          "random_split": {
+            "n": 100,
+            "detected": 90,
+            "detection_rate": 0.9,
+            "ci95": [
+              0.8237774022599773,
+              0.9509953107785141
+            ],
+            "missed": 10,
+            "median_logit": 4.628018379211426
+          },
+          "held_out_fold": {
+            "n": 100,
+            "detected": 90,
+            "detection_rate": 0.9,
+            "ci95": [
+              0.8237774022599773,
+              0.9509953107785141
+            ],
+            "missed": 10,
+            "median_logit": 4.583458185195923
+          },
+          "frozen_raw": {
+            "n": 100,
+            "detected": 92,
+            "detection_rate": 0.92,
+            "ci95": [
+              0.848442364135579,
+              0.9648284374818372
+            ],
+            "missed": 8,
+            "median_logit": 4.587286472320557
+          },
+          "frozen_norm": {
+            "n": 100,
+            "detected": 99,
+            "detection_rate": 0.99,
+            "ci95": [
+              0.9455406146079194,
+              0.9997468539670226
+            ],
+            "missed": 1,
+            "median_logit": 4.589442729949951
+          }
+        },
+        "Patek Philippe": {
+          "random_split": {
+            "n": 100,
+            "detected": 94,
+            "detection_rate": 0.94,
+            "ci95": [
+              0.8739700654191771,
+              0.9776651139286836
+            ],
+            "missed": 6,
+            "median_logit": 4.623167037963867
+          },
+          "held_out_fold": {
+            "n": 100,
+            "detected": 92,
+            "detection_rate": 0.92,
+            "ci95": [
+              0.848442364135579,
+              0.9648284374818372
+            ],
+            "missed": 8,
+            "median_logit": 4.574926137924194
+          },
+          "frozen_raw": {
+            "n": 100,
+            "detected": 96,
+            "detection_rate": 0.96,
+            "ci95": [
+              0.9007428432873401,
+              0.9889955060138118
+            ],
+            "missed": 4,
+            "median_logit": 4.5884552001953125
+          },
+          "frozen_norm": {
+            "n": 100,
+            "detected": 99,
+            "detection_rate": 0.99,
+            "ci95": [
+              0.9455406146079194,
+              0.9997468539670226
+            ],
+            "missed": 1,
+            "median_logit": 4.592785835266113
+          }
+        },
+        "Richard Mille": {
+          "random_split": {
+            "n": 100,
+            "detected": 90,
+            "detection_rate": 0.9,
+            "ci95": [
+              0.8237774022599773,
+              0.9509953107785141
+            ],
+            "missed": 10,
+            "median_logit": 4.632667541503906
+          },
+          "held_out_fold": {
+            "n": 100,
+            "detected": 85,
+            "detection_rate": 0.85,
+            "ci95": [
+              0.7646924998510451,
+              0.9135456143583515
+            ],
+            "missed": 15,
+            "median_logit": 4.475521564483643
+          },
+          "frozen_raw": {
+            "n": 100,
+            "detected": 97,
+            "detection_rate": 0.97,
+            "ci95": [
+              0.91482394702572,
+              0.9937700284616936
+            ],
+            "missed": 3,
+            "median_logit": 4.593637466430664
+          },
+          "frozen_norm": {
+            "n": 100,
+            "detected": 100,
+            "detection_rate": 1.0,
+            "ci95": [
+              0.9637833073548235,
+              1.0
+            ],
+            "missed": 0,
+            "median_logit": 4.593785285949707
+          }
+        },
+        "Vacheron Constantin": {
+          "random_split": {
+            "n": 100,
+            "detected": 91,
+            "detection_rate": 0.91,
+            "ci95": [
+              0.8360177449703647,
+              0.9580164043716077
+            ],
+            "missed": 9,
+            "median_logit": 4.630826473236084
+          },
+          "held_out_fold": {
+            "n": 100,
+            "detected": 96,
+            "detection_rate": 0.96,
+            "ci95": [
+              0.9007428432873401,
+              0.9889955060138118
+            ],
+            "missed": 4,
+            "median_logit": 4.572843790054321
+          },
+          "frozen_raw": {
+            "n": 100,
+            "detected": 98,
+            "detection_rate": 0.98,
+            "ci95": [
+              0.9296160675289299,
+              0.9975686631760574
+            ],
+            "missed": 2,
+            "median_logit": 4.583060264587402
+          },
+          "frozen_norm": {
+            "n": 100,
+            "detected": 100,
+            "detection_rate": 1.0,
+            "ci95": [
+              0.9637833073548235,
+              1.0
+            ],
+            "missed": 0,
+            "median_logit": 4.586498737335205
+          }
+        }
+      }
+    },
+    "sd_1_5": {
+      "random_split": {
+        "n": 500,
+        "detected": 262,
+        "detection_rate": 0.524,
+        "ci95": [
+          0.4791931639375544,
+          0.5685214970299799
+        ],
+        "missed": 238,
+        "median_logit": 0.7644480466842651
+      },
+      "held_out_fold": {
+        "n": 500,
+        "detected": 290,
+        "detection_rate": 0.58,
+        "ci95": [
+          0.5353716214196143,
+          0.6236769256540069
+        ],
+        "missed": 210,
+        "median_logit": 2.536450743675232
+      },
+      "frozen_raw": {
+        "n": 500,
+        "detected": 402,
+        "detection_rate": 0.804,
+        "ci95": [
+          0.7664479273429295,
+          0.8379112479437327
+        ],
+        "missed": 98,
+        "median_logit": 4.590120315551758
+      },
+      "frozen_norm": {
+        "n": 500,
+        "detected": 433,
+        "detection_rate": 0.866,
+        "ci95": [
+          0.8329700763861786,
+          0.8946210357386056
+        ],
+        "missed": 67,
+        "median_logit": 4.5923261642456055
+      },
+      "by_brand": {
+        "A. Lange & Söhne": {
+          "random_split": {
+            "n": 100,
+            "detected": 41,
+            "detection_rate": 0.41,
+            "ci95": [
+              0.31261997656757085,
+              0.5128557962332292
+            ],
+            "missed": 59,
+            "median_logit": -2.5413455963134766
+          },
+          "held_out_fold": {
+            "n": 100,
+            "detected": 62,
+            "detection_rate": 0.62,
+            "ci95": [
+              0.5174606942491935,
+              0.7152325238585204
+            ],
+            "missed": 38,
+            "median_logit": 3.3126893043518066
+          },
+          "frozen_raw": {
+            "n": 100,
+            "detected": 78,
+            "detection_rate": 0.78,
+            "ci95": [
+              0.686080346213682,
+              0.8566964232501856
+            ],
+            "missed": 22,
+            "median_logit": 4.590394020080566
+          },
+          "frozen_norm": {
+            "n": 100,
+            "detected": 87,
+            "detection_rate": 0.87,
+            "ci95": [
+              0.7879593229125502,
+              0.9289269538145705
+            ],
+            "missed": 13,
+            "median_logit": 4.592724323272705
+          }
+        },
+        "Audemars Piguet": {
+          "random_split": {
+            "n": 100,
+            "detected": 69,
+            "detection_rate": 0.69,
+            "ci95": [
+              0.5896854458398009,
+              0.778711207869329
+            ],
+            "missed": 31,
+            "median_logit": 4.168835639953613
+          },
+          "held_out_fold": {
+            "n": 100,
+            "detected": 71,
+            "detection_rate": 0.71,
+            "ci95": [
+              0.6107340410925517,
+              0.7964258107492681
+            ],
+            "missed": 29,
+            "median_logit": 4.489600419998169
+          },
+          "frozen_raw": {
+            "n": 100,
+            "detected": 90,
+            "detection_rate": 0.9,
+            "ci95": [
+              0.8237774022599773,
+              0.9509953107785141
+            ],
+            "missed": 10,
+            "median_logit": 4.593435287475586
+          },
+          "frozen_norm": {
+            "n": 100,
+            "detected": 92,
+            "detection_rate": 0.92,
+            "ci95": [
+              0.848442364135579,
+              0.9648284374818372
+            ],
+            "missed": 8,
+            "median_logit": 4.592562675476074
+          }
+        },
+        "Patek Philippe": {
+          "random_split": {
+            "n": 100,
+            "detected": 49,
+            "detection_rate": 0.49,
+            "ci95": [
+              0.38864416516163774,
+              0.5919636708445463
+            ],
+            "missed": 51,
+            "median_logit": -0.7437782287597656
+          },
+          "held_out_fold": {
+            "n": 100,
+            "detected": 43,
+            "detection_rate": 0.43,
+            "ci95": [
+              0.3313910166313832,
+              0.5328662616751536
+            ],
+            "missed": 57,
+            "median_logit": -0.8466488420963287
+          },
+          "frozen_raw": {
+            "n": 100,
+            "detected": 80,
+            "detection_rate": 0.8,
+            "ci95": [
+              0.7081573109113719,
+              0.8733444478980441
+            ],
+            "missed": 20,
+            "median_logit": 4.591233730316162
+          },
+          "frozen_norm": {
+            "n": 100,
+            "detected": 88,
+            "detection_rate": 0.88,
+            "ci95": [
+              0.7997643163800312,
+              0.9364310974388407
+            ],
+            "missed": 12,
+            "median_logit": 4.595610618591309
+          }
+        },
+        "Richard Mille": {
+          "random_split": {
+            "n": 100,
+            "detected": 58,
+            "detection_rate": 0.58,
+            "ci95": [
+              0.4771191957239138,
+              0.6780144606452031
+            ],
+            "missed": 42,
+            "median_logit": 2.6815531253814697
+          },
+          "held_out_fold": {
+            "n": 100,
+            "detected": 54,
+            "detection_rate": 0.54,
+            "ci95": [
+              0.4374115798664712,
+              0.640156647020588
+            ],
+            "missed": 46,
+            "median_logit": 0.9950367212295532
+          },
+          "frozen_raw": {
+            "n": 100,
+            "detected": 85,
+            "detection_rate": 0.85,
+            "ci95": [
+              0.7646924998510451,
+              0.9135456143583515
+            ],
+            "missed": 15,
+            "median_logit": 4.5900959968566895
+          },
+          "frozen_norm": {
+            "n": 100,
+            "detected": 88,
+            "detection_rate": 0.88,
+            "ci95": [
+              0.7997643163800312,
+              0.9364310974388407
+            ],
+            "missed": 12,
+            "median_logit": 4.590553283691406
+          }
+        },
+        "Vacheron Constantin": {
+          "random_split": {
+            "n": 100,
+            "detected": 45,
+            "detection_rate": 0.45,
+            "ci95": [
+              0.35032022923967193,
+              0.552719811226064
+            ],
+            "missed": 55,
+            "median_logit": -0.9359962940216064
+          },
+          "held_out_fold": {
+            "n": 100,
+            "detected": 60,
+            "detection_rate": 0.6,
+            "ci95": [
+              0.4972091504223347,
+              0.6967052312971226
+            ],
+            "missed": 40,
+            "median_logit": 2.7388030290603638
+          },
+          "frozen_raw": {
+            "n": 100,
+            "detected": 69,
+            "detection_rate": 0.69,
+            "ci95": [
+              0.5896854458398009,
+              0.778711207869329
+            ],
+            "missed": 31,
+            "median_logit": 4.570926189422607
+          },
+          "frozen_norm": {
+            "n": 100,
+            "detected": 78,
+            "detection_rate": 0.78,
+            "ci95": [
+              0.686080346213682,
+              0.8566964232501856
+            ],
+            "missed": 22,
+            "median_logit": 4.588969707489014
+          }
+        }
+      }
+    }
+  }
+}

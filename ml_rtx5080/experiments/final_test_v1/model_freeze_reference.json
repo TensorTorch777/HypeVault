@@ -1,0 +1,10 @@
+{
+  "freeze_directory": "final_model_freeze",
+  "selected_model": "v2_dinov3_cls_patch_attention",
+  "selected_checkpoint": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+  "selected_temperature": 0.24038200410185356,
+  "freeze_sha256": "c033b054f9187383321ee71f48affcc4b486c2623b5e4eb980f8a8d5cacb4956",
+  "production_threshold": null,
+  "model_selection_completed_before_test": true,
+  "test_used_for_selection": false
+}

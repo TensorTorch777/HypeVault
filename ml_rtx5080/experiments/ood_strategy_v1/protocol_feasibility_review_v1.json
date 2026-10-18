@@ -1,0 +1,84 @@
+{
+  "current_protocol_sha256": "babaaf2b5c30d252c39765886ee5db032c09c4e3f25cf0e9eacc63f17128dde9",
+  "protocol_file_edited": false,
+  "byte_cap_classification": "weakly_justified",
+  "byte_cap_bytes": 1500000,
+  "requirement_classes": {
+    "scientifically_necessary": [
+      "real watch photographs rather than synthetic images, diagrams, or movement-only parts",
+      "no thumbnail, resized preview, screenshot, or .rf. augmentation substitute",
+      "five training brands excluded from the OOD set",
+      "no hash, URL, or near-duplicate overlap with Phase 16, Phase 35, Phase 36, or the locked final test",
+      "holdout images are not used for threshold search",
+      "a source family stays in one split",
+      "holdout floors of 60 unseen luxury, 40 ordinary, and 25 smart/digital",
+      "at least 4 unseen brands with at least 8 holdout images and no brand above 40 percent of the unseen holdout",
+      "the evaluated model is not the brand verifier"
+    ],
+    "highly_desirable": [
+      "collection targets of 300, 200, 100, and 50",
+      "more than one website and more than one photographer",
+      "wrist/store photographs",
+      "brand cap of 40"
+    ],
+    "operational_constraints": [
+      "Commons original-file inclusion path",
+      "pre-listed Commons categories",
+      "jpeg, png, or webp MIME",
+      "1.5 MB ceiling",
+      "Commons upload rate limits"
+    ],
+    "potentially_over_restrictive": [
+      "1.5 MB ceiling",
+      "Commons category as the only allowed brand declaration"
+    ]
+  },
+  "routes": {
+    "A_licensed_open_images": {
+      "reaches_registered_package": false,
+      "evidence": "Commons ceiling after the brand cap is about 216 unseen, 149 ordinary, 104 smart, and 14 wrist. Other open pilots failed brand verification, the byte cap, or original-byte delivery."
+    },
+    "B_newly_captured": {
+      "collected": false,
+      "reaches_registered_package": false,
+      "realistic_scale": "Low tens of photographs from watches a researcher owns or can borrow with permission. No collaborator or store program is on record."
+    },
+    "C_copyrighted_research_only": {
+      "LEGAL_BASIS": "UNKNOWN",
+      "classification": "REQUIRES_INSTITUTIONAL_APPROVAL",
+      "proceed": false
+    },
+    "D_existing_datasets": {
+      "large_downloads": false,
+      "reaches_registered_package": false,
+      "evidence": "Roboflow exports are .rf. derivatives. Timepiecepedia image licenses are unknown. The local archive has no license. A Hugging Face wristwatch search returned 0 datasets."
+    }
+  },
+  "brand_verification": {
+    "source_declared": "required for a named-brand rate",
+    "expert_manual": "acceptable only in a future versioned protocol with a written record",
+    "multi_source": "acceptable when the records agree about the photograph, not merely about a catalog row",
+    "model_assisted": "not allowed for the model under evaluation; no second oracle was justified"
+  },
+  "proposed_changes_not_adopted": [
+    {
+      "change": "Raise or remove the 1.5 MB cap and keep the no-resize rule",
+      "scientific_justification": "The cap discarded originals without measuring independence.",
+      "legal_implication": "None by itself.",
+      "comparability": "Phase 36 stays frozen. A later corpus would be a new experiment.",
+      "expected_evidence_quality": "Higher only if a licensed supply of large originals exists. That supply was not shown.",
+      "adopted": false
+    },
+    {
+      "change": "Allow a documented expert brand check in addition to a source-declared brand",
+      "scientific_justification": "A publisher category is one kind of label evidence. It is not the only kind.",
+      "legal_implication": "Does not create an image license.",
+      "comparability": "Brand rates would need a verification_method field.",
+      "expected_evidence_quality": "Could admit licensed photos that currently fail as UNKNOWN brand. It does not create the missing photographs.",
+      "adopted": false
+    }
+  ],
+  "SCIENTIFIC_FEASIBILITY": true,
+  "DATA_GOVERNANCE_FEASIBILITY": false,
+  "PROTOCOL_DECISION": "SCOPE_REDUCTION_RECOMMENDED"
+}

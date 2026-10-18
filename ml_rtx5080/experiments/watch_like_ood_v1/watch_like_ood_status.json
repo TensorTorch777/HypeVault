@@ -1,0 +1,117 @@
+{
+  "INDEPENDENT_CORPUS_AVAILABLE": true,
+  "WATCH_LIKE_OOD_VALIDATED": false,
+  "WATCH_OOD_STATUS": "WATCH_OOD_UNRESOLVED",
+  "admitted_counts": {
+    "ordinary_watch": 11,
+    "smart_digital": 2,
+    "unseen_luxury": 15,
+    "wrist_store": 0
+  },
+  "calibration_changed": false,
+  "categories": [
+    "unseen_luxury",
+    "ordinary_watch",
+    "smart_digital",
+    "wrist_store"
+  ],
+  "category_escape_rates": {
+    "ordinary_watch": 0.3,
+    "smart_digital": 1.0,
+    "unseen_luxury": 0.7857142857142857,
+    "wrist_store": 0.0
+  },
+  "corpus_counts": {
+    "ordinary_watch": 10,
+    "smart_digital": 1,
+    "unseen_luxury": 14,
+    "wrist_store": 0
+  },
+  "duplicate_counts": {},
+  "final_test_samples_used": 0,
+  "final_test_untouched": true,
+  "frozen_checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "frozen_temperature": 0.24038200410185356,
+  "independent_source_count": 28,
+  "model_changed": false,
+  "phase35_comparison": [
+    {
+      "category": "unseen_luxury",
+      "difference": -0.09572901325478644,
+      "phase35_count": 194,
+      "phase35_escape": 0.8814432989690721,
+      "phase36_count": 14,
+      "phase36_escape": 0.7857142857142857
+    },
+    {
+      "category": "ordinary_watch",
+      "difference": -0.3818181818181818,
+      "phase35_count": 22,
+      "phase35_escape": 0.6818181818181818,
+      "phase36_count": 10,
+      "phase36_escape": 0.3
+    },
+    {
+      "category": "smart_digital",
+      "difference": 0.30434782608695654,
+      "phase35_count": 23,
+      "phase35_escape": 0.6956521739130435,
+      "phase36_count": 1,
+      "phase36_escape": 1.0
+    },
+    {
+      "category": "wrist_store",
+      "difference": null,
+      "phase35_count": 18,
+      "phase35_escape": 0.7777777777777778,
+      "phase36_count": 0,
+      "phase36_escape": null
+    },
+    {
+      "category": "overall_watch_like",
+      "difference": -0.24046692607003894,
+      "phase35_count": 257,
+      "phase35_escape": 0.8404669260700389,
+      "phase36_count": 25,
+      "phase36_escape": 0.6
+    }
+  ],
+  "policy_version": "shadow_v1",
+  "production_ood_threshold": null,
+  "promoted": false,
+  "protocol_sha256": "babaaf2b5c30d252c39765886ee5db032c09c4e3f25cf0e9eacc63f17128dde9",
+  "status_reasons": [
+    "the independent holdout does not meet the pre-registered minimum",
+    "holdout unseen luxury is 14, below 60",
+    "fewer than 4 unseen brands have 8 holdout images",
+    "holdout ordinary watches are 10, below 40",
+    "holdout smart/digital watches are 1, below 25"
+  ],
+  "targets": {
+    "achieved": {
+      "ordinary_watch": 11,
+      "smart_digital": 2,
+      "unseen_luxury": 15,
+      "wrist_store": 0
+    },
+    "confirmed_original_uploads": 28,
+    "distinct_source_urls": 28,
+    "known_independent_photograph_count": 28,
+    "shortfall": {
+      "ordinary_watch": 189,
+      "smart_digital": 98,
+      "unseen_luxury": 285,
+      "wrist_store": 50
+    },
+    "target": {
+      "ordinary_watch": 200,
+      "smart_digital": 100,
+      "unseen_luxury": 300,
+      "wrist_store": 50
+    },
+    "unknown_original_status": 0
+  },
+  "threshold_changed": false,
+  "timestamp": "2026-10-07T10:25:21.686029+00:00",
+  "watch_like_ood_escape_rate": 0.6
+}

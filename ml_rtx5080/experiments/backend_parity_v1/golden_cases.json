@@ -1,0 +1,181 @@
+{
+  "cases": [
+    {
+      "case_id": "clean_authentic",
+      "expected_decision": "AUTHENTIC",
+      "expected_logit": -4.6621904373168945,
+      "expected_probability": 3.774783115192984e-09,
+      "expected_quality_flags": [],
+      "expected_reason_codes": [
+        "AUTHENTICITY_BELOW_THRESHOLD"
+      ],
+      "expected_system_status": "ok",
+      "label": 0,
+      "quality_flags": [],
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/0003c0bd6ebe.jpg",
+      "split": "train"
+    },
+    {
+      "case_id": "clean_fake",
+      "expected_decision": "FAKE",
+      "expected_logit": 4.595499515533447,
+      "expected_probability": 0.9999999950182552,
+      "expected_quality_flags": [],
+      "expected_reason_codes": [
+        "AUTHENTICITY_THRESHOLD"
+      ],
+      "expected_system_status": "ok",
+      "label": 1,
+      "quality_flags": [],
+      "sample_id": "Label_1_Watches/A. Lange & S\u00f6hne/001067d69616.jpg",
+      "split": "train"
+    },
+    {
+      "case_id": "low_resolution",
+      "expected_decision": "REVIEW",
+      "expected_logit": -4.650574684143066,
+      "expected_probability": 3.961667355652568e-09,
+      "expected_quality_flags": [
+        "LOW_RESOLUTION"
+      ],
+      "expected_reason_codes": [
+        "QUALITY_LOW_RESOLUTION"
+      ],
+      "expected_system_status": "ok",
+      "label": 0,
+      "quality_flags": [
+        "LOW_RESOLUTION"
+      ],
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/00e7fec26604.jpg",
+      "split": "train"
+    },
+    {
+      "case_id": "low_contrast",
+      "expected_decision": "REVIEW",
+      "expected_logit": -4.651640892028809,
+      "expected_probability": 3.944134399403939e-09,
+      "expected_quality_flags": [
+        "LOW_CONTRAST"
+      ],
+      "expected_reason_codes": [
+        "QUALITY_LOW_CONTRAST"
+      ],
+      "expected_system_status": "ok",
+      "label": 0,
+      "quality_flags": [
+        "LOW_CONTRAST"
+      ],
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/074c056bbf39.jpg",
+      "split": "calibration"
+    },
+    {
+      "case_id": "both_quality_flags",
+      "expected_decision": "REVIEW",
+      "expected_logit": -4.640308380126953,
+      "expected_probability": 4.134528413823243e-09,
+      "expected_quality_flags": [
+        "LOW_RESOLUTION",
+        "LOW_CONTRAST"
+      ],
+      "expected_reason_codes": [
+        "QUALITY_MULTIPLE_FLAGS",
+        "QUALITY_LOW_RESOLUTION",
+        "QUALITY_LOW_CONTRAST"
+      ],
+      "expected_system_status": "ok",
+      "label": 0,
+      "quality_flags": [
+        "LOW_RESOLUTION",
+        "LOW_CONTRAST"
+      ],
+      "sample_id": "Label_0_Watches/A. Lange & S\u00f6hne/1f4e2e10b83b.jpg",
+      "split": "train"
+    },
+    {
+      "cached_probability": 0.029489500032526334,
+      "case_id": "closest_cached_probability",
+      "distance_to_0_50": 0.4705104999674737,
+      "expected_decision": "AUTHENTIC",
+      "expected_logit": -1.2462576627731323,
+      "expected_probability": 0.005571586913171242,
+      "expected_quality_flags": [
+        "EXTREME_ASPECT_RATIO"
+      ],
+      "expected_reason_codes": [
+        "AUTHENTICITY_BELOW_THRESHOLD"
+      ],
+      "expected_system_status": "ok",
+      "label": 0,
+      "near_0_50_available": false,
+      "quality_flags": [
+        "EXTREME_ASPECT_RATIO"
+      ],
+      "sample_id": "Label_0_Watches/Richard Mille/9eda705bd8c9.jpg",
+      "split": "validation"
+    },
+    {
+      "cached_probability": 2.9833684411784134e-09,
+      "case_id": "strong_authentic_probability",
+      "expected_decision": "AUTHENTIC",
+      "expected_logit": -4.711509704589844,
+      "expected_probability": 3.074593041318214e-09,
+      "expected_quality_flags": [],
+      "expected_reason_codes": [
+        "AUTHENTICITY_BELOW_THRESHOLD"
+      ],
+      "expected_system_status": "ok",
+      "label": 0,
+      "quality_flags": [],
+      "sample_id": "Label_0_Watches/Patek Philippe/c0d2eb84a449.jpg",
+      "split": "train"
+    },
+    {
+      "cached_probability": 1.0,
+      "case_id": "strong_fake_probability",
+      "expected_decision": "FAKE",
+      "expected_logit": 4.595499515533447,
+      "expected_probability": 0.9999999950182552,
+      "expected_quality_flags": [],
+      "expected_reason_codes": [
+        "AUTHENTICITY_THRESHOLD"
+      ],
+      "expected_system_status": "ok",
+      "label": 1,
+      "quality_flags": [],
+      "sample_id": "Label_1_Watches/A. Lange & S\u00f6hne/001067d69616.jpg",
+      "split": "train"
+    },
+    {
+      "case_id": "phase22_resize_source",
+      "expected_decision": "AUTHENTIC",
+      "expected_logit": -1.2462576627731323,
+      "expected_probability": 0.005571586913171242,
+      "expected_quality_flags": [
+        "EXTREME_ASPECT_RATIO"
+      ],
+      "expected_reason_codes": [
+        "AUTHENTICITY_BELOW_THRESHOLD"
+      ],
+      "expected_system_status": "ok",
+      "label": 0,
+      "quality_flags": [
+        "EXTREME_ASPECT_RATIO"
+      ],
+      "sample_id": "Label_0_Watches/Richard Mille/9eda705bd8c9.jpg",
+      "split": "validation"
+    },
+    {
+      "case_id": "malformed_input",
+      "expected_decision": null,
+      "expected_reason_codes": [
+        "POLICY_INVALID_INPUT"
+      ],
+      "expected_system_status": "POLICY_ERROR",
+      "label": null,
+      "quality_flags": [],
+      "sample_id": null,
+      "split": null
+    }
+  ],
+  "final_test_samples_used": 0
+}

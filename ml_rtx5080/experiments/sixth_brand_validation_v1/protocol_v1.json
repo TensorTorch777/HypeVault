@@ -1,0 +1,95 @@
+{
+  "admission_rules": [
+    "traceable image provenance",
+    "explicit license or documented permission for this research use",
+    "authenticity and counterfeit labels established independently of this model and independently of an unverified marketplace badge",
+    "original photographs, not augmented derivatives",
+    "more than one source group",
+    "no hash or URL overlap with the HypeVault catalog, Phase 35, Phase 36, or Phase 37",
+    "the locked final-test images are not opened"
+  ],
+  "authentic_only_policy": "Authentic-only images may be described as an acceptance study. They do not support a false-authentic rate or PR-AUC for counterfeit detection.",
+  "checkpoint_verified_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "excluded_brands": {
+    "phase35_scored_manifest": [
+      "Rolex",
+      "Omega",
+      "Cartier",
+      "Swatch",
+      "Casio",
+      "Alexander McQueen",
+      "Balenciaga",
+      "Dior",
+      "Gucci",
+      "Louis Vuitton"
+    ],
+    "phase36_protocol": [
+      "Rolex",
+      "Omega",
+      "Cartier",
+      "Jaeger-LeCoultre",
+      "IWC",
+      "Tudor",
+      "Breitling",
+      "Panerai",
+      "TAG Heuer",
+      "Hublot",
+      "Chopard",
+      "Longines",
+      "Zenith",
+      "Breguet",
+      "Casio",
+      "Swatch",
+      "Seiko",
+      "Citizen",
+      "Timex",
+      "Tissot",
+      "Apple",
+      "Samsung",
+      "Garmin",
+      "Fitbit"
+    ],
+    "training_catalog": [
+      "A. Lange & S\u00f6hne",
+      "Audemars Piguet",
+      "Patek Philippe",
+      "Richard Mille",
+      "Vacheron Constantin"
+    ]
+  },
+  "final_test_touched": false,
+  "frozen_model": {
+    "architecture": "DINOv3 ViT-B/16",
+    "backbone": "vit_base_patch16_dinov3.lvd1689m",
+    "checkpoint": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+    "decision_threshold": 0.5,
+    "head": "cls_patch_attention",
+    "inference": "fp32",
+    "input_size": 512,
+    "new_threshold": false,
+    "recalibrate": false,
+    "retrain": false,
+    "sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "temperature": 0.24038200410185356
+  },
+  "minimum_target_counts": {
+    "authentic": 100,
+    "counterfeit": 100
+  },
+  "phase": 46,
+  "production_promotion_allowed": false,
+  "protocol_id": "sixth_brand_validation_v1",
+  "research_questions": [
+    "Does the frozen DINOv3 model generalize to a genuinely unseen sixth watch brand from an independent dataset?",
+    "Why did the Richard Mille leave-one-brand-out model confidently classify some counterfeit images as authentic?"
+  ],
+  "richard_mille_forensics": {
+    "aggregate_false_authentic_count": 20,
+    "model": "fold_4 leave-one-brand-out cls_patch_attention, not epoch_018",
+    "persisted_examples": 15,
+    "retrain": false,
+    "source": "ml_rtx5080/experiments/v3_cross_brand/fold_4_rm/metrics.json"
+  },
+  "target_selection_rule": "Choose a watch brand outside the excluded lists only if a corpus meets the admission rules. Do not choose from model predictions. If no corpus qualifies, record BLOCKED and do not score.",
+  "written_before_external_scoring": true
+}

@@ -1,0 +1,66 @@
+{
+  "candidates": [
+    {
+      "authenticity_labels": "Category membership is not an authentic-versus-counterfeit label",
+      "brand_overlap": "Rolex, Omega, Cartier, and the other Phase 36 protocol brands",
+      "decision": "rejected",
+      "name": "Wikimedia Commons watch categories"
+    },
+    {
+      "decision": "rejected",
+      "license": "CC BY 4.0 claimed",
+      "name": "Roboflow Rolex exports already audited in Phase 37",
+      "original_photographs": false,
+      "reason": "Filenames contain .rf. derivatives. Brand is Rolex, which Phase 35 scored. Labels are not independently verified."
+    },
+    {
+      "authenticity_labels": false,
+      "brand_overlap": "Includes Audemars Piguet, Patek Philippe, Vacheron Constantin, Breguet, and Tissot",
+      "decision": "rejected",
+      "license": "CC BY 4.0",
+      "name": "Roboflow Watches object-detection set",
+      "url": "https://universe.roboflow.com/class-4n5va/watches-nge4k"
+    },
+    {
+      "authenticity_labels": false,
+      "decision": "rejected",
+      "license": "Apache 2.0",
+      "name": "Kaggle Luxury Chrono Watches",
+      "url": "https://www.kaggle.com/datasets/mohdrehanhaider/chrono-analyzer"
+    },
+    {
+      "authenticity_labels": false,
+      "brand_overlap": "Breitling, Tissot, Omega, Rolex, Audemars Piguet, Breguet, Patek Philippe, Vacheron Constantin",
+      "decision": "rejected",
+      "license": "unknown",
+      "name": "Kaggle Watche Image Dataset",
+      "provenance": "Bing image scrape"
+    },
+    {
+      "authenticity_labels": "Unverified mix. The card says images lack authenticity metadata.",
+      "decision": "rejected",
+      "license": "Research-only. Image rights are not granted.",
+      "name": "Innovatiana luxury fashion fraud set",
+      "subject": "Chanel fashion, not a watch brand"
+    },
+    {
+      "content": "Synthetic text verdicts, including Seiko and Glash\u00fctte examples. Not photographs with independent labels.",
+      "decision": "rejected",
+      "name": "Hugging Face 316usman/product-authenticity"
+    },
+    {
+      "authenticity_labels": false,
+      "decision": "rejected",
+      "name": "Hugging Face watch listing tables (yotam22/watches, pk3388/ethoswatches)"
+    },
+    {
+      "decision": "rejected",
+      "name": "Timepiecepedia and local unlabeled archives",
+      "reason": "Already rejected in the Phase 37 candidate review for missing image licenses or missing provenance."
+    }
+  ],
+  "external_classification_validation": "BLOCKED",
+  "final_test_images_opened": false,
+  "images_collected": 0,
+  "overlap_audit_against_existing_manifests": "Not run on new bytes. No new image was hashed."
+}

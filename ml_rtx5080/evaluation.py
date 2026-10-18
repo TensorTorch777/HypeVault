@@ -397,7 +397,7 @@ def _roc_auc(labels: np.ndarray, scores: np.ndarray) -> float | None:
     ends = _tie_ends(ordered_scores)
     true_rate = np.r_[0.0, true_positives[ends] / positives]
     false_rate = np.r_[0.0, false_positives[ends] / negatives]
-    integrate = getattr(np, "trapezoid", np.trapz)
+    integrate = np.trapezoid if hasattr(np, "trapezoid") else np.trapz
     return float(integrate(true_rate, false_rate))
 
 

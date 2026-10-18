@@ -1,0 +1,2 @@
+status,server_reachable,reason
+unavailable,False,tritonserver is not installed and nothing accepted a connection on port 8001.

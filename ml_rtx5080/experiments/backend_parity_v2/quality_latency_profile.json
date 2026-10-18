@@ -1,0 +1,94 @@
+{
+  "authoritative_function": "image_quality.extract_quality_features",
+  "conclusion": "Quality flags are computed from the original image. A single decode can feed both preprocess and quality, and the shadow path already does that. The resized 512 model tensor is not a valid quality input. The authoritative feature function was not replaced.",
+  "resized_model_buffer": {
+    "flags_match": true,
+    "min_dimension_original": 550,
+    "min_dimension_resized": 512,
+    "original_flags": [],
+    "resized_flags": [],
+    "small_flags_match": false,
+    "small_original_flags": [
+      "LOW_RESOLUTION",
+      "BLURRY",
+      "LOW_CONTRAST",
+      "SUSPICIOUS_FRAMING"
+    ],
+    "small_resized_flags": [
+      "BLURRY",
+      "LOW_CONTRAST"
+    ],
+    "used_for_decisions": false
+  },
+  "rule_changed": false,
+  "samples": [
+    {
+      "contrast": 0.3052730373113513,
+      "contrast_ms": 0.2996909897774458,
+      "decode_ms": 0.22342600277625024,
+      "flags": [],
+      "flags_ms": 0.002988992491737008,
+      "full_feature_function_ms": 6.381095008691773,
+      "height": 550,
+      "laplacian_ms": 1.076229993486777,
+      "luminance_ms": 2.015981008298695,
+      "occupancy": 0.7980297520661157,
+      "occupancy_ms": 0.6403090083040297,
+      "percentile_ms": 2.418629010207951,
+      "percentile_spread": 0.853236862745098,
+      "rgb_conversion_ms": 1.1061359837185591,
+      "sample_id": "Label_0_Watches/Audemars Piguet/b1a40ed1b5b9.jpg",
+      "sharpness": 0.025563788105763968,
+      "total_profiled_ms": 14.164569991407916,
+      "width": 550
+    },
+    {
+      "contrast": 0.2871394783022137,
+      "contrast_ms": 1.3421050098259002,
+      "decode_ms": 0.15449299826286733,
+      "flags": [],
+      "flags_ms": 0.003850000211969018,
+      "full_feature_function_ms": 30.45051998924464,
+      "height": 1149,
+      "laplacian_ms": 4.71445097355172,
+      "luminance_ms": 10.874113999307156,
+      "occupancy": 0.6163766726501305,
+      "occupancy_ms": 2.580723026767373,
+      "percentile_ms": 8.26482500997372,
+      "percentile_spread": 0.9372549019607843,
+      "rgb_conversion_ms": 3.1856769928708673,
+      "sample_id": "Label_0_Watches/Patek Philippe/9ba50fea3805.jpg",
+      "sharpness": 0.01145570893025997,
+      "total_profiled_ms": 61.57087898463942,
+      "width": 1024
+    },
+    {
+      "contrast": 0.2405790780476377,
+      "contrast_ms": 0.7132409955374897,
+      "decode_ms": 0.16250699991360307,
+      "flags": [],
+      "flags_ms": 0.0029259826987981796,
+      "full_feature_function_ms": 16.080711997346953,
+      "height": 918,
+      "laplacian_ms": 2.574737009126693,
+      "luminance_ms": 5.62592301866971,
+      "occupancy": 0.7424988013223307,
+      "occupancy_ms": 1.2865419848822057,
+      "percentile_ms": 4.612461983924732,
+      "percentile_spread": 0.806949019607843,
+      "rgb_conversion_ms": 2.2356619883794338,
+      "sample_id": "Label_0_Watches/Patek Philippe/c2f778c66d15.jpg",
+      "sharpness": 0.01684926310436158,
+      "total_profiled_ms": 33.294781984295696,
+      "width": 777
+    }
+  ],
+  "shared_decode": {
+    "adopted": false,
+    "conclusion": "Quality flags are computed from the original image. A single decode can feed both preprocess and quality, and the shadow path already does that. The resized 512 model tensor is not a valid quality input. The authoritative feature function was not replaced.",
+    "flags_match": true,
+    "numeric_features_match": true,
+    "path_decode_p50_ms": 8.094025019090623,
+    "shared_decode_p50_ms": 7.811506016878411
+  }
+}
