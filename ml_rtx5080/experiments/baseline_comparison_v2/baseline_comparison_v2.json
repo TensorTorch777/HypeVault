@@ -1,0 +1,769 @@
+{
+  "winner": null,
+  "winner_selection_rule": "Among safety-qualified validation checkpoints, highest PR-AUC, then higher F1, then lower false-authentic rate. The final test set is not used.",
+  "winner_status": "Safety-qualified models tied on PR-AUC, F1, and false-authentic rate.",
+  "ranking_source": "phase17_validation_only",
+  "phase15_used_for_ranking": false,
+  "test_set_used": false,
+  "production_threshold": null,
+  "temperature": "not_fitted",
+  "ood_used_for_selection": false,
+  "experiments": [
+    {
+      "directory": "v2_dinov2_cls_only",
+      "family": "dinov2",
+      "backbone": "vit_base_patch14_dinov2.lvd142m",
+      "head": "cls_only",
+      "input_size": 504,
+      "completed": true,
+      "safety_validated": true,
+      "checkpoint": "epoch_030",
+      "epoch": 30,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "roc_auc": 1.0,
+      "validation_loss": 0.010064411105865494,
+      "peak_allocated_bytes": 9625030144,
+      "peak_reserved_bytes": 10762584064,
+      "runtime_seconds": 9643.44720005989,
+      "brand_summary": {
+        "global_false_authentic_rate": 0.0,
+        "global_pr_auc": 1.0,
+        "macro_false_authentic_rate": 0.0,
+        "macro_pr_auc": 1.0,
+        "macro_f1": 1.0,
+        "macro_recall": 1.0,
+        "worst_brand_far": 0.0,
+        "brand_far_spread": 0.0,
+        "checkpoint_selection_affected": false,
+        "brands": [
+          {
+            "brand": "A. Lange & S\u00f6hne",
+            "authentic_count": 315,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Audemars Piguet",
+            "authentic_count": 297,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Patek Philippe",
+            "authentic_count": 293,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Richard Mille",
+            "authentic_count": 300,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Vacheron Constantin",
+            "authentic_count": 292,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          }
+        ]
+      },
+      "test_set_used_for_selection": false,
+      "production_threshold": null,
+      "phase15": {
+        "pr_auc": 0.9999961198364505,
+        "f1": 0.9983311081441922,
+        "false_authentic_rate": 0.003,
+        "roc_auc": 0.9999964444444445
+      },
+      "performance_delta": {
+        "pr_auc": 3.880163549463411e-06,
+        "f1": 0.0016688918558077637,
+        "false_authentic_rate": -0.003
+      },
+      "hyperparameters": {
+        "manifest_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+        "manifest_membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+        "split_strategy": "brand_stratified_duplicate_safe",
+        "calibration_membership_source": "split_manifest_v2",
+        "dataset_counts": {
+          "train": {
+            "split": "train",
+            "samples": 20999,
+            "authentic": 10499,
+            "fake": 10500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 4201,
+              "Audemars Piguet": 4195,
+              "Patek Philippe": 4195,
+              "Richard Mille": 4202,
+              "Vacheron Constantin": 4206
+            }
+          },
+          "calibration": {
+            "split": "calibration",
+            "samples": 2998,
+            "authentic": 1498,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 601,
+              "Audemars Piguet": 599,
+              "Patek Philippe": 596,
+              "Richard Mille": 600,
+              "Vacheron Constantin": 602
+            }
+          },
+          "validation": {
+            "split": "validation",
+            "samples": 2997,
+            "authentic": 1497,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 615,
+              "Audemars Piguet": 597,
+              "Patek Philippe": 593,
+              "Richard Mille": 600,
+              "Vacheron Constantin": 592
+            }
+          },
+          "test": {
+            "split": "test",
+            "samples": 3006,
+            "authentic": 1506,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 583,
+              "Audemars Piguet": 609,
+              "Patek Philippe": 616,
+              "Richard Mille": 598,
+              "Vacheron Constantin": 600
+            }
+          }
+        },
+        "seed": 42,
+        "family": "dinov2",
+        "backbone": "vit_base_patch14_dinov2.lvd142m",
+        "head": "cls_only",
+        "input_size": 504,
+        "precision": "bf16",
+        "batch_size": 16,
+        "accumulate_grad": 2,
+        "effective_batch": 32,
+        "backbone_lr": 1e-05,
+        "head_lr": 0.0001,
+        "layer_decay": 0.75,
+        "weight_decay": 0.05,
+        "warmup_epochs": 2,
+        "num_epochs": 30,
+        "early_stop_patience": 6,
+        "grad_clip": 1.0,
+        "label_smoothing": 0.02,
+        "mixup_alpha": 0.0,
+        "validation_threshold": 0.5,
+        "max_false_authentic_rate": 0.02,
+        "preprocessing_version": "resize_pad_square_eval_v1",
+        "deterministic_algorithms": false,
+        "cudnn_benchmark": true
+      },
+      "test_root": null,
+      "gpu_name": "NVIDIA GeForce RTX 5080",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_fake_rate": 0.0,
+      "threshold": 0.5,
+      "threshold_policy": "fixed_not_calibrated",
+      "history_contains_test": false,
+      "false_authentic": 0,
+      "false_fake": 0
+    },
+    {
+      "directory": "v2_dinov2_cls_patch_attention",
+      "family": "dinov2",
+      "backbone": "vit_base_patch14_dinov2.lvd142m",
+      "head": "cls_patch_attention",
+      "input_size": 504,
+      "completed": true,
+      "safety_validated": true,
+      "checkpoint": "epoch_030",
+      "epoch": 30,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "roc_auc": 1.0,
+      "validation_loss": 0.010062746822516969,
+      "peak_allocated_bytes": 9765018112,
+      "peak_reserved_bytes": 10794041344,
+      "runtime_seconds": 9763.929130077362,
+      "brand_summary": {
+        "global_false_authentic_rate": 0.0,
+        "global_pr_auc": 1.0,
+        "macro_false_authentic_rate": 0.0,
+        "macro_pr_auc": 1.0,
+        "macro_f1": 1.0,
+        "macro_recall": 1.0,
+        "worst_brand_far": 0.0,
+        "brand_far_spread": 0.0,
+        "checkpoint_selection_affected": false,
+        "brands": [
+          {
+            "brand": "A. Lange & S\u00f6hne",
+            "authentic_count": 315,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Audemars Piguet",
+            "authentic_count": 297,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Patek Philippe",
+            "authentic_count": 293,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Richard Mille",
+            "authentic_count": 300,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Vacheron Constantin",
+            "authentic_count": 292,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          }
+        ]
+      },
+      "test_set_used_for_selection": false,
+      "production_threshold": null,
+      "phase15": {
+        "pr_auc": 1.0,
+        "f1": 0.9993328885923949,
+        "false_authentic_rate": 0.0013333333333333333,
+        "roc_auc": 0.9999999999999999
+      },
+      "performance_delta": {
+        "pr_auc": 0.0,
+        "f1": 0.0006671114076051143,
+        "false_authentic_rate": -0.0013333333333333333
+      },
+      "hyperparameters": {
+        "manifest_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+        "manifest_membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+        "split_strategy": "brand_stratified_duplicate_safe",
+        "calibration_membership_source": "split_manifest_v2",
+        "dataset_counts": {
+          "train": {
+            "split": "train",
+            "samples": 20999,
+            "authentic": 10499,
+            "fake": 10500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 4201,
+              "Audemars Piguet": 4195,
+              "Patek Philippe": 4195,
+              "Richard Mille": 4202,
+              "Vacheron Constantin": 4206
+            }
+          },
+          "calibration": {
+            "split": "calibration",
+            "samples": 2998,
+            "authentic": 1498,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 601,
+              "Audemars Piguet": 599,
+              "Patek Philippe": 596,
+              "Richard Mille": 600,
+              "Vacheron Constantin": 602
+            }
+          },
+          "validation": {
+            "split": "validation",
+            "samples": 2997,
+            "authentic": 1497,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 615,
+              "Audemars Piguet": 597,
+              "Patek Philippe": 593,
+              "Richard Mille": 600,
+              "Vacheron Constantin": 592
+            }
+          },
+          "test": {
+            "split": "test",
+            "samples": 3006,
+            "authentic": 1506,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 583,
+              "Audemars Piguet": 609,
+              "Patek Philippe": 616,
+              "Richard Mille": 598,
+              "Vacheron Constantin": 600
+            }
+          }
+        },
+        "seed": 42,
+        "family": "dinov2",
+        "backbone": "vit_base_patch14_dinov2.lvd142m",
+        "head": "cls_patch_attention",
+        "input_size": 504,
+        "precision": "bf16",
+        "batch_size": 16,
+        "accumulate_grad": 2,
+        "effective_batch": 32,
+        "backbone_lr": 1e-05,
+        "head_lr": 0.0001,
+        "layer_decay": 0.75,
+        "weight_decay": 0.05,
+        "warmup_epochs": 2,
+        "num_epochs": 30,
+        "early_stop_patience": 6,
+        "grad_clip": 1.0,
+        "label_smoothing": 0.02,
+        "mixup_alpha": 0.0,
+        "validation_threshold": 0.5,
+        "max_false_authentic_rate": 0.02,
+        "preprocessing_version": "resize_pad_square_eval_v1",
+        "deterministic_algorithms": false,
+        "cudnn_benchmark": true
+      },
+      "test_root": null,
+      "gpu_name": "NVIDIA GeForce RTX 5080",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_fake_rate": 0.0,
+      "threshold": 0.5,
+      "threshold_policy": "fixed_not_calibrated",
+      "history_contains_test": false,
+      "false_authentic": 0,
+      "false_fake": 0
+    },
+    {
+      "directory": "v2_dinov3_cls_only",
+      "family": "dinov3",
+      "backbone": "vit_base_patch16_dinov3.lvd1689m",
+      "head": "cls_only",
+      "input_size": 512,
+      "completed": true,
+      "safety_validated": true,
+      "checkpoint": "epoch_030",
+      "epoch": 30,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "roc_auc": 1.0,
+      "validation_loss": 0.010086415761566542,
+      "peak_allocated_bytes": 8864262144,
+      "peak_reserved_bytes": 10575937536,
+      "runtime_seconds": 8903.282101631165,
+      "brand_summary": {
+        "global_false_authentic_rate": 0.0,
+        "global_pr_auc": 1.0,
+        "macro_false_authentic_rate": 0.0,
+        "macro_pr_auc": 1.0,
+        "macro_f1": 1.0,
+        "macro_recall": 1.0,
+        "worst_brand_far": 0.0,
+        "brand_far_spread": 0.0,
+        "checkpoint_selection_affected": false,
+        "brands": [
+          {
+            "brand": "A. Lange & S\u00f6hne",
+            "authentic_count": 315,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Audemars Piguet",
+            "authentic_count": 297,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Patek Philippe",
+            "authentic_count": 293,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Richard Mille",
+            "authentic_count": 300,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Vacheron Constantin",
+            "authentic_count": 292,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          }
+        ]
+      },
+      "test_set_used_for_selection": false,
+      "production_threshold": null,
+      "phase15": {
+        "pr_auc": 0.9999890642552324,
+        "f1": 0.9984992496248123,
+        "false_authentic_rate": 0.002,
+        "roc_auc": 0.9999890555555556
+      },
+      "performance_delta": {
+        "pr_auc": 1.0935744767626154e-05,
+        "f1": 0.0015007503751877094,
+        "false_authentic_rate": -0.002
+      },
+      "hyperparameters": {
+        "manifest_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+        "manifest_membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+        "split_strategy": "brand_stratified_duplicate_safe",
+        "calibration_membership_source": "split_manifest_v2",
+        "dataset_counts": {
+          "train": {
+            "split": "train",
+            "samples": 20999,
+            "authentic": 10499,
+            "fake": 10500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 4201,
+              "Audemars Piguet": 4195,
+              "Patek Philippe": 4195,
+              "Richard Mille": 4202,
+              "Vacheron Constantin": 4206
+            }
+          },
+          "calibration": {
+            "split": "calibration",
+            "samples": 2998,
+            "authentic": 1498,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 601,
+              "Audemars Piguet": 599,
+              "Patek Philippe": 596,
+              "Richard Mille": 600,
+              "Vacheron Constantin": 602
+            }
+          },
+          "validation": {
+            "split": "validation",
+            "samples": 2997,
+            "authentic": 1497,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 615,
+              "Audemars Piguet": 597,
+              "Patek Philippe": 593,
+              "Richard Mille": 600,
+              "Vacheron Constantin": 592
+            }
+          },
+          "test": {
+            "split": "test",
+            "samples": 3006,
+            "authentic": 1506,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 583,
+              "Audemars Piguet": 609,
+              "Patek Philippe": 616,
+              "Richard Mille": 598,
+              "Vacheron Constantin": 600
+            }
+          }
+        },
+        "seed": 42,
+        "family": "dinov3",
+        "backbone": "vit_base_patch16_dinov3.lvd1689m",
+        "head": "cls_only",
+        "input_size": 512,
+        "precision": "bf16",
+        "batch_size": 16,
+        "accumulate_grad": 2,
+        "effective_batch": 32,
+        "backbone_lr": 1e-05,
+        "head_lr": 0.0001,
+        "layer_decay": 0.75,
+        "weight_decay": 0.05,
+        "warmup_epochs": 2,
+        "num_epochs": 30,
+        "early_stop_patience": 6,
+        "grad_clip": 1.0,
+        "label_smoothing": 0.02,
+        "mixup_alpha": 0.0,
+        "validation_threshold": 0.5,
+        "max_false_authentic_rate": 0.02,
+        "preprocessing_version": "resize_pad_square_eval_v1",
+        "deterministic_algorithms": false,
+        "cudnn_benchmark": true
+      },
+      "test_root": null,
+      "gpu_name": "NVIDIA GeForce RTX 5080",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_fake_rate": 0.0,
+      "threshold": 0.5,
+      "threshold_policy": "fixed_not_calibrated",
+      "history_contains_test": false,
+      "false_authentic": 0,
+      "false_fake": 0
+    },
+    {
+      "directory": "v2_dinov3_cls_patch_attention",
+      "family": "dinov3",
+      "backbone": "vit_base_patch16_dinov3.lvd1689m",
+      "head": "cls_patch_attention",
+      "input_size": 512,
+      "completed": true,
+      "safety_validated": true,
+      "checkpoint": "epoch_030",
+      "epoch": 30,
+      "pr_auc": 1.0,
+      "f1": 1.0,
+      "false_authentic_rate": 0.0,
+      "roc_auc": 1.0,
+      "validation_loss": 0.010065387637215727,
+      "peak_allocated_bytes": 8963785728,
+      "peak_reserved_bytes": 10687086592,
+      "runtime_seconds": 9006.169022798538,
+      "brand_summary": {
+        "global_false_authentic_rate": 0.0,
+        "global_pr_auc": 1.0,
+        "macro_false_authentic_rate": 0.0,
+        "macro_pr_auc": 1.0,
+        "macro_f1": 1.0,
+        "macro_recall": 1.0,
+        "worst_brand_far": 0.0,
+        "brand_far_spread": 0.0,
+        "checkpoint_selection_affected": false,
+        "brands": [
+          {
+            "brand": "A. Lange & S\u00f6hne",
+            "authentic_count": 315,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Audemars Piguet",
+            "authentic_count": 297,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Patek Philippe",
+            "authentic_count": 293,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Richard Mille",
+            "authentic_count": 300,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          },
+          {
+            "brand": "Vacheron Constantin",
+            "authentic_count": 292,
+            "fake_count": 300,
+            "false_authentic_rate": 0.0,
+            "f1": 1.0,
+            "recall": 1.0,
+            "pr_auc": 1.0
+          }
+        ]
+      },
+      "test_set_used_for_selection": false,
+      "production_threshold": null,
+      "phase15": {
+        "pr_auc": 0.9999977773257707,
+        "f1": 0.9984982479559485,
+        "false_authentic_rate": 0.0026666666666666666,
+        "roc_auc": 0.9999978333333333
+      },
+      "performance_delta": {
+        "pr_auc": 2.2226742293351975e-06,
+        "f1": 0.001501752044051452,
+        "false_authentic_rate": -0.0026666666666666666
+      },
+      "hyperparameters": {
+        "manifest_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+        "manifest_membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+        "split_strategy": "brand_stratified_duplicate_safe",
+        "calibration_membership_source": "split_manifest_v2",
+        "dataset_counts": {
+          "train": {
+            "split": "train",
+            "samples": 20999,
+            "authentic": 10499,
+            "fake": 10500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 4201,
+              "Audemars Piguet": 4195,
+              "Patek Philippe": 4195,
+              "Richard Mille": 4202,
+              "Vacheron Constantin": 4206
+            }
+          },
+          "calibration": {
+            "split": "calibration",
+            "samples": 2998,
+            "authentic": 1498,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 601,
+              "Audemars Piguet": 599,
+              "Patek Philippe": 596,
+              "Richard Mille": 600,
+              "Vacheron Constantin": 602
+            }
+          },
+          "validation": {
+            "split": "validation",
+            "samples": 2997,
+            "authentic": 1497,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 615,
+              "Audemars Piguet": 597,
+              "Patek Philippe": 593,
+              "Richard Mille": 600,
+              "Vacheron Constantin": 592
+            }
+          },
+          "test": {
+            "split": "test",
+            "samples": 3006,
+            "authentic": 1506,
+            "fake": 1500,
+            "group_count": 10,
+            "brand_counts": {
+              "A. Lange & S\u00f6hne": 583,
+              "Audemars Piguet": 609,
+              "Patek Philippe": 616,
+              "Richard Mille": 598,
+              "Vacheron Constantin": 600
+            }
+          }
+        },
+        "seed": 42,
+        "family": "dinov3",
+        "backbone": "vit_base_patch16_dinov3.lvd1689m",
+        "head": "cls_patch_attention",
+        "input_size": 512,
+        "precision": "bf16",
+        "batch_size": 16,
+        "accumulate_grad": 2,
+        "effective_batch": 32,
+        "backbone_lr": 1e-05,
+        "head_lr": 0.0001,
+        "layer_decay": 0.75,
+        "weight_decay": 0.05,
+        "warmup_epochs": 2,
+        "num_epochs": 30,
+        "early_stop_patience": 6,
+        "grad_clip": 1.0,
+        "label_smoothing": 0.02,
+        "mixup_alpha": 0.0,
+        "validation_threshold": 0.5,
+        "max_false_authentic_rate": 0.02,
+        "preprocessing_version": "resize_pad_square_eval_v1",
+        "deterministic_algorithms": false,
+        "cudnn_benchmark": true
+      },
+      "test_root": null,
+      "gpu_name": "NVIDIA GeForce RTX 5080",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_fake_rate": 0.0,
+      "threshold": 0.5,
+      "threshold_policy": "fixed_not_calibrated",
+      "history_contains_test": false,
+      "false_authentic": 0,
+      "false_fake": 0
+    }
+  ]
+}

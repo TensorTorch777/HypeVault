@@ -1,0 +1,6 @@
+brand,sample_count,authentic_count,fake_count,baseline_pr_auc,baseline_f1,baseline_recall,baseline_false_authentic_count,baseline_false_authentic_rate,baseline_false_fake_count,baseline_false_fake_rate,calibrated_pr_auc,calibrated_f1,calibrated_recall,calibrated_false_authentic_count,calibrated_false_authentic_rate,calibrated_false_fake_count,calibrated_false_fake_rate
+A. Lange & Söhne,583,283,300,1.0,1.0,1.0,0,0.0,0,0.0,1.0,1.0,1.0,0,0.0,0,0.0
+Audemars Piguet,609,309,300,1.0,1.0,1.0,0,0.0,0,0.0,1.0,1.0,1.0,0,0.0,0,0.0
+Patek Philippe,616,316,300,1.0,1.0,1.0,0,0.0,0,0.0,1.0,1.0,1.0,0,0.0,0,0.0
+Richard Mille,598,298,300,1.0,1.0,1.0,0,0.0,0,0.0,1.0,1.0,1.0,0,0.0,0,0.0
+Vacheron Constantin,600,300,300,1.0,1.0,1.0,0,0.0,0,0.0,1.0,1.0,1.0,0,0.0,0,0.0

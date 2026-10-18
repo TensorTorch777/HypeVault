@@ -1,0 +1,10 @@
+sample_id,transform,expected_decision,reference_decision_flags,fast_flags,flags_match,reference_decision,fast_decision,decision_match,matches_expected,logit
+Label_0_Watches/Audemars Piguet/b1a40ed1b5b9.jpg,mild_crop,REVIEW,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,True,4.533697605133057
+Label_0_Watches/Audemars Piguet/b1a40ed1b5b9.jpg,partial_crop,REVIEW,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,True,4.631185531616211
+Label_0_Watches/Patek Philippe/9ba50fea3805.jpg,lower_resolution,REVIEW,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,True,3.4449734687805176
+Label_0_Watches/Patek Philippe/c2f778c66d15.jpg,lower_resolution,REVIEW,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,True,4.037087440490723
+Label_0_Watches/A. Lange & Söhne/63d2c86b29d3.jpg,lower_resolution,REVIEW,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,True,3.992917776107788
+Label_0_Watches/Audemars Piguet/99fcd3b9051c.jpg,lower_resolution,REVIEW,LOW_RESOLUTION|LOW_CONTRAST,LOW_RESOLUTION|LOW_CONTRAST,True,REVIEW,REVIEW,True,True,4.608257293701172
+Label_0_Watches/Richard Mille/a11094843532.jpg,lower_resolution,REVIEW,LOW_RESOLUTION,LOW_RESOLUTION,True,REVIEW,REVIEW,True,True,4.602858543395996
+Label_0_Watches/Richard Mille/9eda705bd8c9.jpg,darker,REVIEW,LOW_CONTRAST,LOW_CONTRAST,True,REVIEW,REVIEW,True,True,3.3558452129364014
+Label_0_Watches/Richard Mille/9eda705bd8c9.jpg,resize_recompression,FAKE,,,True,FAKE,FAKE,True,True,0.085111603140831

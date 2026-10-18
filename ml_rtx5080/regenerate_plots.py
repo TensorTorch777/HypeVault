@@ -101,7 +101,9 @@ def run_eval_plots(
     val_samples = [catalog[i] for i in val_idx]
     tv.verify_product_split(train_samples, val_samples)
 
-    val_tf = tv.build_transforms(cfg["img_size"], train=False)
+    family = str(cfg.get("family", "dinov2"))
+    profile = str(cfg.get("augmentation_profile", "conservative"))
+    val_tf = tv.build_transforms(family, train=False, profile=profile)
     val_ds = tv.HypeVaultDataset(
         data_root,
         transform=val_tf,

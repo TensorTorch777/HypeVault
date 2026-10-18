@@ -1,0 +1,228 @@
+{
+  "authenticity_threshold": 0.5,
+  "brand_cap": 40,
+  "brand_cap_meaning": "At most 40 admitted files per brand, or per Commons category when brand is UNKNOWN. The cap is a diversity rule.",
+  "categories": [
+    {
+      "brand": "Rolex",
+      "commons_category": "Rolex watches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Rolex",
+      "commons_category": "Rolex Datejust",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Rolex",
+      "commons_category": "Rolex Submariner",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Rolex",
+      "commons_category": "Rolex Daytona",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Omega",
+      "commons_category": "Omega watches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Cartier",
+      "commons_category": "Cartier watches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Jaeger-LeCoultre",
+      "commons_category": "Jaeger-LeCoultre wristwatches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "IWC",
+      "commons_category": "IWC watches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Tudor",
+      "commons_category": "Tudor watches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Breitling",
+      "commons_category": "Breitling watches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Panerai",
+      "commons_category": "Panerai watches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "TAG Heuer",
+      "commons_category": "TAG Heuer watches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Hublot",
+      "commons_category": "Hublot watches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Chopard",
+      "commons_category": "Chopard watches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Longines",
+      "commons_category": "Longines watches",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Zenith",
+      "commons_category": "Zenith (watch)",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Breguet",
+      "commons_category": "Breguet (watch)",
+      "watch_category": "unseen_luxury"
+    },
+    {
+      "brand": "Casio",
+      "commons_category": "Casio watches",
+      "watch_category": "ordinary_watch"
+    },
+    {
+      "brand": "Swatch",
+      "commons_category": "Swatch watches",
+      "watch_category": "ordinary_watch"
+    },
+    {
+      "brand": "Seiko",
+      "commons_category": "Seiko watches",
+      "watch_category": "ordinary_watch"
+    },
+    {
+      "brand": "Citizen",
+      "commons_category": "Citizen watches",
+      "watch_category": "ordinary_watch"
+    },
+    {
+      "brand": "Timex",
+      "commons_category": "Timex Watches",
+      "watch_category": "ordinary_watch"
+    },
+    {
+      "brand": "Tissot",
+      "commons_category": "Tissot wristwatches",
+      "watch_category": "ordinary_watch"
+    },
+    {
+      "brand": "UNKNOWN",
+      "commons_category": "Smartwatches",
+      "watch_category": "smart_digital"
+    },
+    {
+      "brand": "Apple",
+      "commons_category": "Apple Watch",
+      "watch_category": "smart_digital"
+    },
+    {
+      "brand": "Samsung",
+      "commons_category": "Samsung Galaxy Watch",
+      "watch_category": "smart_digital"
+    },
+    {
+      "brand": "Garmin",
+      "commons_category": "Garmin watches",
+      "watch_category": "smart_digital"
+    },
+    {
+      "brand": "Fitbit",
+      "commons_category": "Fitbit",
+      "watch_category": "smart_digital"
+    },
+    {
+      "brand": "UNKNOWN",
+      "commons_category": "Digital watches",
+      "watch_category": "smart_digital"
+    },
+    {
+      "brand": "UNKNOWN",
+      "commons_category": "People wearing wristwatches",
+      "watch_category": "wrist_store"
+    },
+    {
+      "brand": "UNKNOWN",
+      "commons_category": "Watch shops",
+      "watch_category": "wrist_store"
+    }
+  ],
+  "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "development_uses": "descriptive counts only",
+  "exclusion": [
+    "Five trained brands in the title or description",
+    "Roboflow names, .rf. suffixes, and the Phase 35 corpus hashes and source URLs",
+    "Derivative tokens and the pre-listed non-watch title tokens",
+    "Thumbnail renditions are not admitted",
+    "Originals above the byte cap are skipped rather than resized",
+    "Exact SHA-256 or dHash Hamming <= 4 against the Phase 16 catalog or Phase 35 scored files",
+    "Duplicate source URLs and exact perceptual copies inside this corpus"
+  ],
+  "existing_phase35_thresholds_reported_only": {
+    "aggressive": 33.5842585568423,
+    "conservative": 37.69066974303325,
+    "moderate": 35.753779125719554
+  },
+  "final_test_used": false,
+  "holdout_uses": "evaluation only",
+  "id_geometry_reference": "Phase 35 calibration CLS cache for this checkpoint, authentic label 0 reported separately",
+  "inclusion": [
+    "Commons original file bytes at or below the byte cap",
+    "Category is one of the pre-listed watch categories",
+    "Brand is the category brand, or UNKNOWN when the category is not brand-specific",
+    "LicenseShortName is present",
+    "MIME is jpeg, png, or webp"
+  ],
+  "meaningful_brand_count": 8,
+  "methodology_version": "phase36_watch_like_ood_v1",
+  "minimum_for_a_conclusion": {
+    "holdout_ordinary_watch": 40,
+    "holdout_smart_digital": 25,
+    "holdout_unseen_luxury": 60,
+    "max_single_brand_fraction_of_holdout_unseen": 0.4,
+    "phase35_sha_overlap": 0,
+    "roboflow_count": 0,
+    "unseen_brands_with_at_least_8_holdout_images": 4
+  },
+  "original_byte_cap": 1500000,
+  "phase35_group_map": {
+    "ordinary_watch": "ood_category fashion_watches or inexpensive_or_fashion_watches",
+    "smart_digital": "ood_category smartwatches or digital_watches",
+    "unseen_luxury": "taxonomy D_unseen_luxury_brand",
+    "wrist_store": "taxonomy E_structurally_different"
+  },
+  "phase35_unseen_luxury_escape": 0.8814432989690721,
+  "primary_metric": "WATCH_OOD_HOLDOUT fraction whose current shadow decision is AUTHENTIC",
+  "production_ood_threshold": null,
+  "shadow_decision": "LOW_RESOLUTION or LOW_CONTRAST -> REVIEW; else P(fake) >= 0.50 -> FAKE; else AUTHENTIC",
+  "split_rule": "sha256 first 8 hex digits modulo 5 equals 0 means WATCH_OOD_DEV; every other residue is WATCH_OOD_HOLDOUT",
+  "status_rules": [
+    "UNRESOLVED when the minimum is not met",
+    "PASS only when unseen, ordinary, and smart/digital holdout authentic escape are all <= 0.05",
+    "CONFIRMED_FAIL when unseen-luxury holdout escape is >= 0.50",
+    "IMPROVED_BUT_NOT_SAFE when unseen-luxury escape is below 0.50, more than 0.25 below the Phase 35 rate, and still above 0.05",
+    "PARTIAL when the remaining pattern is mixed"
+  ],
+  "substantial_drop": 0.25,
+  "targets": {
+    "ordinary_watch": 200,
+    "smart_digital": 100,
+    "unseen_luxury": 300,
+    "wrist_store": 50
+  },
+  "temperature": 0.24038200410185356,
+  "threshold_search": "forbidden",
+  "wrist_store_shortfall_alone_does_not_block": true
+}

@@ -1,0 +1,35 @@
+{
+  "cleanup_growth_bytes": 0,
+  "cycles": [
+    {
+      "allocated_after_cleanup": 168057856,
+      "allocated_after_load": 523476480,
+      "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+      "cycle": 1,
+      "logit_delta": 0.0
+    },
+    {
+      "allocated_after_cleanup": 168057856,
+      "allocated_after_load": 523476480,
+      "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+      "cycle": 2,
+      "logit_delta": 0.0
+    },
+    {
+      "allocated_after_cleanup": 168057856,
+      "allocated_after_load": 523476480,
+      "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+      "cycle": 3,
+      "logit_delta": 0.0
+    },
+    {
+      "allocated_after_cleanup": 168057856,
+      "allocated_after_load": 523476480,
+      "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+      "cycle": 4,
+      "logit_delta": 0.0
+    }
+  ],
+  "duplicate_instances_intended": false,
+  "passed": true
+}

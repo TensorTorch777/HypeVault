@@ -17,8 +17,16 @@ import argparse
 import json
 import math
 import os
+import random
+import sys
 import time
+from collections import Counter
+from contextlib import nullcontext
 from pathlib import Path
+
+_PKG = Path(__file__).resolve().parent
+if str(_PKG) not in sys.path:
+    sys.path.insert(0, str(_PKG))
 
 import torch
 import torch.nn as nn
@@ -37,6 +45,67 @@ try:
 except ImportError:
     HAS_TIMM = False
 
+from dataset import (
+    LABEL_DIRS,
+    load_hypevault_samples,
+    load_records,
+    product_group_key,
+    split_indices_by_product,
+    carve_calibration_records,
+    split_records,
+    verify_no_image_overlap,
+    verify_no_product_overlap,
+    verify_no_source_leakage,
+    verify_product_split,
+    write_split_manifest,
+)
+from split_v2 import (
+    AUTHORITATIVE_MEMBERSHIP_HASH,
+    records_from_fixed_manifest,
+    write_fixed_membership_copy,
+)
+from augmentations import CONSERVATIVE, build_transforms as build_shared_transforms, preprocessing_record
+from checkpoint_selection import (
+    DEFAULT_MAX_FALSE_AUTHENTIC_RATE,
+    DEFAULT_METRIC_TOLERANCE,
+    DEFAULT_VALIDATION_THRESHOLD,
+    THRESHOLD_POLICY,
+    UNQUALIFIED_MESSAGE,
+    candidate_from_validation,
+    epoch_artifact_path,
+    load_selection_state,
+    new_selection_state,
+    should_save_production_checkpoint,
+    update_selection,
+    validate_max_false_authentic_rate,
+    validate_metric_tolerance,
+    validate_validation_threshold,
+    write_selection_report,
+)
+from classifier import build_authenticity_classifier
+from evaluation import evaluate_logits
+from layerwise_lr import (
+    build_layerwise_param_groups,
+    format_decay_summary,
+    format_param_group_table,
+)
+from manifest import IMAGENET_MEAN, IMAGENET_STD, write_training_manifest
+from training_config import (
+    FAMILY_TIMM_NAME,
+    assert_experiment_output_dir,
+    build_bce_loss,
+    load_training_checkpoint,
+    resolve_amp,
+    resolve_family_image_size,
+    sampler_decision,
+    save_training_checkpoint,
+    smooth_binary_targets,
+    validate_classifier_arch,
+    validate_label_smoothing,
+    validate_mixup_alpha,
+    write_experiment_config,
+)
+
 try:
     import matplotlib
     matplotlib.use("Agg")
@@ -52,30 +121,49 @@ except ImportError:
 # ─────────────────────────────────────────────
 DEFAULTS = dict(
     data_root="/home/tensortorch26/Desktop/HypeVault",
-    output_dir="/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/checkpoints_watches",
-    # DINOv2-Base (timm id); ~86M backbone params — fits 16 GB at 512²
+    # Experiment directory. checkpoints/ and checkpoints_watches/ are refused.
+    output_dir="/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dinov2_cls_only",
+    family="dinov2",
+    classifier_arch="cls_only",
+    # Filled from the family (504 for DINOv2, 512 for DINOv3). 0 means "use that default".
     model_name="vit_base_patch14_dinov2.lvd142m",
-    # DINOv2 patch14 → H and W must be divisible by 14 (512 is invalid). 504 = 36×14, smaller than 518.
-    img_size=504,
+    img_size=0,
+    # Phase 10 BF16 measurement on the RTX 5080: microbatch 16, accumulation 2.
     batch_size=16,
-    num_epochs=20,
-    lr=2e-5,
+    accumulate_grad=2,
+    num_epochs=30,
+    backbone_lr=1e-5,
+    head_lr=1e-4,
+    layer_decay=0.75,
     weight_decay=0.05,
     warmup_epochs=2,
-    label_smoothing=0.05,
-    dropout=0.2,
+    label_smoothing=0.02,
+    dropout=0.15,
     val_split=0.1,
     num_workers=6,
     seed=42,
     grad_clip=1.0,
-    accumulate_grad=2,                  # effective batch = 16 * 2 = 32
     amp_dtype="bf16",
     save_every=2,
-    resume_from=None,                   # path to best_model.pt to resume from
+    resume_from=None,                   # path to a checkpoint to resume from
     start_epoch=1,                      # epoch to start from when resuming
-    early_stop_patience=5,
-    mixup_alpha=0.2,
+    early_stop_patience=6,
+    # Production selection constraint. At most this fraction of actual fakes
+    # may be predicted authentic. This is not a calibrated threshold.
+    max_false_authentic_rate=DEFAULT_MAX_FALSE_AUTHENTIC_RATE,
+    metric_tolerance=DEFAULT_METRIC_TOLERANCE,
+    validation_threshold=DEFAULT_VALIDATION_THRESHOLD,
+    mixup_alpha=0.0,
+    augmentation_profile="conservative",
+    weighted_sampler=0,                 # 0 = shuffle, 1 = WeightedRandomSampler
+    split_strategy="product_disjoint",
+    test_fraction=0.1,
+    # Fraction of training-side parent directories reserved from weight updates.
+    calibration_fraction=0.10,
     test_root=None,
+    # Phase 16 manifest. When set, membership is read from this file and the
+    # old directory split / calibration carve is not called.
+    fixed_split_manifest=None,
     # Confidence threshold for AUTHENTIC verdict (raise if too many false-negatives)
     # Default 0.5 = 50% sigmoid. Raise to 0.65–0.75 if real items get flagged as fake.
     confidence_threshold=0.5,
@@ -84,129 +172,6 @@ DEFAULTS = dict(
 # ─────────────────────────────────────────────
 # Dataset
 # ─────────────────────────────────────────────
-
-LABEL_DIRS = {
-    0: ["Label_0_Watches"],
-    1: ["Label_1_Watches"],
-}
-
-
-def product_group_key(path: Path) -> str:
-    """Stable product identity: label-folder brand/model directory (image parent)."""
-    return str(path.parent.resolve())
-
-
-def load_hypevault_samples(root: Path) -> list[tuple[Path, int]]:
-    """Deterministic catalog order: label folder, brand, then filename."""
-    samples: list[tuple[Path, int]] = []
-    for label, dirs in LABEL_DIRS.items():
-        for d in dirs:
-            folder = root / d
-            if not folder.exists():
-                raise FileNotFoundError(f"Dataset folder not found: {folder}")
-            for brand_dir in sorted(folder.iterdir()):
-                if not brand_dir.is_dir():
-                    continue
-                for img_path in sorted(brand_dir.iterdir()):
-                    if img_path.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}:
-                        samples.append((img_path, label))
-    return samples
-
-
-def split_indices_by_product(
-    samples: list[tuple[Path, int]],
-    val_split: float,
-    seed: int,
-) -> tuple[list[int], list[int]]:
-    """Assign whole products to train or val; stratify by class at the product level."""
-    groups: dict[str, list[int]] = {}
-    for idx, (path, _) in enumerate(samples):
-        groups.setdefault(product_group_key(path), []).append(idx)
-
-    if not groups:
-        return [], []
-
-    labels_by_key = {key: samples[idxs[0]][1] for key, idxs in groups.items()}
-    keys_by_label: dict[int, list[str]] = {}
-    for key in groups:
-        keys_by_label.setdefault(labels_by_key[key], []).append(key)
-
-    rng = np.random.default_rng(seed)
-    val_key_set: set[str] = set()
-    for label in sorted(keys_by_label):
-        keys = list(keys_by_label[label])
-        rng.shuffle(keys)
-        if val_split <= 0 or len(keys) <= 1:
-            n_val_groups = 0
-        else:
-            n_val_groups = int(round(len(keys) * val_split))
-            n_val_groups = max(1, min(len(keys) - 1, n_val_groups))
-        val_key_set.update(keys[:n_val_groups])
-
-    train_idx: list[int] = []
-    val_idx: list[int] = []
-    for key, idxs in groups.items():
-        if key in val_key_set:
-            val_idx.extend(idxs)
-        else:
-            train_idx.extend(idxs)
-    return train_idx, val_idx
-
-
-def verify_product_split(
-    train_samples: list[tuple[Path, int]],
-    val_samples: list[tuple[Path, int]],
-) -> dict[str, int]:
-    """Fail fast if any product folder or image path appears in both splits."""
-    train_products = {product_group_key(path) for path, _ in train_samples}
-    val_products = {product_group_key(path) for path, _ in val_samples}
-    product_overlap = train_products & val_products
-    if product_overlap:
-        examples = sorted(product_overlap)[:5]
-        raise RuntimeError(
-            "Product-level split leak: "
-            f"{len(product_overlap)} folders appear in both train and val. "
-            f"Examples: {examples}"
-        )
-
-    train_files = {str(path.resolve()) for path, _ in train_samples}
-    val_files = {str(path.resolve()) for path, _ in val_samples}
-    file_overlap = train_files & val_files
-    if file_overlap:
-        examples = sorted(file_overlap)[:5]
-        raise RuntimeError(
-            "Image-level split leak: "
-            f"{len(file_overlap)} files appear in both train and val. "
-            f"Examples: {examples}"
-        )
-
-    return {
-        "train_products": len(train_products),
-        "val_products": len(val_products),
-        "train_images": len(train_samples),
-        "val_images": len(val_samples),
-        "product_overlap": 0,
-        "file_overlap": 0,
-    }
-
-
-def write_split_manifest(
-    out_dir: Path,
-    train_samples: list[tuple[Path, int]],
-    val_samples: list[tuple[Path, int]],
-    seed: int,
-    val_split: float,
-) -> None:
-    payload = {
-        "seed": seed,
-        "val_split": val_split,
-        "train_product_folders": sorted({product_group_key(p) for p, _ in train_samples}),
-        "val_product_folders": sorted({product_group_key(p) for p, _ in val_samples}),
-        "train_images": len(train_samples),
-        "val_images": len(val_samples),
-    }
-    (out_dir / "split_manifest.json").write_text(json.dumps(payload, indent=2))
-
 
 class HypeVaultDataset(Dataset):
     """
@@ -280,65 +245,9 @@ class HypeVaultDataset(Dataset):
         return img, torch.tensor(label, dtype=torch.float32)
 
 
-def build_transforms(img_size: int, train: bool) -> transforms.Compose:
-    """
-    Augmentation strategy designed to close the distribution gap between
-    clean training images (professional product photography) and real
-    seller uploads (phone photos, varied lighting, compression artifacts).
-
-    Key additions vs. vanilla DINOv2 fine-tune:
-      - JPEG compression simulation  → handles listing photo artifacts
-      - Random perspective            → handles phone-camera angles
-      - Random rotation (±15°)        → handles non-studio shots
-      - Heavy blur augmentation       → handles out-of-focus uploads
-      - Aggressive crop (0.55 min)    → handles partial/cropped images
-    """
-    mean = [0.485, 0.456, 0.406]
-    std  = [0.229, 0.224, 0.225]
-
-    class SimulateJPEG:
-        """Simulate JPEG compression artifacts (common in real listings)."""
-        def __init__(self, quality_range=(40, 95)):
-            self.quality_range = quality_range
-        def __call__(self, img: Image.Image) -> Image.Image:
-            import io, random
-            quality = random.randint(*self.quality_range)
-            buf = io.BytesIO()
-            img.save(buf, format="JPEG", quality=quality)
-            buf.seek(0)
-            return Image.open(buf).copy()
-
-    if train:
-        return transforms.Compose([
-            # Simulate phone crop / partial product shot
-            transforms.RandomResizedCrop(
-                img_size,
-                scale=(0.55, 1.0),   # more aggressive than default 0.7
-                ratio=(0.8, 1.25),   # allow portrait/landscape crops
-                interpolation=InterpolationMode.BICUBIC,
-            ),
-            transforms.RandomHorizontalFlip(),
-            # Phone camera rotation / tilt
-            transforms.RandomRotation(degrees=15, interpolation=InterpolationMode.BICUBIC),
-            # Perspective distortion (table/shelf photos)
-            transforms.RandomPerspective(distortion_scale=0.2, p=0.3),
-            # Lighting variation
-            transforms.ColorJitter(brightness=0.35, contrast=0.35, saturation=0.25, hue=0.08),
-            transforms.RandomGrayscale(p=0.03),
-            # Focus blur (phone photos)
-            transforms.RandomApply([transforms.GaussianBlur(kernel_size=7, sigma=(0.1, 3.0))], p=0.2),
-            # JPEG compression artifacts
-            transforms.RandomApply([SimulateJPEG(quality_range=(40, 90))], p=0.3),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=mean, std=std),
-        ])
-    else:
-        return transforms.Compose([
-            transforms.Resize(img_size + 16, interpolation=InterpolationMode.BICUBIC),
-            transforms.CenterCrop(img_size),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=mean, std=std),
-        ])
+def build_transforms(family: str, *, train: bool, profile: str = CONSERVATIVE) -> transforms.Compose:
+    """Use the shared pipeline in ``augmentations.py``. This function does not define one."""
+    return build_shared_transforms(family, train=train, profile=profile)
 
 
 def make_weighted_sampler(dataset: HypeVaultDataset) -> WeightedRandomSampler:
@@ -518,6 +427,92 @@ def cosine_schedule_with_warmup(
     return torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
 
 
+def optimizer_step_due(batch_idx: int, num_batches: int, accumulate_grad: int) -> bool:
+    """Return whether this 0-based batch closes an optimizer update.
+
+    Full windows step on batches divisible by ``accumulate_grad``. A trailing
+    window that does not fill the window still steps on the final batch so its
+    gradients are not discarded.
+    """
+    if accumulate_grad < 1:
+        raise ValueError(f"accumulate_grad must be >= 1, got {accumulate_grad}")
+    if num_batches < 1:
+        raise ValueError(f"num_batches must be >= 1, got {num_batches}")
+    if not 0 <= batch_idx < num_batches:
+        raise ValueError(f"batch_idx {batch_idx} outside 0..{num_batches - 1}")
+    seen = batch_idx + 1
+    on_full_window = seen % accumulate_grad == 0
+    tail_pending = seen == num_batches and num_batches % accumulate_grad != 0
+    return on_full_window or tail_pending
+
+
+def optimizer_updates_per_epoch(num_batches: int, accumulate_grad: int) -> int:
+    """Count optimizer updates in one epoch, including a partial tail window."""
+    if accumulate_grad < 1:
+        raise ValueError(f"accumulate_grad must be >= 1, got {accumulate_grad}")
+    if num_batches < 0:
+        raise ValueError(f"num_batches must be >= 0, got {num_batches}")
+    if num_batches == 0:
+        return 0
+    return math.ceil(num_batches / accumulate_grad)
+
+
+def microbatch_loss_divisor(batch_idx: int, num_batches: int, accumulate_grad: int) -> int:
+    """How many microbatches share the optimizer update that includes this batch.
+
+    A full window divides by ``accumulate_grad``. A trailing window divides by
+    the number of batches actually in that window, so a single leftover batch
+    is not scaled by the full accumulation factor.
+    """
+    if accumulate_grad < 1:
+        raise ValueError(f"accumulate_grad must be >= 1, got {accumulate_grad}")
+    if num_batches < 1:
+        raise ValueError(f"num_batches must be >= 1, got {num_batches}")
+    if not 0 <= batch_idx < num_batches:
+        raise ValueError(f"batch_idx {batch_idx} outside 0..{num_batches - 1}")
+    window_start = (batch_idx // accumulate_grad) * accumulate_grad
+    window_end = min(window_start + accumulate_grad, num_batches)
+    return window_end - window_start
+
+
+def rescale_accumulated_gradients(model, planned_divisor: int, actual_count: int) -> None:
+    """Correct a window that was divided by a size it never reached.
+
+    Each microbatch already divided the loss by ``planned_divisor``. If the
+    loader stopped after ``actual_count`` of those batches, multiply the
+    summed gradient by ``planned_divisor / actual_count`` once. When the two
+    counts match, the gradient is left alone.
+    """
+    if actual_count < 1:
+        raise ValueError(f"actual_count must be >= 1, got {actual_count}")
+    if planned_divisor < 1:
+        raise ValueError(f"planned_divisor must be >= 1, got {planned_divisor}")
+    if planned_divisor == actual_count:
+        return
+    factor = planned_divisor / actual_count
+    for parameter in model.parameters():
+        if parameter.grad is not None:
+            parameter.grad.mul_(factor)
+
+
+def autocast_for(device: torch.device, amp_dtype: str):
+    if device.type == "cuda" and amp_dtype == "bf16":
+        return autocast("cuda", dtype=torch.bfloat16)
+    if device.type == "cuda" and amp_dtype == "fp16":
+        return autocast("cuda", dtype=torch.float16)
+    return nullcontext()
+
+
+def apply_accumulated_step(model, optimizer, scaler, scheduler, grad_clip: float) -> None:
+    """Clip, step, zero, and advance the LR schedule once per optimizer update."""
+    scaler.unscale_(optimizer)
+    torch.nn.utils.clip_grad_norm_(model.parameters(), grad_clip)
+    scaler.step(optimizer)
+    scaler.update()
+    optimizer.zero_grad(set_to_none=True)
+    scheduler.step()
+
+
 # ─────────────────────────────────────────────
 # Metrics
 # ─────────────────────────────────────────────
@@ -549,12 +544,17 @@ def train_epoch(
     all_logits, all_labels = [], []
     step = step_offset
 
-    amp_dtype = torch.bfloat16 if cfg["amp_dtype"] == "bf16" else torch.float16
-    lr_now = scheduler.get_last_lr()[0]
+    amp_dtype = cfg["amp_dtype"]
+    lr_now = scheduler.get_last_lr()[-1]
+    num_batches = len(loader)
+    accumulate_grad = int(cfg["accumulate_grad"])
+    label_smoothing = float(cfg.get("label_smoothing", 0.0))
+    pending_count = 0
+    pending_divisor = 1
 
     pbar = tqdm(
         enumerate(loader),
-        total=len(loader),
+        total=num_batches,
         desc=f"Epoch {epoch} [Train]",
         ncols=110,
         leave=True,
@@ -565,30 +565,37 @@ def train_epoch(
 
         if cfg["mixup_alpha"] > 0:
             images, labels = mixup_batch(images, labels, cfg["mixup_alpha"])
+        targets = smooth_binary_targets(labels, label_smoothing)
 
-        with autocast("cuda", dtype=amp_dtype):
+        divisor = microbatch_loss_divisor(batch_idx, num_batches, accumulate_grad)
+        with autocast_for(device, amp_dtype):
             logits = model(images)
-            loss = criterion(logits, labels)
-            loss = loss / cfg["accumulate_grad"]
+            loss = criterion(logits, targets)
+            loss = loss / divisor
 
         scaler.scale(loss).backward()
+        pending_count += 1
+        pending_divisor = divisor
 
-        if (batch_idx + 1) % cfg["accumulate_grad"] == 0:
-            scaler.unscale_(optimizer)
-            torch.nn.utils.clip_grad_norm_(model.parameters(), cfg["grad_clip"])
-            scaler.step(optimizer)
-            scaler.update()
-            optimizer.zero_grad(set_to_none=True)
-            scheduler.step()
-            lr_now = scheduler.get_last_lr()[0]
+        if optimizer_step_due(batch_idx, num_batches, accumulate_grad):
+            apply_accumulated_step(model, optimizer, scaler, scheduler, cfg["grad_clip"])
+            pending_count = 0
+            lr_now = scheduler.get_last_lr()[-1]
             step += 1
 
-        batch_loss = loss.item() * cfg["accumulate_grad"]
+        batch_loss = loss.item() * divisor
         total_loss += batch_loss
         all_logits.append(logits.detach().float())
         all_labels.append(labels.detach().float())
 
-        pbar.set_postfix(loss=f"{batch_loss:.4f}", lr=f"{lr_now:.2e}", refresh=False)
+        pbar.set_postfix(loss=f"{batch_loss:.4f}", head_lr=f"{lr_now:.2e}", refresh=False)
+
+    # Loader length can exceed batches actually yielded. Flush that tail,
+    # rescaling if those batches were divided by a window that never filled.
+    if pending_count:
+        rescale_accumulated_gradients(model, pending_divisor, pending_count)
+        apply_accumulated_step(model, optimizer, scaler, scheduler, cfg["grad_clip"])
+        step += 1
 
     metrics = compute_metrics(
         torch.cat(all_logits),
@@ -603,14 +610,15 @@ def val_epoch(model, loader, criterion, device, cfg, epoch: int | None = None) -
     total_loss = 0.0
     all_logits, all_labels = [], []
 
-    amp_dtype = torch.bfloat16 if cfg["amp_dtype"] == "bf16" else torch.float16
+    amp_dtype = cfg["amp_dtype"]
     desc = f"Epoch {epoch} [ Val ]" if epoch is not None else "Evaluating"
 
     pbar = tqdm(loader, total=len(loader), desc=desc, ncols=110, leave=True)
     for images, labels in pbar:
         images = images.to(device, non_blocking=True)
         labels = labels.to(device, non_blocking=True)
-        with autocast("cuda", dtype=amp_dtype):
+        # Validation stays on the original images and the original hard labels.
+        with autocast_for(device, amp_dtype):
             logits = model(images)
             loss = criterion(logits, labels)
         total_loss += loss.item()
@@ -720,12 +728,13 @@ def plot_confusion_eval(
     num_val: int,
     best_val_acc: float,
     best_val_f1: float,
+    threshold: float = 0.5,
 ) -> None:
     if not HAS_PLOT:
         return
     probs  = torch.sigmoid(logits).cpu().numpy().astype(float)
     y_true = labels.cpu().numpy().astype(int)
-    y_pred = (probs >= 0.5).astype(int)
+    y_pred = (probs >= threshold).astype(int)
 
     cm = confusion_matrix(y_true, y_pred)
     tn, fp, fn, tp = cm.ravel()
@@ -842,6 +851,71 @@ def plot_confusion_eval(
 # Main
 # ─────────────────────────────────────────────
 
+def build_optimizer(model: nn.Module, cfg: dict):
+    """AdamW over real per-block learning rates, with decay split from no-decay."""
+    groups = build_layerwise_param_groups(
+        model,
+        base_backbone_lr=float(cfg["backbone_lr"]),
+        head_lr=float(cfg["head_lr"]),
+        layer_decay=float(cfg["layer_decay"]),
+        weight_decay=float(cfg["weight_decay"]),
+        separate_no_decay=True,
+    )
+    table = format_param_group_table(groups)
+    summary = format_decay_summary(groups)
+    print(table)
+    print(summary)
+    optimizer = torch.optim.AdamW(groups, betas=(0.9, 0.999), eps=1e-8)
+    return optimizer, groups, table
+
+
+def build_train_loader(dataset, cfg: dict, labels: list[int]):
+    decision = sampler_decision(labels, weighted_sampler=bool(int(cfg["weighted_sampler"])))
+    counts = decision["counts"]
+    print(
+        f"Class counts — authentic: {counts[0]}  deepfake: {counts[1]}  "
+        f"minority/majority: {decision['minority_ratio']:.4f}"
+    )
+    print(f"Sampler: {decision['sampler']}  shuffle: {decision['shuffle']}")
+    if decision["materially_imbalanced"] and decision["sampler"] == "none":
+        print(
+            "Class counts differ by more than 10%. WeightedRandomSampler stays off "
+            "unless --weighted_sampler 1."
+        )
+    workers = int(cfg["num_workers"])
+    common = dict(
+        batch_size=int(cfg["batch_size"]),
+        num_workers=workers,
+        pin_memory=True,
+        drop_last=False,
+        persistent_workers=workers > 0,
+    )
+    if decision["sampler"] == "weighted_random":
+        loader = DataLoader(
+            dataset,
+            sampler=make_weighted_sampler(dataset),
+            shuffle=False,
+            **common,
+        )
+    else:
+        loader = DataLoader(dataset, shuffle=True, **common)
+    return loader, decision
+
+
+def split_census(name: str, records: list) -> dict:
+    authentic = sum(1 for record in records if record.label == 0)
+    fake = sum(1 for record in records if record.label == 1)
+    brands = Counter(record.brand for record in records)
+    return {
+        "split": name,
+        "samples": len(records),
+        "authentic": authentic,
+        "fake": fake,
+        "group_count": len({record.split_group for record in records}),
+        "brand_counts": dict(sorted(brands.items())),
+    }
+
+
 def write_history(out_dir: Path, history: list[dict], test_summary: dict | None = None) -> None:
     payload: dict = {"epochs": history}
     if test_summary is not None:
@@ -857,15 +931,42 @@ def main():
         else:
             parser.add_argument(f"--{k}", type=type(v), default=v)
     cfg = vars(parser.parse_args())
+    cfg["family"] = str(cfg["family"])
+    cfg["classifier_arch"] = validate_classifier_arch(str(cfg["classifier_arch"]))
+    cfg["img_size"] = resolve_family_image_size(cfg["family"], int(cfg["img_size"]))
+    cfg["model_name"] = FAMILY_TIMM_NAME[cfg["family"]]
+    cfg["mixup_alpha"] = validate_mixup_alpha(cfg["mixup_alpha"])
+    cfg["label_smoothing"] = validate_label_smoothing(cfg["label_smoothing"])
+    cfg["max_false_authentic_rate"] = validate_max_false_authentic_rate(cfg["max_false_authentic_rate"])
+    cfg["metric_tolerance"] = validate_metric_tolerance(cfg["metric_tolerance"])
+    cfg["validation_threshold"] = validate_validation_threshold(cfg["validation_threshold"])
+    cfg["threshold_policy"] = THRESHOLD_POLICY
+    cfg.update(preprocessing_record(cfg["family"], str(cfg["augmentation_profile"]), cfg["classifier_arch"]))
+    if int(cfg["input_size"]) != int(cfg["img_size"]):
+        raise ValueError(
+            f"{cfg['family']} preprocessing is {cfg['input_size']}px, but img_size is {cfg['img_size']}"
+        )
+    if int(cfg["batch_size"]) < 1 or int(cfg["accumulate_grad"]) < 1:
+        raise ValueError("batch_size and accumulate_grad must be >= 1")
 
     # ── Paths ──────────────────────────────────
-    out_dir = Path(cfg["output_dir"])
+    out_dir = assert_experiment_output_dir(Path(cfg["output_dir"]))
     out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "config.json").write_text(json.dumps(cfg, indent=2))
+    cfg["output_dir"] = str(out_dir)
 
     # ── Reproducibility ────────────────────────
-    torch.manual_seed(cfg["seed"])
-    np.random.seed(cfg["seed"])
+    # One seed for every experiment. cudnn.benchmark stays on, so the run is
+    # seeded but not bitwise deterministic.
+    random.seed(int(cfg["seed"]))
+    np.random.seed(int(cfg["seed"]))
+    torch.manual_seed(int(cfg["seed"]))
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(int(cfg["seed"]))
+    cfg["python_seed"] = int(cfg["seed"])
+    cfg["numpy_seed"] = int(cfg["seed"])
+    cfg["torch_seed"] = int(cfg["seed"])
+    cfg["cuda_seed"] = int(cfg["seed"]) if torch.cuda.is_available() else None
+    cfg["deterministic_algorithms"] = False
 
     # ── Device ────────────────────────────────
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -875,39 +976,136 @@ def main():
         print(f"VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.benchmark = True
+    cfg["cudnn_benchmark"] = True
+    if device.type == "cuda":
+        cfg["gpu_name"] = torch.cuda.get_device_name(0)
+    else:
+        cfg["gpu_name"] = None
 
     # ── Dataset ───────────────────────────────
     # Validation on the same scraped distribution can look strong when products
     # leak across splits; use --test_root for held-out products before production claims.
     data_root = Path(cfg["data_root"])
     print(f"\nLoading dataset from: {data_root}")
-    catalog = load_hypevault_samples(data_root)
+    records = load_records(data_root)
+    catalog = [(record.image_path, record.label) for record in records]
     total = len(catalog)
     print(f"Total images: {total:,}")
 
-    train_idx, val_idx = split_indices_by_product(
-        catalog,
-        cfg["val_split"],
-        cfg["seed"],
-    )
-    train_samples = [catalog[i] for i in train_idx]
-    val_samples = [catalog[i] for i in val_idx]
-    split_stats = verify_product_split(train_samples, val_samples)
-    write_split_manifest(out_dir, train_samples, val_samples, cfg["seed"], cfg["val_split"])
+    fixed_manifest = cfg.get("fixed_split_manifest")
+    if fixed_manifest:
+        if cfg.get("test_root"):
+            raise RuntimeError("A fixed split manifest run must not load --test_root")
+        splits, split_meta = records_from_fixed_manifest(
+            records,
+            Path(fixed_manifest),
+            expected_hash=AUTHORITATIVE_MEMBERSHIP_HASH,
+        )
+        cfg["split_strategy"] = split_meta["strategy"]
+        cfg["fixed_split_manifest"] = split_meta["fixed_split_manifest"]
+        cfg["manifest_membership_hash"] = split_meta["manifest_membership_hash"]
+        cfg["calibration_membership_source"] = split_meta["calibration_membership_source"]
+        cfg["product_disjoint_guarantee"] = False
+        write_fixed_membership_copy(out_dir, splits, split_meta)
+        source_report = {
+            "status": "not_used",
+            "reason": "fixed manifest membership was used; source was not a split key",
+        }
+        product_report = {"product_id_status": "unavailable"}
+        print(
+            f"Fixed manifest {split_meta['fixed_split_manifest']} "
+            f"hash {split_meta['manifest_membership_hash']}"
+        )
+        print("Calibration membership source: split_manifest_v2. No directory carve was applied.")
+    else:
+        splits, split_meta = split_records(
+            records,
+            cfg["split_strategy"],
+            cfg["seed"],
+            cfg["val_split"],
+            cfg["test_fraction"],
+        )
+        if not 0.0 <= float(cfg["calibration_fraction"]) < 1.0:
+            raise ValueError("calibration_fraction must be in [0, 1)")
+        validation_membership = list(splits["validation"])
+        test_membership = list(splits["test"])
+        weight_train, calibration_records = carve_calibration_records(
+            splits["train"], float(cfg["calibration_fraction"]), int(cfg["seed"])
+        )
+        splits = {
+            "train": weight_train,
+            "calibration": calibration_records,
+            "validation": validation_membership,
+            "test": test_membership,
+        }
+        split_meta = {**split_meta, "calibration_fraction": float(cfg["calibration_fraction"])}
+        verify_no_image_overlap(splits)
+        product_report = verify_no_product_overlap(splits)
+        source_report = verify_no_source_leakage(splits)
+        write_split_manifest(
+            out_dir,
+            records,
+            splits,
+            strategy=cfg["split_strategy"],
+            seed=cfg["seed"],
+            val_fraction=cfg["val_split"],
+            test_fraction=cfg["test_fraction"],
+            split_meta=split_meta,
+            source_report=source_report,
+            product_report=product_report,
+        )
+    train_samples = [(record.image_path, record.label) for record in splits["train"]]
+    val_samples = [(record.image_path, record.label) for record in splits["validation"]]
+    dataset_report = {
+        "total_samples": len(records),
+        "seed": int(cfg["seed"]),
+        "split_strategy": cfg["split_strategy"],
+        "calibration_fraction": None if fixed_manifest else float(cfg["calibration_fraction"]),
+        "calibration_membership_source": cfg.get("calibration_membership_source"),
+        "manifest_membership_hash": cfg.get("manifest_membership_hash"),
+        "fixed_split_manifest": cfg.get("fixed_split_manifest"),
+        "splits": {
+            name: split_census(name, splits.get(name, []))
+            for name in ("train", "calibration", "validation", "test")
+        },
+    }
+    (out_dir / "dataset_report.json").write_text(json.dumps(dataset_report, indent=2) + "\n")
     print(
-        f"Product groups: train {split_stats['train_products']:,} | "
-        f"val {split_stats['val_products']:,} "
-        f"(saved split_manifest.json)"
+        f"Split {cfg['split_strategy']}: "
+        f"train {len(train_samples):,} | calibration {len(splits['calibration']):,} | "
+        f"val {len(val_samples):,} | holdout {len(splits['test']):,} "
+        f"(saved split_manifest.json; calibration is not used for weight updates)"
     )
+    for name in ("train", "calibration", "validation", "test"):
+        census = dataset_report["splits"][name]
+        print(
+            f"  {name}: {census['samples']:,} images | "
+            f"authentic {census['authentic']:,} | fake {census['fake']:,} | "
+            f"groups {census['group_count']} | brands {census['brand_counts']}"
+        )
+    if len(train_samples) < 100:
+        raise RuntimeError(
+            f"Training split has only {len(train_samples)} images after the calibration carve. "
+            "Refusing to start a full run. The split was not changed."
+        )
+    if source_report["status"] == "unavailable":
+        print(f"Source check: {source_report['reason']}")
+    if fixed_manifest:
+        print(
+            "Product ids are UNKNOWN. Membership comes from the fixed brand-stratified "
+            "manifest, not from parent-directory disjointness."
+        )
+    elif product_report["product_id_status"] == "unavailable":
+        print("Product ids are UNKNOWN; disjointness is enforced on parent directories.")
 
-    train_tf = build_transforms(cfg["img_size"], train=True)
-    val_tf   = build_transforms(cfg["img_size"], train=False)
+    train_tf = build_transforms(cfg["family"], train=True, profile=cfg["augmentation_profile"])
+    val_tf = build_transforms(cfg["family"], train=False, profile=cfg["augmentation_profile"])
 
     train_ds = HypeVaultDataset(
         data_root,
         transform=train_tf,
         samples=train_samples,
-        shuffle=True,
+        shuffle=False,
         seed=cfg["seed"],
     )
     val_ds = HypeVaultDataset(
@@ -918,6 +1116,12 @@ def main():
     )
     print(f"Train: {len(train_ds):,} | Val: {len(val_ds):,}")
     print(f"Class distribution — train: {np.bincount(train_ds.labels)}")
+    effective_batch = int(cfg["batch_size"]) * int(cfg["accumulate_grad"])
+    print(
+        f"Effective batch: {effective_batch} "
+        f"(batch_size={cfg['batch_size']} × accumulate_grad={cfg['accumulate_grad']})."
+    )
+    cfg["effective_batch"] = effective_batch
     if cfg.get("test_root"):
         test_root = Path(cfg["test_root"])
         print(f"Held-out test root: {test_root}")
@@ -931,81 +1135,121 @@ def main():
                 "Held-out test root shares product folders with training data. "
                 f"Examples: {examples}"
             )
+    elif fixed_manifest:
+        print(
+            "Final test membership is recorded and is not evaluated. "
+            "Architecture selection uses validation only."
+        )
     else:
         print(
             "No --test_root provided: validation metrics are same-distribution only "
             "and may overstate production accuracy."
         )
 
-    sampler = make_weighted_sampler(train_ds)
-
-    train_loader = DataLoader(
-        train_ds, batch_size=cfg["batch_size"], sampler=sampler,
-        num_workers=cfg["num_workers"], pin_memory=True, drop_last=True,
-        persistent_workers=cfg["num_workers"] > 0,
+    train_loader, sampler_info = build_train_loader(
+        train_ds, cfg, [int(label) for label in train_ds.labels]
     )
+    cfg["sampler"] = sampler_info["sampler"]
+    cfg["shuffle"] = sampler_info["shuffle"]
+    cfg["class_counts"] = {
+        "authentic": int(sampler_info["counts"][0]),
+        "deepfake": int(sampler_info["counts"][1]),
+    }
+    cfg["minority_ratio"] = sampler_info["minority_ratio"]
+    cfg["preprocessing_version"] = cfg.get("evaluation_transform")
+    cfg["dataset_counts"] = dataset_report["splits"]
+    cfg["val_batch_size"] = int(cfg["batch_size"]) * 2
     val_loader = DataLoader(
-        val_ds, batch_size=cfg["batch_size"] * 2, shuffle=False,
+        val_ds, batch_size=cfg["val_batch_size"], shuffle=False,
         num_workers=cfg["num_workers"], pin_memory=True,
         persistent_workers=cfg["num_workers"] > 0,
     )
 
+    # ── AMP, recorded before the model build so config.json matches the run ──
+    bf16_supported = bool(device.type == "cuda" and torch.cuda.is_bf16_supported())
+    amp = resolve_amp(cfg["amp_dtype"], cuda=device.type == "cuda", bf16_supported=bf16_supported)
+    cfg["amp_dtype_requested"] = cfg["amp_dtype"]
+    cfg["amp_dtype"] = amp["amp_dtype"]
+    cfg["amp_scaler"] = amp["amp_scaler"]
+    cfg["amp_fallback"] = amp["amp_fallback"]
+    write_experiment_config(out_dir / "config.json", cfg)
+    if amp["amp_fallback"]:
+        print(f"AMP requested {cfg['amp_dtype_requested']}; using {cfg['amp_dtype']}")
+
     # ── Model ─────────────────────────────────
-    print(f"\nBuilding model: {cfg['model_name']}")
-    model = DINOv2Classifier(cfg["model_name"], dropout=cfg["dropout"])
+    print(f"\nBuilding model: {cfg['family']} {cfg['classifier_arch']} ({cfg['model_name']})")
+    model = build_authenticity_classifier(
+        cfg["family"],
+        cfg["classifier_arch"],
+        image_size=int(cfg["img_size"]),
+        pretrained=True,
+        dropout=float(cfg["dropout"]),
+    )
     model = model.to(device)
 
-    param_count = sum(p.numel() for p in model.parameters()) / 1e9
-    print(f"Total parameters: {param_count:.2f}B")
+    param_count = sum(p.numel() for p in model.parameters()) / 1e6
+    print(f"Total parameters: {param_count:.2f}M")
 
-    # ── Optimizer — layer-wise LR decay (optional but helps) ──
-    # Give backbone a 10× lower LR than the head
-    backbone_params = [p for n, p in model.named_parameters() if "head" not in n and p.requires_grad]
-    head_params     = [p for n, p in model.named_parameters() if "head" in  n and p.requires_grad]
-    optimizer = torch.optim.AdamW(
-        [
-            {"params": backbone_params, "lr": cfg["lr"],      "weight_decay": cfg["weight_decay"]},
-            {"params": head_params,     "lr": cfg["lr"] * 10, "weight_decay": 0.0},
-        ],
-        betas=(0.9, 0.999),
-        eps=1e-8,
-    )
+    optimizer, _param_groups, _table = build_optimizer(model, cfg)
 
     # ── LR Schedule ───────────────────────────
-    steps_per_epoch = len(train_loader) // cfg["accumulate_grad"]
+    # Count every optimizer update, including a partial accumulation window.
+    steps_per_epoch = optimizer_updates_per_epoch(len(train_loader), cfg["accumulate_grad"])
     total_steps     = steps_per_epoch * cfg["num_epochs"]
     warmup_steps    = steps_per_epoch * cfg["warmup_epochs"]
     scheduler = cosine_schedule_with_warmup(optimizer, warmup_steps, total_steps)
+    print(
+        f"Schedule: {warmup_steps} warmup optimizer steps, "
+        f"{total_steps} total optimizer steps "
+        f"({steps_per_epoch} per epoch, including a partial accumulation window)."
+    )
+    print("Group table above is the base rate. Warmup and cosine scale every group together.")
 
     # ── Loss ──────────────────────────────────
-    criterion = nn.BCEWithLogitsLoss(
-        pos_weight=None  # classes balanced by sampler
-    )
+    # BCE-with-logits on the raw logit. Label smoothing edits the targets.
+    criterion = build_bce_loss()
 
     # ── AMP Scaler ────────────────────────────
-    use_bf16 = (cfg["amp_dtype"] == "bf16") and torch.cuda.is_bf16_supported()
-    scaler = GradScaler("cuda", enabled=not use_bf16)  # bf16 doesn't need loss scaling
-    print(f"AMP mode: {'bf16 (no scaler)' if use_bf16 else 'fp16 (with scaler)'}")
+    scaler = GradScaler("cuda", enabled=bool(cfg["amp_scaler"]))
+    print(
+        f"AMP mode: {cfg['amp_dtype']}"
+        + (" (scaler on)" if cfg["amp_scaler"] else " (scaler off)")
+    )
 
     # ── Training ──────────────────────────────
-    best_val_acc = 0.0
-    best_val_f1  = 0.0
-    best_epoch   = cfg["start_epoch"]
+    # best_model.pt tracks the safety-constrained winner, not the highest F1.
+    best_epoch = cfg["start_epoch"]
     best_val_logits = None
     best_val_labels = None
-    patience_count = 0
     history = []
+    selection_state = new_selection_state(
+        max_false_authentic_rate=cfg["max_false_authentic_rate"],
+        metric_tolerance=cfg["metric_tolerance"],
+        validation_threshold=cfg["validation_threshold"],
+        model_family=cfg["family"],
+        classifier_arch=cfg["classifier_arch"],
+    )
 
     # ── Resume from checkpoint ─────────────────
+    resumed_scheduler = False
     if cfg.get("resume_from"):
         resume_path = Path(cfg["resume_from"])
         if resume_path.exists():
             print(f"\nResuming from: {resume_path}")
-            ckpt = torch.load(resume_path, map_location=device, weights_only=False)
-            model.load_state_dict(ckpt["model_state"])
-            best_val_acc = ckpt.get("val_acc", 0.0)
-            best_val_f1  = ckpt.get("val_f1",  0.0)
-            print(f"  Loaded weights — previous best val_acc={best_val_acc*100:.2f}% val_f1={best_val_f1:.4f}")
+            ckpt = load_training_checkpoint(
+                resume_path, model, optimizer, scheduler, map_location=device
+            )
+            print(f"  Loaded weights from epoch {ckpt.get('epoch')}.")
+            print("  Checkpoint selection uses the safety report, not validation F1.")
+            resumed_scheduler = ckpt.get("scheduler_state") is not None
+            selection_path = out_dir / "selection" / "checkpoint_selection.json"
+            if selection_path.is_file():
+                selection_state = load_selection_state(selection_path)
+                print(
+                    f"  Restored selection report — "
+                    f"safety_validated={selection_state['safety_validated']} "
+                    f"selected={selection_state['selected_checkpoint']}"
+                )
             # Load history from disk so plots include prior epochs
             hist_path = out_dir / "history.json"
             if hist_path.exists():
@@ -1015,13 +1259,19 @@ def main():
         else:
             print(f"WARNING: resume_from path not found: {resume_path} — starting fresh")
 
-    # Fast-forward LR scheduler past already-completed steps
+    # Fast-forward LR scheduler past already-completed steps when the checkpoint
+    # did not carry scheduler state (older checkpoints).
     steps_already_done = (cfg["start_epoch"] - 1) * steps_per_epoch
     global_step = steps_already_done
-    for _ in range(steps_already_done):
-        scheduler.step()
+    if resumed_scheduler:
+        global_step = int(ckpt.get("global_step", scheduler.last_epoch))
+    else:
+        for _ in range(steps_already_done):
+            scheduler.step()
 
     print(f"\n{'='*60}")
+    if device.type == "cuda":
+        torch.cuda.reset_peak_memory_stats()
     end_epoch = cfg["start_epoch"] + cfg["num_epochs"] - 1
     print(f"Starting training — epochs {cfg['start_epoch']}→{end_epoch}, {steps_per_epoch} steps/epoch")
     print(f"{'='*60}\n")
@@ -1035,13 +1285,24 @@ def main():
         )
 
         val_loss, val_metrics = val_epoch(model, val_loader, criterion, device, cfg, epoch)
+        # Fixed validation threshold. Not calibrated, and not chosen from the test set.
+        scored = evaluate_logits(
+            val_metrics["_logits"],
+            val_metrics["_labels"],
+            threshold=cfg["validation_threshold"],
+        )
+        far_value = scored["false_authentic_rate"]
+        pr_value = scored["pr_auc"]
+        far_text = "n/a" if far_value is None else f"{far_value:.4f}"
+        pr_text = "n/a" if pr_value is None else f"{pr_value:.4f}"
 
         elapsed = time.time() - t0
         print(
             f"\n{'─'*55}\n"
             f"  Epoch {epoch:3d} | {elapsed:.0f}s\n"
             f"  Train | loss={train_loss:.4f} acc={train_metrics['acc']*100:.2f}% f1={train_metrics['f1']:.4f}\n"
-            f"  Val   | loss={val_loss:.4f}  acc={val_metrics['acc']*100:.2f}%  f1={val_metrics['f1']:.4f}\n"
+            f"  Val   | loss={val_loss:.4f}  acc={val_metrics['acc']*100:.2f}%  "
+            f"f1={val_metrics['f1']:.4f}  far={far_text}  pr_auc={pr_text}\n"
             f"{'─'*55}\n"
         )
 
@@ -1050,41 +1311,141 @@ def main():
         val_metrics_log   = {k: v for k, v in val_metrics.items()   if not k.startswith("_")}
         row = {"epoch": epoch, "train_loss": train_loss, "val_loss": val_loss,
                **{f"train_{k}": v for k, v in train_metrics_log.items()},
-               **{f"val_{k}": v for k, v in val_metrics_log.items()}}
+               **{f"val_{k}": v for k, v in val_metrics_log.items()},
+               "val_false_authentic_rate": far_value,
+               "val_pr_auc": pr_value,
+               "val_threshold": scored["threshold"],
+               "epoch_seconds": elapsed,
+               "learning_rates": [float(value) for value in scheduler.get_last_lr()]}
+        for key in (
+            "roc_auc",
+            "pr_auc",
+            "accuracy",
+            "precision",
+            "recall",
+            "f1",
+            "false_authentic",
+            "false_authentic_rate",
+            "false_fake",
+            "false_fake_rate",
+            "threshold",
+            "threshold_policy",
+        ):
+            row[f"val_{key}"] = scored[key]
+        if device.type == "cuda":
+            row["peak_allocated_bytes"] = int(torch.cuda.max_memory_allocated())
+            row["peak_reserved_bytes"] = int(torch.cuda.max_memory_reserved())
+            row["throughput_images_per_sec"] = (len(train_ds) + len(val_ds)) / max(elapsed, 1e-6)
         history.append(row)
+
+        checkpoint_kwargs = dict(
+            model=model,
+            optimizer=optimizer,
+            scheduler=scheduler,
+            epoch=epoch,
+            config=cfg,
+            global_step=global_step,
+            val_acc=val_metrics["acc"],
+            val_f1=val_metrics["f1"],
+        )
+        # Only an epoch file that is actually written can be selected. save_every
+        # greater than 1 leaves the skipped epochs in the metric history only.
+        epoch_path = epoch_artifact_path(out_dir, epoch)
+        if epoch % int(cfg["save_every"]) == 0:
+            save_training_checkpoint(epoch_path, **checkpoint_kwargs)
+            print(f"  Saved checkpoint: {epoch_path.name}")
+        selection_state = update_selection(
+            selection_state,
+            candidate_from_validation(
+                checkpoint_id=f"epoch_{epoch:03d}",
+                epoch=epoch,
+                global_step=global_step,
+                validation_loss=val_loss,
+                model_family=cfg["family"],
+                classifier_arch=cfg["classifier_arch"],
+                metrics=scored,
+                checkpoint_path=str(epoch_path),
+                checkpoint_available=epoch_path.is_file(),
+            ),
+        )
+        row["selected_checkpoint"] = selection_state["selected_checkpoint"]
+        row["safety_validated"] = bool(selection_state["safety_validated"])
+        row["selection_action"] = selection_state["action"]
         write_history(out_dir, history)
+        write_selection_report(out_dir, selection_state)
 
-        # ── Save checkpoint ──────────────────
-        if epoch % cfg["save_every"] == 0:
-            ckpt = out_dir / f"epoch_{epoch:03d}.pt"
-            torch.save({"epoch": epoch, "model_state": model.state_dict(), "optimizer_state": optimizer.state_dict(), "val_acc": val_metrics["acc"], "val_f1": val_metrics["f1"]}, ckpt)
-            print(f"  Saved checkpoint: {ckpt.name}")
+        save_training_checkpoint(out_dir / "latest.pt", **checkpoint_kwargs)
 
-        # ── Save best ────────────────────────
-        if val_metrics["f1"] > best_val_f1:
-            best_val_f1  = val_metrics["f1"]
-            best_val_acc = val_metrics["acc"]
-            best_epoch   = epoch
+        chosen = selection_state["summary"]["selected_metrics"]
+        if should_save_production_checkpoint(selection_state):
+            best_epoch = epoch
             best_val_logits = val_metrics.get("_logits")
             best_val_labels = val_metrics.get("_labels")
-            patience_count = 0
-            best_ckpt = out_dir / "best_model.pt"
-            torch.save({"epoch": epoch, "model_state": model.state_dict(), "val_acc": val_metrics["acc"], "val_f1": val_metrics["f1"]}, best_ckpt)
-            print(f"  ★ New best! val_acc={best_val_acc*100:.2f}% val_f1={best_val_f1:.4f} → saved to best_model.pt")
+            save_training_checkpoint(out_dir / "best_model.pt", **checkpoint_kwargs)
+            print(
+                "  Safety-validated checkpoint "
+                f"{chosen['checkpoint_id']} "
+                f"pr_auc={chosen['pr_auc']:.4f} f1={chosen['f1']:.4f} "
+                f"false_authentic_rate={chosen['false_authentic_rate']:.4f} "
+                "→ best_model.pt"
+            )
+        elif (
+            selection_state["action"] == "increment"
+            and selection_state["epochs_without_improvement"] >= cfg["early_stop_patience"]
+        ):
+            print(
+                "\nEarly stopping after "
+                f"{selection_state['epochs_without_improvement']} validation epochs "
+                "without a safety-ranking improvement."
+            )
+            break
+        elif selection_state["action"] == "hold":
+            print(
+                "  Not safety-eligible. best_model.pt was not updated. "
+                "Early-stopping patience was not advanced."
+            )
         else:
-            patience_count += 1
-            if patience_count >= cfg["early_stop_patience"]:
-                print(f"\nEarly stopping after {patience_count} epochs without improvement.")
-                break
+            print(
+                "  No safety-ranking improvement. "
+                f"Patience {selection_state['epochs_without_improvement']}"
+                f"/{cfg['early_stop_patience']}."
+            )
 
     # ── Final save ────────────────────────────
+    # final_model.pt is the last epoch, kept for analysis. It is not the
+    # safety selection. checkpoint_selection.json is the source of truth.
     final_ckpt = out_dir / "final_model.pt"
-    torch.save({"epoch": epoch, "model_state": model.state_dict()}, final_ckpt)
+    save_training_checkpoint(
+        final_ckpt,
+        model=model,
+        optimizer=optimizer,
+        scheduler=scheduler,
+        epoch=epoch,
+        config=cfg,
+        global_step=global_step,
+        val_acc=val_metrics["acc"],
+        val_f1=val_metrics["f1"],
+    )
+    write_selection_report(out_dir, selection_state)
+    resource = {
+        "gpu_name": cfg.get("gpu_name"),
+        "amp_dtype": cfg["amp_dtype"],
+        "batch_size": int(cfg["batch_size"]),
+        "accumulate_grad": int(cfg["accumulate_grad"]),
+        "effective_batch": int(cfg["batch_size"]) * int(cfg["accumulate_grad"]),
+        "peak_allocated_bytes": int(torch.cuda.max_memory_allocated()) if device.type == "cuda" else None,
+        "peak_reserved_bytes": int(torch.cuda.max_memory_reserved()) if device.type == "cuda" else None,
+        "test_root": cfg.get("test_root"),
+        "test_set_used_for_selection": False,
+        "production_threshold": None,
+    }
+    (out_dir / "resource.json").write_text(json.dumps(resource, indent=2) + "\n")
 
     test_summary = None
-    if cfg.get("test_root"):
+    if cfg.get("test_root") and selection_state["safety_validated"]:
         test_root = Path(cfg["test_root"])
         print(f"\nEvaluating held-out test set from: {test_root}")
+        print("Test metrics are reported only. They do not change checkpoint selection.")
         test_ds = HypeVaultDataset(
             test_root,
             transform=val_tf,
@@ -1100,15 +1461,15 @@ def main():
             persistent_workers=cfg["num_workers"] > 0,
         )
         best_ckpt = out_dir / "best_model.pt"
-        if best_ckpt.exists():
-            state = torch.load(best_ckpt, map_location=device)
-            model.load_state_dict(state["model_state"])
+        state = torch.load(best_ckpt, map_location=device)
+        model.load_state_dict(state["model_state"])
         test_loss, test_metrics = val_epoch(model, test_loader, criterion, device, cfg)
         test_summary = {
             "data_root": str(test_root),
             "num_images": len(test_ds),
             "loss": test_loss,
-            **test_metrics,
+            "selection_used": False,
+            **{key: value for key, value in test_metrics.items() if not key.startswith("_")},
         }
         write_history(out_dir, history, test_summary)
         print(
@@ -1118,26 +1479,71 @@ def main():
     else:
         write_history(out_dir, history)
 
+    selected_metrics = selection_state["summary"]["selected_metrics"]
     print(f"\n{'='*60}")
-    print(f"Training complete.")
-    print(f"Best val accuracy: {best_val_acc*100:.2f}%   Best val F1: {best_val_f1:.4f}")
+    print("Training complete.")
+    if selection_state["safety_validated"] and selected_metrics is not None:
+        best_epoch = int(selected_metrics["epoch"])
+        print(f"Safety-validated checkpoint: {selected_metrics['checkpoint_id']}")
+        print(
+            f"Validation PR-AUC={selected_metrics['pr_auc']:.4f}  "
+            f"F1={selected_metrics['f1']:.4f}  "
+            f"false_authentic_rate={selected_metrics['false_authentic_rate']:.4f}  "
+            f"threshold={selected_metrics['threshold']:.2f}"
+        )
+    else:
+        print(UNQUALIFIED_MESSAGE)
+        print("final_model.pt is retained for analysis and is not a production checkpoint.")
     if test_summary:
         print(
             f"Held-out test accuracy: {test_summary['acc']*100:.2f}%   "
             f"test F1: {test_summary['f1']:.4f}"
         )
+    print(f"Selection report: {out_dir / 'selection' / 'checkpoint_selection.json'}")
     print(f"Checkpoints in: {out_dir}")
     print(f"{'='*60}\n")
+
+    # ── Model contract ─────────────────────────
+    # Records the trained architecture. Does not read backend defaults and does
+    # not overwrite checkpoint weights. Thresholds stay unset until calibration.
+    try:
+        best_ckpt = out_dir / "best_model.pt"
+        manifest_checkpoint = (
+            best_ckpt if selection_state["safety_validated"] and best_ckpt.is_file() else None
+        )
+        manifest = write_training_manifest(
+            out_dir,
+            backbone=cfg["model_name"],
+            image_size=int(cfg["img_size"]),
+            training_config=cfg,
+            checkpoint_path=manifest_checkpoint,
+            dataset_samples=catalog,
+            repo_root=Path(__file__).resolve().parents[1],
+        )
+        print(f"Wrote model manifest {manifest['model_version']}")
+    except Exception as e:
+        print(f"Model manifest write failed (non-fatal): {e}")
 
     # ── Generate plots ─────────────────────────
     print("Generating training plots...")
     try:
-        plot_training_curves(history, out_dir, best_epoch)
-        if best_val_logits is not None and best_val_labels is not None:
+        plot_training_curves(
+            history,
+            out_dir,
+            best_epoch,
+            subtitle="Checkpoint selection is safety-constrained PR-AUC, not max F1.",
+        )
+        if (
+            selection_state["safety_validated"]
+            and best_val_logits is not None
+            and best_val_labels is not None
+            and selected_metrics is not None
+        ):
             plot_confusion_eval(
                 best_val_logits, best_val_labels,
                 out_dir, len(val_ds),
-                best_val_acc, best_val_f1,
+                selected_metrics["accuracy"], selected_metrics["f1"],
+                threshold=float(selected_metrics["threshold"]),
             )
     except Exception as e:
         print(f"  Plot generation failed (non-fatal): {e}")

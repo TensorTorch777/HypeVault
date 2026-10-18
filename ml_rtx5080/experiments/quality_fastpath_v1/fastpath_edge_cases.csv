@@ -1,0 +1,13 @@
+case,width,height,min_dimension,luminance_std,reference_decision_flags,fast_flags,expected_flags,flags_match,low_resolution,low_contrast
+511x511,511,511,511,0.4999999999963334,LOW_RESOLUTION,LOW_RESOLUTION,LOW_RESOLUTION,True,True,False
+512x512,512,512,512,0.5,,,,True,False,False
+513x513,513,513,513,0.4999999999963902,,,,True,False,False
+511x2000,2000,511,511,0.5,LOW_RESOLUTION,LOW_RESOLUTION,LOW_RESOLUTION,True,True,False
+512x2000,2000,512,512,0.5,,,,True,False,False
+rgb,600,600,600,0.5,,,,True,False,False
+grayscale,600,600,600,0.5,,,,True,False,False
+uniform_black,600,600,600,0.0,LOW_CONTRAST,LOW_CONTRAST,LOW_CONTRAST,True,False,True
+uniform_white,600,600,600,0.0,LOW_CONTRAST,LOW_CONTRAST,LOW_CONTRAST,True,False,True
+std_below_cutoff,512,512,512,0.1933616422528972,LOW_CONTRAST,LOW_CONTRAST,LOW_CONTRAST,True,False,True
+std_above_cutoff,512,512,512,0.19336208292842244,,,,True,False,False
+std_equal_to_cutoff_operator,,,512,0.1933616647502347,,,,True,False,False

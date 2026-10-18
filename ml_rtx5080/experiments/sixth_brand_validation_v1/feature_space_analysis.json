@@ -1,0 +1,16 @@
+{
+  "production_ood_threshold": null,
+  "reason": "No external corpus was scored.",
+  "richard_mille_fold_aggregate": {
+    "held_out_cosine_median": 0.47431632227431536,
+    "held_out_fraction_above_train_mahalanobis_p95": 0.2934098482043688,
+    "held_out_mahalanobis_median": 32.18292832720026,
+    "mean_p_fake_above_train_mahalanobis_p95": 0.00017749865946825594,
+    "mean_p_fake_below_train_mahalanobis_median": 0.9998329281806946,
+    "per_error_distances": null,
+    "source": "fold_4_rm metrics features",
+    "train_cosine_median": 0.332216343531917,
+    "train_mahalanobis_median": 25.645002632437212
+  },
+  "sixth_brand": null
+}

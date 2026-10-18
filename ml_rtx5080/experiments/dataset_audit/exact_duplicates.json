@@ -1,0 +1,125 @@
+{
+  "exact_duplicate_groups": 2,
+  "largest_exact_duplicate_group": 5,
+  "counts_by_label_brand": [
+    {
+      "label": 0,
+      "brand": "A. Lange & S\u00f6hne",
+      "images": 2
+    },
+    {
+      "label": 0,
+      "brand": "Audemars Piguet",
+      "images": 2
+    },
+    {
+      "label": 0,
+      "brand": "Patek Philippe",
+      "images": 1
+    },
+    {
+      "label": 0,
+      "brand": "Richard Mille",
+      "images": 2
+    },
+    {
+      "label": 0,
+      "brand": "Vacheron Constantin",
+      "images": 2
+    }
+  ],
+  "examples": [
+    {
+      "size": 5,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Audemars Piguet",
+        "Patek Philippe",
+        "Richard Mille",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/2889a285fade.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/2889a285fade.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/2889a285fade.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/2889a285fade.jpg"
+      ]
+    },
+    {
+      "size": 4,
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Audemars Piguet",
+        "Richard Mille",
+        "Vacheron Constantin"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/134681818e00.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/134681818e00.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/134681818e00.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/134681818e00.jpg"
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "sha256": "79adac471e4ff324a26dcdf2fe6b7a9df67b5921d34b992eb286029e0968499b",
+      "size": 5,
+      "sample_ids": [
+        "Label_0_Watches/A. Lange & S\u00f6hne/2889a285fade.jpg",
+        "Label_0_Watches/Audemars Piguet/2889a285fade.jpg",
+        "Label_0_Watches/Patek Philippe/2889a285fade.jpg",
+        "Label_0_Watches/Richard Mille/2889a285fade.jpg",
+        "Label_0_Watches/Vacheron Constantin/2889a285fade.jpg"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/2889a285fade.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/2889a285fade.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Patek Philippe/2889a285fade.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/2889a285fade.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/2889a285fade.jpg"
+      ],
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Audemars Piguet",
+        "Patek Philippe",
+        "Richard Mille",
+        "Vacheron Constantin"
+      ]
+    },
+    {
+      "sha256": "f034c2a27ee217bdb701089282b7e4b017616930c4d39ea89c6ef623782438b8",
+      "size": 4,
+      "sample_ids": [
+        "Label_0_Watches/A. Lange & S\u00f6hne/134681818e00.jpg",
+        "Label_0_Watches/Audemars Piguet/134681818e00.jpg",
+        "Label_0_Watches/Richard Mille/134681818e00.jpg",
+        "Label_0_Watches/Vacheron Constantin/134681818e00.jpg"
+      ],
+      "paths": [
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/A. Lange & S\u00f6hne/134681818e00.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Audemars Piguet/134681818e00.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Richard Mille/134681818e00.jpg",
+        "/home/tensortorch26/Desktop/HypeVault/Label_0_Watches/Vacheron Constantin/134681818e00.jpg"
+      ],
+      "labels": [
+        0
+      ],
+      "brands": [
+        "A. Lange & S\u00f6hne",
+        "Audemars Piguet",
+        "Richard Mille",
+        "Vacheron Constantin"
+      ]
+    }
+  ]
+}

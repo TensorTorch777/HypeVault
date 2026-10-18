@@ -1,0 +1,22 @@
+{
+  "phase35_open_set": {
+    "not_dismissed_by_phase45": true,
+    "rolex_authentic": "159/180",
+    "status": "OOD_FAIL",
+    "unseen_luxury_authentic_escape": "171/194"
+  },
+  "phase45_within_five_brands": {
+    "generalization": "STRONG",
+    "mean_unseen_false_authentic_rate": 0.002074074074074074,
+    "mean_unseen_pr_auc": 0.9999969178872116,
+    "remains_valid_only_inside_that_catalog": true,
+    "scope": "Leave-one-brand-out inside A. Lange & S\u00f6hne, Audemars Piguet, Patek Philippe, Richard Mille, and Vacheron Constantin.",
+    "worst_brand": "Richard Mille"
+  },
+  "separation": "Within-catalog cross-brand accuracy, sixth-brand classification, and open-set rejection are different claims.",
+  "sixth_brand": {
+    "false_authentic_rate": null,
+    "pr_auc": null,
+    "status": "BLOCKED"
+  }
+}

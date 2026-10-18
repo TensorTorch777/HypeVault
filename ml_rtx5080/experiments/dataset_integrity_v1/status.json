@@ -1,0 +1,18 @@
+{
+  "DATASET_LABEL_INTEGRITY": "FAIL",
+  "IMAGES_AUDITED": 55,
+  "LABEL_PROVENANCE_COVERAGE": "0/55",
+  "SUSPECT_IMAGES": 31,
+  "DUPLICATE_OR_LEAKAGE_FINDINGS": "No split overlap under the stored duplicate rule. Two exact SHA-256 groups are non-watch placeholders copied across authentic brand folders. All 1799 multi-member dHash groups are authentic-only.",
+  "RM_ERRORS_REVIEWED": 15,
+  "RM_ERROR_IDENTITIES_UNAVAILABLE": 5,
+  "PHASE45_GENERALIZATION_SCOPE": "FIVE_BRAND_CATALOG_ONLY",
+  "EXTERNAL_SIXTH_BRAND_VALIDATION": "BLOCKED",
+  "MODEL_CHANGED": false,
+  "CALIBRATION_CHANGED": false,
+  "THRESHOLD_CHANGED": false,
+  "FINAL_TEST_TOUCHED": false,
+  "PRODUCTION_PROMOTION_ALLOWED": false,
+  "protocol_sha256": "db3fd5034850021f4841168e93c30fcdf7199af5698c6679843bb5a6a8b0d45c",
+  "sample_manifest_sha256": "e78ec64c75b1f2621638c15f8de5fc24ecf6d9bd8efbe62b58fe4c96a43f700b"
+}

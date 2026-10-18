@@ -1,0 +1,15 @@
+item,result,note
+Model,PASS,"locked in-distribution result, five brands, both classes"
+Calibration,PASS,temperature fitted on 2998 calibration samples and not refit
+Final test,PASS,"3006 locked samples, not reopened"
+Robustness,PASS,audit complete; resize_recompression_case remains uncovered
+Quality,PASS,"research candidate LOW_RESOLUTION OR LOW_CONTRAST, not promoted"
+OOD,PENDING,REAL_OOD_CORPUS_AVAILABLE is false; production_ood_threshold is null
+PyTorch GPU shadow,PASS,"FP32 CUDA shadow parity, stability, and fast gate"
+ONNX GPU,FAIL,CUDA execution provider unavailable
+TensorRT,FAIL,TensorRT runtime unavailable
+Triton,FAIL,Triton server unavailable
+Fail-closed contract,PASS,shadow_v1 rejects unsafe inputs without a guessed verdict
+Memory stability,PASS,"allocated growth is 0 bytes across 100, 500, and 1000 requests"
+Live backend isolation,PASS,live verdict path remains DINOv2 and was not modified
+Policy approval,PENDING,shadow_v1 is not an approved production policy

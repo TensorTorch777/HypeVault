@@ -1,0 +1,788 @@
+{
+  "phase": 22,
+  "production_threshold": null,
+  "temperature": 0.24038200410185356,
+  "temperature_changed": false,
+  "threshold_selected": false,
+  "training_performed": false,
+  "ood_used": false,
+  "final_test_opened": false,
+  "test_samples_used": 0,
+  "checkpoint_changed": false,
+  "low_margin_note": "Low-margin rows are nearest the 0.50 boundary. They are errors only when misclassified is true.",
+  "transform_parameters": [
+    {
+      "name": "jpeg_recompression",
+      "quality": 85
+    },
+    {
+      "name": "gaussian_blur",
+      "radius": 0.4
+    },
+    {
+      "name": "brightness_shift",
+      "factor": 1.1
+    },
+    {
+      "name": "contrast_shift",
+      "factor": 1.1
+    },
+    {
+      "name": "mild_crop",
+      "keep": 0.9
+    },
+    {
+      "name": "small_rotation",
+      "degrees": 3.0
+    },
+    {
+      "name": "resize_recompression",
+      "scale": 0.85,
+      "quality": 80
+    },
+    {
+      "name": "perspective",
+      "shift": 0.02
+    }
+  ],
+  "quality_parameters": [
+    {
+      "name": "lower_resolution",
+      "longest_side": 256
+    },
+    {
+      "name": "moderate_jpeg",
+      "quality": 60
+    },
+    {
+      "name": "mild_blur",
+      "radius": 0.8
+    },
+    {
+      "name": "partial_crop",
+      "keep": 0.75
+    },
+    {
+      "name": "darker",
+      "factor": 0.85
+    },
+    {
+      "name": "brighter",
+      "factor": 1.15
+    }
+  ],
+  "groups": {
+    "low_margin": {
+      "sample_count": 500,
+      "authentic_count": 500,
+      "fake_count": 0,
+      "accuracy": 1.0,
+      "f1": null,
+      "recall": null,
+      "false_authentic_count": 0,
+      "false_authentic_rate": null,
+      "false_fake_count": 0,
+      "false_fake_rate": 0.0,
+      "mean_calibrated_probability": 5.898385143531293e-05,
+      "median_calibrated_probability": 4.406392140055004e-09,
+      "distribution": {
+        "count": 500,
+        "authentic_count": 500,
+        "fake_count": 0,
+        "misclassified_count": 0,
+        "brands": {
+          "Richard Mille": {
+            "authentic": 74,
+            "fake": 0
+          },
+          "Audemars Piguet": {
+            "authentic": 39,
+            "fake": 0
+          },
+          "Patek Philippe": {
+            "authentic": 50,
+            "fake": 0
+          },
+          "Vacheron Constantin": {
+            "authentic": 33,
+            "fake": 0
+          },
+          "A. Lange & S\u00f6hne": {
+            "authentic": 304,
+            "fake": 0
+          }
+        }
+      }
+    },
+    "high_confidence": {
+      "sample_count": 500,
+      "authentic_count": 250,
+      "fake_count": 250,
+      "accuracy": 1.0,
+      "f1": 1.0,
+      "recall": 1.0,
+      "false_authentic_count": 0,
+      "false_authentic_rate": 0.0,
+      "false_fake_count": 0,
+      "false_fake_rate": 0.0,
+      "mean_calibrated_probability": 0.500000001696289,
+      "median_calibrated_probability": 0.5000000016987741,
+      "pool_count": 26993
+    },
+    "same_brand_pairs": {
+      "pair_count": 500,
+      "authentic_count": 500,
+      "fake_count": 500,
+      "accuracy": 1.0,
+      "f1": 1.0,
+      "recall": 1.0,
+      "false_authentic_count": 0,
+      "false_authentic_rate": 0.0,
+      "false_fake_count": 0,
+      "false_fake_rate": 0.0,
+      "mean_cosine_similarity": 0.35719269335311243,
+      "maximum_cosine_similarity": 0.4251027199260001,
+      "mean_calibrated_probability": 0.5147447492927313,
+      "median_calibrated_probability": 0.5147447492927313
+    },
+    "cross_brand_pairs": {
+      "pair_count": 500,
+      "authentic_count": 500,
+      "fake_count": 500,
+      "accuracy": 1.0,
+      "f1": 1.0,
+      "recall": 1.0,
+      "false_authentic_count": 0,
+      "false_authentic_rate": 0.0,
+      "false_fake_count": 0,
+      "false_fake_rate": 0.0,
+      "mean_cosine_similarity": 0.3345523144967739,
+      "maximum_cosine_similarity": 0.37459217117335025,
+      "mean_calibrated_probability": 0.5147447492927313,
+      "median_calibrated_probability": 0.5147447492927313
+    },
+    "transform": {
+      "sample_count": 1600,
+      "authentic_count": 1600,
+      "fake_count": 0,
+      "prediction_flip_rate": 0.00125,
+      "prediction_stability": 0.99875,
+      "mean_absolute_logit_change": 0.0296417236328125,
+      "mean_absolute_probability_change": 0.0011567501513759832,
+      "maximum_probability_change": 0.9999999647283673,
+      "accuracy": 0.99875,
+      "f1": null,
+      "recall": null,
+      "false_authentic_count": 0,
+      "false_authentic_rate": null,
+      "false_fake_count": 2,
+      "false_fake_rate": 0.00125,
+      "mean_calibrated_probability": 0.00108758203852699,
+      "median_calibrated_probability": 5.018129911604774e-09
+    },
+    "quality_stress": {
+      "sample_count": 1200,
+      "authentic_count": 1200,
+      "fake_count": 0,
+      "prediction_flip_rate": 0.005833333333333334,
+      "prediction_stability": 0.9941666666666666,
+      "mean_absolute_logit_change": 0.08669921875,
+      "mean_absolute_probability_change": 0.005928606091565867,
+      "maximum_probability_change": 0.9999999949818701,
+      "accuracy": 0.9941666666666666,
+      "f1": null,
+      "recall": null,
+      "false_authentic_count": 0,
+      "false_authentic_rate": null,
+      "false_fake_count": 7,
+      "false_fake_rate": 0.005833333333333334,
+      "mean_calibrated_probability": 0.0058365030209428384,
+      "median_calibrated_probability": 5.018129911604774e-09
+    }
+  },
+  "low_margin_slices": {
+    "top_1_percent": {
+      "count": 270,
+      "authentic_count": 270,
+      "fake_count": 0,
+      "misclassified_count": 0,
+      "brands": {
+        "Richard Mille": {
+          "authentic": 74,
+          "fake": 0
+        },
+        "Audemars Piguet": {
+          "authentic": 39,
+          "fake": 0
+        },
+        "Patek Philippe": {
+          "authentic": 50,
+          "fake": 0
+        },
+        "Vacheron Constantin": {
+          "authentic": 33,
+          "fake": 0
+        },
+        "A. Lange & S\u00f6hne": {
+          "authentic": 74,
+          "fake": 0
+        }
+      }
+    },
+    "top_5_percent": {
+      "count": 1350,
+      "authentic_count": 1350,
+      "fake_count": 0,
+      "misclassified_count": 0,
+      "brands": {
+        "Richard Mille": {
+          "authentic": 74,
+          "fake": 0
+        },
+        "Audemars Piguet": {
+          "authentic": 596,
+          "fake": 0
+        },
+        "Patek Philippe": {
+          "authentic": 50,
+          "fake": 0
+        },
+        "Vacheron Constantin": {
+          "authentic": 33,
+          "fake": 0
+        },
+        "A. Lange & S\u00f6hne": {
+          "authentic": 597,
+          "fake": 0
+        }
+      }
+    },
+    "top_10_percent": {
+      "count": 2700,
+      "authentic_count": 2700,
+      "fake_count": 0,
+      "misclassified_count": 0,
+      "brands": {
+        "Richard Mille": {
+          "authentic": 475,
+          "fake": 0
+        },
+        "Audemars Piguet": {
+          "authentic": 872,
+          "fake": 0
+        },
+        "Patek Philippe": {
+          "authentic": 723,
+          "fake": 0
+        },
+        "Vacheron Constantin": {
+          "authentic": 33,
+          "fake": 0
+        },
+        "A. Lange & S\u00f6hne": {
+          "authentic": 597,
+          "fake": 0
+        }
+      }
+    }
+  },
+  "conditions": {
+    "transform": [
+      {
+        "quality_condition": "jpeg_recompression",
+        "condition": "jpeg_recompression",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.0,
+        "mean_probability_shift": 6.730966764957102e-05,
+        "mean_absolute_probability_change": 6.73098926189386e-05,
+        "maximum_probability_change": 0.013461943715810776,
+        "mean_absolute_logit_change": 0.00578125,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "gaussian_blur",
+        "condition": "gaussian_blur",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.0,
+        "mean_probability_shift": -0.00013110355629820437,
+        "mean_absolute_probability_change": 0.00013110390224728265,
+        "maximum_probability_change": 0.026220712112262845,
+        "mean_absolute_logit_change": 0.00767578125,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "brightness_shift",
+        "condition": "brightness_shift",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.0,
+        "mean_probability_shift": -0.00014744630362711897,
+        "mean_absolute_probability_change": 0.0001474464093076011,
+        "maximum_probability_change": 0.02948923401672232,
+        "mean_absolute_logit_change": 0.02041015625,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "contrast_shift",
+        "condition": "contrast_shift",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.0,
+        "mean_probability_shift": -0.00014558925564355228,
+        "mean_absolute_probability_change": 0.00014559087034960117,
+        "maximum_probability_change": 0.029117997008142993,
+        "mean_absolute_logit_change": 0.01482421875,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "mild_crop",
+        "condition": "mild_crop",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.005,
+        "mean_probability_shift": 0.004852552133839094,
+        "mean_absolute_probability_change": 0.005147447627673218,
+        "maximum_probability_change": 0.9999999647283673,
+        "mean_absolute_logit_change": 0.07564453125,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "small_rotation",
+        "condition": "small_rotation",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.0,
+        "mean_probability_shift": -0.0001474480782118004,
+        "mean_absolute_probability_change": 0.00014744811608120135,
+        "maximum_probability_change": 0.029489491173742888,
+        "mean_absolute_logit_change": 0.04189453125,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "resize_recompression",
+        "condition": "resize_recompression",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.005,
+        "mean_probability_shift": 0.0033202060318837812,
+        "mean_absolute_probability_change": 0.003320206300865769,
+        "maximum_probability_change": 0.6640185303986073,
+        "mean_absolute_logit_change": 0.0297900390625,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "perspective",
+        "condition": "perspective",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.0,
+        "mean_probability_shift": -0.0001474480918642529,
+        "mean_absolute_probability_change": 0.0001474480918642529,
+        "maximum_probability_change": 0.029489488972960665,
+        "mean_absolute_logit_change": 0.04111328125,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      }
+    ],
+    "quality_stress": [
+      {
+        "quality_condition": "lower_resolution",
+        "condition": "lower_resolution",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.025,
+        "mean_probability_shift": 0.024853126821579447,
+        "mean_absolute_probability_change": 0.0251469058836676,
+        "maximum_probability_change": 0.9999999949818701,
+        "mean_absolute_logit_change": 0.25673828125,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "moderate_jpeg",
+        "condition": "moderate_jpeg",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.0,
+        "mean_probability_shift": -0.00014744788674494913,
+        "mean_absolute_probability_change": 0.0001474479289043451,
+        "maximum_probability_change": 0.029489492077273027,
+        "mean_absolute_logit_change": 0.03392578125,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "mild_blur",
+        "condition": "mild_blur",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.0,
+        "mean_probability_shift": -0.00012943258081023367,
+        "mean_absolute_probability_change": 0.00012943932167618354,
+        "maximum_probability_change": 0.025887151947245002,
+        "mean_absolute_logit_change": 0.01560546875,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "partial_crop",
+        "condition": "partial_crop",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.005,
+        "mean_probability_shift": 0.004852552138421726,
+        "mean_absolute_probability_change": 0.005147447787812192,
+        "maximum_probability_change": 0.9999999647283673,
+        "mean_absolute_logit_change": 0.08314453125,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "darker",
+        "condition": "darker",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.005,
+        "mean_probability_shift": 0.004852550665567228,
+        "mean_absolute_probability_change": 0.004852550885436284,
+        "maximum_probability_change": 0.9705100245773792,
+        "mean_absolute_logit_change": 0.03146484375,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      },
+      {
+        "quality_condition": "brighter",
+        "condition": "brighter",
+        "sample_count": 200,
+        "fake_count": 0,
+        "authentic_count": 200,
+        "prediction_flip_rate": 0.0,
+        "mean_probability_shift": -0.00014704885272249336,
+        "mean_absolute_probability_change": 0.00014784474189859508,
+        "maximum_probability_change": 0.02948930742797984,
+        "mean_absolute_logit_change": 0.09931640625,
+        "false_authentic_rate": null,
+        "false_authentic_count": 0,
+        "production_threshold": null
+      }
+    ]
+  },
+  "confidence_levels": [
+    {
+      "minimum_confidence": 0.9,
+      "count": 26994,
+      "authentic_count": 13494,
+      "fake_count": 13500,
+      "predicted_authentic_count": 13494,
+      "predicted_fake_count": 13500,
+      "error_count": 0,
+      "false_authentic_count": 0,
+      "false_fake_count": 0,
+      "role": "analysis_only",
+      "production_threshold": null
+    },
+    {
+      "minimum_confidence": 0.95,
+      "count": 26994,
+      "authentic_count": 13494,
+      "fake_count": 13500,
+      "predicted_authentic_count": 13494,
+      "predicted_fake_count": 13500,
+      "error_count": 0,
+      "false_authentic_count": 0,
+      "false_fake_count": 0,
+      "role": "analysis_only",
+      "production_threshold": null
+    },
+    {
+      "minimum_confidence": 0.99,
+      "count": 26993,
+      "authentic_count": 13493,
+      "fake_count": 13500,
+      "predicted_authentic_count": 13493,
+      "predicted_fake_count": 13500,
+      "error_count": 0,
+      "false_authentic_count": 0,
+      "false_fake_count": 0,
+      "role": "analysis_only",
+      "production_threshold": null
+    }
+  ],
+  "brands": {
+    "low_margin": [
+      {
+        "brand": "A. Lange & S\u00f6hne",
+        "challenge_sample_count": 304,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": null,
+        "production_threshold": null
+      },
+      {
+        "brand": "Audemars Piguet",
+        "challenge_sample_count": 39,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": null,
+        "production_threshold": null
+      },
+      {
+        "brand": "Patek Philippe",
+        "challenge_sample_count": 50,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": null,
+        "production_threshold": null
+      },
+      {
+        "brand": "Richard Mille",
+        "challenge_sample_count": 74,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": null,
+        "production_threshold": null
+      },
+      {
+        "brand": "Vacheron Constantin",
+        "challenge_sample_count": 33,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": null,
+        "production_threshold": null
+      }
+    ],
+    "transform": [
+      {
+        "brand": "A. Lange & S\u00f6hne",
+        "challenge_sample_count": 160,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": 0.0,
+        "production_threshold": null
+      },
+      {
+        "brand": "Audemars Piguet",
+        "challenge_sample_count": 312,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": 0.003205128205128205,
+        "production_threshold": null
+      },
+      {
+        "brand": "Patek Philippe",
+        "challenge_sample_count": 400,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": 0.0,
+        "production_threshold": null
+      },
+      {
+        "brand": "Richard Mille",
+        "challenge_sample_count": 592,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": 0.0016891891891891893,
+        "production_threshold": null
+      },
+      {
+        "brand": "Vacheron Constantin",
+        "challenge_sample_count": 136,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": 0.0,
+        "production_threshold": null
+      }
+    ],
+    "quality_stress": [
+      {
+        "brand": "A. Lange & S\u00f6hne",
+        "challenge_sample_count": 120,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": 0.008333333333333333,
+        "production_threshold": null
+      },
+      {
+        "brand": "Audemars Piguet",
+        "challenge_sample_count": 234,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": 0.008547008547008548,
+        "production_threshold": null
+      },
+      {
+        "brand": "Patek Philippe",
+        "challenge_sample_count": 300,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": 0.006666666666666667,
+        "production_threshold": null
+      },
+      {
+        "brand": "Richard Mille",
+        "challenge_sample_count": 444,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": 0.0045045045045045045,
+        "production_threshold": null
+      },
+      {
+        "brand": "Vacheron Constantin",
+        "challenge_sample_count": 102,
+        "false_authentic_rate": null,
+        "f1": null,
+        "recall": null,
+        "prediction_flip_rate": 0.0,
+        "production_threshold": null
+      }
+    ]
+  },
+  "worst_brands": {
+    "low_margin": {
+      "worst_brand_far": null,
+      "brands": []
+    },
+    "transform": {
+      "worst_brand_far": null,
+      "brands": []
+    },
+    "quality_stress": {
+      "worst_brand_far": null,
+      "brands": []
+    }
+  },
+  "false_authentic": {
+    "non_test_pool": {
+      "count": 0,
+      "p_fake_below_0.10": 0,
+      "p_fake_from_0.10_to_0.25": 0,
+      "p_fake_from_0.25_to_0.50": 0,
+      "cases": [],
+      "production_threshold": null
+    },
+    "stress": {
+      "count": 0,
+      "p_fake_below_0.10": 0,
+      "p_fake_from_0.10_to_0.25": 0,
+      "p_fake_from_0.25_to_0.50": 0,
+      "cases": [],
+      "production_threshold": null
+    }
+  },
+  "high_confidence_pool_count": 26993,
+  "high_confidence_stored_count": 500,
+  "challenge_manifest_sha256": "5efe970cabc900399e1d09ba3595dfff92bffc99925bf50ce50badc11ada8bed",
+  "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "split_manifest_sha256": "4d0d20c17d12ac29cb299b7b4f369ebcce3c5acd7b2fd5430d61f952b9852eea",
+  "freeze_sha256": "c033b054f9187383321ee71f48affcc4b486c2623b5e4eb980f8a8d5cacb4956",
+  "source_counts": {
+    "train": {
+      "count": 20999,
+      "authentic": 10499,
+      "fake": 10500
+    },
+    "calibration": {
+      "count": 2998,
+      "authentic": 1498,
+      "fake": 1500
+    },
+    "validation": {
+      "count": 2997,
+      "authentic": 1497,
+      "fake": 1500
+    }
+  },
+  "rejected_count": 0,
+  "rejected_reasons": {},
+  "non_test_pool": {
+    "sample_count": 26994,
+    "authentic_count": 13494,
+    "fake_count": 13500,
+    "accuracy": 1.0,
+    "f1": 1.0,
+    "recall": 1.0,
+    "false_authentic_count": 0,
+    "false_authentic_rate": 0.0,
+    "false_fake_count": 0,
+    "false_fake_rate": 0.0,
+    "mean_calibrated_probability": 0.5001122302734392,
+    "median_calibrated_probability": 1.0
+  },
+  "non_test_distribution": {
+    "count": 26994,
+    "authentic_count": 13494,
+    "fake_count": 13500,
+    "misclassified_count": 0,
+    "brands": {
+      "A. Lange & S\u00f6hne": {
+        "authentic": 2717,
+        "fake": 2700
+      },
+      "Audemars Piguet": {
+        "authentic": 2691,
+        "fake": 2700
+      },
+      "Patek Philippe": {
+        "authentic": 2684,
+        "fake": 2700
+      },
+      "Richard Mille": {
+        "authentic": 2702,
+        "fake": 2700
+      },
+      "Vacheron Constantin": {
+        "authentic": 2700,
+        "fake": 2700
+      }
+    }
+  }
+}

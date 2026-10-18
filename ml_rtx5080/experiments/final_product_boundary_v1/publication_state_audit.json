@@ -1,0 +1,15 @@
+{
+  "publication_field": "listings.status",
+  "evidence_field": "listings.verdict",
+  "customer_interpretation_field": "customer_label",
+  "authenticity_model_production_approved": false,
+  "new_authentic_status": "pending",
+  "new_authentic_publication": "BLOCKED",
+  "fake_status": "rejected",
+  "model_error_publication": "BLOCKED",
+  "dinov3_publication": "BLOCKED",
+  "dinov3_production_allowed": false,
+  "seller_update_can_set_status": false,
+  "future_state_not_implemented": "DRAFT to PENDING to a separate authorization step to LIVE. Model authentic is not publication authorized.",
+  "historical_live_rows_left_live": true
+}

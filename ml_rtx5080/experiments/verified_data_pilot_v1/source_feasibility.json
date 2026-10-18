@@ -1,0 +1,46 @@
+{
+  "protocol_sha256": "42d03f08827a7657028e1cf0d44973ec779f79e7dd4a271b10deb80aa48f7112",
+  "candidate_manifest_sha256": "bfb27c410b5c608fec8a0ba1d452a67d33ce26f459795ef33168d6607b3a0c92",
+  "images_downloaded": 0,
+  "pathways": [
+    {
+      "pathway": "Qualified watchmaker, authenticator, or dealer partnership",
+      "practical": "This is a real way to obtain examined watches. It requires a named organization, a written method, and permission to keep the photographs.",
+      "status": "NOT_ESTABLISHED",
+      "evidence_in_repository": "No agreement, verifier, or data commitment is recorded."
+    },
+    {
+      "pathway": "Watches photographed with owner permission",
+      "practical": "Direct photography can separate image rights from the authenticity label when the owner grants permission and a qualified person examines the watch.",
+      "status": "NOT_ESTABLISHED",
+      "evidence_in_repository": "No permission and no new photographs are recorded."
+    },
+    {
+      "pathway": "Counterfeit examples with affirmative independent evidence",
+      "practical": "A customs, brand-security, or laboratory record can support a counterfeit label. A suspicious appearance cannot.",
+      "status": "NOT_ESTABLISHED",
+      "evidence_in_repository": "No such record is available. The existing counterfeit folder is a directory label plus a shared JPEG export."
+    },
+    {
+      "pathway": "Public research datasets",
+      "practical": "Usable only when the card states both image rights and an authenticity method that is independent of a model.",
+      "status": "NONE_MET_THE_RULE",
+      "sources_checked": [
+        "Phase 46 data_audit.json",
+        "Kaggle chrono-analyzer",
+        "TagMyWatch / Chrono24",
+        "Hugging Face listing and synthetic-verdict sets",
+        "TrustWatch public description",
+        "GoldNet",
+        "FAMOS",
+        "IEEE QR anti-counterfeit set"
+      ]
+    },
+    {
+      "pathway": "Institutional datasets",
+      "practical": "A museum or university set can qualify when the object record and the image license are both published.",
+      "status": "NONE_MET_THE_RULE",
+      "note": "FAMOS is an institutional authentication set for package microstructures, not watches. Earlier museum endpoints did not yield licensed watch originals."
+    }
+  ]
+}

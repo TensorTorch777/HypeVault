@@ -1,0 +1,29 @@
+{
+  "model_version": "hv-dinov2-cls_only.v1-img504-78e0da14c4d3",
+  "model_family": "dinov2",
+  "backbone": "vit_base_patch14_dinov2.lvd142m",
+  "backbone_revision": "lvd142m",
+  "architecture_version": "cls_only.v1",
+  "classifier_version": "ln-dropout-linear512-gelu-dropout-linear1",
+  "image_size": 504,
+  "patch_size": 14,
+  "normalization": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "calibration_version": null,
+  "fake_threshold": null,
+  "review_thresholds": null,
+  "git_sha": "e0c0c6d27afa5275909ff3c9a3fbe0713a28f330",
+  "dataset_hash": "fa45e8d07ec7a8f43e5ae92fd91e02d7fcb5426a64c4f9bedd187b1570739c0f",
+  "training_config_hash": "78e0da14c4d3a40bf058b13cc327ae08e4d19602d5a6f48410d6b878af1649fc",
+  "checkpoint_sha256": "de90d8ffcb9b636bf8c2950d09ee0032f5754ea15574fcdf029f20a688bd68a0"
+}

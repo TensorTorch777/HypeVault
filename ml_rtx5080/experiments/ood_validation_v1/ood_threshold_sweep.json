@@ -1,0 +1,150 @@
+{
+  "gates": [
+    {
+      "calibration_authentic_rate": 0.4409606404269513,
+      "calibration_decision_counts": {
+        "AUTHENTIC": 1322,
+        "FAKE": 1473,
+        "REVIEW": 203
+      },
+      "calibration_fake_rate": 0.49132755170113407,
+      "calibration_review_increase": 0.0,
+      "calibration_review_rate": 0.06771180787191461,
+      "mahalanobis_threshold": null,
+      "name": "none",
+      "ood_authentic_count": {
+        "A_unrelated": 51,
+        "B_product_non_watch": 70,
+        "C_watch_outside_scope": 31,
+        "D_unseen_luxury_brand": 171,
+        "E_structurally_different": 14
+      },
+      "ood_authentic_escape": {
+        "A_unrelated": 0.75,
+        "B_product_non_watch": 0.8433734939759037,
+        "C_watch_outside_scope": 0.6888888888888889,
+        "D_unseen_luxury_brand": 0.8814432989690721,
+        "E_structurally_different": 0.7777777777777778
+      },
+      "ood_caught_rate": {
+        "A_unrelated": 0.25,
+        "B_product_non_watch": 0.15662650602409633,
+        "C_watch_outside_scope": 0.3111111111111111,
+        "D_unseen_luxury_brand": 0.11855670103092786,
+        "E_structurally_different": 0.2222222222222222
+      },
+      "production_ood_threshold": null,
+      "role": "current_shadow_without_ood"
+    },
+    {
+      "calibration_authentic_rate": 0.4309539693128753,
+      "calibration_decision_counts": {
+        "AUTHENTIC": 1292,
+        "FAKE": 1473,
+        "REVIEW": 233
+      },
+      "calibration_fake_rate": 0.49132755170113407,
+      "calibration_review_increase": 0.010006671114076049,
+      "calibration_review_rate": 0.07771847898599066,
+      "mahalanobis_threshold": 37.69066974303325,
+      "name": "conservative",
+      "ood_authentic_count": {
+        "A_unrelated": 0,
+        "B_product_non_watch": 0,
+        "C_watch_outside_scope": 14,
+        "D_unseen_luxury_brand": 160,
+        "E_structurally_different": 0
+      },
+      "ood_authentic_escape": {
+        "A_unrelated": 0.0,
+        "B_product_non_watch": 0.0,
+        "C_watch_outside_scope": 0.3111111111111111,
+        "D_unseen_luxury_brand": 0.8247422680412371,
+        "E_structurally_different": 0.0
+      },
+      "ood_caught_rate": {
+        "A_unrelated": 1.0,
+        "B_product_non_watch": 1.0,
+        "C_watch_outside_scope": 0.6888888888888889,
+        "D_unseen_luxury_brand": 0.17525773195876293,
+        "E_structurally_different": 1.0
+      },
+      "production_ood_threshold": null,
+      "role": "research_candidate_only"
+    },
+    {
+      "calibration_authentic_rate": 0.40260173448965975,
+      "calibration_decision_counts": {
+        "AUTHENTIC": 1207,
+        "FAKE": 1473,
+        "REVIEW": 318
+      },
+      "calibration_fake_rate": 0.49132755170113407,
+      "calibration_review_increase": 0.038358905937291535,
+      "calibration_review_rate": 0.10607071380920614,
+      "mahalanobis_threshold": 35.753779125719554,
+      "name": "moderate",
+      "ood_authentic_count": {
+        "A_unrelated": 0,
+        "B_product_non_watch": 0,
+        "C_watch_outside_scope": 7,
+        "D_unseen_luxury_brand": 134,
+        "E_structurally_different": 0
+      },
+      "ood_authentic_escape": {
+        "A_unrelated": 0.0,
+        "B_product_non_watch": 0.0,
+        "C_watch_outside_scope": 0.15555555555555556,
+        "D_unseen_luxury_brand": 0.6907216494845361,
+        "E_structurally_different": 0.0
+      },
+      "ood_caught_rate": {
+        "A_unrelated": 1.0,
+        "B_product_non_watch": 1.0,
+        "C_watch_outside_scope": 0.8444444444444444,
+        "D_unseen_luxury_brand": 0.30927835051546393,
+        "E_structurally_different": 1.0
+      },
+      "production_ood_threshold": null,
+      "role": "research_candidate_only"
+    },
+    {
+      "calibration_authentic_rate": 0.27985323549032687,
+      "calibration_decision_counts": {
+        "AUTHENTIC": 839,
+        "FAKE": 1473,
+        "REVIEW": 686
+      },
+      "calibration_fake_rate": 0.49132755170113407,
+      "calibration_review_increase": 0.16110740493662443,
+      "calibration_review_rate": 0.22881921280853904,
+      "mahalanobis_threshold": 33.5842585568423,
+      "name": "aggressive",
+      "ood_authentic_count": {
+        "A_unrelated": 0,
+        "B_product_non_watch": 0,
+        "C_watch_outside_scope": 2,
+        "D_unseen_luxury_brand": 36,
+        "E_structurally_different": 0
+      },
+      "ood_authentic_escape": {
+        "A_unrelated": 0.0,
+        "B_product_non_watch": 0.0,
+        "C_watch_outside_scope": 0.044444444444444446,
+        "D_unseen_luxury_brand": 0.18556701030927836,
+        "E_structurally_different": 0.0
+      },
+      "ood_caught_rate": {
+        "A_unrelated": 1.0,
+        "B_product_non_watch": 1.0,
+        "C_watch_outside_scope": 0.9555555555555556,
+        "D_unseen_luxury_brand": 0.8144329896907216,
+        "E_structurally_different": 1.0
+      },
+      "production_ood_threshold": null,
+      "role": "research_candidate_only"
+    }
+  ],
+  "production_ood_threshold": null,
+  "threshold_status": "research_candidate_only"
+}

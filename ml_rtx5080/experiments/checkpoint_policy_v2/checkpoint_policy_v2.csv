@@ -1,0 +1,5 @@
+directory,family,head,old_selected_epoch,new_selected_epoch,old_selected_PR_AUC,new_selected_PR_AUC,old_selected_F1,new_selected_F1,old_selected_FAR,new_selected_FAR,old_selected_loss,new_selected_loss,policy_v2_selected_checkpoint,weights_file_present
+v2_dinov2_cls_only,dinov2,cls_only,30,8,1.0,1.0,1.0,1.0,0.0,0.0,0.010064411105865494,0.009299791903492617,/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_008.pt,True
+v2_dinov2_cls_patch_attention,dinov2,cls_patch_attention,30,19,1.0,1.0,1.0,1.0,0.0,0.0,0.010062746822516969,0.009500205714968925,,False
+v2_dinov3_cls_only,dinov3,cls_only,30,13,1.0,1.0,1.0,1.0,0.0,0.0,0.010086415761566542,0.009602455927574255,,False
+v2_dinov3_cls_patch_attention,dinov3,cls_patch_attention,30,15,1.0,1.0,1.0,1.0,0.0,0.0,0.010065387637215727,0.009584318896002591,,False

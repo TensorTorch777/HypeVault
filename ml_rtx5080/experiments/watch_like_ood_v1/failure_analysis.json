@@ -1,0 +1,170 @@
+{
+  "authentic_count": 15,
+  "lowest_p_fake": [
+    {
+      "brand": "Breguet",
+      "category": "unseen_luxury",
+      "cosine": 0.6675265247499094,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/ccf369c926bbc678.jpg",
+      "mahalanobis": 33.492983468489996,
+      "p_fake": 3.696701957448043e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Breguet_MG_2575.jpg"
+    },
+    {
+      "brand": "Swatch",
+      "category": "ordinary_watch",
+      "cosine": 0.7321537465476984,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/05fe237be5b3027c.jpg",
+      "mahalanobis": 36.23681835879675,
+      "p_fake": 3.806303271248494e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Swatch_Irony_da_donna,_fine_anni_%2790_-_inizio_anni_2000.jpg"
+    },
+    {
+      "brand": "Swatch",
+      "category": "ordinary_watch",
+      "cosine": 0.7073311810516629,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/6f3f611f13d3d444.jpg",
+      "mahalanobis": 34.24487349585139,
+      "p_fake": 3.8136039765911425e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Swatch_Light_Painting_(57940452).jpg"
+    },
+    {
+      "brand": "Jaeger-LeCoultre",
+      "category": "unseen_luxury",
+      "cosine": 0.6478455636248787,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/0ac022c1b2ea3d1a.jpg",
+      "mahalanobis": 32.58945873213305,
+      "p_fake": 3.8277842202796466e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Jaeger_Lecoultre_img_0992.jpg"
+    },
+    {
+      "brand": "Tissot",
+      "category": "ordinary_watch",
+      "cosine": 0.6783938060521797,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/dfee18df6b39e4b7.jpg",
+      "mahalanobis": 33.18306611313273,
+      "p_fake": 4.052581705780415e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Tissot_PRX_35mm.jpg"
+    },
+    {
+      "brand": "Rolex",
+      "category": "unseen_luxury",
+      "cosine": 0.7232992554598241,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/eeb90c847e0d269a.jpg",
+      "mahalanobis": 34.030517796292926,
+      "p_fake": 4.07140429523e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Rolex-Submariner.jpg"
+    },
+    {
+      "brand": "Tudor",
+      "category": "unseen_luxury",
+      "cosine": 0.7659251377205141,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/ad6641df755fd5a9.jpg",
+      "mahalanobis": 35.133451034529465,
+      "p_fake": 4.199414193642488e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:263-tudor-76100-submariner-marine-nationale-1979-mostra-store-aix-en-provence-27.jpg"
+    },
+    {
+      "brand": "Rolex",
+      "category": "unseen_luxury",
+      "cosine": 0.9079934023280383,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/e36c43529e3899e7.jpg",
+      "mahalanobis": 39.22698612315479,
+      "p_fake": 4.412508764708923e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Bilanciere_Rolex_in_cui_si_possono_notare_due_dei_quattro_dadi_Microstella_utili_per_regolare_la_precisione_cronometrica_dell%27orologio.jpg"
+    },
+    {
+      "brand": "Rolex",
+      "category": "unseen_luxury",
+      "cosine": 0.7309696539987507,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/cc1d039dda4f893a.jpg",
+      "mahalanobis": 35.490216806805634,
+      "p_fake": 4.463436145079345e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Calibro_Rolex_4131.jpg"
+    },
+    {
+      "brand": "Rolex",
+      "category": "unseen_luxury",
+      "cosine": 0.734469999928973,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/5eb8819736e5e306.jpg",
+      "mahalanobis": 35.86702757407328,
+      "p_fake": 4.490201908216483e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Daytona116509.jpg"
+    },
+    {
+      "brand": "Rolex",
+      "category": "unseen_luxury",
+      "cosine": 0.8641968394315938,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/97d49708d376bf74.jpg",
+      "mahalanobis": 40.09640554800909,
+      "p_fake": 4.694945343649051e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Back_of_Rolex_Submariner_Professional.JPG"
+    },
+    {
+      "brand": "Rolex",
+      "category": "unseen_luxury",
+      "cosine": 0.8363185894434589,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/133f664ba914b67f.jpg",
+      "mahalanobis": 39.56520079894869,
+      "p_fake": 4.763123935739115e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Calibro_Rolex_9_3-4,_anni_Trenta.jpg"
+    },
+    {
+      "brand": "UNKNOWN",
+      "category": "smart_digital",
+      "cosine": 0.8011747235409994,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/d297ef5d28a794ae.jpg",
+      "mahalanobis": 39.14084951639897,
+      "p_fake": 5.343892270646443e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Smart_Watch.jpg"
+    },
+    {
+      "brand": "Rolex",
+      "category": "unseen_luxury",
+      "cosine": 0.8194395772506897,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/40b46de7340e21fb.jpg",
+      "mahalanobis": 40.009803091098135,
+      "p_fake": 6.290354436581931e-09,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:Calibro_Rolex_3185.jpg"
+    },
+    {
+      "brand": "Rolex",
+      "category": "unseen_luxury",
+      "cosine": 0.9111348590509547,
+      "decision": "AUTHENTIC",
+      "image": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/watch_like_ood_v1/corpus/commons/7e16566952fac9d2.jpg",
+      "mahalanobis": 42.601096481729634,
+      "p_fake": 2.2314702293211452e-08,
+      "quality_flags": [],
+      "source": "https://commons.wikimedia.org/wiki/File:EPP_Political_Assembly,_04-05_May,_Munich_(52870485070).jpg"
+    }
+  ]
+}

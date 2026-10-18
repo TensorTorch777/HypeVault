@@ -1,0 +1,262 @@
+{
+  "brands": [
+    {
+      "authentic_escape_rate": 0.8,
+      "brand": "Rolex",
+      "count": 10,
+      "mean_p_fake": 6.730317026043482e-09,
+      "median_mahalanobis": 39.396093461051734
+    }
+  ],
+  "development_escape_descriptive_only": {
+    "ordinary_watch": 0.0,
+    "smart_digital": 0.0,
+    "unseen_luxury": 0.0,
+    "wrist_store": 0.0
+  },
+  "holdout": {
+    "ordinary_watch": {
+      "authentic": 3,
+      "authentic_escape_rate": 0.3,
+      "brands": [],
+      "cosine": {
+        "mean": 0.7743472768169483,
+        "median": 0.7292976490186294,
+        "p05": 0.686383778620099,
+        "p95": 0.9127535823862689
+      },
+      "count": 10,
+      "detectors": {
+        "cosine": {
+          "average_precision": 0.1096415053569278,
+          "fpr_at_95_tpr": null,
+          "fpr_status": "too_few_samples",
+          "id_mean": 0.6818381851087267,
+          "id_median": 0.6751364127474717,
+          "ood_mean": 0.7743472768169484,
+          "ood_median": 0.7264415514895605,
+          "roc_auc": 0.8397196261682243
+        },
+        "mahalanobis": {
+          "average_precision": 0.2652905298721916,
+          "fpr_at_95_tpr": null,
+          "fpr_status": "too_few_samples",
+          "id_mean": 33.32768349801957,
+          "id_median": 33.076613294689686,
+          "ood_mean": 36.668460766290806,
+          "ood_median": 36.002162674738024,
+          "roc_auc": 0.8230974632843793
+        },
+        "p_fake": {
+          "average_precision": 0.09983249894609575,
+          "fpr_at_95_tpr": null,
+          "fpr_status": "too_few_samples",
+          "id_mean": 4.110056672996139e-09,
+          "id_median": 4.0447593170555835e-09,
+          "ood_mean": 4.631098608534704e-09,
+          "ood_median": 4.003648927577561e-09,
+          "roc_auc": 0.5357142857142857
+        }
+      },
+      "fake": 0,
+      "mahalanobis": {
+        "mean": 36.668460766290806,
+        "median": 36.119490516767385,
+        "p05": 32.763714066706754,
+        "p95": 41.724309398700726
+      },
+      "max_p_fake": 7.244383883348007e-09,
+      "mean_p_fake": 4.631098608534705e-09,
+      "median_p_fake": 4.028115316678988e-09,
+      "p95_p_fake": 7.0087265513739815e-09,
+      "predicted_authentic_at_0_50": 1.0,
+      "review": 7
+    },
+    "overall_watch_like": {
+      "authentic": 15,
+      "authentic_escape_rate": 0.6,
+      "cosine": {
+        "mean": 0.7810352997414758,
+        "median": 0.734469999928973,
+        "p05": 0.6689146724244959,
+        "p95": 0.9133551703385799
+      },
+      "count": 25,
+      "detectors": {
+        "cosine": {
+          "average_precision": 0.22437725073115986,
+          "fpr_at_95_tpr": 0.5687583444592791,
+          "fpr_status": "ok",
+          "id_mean": 0.6818381851087267,
+          "id_median": 0.6751364127474717,
+          "ood_mean": 0.7810352997414758,
+          "ood_median": 0.734469999928973,
+          "roc_auc": 0.8351401869158879
+        },
+        "mahalanobis": {
+          "average_precision": 0.3631965364272238,
+          "fpr_at_95_tpr": 0.6748998664886515,
+          "fpr_status": "ok",
+          "id_mean": 33.32768349801957,
+          "id_median": 33.076613294689686,
+          "ood_mean": 36.968866438962955,
+          "ood_median": 36.18087356538323,
+          "roc_auc": 0.8279038718291054
+        },
+        "p_fake": {
+          "average_precision": 0.18838102719367358,
+          "fpr_at_95_tpr": 0.9292389853137517,
+          "fpr_status": "ok",
+          "id_mean": 4.110056672996139e-09,
+          "id_median": 4.0447593170555835e-09,
+          "ood_mean": 5.382749636739296e-09,
+          "ood_median": 4.199414193642488e-09,
+          "roc_auc": 0.637196261682243
+        }
+      },
+      "fake": 0,
+      "mahalanobis": {
+        "mean": 36.96886643896295,
+        "median": 36.18087356538323,
+        "p05": 32.45437802394956,
+        "p95": 42.45684977006856
+      },
+      "max_p_fake": 2.2314702293211452e-08,
+      "mean_p_fake": 5.382749636739295e-09,
+      "median_p_fake": 4.199414193642488e-09,
+      "p95_p_fake": 7.920893566844403e-09,
+      "predicted_authentic_at_0_50": 1.0,
+      "review": 10
+    },
+    "smart_digital": {
+      "authentic": 1,
+      "authentic_escape_rate": 1.0,
+      "brands": [],
+      "cosine": {
+        "mean": 0.8011747235409994,
+        "median": 0.8011747235409994,
+        "p05": 0.8011747235409994,
+        "p95": 0.8011747235409994
+      },
+      "count": 1,
+      "detectors": {
+        "cosine": {
+          "average_precision": 0.02127659574468085,
+          "fpr_at_95_tpr": null,
+          "fpr_status": "too_few_samples",
+          "id_mean": 0.6818381851087267,
+          "id_median": 0.6751364127474717,
+          "ood_mean": 0.8011747235409994,
+          "ood_median": 0.8011747235409994,
+          "roc_auc": 0.9692923898531376
+        },
+        "mahalanobis": {
+          "average_precision": 0.1,
+          "fpr_at_95_tpr": null,
+          "fpr_status": "too_few_samples",
+          "id_mean": 33.32768349801957,
+          "id_median": 33.076613294689686,
+          "ood_mean": 39.14084951639897,
+          "ood_median": 39.14084951639897,
+          "roc_auc": 0.993991989319092
+        },
+        "p_fake": {
+          "average_precision": 0.1111111111111111,
+          "fpr_at_95_tpr": null,
+          "fpr_status": "too_few_samples",
+          "id_mean": 4.110056672996139e-09,
+          "id_median": 4.0447593170555835e-09,
+          "ood_mean": 5.343892270646443e-09,
+          "ood_median": 5.343892270646443e-09,
+          "roc_auc": 0.9946595460614153
+        }
+      },
+      "fake": 0,
+      "mahalanobis": {
+        "mean": 39.14084951639897,
+        "median": 39.14084951639897,
+        "p05": 39.14084951639897,
+        "p95": 39.14084951639897
+      },
+      "max_p_fake": 5.343892270646443e-09,
+      "mean_p_fake": 5.343892270646443e-09,
+      "median_p_fake": 5.343892270646443e-09,
+      "p95_p_fake": 5.343892270646443e-09,
+      "predicted_authentic_at_0_50": 1.0,
+      "review": 0
+    },
+    "unseen_luxury": {
+      "authentic": 11,
+      "authentic_escape_rate": 0.7857142857142857,
+      "brands": [
+        {
+          "authentic_escape_rate": 0.8,
+          "brand": "Rolex",
+          "count": 10,
+          "mean_p_fake": 6.730317026043482e-09,
+          "median_mahalanobis": 39.396093461051734
+        }
+      ],
+      "cosine": {
+        "mean": 0.7843739287018866,
+        "median": 0.7501975688247435,
+        "p05": 0.6606381883561486,
+        "p95": 0.9294289534993286
+      },
+      "count": 14,
+      "detectors": {
+        "cosine": {
+          "average_precision": 0.2057064125558457,
+          "fpr_at_95_tpr": null,
+          "fpr_status": "too_few_samples",
+          "id_mean": 0.6818381851087267,
+          "id_median": 0.6751364127474717,
+          "ood_mean": 0.7843739287018865,
+          "ood_median": 0.734469999928973,
+          "roc_auc": 0.8222868586687011
+        },
+        "mahalanobis": {
+          "average_precision": 0.34458868747609595,
+          "fpr_at_95_tpr": null,
+          "fpr_status": "too_few_samples",
+          "id_mean": 33.32768349801957,
+          "id_median": 33.076613294689686,
+          "ood_mean": 37.02830027105477,
+          "ood_median": 35.86702757407328,
+          "roc_auc": 0.8194735838260537
+        },
+        "p_fake": {
+          "average_precision": 0.15287440988972872,
+          "fpr_at_95_tpr": null,
+          "fpr_status": "too_few_samples",
+          "id_mean": 4.110056672996139e-09,
+          "id_median": 4.0447593170555835e-09,
+          "ood_mean": 5.922418754463493e-09,
+          "ood_median": 4.412508764708923e-09,
+          "roc_auc": 0.6841502956322716
+        }
+      },
+      "fake": 0,
+      "mahalanobis": {
+        "mean": 37.02830027105477,
+        "median": 36.02395056972826,
+        "p05": 32.3290102891493,
+        "p95": 42.383844361437376
+      },
+      "max_p_fake": 2.2314702293211452e-08,
+      "mean_p_fake": 5.922418754463493e-09,
+      "median_p_fake": 4.437972454894134e-09,
+      "p95_p_fake": 1.3068659444641032e-08,
+      "predicted_authentic_at_0_50": 1.0,
+      "review": 3
+    },
+    "wrist_store": {
+      "authentic": 0,
+      "authentic_escape_rate": null,
+      "brands": [],
+      "count": 0,
+      "fake": 0,
+      "review": 0
+    }
+  }
+}

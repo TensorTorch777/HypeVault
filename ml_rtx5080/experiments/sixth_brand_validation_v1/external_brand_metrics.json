@@ -1,0 +1,18 @@
+{
+  "authentic_count": 0,
+  "brier": null,
+  "calibration_changed": false,
+  "counterfeit_count": 0,
+  "ece": null,
+  "f1": null,
+  "false_authentic_rate": null,
+  "false_fake_rate": null,
+  "nll": null,
+  "pr_auc": null,
+  "production_ood_threshold": null,
+  "reason": "EXTERNAL_CLASSIFICATION_VALIDATION is BLOCKED. The frozen checkpoint was not run on a sixth brand.",
+  "roc_auc": null,
+  "scoring_performed": false,
+  "target_brand": null,
+  "threshold_changed": false
+}

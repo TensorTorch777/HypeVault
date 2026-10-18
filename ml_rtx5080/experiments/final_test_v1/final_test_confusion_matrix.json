@@ -1,0 +1,44 @@
+{
+  "evaluation_threshold": 0.5,
+  "production_threshold": null,
+  "baseline": {
+    "labels": [
+      "authentic",
+      "fake"
+    ],
+    "matrix": [
+      [
+        1506,
+        0
+      ],
+      [
+        0,
+        1500
+      ]
+    ],
+    "true_negative": 1506,
+    "false_fake": 0,
+    "false_authentic": 0,
+    "true_positive": 1500
+  },
+  "calibrated": {
+    "labels": [
+      "authentic",
+      "fake"
+    ],
+    "matrix": [
+      [
+        1506,
+        0
+      ],
+      [
+        0,
+        1500
+      ]
+    ],
+    "true_negative": 1506,
+    "false_fake": 0,
+    "false_authentic": 0,
+    "true_positive": 1500
+  }
+}

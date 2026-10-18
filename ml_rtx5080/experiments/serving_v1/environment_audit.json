@@ -1,0 +1,32 @@
+{
+  "blocker": "onnxruntime 1.26 CUDAExecutionProvider is linked to CUDA 12 sonames, including libcublasLt.so.12. PyTorch in this environment is torch 2.11.0+cu130 and ships libcublasLt.so.13. libcublasLt.so.12 is not on the dynamic linker path and is not installed in the project virtualenv. A private copy under Ollama's cuda_v12 tree was not added to the library path. The current environment cannot load this ONNX Runtime CUDA provider without a CUDA 12 runtime that is not part of the project stack.",
+  "cuda_provider_listed": true,
+  "cuda_provider_loaded": false,
+  "gpu_name": "NVIDIA GeForce RTX 5080",
+  "nvcc": null,
+  "nvidia_driver": "595.71.05",
+  "nvidia_smi_cuda_version": "13.2",
+  "ollama_library_used": false,
+  "onnxruntime_device": "GPU",
+  "onnxruntime_providers": [
+    "TensorrtExecutionProvider",
+    "CUDAExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "onnxruntime_version": "1.26.0",
+  "ort_cuda_missing_libraries": [
+    "libcublasLt.so.12 => not found",
+    "libcublas.so.12 => not found",
+    "libcurand.so.10 => not found",
+    "libcufft.so.11 => not found",
+    "libcudart.so.12 => not found",
+    "libcudnn.so.9 => not found"
+  ],
+  "project_cublaslt": "/home/tensortorch26/Desktop/HypeVault/.venv/lib/python3.12/site-packages/nvidia/cu13/lib/libcublasLt.so.13",
+  "torch_cuda": "13.0",
+  "torch_cudnn": 91900,
+  "torch_gpu_name": "NVIDIA GeForce RTX 5080",
+  "torch_gpu_visible": true,
+  "torch_version": "2.11.0+cu130",
+  "unrelated_cublaslt_so12": "/usr/local/lib/ollama/cuda_v12/libcublasLt.so.12"
+}

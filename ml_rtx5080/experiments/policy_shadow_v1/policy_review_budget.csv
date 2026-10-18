@@ -1,0 +1,5 @@
+dataset,policy,authentic_rate,fake_rate,review_rate,false_authentic_count,false_fake_count,review_count,sample_count
+reference,authenticity_only,0.4998888641920427,0.5001111358079573,0.0,0,0,0,26994
+reference,quality_gated,0.44146847447580945,0.4898125509372453,0.06871897458694524,0,0,1855,26994
+phase22_stress,authenticity_only,0.9967857142857143,0.0032142857142857142,0.0,0,9,0,2800
+phase22_stress,quality_gated,0.7596428571428572,0.00035714285714285714,0.24,0,1,672,2800

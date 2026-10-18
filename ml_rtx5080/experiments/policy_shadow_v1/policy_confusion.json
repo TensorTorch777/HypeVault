@@ -1,0 +1,13 @@
+{
+  "actual_authentic": {
+    "AUTHENTIC": 11917,
+    "FAKE": 0,
+    "REVIEW": 1577
+  },
+  "actual_fake": {
+    "AUTHENTIC": 0,
+    "FAKE": 13222,
+    "REVIEW": 278
+  },
+  "review_excluded_from_binary_metrics": true
+}

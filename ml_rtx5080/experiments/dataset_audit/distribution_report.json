@@ -1,0 +1,70 @@
+{
+  "train": {
+    "total": 20999,
+    "authentic": 10499,
+    "fake": 10500,
+    "fake_ratio": 0.5000238106576503,
+    "brands": 5,
+    "brand_entropy_bits": 2.3219273522238653,
+    "largest_brand_share": 0.20029525215486452,
+    "largest_class_share": 0.5000238106576503,
+    "brand_counts": {
+      "A. Lange & S\u00f6hne": 4201,
+      "Audemars Piguet": 4195,
+      "Patek Philippe": 4195,
+      "Richard Mille": 4202,
+      "Vacheron Constantin": 4206
+    }
+  },
+  "calibration": {
+    "total": 2998,
+    "authentic": 1498,
+    "fake": 1500,
+    "fake_ratio": 0.5003335557038026,
+    "brands": 5,
+    "brand_entropy_bits": 2.321919580893082,
+    "largest_brand_share": 0.2008005336891261,
+    "largest_class_share": 0.5003335557038026,
+    "brand_counts": {
+      "A. Lange & S\u00f6hne": 601,
+      "Audemars Piguet": 599,
+      "Patek Philippe": 596,
+      "Richard Mille": 600,
+      "Vacheron Constantin": 602
+    }
+  },
+  "validation": {
+    "total": 2997,
+    "authentic": 1497,
+    "fake": 1500,
+    "fake_ratio": 0.5005005005005005,
+    "brands": 5,
+    "brand_entropy_bits": 2.3217901633250206,
+    "largest_brand_share": 0.20520520520520522,
+    "largest_class_share": 0.5005005005005005,
+    "brand_counts": {
+      "A. Lange & S\u00f6hne": 615,
+      "Audemars Piguet": 597,
+      "Patek Philippe": 593,
+      "Richard Mille": 600,
+      "Vacheron Constantin": 592
+    }
+  },
+  "test": {
+    "total": 3006,
+    "authentic": 1506,
+    "fake": 1500,
+    "fake_ratio": 0.499001996007984,
+    "brands": 5,
+    "brand_entropy_bits": 2.3216789546891854,
+    "largest_brand_share": 0.2049234863606121,
+    "largest_class_share": 0.500998003992016,
+    "brand_counts": {
+      "A. Lange & S\u00f6hne": 583,
+      "Audemars Piguet": 609,
+      "Patek Philippe": 616,
+      "Richard Mille": 598,
+      "Vacheron Constantin": 600
+    }
+  }
+}

@@ -1,0 +1,501 @@
+sample_id,source_split,brand,label,calibrated_probability,confidence,predicted_class
+Label_1_Watches/A. Lange & Söhne/001067d69616.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/003190ac3813.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/004c219b045c.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/005442daf6b3.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/005bb6357b99.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/00620a3d102e.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/006ef6078c95.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/00cb3b67c58e.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/00cf1c7120fb.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/00e163d30b10.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/010a9860b5fd.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/011335ca8dc8.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/01137ddde2d7.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/014f8a4abecf.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/01564b6d78e2.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/01799c5f6d5b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/017b161b1a98.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/019d85ef6961.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/01beb9047d1e.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0233f16c095c.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0239575a356e.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/026430c94ee2.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/02a2d87ec8ff.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/02bc53204664.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/02c7358e65be.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/02f1973c0400.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/030a3cd95355.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/031026f58138.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0313b4f5cceb.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0317ea1ff9d3.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0329905fe7fa.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/032f0da2ace9.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/034590eee69c.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/03587ba83c06.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0369ce716646.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/037b591ef4bd.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/03d832bf9cbc.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/03dd2ac0a742.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/042709a47fe4.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/042d072372fc.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/04433162bc11.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0446e66b35de.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/04baa7e45878.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/04bfeecc5ba6.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/04c55c7420c3.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/04eddc972b10.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/04f948041845.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0500da077e1c.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0512a25f98fc.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0527937a328d.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0529e52e0476.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/055281d7fdf9.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/05703a7c8d5c.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0579a7c76e38.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/058cba186135.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/05981d97b6f1.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/05d01d402f2d.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/05f2d5c3c36b.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/05f4baded050.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/05f680b82199.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/060ca69f154b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/061a6839d90b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/064a17101958.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0655b254c24f.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/068489d72689.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/06854172d743.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0687d4a3a47b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/06a61a5ea389.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/06c482b96f9f.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/071bfa185402.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0737ceaf67fd.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0737da8ccd30.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0740bf8ecbee.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/07519c75aa17.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/07621840dd4b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0763d545d6ee.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/076708b2fdf7.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0787b7409ea3.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/07c02c2d4b04.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/07e418f13efb.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/07e6aeb0a4ec.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/07ee1be0e274.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/07f824a3d9cf.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/08317fdc6e32.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0865c4b94145.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/086bc7d98665.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0871d0c04eca.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0875d861376a.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0883f51fba3e.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/08a0382ee5dc.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/08a4cee4133e.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/08c51def3089.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/08c8fc6fa17b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/08d77995d34c.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/09228c75371c.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/092a4f911920.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/092efaba6b4b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/09415c340898.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/09571ca3f25a.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0967a64243fe.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0976afec5b99.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0985c17ab408.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/09964195cae2.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/09a8bea94a9a.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0a168074611c.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0a3e677f3879.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0a3e80b99ab7.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0a647b050f88.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0a68ad3c47ee.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0a6e52ba976d.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0a7bf08c6795.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0a7f66addae4.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0a8b9e013974.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0a9ab42f4467.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0ad18e18e341.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0b073cf97b33.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0b1618455fe5.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0b4ac4ce36f3.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0b62434d92b3.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0b6c73fc41fd.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0b76048e16f6.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0b772403f612.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0b89dc67cba4.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0bc515329b18.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0bd91dfb738f.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0bda34e51823.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0be485b4fd19.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0be62de6bef0.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0c74651eb02e.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0c7bf7e2253c.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0c8210163d26.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0c97b35def24.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0c9a67973078.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0cc6a078b668.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0cc9f2a5cae0.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0ccd7a1d5cf8.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0cd1e514f260.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0cdd86bf7ca2.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0d057fcd7bcf.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0d0acc1bbdff.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0d2d7a018d56.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0d45531bbbd0.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0d523bb0eee2.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0d6e50d948fc.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0d832f80fb6b.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0d97fc464238.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0ddd3da413fa.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0de0087c0184.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0deecbea9b4f.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0e983a933e48.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0e9a08fcb578.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0e9f826b0ee9.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0eb313f45a7b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0ebf3994fbb1.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0ef3f5dc16b6.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0f043d567316.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0f149c45bf83.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0f22e282b5af.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0f634f8c5e07.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0fa26c7886a2.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0fa544e29b0b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0ff49d92d4a2.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/0ffa5469ddd1.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/101070a5802f.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/101755725ae7.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1017da6e94ad.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/105df470e1bf.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1066ad9ea134.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1076ef9ced79.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/10848c393f27.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/10852aa3fcb3.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1089553dc917.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/108b2c2c9468.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/10a49ba230f6.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/10aa2779e592.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/10dfb2a5f074.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1101bf9aaf71.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/110c4eb60fd0.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/111a76b1e31f.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/11233aa80ed3.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1141c4b3446b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1159ea1ad53d.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/11a4a5417186.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1212872f2f88.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/128244af3a69.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/128d8a9110aa.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/12ab32b0da00.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/12c13b1b239f.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/12cc77659f1f.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/12dccfbb8e59.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/12fa5060e145.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/130fae583b09.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/132848913943.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/13349a52c38b.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/13431cecde8a.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1362d108ae6c.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/13857a56fc01.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/13c71190563b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/13e3266a4c87.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/13e90ff8dba3.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/13fafdba8a3b.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/143700ad12d4.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/14465960ba9c.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/145b52ea35f1.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1486a3860fd6.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/14902928bd46.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/149e2b8d7a86.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/14b7ff911a58.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/14c043fa1273.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/15049294cd8e.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/150879ab0155.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1509b9cac301.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/150a19c41c19.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/15109cb3fba4.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/151dd2fa1491.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1531cb7f4cd7.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1571c5e36878.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/157b406ab6b1.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/158229560862.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/15a0ded18c68.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/15df78d9e09d.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/15fdfb715c3d.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/160a30891c88.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1624bf9d7f3f.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1636904a4bb2.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/163e7a3e74e5.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/164822eb8df2.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1655e7258bf2.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/165bf88593be.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1667b1642bcf.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/16aec21ad28a.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/16b2a8265b13.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/16df8f944679.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/16e97ace32c0.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/16ff6f29382b.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/170d5f635877.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1710bf83299a.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1714adf458ba.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1717e004aead.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/171bfc84be3f.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/17218c48bedb.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/173198411ae2.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/1757b7e29ebd.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/17593775469f.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/175a4f99e3ac.jpg,calibration,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/17606d8d111d.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/176962225baa.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/177c469db965.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/177cb42f508f.jpg,validation,A. Lange & Söhne,1,1.0,1.0,fake
+Label_1_Watches/A. Lange & Söhne/17859a0713b4.jpg,train,A. Lange & Söhne,1,1.0,1.0,fake
+Label_0_Watches/Patek Philippe/c0d2eb84a449.jpg,train,Patek Philippe,0,2.9833684411784134e-09,0.9999999970166316,authentic
+Label_0_Watches/Patek Philippe/e5ce192c596c.jpg,train,Patek Philippe,0,2.9833684411784134e-09,0.9999999970166316,authentic
+Label_0_Watches/Vacheron Constantin/0181766fc272.jpg,train,Vacheron Constantin,0,2.9833684411784134e-09,0.9999999970166316,authentic
+Label_0_Watches/A. Lange & Söhne/00a208f1d991.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/01f6cc116895.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/03eeec26e9a1.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/045fea3a056b.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/060d5b562a4b.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/0ade602ce257.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/13ab70db34f8.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/1439583cbd08.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/1a69662c43f8.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/1c41423d78f6.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/1d24159004a4.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/1dbe533f789f.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/1f2b675b6982.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/1f2f9f58c5fa.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/2158ba6c8d77.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/2591c901ee3e.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/27b22f8e3d7e.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/27efccf59a5b.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/2818861d6d28.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/2aaed42e4026.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/2b192f0d15e9.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/2bfe88100fff.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/2e342eef40e0.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/2e6e67c7d607.jpg,calibration,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/3155497bc43a.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/34478be4998f.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/359080261d4a.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/3670b8a6f146.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/3d9d53e8e892.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/40781c79acfc.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/419912a98a28.jpg,calibration,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/4322434e3917.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/45048ea3f94e.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/465256569208.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/46bef808b4ec.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/478414cf2acf.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/4b6ce219851c.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/4bb12bc2975f.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/4ea0672ec933.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/52f1e349614d.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/53a683db9a35.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/5816d1c49b2f.jpg,calibration,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/582f5b88894c.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/59708481bf71.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/5a206eab8849.jpg,calibration,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/5d3ee91161fa.jpg,calibration,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/5f193b833ca1.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/637332c64c4c.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/6ac6ceb5fd3a.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/70710733fe8f.jpg,calibration,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/72b2eaaf3963.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/72cef126cca8.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/745b7ff34b68.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/75c405f9696a.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/770b81ea2c21.jpg,calibration,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/77678f5a6434.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/7a295a96173f.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/829dfd0369d5.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/84705974d007.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/884c2b8800df.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/8c92341f3a71.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/8f6fc08cadee.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/9457813d8bad.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/976ca804d9bf.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/9dc0eadb8746.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/9df17710e7a0.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/a128ed297901.jpg,calibration,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/a4fe898c219d.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/ab0c1da43050.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/ab368dba8e1e.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/b1041e53dcc5.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/b156dae371c2.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/b24da7358b21.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/b55a455a62a4.jpg,calibration,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/b6de80ecc6ff.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/bc74e7787afc.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/bff6c6d47932.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/c177fbfbd87d.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/c1a1e27fb240.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/c332cee26571.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/c37d4be87133.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/c5212e0a2631.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/c5d125eac88b.jpg,validation,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/c7a59af5060d.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/cba56d8a423b.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/cce550455962.jpg,calibration,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/cf292f4a7038.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/d735a1791fb9.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/d7eac446cd01.jpg,calibration,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/d85de23adb10.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/e15eb6a2e9e1.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/e6e2ee1d9de9.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/e9655e1b7238.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/ebdfc222ea05.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/ec306448361a.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/effa07502392.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/f2c2062e8c00.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/f3ece65fa6f7.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/f47e27f0c893.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/f65e6691567e.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/f668416a1c83.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/febfd79780d0.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/A. Lange & Söhne/ffca31274b00.jpg,train,A. Lange & Söhne,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/003f2279536b.jpg,validation,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/04223cf43d54.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/06e4e0173fd4.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/07ac4a62145f.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/0c6369d194dc.jpg,calibration,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/0ccb81f69f86.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/0f0714423921.jpg,validation,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/17aa1bf3f467.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/1a433506d45c.jpg,calibration,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/1abbd87d4c6b.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/1ba4271e0654.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/1d036f64ad08.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/263cbe2a75fc.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/2c854f1c5259.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/2c86c3a88eaf.jpg,validation,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/2c965f511923.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/2d1c01b97609.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/2f7549ba060b.jpg,calibration,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/34600fad93ef.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/373cebcc780c.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/3ad778c9dea5.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/3da9f74e59f8.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/3ee9afc4b46b.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/43991c31e47e.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/50c99e21a5a8.jpg,validation,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/52621ceebc1e.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/52735c083369.jpg,calibration,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/54255963dedf.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/595983cb7f3c.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/5acbdb5c8512.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/5e36ac5bfc07.jpg,validation,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/685abe272fd3.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/68b8620602dd.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/69bb3e42af90.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/6abca756d7e1.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/6efcd2ed84e5.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/712cd362cc68.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/724a4f36c555.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/747a0947bb18.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/74a021cdae8e.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/767327026230.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/768b84604a16.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/7c12667d4428.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/7ee7ef21cd0a.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/7f098c7ff91e.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/82e0538ccc78.jpg,validation,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/83edda267b10.jpg,validation,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/8aac809ad57e.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/8bbb730a7766.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/8cd35bd99efc.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/8e50624a0eb5.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/9024cd7dd454.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/92801706b285.jpg,calibration,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/94f9a41f4520.jpg,calibration,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/97aaf6d0246b.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/9808f10cf554.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/9922df2e2be0.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/9c89d6993d28.jpg,calibration,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/aa2940895d12.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/ab914515fac6.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/ac11944d17b6.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/af70d9a8dd81.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/baa91cd8fdd6.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/c57927ba33c5.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/c5d0580e7791.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/c5d8133d7b04.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/c6c7bbff27f3.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/ce6dde0ede73.jpg,validation,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/d06cb8413437.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/d0f7451aead1.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/d11ee28819b4.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/d3b61a86aadf.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/d4c2d9b4506f.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/d6f387c5d2e6.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/dbf744129c6f.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/ddcec994828c.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/de38e0db1f09.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/e027acb4cf12.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/e05820229a99.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/e115a5f60b10.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/e5e0edb7a2d6.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/e7578b280038.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/e8ca9f77ddd7.jpg,calibration,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/e8fca5ba96ee.jpg,validation,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/ea80f9ef5d84.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/edb7c30f039b.jpg,validation,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/ee153f31c4ad.jpg,calibration,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/eea4f9201a53.jpg,calibration,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/ef01ccc09892.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/f0348234dd93.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/f0ec6e447717.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/f398936237fb.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Audemars Piguet/fd4f04d4a205.jpg,train,Audemars Piguet,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/006e36e24016.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/0346db036f33.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/07d7c829e5b1.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/08f7441350ee.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/0b4b9e4393a9.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/0c83c1f56ab6.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/0c8535b37bd6.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/0d3f976f56aa.jpg,validation,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/0ffe92e0e324.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/1030e0e6a559.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/126a3160e753.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/140c84b90906.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/18e18ca12d88.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/1fe3a4efaf76.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/20fe35213a31.jpg,validation,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/22c3246094b1.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/2432ba56a1dd.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/24f110cdb1fe.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/270861ce57ee.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/2737e6a10605.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/28ea3354ea70.jpg,validation,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/2c389e28fddf.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/2cd6cc18a528.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/2e1b61db9b49.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/2ea7b1bcb58a.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/2f837eef58fb.jpg,calibration,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/3006362bbbd9.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/304530b9edc5.jpg,calibration,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/31ec1117a470.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/329a3e2943fd.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/34156580c38d.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/357b381aad30.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/3a5ca799299d.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/3b75ef07b9ef.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/3b88220fe20c.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/3beafa5f1064.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/3dd60da87ced.jpg,validation,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/3e6c0499dec1.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/3e742df71a94.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/3fefd306d0d8.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/40444d6dac01.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/4282db92ba15.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/47184dd13910.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/47d11763d237.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/4935846cd044.jpg,calibration,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/4ec601012e98.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/4ff32b7a1f01.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/511100b6942c.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/51762fa59a6d.jpg,validation,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/51876771465e.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic
+Label_0_Watches/Patek Philippe/519ce40ea260.jpg,train,Patek Philippe,0,3.3975482427450743e-09,0.9999999966024518,authentic

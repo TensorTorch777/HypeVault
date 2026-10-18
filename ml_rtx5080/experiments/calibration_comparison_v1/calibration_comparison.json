@@ -1,0 +1,715 @@
+{
+  "phase": 20,
+  "architecture_ranking_affected": false,
+  "architecture_winner": null,
+  "production_threshold": null,
+  "checkpoint_selection_completed": true,
+  "calibration_fitted_after_selection": true,
+  "checkpoint_selection_rerun": false,
+  "test_images_loaded": false,
+  "ood_used": false,
+  "training_performed": false,
+  "temperature_meaning": "Each temperature is one global positive scalar. It changes probability calibration. It is not an architecture-selection score.",
+  "models": [
+    {
+      "model": "v2_dinov2_cls_only",
+      "checkpoint": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_008.pt",
+      "temperature": 0.23981918523674164,
+      "temperature_improved_nll": true,
+      "fitting_status": "fitted",
+      "baseline_nll": 0.009291300550103188,
+      "calibrated_nll": 2.217199979170914e-09,
+      "delta_nll": -0.009291298332903208,
+      "baseline_brier": 8.736813470022753e-05,
+      "calibrated_brier": 9.368768849366167e-16,
+      "baseline_ece": 0.009247362613677979,
+      "calibrated_ece": 0.0,
+      "baseline_roc_auc": 1.0,
+      "calibrated_roc_auc": 1.0,
+      "baseline_pr_auc": 1.0,
+      "calibrated_pr_auc": 1.0,
+      "roc_auc_unchanged": true,
+      "pr_auc_unchanged": true,
+      "baseline_f1_at_0_50": 1.0,
+      "calibrated_f1_at_0_50": 1.0,
+      "baseline_far_at_0_50": 0.0,
+      "calibrated_far_at_0_50": 0.0,
+      "baseline_safe_thresholds": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "calibrated_safe_thresholds": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "baseline_candidates": {
+        "highest_f1": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "highest_recall": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "lowest_far": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "closest_to_0_50": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        }
+      },
+      "calibrated_candidates": {
+        "highest_f1": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "highest_recall": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "lowest_far": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "closest_to_0_50": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        }
+      },
+      "brand_calibrated": [
+        {
+          "brand": "A. Lange & S\u00f6hne",
+          "sample_count": 601,
+          "sample_status": "eligible",
+          "nll": 1.52061896407929e-09,
+          "brier": 1.8845152969983197e-17,
+          "ece": 0.0,
+          "temperature": 0.23981918523674164
+        },
+        {
+          "brand": "Audemars Piguet",
+          "sample_count": 599,
+          "sample_status": "eligible",
+          "nll": 1.435497609669767e-09,
+          "brier": 1.747450940102691e-16,
+          "ece": 0.0,
+          "temperature": 0.23981918523674164
+        },
+        {
+          "brand": "Patek Philippe",
+          "sample_count": 596,
+          "sample_status": "eligible",
+          "nll": 2.9009912250188563e-09,
+          "brier": 2.525221209166619e-15,
+          "ece": 0.0,
+          "temperature": 0.23981918523674164
+        },
+        {
+          "brand": "Richard Mille",
+          "sample_count": 600,
+          "sample_status": "eligible",
+          "nll": 2.430202705738793e-09,
+          "brier": 6.394325751487537e-18,
+          "ece": 0.0,
+          "temperature": 0.23981918523674164
+        },
+        {
+          "brand": "Vacheron Constantin",
+          "sample_count": 602,
+          "sample_status": "eligible",
+          "nll": 2.801160636778377e-09,
+          "brier": 1.9665947218811724e-15,
+          "ece": 0.0,
+          "temperature": 0.23981918523674164
+        }
+      ],
+      "production_threshold": null,
+      "architecture_ranking_affected": false
+    },
+    {
+      "model": "v2_dinov2_cls_patch_attention",
+      "checkpoint": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_016.pt",
+      "temperature": 0.24072701525316312,
+      "temperature_improved_nll": true,
+      "fitting_status": "fitted",
+      "baseline_nll": 0.009747901000082493,
+      "calibrated_nll": 2.406748578209772e-09,
+      "delta_nll": -0.009747898593333915,
+      "baseline_brier": 9.414371015736833e-05,
+      "calibrated_brier": 9.045993412140095e-18,
+      "baseline_ece": 0.009700536727905273,
+      "calibrated_ece": 0.0,
+      "baseline_roc_auc": 1.0,
+      "calibrated_roc_auc": 1.0,
+      "baseline_pr_auc": 1.0,
+      "calibrated_pr_auc": 1.0,
+      "roc_auc_unchanged": true,
+      "pr_auc_unchanged": true,
+      "baseline_f1_at_0_50": 1.0,
+      "calibrated_f1_at_0_50": 1.0,
+      "baseline_far_at_0_50": 0.0,
+      "calibrated_far_at_0_50": 0.0,
+      "baseline_safe_thresholds": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "calibrated_safe_thresholds": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "baseline_candidates": {
+        "highest_f1": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "highest_recall": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "lowest_far": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "closest_to_0_50": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        }
+      },
+      "calibrated_candidates": {
+        "highest_f1": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "highest_recall": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "lowest_far": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "closest_to_0_50": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        }
+      },
+      "brand_calibrated": [
+        {
+          "brand": "A. Lange & S\u00f6hne",
+          "sample_count": 601,
+          "sample_status": "eligible",
+          "nll": 2.4077448923520706e-09,
+          "brier": 9.003267879140506e-18,
+          "ece": 0.0,
+          "temperature": 0.24072701525316312
+        },
+        {
+          "brand": "Audemars Piguet",
+          "sample_count": 599,
+          "sample_status": "eligible",
+          "nll": 2.4291002542753404e-09,
+          "brier": 9.133945872311633e-18,
+          "ece": 0.0,
+          "temperature": 0.24072701525316312
+        },
+        {
+          "brand": "Patek Philippe",
+          "sample_count": 596,
+          "sample_status": "eligible",
+          "nll": 2.426432388347166e-09,
+          "brier": 8.851571226604406e-18,
+          "ece": 0.0,
+          "temperature": 0.24072701525316312
+        },
+        {
+          "brand": "Richard Mille",
+          "sample_count": 600,
+          "sample_status": "eligible",
+          "nll": 2.3715369668053654e-09,
+          "brier": 9.231110642965174e-18,
+          "ece": 0.0,
+          "temperature": 0.24072701525316312
+        },
+        {
+          "brand": "Vacheron Constantin",
+          "sample_count": 602,
+          "sample_status": "eligible",
+          "nll": 2.3991200137629676e-09,
+          "brier": 9.00911770043248e-18,
+          "ece": 0.0,
+          "temperature": 0.24072701525316312
+        }
+      ],
+      "production_threshold": null,
+      "architecture_ranking_affected": false
+    },
+    {
+      "model": "v2_dinov3_cls_only",
+      "checkpoint": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_030.pt",
+      "temperature": 0.5624702356810892,
+      "temperature_improved_nll": true,
+      "fitting_status": "fitted",
+      "baseline_nll": 0.01137436181306839,
+      "calibrated_nll": 0.0026009841822087765,
+      "delta_nll": -0.008773377630859613,
+      "baseline_brier": 0.0004208837926853448,
+      "calibrated_brier": 0.00033299444476142526,
+      "baseline_ece": 0.009687304496765137,
+      "calibrated_ece": 4.9173831939697266e-05,
+      "baseline_roc_auc": 1.0,
+      "calibrated_roc_auc": 1.0,
+      "baseline_pr_auc": 1.0,
+      "calibrated_pr_auc": 1.0,
+      "roc_auc_unchanged": true,
+      "pr_auc_unchanged": true,
+      "baseline_f1_at_0_50": 0.9996665555185061,
+      "calibrated_f1_at_0_50": 0.9996665555185061,
+      "baseline_far_at_0_50": 0.0006666666666666666,
+      "calibrated_far_at_0_50": 0.0006666666666666666,
+      "baseline_safe_thresholds": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "calibrated_safe_thresholds": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "baseline_candidates": {
+        "highest_f1": {
+          "threshold": 0.5,
+          "f1": 0.9996665555185061,
+          "recall": 0.9993333333333333,
+          "false_authentic_rate": 0.0006666666666666666,
+          "role": "calibration_candidate"
+        },
+        "highest_recall": {
+          "threshold": 0.5,
+          "f1": 0.9996665555185061,
+          "recall": 0.9993333333333333,
+          "false_authentic_rate": 0.0006666666666666666,
+          "role": "calibration_candidate"
+        },
+        "lowest_far": {
+          "threshold": 0.5,
+          "f1": 0.9996665555185061,
+          "recall": 0.9993333333333333,
+          "false_authentic_rate": 0.0006666666666666666,
+          "role": "calibration_candidate"
+        },
+        "closest_to_0_50": {
+          "threshold": 0.5,
+          "f1": 0.9996665555185061,
+          "recall": 0.9993333333333333,
+          "false_authentic_rate": 0.0006666666666666666,
+          "role": "calibration_candidate"
+        }
+      },
+      "calibrated_candidates": {
+        "highest_f1": {
+          "threshold": 0.5,
+          "f1": 0.9996665555185061,
+          "recall": 0.9993333333333333,
+          "false_authentic_rate": 0.0006666666666666666,
+          "role": "calibration_candidate"
+        },
+        "highest_recall": {
+          "threshold": 0.5,
+          "f1": 0.9996665555185061,
+          "recall": 0.9993333333333333,
+          "false_authentic_rate": 0.0006666666666666666,
+          "role": "calibration_candidate"
+        },
+        "lowest_far": {
+          "threshold": 0.5,
+          "f1": 0.9996665555185061,
+          "recall": 0.9993333333333333,
+          "false_authentic_rate": 0.0006666666666666666,
+          "role": "calibration_candidate"
+        },
+        "closest_to_0_50": {
+          "threshold": 0.5,
+          "f1": 0.9996665555185061,
+          "recall": 0.9993333333333333,
+          "false_authentic_rate": 0.0006666666666666666,
+          "role": "calibration_candidate"
+        }
+      },
+      "brand_calibrated": [
+        {
+          "brand": "A. Lange & S\u00f6hne",
+          "sample_count": 601,
+          "sample_status": "eligible",
+          "nll": 0.00028528092661872506,
+          "brier": 8.133291373724205e-08,
+          "ece": 0.00028514862060546875,
+          "temperature": 0.5624702356810892
+        },
+        {
+          "brand": "Audemars Piguet",
+          "sample_count": 599,
+          "sample_status": "eligible",
+          "nll": 0.01187905017286539,
+          "brier": 0.0016663167625665665,
+          "ece": 0.0013845562934875488,
+          "temperature": 0.5624702356810892
+        },
+        {
+          "brand": "Patek Philippe",
+          "sample_count": 596,
+          "sample_status": "eligible",
+          "nll": 0.0002845095586962998,
+          "brier": 8.088626657354325e-08,
+          "ece": 0.00028437376022338867,
+          "temperature": 0.5624702356810892
+        },
+        {
+          "brand": "Richard Mille",
+          "sample_count": 600,
+          "sample_status": "eligible",
+          "nll": 0.00028277060482650995,
+          "brier": 7.992867523398672e-08,
+          "ece": 0.00028270483016967773,
+          "temperature": 0.5624702356810892
+        },
+        {
+          "brand": "Vacheron Constantin",
+          "sample_count": 602,
+          "sample_status": "eligible",
+          "nll": 0.00028491183184087276,
+          "brier": 8.111430105373074e-08,
+          "ece": 0.0002846717834472656,
+          "temperature": 0.5624702356810892
+        }
+      ],
+      "production_threshold": null,
+      "architecture_ranking_affected": false
+    },
+    {
+      "model": "v2_dinov3_cls_patch_attention",
+      "checkpoint": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+      "temperature": 0.24038200410185356,
+      "temperature_improved_nll": true,
+      "fitting_status": "fitted",
+      "baseline_nll": 0.009811311960220337,
+      "calibrated_nll": 2.5221722488311116e-09,
+      "delta_nll": -0.009811309438048088,
+      "baseline_brier": 9.542139014229178e-05,
+      "calibrated_brier": 8.573122380084356e-18,
+      "baseline_ece": 0.009763479232788086,
+      "calibrated_ece": 0.0,
+      "baseline_roc_auc": 1.0,
+      "calibrated_roc_auc": 1.0,
+      "baseline_pr_auc": 1.0,
+      "calibrated_pr_auc": 1.0,
+      "roc_auc_unchanged": true,
+      "pr_auc_unchanged": true,
+      "baseline_f1_at_0_50": 1.0,
+      "calibrated_f1_at_0_50": 1.0,
+      "baseline_far_at_0_50": 0.0,
+      "calibrated_far_at_0_50": 0.0,
+      "baseline_safe_thresholds": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "calibrated_safe_thresholds": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "baseline_candidates": {
+        "highest_f1": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "highest_recall": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "lowest_far": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "closest_to_0_50": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        }
+      },
+      "calibrated_candidates": {
+        "highest_f1": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "highest_recall": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "lowest_far": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        },
+        "closest_to_0_50": {
+          "threshold": 0.5,
+          "f1": 1.0,
+          "recall": 1.0,
+          "false_authentic_rate": 0.0,
+          "role": "calibration_candidate"
+        }
+      },
+      "brand_calibrated": [
+        {
+          "brand": "A. Lange & S\u00f6hne",
+          "sample_count": 601,
+          "sample_status": "eligible",
+          "nll": 2.515323282992199e-09,
+          "brier": 7.915002595486141e-18,
+          "ece": 0.0,
+          "temperature": 0.24038200410185356
+        },
+        {
+          "brand": "Audemars Piguet",
+          "sample_count": 599,
+          "sample_status": "eligible",
+          "nll": 2.526281628334459e-09,
+          "brier": 1.0159270983156838e-17,
+          "ece": 0.0,
+          "temperature": 0.24038200410185356
+        },
+        {
+          "brand": "Patek Philippe",
+          "sample_count": 596,
+          "sample_status": "eligible",
+          "nll": 2.5364248479320395e-09,
+          "brier": 7.949578745090857e-18,
+          "ece": 0.0,
+          "temperature": 0.24038200410185356
+        },
+        {
+          "brand": "Richard Mille",
+          "sample_count": 600,
+          "sample_status": "eligible",
+          "nll": 2.5148709781319667e-09,
+          "brier": 8.95642546823224e-18,
+          "ece": 0.0,
+          "temperature": 0.24038200410185356
+        },
+        {
+          "brand": "Vacheron Constantin",
+          "sample_count": 602,
+          "sample_status": "eligible",
+          "nll": 2.5180884044573304e-09,
+          "brier": 7.887204363820684e-18,
+          "ece": 0.0,
+          "temperature": 0.24038200410185356
+        }
+      ],
+      "production_threshold": null,
+      "architecture_ranking_affected": false
+    }
+  ]
+}

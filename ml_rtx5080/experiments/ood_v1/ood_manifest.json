@@ -1,0 +1,8 @@
+{
+  "REAL_OOD_CORPUS_AVAILABLE": false,
+  "dataset_type": "OOD",
+  "rejected": [],
+  "rejected_count": 0,
+  "sample_count": 0,
+  "samples": []
+}

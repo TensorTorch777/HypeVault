@@ -1,0 +1,617 @@
+{
+  "A. Lange & S\u00f6hne": {
+    "all_images_p_fake": {
+      "minimum": 0.00011196120613021776,
+      "p5": 0.0001684865797869861,
+      "p25": 0.00019611793686635792,
+      "median": 0.0004363046318758279,
+      "p75": 0.9998388290405273,
+      "p95": 0.999858021736145,
+      "maximum": 0.9998832941055298
+    },
+    "authentic_images_p_fake": {
+      "minimum": 0.00011196120613021776,
+      "p5": 0.0001624682452529669,
+      "p25": 0.00018051340884994715,
+      "median": 0.00019621315004769713,
+      "p75": 0.0002138697891496122,
+      "p95": 0.0002448805025778711,
+      "maximum": 0.0027935702819377184
+    },
+    "fake_images_p_fake": {
+      "minimum": 0.024076716974377632,
+      "p5": 0.9998142123222351,
+      "p25": 0.9998291730880737,
+      "median": 0.9998389482498169,
+      "p75": 0.9998493194580078,
+      "p95": 0.9998631477355957,
+      "maximum": 0.9998832941055298
+    },
+    "mean_p_fake": 0.49798592925071716,
+    "median_p_fake": 0.0004363046318758279,
+    "most_confident_false_authentic_examples": [
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/26f47a0270b3.jpg",
+        "label": 1,
+        "p_fake": 0.024076716974377632,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/5350b50a3231.jpg",
+        "label": 1,
+        "p_fake": 0.22109971940517426,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/c31f08ca77a8.jpg",
+        "label": 1,
+        "p_fake": 0.23323851823806763,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/5d8fded6f656.jpg",
+        "label": 1,
+        "p_fake": 0.9970749616622925,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/d98980e1daa8.jpg",
+        "label": 1,
+        "p_fake": 0.9993589520454407,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/5dde58ed0bc2.jpg",
+        "label": 1,
+        "p_fake": 0.9994010925292969,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/6f4470fdc132.jpg",
+        "label": 1,
+        "p_fake": 0.9994896650314331,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/adeab1447a96.jpg",
+        "label": 1,
+        "p_fake": 0.9994933605194092,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/9ff990349e4c.jpg",
+        "label": 1,
+        "p_fake": 0.9995513558387756,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/08c8fc6fa17b.jpg",
+        "label": 1,
+        "p_fake": 0.9996402263641357,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/702503b49ca6.jpg",
+        "label": 1,
+        "p_fake": 0.9996809959411621,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/e991d83e8fca.jpg",
+        "label": 1,
+        "p_fake": 0.9996950626373291,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/7d78d12bab37.jpg",
+        "label": 1,
+        "p_fake": 0.9997015595436096,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/325866349899.jpg",
+        "label": 1,
+        "p_fake": 0.9997021555900574,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/fe08823dfece.jpg",
+        "label": 1,
+        "p_fake": 0.9997149109840393,
+        "error": "fake image received a low P(fake)"
+      }
+    ]
+  },
+  "Audemars Piguet": {
+    "all_images_p_fake": {
+      "minimum": 9.314744531252472e-10,
+      "p5": 1.5558211385879872e-09,
+      "p25": 1.9335012479970715e-09,
+      "median": 0.16902261972427368,
+      "p75": 1.0,
+      "p95": 1.0,
+      "maximum": 1.0
+    },
+    "authentic_images_p_fake": {
+      "minimum": 9.314744531252472e-10,
+      "p5": 1.4659000124872534e-09,
+      "p25": 1.720267261973163e-09,
+      "median": 1.9333628031859007e-09,
+      "p75": 2.1797647020704858e-09,
+      "p95": 2.723337222398925e-09,
+      "maximum": 4.211978193779942e-06
+    },
+    "fake_images_p_fake": {
+      "minimum": 3.453014187471126e-06,
+      "p5": 1.0,
+      "p25": 1.0,
+      "median": 1.0,
+      "p75": 1.0,
+      "p95": 1.0,
+      "maximum": 1.0
+    },
+    "mean_p_fake": 0.49996063113212585,
+    "median_p_fake": 0.16902261972427368,
+    "most_confident_false_authentic_examples": [
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/f7a36e945557.jpg",
+        "label": 1,
+        "p_fake": 3.453014187471126e-06,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/d3050eca93f7.jpg",
+        "label": 1,
+        "p_fake": 1.3229635442257859e-05,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/5ce30192067b.jpg",
+        "label": 1,
+        "p_fake": 0.0004431945853866637,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/a840b90b2749.jpg",
+        "label": 1,
+        "p_fake": 0.11925004422664642,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/b6f8ceca6503.jpg",
+        "label": 1,
+        "p_fake": 0.16902261972427368,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/93db5a321482.jpg",
+        "label": 1,
+        "p_fake": 0.9996110796928406,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/108dcb554a40.jpg",
+        "label": 1,
+        "p_fake": 0.9998716115951538,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/f8cedf4b47e8.jpg",
+        "label": 1,
+        "p_fake": 0.9998917579650879,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/f1efb82417a3.jpg",
+        "label": 1,
+        "p_fake": 0.9999440908432007,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/8b6ee17b00c5.jpg",
+        "label": 1,
+        "p_fake": 0.999958872795105,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/75bf6d75b1a0.jpg",
+        "label": 1,
+        "p_fake": 0.9999895095825195,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/f0486c9c1aa5.jpg",
+        "label": 1,
+        "p_fake": 0.9999921321868896,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/7278fd9e1297.jpg",
+        "label": 1,
+        "p_fake": 0.9999951124191284,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/27fc749bf810.jpg",
+        "label": 1,
+        "p_fake": 0.9999988079071045,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/6bdaaa2df41c.jpg",
+        "label": 1,
+        "p_fake": 0.9999990463256836,
+        "error": "fake image received a low P(fake)"
+      }
+    ]
+  },
+  "Patek Philippe": {
+    "all_images_p_fake": {
+      "minimum": 3.5301640309626237e-05,
+      "p5": 6.918955114088021e-05,
+      "p25": 0.00010290067075402476,
+      "median": 0.9997602701187134,
+      "p75": 0.999922513961792,
+      "p95": 0.9999418079853057,
+      "maximum": 0.9999690055847168
+    },
+    "authentic_images_p_fake": {
+      "minimum": 3.5301640309626237e-05,
+      "p5": 6.214905552042183e-05,
+      "p25": 8.419273399340454e-05,
+      "median": 0.00010285965981893241,
+      "p75": 0.00012783492275048047,
+      "p95": 0.00026671989762689903,
+      "maximum": 0.9995299577713013
+    },
+    "fake_images_p_fake": {
+      "minimum": 0.9993446469306946,
+      "p5": 0.999873161315918,
+      "p25": 0.9999091625213623,
+      "median": 0.999922513961792,
+      "p75": 0.9999330043792725,
+      "p95": 0.9999457657337188,
+      "maximum": 0.9999690055847168
+    },
+    "mean_p_fake": 0.5031929612159729,
+    "median_p_fake": 0.9997602701187134,
+    "most_confident_false_authentic_examples": [
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/38c9c3817e27.jpg",
+        "label": 1,
+        "p_fake": 0.9993446469306946,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/872698387403.jpg",
+        "label": 1,
+        "p_fake": 0.9994939565658569,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/3d072ddd818b.jpg",
+        "label": 1,
+        "p_fake": 0.9995782971382141,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/753f8eaa978e.jpg",
+        "label": 1,
+        "p_fake": 0.9996201992034912,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/ffd079d8dd23.jpg",
+        "label": 1,
+        "p_fake": 0.9997132420539856,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/4a78d4ed8689.jpg",
+        "label": 1,
+        "p_fake": 0.9997460246086121,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/5064e2f4155f.jpg",
+        "label": 1,
+        "p_fake": 0.9997461438179016,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/3ee10bc579c4.jpg",
+        "label": 1,
+        "p_fake": 0.9997565150260925,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/5a7a59a57b6d.jpg",
+        "label": 1,
+        "p_fake": 0.9997640252113342,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/f6a2a7c3226e.jpg",
+        "label": 1,
+        "p_fake": 0.999775230884552,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/4392e3fe0b3c.jpg",
+        "label": 1,
+        "p_fake": 0.9997770190238953,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/303fd62558c5.jpg",
+        "label": 1,
+        "p_fake": 0.9997804760932922,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/e2b9bab5f0d2.jpg",
+        "label": 1,
+        "p_fake": 0.9997817873954773,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/5fd84e4e2494.jpg",
+        "label": 1,
+        "p_fake": 0.9997826218605042,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/381127c6ed0e.jpg",
+        "label": 1,
+        "p_fake": 0.9997848868370056,
+        "error": "fake image received a low P(fake)"
+      }
+    ]
+  },
+  "Richard Mille": {
+    "all_images_p_fake": {
+      "minimum": 8.151139627443627e-05,
+      "p5": 0.00011520949738041963,
+      "p25": 0.00013883496649214067,
+      "median": 0.004589357180520892,
+      "p75": 0.999839186668396,
+      "p95": 0.9998644530773163,
+      "maximum": 0.9999185800552368
+    },
+    "authentic_images_p_fake": {
+      "minimum": 8.151139627443627e-05,
+      "p5": 0.00010877194108616095,
+      "p25": 0.0001253742702829186,
+      "median": 0.00013883681822335348,
+      "p75": 0.00015524464470217936,
+      "p95": 0.00019183600597898472,
+      "maximum": 0.03812306746840477
+    },
+    "fake_images_p_fake": {
+      "minimum": 0.00027359931846149266,
+      "p5": 0.9996365129947662,
+      "p25": 0.9998175203800201,
+      "median": 0.9998392462730408,
+      "p75": 0.999853253364563,
+      "p95": 0.9998724460601807,
+      "maximum": 0.9999185800552368
+    },
+    "mean_p_fake": 0.4959072768688202,
+    "median_p_fake": 0.004589357413351536,
+    "most_confident_false_authentic_examples": [
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/3b5748de7b1b.jpg",
+        "label": 1,
+        "p_fake": 0.00027359931846149266,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/e12883ada111.jpg",
+        "label": 1,
+        "p_fake": 0.0009082261240109801,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/4daef03931ff.jpg",
+        "label": 1,
+        "p_fake": 0.0012016670079901814,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d07c3aa1998f.jpg",
+        "label": 1,
+        "p_fake": 0.001299011637456715,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d5266fb5ab9a.jpg",
+        "label": 1,
+        "p_fake": 0.001818253891542554,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/18730ea81b18.jpg",
+        "label": 1,
+        "p_fake": 0.00481198076158762,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/ff49bf4ac8ab.jpg",
+        "label": 1,
+        "p_fake": 0.005608499050140381,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d6ca042cb997.jpg",
+        "label": 1,
+        "p_fake": 0.005861436016857624,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/a6d20a112797.jpg",
+        "label": 1,
+        "p_fake": 0.00886253360658884,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/debeefd1cdee.jpg",
+        "label": 1,
+        "p_fake": 0.01097421906888485,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/7be465bc1cf6.jpg",
+        "label": 1,
+        "p_fake": 0.013311536982655525,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/896a73ac8355.jpg",
+        "label": 1,
+        "p_fake": 0.0478254072368145,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/5d747fb6eba2.jpg",
+        "label": 1,
+        "p_fake": 0.06581775099039078,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d14367e7ccfe.jpg",
+        "label": 1,
+        "p_fake": 0.07353265583515167,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/4e3b5554ef77.jpg",
+        "label": 1,
+        "p_fake": 0.07532397657632828,
+        "error": "fake image received a low P(fake)"
+      }
+    ]
+  },
+  "Vacheron Constantin": {
+    "all_images_p_fake": {
+      "minimum": 2.833456580475513e-09,
+      "p5": 3.810105608792469e-09,
+      "p25": 4.2403086597531114e-09,
+      "median": 0.5000030994415283,
+      "p75": 1.0,
+      "p95": 1.0,
+      "maximum": 1.0
+    },
+    "authentic_images_p_fake": {
+      "minimum": 2.833456580475513e-09,
+      "p5": 3.664616010645716e-09,
+      "p25": 4.01662159088545e-09,
+      "median": 4.240185313975076e-09,
+      "p75": 4.5049451946610475e-09,
+      "p95": 5.247092738080993e-09,
+      "maximum": 6.211787876964081e-06
+    },
+    "fake_images_p_fake": {
+      "minimum": 1.0,
+      "p5": 1.0,
+      "p25": 1.0,
+      "median": 1.0,
+      "p75": 1.0,
+      "p95": 1.0,
+      "maximum": 1.0
+    },
+    "mean_p_fake": 0.5,
+    "median_p_fake": 0.5000030994415283,
+    "most_confident_false_authentic_examples": [
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/0018ab896546.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/aabf116d4f57.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/aaf8c2a414c7.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/aafbbb1f31fe.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ab03676b2315.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ab05f714d264.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ab298786497c.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ab2fc5544cc3.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ab93e87f5cf6.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/abb2c7fb5bd0.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ac0b0914dde2.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ac133c858041.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ac15f208788a.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ac1d03bc3a8b.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Vacheron Constantin/ac1ed0db3ea3.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      }
+    ]
+  }
+}

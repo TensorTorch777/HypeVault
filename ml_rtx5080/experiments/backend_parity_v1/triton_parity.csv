@@ -1,0 +1,2 @@
+status,server_reachable,corresponds_to_frozen_checkpoint,reason
+skipped,false,false,"Triton model repository config is dinov2_classifier at 518x518. That is not the frozen DINOv3 512 contract, so Triton parity was not run. Nothing accepted a connection on port 8001."

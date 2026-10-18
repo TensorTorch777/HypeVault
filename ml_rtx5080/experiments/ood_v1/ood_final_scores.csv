@@ -1,0 +1,1 @@
+sample_id,path,category,dataset_type,ood_split,sha256,method,ood_score,baseline_p_fake,calibrated_p_fake,authenticity_logit,ood_flag,quality_flags,research_quality_candidate_match

@@ -1,0 +1,189 @@
+{
+  "calibration_performed": false,
+  "checklist": [
+    {
+      "item": "Model",
+      "note": "locked in-distribution result, five brands, both classes",
+      "result": "PASS"
+    },
+    {
+      "item": "Calibration",
+      "note": "temperature fitted on 2998 calibration samples and not refit",
+      "result": "PASS"
+    },
+    {
+      "item": "Final test",
+      "note": "3006 locked samples, not reopened",
+      "result": "PASS"
+    },
+    {
+      "item": "Robustness",
+      "note": "audit complete; resize_recompression_case remains uncovered",
+      "result": "PASS"
+    },
+    {
+      "item": "Quality",
+      "note": "research candidate LOW_RESOLUTION OR LOW_CONTRAST, not promoted",
+      "result": "PASS"
+    },
+    {
+      "item": "OOD",
+      "note": "REAL_OOD_CORPUS_AVAILABLE is false; production_ood_threshold is null",
+      "result": "PENDING"
+    },
+    {
+      "item": "PyTorch GPU shadow",
+      "note": "FP32 CUDA shadow parity, stability, and fast gate",
+      "result": "PASS"
+    },
+    {
+      "item": "ONNX GPU",
+      "note": "CUDA execution provider unavailable",
+      "result": "FAIL"
+    },
+    {
+      "item": "TensorRT",
+      "note": "TensorRT runtime unavailable",
+      "result": "FAIL"
+    },
+    {
+      "item": "Triton",
+      "note": "Triton server unavailable",
+      "result": "FAIL"
+    },
+    {
+      "item": "Fail-closed contract",
+      "note": "shadow_v1 rejects unsafe inputs without a guessed verdict",
+      "result": "PASS"
+    },
+    {
+      "item": "Memory stability",
+      "note": "allocated growth is 0 bytes across 100, 500, and 1000 requests",
+      "result": "PASS"
+    },
+    {
+      "item": "Live backend isolation",
+      "note": "live verdict path remains DINOv2 and was not modified",
+      "result": "PASS"
+    },
+    {
+      "item": "Policy approval",
+      "note": "shadow_v1 is not an approved production policy",
+      "result": "PENDING"
+    }
+  ],
+  "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "current_production_status": "not_promoted",
+  "customer_traffic_used": false,
+  "deployed": false,
+  "evidence": {
+    "authentic_review_rate": 0.1168667555950793,
+    "batch1_model_p50_ms": 13.870440496248193,
+    "batch4_images_per_sec": 82.6969435695549,
+    "brands": [
+      "A. Lange & S\u00f6hne",
+      "Audemars Piguet",
+      "Patek Philippe",
+      "Richard Mille",
+      "Vacheron Constantin"
+    ],
+    "calibrated_brier": 8.573122380084356e-18,
+    "calibrated_ece": 0.0,
+    "calibrated_nll": 2.5221722488311116e-09,
+    "calibration_complete": true,
+    "calibration_sample_count": 2998,
+    "checkpoint_mismatch": false,
+    "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "clean_false_authentic": 0,
+    "clean_false_fake": 0,
+    "fail_closed_failed": false,
+    "fake_review_rate": 0.020592592592592593,
+    "fast_e2e_p50_ms": {
+      "large_lange_2560": 214.6484240074642,
+      "medium": 23.975707503268495
+    },
+    "fast_large_quality_p50_ms": 76.33416149474215,
+    "final_test_complete": true,
+    "final_test_f1": 1.0,
+    "final_test_false_authentic_rate": 0.0,
+    "final_test_false_fake_rate": 0.0,
+    "final_test_pr_auc": 1.0,
+    "final_test_roc_auc": 1.0,
+    "final_test_samples": 3006,
+    "limitations_explicit": true,
+    "live_backend": "dinov2",
+    "manifest_file_sha256": "4d0d20c17d12ac29cb299b7b4f369ebcce3c5acd7b2fd5430d61f952b9852eea",
+    "membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+    "memory_growth_bytes": 0,
+    "model_parity_failed": false,
+    "model_quality_strong": true,
+    "no_unresolved_critical_failure": true,
+    "onnx_cuda_provider": "unavailable",
+    "ood_explicitly_not_required": false,
+    "policy_formally_approved": false,
+    "production_ood_threshold": null,
+    "production_runtime_parity_complete": false,
+    "production_runtime_ready": false,
+    "production_runtime_unsafe": false,
+    "production_serving_infrastructure_available": false,
+    "quality_review_workload_accepted": false,
+    "real_ood_corpus_available": false,
+    "real_ood_validation_complete": false,
+    "reference_pool": 26994,
+    "review_count": 1855,
+    "review_rate": 0.06871897458694524,
+    "robustness_audit_complete": true,
+    "safety_constraint_failed": false,
+    "sequential_e2e_mean_ms": 75.96065286453813,
+    "sequential_e2e_p50_ms": 31.340526504209265,
+    "shadow_backend": "pytorch_cuda_fp32",
+    "shadow_path_stable": true,
+    "shadow_ready": true,
+    "stress_caught": 8,
+    "stress_events": 9,
+    "stress_false_authentic": 0,
+    "stress_missed": [
+      "Label_0_Watches/Richard Mille/9eda705bd8c9.jpg|resize_recompression"
+    ],
+    "temperature": 0.24038200410185356,
+    "tensorrt_status": "unavailable",
+    "triton_status": "unavailable"
+  },
+  "final_test_opened": false,
+  "final_test_samples_used": 0,
+  "in_distribution_validation": "complete",
+  "known_robustness_limitation": "resize_recompression_case",
+  "manifest_file_sha256": "4d0d20c17d12ac29cb299b7b4f369ebcce3c5acd7b2fd5430d61f952b9852eea",
+  "membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+  "missing_requirements": [
+    "real_ood_validation_complete",
+    "production_runtime_parity_complete",
+    "production_serving_infrastructure_available",
+    "quality_review_workload_accepted",
+    "policy_formally_approved"
+  ],
+  "ood_evaluation_performed": false,
+  "ood_validated": false,
+  "open_set_validation": "incomplete",
+  "phase": 34,
+  "policy_version": "shadow_v1",
+  "production_ood_threshold": null,
+  "production_policy_status": "not_promoted",
+  "production_runtime_ready": false,
+  "promotion_performed": false,
+  "readiness": "CONDITIONALLY_READY",
+  "readiness_reasons": [
+    "promotion requirements not met: real_ood_validation_complete, production_runtime_parity_complete, production_serving_infrastructure_available, quality_review_workload_accepted, policy_formally_approved",
+    "in-distribution model evidence and the PyTorch shadow path are intact; remaining blockers are infrastructure, data, or policy approval"
+  ],
+  "real_ood_corpus_available": false,
+  "severity_meaning": {
+    "critical": "A promoted system would fail open, contradict the locked safety result, or serve a mismatched checkpoint.",
+    "high": "A concrete control required before promotion is missing or a demonstrated failure remains uncovered.",
+    "medium": "A scope or operations limit. It does not make the locked in-distribution result false."
+  },
+  "shadow_ready": true,
+  "temperature": 0.24038200410185356,
+  "training_performed": false,
+  "unsafe": []
+}

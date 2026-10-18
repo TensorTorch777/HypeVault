@@ -1,0 +1,70 @@
+{
+  "CALIBRATION_TOUCHED": false,
+  "FINAL_TEST_TOUCHED": false,
+  "MODEL_TOUCHED": false,
+  "PHASE36_HOLDOUT_MODIFIED": false,
+  "PROTOCOL_HASH_UNCHANGED": true,
+  "THRESHOLD_TOUCHED": false,
+  "WATCH_OOD_V2_CORPUS_READY": false,
+  "acquisition_manifest_sha256": "8c216ad2d0d87ef43585d64f53704b4113593c3165660c1ced52329b25943b16",
+  "audit_counts": {
+    "admitted_count": 0,
+    "ambiguous_category_rejected": 1,
+    "brand_exclusions_rejected": 0,
+    "candidate_count": 1,
+    "derivatives_rejected": 0,
+    "exact_duplicates_rejected": 0,
+    "near_duplicates_rejected": 0,
+    "provenance_failures_rejected": 0
+  },
+  "commons_rate_limit_ceiling": {
+    "ordinary_watch": 155,
+    "smart_digital": 104,
+    "unseen_luxury": 258,
+    "wrist_store": 14
+  },
+  "coverage": {
+    "brand_holdout_counts": {},
+    "corpus_ready": false,
+    "groups": {
+      "ordinary_watch": {
+        "admitted": 0,
+        "candidate": 0,
+        "holdout": 0,
+        "holdout_target": 40,
+        "ready": false,
+        "target": 200
+      },
+      "smart_digital": {
+        "admitted": 0,
+        "candidate": 0,
+        "holdout": 0,
+        "holdout_target": 25,
+        "ready": false,
+        "target": 100
+      },
+      "unseen_luxury": {
+        "admitted": 0,
+        "candidate": 0,
+        "holdout": 0,
+        "holdout_target": 60,
+        "ready": false,
+        "target": 300
+      },
+      "wrist_store": {
+        "admitted": 0,
+        "candidate": 0,
+        "holdout": 0,
+        "holdout_target": 25,
+        "ready": false,
+        "target": 50
+      }
+    },
+    "independent_source_count": 0,
+    "protocol_minimum_met": false,
+    "unseen_luxury_brands": []
+  },
+  "evaluation_corpus_locked": false,
+  "phase36_images_added": 0,
+  "protocol_sha256": "babaaf2b5c30d252c39765886ee5db032c09c4e3f25cf0e9eacc63f17128dde9"
+}

@@ -1,0 +1,18 @@
+{
+  "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "dtype": "float64",
+  "equality_is_not_flagged": true,
+  "fast_gate": "quality_fastpath.fast_quality_gate",
+  "full_analyzer": "image_quality.extract_quality_features",
+  "low_contrast": "population std of BT.601 luminance < 0.1933616647502347",
+  "low_contrast_cutoff": 0.1933616647502347,
+  "low_resolution": "min(original width, original height) < 512",
+  "low_resolution_cutoff": 512.0,
+  "luminance": "BT.601 Y = (0.299 R + 0.587 G + 0.114 B) / 255 on the original RGB image",
+  "model_tensor_used_for_quality": false,
+  "policy_version": "shadow_v1",
+  "reference_function": "image_quality.luminance_image",
+  "std_ddof": 0,
+  "std_snap_below": 1e-12,
+  "temperature": 0.24038200410185356
+}

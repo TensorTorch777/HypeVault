@@ -1,0 +1,105 @@
+{
+  "rule": "A repository license covers only the material it licenses. metadata_license and image_license are separate. unknown is never upgraded to CC0.",
+  "image_license_states": ["explicit", "inherited", "unknown", "restricted", "unavailable"],
+  "sources": [
+    {
+      "source": "Pixnio pilot page",
+      "metadata_license": "explicit",
+      "metadata_license_name": "CC0 1.0",
+      "image_license": "explicit",
+      "image_license_name": "CC0 1.0",
+      "usable_under_protocol_v1": false,
+      "reason": "Brand and protocol category are not source-declared."
+    },
+    {
+      "source": "Flickr sample 5424986061",
+      "metadata_license": "explicit",
+      "metadata_license_name": "CC BY-SA 2.0",
+      "image_license": "explicit",
+      "image_license_name": "CC BY-SA 2.0",
+      "usable_under_protocol_v1": false,
+      "reason": "Original file is 2475875 bytes, above the 1500000-byte cap. The _b rendition is a derivative."
+    },
+    {
+      "source": "Openverse",
+      "metadata_license": "explicit",
+      "metadata_license_name": "Upstream license field, sample was CC BY-SA 2.0",
+      "image_license": "restricted",
+      "image_license_name": "Delivered bytes are a resized rendition, not the licensed original",
+      "usable_under_protocol_v1": false,
+      "reason": "Thumbnail and resized copies are excluded."
+    },
+    {
+      "source": "Wikimedia Commons",
+      "metadata_license": "explicit",
+      "metadata_license_name": "Per-file LicenseShortName when the API returns it",
+      "image_license": "explicit",
+      "image_license_name": "Same per-file license when the original upload is the file that was downloaded",
+      "usable_under_protocol_v1": false,
+      "reason": "Bulk original delivery is rate-limited, and the recorded ceiling misses the registered targets."
+    },
+    {
+      "source": "Roboflow Rolex Day-Date, Rolex Watches, Rolex Submariner",
+      "metadata_license": "explicit",
+      "metadata_license_name": "CC BY 4.0 recorded in data.yaml",
+      "image_license": "explicit",
+      "image_license_name": "CC BY 4.0 applies to the exported dataset files, which are .rf. derivative images",
+      "usable_under_protocol_v1": false,
+      "reason": "Every local file uses an .rf. suffix. Phase 35 already scored 180 of them. They are not independent originals."
+    },
+    {
+      "source": "Timepiecepedia",
+      "metadata_license": "explicit",
+      "metadata_license_name": "CC0 claimed for the reference database",
+      "image_license": "unknown",
+      "image_license_name": "External cdn.watchbase.com/watch/lg URLs",
+      "usable_under_protocol_v1": false,
+      "reason": "The metadata license is not an image license."
+    },
+    {
+      "source": "Internet Archive wristwatch search",
+      "metadata_license": "unknown",
+      "metadata_license_name": "UNKNOWN",
+      "image_license": "unknown",
+      "image_license_name": "UNKNOWN",
+      "usable_under_protocol_v1": false,
+      "reason": "52 hits are not a brand-verified watch-photo corpus."
+    },
+    {
+      "source": "Metropolitan Museum, Smithsonian, Europeana, Hippopx",
+      "metadata_license": "unavailable",
+      "metadata_license_name": "HTTP 410, 403, 401, or 403",
+      "image_license": "unavailable",
+      "image_license_name": "No file was retrieved",
+      "usable_under_protocol_v1": false,
+      "reason": "Bytes and license were not established."
+    },
+    {
+      "source": "Public retailer and manufacturer photographs",
+      "metadata_license": "unknown",
+      "metadata_license_name": "UNKNOWN",
+      "image_license": "unknown",
+      "image_license_name": "LEGAL_BASIS = UNKNOWN",
+      "usable_under_protocol_v1": false,
+      "reason": "REQUIRES_INSTITUTIONAL_APPROVAL. This review does not authorize use."
+    },
+    {
+      "source": "Local numeric archive",
+      "metadata_license": "unavailable",
+      "metadata_license_name": "No license file",
+      "image_license": "unavailable",
+      "image_license_name": "No source URL",
+      "usable_under_protocol_v1": false,
+      "reason": "Rejected in Phase 35. Augmentation suffixes are present."
+    },
+    {
+      "source": "Researcher-owned photographs",
+      "metadata_license": "unavailable",
+      "metadata_license_name": "No collection was performed",
+      "image_license": "unavailable",
+      "image_license_name": "Would require a recorded ownership or permission note per file",
+      "usable_under_protocol_v1": false,
+      "reason": "No images exist. Realistic scale is not evidenced at the registered minimums."
+    }
+  ]
+}

@@ -1,0 +1,1106 @@
+{
+  "phase": 19,
+  "missing_artifact_reason": "no checkpoint artifact",
+  "experiments": [
+    {
+      "directory": "v2_dinov2_cls_only",
+      "rows": [
+        {
+          "epoch": 1,
+          "checkpoint_id": "epoch_001",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_001.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 2,
+          "checkpoint_id": "epoch_002",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_002.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 3,
+          "checkpoint_id": "epoch_003",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_003.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 4,
+          "checkpoint_id": "epoch_004",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_004.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 5,
+          "checkpoint_id": "epoch_005",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_005.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 6,
+          "checkpoint_id": "epoch_006",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_006.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 7,
+          "checkpoint_id": "epoch_007",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_007.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 8,
+          "checkpoint_id": "epoch_008",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_008.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 9,
+          "checkpoint_id": "epoch_009",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_009.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 10,
+          "checkpoint_id": "epoch_010",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_010.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 11,
+          "checkpoint_id": "epoch_011",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_011.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 12,
+          "checkpoint_id": "epoch_012",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_012.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 13,
+          "checkpoint_id": "epoch_013",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_013.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 14,
+          "checkpoint_id": "epoch_014",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_014.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 15,
+          "checkpoint_id": "epoch_015",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_015.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 16,
+          "checkpoint_id": "epoch_016",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_016.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 17,
+          "checkpoint_id": "epoch_017",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_017.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 18,
+          "checkpoint_id": "epoch_018",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_018.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 19,
+          "checkpoint_id": "epoch_019",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_019.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 20,
+          "checkpoint_id": "epoch_020",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_020.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 21,
+          "checkpoint_id": "epoch_021",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_021.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 22,
+          "checkpoint_id": "epoch_022",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_022.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 23,
+          "checkpoint_id": "epoch_023",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_023.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 24,
+          "checkpoint_id": "epoch_024",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_024.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 25,
+          "checkpoint_id": "epoch_025",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_025.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 26,
+          "checkpoint_id": "epoch_026",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_026.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 27,
+          "checkpoint_id": "epoch_027",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_027.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 28,
+          "checkpoint_id": "epoch_028",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_028.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 29,
+          "checkpoint_id": "epoch_029",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_029.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 30,
+          "checkpoint_id": "epoch_030",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_only/epoch_030.pt",
+          "eligible": true,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "directory": "v2_dinov2_cls_patch_attention",
+      "rows": [
+        {
+          "epoch": 1,
+          "checkpoint_id": "epoch_001",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_001.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 2,
+          "checkpoint_id": "epoch_002",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_002.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 3,
+          "checkpoint_id": "epoch_003",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_003.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 4,
+          "checkpoint_id": "epoch_004",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_004.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 5,
+          "checkpoint_id": "epoch_005",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_005.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 6,
+          "checkpoint_id": "epoch_006",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_006.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 7,
+          "checkpoint_id": "epoch_007",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_007.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 8,
+          "checkpoint_id": "epoch_008",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_008.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 9,
+          "checkpoint_id": "epoch_009",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_009.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 10,
+          "checkpoint_id": "epoch_010",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_010.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 11,
+          "checkpoint_id": "epoch_011",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_011.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 12,
+          "checkpoint_id": "epoch_012",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_012.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 13,
+          "checkpoint_id": "epoch_013",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_013.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 14,
+          "checkpoint_id": "epoch_014",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_014.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 15,
+          "checkpoint_id": "epoch_015",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_015.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 16,
+          "checkpoint_id": "epoch_016",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_016.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 17,
+          "checkpoint_id": "epoch_017",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_017.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 18,
+          "checkpoint_id": "epoch_018",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_018.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 19,
+          "checkpoint_id": "epoch_019",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_019.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 20,
+          "checkpoint_id": "epoch_020",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_020.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 21,
+          "checkpoint_id": "epoch_021",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_021.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 22,
+          "checkpoint_id": "epoch_022",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_022.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 23,
+          "checkpoint_id": "epoch_023",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_023.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 24,
+          "checkpoint_id": "epoch_024",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_024.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 25,
+          "checkpoint_id": "epoch_025",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_025.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 26,
+          "checkpoint_id": "epoch_026",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_026.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 27,
+          "checkpoint_id": "epoch_027",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_027.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 28,
+          "checkpoint_id": "epoch_028",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_028.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 29,
+          "checkpoint_id": "epoch_029",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_029.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 30,
+          "checkpoint_id": "epoch_030",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov2_cls_patch_attention/epoch_030.pt",
+          "eligible": true,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "directory": "v2_dinov3_cls_only",
+      "rows": [
+        {
+          "epoch": 1,
+          "checkpoint_id": "epoch_001",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_001.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 2,
+          "checkpoint_id": "epoch_002",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_002.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 3,
+          "checkpoint_id": "epoch_003",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_003.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 4,
+          "checkpoint_id": "epoch_004",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_004.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 5,
+          "checkpoint_id": "epoch_005",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_005.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 6,
+          "checkpoint_id": "epoch_006",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_006.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 7,
+          "checkpoint_id": "epoch_007",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_007.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 8,
+          "checkpoint_id": "epoch_008",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_008.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 9,
+          "checkpoint_id": "epoch_009",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_009.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 10,
+          "checkpoint_id": "epoch_010",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_010.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 11,
+          "checkpoint_id": "epoch_011",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_011.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 12,
+          "checkpoint_id": "epoch_012",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_012.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 13,
+          "checkpoint_id": "epoch_013",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_013.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 14,
+          "checkpoint_id": "epoch_014",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_014.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 15,
+          "checkpoint_id": "epoch_015",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_015.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 16,
+          "checkpoint_id": "epoch_016",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_016.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 17,
+          "checkpoint_id": "epoch_017",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_017.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 18,
+          "checkpoint_id": "epoch_018",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_018.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 19,
+          "checkpoint_id": "epoch_019",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_019.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 20,
+          "checkpoint_id": "epoch_020",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_020.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 21,
+          "checkpoint_id": "epoch_021",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_021.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 22,
+          "checkpoint_id": "epoch_022",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_022.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 23,
+          "checkpoint_id": "epoch_023",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_023.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 24,
+          "checkpoint_id": "epoch_024",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_024.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 25,
+          "checkpoint_id": "epoch_025",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_025.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 26,
+          "checkpoint_id": "epoch_026",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_026.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 27,
+          "checkpoint_id": "epoch_027",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_027.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 28,
+          "checkpoint_id": "epoch_028",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_028.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 29,
+          "checkpoint_id": "epoch_029",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_029.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 30,
+          "checkpoint_id": "epoch_030",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_only/epoch_030.pt",
+          "eligible": true,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "directory": "v2_dinov3_cls_patch_attention",
+      "rows": [
+        {
+          "epoch": 1,
+          "checkpoint_id": "epoch_001",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_001.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 2,
+          "checkpoint_id": "epoch_002",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_002.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 3,
+          "checkpoint_id": "epoch_003",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_003.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 4,
+          "checkpoint_id": "epoch_004",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_004.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 5,
+          "checkpoint_id": "epoch_005",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_005.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 6,
+          "checkpoint_id": "epoch_006",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_006.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 7,
+          "checkpoint_id": "epoch_007",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_007.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 8,
+          "checkpoint_id": "epoch_008",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_008.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 9,
+          "checkpoint_id": "epoch_009",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_009.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 10,
+          "checkpoint_id": "epoch_010",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_010.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 11,
+          "checkpoint_id": "epoch_011",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_011.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 12,
+          "checkpoint_id": "epoch_012",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_012.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 13,
+          "checkpoint_id": "epoch_013",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_013.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 14,
+          "checkpoint_id": "epoch_014",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_014.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 15,
+          "checkpoint_id": "epoch_015",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_015.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 16,
+          "checkpoint_id": "epoch_016",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_016.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 17,
+          "checkpoint_id": "epoch_017",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_017.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 18,
+          "checkpoint_id": "epoch_018",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 19,
+          "checkpoint_id": "epoch_019",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_019.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 20,
+          "checkpoint_id": "epoch_020",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_020.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 21,
+          "checkpoint_id": "epoch_021",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_021.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 22,
+          "checkpoint_id": "epoch_022",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_022.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 23,
+          "checkpoint_id": "epoch_023",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_023.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 24,
+          "checkpoint_id": "epoch_024",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_024.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 25,
+          "checkpoint_id": "epoch_025",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_025.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 26,
+          "checkpoint_id": "epoch_026",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_026.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 27,
+          "checkpoint_id": "epoch_027",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_027.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 28,
+          "checkpoint_id": "epoch_028",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_028.pt",
+          "eligible": true,
+          "reason": null
+        },
+        {
+          "epoch": 29,
+          "checkpoint_id": "epoch_029",
+          "metrics_available": true,
+          "checkpoint_available": false,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_029.pt",
+          "eligible": false,
+          "reason": "no checkpoint artifact"
+        },
+        {
+          "epoch": 30,
+          "checkpoint_id": "epoch_030",
+          "metrics_available": true,
+          "checkpoint_available": true,
+          "checkpoint_path": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_030.pt",
+          "eligible": true,
+          "reason": null
+        }
+      ]
+    }
+  ]
+}

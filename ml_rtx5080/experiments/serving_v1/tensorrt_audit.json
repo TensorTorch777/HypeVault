@@ -1,0 +1,8 @@
+{
+  "engine_created": false,
+  "precision": null,
+  "python_package_installed": false,
+  "reason": "The tensorrt Python package is not installed, and no TensorRT engine was built. ONNX Runtime lists TensorrtExecutionProvider, but that provider cannot run without the TensorRT libraries this environment does not have.",
+  "source_onnx_sha256": "d1d0c9bc010551b006b7cd57830d0d2511928832aefb4582bb71d70e02363edb",
+  "status": "unavailable"
+}

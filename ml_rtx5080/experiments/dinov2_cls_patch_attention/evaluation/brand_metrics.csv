@@ -1,0 +1,3 @@
+brand,brand_status,sample_status,metrics_reliable,sample_count,authentic_count,fake_count,fake_rate,zero_authentic,zero_fake,roc_auc,pr_auc,accuracy,precision,recall,f1,false_authentic,false_authentic_rate,false_fake,false_fake_rate,brand_far_eligible,far_gap_to_limit,far_gap_versus_global
+Richard Mille,KNOWN_BRAND,eligible,True,3000,0,3000,1.0,True,False,,,0.9986666666666667,1.0,0.9986666666666667,0.9993328885923949,4,0.0013333333333333333,0,,True,0.018666666666666668,0.0
+Vacheron Constantin,KNOWN_BRAND,eligible,True,3000,3000,0,0.0,False,True,,,1.0,,,,0,,0,0.0,,,

@@ -1,0 +1,30 @@
+{
+  "final_test_samples_used": 0,
+  "methods": {
+    "cosine": {
+      "f1": null,
+      "id_ood_flag_rate": null,
+      "method": "cosine",
+      "ood_detection_rate": null,
+      "ood_false_accept_rate": null,
+      "pr_auc": null,
+      "precision": null,
+      "recall": null,
+      "roc_auc": null,
+      "status": "not_evaluated_corpus_unavailable"
+    },
+    "mahalanobis": {
+      "f1": null,
+      "id_ood_flag_rate": null,
+      "method": "mahalanobis",
+      "ood_detection_rate": null,
+      "ood_false_accept_rate": null,
+      "pr_auc": null,
+      "precision": null,
+      "recall": null,
+      "roc_auc": null,
+      "status": "not_evaluated_corpus_unavailable"
+    }
+  },
+  "production_ood_threshold": null
+}

@@ -1,0 +1,51 @@
+{
+  "export": {
+    "architecture": {
+      "attention_pool": true,
+      "backbone": "vit_base_patch16_dinov3.lvd1689m",
+      "cls_index": 0,
+      "embed_dim": 768,
+      "fusion": true,
+      "head": "cls_patch_attention",
+      "image_size": 512,
+      "model_family": "dinov3",
+      "num_register_tokens": 4,
+      "output": "raw_logit",
+      "patch_size": 16,
+      "patch_token_start": 5,
+      "policy_in_graph": false,
+      "temperature_in_graph": false,
+      "trunk": true
+    },
+    "artifact_bytes": 349179042,
+    "backend": "onnxruntime",
+    "config_path": "/home/tensortorch26/Desktop/HypeVault/models/dinov3_authenticity_classifier/config.pbtxt",
+    "config_sha256": "96f4f4a65d46d1bd3075788ab554cc20f586e08996ec18d35ee49a6e7bc643c9",
+    "export_artifact_sha256": "d1d0c9bc010551b006b7cd57830d0d2511928832aefb4582bb71d70e02363edb",
+    "identity_sha256": "a718239eccd6b4d0f2fc5eccadc035af532d384f9c4312ecda30e542087f2e02",
+    "input_dims": [
+      3,
+      512,
+      512
+    ],
+    "instance_count": 1,
+    "max_batch_size": 16,
+    "model_name": "dinov3_authenticity_classifier",
+    "onnx_path": "/home/tensortorch26/Desktop/HypeVault/models/dinov3_authenticity_classifier/1/model.onnx",
+    "output_dims": [
+      1
+    ],
+    "source_checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "temperature_in_graph": false,
+    "tensorrt_reason": "The tensorrt Python package is not installed. No engine was built.",
+    "tensorrt_status": "unavailable"
+  },
+  "old_dinov2": {
+    "config_bytes": 302,
+    "config_sha256": "9488821bf515001efff6fe32853665a09e9430327d4f2ec88451a58cfb7f7c4f",
+    "onnx_bytes": 313072,
+    "onnx_sha256": "99c22272bd420d8cd176b97778f6fdf85b5bcb7d2f73c60396ecfdbb6d4b37b5",
+    "weights_bytes": 4549246976,
+    "weights_sha256": "b4ff43d19bb90542ef51e39df78fb58930dc1efbe0dd5b418177b2011ac82b27"
+  }
+}

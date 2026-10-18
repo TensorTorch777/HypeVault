@@ -1,0 +1,17 @@
+{
+  "catalog_manifest": "ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+  "what_establishes_the_brand_label": "The parent directory name under Label_0_Watches or Label_1_Watches. The manifest records no other brand field.",
+  "what_establishes_the_authentic_counterfeit_label": "The top-level directory. Label_0_Watches is stored as label 0. Label_1_Watches is stored as label 1.",
+  "recorded_source_or_independent_verification": "None. The manifest header sets source_status, marketplace_status, and product_id_status to unavailable.",
+  "labels_inherited_from_directory_names": true,
+  "product_disjoint_guarantee": false,
+  "same_source_or_listing": "No product id, marketplace, or source URL is stored, so same-listing membership cannot be established from the manifest. Identical SHA-256 copies and identical dHash groups are the only on-disk source-family indicators.",
+  "coverage_in_audited_sample": {
+    "images": 55,
+    "with_independent_provenance": 0,
+    "coverage": "0/55"
+  },
+  "coverage_in_catalog_header": "unavailable for every row",
+  "visible_watermarks_are_not_recorded_provenance": "A watermark seen in an image is an observation. It was not a field in the manifest, and it is not treated as verification of either label.",
+  "labels_changed": false
+}

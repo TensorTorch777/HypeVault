@@ -1,0 +1,2 @@
+status,server_reachable,model_name,reason
+blocked,False,dinov3_authenticity_classifier,Triton is not accepting connections on port 8001. Parity was not fabricated.

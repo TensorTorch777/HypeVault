@@ -1,0 +1,102 @@
+{
+  "method": "Wilson score interval with z=1.96. Normal half-widths use 1.96 * sqrt(p*(1-p)/n) and are approximations. Hypothetical rows are not measurements.",
+  "do_not_lower_minimums": true,
+  "observed": [
+    {
+      "name": "phase35_unseen_luxury",
+      "k": 171,
+      "n": 194,
+      "rate": 0.8814432989690721,
+      "wilson_low": 0.8284,
+      "wilson_high": 0.9197,
+      "interpretation": "The interval stays above 0.80. This is substantial warning evidence. It is not a final multi-source benchmark."
+    },
+    {
+      "name": "phase35_watch_like",
+      "k": 216,
+      "n": 257,
+      "rate": 0.8404669260700389,
+      "wilson_low": 0.7907,
+      "wilson_high": 0.8802,
+      "interpretation": "Groups C, D, and E together. The interval stays near 0.79 to 0.88."
+    },
+    {
+      "name": "phase35_rolex",
+      "k": 159,
+      "n": 180,
+      "rate": 0.8833333333333333,
+      "wilson_low": 0.8282,
+      "wilson_high": 0.9224,
+      "interpretation": "Rolex dominates the unseen-luxury sample. A Rolex rate is not a four-brand rate."
+    },
+    {
+      "name": "phase36_unseen_holdout",
+      "k": 11,
+      "n": 14,
+      "rate": 0.7857142857142857,
+      "wilson_low": 0.5241,
+      "wilson_high": 0.9243,
+      "interpretation": "Width is about 0.40. The pre-registered minimum was 60. This observation cannot confirm or overturn Phase 35."
+    },
+    {
+      "name": "phase36_ordinary_holdout",
+      "k": 3,
+      "n": 10,
+      "rate": 0.3,
+      "wilson_low": 0.1078,
+      "wilson_high": 0.6032,
+      "interpretation": "The interval includes both a large drop and a majority-escape result. Minimum was 40."
+    },
+    {
+      "name": "phase36_overall_holdout",
+      "k": 15,
+      "n": 25,
+      "rate": 0.6,
+      "wilson_low": 0.4074,
+      "wilson_high": 0.7660,
+      "interpretation": "Underpowered. Not a safety result and not a confirmation of the Phase 35 rate."
+    }
+  ],
+  "hypothetical_intervals": [
+    {
+      "name": "n60_if_escape_were_0.05",
+      "k": 3,
+      "n": 60,
+      "wilson_low": 0.0171,
+      "wilson_high": 0.1370,
+      "role": "Shows why 60 can separate a near-0.05 safety claim from a 0.50 failure."
+    },
+    {
+      "name": "n60_if_escape_were_0.50",
+      "k": 30,
+      "n": 60,
+      "wilson_low": 0.3773,
+      "wilson_high": 0.6227,
+      "role": "The lower bound stays above the upper bound of the 0.05 row. The two claims do not share a 95 percent interval at n=60."
+    },
+    {
+      "name": "n14_if_escape_were_0",
+      "k": 0,
+      "n": 14,
+      "wilson_low": 0.0,
+      "wilson_high": 0.2153,
+      "role": "Even a perfect 14-image result would have an upper bound above 0.20. Phase 36 did not observe zero escapes."
+    },
+    {
+      "name": "n8_brand_normal_half_width_at_0.50",
+      "n": 8,
+      "p": 0.5,
+      "normal_half_width": 0.3465,
+      "role": "Eight images stop an empty brand from being reported. They do not estimate a brand rate precisely."
+    }
+  ],
+  "what_each_minimum_protects": {
+    "holdout_unseen_luxury_60": "Stops a 14-image interval of width 0.40 from being treated as a conclusion. At n=60, a 0.05 rate and a 0.50 rate have non-overlapping Wilson intervals.",
+    "holdout_ordinary_40": "Phase 35 ordinary evidence was 22 images and Phase 36 was 10. Forty images bring a 0.50-rate normal half-width to about 0.155.",
+    "holdout_smart_digital_25": "Phase 36 had 1 image. Twenty-five images block a single-photo anecdote. The normal half-width at 0.50 is still about 0.196, so this is a floor, not a precise rate.",
+    "holdout_wrist_store_25": "Phase 36 had 0 and Phase 35 had 18. The frozen protocol says a wrist shortfall alone does not block a conclusion. Twenty-five remains the useful floor for a wrist claim.",
+    "four_brands_with_8": "Phase 35 unseen luxury was 180 Rolex images out of 194. Four brands block a one-brand result. Eight images per brand block an empty cell. Neither number is a precise brand-rate study.",
+    "max_single_brand_fraction_0.4": "Stops a holdout that is mostly one brand from being described as a multi-brand result.",
+    "collection_targets_300_200_100_50": "Headroom for splits, brand caps, and content rejections. They are governance and diversity targets above the holdout floors. Missing them blocked Phase 37. Lowering them was not done."
+  }
+}

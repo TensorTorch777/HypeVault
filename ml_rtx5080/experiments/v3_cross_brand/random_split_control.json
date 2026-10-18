@@ -1,0 +1,266 @@
+{
+  "initialization": "timm pretrained vit_base_patch16_dinov3.lvd1689m. The frozen epoch_018.pt checkpoint is not loaded.",
+  "loaded_frozen_checkpoint": false,
+  "classifier_arch": "cls_patch_attention",
+  "selected_epoch": 2,
+  "selected_checkpoint": "epoch_002",
+  "temperature": 0.03271517674210808,
+  "calibration": {
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 1.0,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0,
+    "nll": 6.000171470788018e-09,
+    "brier": 9.836256836164362e-14,
+    "ece": 0.0,
+    "sample_count": 2702,
+    "authentic_count": 1352,
+    "fake_count": 1350,
+    "temperature": 0.03271517674210808
+  },
+  "in_domain": {
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 1.0,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0,
+    "nll": 5.797253281179685e-27,
+    "brier": 0.0,
+    "ece": 0.0,
+    "sample_count": 2701,
+    "authentic_count": 1351,
+    "fake_count": 1350,
+    "temperature": 0.03271517674210808
+  },
+  "unseen": {
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 1.0,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0,
+    "nll": 5.9457805170083425e-28,
+    "brier": 0.0,
+    "ece": 0.0,
+    "sample_count": 2696,
+    "authentic_count": 1346,
+    "fake_count": 1350,
+    "temperature": 0.03271517674210808
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.2038604267616579,
+      "val_loss": 0.01154603622853756,
+      "val_pr_auc": 0.9999967069994179,
+      "val_f1": 0.9985207100591716,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.06083635260034778,
+      "val_loss": 0.00994997750967741,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.05745684333732328,
+      "val_loss": 0.010308925062417984,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9996294924045943,
+      "val_false_authentic_rate": 0.0007407407407407407,
+      "action": "increment"
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.05687214524361363,
+      "val_loss": 0.0103078568354249,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.05713118287867959,
+      "val_loss": 0.010275645181536674,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.05665064846606299,
+      "val_loss": 0.010707452893257141,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.05668078900443407,
+      "val_loss": 0.011534309946000576,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9992587101556708,
+      "val_false_authentic_rate": 0.0014814814814814814,
+      "action": "increment"
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.056487360945528184,
+      "val_loss": 0.010487347841262817,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    }
+  ],
+  "features": null,
+  "confidence": {
+    "all_images_p_fake": {
+      "minimum": 0.0,
+      "p5": 0.0,
+      "p25": 0.0,
+      "median": 1.0,
+      "p75": 1.0,
+      "p95": 1.0,
+      "maximum": 1.0
+    },
+    "authentic_images_p_fake": {
+      "minimum": 0.0,
+      "p5": 0.0,
+      "p25": 0.0,
+      "median": 0.0,
+      "p75": 0.0,
+      "p95": 0.0,
+      "maximum": 0.0
+    },
+    "fake_images_p_fake": {
+      "minimum": 1.0,
+      "p5": 1.0,
+      "p25": 1.0,
+      "median": 1.0,
+      "p75": 1.0,
+      "p95": 1.0,
+      "maximum": 1.0
+    },
+    "mean_p_fake": 0.5007418394088745,
+    "median_p_fake": 1.0,
+    "most_confident_false_authentic_examples": [
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/A. Lange & S\u00f6hne/87e22b1bbb37.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/829b81e66477.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/70e9683ad129.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/75679ea11cdf.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/3f5afbec4c72.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/a391df04e043.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/6808493b0ac8.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/eb56d8183bc1.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/7f29e8b533b7.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/bda82f6b387a.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/f2c21c817ea7.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/143d36187ea1.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/d803c0ff8765.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/9323d14e9f7c.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Richard Mille/4e4eb26be723.jpg",
+        "label": 1,
+        "p_fake": 1.0,
+        "error": "fake image received a low P(fake)"
+      }
+    ]
+  },
+  "gap": {
+    "roc_auc": 0.0,
+    "roc_auc_relative_degradation": 0.0,
+    "pr_auc": 0.0,
+    "pr_auc_relative_degradation": 0.0,
+    "f1": 0.0,
+    "f1_relative_degradation": 0.0,
+    "false_authentic_rate": 0.0,
+    "false_authentic_rate_relative_degradation": null,
+    "false_fake_rate": 0.0,
+    "false_fake_rate_relative_degradation": null,
+    "nll": 5.202675229478851e-27,
+    "nll_relative_degradation": 0.8974379722840325,
+    "brier": 0.0,
+    "brier_relative_degradation": null,
+    "ece": 0.0,
+    "ece_relative_degradation": null
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "checkpoint_hash_ms": 442.1953879937064,
+  "cuda_already_initialized": true,
+  "cuda_init_ms": 89.46003700839356,
+  "cuda_version": "13.0",
+  "device": "NVIDIA GeForce RTX 5080",
+  "first_10_e2e_mean_ms": 23.639619100140408,
+  "first_10_model_p50_ms": 13.924566010246053,
+  "first_inference_e2e_ms": 109.41206399002112,
+  "first_inference_model_ms": 96.30921899224631,
+  "model_load_includes_second_checkpoint_hash": true,
+  "model_load_ms": 1777.0546510000713,
+  "pytorch_version": "2.11.0+cu130",
+  "warm_load_ms": 0.018681981600821018
+}

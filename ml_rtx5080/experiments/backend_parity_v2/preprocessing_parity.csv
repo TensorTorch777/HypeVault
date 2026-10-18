@@ -1,0 +1,8 @@
+case,source_size,output_shape,max_abs_delta,within_tolerance
+square,512x512,3x512x512,0.0,True
+wide,900x200,3x512x512,0.0,True
+tall,180x960,3x512x512,0.0,True
+tiny,8x8,3x512x512,0.0,True
+large,1600x900,3x512x512,0.0,True
+rgb,640x480,3x512x512,0.0,True
+grayscale_convertible,700x300,3x512x512,0.0,True

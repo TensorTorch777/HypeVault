@@ -1,0 +1,211 @@
+{
+  "scope": "Non-test census of split_manifest_v2. The locked test files were not opened. Associations are measured. They are not causal claims about the trained network.",
+  "eligible_images": 26994,
+  "resolution_by_class": {
+    "counterfeit_images": 13500,
+    "counterfeit_exactly_512x512": 13500,
+    "authentic_images": 13494,
+    "authentic_exactly_512x512": 1,
+    "authentic_512_exception": {
+      "image_id": "79313cbd6863.jpg",
+      "brand": "A. Lange & S\u00f6hne",
+      "split": "validation",
+      "sha256": "e0e6c2dd57c1a9459ee5d1559e9ac3294407db3072a538946a30d8870943e8b3",
+      "observed_subject": "A dial graphic without a case. The wordmark reads A. Lange & S\u00f6hne. This file is outside the 55-image sample."
+    },
+    "rule_512_predicts_counterfeit": {
+      "correct_on_non_test": 26993,
+      "incorrect_on_non_test": 1,
+      "statement": "On the non-test census, file dimensions separate the directory labels with one exception. This was measured from image headers. It was not used as a model."
+    },
+    "per_brand": {
+      "A. Lange & S\u00f6hne": {
+        "authentic_n": 2717,
+        "authentic_512": 1,
+        "authentic_square_fraction": 0.326,
+        "counterfeit_n": 2700,
+        "counterfeit_512": 2700
+      },
+      "Audemars Piguet": {
+        "authentic_n": 2691,
+        "authentic_512": 0,
+        "authentic_square_fraction": 0.311,
+        "counterfeit_n": 2700,
+        "counterfeit_512": 2700
+      },
+      "Patek Philippe": {
+        "authentic_n": 2684,
+        "authentic_512": 0,
+        "authentic_square_fraction": 0.361,
+        "counterfeit_n": 2700,
+        "counterfeit_512": 2700
+      },
+      "Richard Mille": {
+        "authentic_n": 2702,
+        "authentic_512": 0,
+        "authentic_square_fraction": 0.401,
+        "counterfeit_n": 2700,
+        "counterfeit_512": 2700
+      },
+      "Vacheron Constantin": {
+        "authentic_n": 2700,
+        "authentic_512": 0,
+        "authentic_square_fraction": 0.339,
+        "counterfeit_n": 2700,
+        "counterfeit_512": 2700
+      }
+    }
+  },
+  "file_bytes_and_edge_std": {
+    "A. Lange & S\u00f6hne|label0|bytes": {
+      "n": 2717,
+      "median": 204080.0,
+      "p25": 95102.0,
+      "p75": 397372.0,
+      "mean": 302133.2359219728
+    },
+    "A. Lange & S\u00f6hne|label0|edge_std": {
+      "n": 2717,
+      "median": 45.01300048828125,
+      "p25": 18.51593589782715,
+      "p75": 63.734153747558594,
+      "mean": 41.585886710285
+    },
+    "A. Lange & S\u00f6hne|label1|bytes": {
+      "n": 2700,
+      "median": 98342.0,
+      "p25": 78539.25,
+      "p75": 113656.0,
+      "mean": 96736.13777777778
+    },
+    "A. Lange & S\u00f6hne|label1|edge_std": {
+      "n": 2700,
+      "median": 67.89202499389648,
+      "p25": 54.17279815673828,
+      "p75": 78.9139633178711,
+      "mean": 65.99303431970102
+    },
+    "Audemars Piguet|label0|bytes": {
+      "n": 2691,
+      "median": 225783.0,
+      "p25": 122290.5,
+      "p75": 432617.0,
+      "mean": 382023.62170196953
+    },
+    "Audemars Piguet|label0|edge_std": {
+      "n": 2691,
+      "median": 37.718955993652344,
+      "p25": 4.863564968109131,
+      "p75": 59.25654411315918,
+      "mean": 36.48957223810992
+    },
+    "Audemars Piguet|label1|bytes": {
+      "n": 2700,
+      "median": 108139.5,
+      "p25": 90090.0,
+      "p75": 122661.25,
+      "mean": 106300.58740740741
+    },
+    "Audemars Piguet|label1|edge_std": {
+      "n": 2700,
+      "median": 71.60449600219727,
+      "p25": 56.611329078674316,
+      "p75": 83.04812622070312,
+      "mean": 69.42169594552782
+    },
+    "Patek Philippe|label0|bytes": {
+      "n": 2684,
+      "median": 240786.5,
+      "p25": 127539.5,
+      "p75": 459966.25,
+      "mean": 382657.6348733234
+    },
+    "Patek Philippe|label0|edge_std": {
+      "n": 2684,
+      "median": 39.337371826171875,
+      "p25": 13.151916265487671,
+      "p75": 62.208815574645996,
+      "mean": 38.55468680077522
+    },
+    "Patek Philippe|label1|bytes": {
+      "n": 2700,
+      "median": 109356.5,
+      "p25": 86846.0,
+      "p75": 126626.25,
+      "mean": 107425.51703703703
+    },
+    "Patek Philippe|label1|edge_std": {
+      "n": 2700,
+      "median": 70.58318328857422,
+      "p25": 56.02876091003418,
+      "p75": 80.62145614624023,
+      "mean": 68.30981283258508
+    },
+    "Richard Mille|label0|bytes": {
+      "n": 2702,
+      "median": 153429.5,
+      "p25": 92473.25,
+      "p75": 292905.5,
+      "mean": 352088.84492968174
+    },
+    "Richard Mille|label0|edge_std": {
+      "n": 2702,
+      "median": 34.144493103027344,
+      "p25": 0.2828003317117691,
+      "p75": 62.31750774383545,
+      "mean": 35.2640305193938
+    },
+    "Richard Mille|label1|bytes": {
+      "n": 2700,
+      "median": 100450.0,
+      "p25": 79782.25,
+      "p75": 118584.5,
+      "mean": 99768.62518518518
+    },
+    "Richard Mille|label1|edge_std": {
+      "n": 2700,
+      "median": 60.81542205810547,
+      "p25": 48.253390312194824,
+      "p75": 73.04647636413574,
+      "mean": 60.1029572266561
+    },
+    "Vacheron Constantin|label0|bytes": {
+      "n": 2700,
+      "median": 229050.5,
+      "p25": 117110.5,
+      "p75": 419997.0,
+      "mean": 344517.28962962964
+    },
+    "Vacheron Constantin|label0|edge_std": {
+      "n": 2700,
+      "median": 38.48228073120117,
+      "p25": 11.972530126571655,
+      "p75": 61.149784088134766,
+      "mean": 38.29486215500299
+    },
+    "Vacheron Constantin|label1|bytes": {
+      "n": 2700,
+      "median": 99755.0,
+      "p25": 78820.0,
+      "p75": 118472.25,
+      "mean": 99484.25259259259
+    },
+    "Vacheron Constantin|label1|edge_std": {
+      "n": 2700,
+      "median": 64.35843658447266,
+      "p25": 51.94190311431885,
+      "p75": 78.42267417907715,
+      "mean": 64.79350561318574
+    }
+  },
+  "modes_non_test": {
+    "RGB": 26956,
+    "P": 6,
+    "L": 10,
+    "CMYK": 6,
+    "RGBA": 16
+  },
+  "unique_dimensions_non_test": 3612,
+  "training_input_note": "The research loader resizes every image to 512 before the network. Raw width is therefore not a numeric input feature. Class-conditional file preparation can still leave resampling, compression, and padding differences. This audit did not test whether the trained model uses those differences.",
+  "duplicate_association": "Every multi-member dHash group in the manifest is authentic-only. No counterfeit image shares a stored duplicate group."
+}

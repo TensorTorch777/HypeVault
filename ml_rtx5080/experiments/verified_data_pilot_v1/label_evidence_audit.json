@@ -1,0 +1,22 @@
+{
+  "protocol_sha256": "42d03f08827a7657028e1cf0d44973ec779f79e7dd4a271b10deb80aa48f7112",
+  "acceptable_before_admission": {
+    "authentic": "Provenance of the physical watch, or examination by a qualified verifier independent of folder names and of any model.",
+    "counterfeit": "Affirmative evidence from that kind of verifier or from an institutional record. Visual suspicion is not a counterfeit label.",
+    "model_under_evaluation_is_not_the_verifier": true,
+    "disputed": "REQUIRES_EXPERT_REVIEW"
+  },
+  "not_sufficient": [
+    "seller assertion",
+    "directory name",
+    "readable wordmark",
+    "online listing label",
+    "model prediction",
+    "scraped image of uncertain provenance"
+  ],
+  "rows_admitted": 0,
+  "rows_requiring_expert_review": 0,
+  "rows_rejected": 16,
+  "label_provenance_complete": false,
+  "finding": "Every reviewed source is missing a verifier, an authenticity method, or both. No row can be admitted."
+}

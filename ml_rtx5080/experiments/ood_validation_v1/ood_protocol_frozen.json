@@ -1,0 +1,37 @@
+{
+  "authenticity_threshold": 0.5,
+  "final_test_used": false,
+  "frozen_before_holdout_scoring": true,
+  "frozen_mahalanobis_thresholds": {
+    "aggressive": 33.5842585568423,
+    "conservative": 37.69066974303325,
+    "moderate": 35.753779125719554
+  },
+  "gates": [
+    {
+      "name": "none",
+      "ood_threshold": null
+    },
+    {
+      "id_quantile": 0.99,
+      "name": "conservative"
+    },
+    {
+      "id_quantile": 0.95,
+      "name": "moderate"
+    },
+    {
+      "id_quantile": 0.8,
+      "name": "aggressive"
+    }
+  ],
+  "holdout_used_for_threshold": false,
+  "methodology_version": "phase35_real_ood_v1",
+  "primary_ood_score": "mahalanobis",
+  "production_ood_threshold": null,
+  "quality_rule": "LOW_RESOLUTION OR LOW_CONTRAST",
+  "temperature": 0.24038200410185356,
+  "threshold_frozen_before_ood_and_holdout_metrics": true,
+  "threshold_source": "validation split mahalanobis percentiles only",
+  "threshold_status": "research_candidate_only"
+}

@@ -1,0 +1,11 @@
+{
+  "protocol_sha256": "42d03f08827a7657028e1cf0d44973ec779f79e7dd4a271b10deb80aa48f7112",
+  "candidate_files_acquired": 0,
+  "exact_duplicate_check": "Not run. No new file bytes were hashed.",
+  "perceptual_duplicate_check": "Not run. No new images were opened.",
+  "phase35_phase36_overlap": "Not run on new bytes. No pilot image was compared with those manifests.",
+  "five_brand_catalog_overlap": "Not run on new bytes. The existing catalog was not reused as verified data.",
+  "final_test_files_opened": 0,
+  "geometry_policy": "shared_original_plus_resize_pad_square_v1 remains the policy for any future acquisition. It was not applied because no original was acquired.",
+  "collages_components_placeholders": "None in the pilot. No pilot image exists."
+}

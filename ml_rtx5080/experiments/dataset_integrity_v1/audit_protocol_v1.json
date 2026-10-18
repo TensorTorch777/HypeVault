@@ -1,0 +1,98 @@
+{
+  "frozen": {
+    "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+    "decision_threshold": 0.5,
+    "final_test_images_not_opened": true,
+    "no_calibration": true,
+    "no_threshold_tuning": true,
+    "no_training": true,
+    "phase45_metrics_unchanged": true,
+    "phase46_artifacts_unchanged": true,
+    "temperature": 0.24038200410185356
+  },
+  "identity_recovery": {
+    "allowed_sources": [
+      "ml_rtx5080/experiments/v3_cross_brand/fold_4_rm/metrics.json",
+      "ml_rtx5080/experiments/v3_cross_brand/confidence_analysis.json",
+      "ml_rtx5080/experiments/v3_cross_brand/cross_brand_metrics.json",
+      "ml_rtx5080/experiments/v3_cross_brand/primary_partial.json",
+      "ml_rtx5080/experiments/sixth_brand_validation_v1/rm_false_authentic_analysis.json"
+    ],
+    "forbidden": "Do not identify the five missing Richard Mille false-authentic cases from another checkpoint, including epoch_018 predictions.",
+    "preidentified_image_ids": [
+      "3b5748de7b1b.jpg",
+      "e12883ada111.jpg",
+      "4daef03931ff.jpg",
+      "d07c3aa1998f.jpg",
+      "d5266fb5ab9a.jpg",
+      "18730ea81b18.jpg",
+      "ff49bf4ac8ab.jpg",
+      "d6ca042cb997.jpg",
+      "a6d20a112797.jpg",
+      "debeefd1cdee.jpg",
+      "7be465bc1cf6.jpg",
+      "896a73ac8355.jpg",
+      "5d747fb6eba2.jpg",
+      "d14367e7ccfe.jpg",
+      "4e3b5554ef77.jpg"
+    ]
+  },
+  "integrity_rule": {
+    "FAIL": "Demonstrated integrity defects invalidate the intended evaluation.",
+    "PARTIAL": "Some material quality is established but important limitations remain.",
+    "SUPPORTED": "Labels and provenance are sufficiently substantiated.",
+    "UNVERIFIED": "Label or source evidence is insufficient."
+  },
+  "model_predictions_do_not_set_ground_truth": true,
+  "phase": 47,
+  "population_measurements_non_test_only": [
+    "width, height, mode, file bytes",
+    "standard deviation of the outer 8-pixel frame",
+    "duplicate-group summaries already stored on the manifest"
+  ],
+  "protocol_id": "dataset_integrity_audit_v1",
+  "questions": [
+    "Are the existing image labels sufficiently reliable for the stated authenticity task?",
+    "Are images appropriate for a single-image watch-authenticity classifier?",
+    "Could image composition, source conventions, or dataset artefacts explain some of the apparently perfect results?"
+  ],
+  "sampling": {
+    "algorithm": "For each brand in brands_in_order, then each label in labels_in_order, take eligible rows of that brand and label, sort by sha256 ascending, and draw per_cell rows with random.Random(seed).sample. The Random instance is created once and advanced in that nested order. The 15 preidentified Richard Mille errors are added as a mandatory stratum and are not replaced if the draw also selects them.",
+    "brands_in_order": [
+      "A. Lange & S\u00f6hne",
+      "Audemars Piguet",
+      "Patek Philippe",
+      "Richard Mille",
+      "Vacheron Constantin"
+    ],
+    "eligible_rule": "split is train, calibration, or validation. split == test is excluded and those image files are not opened.",
+    "labels_in_order": [
+      0,
+      1
+    ],
+    "manifest": "ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+    "per_cell": 4,
+    "seed": 47
+  },
+  "visual_codes": {
+    "brand_consistency": [
+      "CONSISTENT",
+      "INCONSISTENT",
+      "UNCERTAIN"
+    ],
+    "provenance": "UNKNOWN unless a manifest field records an independent source",
+    "subject": [
+      "COMPLETE_WATCH",
+      "DIAL_CROP",
+      "MOVEMENT_OR_COMPONENT",
+      "COLLAGE_OR_ADVERTISEMENT",
+      "OTHER"
+    ],
+    "suitability": [
+      "SUITABLE",
+      "UNSUITABLE",
+      "UNCERTAIN"
+    ]
+  },
+  "written_before_additional_image_selection": true
+}

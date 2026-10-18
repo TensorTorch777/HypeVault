@@ -1,0 +1,275 @@
+{
+  "initialization": "timm pretrained vit_base_patch16_dinov3.lvd1689m. The frozen epoch_018.pt checkpoint is not loaded.",
+  "loaded_frozen_checkpoint": false,
+  "classifier_arch": "cls_only",
+  "selected_epoch": 3,
+  "selected_checkpoint": "epoch_003",
+  "temperature": 0.5194997895512107,
+  "calibration": {
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 0.9995835068721366,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0008453085376162299,
+    "nll": 0.0023187673650681973,
+    "brier": 0.0006023069145157933,
+    "ece": 0.0006977695654382037,
+    "sample_count": 2383,
+    "authentic_count": 1183,
+    "fake_count": 1200,
+    "temperature": 0.5194997895512107
+  },
+  "in_domain": {
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 1.0,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0,
+    "nll": 0.0004155426286160946,
+    "brier": 5.840045923832804e-05,
+    "ece": 0.00037753742147552977,
+    "sample_count": 2382,
+    "authentic_count": 1182,
+    "fake_count": 1200,
+    "temperature": 0.5194997895512107
+  },
+  "unseen": {
+    "roc_auc": 0.9999891269939578,
+    "pr_auc": 0.9999891868218077,
+    "f1": 0.9988880652335063,
+    "false_authentic_rate": 0.001851851851851852,
+    "false_fake_rate": 0.0003716090672612412,
+    "nll": 0.007585946004837751,
+    "brier": 0.0012229179264977574,
+    "ece": 0.001206639082350861,
+    "sample_count": 5391,
+    "authentic_count": 2691,
+    "fake_count": 2700,
+    "temperature": 0.5194997895512107
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.275111119361989,
+      "val_loss": 0.012189634144306183,
+      "val_pr_auc": 0.9999958350622142,
+      "val_f1": 0.9991673605328892,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.06184428240943161,
+      "val_loss": 0.01167722512036562,
+      "val_pr_auc": 0.9999986134220743,
+      "val_f1": 0.9991666666666666,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "reset"
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.05818222666361074,
+      "val_loss": 0.010582256130874157,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.05707180086784029,
+      "val_loss": 0.011287391185760498,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995835068721366,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.05645356072275431,
+      "val_loss": 0.010774494148790836,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.056924494224478164,
+      "val_loss": 0.010991961695253849,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995831596498541,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "increment"
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.057046188443384827,
+      "val_loss": 0.010867180302739143,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995831596498541,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "increment"
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.056420672781344,
+      "val_loss": 0.011018221266567707,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995831596498541,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "increment"
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.0569075663232049,
+      "val_loss": 0.013415124267339706,
+      "val_pr_auc": 0.999998611689333,
+      "val_f1": 0.9987484355444306,
+      "val_false_authentic_rate": 0.0025,
+      "action": "increment"
+    }
+  ],
+  "features": null,
+  "confidence": {
+    "all_images_p_fake": {
+      "minimum": 3.45030493917875e-05,
+      "p5": 9.32213406485971e-05,
+      "p25": 0.00015673975576646626,
+      "median": 0.5417039394378662,
+      "p75": 0.9998455047607422,
+      "p95": 0.9998795390129089,
+      "maximum": 0.9999189376831055
+    },
+    "authentic_images_p_fake": {
+      "minimum": 3.45030493917875e-05,
+      "p5": 8.04222872829996e-05,
+      "p25": 0.0001191809969895985,
+      "median": 0.0001564647100167349,
+      "p75": 0.00021241339709376916,
+      "p95": 0.0003757826780201867,
+      "maximum": 0.9971215128898621
+    },
+    "fake_images_p_fake": {
+      "minimum": 0.0009231643634848297,
+      "p5": 0.9997517466545105,
+      "p25": 0.9998203814029694,
+      "median": 0.9998455047607422,
+      "p75": 0.9998658895492554,
+      "p95": 0.9998869955539703,
+      "maximum": 0.9999189376831055
+    },
+    "mean_p_fake": 0.4997508227825165,
+    "median_p_fake": 0.5417039394378662,
+    "most_confident_false_authentic_examples": [
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/f7a36e945557.jpg",
+        "label": 1,
+        "p_fake": 0.0009231643634848297,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/5ce30192067b.jpg",
+        "label": 1,
+        "p_fake": 0.0011437236098572612,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/b6f8ceca6503.jpg",
+        "label": 1,
+        "p_fake": 0.0015053105307742953,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/d3050eca93f7.jpg",
+        "label": 1,
+        "p_fake": 0.0016826573992148042,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/a5e082a396bb.jpg",
+        "label": 1,
+        "p_fake": 0.008703934028744698,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/4df3b8dda14a.jpg",
+        "label": 1,
+        "p_fake": 0.5417039394378662,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/76fafbfc7f44.jpg",
+        "label": 1,
+        "p_fake": 0.597562849521637,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/02e5083b8b8c.jpg",
+        "label": 1,
+        "p_fake": 0.671521782875061,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/6ac229561b00.jpg",
+        "label": 1,
+        "p_fake": 0.7851873636245728,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/9c766e31bd45.jpg",
+        "label": 1,
+        "p_fake": 0.8098956942558289,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/c96a598cc2a8.jpg",
+        "label": 1,
+        "p_fake": 0.8565483689308167,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/20480e25542d.jpg",
+        "label": 1,
+        "p_fake": 0.8594895601272583,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/a840b90b2749.jpg",
+        "label": 1,
+        "p_fake": 0.9061374068260193,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/8b7c67fef552.jpg",
+        "label": 1,
+        "p_fake": 0.9575372934341431,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Audemars Piguet/702fe817648e.jpg",
+        "label": 1,
+        "p_fake": 0.986573338508606,
+        "error": "fake image received a low P(fake)"
+      }
+    ]
+  },
+  "gap": {
+    "roc_auc": 1.0873006042189104e-05,
+    "roc_auc_relative_degradation": 1.0873006042189104e-05,
+    "pr_auc": 1.081317819229266e-05,
+    "pr_auc_relative_degradation": 1.081317819229266e-05,
+    "f1": 0.0011119347664937385,
+    "f1_relative_degradation": 0.0011119347664937385,
+    "false_authentic_rate": -0.001851851851851852,
+    "false_authentic_rate_relative_degradation": null,
+    "false_fake_rate": -0.0003716090672612412,
+    "false_fake_rate_relative_degradation": null,
+    "nll": -0.007170403376221657,
+    "nll_relative_degradation": -17.255518164530223,
+    "brier": -0.0011645174672594294,
+    "brier_relative_degradation": -19.94021078682135,
+    "ece": -0.0008291016608753312,
+    "ece_relative_degradation": -2.196078093755455
+  }
+}

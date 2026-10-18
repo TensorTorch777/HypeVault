@@ -1,0 +1,67 @@
+{
+  "total_samples": 30000,
+  "seed": 42,
+  "split_strategy": "brand_stratified_duplicate_safe",
+  "calibration_fraction": null,
+  "calibration_membership_source": "split_manifest_v2",
+  "manifest_membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+  "fixed_split_manifest": "/home/tensortorch26/Desktop/HypeVault/ml_rtx5080/experiments/dataset_audit/split_manifest_v2.json",
+  "splits": {
+    "train": {
+      "split": "train",
+      "samples": 20999,
+      "authentic": 10499,
+      "fake": 10500,
+      "group_count": 10,
+      "brand_counts": {
+        "A. Lange & S\u00f6hne": 4201,
+        "Audemars Piguet": 4195,
+        "Patek Philippe": 4195,
+        "Richard Mille": 4202,
+        "Vacheron Constantin": 4206
+      }
+    },
+    "calibration": {
+      "split": "calibration",
+      "samples": 2998,
+      "authentic": 1498,
+      "fake": 1500,
+      "group_count": 10,
+      "brand_counts": {
+        "A. Lange & S\u00f6hne": 601,
+        "Audemars Piguet": 599,
+        "Patek Philippe": 596,
+        "Richard Mille": 600,
+        "Vacheron Constantin": 602
+      }
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 2997,
+      "authentic": 1497,
+      "fake": 1500,
+      "group_count": 10,
+      "brand_counts": {
+        "A. Lange & S\u00f6hne": 615,
+        "Audemars Piguet": 597,
+        "Patek Philippe": 593,
+        "Richard Mille": 600,
+        "Vacheron Constantin": 592
+      }
+    },
+    "test": {
+      "split": "test",
+      "samples": 3006,
+      "authentic": 1506,
+      "fake": 1500,
+      "group_count": 10,
+      "brand_counts": {
+        "A. Lange & S\u00f6hne": 583,
+        "Audemars Piguet": 609,
+        "Patek Philippe": 616,
+        "Richard Mille": 598,
+        "Vacheron Constantin": 600
+      }
+    }
+  }
+}

@@ -1,0 +1,307 @@
+{
+  "initialization": "timm pretrained vit_base_patch16_dinov3.lvd1689m. The frozen epoch_018.pt checkpoint is not loaded.",
+  "loaded_frozen_checkpoint": false,
+  "classifier_arch": "cls_patch_attention",
+  "selected_epoch": 2,
+  "selected_checkpoint": "epoch_002",
+  "temperature": 0.49929335363560123,
+  "calibration": {
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 0.9991673605328892,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.001694915254237288,
+    "nll": 0.0014197075506672263,
+    "brier": 0.00046166693209670484,
+    "ece": 0.0005007678470691713,
+    "sample_count": 2380,
+    "authentic_count": 1180,
+    "fake_count": 1200,
+    "temperature": 0.49929335363560123
+  },
+  "in_domain": {
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 1.0,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0,
+    "nll": 0.00014972707140259445,
+    "brier": 2.438645424263086e-06,
+    "ece": 0.00014847517013549805,
+    "sample_count": 2379,
+    "authentic_count": 1179,
+    "fake_count": 1200,
+    "temperature": 0.49929335363560123
+  },
+  "unseen": {
+    "roc_auc": 0.9999997240161175,
+    "pr_auc": 0.999999725702364,
+    "f1": 0.9983361064891847,
+    "false_authentic_rate": 0.0,
+    "false_fake_rate": 0.0033532041728763042,
+    "nll": 0.005150396842509508,
+    "brier": 0.0013386638602241874,
+    "ece": 0.0012805617426869418,
+    "sample_count": 5384,
+    "authentic_count": 2684,
+    "fake_count": 2700,
+    "temperature": 0.49929335363560123
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.2122754274789641,
+      "val_loss": 0.014437871985137463,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9983361064891847,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.05979707521117157,
+      "val_loss": 0.00985677633434534,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "reset"
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.05765613231818683,
+      "val_loss": 0.009948923252522945,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.05651472321748161,
+      "val_loss": 0.01021239161491394,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.05730004994400869,
+      "val_loss": 0.010674821212887764,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.05649205726302094,
+      "val_loss": 0.010276567190885544,
+      "val_pr_auc": 1.0,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.05648022762693887,
+      "val_loss": 0.010378398001194,
+      "val_pr_auc": 0.9999999999999999,
+      "val_f1": 1.0,
+      "val_false_authentic_rate": 0.0,
+      "action": "increment"
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.05678622878365054,
+      "val_loss": 0.01056036725640297,
+      "val_pr_auc": 1.0,
+      "val_f1": 0.9995831596498541,
+      "val_false_authentic_rate": 0.0008333333333333334,
+      "action": "increment"
+    }
+  ],
+  "features": {
+    "production_ood_threshold": null,
+    "train_mahalanobis": {
+      "minimum": 17.22522858554203,
+      "p5": 19.565788454303586,
+      "p25": 21.73302236637008,
+      "median": 27.357972835409637,
+      "p75": 31.989042219212983,
+      "p95": 35.36855380927332,
+      "maximum": 51.45212742569964
+    },
+    "held_out_mahalanobis": {
+      "minimum": 18.34798363005293,
+      "p5": 20.189650121682703,
+      "p25": 22.24772132031438,
+      "median": 27.26795231665067,
+      "p75": 32.288939870163496,
+      "p95": 35.201931733273774,
+      "maximum": 54.777426477225156
+    },
+    "train_cosine_distance": {
+      "minimum": 0.09530650155748566,
+      "p5": 0.1606072728912516,
+      "p25": 0.22371721985614793,
+      "median": 0.3332660220523151,
+      "p75": 0.42321214146515534,
+      "p95": 0.5209278675682512,
+      "maximum": 0.9911998643736669
+    },
+    "held_out_cosine_distance": {
+      "minimum": 0.1206413025811639,
+      "p5": 0.18697295778315168,
+      "p25": 0.24344362496924984,
+      "median": 0.3325991913235143,
+      "p75": 0.42396502412878706,
+      "p95": 0.5033109534578329,
+      "maximum": 1.0049912541770478
+    },
+    "held_out_fraction_above_train_mahalanobis_p95": 0.04699108469539376,
+    "mean_p_fake_above_train_mahalanobis_p95": 0.000436693022493273,
+    "mean_p_fake_below_train_mahalanobis_median": 0.9936180114746094
+  },
+  "confidence": {
+    "all_images_p_fake": {
+      "minimum": 3.5301640309626237e-05,
+      "p5": 6.918955114088021e-05,
+      "p25": 0.00010290067075402476,
+      "median": 0.9997602701187134,
+      "p75": 0.999922513961792,
+      "p95": 0.9999418079853057,
+      "maximum": 0.9999690055847168
+    },
+    "authentic_images_p_fake": {
+      "minimum": 3.5301640309626237e-05,
+      "p5": 6.214905552042183e-05,
+      "p25": 8.419273399340454e-05,
+      "median": 0.00010285965981893241,
+      "p75": 0.00012783492275048047,
+      "p95": 0.00026671989762689903,
+      "maximum": 0.9995299577713013
+    },
+    "fake_images_p_fake": {
+      "minimum": 0.9993446469306946,
+      "p5": 0.999873161315918,
+      "p25": 0.9999091625213623,
+      "median": 0.999922513961792,
+      "p75": 0.9999330043792725,
+      "p95": 0.9999457657337188,
+      "maximum": 0.9999690055847168
+    },
+    "mean_p_fake": 0.5031929612159729,
+    "median_p_fake": 0.9997602701187134,
+    "most_confident_false_authentic_examples": [
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/38c9c3817e27.jpg",
+        "label": 1,
+        "p_fake": 0.9993446469306946,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/872698387403.jpg",
+        "label": 1,
+        "p_fake": 0.9994939565658569,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/3d072ddd818b.jpg",
+        "label": 1,
+        "p_fake": 0.9995782971382141,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/753f8eaa978e.jpg",
+        "label": 1,
+        "p_fake": 0.9996201992034912,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/ffd079d8dd23.jpg",
+        "label": 1,
+        "p_fake": 0.9997132420539856,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/4a78d4ed8689.jpg",
+        "label": 1,
+        "p_fake": 0.9997460246086121,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/5064e2f4155f.jpg",
+        "label": 1,
+        "p_fake": 0.9997461438179016,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/3ee10bc579c4.jpg",
+        "label": 1,
+        "p_fake": 0.9997565150260925,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/5a7a59a57b6d.jpg",
+        "label": 1,
+        "p_fake": 0.9997640252113342,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/f6a2a7c3226e.jpg",
+        "label": 1,
+        "p_fake": 0.999775230884552,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/4392e3fe0b3c.jpg",
+        "label": 1,
+        "p_fake": 0.9997770190238953,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/303fd62558c5.jpg",
+        "label": 1,
+        "p_fake": 0.9997804760932922,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/e2b9bab5f0d2.jpg",
+        "label": 1,
+        "p_fake": 0.9997817873954773,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/5fd84e4e2494.jpg",
+        "label": 1,
+        "p_fake": 0.9997826218605042,
+        "error": "fake image received a low P(fake)"
+      },
+      {
+        "path": "/home/tensortorch26/Desktop/HypeVault/Label_1_Watches/Patek Philippe/381127c6ed0e.jpg",
+        "label": 1,
+        "p_fake": 0.9997848868370056,
+        "error": "fake image received a low P(fake)"
+      }
+    ]
+  },
+  "gap": {
+    "roc_auc": 2.759838825250327e-07,
+    "roc_auc_relative_degradation": 2.759838825250327e-07,
+    "pr_auc": 2.7429763604924773e-07,
+    "pr_auc_relative_degradation": 2.7429763604924773e-07,
+    "f1": 0.0016638935108153063,
+    "f1_relative_degradation": 0.0016638935108153063,
+    "false_authentic_rate": 0.0,
+    "false_authentic_rate_relative_degradation": null,
+    "false_fake_rate": -0.0033532041728763042,
+    "false_fake_rate_relative_degradation": null,
+    "nll": -0.005000669771106914,
+    "nll_relative_degradation": -33.398567969454476,
+    "brier": -0.0013362252147999243,
+    "brier_relative_degradation": -547.9374744295625,
+    "ece": -0.0011320865725514438,
+    "ece_relative_degradation": -7.624753495943494
+  }
+}

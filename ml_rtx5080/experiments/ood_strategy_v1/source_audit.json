@@ -1,0 +1,62 @@
+{
+  "phase37_admitted": 0,
+  "phase37_candidates_stored": 1,
+  "sources_qualified": 10,
+  "registered_package_reached": false,
+  "blockers": {
+    "original_byte_availability": {
+      "quantification": "Phase 36 stored 28 original Commons files and failed 531 downloads with HTTP 429. Phase 37 verified one Pixnio original and one Flickr original header. Openverse, museums, Hippopx, Internet Archive, and WatchBase did not yield admissible original bytes.",
+      "sources_blocked": ["Openverse", "Wikimedia Commons bulk", "Internet Archive", "Met", "Smithsonian", "Europeana", "Hippopx", "WatchBase CDN"]
+    },
+    "licensing": {
+      "quantification": "One explicit CC0 image and one explicit CC BY-SA original were found. Neither was admissible. Four access-controlled sources returned HTTP 410, 403, 401, or 403. Timepiecepedia's CC0 claim was not accepted as an image license.",
+      "image_license_unknown_or_unavailable": ["Timepiecepedia photographs", "Internet Archive samples", "museum APIs", "Hippopx", "local numeric archive", "public retailer photographs"]
+    },
+    "provenance": {
+      "quantification": "The Pixnio file has a page URL, a file URL, and a CC0 license URL. It still lacks a source-declared brand. WatchBase URLs in a metadata repository do not carry photograph provenance.",
+      "phase37_provenance_file_rejections": 0
+    },
+    "brand_verification": {
+      "quantification": "1 of 1 stored Phase 37 files has brand_verification unknown. Commons category names can verify a brand, and that route's ceiling still misses the targets.",
+      "phase37_ambiguous_category_rejections": 1
+    },
+    "category_verification": {
+      "quantification": "The Pixnio page says wristwatch and does not map to unseen luxury, ordinary, smart/digital, or wrist/store. Phase 36 rejected 92 files for non-watch or part markers and 6 boutique exteriors.",
+      "phase36_non_watch_or_part": 92,
+      "phase36_boutique_exterior": 6
+    },
+    "byte_size_cap": {
+      "quantification": "456 of 1146 Phase 36 failures were original_outside_byte_cap_or_mime. The Flickr pilot original was 2475875 bytes. The cap is 1500000 bytes. The Pixnio original was under the cap at 972467 bytes and 5400x3600 pixels, so pixel size and file size are different constraints.",
+      "phase36_cap_or_mime_failures": 456,
+      "share_of_phase36_failures": 0.3979
+    },
+    "access_and_rate_limits": {
+      "quantification": "531 of 1146 Phase 36 failures were HTTP 429, a share of 0.4634. Together with the byte cap, 987 of 1146 failures (0.8613) were access or size, not content exclusions.",
+      "http_429": 531,
+      "museum_and_gallery_http": ["410", "403", "401", "403"]
+    },
+    "source_independence": {
+      "quantification": "Phase 37 admitted 0 independent source groups. The only source with category-verified brands at any scale is Wikimedia Commons, which is one site. Its not-yet-downloaded ceiling is one source family, not a multi-site corpus.",
+      "independent_source_count": 0
+    },
+    "derivative_restrictions": {
+      "quantification": "Phase 36 marked 36 derivative titles. Phase 35 local Roboflow exports are 871 + 510 + 267 = 1648 .rf. files, of which 180 were already scored. Openverse served resized Flickr renditions. No derivative file was admitted in Phase 37.",
+      "phase36_derivative_markers": 36,
+      "roboflow_rf_files": 1648,
+      "phase37_derivative_files_rejected": 0
+    }
+  },
+  "commons_ceiling_if_every_429_later_passed": {
+    "unseen_luxury": 258,
+    "ordinary_watch": 155,
+    "smart_digital": 104,
+    "wrist_store": 14,
+    "after_brand_cap_40": {
+      "unseen_luxury": 216,
+      "ordinary_watch": 149,
+      "note": "Rolex categories in the 429 set sum to 82, so the cap removes 42. Tissot is 46, so the ordinary cap removes 6. Smart categories are each at or below 40."
+    },
+    "targets": {"unseen_luxury": 300, "ordinary_watch": 200, "smart_digital": 100, "wrist_store": 50},
+    "holdout_minimums": {"unseen_luxury": 60, "ordinary_watch": 40, "smart_digital": 25, "wrist_store": 25}
+  }
+}

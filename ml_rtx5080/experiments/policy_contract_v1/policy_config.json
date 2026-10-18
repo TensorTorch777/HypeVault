@@ -1,0 +1,33 @@
+{
+  "architecture": "vit_base_patch16_dinov3.lvd1689m",
+  "authenticity_threshold": 0.5,
+  "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+  "final_test_samples_used": 0,
+  "head": "cls_patch_attention",
+  "input_size": 512,
+  "low_contrast_cutoff": 0.1933616647502347,
+  "low_resolution_cutoff": 512.0,
+  "manifest_file_sha256": "4d0d20c17d12ac29cb299b7b4f369ebcce3c5acd7b2fd5430d61f952b9852eea",
+  "membership_hash": "78a38ebac1102977ec5598577126ade77fed8edd6563e13dbdee73dba389f678",
+  "model_family": "dinov3",
+  "ood_status": "unavailable",
+  "policy_status": "not_promoted",
+  "policy_version": "shadow_v1",
+  "precedence": [
+    "quality review (LOW_RESOLUTION or LOW_CONTRAST) -> REVIEW",
+    "else calibrated P(fake) >= 0.50 -> FAKE",
+    "else AUTHENTIC",
+    "OOD is not a decision input while ood_status is unavailable",
+    "invalid critical input -> POLICY_ERROR, which is not an authenticity verdict"
+  ],
+  "preprocessing_version": "resize_pad_square_eval_v1",
+  "production_authenticity_threshold": null,
+  "production_ood_threshold": null,
+  "production_policy_status": "not_promoted",
+  "production_quality_gate": null,
+  "quality_policy_version": "phase23_low_resolution_or_low_contrast_v1",
+  "quality_rule": "low_resolution_or_low_contrast",
+  "quality_rule_status": "research_quality_gate_candidate",
+  "temperature": 0.24038200410185356,
+  "threshold_status": "research_policy_candidate"
+}

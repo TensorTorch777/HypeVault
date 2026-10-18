@@ -1,0 +1,37 @@
+{
+  "batch_sizes_measured": [],
+  "decode": {
+    "p50": 3.0455555097432807,
+    "p95": 14.912711991928512,
+    "p99": 47.37966713670174
+  },
+  "images": 24,
+  "images_per_second_without_gpu_model": 40.74137155505751,
+  "model": null,
+  "note": "Policy timing uses logit 0.0 only to time the policy function. It is not a model score.",
+  "onnx_cuda_model": "not_measured",
+  "policy": {
+    "p50": 0.04251900827512145,
+    "p95": 0.05510190239874645,
+    "p99": 0.07230793882627039
+  },
+  "preprocess": {
+    "p50": 5.752140481490642,
+    "p95": 17.779017906286747,
+    "p99": 24.513790460478045
+  },
+  "quality": {
+    "p50": 17.141283504315652,
+    "p95": 107.30857979215213,
+    "p99": 188.29042428289537
+  },
+  "reason": "CUDAExecutionProvider did not load, so GPU ONNX timing was not invented.",
+  "scope": "single-decode stages on the golden images; not a production capacity claim",
+  "timed_iterations": 24,
+  "total_without_gpu_model": {
+    "p50": 24.545074498746544,
+    "p95": 135.2627876520273,
+    "p99": 258.8068689583451
+  },
+  "warmup_iterations": 0
+}
