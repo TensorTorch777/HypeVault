@@ -1,8 +1,10 @@
-# Phase 56: cross-brand generalization on surface-normalized images
+# Phase 69: cross-brand generalization on surface-normalized images
 
 Question: does the Phase 45 leave-one-brand-out result survive when both folder classes share one size, encoder, and metadata state?
 
 Answer on this catalog: yes. All five held-out brands stay above 0.998 F1 after normalization, and the pre-specified STRONG band still holds. The claim is real photograph versus these AI-generated images. It is not authentic versus counterfeit watch, and it does not cover other image generators.
+
+Scope and numbering: this phase was run on the project owner's direct instruction of 18 October 2026. It studies real photographs versus AI-generated images under the historical folder labels and makes no authenticity (counterfeit) claim, so `DATA_READINESS = NO_GO_FOR_AUTHENTICITY_CLAIMS` and the Phase 55–68 acquisition gates on `main` are unchanged. It was numbered Phase 56 while it ran; `protocol_v1.json` has no phase number, so its recorded hash is unaffected. It is renumbered Phase 69 because `main` already uses Phase 56 for a different phase.
 
 Protocol `protocol_v1.json`, SHA-256 `ef4936c502f905d4bb70af7dfab62d083e7cb1e36471be3047b349e556d3ddf4`. Fold manifest SHA-256 `55ff5290ff6cc97f773349d93efb8a50a09dc95af1a4a4011fa66a6d627860f5`. The locked final test was not opened. The frozen `epoch_018.pt` was not loaded. Every model started from the timm pretrained `vit_base_patch16_dinov3.lvd1689m` backbone.
 

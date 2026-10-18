@@ -69,11 +69,11 @@ vendor/superpowers/
 
 # Google OAuth client secrets
 client_secret_*.json
-# Phase 56 normalized image copies stay local.
+# Phase 69 normalized image copies stay local.
 data_normalized_v1/
-# Phase 57 generated images stay local.
+# Phase 70 generated images stay local.
 data_unseen_generator_v1/
-# Phase 56 fold manifest is 85 MB; normalize_surface.py rebuilds it and the .sha256 is kept.
+# Phase 69 fold manifest is 85 MB; normalize_surface.py rebuilds it and the .sha256 is kept.
 ml_rtx5080/experiments/normalized_cross_brand_v1/fold_manifest.json
 # Large local manifests and inventories (full local image paths); kept on disk, not in git.
 ml_rtx5080/experiments/v3_cross_brand/fold_manifest.json

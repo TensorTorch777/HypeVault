@@ -1,4 +1,4 @@
-"""Phase 56: give both folder classes the same surface before cross-brand training.
+"""Phase 69: give both folder classes the same surface before cross-brand training.
 
 Phase 48 found that every Label_1 file is a 512×512 baseline JPEG at IJG quality
 95 with no EXIF, while Label_0 files vary in size, format, and encoder. The eval

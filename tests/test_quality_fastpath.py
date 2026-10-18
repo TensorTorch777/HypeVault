@@ -16,6 +16,10 @@ sys.path.insert(0, str(REPO / "ml_rtx5080"))
 sys.path.insert(0, str(REPO / "backend"))
 
 
+_DATASET = Path(__file__).resolve().parents[1] / "Label_0_Watches"
+_FROZEN = Path(__file__).resolve().parents[1] / "ml_rtx5080" / "experiments" / "v2_dinov3_cls_patch_attention" / "epoch_018.pt"
+
+
 class QualityFastPathTests(unittest.TestCase):
     def test_reference_parity_and_decision(self) -> None:
         from image_quality import apply_quality_flags, extract_quality_features
@@ -109,6 +113,7 @@ class QualityFastPathTests(unittest.TestCase):
         second = fast_quality_gate(image)
         self.assertEqual(first, second)
 
+    @unittest.skipUnless(_DATASET.is_dir(), "local dataset, not in git")
     def test_stress_flags_match_the_reference(self) -> None:
         from hard_negative import apply_challenge_transform
         from image_quality import apply_quality_flags, extract_quality_features
@@ -127,6 +132,7 @@ class QualityFastPathTests(unittest.TestCase):
             if name == "lower_resolution":
                 self.assertIn("LOW_RESOLUTION", fast_flags)
 
+    @unittest.skipUnless(_FROZEN.is_file(), "frozen checkpoint is local, not in git")
     def test_checkpoint_and_temperature_are_unchanged(self) -> None:
         from policy import FROZEN_TEMPERATURE
 
@@ -156,6 +162,7 @@ class QualityFastPathTests(unittest.TestCase):
             Image.open = original
         self.assertFalse(opened["called"])
 
+    @unittest.skipUnless(_DATASET.is_dir(), "local dataset, not in git")
     def test_single_decode(self) -> None:
         from quality_fastpath import fast_quality_gate, load_original_rgb
         from reference_inference import preprocess_image

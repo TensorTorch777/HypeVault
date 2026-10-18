@@ -34,6 +34,9 @@ def _ready_evidence() -> dict:
     }
 
 
+_FROZEN = Path(__file__).resolve().parents[1] / "ml_rtx5080" / "experiments" / "v2_dinov3_cls_patch_attention" / "epoch_018.pt"
+
+
 class ProductionReadinessTests(unittest.TestCase):
     def test_complete_evidence_is_ready(self) -> None:
         from production_readiness import READY, classify_readiness
@@ -116,6 +119,7 @@ class ProductionReadinessTests(unittest.TestCase):
         self.assertEqual(tuple(header), RISK_FIELDS)
         self.assertGreaterEqual(len(path.read_text().splitlines()), 11)
 
+    @unittest.skipUnless(_FROZEN.is_file(), "frozen checkpoint is local, not in git")
     def test_audit_does_not_open_images_and_status_is_calculated(self) -> None:
         from PIL import Image
         from production_readiness import CONDITIONAL, classify_readiness, load_evidence

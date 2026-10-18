@@ -1,4 +1,4 @@
-"""Phase 56 surface normalization. Synthetic images only; no dataset decode."""
+"""Phase 69 surface normalization. Synthetic images only; no dataset decode."""
 
 from __future__ import annotations
 

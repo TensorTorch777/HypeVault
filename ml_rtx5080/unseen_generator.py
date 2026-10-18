@@ -1,4 +1,4 @@
-"""Phase 57: score images from generators that did not produce the training folders.
+"""Phase 70: score images from generators that did not produce the training folders.
 
 The generator behind Label_1_Watches is not recorded. Every Label_1 file is
 512×512, so SDXL base 1.0 (native 1024×1024, two text encoders) is the primary
@@ -7,12 +7,12 @@ be close to the training generator.
 
 Every image here is generated, so the only measurable rate is detection: the
 fraction scored P(generated) >= 0.50. Temperature does not change that decision
-(it is the sign of the logit). Real photos are not re-scored; Phase 56 already
+(it is the sign of the logit). Real photos are not re-scored; Phase 69 already
 measured the false-fake rate.
 
 Scorers:
-  random_split   Phase 56 brand-mixed model on normalized images (primary)
-  held_out_fold  Phase 56 fold model that never saw that brand, on normalized images
+  random_split   Phase 69 brand-mixed model on normalized images (primary)
+  held_out_fold  Phase 69 fold model that never saw that brand, on normalized images
   frozen_raw     frozen production epoch_018 on the raw generator PNG, production eval transform
   frozen_norm    frozen production epoch_018 on the normalized image
 
@@ -43,7 +43,7 @@ from normalize_surface import normalize_image, save_jpeg
 PROTOCOL_ID = "unseen_generator_v1"
 OUT = _PKG / "experiments" / PROTOCOL_ID
 DATA = _REPO / "data_unseen_generator_v1"
-PHASE56_WEIGHTS = _PKG / "experiments" / "normalized_cross_brand_v1" / "weights"
+PHASE69_WEIGHTS = _PKG / "experiments" / "normalized_cross_brand_v1" / "weights"
 FROZEN = _PKG / "experiments" / "v2_dinov3_cls_patch_attention" / "epoch_018.pt"
 FROZEN_SHA256 = "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f"
 SEED = 57
@@ -100,7 +100,7 @@ def prompts() -> list[dict]:
 def protocol_document() -> dict:
     return {
         "protocol_id": PROTOCOL_ID,
-        "question": "Do the Phase 56 and frozen production models detect images from generators outside the training folders?",
+        "question": "Do the Phase 69 and frozen production models detect images from generators outside the training folders?",
         "claim_scope": "detection of generated images only; real photos are not re-scored here",
         "generators": GENERATORS,
         "training_generator": "not recorded; every Label_1 file is 512x512",
@@ -113,8 +113,8 @@ def protocol_document() -> dict:
         "seed_rule": f"seed = {SEED} * 100000 + prompt_index * {PER_PROMPT} + repeat",
         "normalization": "normalize_surface.normalize_image then save_jpeg (448x448, baseline JPEG q90, no EXIF)",
         "scorers": {
-            "random_split": "Phase 56 random_split_cls_patch_attention.pt on normalized images (primary)",
-            "held_out_fold": "Phase 56 fold model whose held-out brand is the image's prompt brand, normalized images",
+            "random_split": "Phase 69 random_split_cls_patch_attention.pt on normalized images (primary)",
+            "held_out_fold": "Phase 69 fold model whose held-out brand is the image's prompt brand, normalized images",
             "frozen_raw": "frozen epoch_018.pt on the raw PNG with the production eval transform",
             "frozen_norm": "frozen epoch_018.pt on the normalized image",
         },
@@ -281,12 +281,12 @@ def score() -> None:
     logits ={name: np.full(len(records), np.nan) for name in ("random_split", "held_out_fold", "frozen_raw", "frozen_norm")}
     norm_paths = [row["normalized_path"] for row in records]
 
-    model = _load(PHASE56_WEIGHTS / "random_split_cls_patch_attention.pt")
+    model = _load(PHASE69_WEIGHTS / "random_split_cls_patch_attention.pt")
     logits["random_split"] = _logits(model, norm_paths)
     del model
     for directory, brand in FOLDS:
         index = [i for i, row in enumerate(records) if row["brand"] == brand]
-        model = _load(PHASE56_WEIGHTS / f"{directory}_cls_patch_attention.pt")
+        model = _load(PHASE69_WEIGHTS / f"{directory}_cls_patch_attention.pt")
         logits["held_out_fold"][index] = _logits(model, [norm_paths[i] for i in index])
         del model
         torch.cuda.empty_cache()
@@ -319,7 +319,7 @@ def score() -> None:
 
 CONTROL_PER_BRAND = 100
 FROZEN_SPLIT = _PKG / "experiments" / "dataset_audit" / "split_manifest_v2.json"
-PHASE56_MANIFEST = _PKG / "experiments" / "normalized_cross_brand_v1" / "fold_manifest.json"
+PHASE69_MANIFEST = _PKG / "experiments" / "normalized_cross_brand_v1" / "fold_manifest.json"
 
 
 def _sample_real(rows: list[dict], key: str = "path") -> list[dict]:
@@ -338,13 +338,13 @@ def control() -> None:
     import torch
     from normalize_surface import output_path, roc_auc
 
-    phase56 = json.loads(PHASE56_MANIFEST.read_text())
+    phase69 = json.loads(PHASE69_MANIFEST.read_text())
     controls: dict[str, list[tuple[str, str]]] = {}
-    random_rows = [r for r in phase56["random_split_control"]["rows"] if r["role"] == "random_test" and r["label"] == 0]
+    random_rows = [r for r in phase69["random_split_control"]["rows"] if r["role"] == "random_test" and r["label"] == 0]
     controls["random_split"] = [(r["brand"], r["path"]) for r in _sample_real(random_rows)]
     held = []
     for directory, _brand in FOLDS:
-        rows = [r for r in phase56["folds"][directory]["rows"] if r["role"] == "cross_brand_test" and r["label"] == 0]
+        rows = [r for r in phase69["folds"][directory]["rows"] if r["role"] == "cross_brand_test" and r["label"] == 0]
         held += [(directory, r["brand"], r["path"]) for r in _sample_real(rows)]
     frozen_rows = [
         r for r in json.loads(FROZEN_SPLIT.read_text())["samples"]
@@ -355,12 +355,12 @@ def control() -> None:
     controls["frozen_norm"] = [(r["brand"], str(output_path(Path(r["path"]), 0))) for r in frozen_rows]
 
     real_logits: dict[str, np.ndarray] = {}
-    model = _load(PHASE56_WEIGHTS / "random_split_cls_patch_attention.pt")
+    model = _load(PHASE69_WEIGHTS / "random_split_cls_patch_attention.pt")
     real_logits["random_split"] = _logits(model, [p for _b, p in controls["random_split"]])
     del model
     parts = []
     for directory, _brand in FOLDS:
-        model = _load(PHASE56_WEIGHTS / f"{directory}_cls_patch_attention.pt")
+        model = _load(PHASE69_WEIGHTS / f"{directory}_cls_patch_attention.pt")
         parts.append(_logits(model, [p for d, _b, p in held if d == directory]))
         del model
         torch.cuda.empty_cache()
@@ -382,7 +382,7 @@ def control() -> None:
     result = {
         "protocol_sha256": (OUT / "protocol_v1.sha256").read_text().split()[0],
         "control_sources": {
-            "random_split": "Phase 56 random_test Label_0, normalized",
+            "random_split": "Phase 69 random_test Label_0, normalized",
             "held_out_fold": "each fold's cross_brand_test Label_0 (brand unseen by that model), normalized",
             "frozen_raw": "split_manifest_v2 validation Label_0, original files (used for epoch selection, not training)",
             "frozen_norm": "the same rows, normalized",

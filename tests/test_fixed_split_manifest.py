@@ -17,7 +17,11 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "ml_rtx5080" / "experiments" / "dataset_audit" / "split_manifest_v2.json"
 
 
+_DATASET = Path(__file__).resolve().parents[1] / "Label_0_Watches"
+
+
 class FixedSplitManifestTests(unittest.TestCase):
+    @unittest.skipUnless(_DATASET.is_dir(), "local dataset, not in git")
     def test_authoritative_manifest_matches_phase16(self) -> None:
         records = ds.load_records(ROOT)
         splits, meta = split_v2.records_from_fixed_manifest(
@@ -34,6 +38,7 @@ class FixedSplitManifestTests(unittest.TestCase):
             self.assertEqual(sum(row.label == 0 for row in rows), expected["authentic"])
             self.assertEqual(sum(row.label == 1 for row in rows), expected["fake"])
 
+    @unittest.skipUnless(_DATASET.is_dir(), "local dataset, not in git")
     def test_wrong_hash_stops_before_a_split_is_accepted(self) -> None:
         records = ds.load_records(ROOT)
         with self.assertRaises(RuntimeError) as raised:

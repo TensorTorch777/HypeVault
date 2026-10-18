@@ -30,6 +30,9 @@ EXPERIMENTS = Path(__file__).resolve().parents[1] / "ml_rtx5080" / "experiments"
 PREPROCESS = PREPROCESSING_VERSION
 
 
+_FROZEN = Path(__file__).resolve().parents[1] / "ml_rtx5080" / "experiments" / "v2_dinov3_cls_patch_attention" / "epoch_018.pt"
+
+
 class PolicyContractTests(unittest.TestCase):
     def _engine(self) -> PolicyEngine:
         events: list[dict] = []
@@ -349,6 +352,7 @@ class PolicyContractTests(unittest.TestCase):
             self.assertEqual(image.read_bytes(), original)
         self.assertEqual(policy_eval._backend_hashes(repo), before)
 
+    @unittest.skipUnless(_FROZEN.is_file(), "frozen checkpoint is local, not in git")
     def test_shadow_counts_reproduce_phase26(self) -> None:
         manifest = EXPERIMENTS / "dataset_audit" / "split_manifest_v2.json"
         observed = policy_eval.simulate_contract(EXPERIMENTS, manifest)

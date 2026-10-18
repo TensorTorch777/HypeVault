@@ -1,4 +1,4 @@
-"""Phase 57 protocol pieces. No diffusion pipeline, checkpoint, or dataset decode."""
+"""Phase 70 protocol pieces. No diffusion pipeline, checkpoint, or dataset decode."""
 
 from __future__ import annotations
 

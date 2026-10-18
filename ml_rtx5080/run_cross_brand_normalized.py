@@ -1,4 +1,4 @@
-"""Phase 56: rerun the Phase 45 leave-one-brand-out protocol on surface-normalized images.
+"""Phase 69: rerun the Phase 45 leave-one-brand-out protocol on surface-normalized images.
 
 Training, selection, calibration, and scoring are ``cross_brand_train.train_fold``
 unchanged. Only the image files differ (see ``normalize_surface.py``). The

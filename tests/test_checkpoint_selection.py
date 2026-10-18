@@ -56,6 +56,9 @@ def _candidate(
     return row
 
 
+_DINOV2_WEIGHTS = Path(__file__).resolve().parents[1] / "ml_rtx5080" / "experiments" / "v2_dinov2_cls_only" / "best_model.pt"
+
+
 class CheckpointSelectionTests(unittest.TestCase):
     def _select(self, candidates, **kwargs):
         settings = {
@@ -448,6 +451,7 @@ class CheckpointSelectionTests(unittest.TestCase):
 
 
 class CheckpointPolicyV2Tests(unittest.TestCase):
+    @unittest.skipUnless(_DINOV2_WEIGHTS.is_file(), "local checkpoint, not in git")
     def test_phase17_histories_rerank_deterministically_without_touching_checkpoints(self) -> None:
         root = Path(__file__).resolve().parents[1] / "ml_rtx5080" / "experiments"
         watched = [root / "dataset_audit" / "split_manifest_v2.json"]
@@ -776,6 +780,7 @@ class CheckpointPolicyV3Tests(unittest.TestCase):
         self.assertEqual(first, "epoch_004")
         self.assertEqual(second, "epoch_004")
 
+    @unittest.skipUnless(_DINOV2_WEIGHTS.is_file(), "local checkpoint, not in git")
     def test_selection_does_not_mutate_checkpoint_bytes(self) -> None:
         root = Path(__file__).resolve().parents[1] / "ml_rtx5080" / "experiments"
         watched = [root / "dataset_audit" / "split_manifest_v2.json"]
