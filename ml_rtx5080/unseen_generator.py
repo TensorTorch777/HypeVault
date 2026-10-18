@@ -26,6 +26,7 @@ import argparse
 import csv
 import hashlib
 import json
+import math
 import sys
 import time
 from pathlib import Path
@@ -224,11 +225,35 @@ def _write_manifest(path: Path, records: list[dict]) -> None:
             writer.writerow({key: record[key] for key in fields})
 
 
-def clopper_pearson(k: int, n: int) -> tuple[float, float]:
-    from scipy.stats import beta
+def _binomial_cdf(k: int, n: int, p: float) -> float:
+    """P(X <= k) for X ~ Binomial(n, p), summed in log space so large n does not overflow."""
+    if p <= 0.0:
+        return 1.0
+    if p >= 1.0:
+        return 1.0 if k >= n else 0.0
+    log_p, log_q = math.log(p), math.log1p(-p)
+    base = math.lgamma(n + 1)
+    return min(1.0, sum(
+        math.exp(base - math.lgamma(i + 1) - math.lgamma(n - i + 1) + i * log_p + (n - i) * log_q)
+        for i in range(k + 1)
+    ))
 
-    low = 0.0 if k == 0 else float(beta.ppf(0.025, k, n - k + 1))
-    high = 1.0 if k == n else float(beta.ppf(0.975, k + 1, n - k))
+
+def _bisect(predicate, low: float = 0.0, high: float = 1.0) -> float:
+    """Smallest p in [low, high] where ``predicate`` turns true; ``predicate`` must be monotone."""
+    for _ in range(100):
+        mid = (low + high) / 2.0
+        if predicate(mid):
+            high = mid
+        else:
+            low = mid
+    return (low + high) / 2.0
+
+
+def clopper_pearson(k: int, n: int) -> tuple[float, float]:
+    """Exact two-sided 95% interval. Pure Python, so CI does not need scipy."""
+    low = 0.0 if k == 0 else _bisect(lambda p: 1.0 - _binomial_cdf(k - 1, n, p) >= 0.025)
+    high = 1.0 if k == n else _bisect(lambda p: _binomial_cdf(k, n, p) <= 0.025)
     return low, high
 
 

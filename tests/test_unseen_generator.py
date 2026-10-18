@@ -37,6 +37,11 @@ class IntervalTests(unittest.TestCase):
         self.assertLess(low, 0.5)
         self.assertGreater(high, 0.5)
 
+    def test_clopper_pearson_matches_the_reported_interval(self) -> None:
+        low, high = ug.clopper_pearson(262, 500)
+        self.assertAlmostEqual(low, 0.479193, places=6)
+        self.assertAlmostEqual(high, 0.568521, places=6)
+
 
 class ControlSampleTests(unittest.TestCase):
     def test_sample_is_seeded_and_capped_per_brand(self) -> None:
