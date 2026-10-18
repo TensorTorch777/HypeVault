@@ -5,3 +5,6 @@ timm==1.0.26
 
 # Phase 55A evidence-ledger schema tests. format: date is checked by jsonschema's FormatChecker.
 jsonschema==4.26.0
+
+# Plot outputs written by the hard-negative and brand-evaluation tests.
+matplotlib==3.10.8
