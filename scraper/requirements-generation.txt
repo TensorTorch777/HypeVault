@@ -1,0 +1,14 @@
+# Optional GPU image generation for generate_label1*.py
+# Install a CUDA-capable PyTorch build that matches your driver BEFORE this file.
+# Example (choose the index that matches your CUDA toolkit; do not use the CI CPU wheel for generation):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+# Then:
+#   pip install -r scraper/requirements-generation.txt
+#
+# These pins intentionally stay local to scraper tooling and do not replace
+# root requirements.txt / requirements-ci.txt application pins.
+-r requirements.txt
+diffusers>=0.30.0,<0.33
+transformers>=4.40.0,<5
+accelerate>=0.33.0,<1
+safetensors>=0.4.0,<0.6

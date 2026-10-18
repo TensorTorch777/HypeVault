@@ -1,0 +1,15 @@
+# Never commit downloaded or generated research artifacts from this folder.
+venv/
+.cache/
+__pycache__/
+*.pyc
+*.csv
+*.json
+*.jsonl
+Label_*/
+**/Label_*/
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.partial
