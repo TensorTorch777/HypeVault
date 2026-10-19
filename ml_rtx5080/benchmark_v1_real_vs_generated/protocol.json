@@ -1,0 +1,109 @@
+{
+  "protocol": "benchmark_v1_real_vs_generated",
+  "status": "PRE_REGISTERED",
+  "written_on": "2026-10-16",
+  "written_before_any_data": true,
+  "question": "On newly collected marketplace listing photos and newly generated images of the five supported brands, which frozen checkpoint better separates real photographs from AI-generated images?",
+  "scope_limit": "Real-photo versus AI-generated image detection only. A REAL_PHOTO label says the image is a photograph from a live listing; it says nothing about whether the watch in it is genuine. No physical-counterfeit or authenticity claim may be drawn from this benchmark.",
+  "models": {
+    "dinov2_legacy": {
+      "triton_name": "dinov2_vitb14_live",
+      "checkpoint_path": "ml_rtx5080/checkpoints/best_model.pt",
+      "checkpoint_sha256": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66",
+      "preprocessing": "legacy_square_resize_504_imagenet",
+      "policy": "sigmoid(logit) >= 0.50 -> FAKE; AUTHENTIC kept only if confidence >= 0.88, else FAKE. No REVIEW state."
+    },
+    "dinov3_experimental": {
+      "triton_name": "dinov3_authenticity_candidate",
+      "checkpoint_path": "ml_rtx5080/experiments/v2_dinov3_cls_patch_attention/epoch_018.pt",
+      "checkpoint_sha256": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f",
+      "preprocessing": "resize_pad_square_eval_v1 at 512",
+      "policy": "p = sigmoid(logit / 0.24038200410185356); REVIEW when the image fails the frozen quality gate (shorter side < 512 px or luminance standard deviation < 0.1934); otherwise FAKE when p >= 0.50, else AUTHENTIC."
+    },
+    "frozen": "Weights, thresholds, temperature and policies are not changed by this benchmark. Neither model is trained or calibrated on benchmark data."
+  },
+  "label_mapping": {
+    "REAL_PHOTO": "A model decision of AUTHENTIC is correct.",
+    "GENERATED": "A model decision of FAKE is correct.",
+    "REVIEW": "Neither correct nor incorrect; counted in coverage."
+  },
+  "classes": {
+    "REAL_PHOTO": {
+      "source": "Primary image of a fixed-price eBay listing in category 31387 (Wristwatches), fetched through the official Browse API",
+      "inclusion": [
+        "listing title names one of the five supported brands and the brand filter matches",
+        "listing price >= 1000 USD",
+        "not an accessory, part or copy listing (market.types.is_accessory)",
+        "image downloads and decodes; short side >= 768 px before normalisation"
+      ],
+      "unit": "listing (one image per listing, so units are independent)",
+      "known_label_noise": "A seller may upload a stock, edited or generated image. This cannot be fully excluded and is reported as a limitation."
+    },
+    "GENERATED": {
+      "groups": {
+        "heldout_kandinsky22": {
+          "role": "PRIMARY",
+          "generator": "kandinsky-community/kandinsky-2-2-decoder (with its prior)",
+          "reason": "A diffusion family not used to make the training fakes"
+        },
+        "sdxl_base10": {
+          "role": "SECONDARY",
+          "generator": "stabilityai/stable-diffusion-xl-base-1.0",
+          "reason": "Possibly the same family as training fakes (training-generator provenance is not recorded); reported separately and never pooled into the primary result"
+        }
+      },
+      "prompts": "Templated from (brand, model) pairs in the Chrono24 dataset crossed with listing-style scenes; every image has a unique (prompt, seed); generator, model revision, prompt, negative prompt, seed, steps and guidance are recorded",
+      "unit": "image; bootstrap clusters are prompt templates",
+      "generation_size": {
+        "heldout_kandinsky22": "768 x 768",
+        "sdxl_base10": "1024 x 1024, then normalised to 768"
+      },
+      "negative_prompt": "text, watermark, caption, cartoon, illustration, 3d render, painting (neutral; no prompt steers images toward or away from detectable errors)"
+    }
+  },
+  "normalisation_applied_to_every_image": [
+    "EXIF transpose, convert to RGB",
+    "centre-crop to a square",
+    "resize to exactly 768 x 768 with Lanczos (sources below 768 px on the short side are excluded, so nothing is upscaled)",
+    "re-encode as JPEG quality 90, 4:2:0, all metadata stripped"
+  ],
+  "normalisation_reason": "Every admitted image, real or generated, ends up as a 768 x 768 JPEG with identical encoding, so file format, size, aspect ratio and metadata cannot separate the classes. 768 is the native output size of the held-out generator.",
+  "exclusions": [
+    "exact SHA-256 match (original download) to any of the 30,000 images in split_manifest_v2.json, using the stored hashes",
+    "64-bit difference-hash (split_v2.dhash_image on the original download) within 2 bits of any image in split_manifest_v2.json, read from the stored hashes so no training or test file is opened. 6 bits was rejected because the dataset audit found unrelated product shots at a median distance of 6.",
+    "duplicate within the benchmark (same rules); the first collected copy is kept"
+  ],
+  "sample_size": {
+    "REAL_PHOTO": {
+      "target": 300,
+      "per_brand_target": 60,
+      "per_brand_minimum": 40
+    },
+    "heldout_kandinsky22": {
+      "target": 300,
+      "per_brand_target": 60
+    },
+    "sdxl_base10": {
+      "target": 150,
+      "per_brand_target": 30
+    },
+    "basis": "With 0 false-authentic errors in 300 generated images the one-sided 95% upper bound is 0.0099. An exact McNemar test (two-sided alpha 0.05, power 0.80, 70/30 split of discordant pairs) needs 49 discordant images; at an assumed 10% discordance the primary set of about 600 images gives about 60.",
+    "required_discordant": 49
+  },
+  "primary_analysis": {
+    "set": "REAL_PHOTO plus heldout_kandinsky22",
+    "per_model": "confusion counts, coverage, accuracy, balanced accuracy, precision/recall/F1 for GENERATED, false-authentic and false-fake rates with exact one-sided 95% upper bounds, ROC-AUC and PR-AUC from each model's own score (never compared on one scale)",
+    "paired": "exact McNemar on images where both models returned AUTHENTIC or FAKE; agreement table; cluster-bootstrap 95% interval (2000 resamples, seed 20261016) for the difference in correctness",
+    "slices": "per brand and per generator group; descriptive only"
+  },
+  "frontier_rule": {
+    "PERFORMANCE_WINNER": "Discordant count >= 49, McNemar p < 0.05, and the better model's false-authentic one-sided upper bound <= 0.10. The better model is the one correct on more discordant images.",
+    "UNDERPOWERED": "Discordant count < 49. No performance winner may be named.",
+    "NO_SIGNIFICANT_DIFFERENCE": "Discordant count >= 49 and p >= 0.05. No performance winner may be named.",
+    "ENGINEERING_SELECTION": "Without a performance winner, DINOv3 may be designated the frontier model only if its false-authentic upper bound is at most 0.02 above DINOv2's and its coverage is at least 0.85. The report must then say it was selected for engineering reasons and was not shown to perform better.",
+    "OTHERWISE": "DINOv2 remains the live model."
+  },
+  "go_no_go": "Confirmatory analysis runs only when both primary classes meet their per-brand minimums after exclusions. Otherwise the run is labelled SMOKE_TEST and its numbers may not be reported as results.",
+  "locked_final_test": "Not opened, hashed from file, or scored by this benchmark.",
+  "data_handling": "Images stay in the ignored data/ folder and are not committed or redistributed. Seller usernames are not stored (salted pseudonyms only). Listing images remain the sellers' property and are used for evaluation only."
+}

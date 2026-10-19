@@ -14,7 +14,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from auth.deps import get_current_user
-from config import settings
+from auth.sso import SsoRefused, check_domain, role_for
+from config import admin_email_set, settings, sso_domains
 from auth.jwt_handler import ACCESS_TOKEN_EXPIRE, REFRESH_TOKEN_EXPIRE, create_access_token, create_refresh_token, decode_token
 from auth.models import (
     PUBLIC_REGISTRATION_ROLES,
@@ -97,7 +98,7 @@ def _clear_auth_cookies(response: Response) -> None:
         )
 
 
-async def _verify_google_id_token(id_token: str) -> str:
+async def _verify_google_id_token(id_token: str) -> tuple[str, str | None]:
     if not settings.google_client_id.strip():
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -121,7 +122,7 @@ async def _verify_google_id_token(id_token: str) -> str:
     verified = str(data.get("email_verified") or "").lower() in {"true", "1"}
     if aud != settings.google_client_id.strip() or not email or not verified:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Google identity")
-    return email
+    return email, (str(data.get("hd")) if data.get("hd") else None)
 
 
 def _infra_unavailable_detail(exc: BaseException) -> str | None:
@@ -157,8 +158,27 @@ def _infra_unavailable_detail(exc: BaseException) -> str | None:
     return None
 
 
+def _require_password_login() -> None:
+    if not settings.password_login_enabled:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Password sign-in is disabled. Use single sign-on.")
+
+
+@router.get("/config")
+async def auth_config() -> dict:
+    """What the sign-in page should offer. Contains no secrets."""
+    return {
+        "sso": {
+            "provider": "google",
+            "configured": bool(settings.google_client_id.strip()),
+            "domains": sorted(sso_domains()),
+        },
+        "password_login": settings.password_login_enabled,
+    }
+
+
 @router.post("/register", response_model=UserPublic, status_code=status.HTTP_201_CREATED)
 async def register(body: UserRegister, db: Annotated[AsyncSession, Depends(get_db)]) -> User:
+    _require_password_login()
     try:
         existing = await db.execute(select(User).where(User.email == str(body.email)))
         if existing.scalar_one_or_none() is not None:
@@ -190,6 +210,7 @@ async def login(
     response: Response,
     db: Annotated[AsyncSession, Depends(get_db)],
 ) -> TokenResponse:
+    _require_password_login()
     try:
         result = await db.execute(select(User).where(User.email == str(body.email)))
         user = result.scalar_one_or_none()
@@ -219,23 +240,30 @@ async def google_login(
     db: Annotated[AsyncSession, Depends(get_db)],
 ) -> TokenResponse:
     try:
-        email = await _verify_google_id_token(body.id_token)
+        email, hosted_domain = await _verify_google_id_token(body.id_token)
+        try:
+            check_domain(email, hosted_domain, sso_domains())
+        except SsoRefused as exc:
+            _log.info("sso_refused email_domain=%s reason=%s", email.rsplit("@", 1)[-1], exc)
+            allowed = ", ".join(sorted(sso_domains())) or "an allowed domain"
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Sign in with your institution account (@{allowed}).",
+            )
         result = await db.execute(select(User).where(User.email == email))
         user = result.scalar_one_or_none()
+        role = role_for(email, user.role if user else None, admin_email_set())
         if user is None:
             user = User(
                 email=email,
                 password_hash=_hash_password(secrets.token_urlsafe(40)),
-                role=UserRole.buyer,
+                role=role,
             )
             db.add(user)
-            await db.commit()
-            await db.refresh(user)
-        elif user.role != UserRole.buyer:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Google sign-in is available for buyers only. Use employee email/password login.",
-            )
+        elif user.role != role:
+            user.role = role
+        await db.commit()
+        await db.refresh(user)
         tokens = await _issue_tokens(user)
         _set_auth_cookies(response, tokens)
         return tokens

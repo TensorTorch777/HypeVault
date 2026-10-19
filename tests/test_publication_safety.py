@@ -1,4 +1,9 @@
-"""Phase 42 publication gate. Model results do not publish listings."""
+"""Publication safety.
+
+Research results never publish. Listing photos are screened (size, wristwatch present,
+original photograph) and either listed or rejected with a reason; nothing is ever
+presented as authenticity-verified.
+"""
 
 from __future__ import annotations
 
@@ -11,12 +16,8 @@ sys.path.insert(0, str(REPO / "backend"))
 
 
 class PublicationSafetyTests(unittest.TestCase):
-    def test_authentic_legacy_result_does_not_publish(self) -> None:
-        from inference.publication_gate import (
-            AUTHENTICITY_MODEL_PRODUCTION_APPROVED,
-            legacy_publication_status,
-            publication_decision,
-        )
+    def test_authenticity_publication_stays_blocked(self) -> None:
+        from inference.publication_gate import AUTHENTICITY_MODEL_PRODUCTION_APPROVED, publication_decision
 
         self.assertFalse(AUTHENTICITY_MODEL_PRODUCTION_APPROVED)
         decision = publication_decision(
@@ -31,11 +32,8 @@ class PublicationSafetyTests(unittest.TestCase):
         self.assertNotIn(decision, {"AUTHENTIC", "FAKE", "LIVE"})
         routes = (REPO / "backend" / "inference" / "routes.py").read_text()
         self.assertNotIn("ListingStatus.live", routes)
-        self.assertIn("legacy_publication_status", routes)
-        self.assertEqual(legacy_publication_status("AUTHENTIC"), "pending")
-        self.assertEqual(legacy_publication_status("FAKE"), "rejected")
-        self.assertEqual(legacy_publication_status(None), "pending")
-        self.assertNotEqual(legacy_publication_status("AUTHENTIC"), "live")
+        self.assertIn("check_content", routes)
+        self.assertLess(routes.index("check_content"), routes.index("classify_image(nchw)"))
 
     def test_fake_error_and_research_results_block_publication(self) -> None:
         from inference.publication_gate import publication_decision

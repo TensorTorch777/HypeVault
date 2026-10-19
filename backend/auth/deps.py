@@ -77,6 +77,18 @@ async def get_current_user(
         )
 
 
+async def get_optional_user(
+    request: Request,
+    credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer_scheme)],
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> User | None:
+    """The signed-in user, or None for anonymous or invalid credentials."""
+    try:
+        return await get_current_user(request, credentials, db)
+    except HTTPException:
+        return None
+
+
 async def require_research_user(user: Annotated[User, Depends(get_current_user)]) -> User:
     """Research access comes from the server-side allowlist, not from a role a user can pick."""
     from config import research_user_allowlist
@@ -89,9 +101,9 @@ async def require_research_user(user: Annotated[User, Depends(get_current_user)]
 
 async def require_seller(user: Annotated[User, Depends(get_current_user)]) -> User:
     try:
-        from database import UserRole
+        from auth.sso import can_sell
 
-        if user.role != UserRole.seller:
+        if not can_sell(user.role):
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Seller role required")
         return user
     except HTTPException:
@@ -99,3 +111,11 @@ async def require_seller(user: Annotated[User, Depends(get_current_user)]) -> Us
     except Exception as exc:
         _log.exception("require_seller_failed: %s", exc)
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+
+
+async def require_admin(user: Annotated[User, Depends(get_current_user)]) -> User:
+    from database import UserRole
+
+    if user.role != UserRole.admin:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin role required")
+    return user

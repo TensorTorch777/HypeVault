@@ -8,7 +8,12 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class AuthenticateResponse(BaseModel):
-    """Legacy DINOv2 listing verdict.
+    """Listing screening result (watch check + legacy DINOv2 origin check).
+
+    `listing_status` and `screening_reason` say whether the listing went live or was
+    rejected, and why. `verdict` is null when the photo was stopped before DINOv2 ran
+    (too small, or no wristwatch found). Going live is a screening result, never an
+    authenticity certificate.
 
     This is not the frozen DINOv3 research candidate. `declared_brand` is the
     caller's scope parameter. This schema has no `verified_brand` field and
@@ -17,14 +22,16 @@ class AuthenticateResponse(BaseModel):
 
     model_config = ConfigDict(protected_namespaces=("settings_",))
 
-    verdict: Literal["AUTHENTIC", "FAKE"]
-    confidence: float = Field(..., ge=0.0, le=1.0)
+    verdict: Literal["AUTHENTIC", "FAKE"] | None
+    confidence: float | None = Field(default=None, ge=0.0, le=1.0)
     s3_url: str
     listing_id: str
     listing_status: Literal["live", "rejected", "pending"]
-    status: Literal["AUTHENTIC", "FAKE"]
-    model_decision: Literal["AUTHENTIC", "FAKE"]
-    publication_decision: Literal["BLOCKED"] = "BLOCKED"
+    status: Literal["AUTHENTIC", "FAKE"] | None
+    model_decision: Literal["AUTHENTIC", "FAKE"] | None
+    screening_code: str | None = None
+    screening_reason: str | None = None
+    publication_decision: Literal["PUBLISHED", "REJECTED", "BLOCKED"] = "BLOCKED"
     declared_brand: str
     brand_verification: Literal["NOT_PERFORMED"] = "NOT_PERFORMED"
     model: Literal["LEGACY_DINOV2"] = "LEGACY_DINOV2"

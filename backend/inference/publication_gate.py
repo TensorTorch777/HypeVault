@@ -1,7 +1,12 @@
-"""Publication governance. A model result is not marketplace approval.
+"""Authenticity governance. No model result is an authenticity certificate.
 
-AUTHENTICITY_MODEL_PRODUCTION_APPROVED is an explicit governance flag.
-It is not inferred from HTTP availability, deployment mode, Triton, or scores.
+AUTHENTICITY_MODEL_PRODUCTION_APPROVED is an explicit governance flag. It is not
+inferred from HTTP availability, deployment mode, Triton, or scores, and while it is
+False nothing may be presented as authenticity-verified.
+
+Whether a listing goes live is a separate, narrower question answered by photo
+screening (inference.screening): is it a watch, and does the photo look original?
+A screened listing is labelled as screened, never as authentic.
 """
 
 from __future__ import annotations
@@ -48,20 +53,3 @@ def publication_decision(**kwargs: str | None) -> str:
         raise RuntimeError("automatic publication is not implemented")
     return PUBLICATION_BLOCKED
 
-
-def legacy_publication_status(model_decision: str | None) -> str:
-    """Status written after a legacy model result. This never returns live."""
-    policy_status = "OK" if model_decision in {"AUTHENTIC", "FAKE"} else "MODEL_ERROR"
-    blocked = publication_decision(
-        model="LEGACY_DINOV2",
-        model_status="LEGACY",
-        production_validation="NOT_ESTABLISHED",
-        model_decision=model_decision,
-        policy_status=policy_status,
-        listing_state="pending",
-    )
-    if blocked != PUBLICATION_BLOCKED:
-        raise RuntimeError("a model result cannot authorize publication")
-    if model_decision == "FAKE":
-        return "rejected"
-    return "pending"

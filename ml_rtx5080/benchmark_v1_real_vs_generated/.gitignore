@@ -1,0 +1,3 @@
+# Benchmark images are sellers' or generated content used for evaluation only; never commit them.
+data/
+results/*/predictions.csv

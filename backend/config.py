@@ -67,6 +67,11 @@ class Settings(BaseSettings):
     report_enforce_triton: bool = True
     # Model AUTHENTIC branch reports P(authentic). Below this → stored and returned as FAKE (rejected).
     inference_min_authentic_confidence: float = 0.88
+    # Listing screening: a photo must show a wristwatch (zero-shot CLIP) and be large enough.
+    content_gate_model: str = "openai/clip-vit-base-patch16"
+    content_gate_device: str = "cpu"
+    content_gate_min_watch_score: float = 0.5
+    listing_min_short_side_px: int = 400
     # Deprecated: use inference_min_authentic_confidence. Kept for older .env files (unused in authenticate).
     inference_live_conf_threshold: float = 0.90
     upload_min_side_px: int = 400
@@ -74,6 +79,14 @@ class Settings(BaseSettings):
 
     # Comma-separated account emails allowed to call /research/*. Empty → nobody. Never set from a request.
     research_user_emails: str = ""
+
+    # Single sign-on: Google accounts from these Workspace domains only (comma-separated).
+    sso_allowed_domains: str = "somaiya.edu"
+    # Comma-separated emails that become admins on SSO sign-in. Admins also get research access.
+    admin_emails: str = "n.vadgaonkar@somaiya.edu"
+    # Email/password sign-in, for local development and tests only. Off by default: when on, /auth/register
+    # accepts any email domain and the seller role, bypassing the SSO domain rule. Set PASSWORD_LOGIN_ENABLED=true locally.
+    password_login_enabled: bool = False
 
     # Market data (Phase 2a). eBay is read through the official Browse API only; HTML is never scraped.
     ebay_client_id: str = ""
@@ -85,9 +98,22 @@ class Settings(BaseSettings):
     market_cache_ttl_sec: int = 30 * 60
 
 
-def research_user_allowlist(raw: str | None = None) -> frozenset[str]:
-    value = settings.research_user_emails if raw is None else raw
+def _email_set(value: str | None) -> frozenset[str]:
     return frozenset(part.strip().casefold() for part in (value or "").split(",") if part.strip())
+
+
+def research_user_allowlist(raw: str | None = None) -> frozenset[str]:
+    if raw is not None:
+        return _email_set(raw)
+    return _email_set(settings.research_user_emails) | admin_email_set()
+
+
+def admin_email_set() -> frozenset[str]:
+    return _email_set(settings.admin_emails)
+
+
+def sso_domains() -> frozenset[str]:
+    return _email_set(settings.sso_allowed_domains)
 
 
 @lru_cache

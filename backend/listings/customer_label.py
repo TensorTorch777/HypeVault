@@ -11,6 +11,7 @@ DEMO_LISTING_LABEL = "Demo listing — not verified"
 PENDING_LABEL = "Pending"
 REJECTED_LABEL = "Rejected"
 PUBLISHED_UNVERIFIED_LABEL = "Published — not verified"
+SCREENED_LISTED_LABEL = "Listed — photo screened, authenticity not verified"
 
 SEED_CONFIDENCE = 0.965
 CERTIFICATION_BADGES = (
@@ -61,9 +62,12 @@ def customer_label(
     verdict: str | None,
     confidence: float | None,
     s3_url: str | None,
+    screening_code: str | None = None,
 ) -> str:
     state = _status_value(status)
-    if state == "pending":
+    if state == "live" and screening_code == "PASSED":
+        label = SCREENED_LISTED_LABEL
+    elif state == "pending":
         label = PENDING_LABEL
     elif state == "rejected":
         label = REJECTED_LABEL
