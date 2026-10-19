@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
+import { Big_Shoulders_Display, Josefin_Sans, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 import { MobileNav } from "@/components/MobileNav";
@@ -10,21 +10,31 @@ import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { TopNav } from "@/components/layout/TopNav";
 
-const plusJakarta = Plus_Jakarta_Sans({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const outfit = Outfit({
+// Condensed Art Deco display, for titles like a GTA VI card heading.
+const bigShoulders = Big_Shoulders_Display({
   subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
   variable: "--font-display",
+  display: "swap",
+});
+
+// Geometric deco sans, for wide-tracked caps and the salmon headlines.
+const josefin = Josefin_Sans({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-wide",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "HypeVault — Five-brand research prototype",
+    default: "HypeVault — Watch market intelligence",
     template: "%s · HypeVault",
   },
   description:
@@ -39,8 +49,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${outfit.variable}`}>
-      <body className="min-h-dvh bg-[#0B0118] pb-24 font-sans text-[#FFEDF6] antialiased md:pb-0">
+    <html lang="en" className={`${jakarta.variable} ${bigShoulders.variable} ${josefin.variable}`}>
+      <body className="min-h-dvh bg-background pb-24 font-sans text-primary antialiased md:pb-0">
         <Providers>
           <SmoothScrollProvider>
             <ScrollProgress />

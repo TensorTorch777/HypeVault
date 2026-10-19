@@ -1,156 +1,119 @@
 "use client";
 
-import { useMemo } from "react";
+import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
-import { ComparisonTable } from "@/components/ComparisonTable";
-import { PriceTrendChart } from "@/components/PriceTrendChart";
+import { MarketPanel } from "@/components/market/MarketPanel";
 import { ProductVisualPanel } from "@/components/product/ProductVisualPanel";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { fetchComparison, fetchComparisonByQuery, fetchListing } from "@/lib/api";
+import { fetchListing } from "@/lib/api";
 import { customerStatusCopy } from "@/lib/customerLabel";
+import { fetchListingMarket, formatDate } from "@/lib/market";
 
-const UUID_RE =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-function inferCategory(_title: string, listingCategory?: string): string {
-  if (listingCategory === "watch" || listingCategory === "sneaker") return listingCategory;
-  return "watch";
-}
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 export default function ProductPage({ params }: { params: { id: string } }) {
+  const router = useRouter();
   const raw = decodeURIComponent(params.id);
   const isUuid = UUID_RE.test(raw);
+
+  // Older links used /product/<search text>; searches now live on /market.
+  useEffect(() => {
+    if (!isUuid) router.replace(`/market?q=${encodeURIComponent(raw)}`);
+  }, [isUuid, raw, router]);
 
   const listingQ = useQuery({
     queryKey: ["listing", raw],
     queryFn: () => fetchListing(raw),
     enabled: isUuid,
+    // A 404 is an answer (missing, or not listed and not yours), not a glitch to retry.
+    retry: (count, err) => !(axios.isAxiosError(err) && err.response?.status === 404) && count < 2,
+  });
+  const marketQ = useQuery({
+    queryKey: ["listing-market", raw],
+    queryFn: () => fetchListingMarket(raw),
+    enabled: isUuid && listingQ.data?.status === "live",
   });
 
-  const title = isUuid ? listingQ.data?.product_name ?? "Product" : raw;
-  const category = inferCategory(title, listingQ.data?.category);
-
-  const comparisonKey = isUuid
-    ? ["comparison", "listing", listingQ.data?.id ?? raw]
-    : ["comparison", "q", title];
-
-  const compQ = useQuery({
-    queryKey: comparisonKey,
-    queryFn: async () => {
-      if (isUuid) {
-        return await fetchComparison(raw);
-      }
-      return await fetchComparisonByQuery(title);
-    },
-    enabled: !isUuid || listingQ.isFetched,
-  });
-
-  const mockSeed = useMemo(() => (isUuid ? listingQ.data?.id ?? raw : title), [isUuid, listingQ.data?.id, raw, title]);
+  if (!isUuid) return <div className="min-h-screen" />;
+  const listing = listingQ.data;
+  const status = listing ? customerStatusCopy(listing) : null;
+  const unlisted = listing != null && listing.status !== "live";
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 pb-28 md:pb-16">
-      <div>
-        <div className="flex flex-col gap-8 lg:grid lg:grid-cols-12 lg:items-stretch">
-          <div className="flex flex-col lg:col-span-6">
-            <ProductVisualPanel
-              title={title}
-              category={category}
-              listing={listingQ.data}
-              loading={Boolean(isUuid && listingQ.isLoading)}
-              isUuid={isUuid}
-            />
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Button
-                className="min-h-[44px]"
-                variant="outline"
-                onClick={() => {
-                  const url = typeof window !== "undefined" ? window.location.href : "";
-                  void navigator.clipboard.writeText(url);
-                }}
-              >
-                Share
-              </Button>
+    <div className="mx-auto max-w-[1240px] px-4 pb-28 pt-28 sm:px-6">
+      <div className="grid gap-12 lg:grid-cols-2">
+        <ProductVisualPanel
+          title={listing?.product_name ?? "Listing"}
+          category={listing?.category ?? "watch"}
+          listing={listing}
+          loading={listingQ.isLoading}
+          isUuid
+        />
+
+        <div className="flex flex-col">
+          {listingQ.isLoading ? <Skeleton className="h-64 rounded-2xl" /> : null}
+          {listingQ.isError ? (
+            <div role="alert" className="hv-hud p-7">
+              <p className="hv-serif text-[1.9rem] uppercase leading-tight text-primary">Listing not found</p>
+              <p className="mt-3 text-[14px] leading-7 text-primary/75">
+                This listing could not be found. It may have been removed, or it did not pass screening and is visible only to its seller.
+              </p>
+              <Link href="/market" className="hv-btn-pill hv-btn-secondary mt-6">Browse the market</Link>
             </div>
-          </div>
+          ) : null}
+          {listing && status ? (
+            <>
+              <p className="hv-eyebrow">{listing.brand ?? "Watch"}</p>
+              <h1 className="hv-display-lg mt-4 text-primary">{listing.product_name}</h1>
 
-          <div className="flex flex-col lg:col-span-6">
-            <p className="hv-section-label">Product</p>
-            <h1 className="mt-0 font-[family-name:var(--font-display)] text-3xl font-extrabold tracking-tight md:text-4xl">
-              {title}
-            </h1>
-
-            <div className="mt-6">
-              {isUuid && listingQ.isLoading ? <Skeleton className="h-40 w-full rounded-2xl" /> : null}
-              {isUuid && listingQ.data ? (
-                <div className="rounded-2xl border border-white/[0.08] bg-[#111111] p-6">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-primary/55">Listing</p>
-                  <p className="mt-2 text-2xl font-semibold tracking-tight text-primary">
-                    {customerStatusCopy(listingQ.data).title}
-                  </p>
-                  <p className="mt-2 text-sm text-primary/70">{customerStatusCopy(listingQ.data).detail}</p>
-                  <p className="mt-1 text-sm text-primary/70">
-                    Declared brand: {listingQ.data.brand?.trim() ? listingQ.data.brand : "not supplied"} — not verified from the image.
-                  </p>
-                </div>
-              ) : null}
-              {!isUuid ? (
-                <div className="rounded-2xl border border-white/[0.08] bg-[#111111] p-6 text-sm text-primary/65">
-                  You’re viewing a quick market comparison for{" "}
-                  <span className="font-semibold text-primary">{title}</span>. A stored listing result is the legacy DINOv2 check, not the DINOv3 research prototype.
-                </div>
-              ) : null}
-            </div>
-
-            <div className="mt-8">
-              <p className="hv-section-label">Price trend</p>
-              <div className="mt-0 rounded-2xl border border-white/[0.08] bg-transparent p-3 md:p-4">
-                <PriceTrendChart titleSeed={title} />
+              <div className={`hv-hud mt-10 p-7 ${unlisted ? "!border-danger/50" : ""}`}>
+                <p className="hv-mono text-[11px] uppercase tracking-[0.18em] text-primary/55">
+                  {unlisted ? "Only you can see this listing" : "Listing status"}
+                </p>
+                <p className={`hv-serif mt-3 text-[1.9rem] uppercase leading-tight ${unlisted ? "text-danger" : "text-primary"}`}>{status.title}</p>
+                <p className="mt-3 text-[14px] leading-7 text-primary/80">{status.detail}</p>
+                {unlisted ? (
+                  <Link href="/seller/upload" className="hv-btn-pill hv-btn-primary mt-6">
+                    List with a new photo
+                  </Link>
+                ) : null}
               </div>
-            </div>
 
-            <div className="mt-6 grid gap-3 text-sm text-primary/65">
-              {isUuid && listingQ.data ? (
-                <>
-                  <div className="flex justify-between border-b border-white/[0.06] py-2">
-                    <span className="text-primary/50">Declared brand</span>
-                    <span className="font-semibold text-primary">{listingQ.data.brand ?? "—"}</span>
+              <dl className="mt-8 divide-y divide-primary/10 border-y border-primary/10 text-[13px]">
+                {[
+                  ["Manufacture", listing.brand ? `${listing.brand} (declared by the seller)` : "Not supplied"],
+                  ["Condition", listing.condition ?? "—"],
+                  ["Size", listing.size ?? "—"],
+                  ["Listed", formatDate(listing.created_at)],
+                ].map(([k, v]) => (
+                  <div key={k} className="flex justify-between gap-6 py-4">
+                    <dt className="text-primary/55">{k}</dt>
+                    <dd className="text-right text-primary">{v}</dd>
                   </div>
-                  <div className="flex justify-between border-b border-white/[0.06] py-2">
-                    <span className="text-primary/50">Condition</span>
-                    <span className="font-semibold text-primary">{listingQ.data.condition ?? "—"}</span>
-                  </div>
-                  <div className="flex justify-between border-b border-white/[0.06] py-2">
-                    <span className="text-primary/50">Size</span>
-                    <span className="font-semibold text-primary">{listingQ.data.size ?? "—"}</span>
-                  </div>
-                </>
-              ) : null}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 border-t border-white/[0.06] pt-12 md:mt-16 md:pt-16">
-          <p className="hv-section-label">Compare market pricing</p>
-          <h2 className="font-[family-name:var(--font-display)] text-xl font-extrabold tracking-tight md:text-2xl">
-            Market comparison
-          </h2>
-          <p className="mt-2 text-sm text-primary/60">
-            Prices appear only when this request returns them. An empty or failed request is not a live quote, and a price is not an authenticity result.
-          </p>
-          <div className="mt-6">
-            <ComparisonTable
-              data={compQ.data}
-              isLoading={compQ.isLoading}
-              isError={compQ.isError}
-              listingId={isUuid ? raw : undefined}
-              queryKey={comparisonKey}
-              mockSeed={mockSeed}
-            />
-          </div>
+                ))}
+              </dl>
+            </>
+          ) : null}
         </div>
       </div>
+
+      {listing?.status !== "live" ? null : (
+      <section aria-labelledby="market-title" className="mt-24 border-t border-primary/10 pt-16">
+        <p className="hv-eyebrow">The market for this watch</p>
+        <h2 id="market-title" className="hv-display-md mt-4 text-primary">What comparable pieces are asking</h2>
+        <p className="mt-4 max-w-2xl text-[14px] leading-7 text-primary/65">
+          Matched on the listing title and declared manufacture. Prices are asking prices, not sale prices, and they say
+          nothing about whether this particular watch is genuine.
+        </p>
+        <div className="mt-10">
+          <MarketPanel data={marketQ.data} loading={listingQ.isLoading || marketQ.isLoading} error={marketQ.isError} />
+        </div>
+      </section>
+      )}
     </div>
   );
 }

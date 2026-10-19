@@ -16,17 +16,16 @@ export function DeclaredBrandSelect({
   return (
     <select
       id={id}
-      className="mt-2 flex h-11 w-full rounded-md border border-[#1D1D1F]/20 bg-white px-3 text-sm text-[#1D1D1F]"
-      style={{ color: "#1D1D1F", backgroundColor: "#FFFFFF" }}
+      className="mt-2 flex h-11 w-full rounded-xl border border-white/12 bg-[#0E0F1E] px-3 text-[15px] text-primary focus:border-accent focus:outline-none"
       value={value}
       disabled={disabled}
       onChange={(event) => onChange(event.target.value)}
     >
-      <option value="" style={{ color: "#1D1D1F", backgroundColor: "#FFFFFF" }}>
+      <option value="">
         Select a declared brand
       </option>
       {SUPPORTED_DECLARED_BRANDS.map((brand) => (
-        <option key={brand} value={brand} style={{ color: "#1D1D1F", backgroundColor: "#FFFFFF" }}>
+        <option key={brand} value={brand}>
           {brand}
         </option>
       ))}

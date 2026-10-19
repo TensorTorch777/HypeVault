@@ -13,7 +13,7 @@ function PulseDots() {
       {[0, 1, 2].map((i) => (
         <span
           key={i}
-          className="inline-block h-1.5 w-1.5 rounded-full bg-[#FF3B00]/80 animate-pulse"
+          className="inline-block h-1.5 w-1.5 rounded-full bg-[#FFB8D2]/80 animate-pulse"
           style={{ animationDelay: `${i * 200}ms` }}
         />
       ))}
@@ -63,8 +63,8 @@ export function ProductVisualPanel({
 
         {showPlaceholder ? (
           <div className="relative flex flex-1 flex-col items-center justify-center text-center">
-            <div className="pointer-events-none absolute h-36 w-36 rounded-full bg-[#FF3B00]/10 blur-3xl" aria-hidden />
-            <Icon className="relative z-[1] h-20 w-20 text-[#FF3B00]" strokeWidth={1.25} aria-hidden />
+            <div className="pointer-events-none absolute h-36 w-36 rounded-full bg-[#FFB8D2]/10 blur-3xl" aria-hidden />
+            <Icon className="relative z-[1] h-20 w-20 text-[#FFB8D2]" strokeWidth={1.25} aria-hidden />
             <h2 className="relative z-[1] mt-6 max-w-md px-2 font-[family-name:var(--font-display)] text-[32px] font-extrabold leading-tight tracking-tight text-white">
               {title}
             </h2>

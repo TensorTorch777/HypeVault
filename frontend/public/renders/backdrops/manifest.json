@@ -1,0 +1,92 @@
+{
+  "bay_dusk_0": {
+    "prompt": "aerial view across a bay toward a coastal art deco city skyline at dusk, lights coming on, reflections on calm water, palm trees in the foreground",
+    "seed": 2769,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "bay_dusk_1": {
+    "prompt": "aerial view across a bay toward a coastal art deco city skyline at dusk, lights coming on, reflections on calm water, palm trees in the foreground",
+    "seed": 2870,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "ocean_drive_0": {
+    "prompt": "empty ocean-front boulevard lined with pastel art deco hotels at golden hour, softly glowing neon signs, tall palm trees, warm haze",
+    "seed": 3070,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "ocean_drive_1": {
+    "prompt": "empty ocean-front boulevard lined with pastel art deco hotels at golden hour, softly glowing neon signs, tall palm trees, warm haze",
+    "seed": 3171,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "marina_0": {
+    "prompt": "luxury yachts moored in a marina at sunset, still water mirroring a pink and lavender sky, distant towers",
+    "seed": 2551,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "marina_1": {
+    "prompt": "luxury yachts moored in a marina at sunset, still water mirroring a pink and lavender sky, distant towers",
+    "seed": 2652,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "convertible_0": {
+    "prompt": "close view of the cream leather seat and polished chrome of a vintage convertible parked by the beach at dusk, shallow depth of field",
+    "seed": 3100,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "convertible_1": {
+    "prompt": "close view of the cream leather seat and polished chrome of a vintage convertible parked by the beach at dusk, shallow depth of field",
+    "seed": 3201,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "rooftop_pool_0": {
+    "prompt": "rooftop infinity pool at blue hour with a white marble edge, overlooking glittering city lights and palm silhouettes",
+    "seed": 3233,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "rooftop_pool_1": {
+    "prompt": "rooftop infinity pool at blue hour with a white marble edge, overlooking glittering city lights and palm silhouettes",
+    "seed": 3334,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "neon_rain_0": {
+    "prompt": "rain-soaked night street with pink and soft cyan neon reflections on wet asphalt, art deco facades, moody atmosphere",
+    "seed": 2872,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "penthouse_0": {
+    "prompt": "luxury penthouse at dusk, black marble table in the foreground, floor-to-ceiling windows over a coastal skyline, warm lamps",
+    "seed": 2906,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "penthouse_1": {
+    "prompt": "luxury penthouse at dusk, black marble table in the foreground, floor-to-ceiling windows over a coastal skyline, warm lamps",
+    "seed": 3007,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "beach_dawn_0": {
+    "prompt": "quiet beach at dawn with a pastel lifeguard tower, gentle waves, pink sky, mist over the sea",
+    "seed": 2939,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  },
+  "beach_dawn_1": {
+    "prompt": "quiet beach at dawn with a pastel lifeguard tower, gentle waves, pink sky, mist over the sea",
+    "seed": 3040,
+    "model": "stabilityai/stable-diffusion-xl-base-1.0",
+    "generated": true
+  }
+}

@@ -3,14 +3,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const variants = cva(
-  "inline-flex min-h-[44px] items-center justify-center rounded-button px-5 text-sm font-semibold transition-all duration-150 hover:-translate-y-px hover:brightness-110 active:translate-y-0 active:scale-[0.98] active:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex min-h-[44px] cursor-pointer items-center justify-center gap-2 rounded-full px-5 text-[14px] font-bold transition-[transform,background-color,color,border-color] duration-200 ease-out hover:-translate-y-px active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-45",
   {
     variants: {
       variant: {
-        primary: "bg-accent text-white",
-        outline:
-          "border border-white/15 bg-card text-primary hover:border-white/25 hover:bg-white/[0.04]",
+        primary: "bg-accent text-ink hover:bg-[#FFD0E1]",
+        outline: "border border-primary/25 bg-background/30 text-primary hover:border-accent hover:text-accent",
         ghost: "text-primary hover:bg-white/[0.06] active:bg-white/10",
+        sand: "bg-neon-yellow text-ink hover:bg-[#FFE6BD]",
       },
     },
     defaultVariants: { variant: "primary" },

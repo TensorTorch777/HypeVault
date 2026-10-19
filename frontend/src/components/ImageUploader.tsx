@@ -90,7 +90,7 @@ export function ImageUploader({
     <div className="space-y-4">
       <div
         className={cn(
-          "group relative overflow-hidden rounded-2xl border border-white/10 bg-[#12081f] p-8 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-colors duration-200 hover:border-white/20"
+          "group relative overflow-hidden rounded-[20px] border border-white/10 px-8 py-14 text-center transition-colors duration-300 hover:border-accent/40"
         )}
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
@@ -103,18 +103,19 @@ export function ImageUploader({
           className="pointer-events-none absolute inset-0 opacity-70"
           style={{
             background:
-              "radial-gradient(120% 80% at 50% 0%, rgba(255,122,26,0.12) 0%, transparent 60%)",
+              "radial-gradient(90% 80% at 50% 110%, rgba(255,192,138,0.28) 0%, rgba(240,138,168,0.16) 35%, rgba(185,163,240,0.08) 60%, transparent 80%), #13152A",
           }}
         />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-[10px] rounded-[14px] border border-dashed border-white/15 transition-colors duration-200 group-hover:border-white/30"
         />
-        <p className="relative text-sm font-semibold uppercase tracking-[0.14em] text-[#FFEDF6]">Drag & drop images</p>
-        <p className="relative mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#FFEDF6]/55">
-          JPEG/PNG/WebP only • any dimensions • need {minImages}+
+        <p className="relative font-display text-[2.2rem] font-extrabold uppercase leading-none text-white">Drop your watch photo</p>
+        <p className="relative mx-auto mt-3 max-w-sm text-[14px] leading-6 text-primary/65">
+          JPEG, PNG or WebP, at least 400 px on the short side. Dial and case in frame, no filters or text overlays.
+          {minImages > 1 ? ` At least ${minImages} photos.` : ""}
         </p>
-        <div className="mt-4">
+        <div className="relative mt-6">
           <input
             type="file"
             multiple
@@ -143,7 +144,7 @@ export function ImageUploader({
       {items.length > 0 ? (
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {items.map((it) => (
-            <div key={it.id} className="relative overflow-hidden rounded-card border border-primary/10 bg-card">
+            <div key={it.id} className="relative overflow-hidden rounded-[18px] border border-white/10 bg-card">
               <div className="relative aspect-square">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -152,8 +153,8 @@ export function ImageUploader({
                   className="h-full w-full object-cover transition duration-300 hover:scale-[1.03]"
                 />
               </div>
-              <div className="border-t border-primary/10 p-3 text-xs text-primary/60">
-                <p className="font-semibold text-primary/75">{it.file.name}</p>
+              <div className="border-t border-white/10 p-3 text-xs text-primary/60">
+                <p className="truncate font-semibold text-primary/80">{it.file.name}</p>
                 <p className="mt-1">
                   {it.width}×{it.height}
                 </p>

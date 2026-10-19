@@ -7,6 +7,7 @@ import { AuthBadge } from "@/components/AuthBadge";
 import { ResearchExplanation, type ResearchExplanationPayload } from "@/components/ResearchExplanation";
 import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
 import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/layout/PageHero";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { api } from "@/lib/api";
@@ -216,11 +217,20 @@ export default function ResearchDemoPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
+    <div className="pb-24">
+    <PageHero
+      eyebrow="Research console"
+      title="Five-brand prototype"
+      subtitle="Run a photo through DINOv2 or the DINOv3 candidate and see which patches drove the score. Research only: nothing here publishes a listing."
+      scene="neon_rain"
+      render="/renders/rm_rm011/hero.webp"
+      compact
+    />
+    <div className="mx-auto max-w-3xl px-4">
       <Card>
         <CardHeader>
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary/45">Research demo</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight">Five-brand prototype</h1>
+          <p className="hv-eyebrow">Research demo</p>
+          <h2 className="mt-1 font-display text-[2rem] font-extrabold uppercase leading-none">Run a screening</h2>
           <p className="mt-3 text-sm text-primary/70">
             Authorized research selector. The selected brand is user-declared and is not independently verified from
             the image. Neither model publishes a listing.
@@ -233,8 +243,8 @@ export default function ResearchDemoPage() {
             </label>
             <select
               id="research-model"
-              className="mt-2 flex h-11 w-full rounded-md border border-[#1D1D1F]/20 bg-white px-3 text-sm text-[#1D1D1F]"
-              style={{ color: "#1D1D1F", backgroundColor: "#FFFFFF" }}
+              className="mt-2 flex h-11 w-full rounded-xl border border-white/12 bg-[#0E0F1E] px-3 text-[15px] text-primary focus:border-accent focus:outline-none"
+             
               value={modelId ?? ""}
               disabled={!readiness || pending}
               onChange={(event) => {
@@ -244,12 +254,12 @@ export default function ResearchDemoPage() {
               }}
             >
               {modelId === null ? (
-                <option value="" style={{ color: "#1D1D1F", backgroundColor: "#FFFFFF" }}>
+                <option value="">
                   No model is available to serve
                 </option>
               ) : null}
               {MODEL_IDS.map((id) => (
-                <option key={id} value={id} disabled={!isReady(id)} style={{ color: "#1D1D1F", backgroundColor: "#FFFFFF" }}>
+                <option key={id} value={id} disabled={!isReady(id)}>
                   {MODEL_LABELS[id]}
                   {readiness && !isReady(id) ? " (unavailable)" : ""}
                 </option>
@@ -303,7 +313,7 @@ export default function ResearchDemoPage() {
             </label>
             <Input
               id="research-image"
-              className="mt-2"
+              className="mt-2 cursor-pointer py-2 file:mr-4 file:cursor-pointer file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-1.5 file:text-[13px] file:font-bold file:text-ink"
               type="file"
               accept="image/jpeg,image/png,image/webp"
               onChange={(event) => {
@@ -415,6 +425,7 @@ export default function ResearchDemoPage() {
           ) : null}
         </CardContent>
       </Card>
+    </div>
     </div>
   );
 }

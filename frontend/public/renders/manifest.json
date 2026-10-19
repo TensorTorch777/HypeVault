@@ -1,0 +1,31 @@
+{
+  "quality": "final",
+  "rendered_at": "2026-10-16T22:13:39Z",
+  "watches": {
+    "ap_royal_oak": {
+      "hero": true,
+      "flat": true,
+      "turntable_frames": 72
+    },
+    "lange_one": {
+      "hero": true,
+      "flat": true,
+      "turntable_frames": 72
+    },
+    "patek_nautilus": {
+      "hero": true,
+      "flat": true,
+      "turntable_frames": 72
+    },
+    "rm_rm011": {
+      "hero": true,
+      "flat": true,
+      "turntable_frames": 72
+    },
+    "vc_overseas": {
+      "hero": true,
+      "flat": true,
+      "turntable_frames": 72
+    }
+  }
+}

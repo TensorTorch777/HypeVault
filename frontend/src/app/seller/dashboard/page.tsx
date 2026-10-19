@@ -3,183 +3,216 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, type ReactNode } from "react";
-import { LayoutGrid, LogOut, Plus, ShieldAlert, Eye } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowRight, Plus } from "lucide-react";
 
+import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { api, fetchMe, logoutRemote, type Listing } from "@/lib/api";
+import { ME_QUERY_KEY, api, fetchMe, logoutRemote, type Listing } from "@/lib/api";
 import { customerStatusCopy } from "@/lib/customerLabel";
+import { formatDate } from "@/lib/market";
+import { canSell, isAdmin } from "@/lib/roles";
+import { cn } from "@/lib/utils";
+
+type Filter = "all" | "live" | "rejected" | "pending";
+
+const FILTERS: { id: Filter; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "live", label: "Listed" },
+  { id: "rejected", label: "Not listed" },
+  { id: "pending", label: "Held" },
+];
+
+const TONE: Record<string, string> = {
+  live: "bg-success/15 text-success",
+  rejected: "bg-danger/15 text-danger",
+  pending: "bg-review/15 text-review",
+};
 
 export default function SellerDashboardPage() {
   const router = useRouter();
-  const meQuery = useQuery({
-    queryKey: ["auth-me-seller-dashboard"],
-    queryFn: fetchMe,
-    retry: false,
-  });
+  const meQuery = useQuery({ queryKey: ME_QUERY_KEY, queryFn: fetchMe, retry: false });
   const me = meQuery.data;
+  const admin = isAdmin(me?.role);
+  const [filter, setFilter] = useState<Filter>("all");
 
   useEffect(() => {
     if (meQuery.isError) router.replace("/login");
-    else if (me && me.role !== "seller") router.replace("/");
-  }, [me, meQuery.isError, router]);
+  }, [meQuery.isError, router]);
 
   const q = useQuery({
-    queryKey: ["my-listings"],
-    enabled: me?.role === "seller",
-    queryFn: async () => {
-      const { data } = await api.get<Listing[]>("/listings/");
-      return data;
-    },
+    queryKey: ["my-listings", me?.id],
+    enabled: canSell(me?.role),
+    queryFn: async () => (await api.get<Listing[]>("/listings/")).data,
   });
 
-  if (meQuery.isError || meQuery.isLoading || !me) {
+  const listings = useMemo(() => q.data ?? [], [q.data]);
+  const counts = useMemo(
+    () => ({
+      all: listings.length,
+      live: listings.filter((l) => l.status === "live").length,
+      rejected: listings.filter((l) => l.status === "rejected").length,
+      pending: listings.filter((l) => l.status === "pending").length,
+    }),
+    [listings]
+  );
+  const shown = filter === "all" ? listings : listings.filter((l) => l.status === filter);
+
+  if (!me) {
+    return <PageHero eyebrow="Seller desk" title="Loading…" scene="penthouse" compact />;
+  }
+
+  if (!canSell(me.role)) {
     return (
-      <div className="mx-auto max-w-2xl px-4 py-12">
-        <Card className="hover:translate-y-0">
-          <CardHeader>
-            <h1 className="text-2xl font-semibold not-italic">Seller dashboard</h1>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-sm text-primary/65">Log in as a seller to manage listings and research classifications.</p>
-            <div className="flex flex-wrap gap-3">
-              <Link href="/login">
-                <Button className="min-h-[44px]">Log in</Button>
-              </Link>
-              <Link href="/register">
-                <Button variant="outline" className="min-h-[44px]">
-                  Register
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <PageHero
+        eyebrow="Seller desk"
+        title="Not a seller account"
+        subtitle={
+          <>
+            Signed in as <span className="font-bold text-white">{me.email}</span>, which cannot list watches. Sign in with your
+            Somaiya Google account to sell.
+          </>
+        }
+        scene="penthouse"
+        compact
+        actions={
+          <Link href="/market" className="hv-btn-pill hv-btn-secondary">
+            Browse the market <ArrowRight className="h-4 w-4" />
+          </Link>
+        }
+      />
     );
   }
 
-  const listings = q.data ?? [];
-  const liveCount = listings.filter((listing) => listing.status === "live").length;
-  const rejectedCount = listings.filter((listing) => listing.status === "rejected").length;
-
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10 md:px-6 md:py-14">
-      <header className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-        <div className="max-w-2xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#FFB089]">Seller</p>
-          <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold not-italic tracking-tight text-white md:text-4xl">
-            Dashboard
-          </h1>
-          <p className="mt-3 text-sm leading-6 text-primary/65">
-            Listings and their publication labels. A live listing is visible, not verified.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <Link href="/seller/upload">
-            <Button className="min-h-[44px] gap-2">
-              <Plus className="h-4 w-4" aria-hidden />
-              New listing
-            </Button>
-          </Link>
-          <Button
-            type="button"
-            variant="outline"
-            className="min-h-[44px] gap-2"
-            onClick={() => void logoutRemote().then(() => router.push("/login"))}
-          >
-            <LogOut className="h-4 w-4" aria-hidden />
-            Log out
-          </Button>
-        </div>
-      </header>
+    <div className="pb-24">
+      <PageHero
+        eyebrow={admin ? "Admin desk · every seller" : "Seller desk"}
+        title={admin ? "All listings" : "Your listings"}
+        subtitle={
+          <>
+            Signed in as <span className="font-bold text-white">{me.email}</span>
+            {admin ? " (admin)" : ""}. Listed watches passed photo screening; screening is not a certificate of authenticity.
+          </>
+        }
+        scene="penthouse"
+        render="/renders/lange_one/hero.webp"
+        actions={
+          <>
+            <Link href="/seller/upload" className="hv-btn-pill hv-btn-primary">
+              <Plus className="h-4 w-4" aria-hidden="true" /> New listing
+            </Link>
+            <button type="button" className="hv-btn-pill hv-btn-secondary" onClick={() => void logoutRemote().then(() => router.push("/login"))}>
+              Sign out
+            </button>
+          </>
+        }
+      />
 
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
-        <SummaryCard icon={<LayoutGrid className="h-4 w-4" />} label="Listings" value={q.isLoading ? "—" : listings.length} detail="Rows returned for this account." />
-        <SummaryCard icon={<Eye className="h-4 w-4" />} label="Live" value={q.isLoading ? "—" : liveCount} detail="Visible in the marketplace. Not verified authentic." />
-        <SummaryCard icon={<ShieldAlert className="h-4 w-4" />} label="Rejected" value={q.isLoading ? "—" : rejectedCount} detail="Rejected by the screening workflow. Not proof of counterfeit." />
-      </div>
+      <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+        {/* Stats */}
+        <div className="-mt-2 grid grid-cols-2 gap-3 md:grid-cols-4">
+          {(
+            [
+              ["Listings", counts.all, admin ? "Across every seller" : "On this account", "text-primary"],
+              ["Listed", counts.live, "Visible to buyers", "text-success"],
+              ["Not listed", counts.rejected, "Stopped by screening, with a reason", "text-danger"],
+              ["Held", counts.pending, "Screening did not finish", "text-review"],
+            ] as const
+          ).map(([label, value, note, tone]) => (
+            <div key={label} className="hv-hud px-5 py-4">
+              <p className={cn("font-display text-[2.6rem] font-extrabold leading-none hv-num", tone)}>{q.isLoading ? "—" : value}</p>
+              <p className="mt-1 font-display text-[14px] font-bold uppercase tracking-[0.05em] text-primary/85">{label}</p>
+              <p className="text-[12px] text-primary/50">{note}</p>
+            </div>
+          ))}
+        </div>
 
-      <section className="mt-12">
-        <h2 className="text-lg font-semibold not-italic text-white">Your listings</h2>
-        <div className="mt-4 grid gap-3">
+        {/* Filters */}
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-4">
+          <h2 className="font-display text-[2rem] font-extrabold uppercase leading-none text-primary">Listings</h2>
+          <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter listings">
+            {FILTERS.map((f) => (
+              <button
+                key={f.id}
+                type="button"
+                role="tab"
+                aria-selected={filter === f.id}
+                onClick={() => setFilter(f.id)}
+                className={cn(
+                  "min-h-[36px] cursor-pointer rounded-full border px-4 text-[13px] font-bold transition-colors",
+                  filter === f.id ? "border-accent bg-accent text-ink" : "border-white/15 text-primary/70 hover:border-white/40 hover:text-primary"
+                )}
+              >
+                {f.label} <span className="opacity-60">{counts[f.id]}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
           {q.isLoading ? (
             <>
-              <Skeleton className="h-28 w-full rounded-2xl" />
-              <Skeleton className="h-28 w-full rounded-2xl" />
+              <Skeleton className="h-44 rounded-[20px]" />
+              <Skeleton className="h-44 rounded-[20px]" />
             </>
           ) : null}
           {q.isError ? (
-            <div className="rounded-2xl border border-[#ffb4ab]/30 bg-[#2a1216] p-6" role="alert">
-              <p className="font-semibold text-[#ffd7d2]">Could not load your listings</p>
-              <p className="mt-2 text-sm text-white/70">The request failed. This is not an empty catalog.</p>
-              <Button className="mt-4 min-h-[44px]" variant="outline" onClick={() => void q.refetch()}>
+            <div className="hv-hud p-6 md:col-span-2" role="alert">
+              <p className="font-display text-[1.4rem] font-bold uppercase text-danger">Could not load listings</p>
+              <p className="mt-1 text-sm text-primary/70">The request failed. This is not an empty catalog.</p>
+              <Button className="mt-4" variant="outline" onClick={() => void q.refetch()}>
                 Retry
               </Button>
             </div>
           ) : null}
-          {!q.isLoading && !q.isError && listings.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-white/15 bg-white/[0.03] px-6 py-12 text-center">
-              <p className="text-lg font-semibold text-white">No listings yet</p>
-              <p className="mx-auto mt-2 max-w-md text-sm text-white/60">
-                When you create one, it stays pending until legacy screening finishes. A result is not a verified authentic certificate.
-              </p>
-              <Link href="/seller/upload" className="mt-6 inline-flex">
-                <Button className="min-h-[44px]">New listing</Button>
+          {!q.isLoading && !q.isError && shown.length === 0 ? (
+            <div className="rounded-[20px] border border-dashed border-white/15 px-6 py-14 text-center md:col-span-2">
+              <p className="font-display text-[1.8rem] font-extrabold uppercase text-primary">Nothing here yet</p>
+              <p className="mx-auto mt-2 max-w-md text-sm text-primary/60">Upload a photo of a watch from one of the five houses. Screening takes a few seconds.</p>
+              <Link href="/seller/upload" className="hv-btn-pill hv-btn-primary mt-6">
+                New listing
               </Link>
             </div>
           ) : null}
-          {q.data?.map((listing) => {
+          {shown.map((listing) => {
             const status = customerStatusCopy(listing);
             return (
-              <article key={listing.id} className="rounded-2xl border border-white/10 bg-[#140a22] p-5 transition-colors duration-200 hover:border-white/20">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="min-w-0">
-                    <p className="truncate text-base font-semibold text-white">{listing.product_name}</p>
-                    <p className="mt-1 text-sm text-white/55">
-                      {listing.category}
-                      {listing.brand ? ` · Declared brand: ${listing.brand}` : ""}
-                    </p>
-                    <p className="mt-3 inline-flex max-w-full rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-medium text-[#FFEDF6]">
-                      {status.title}
-                    </p>
-                    <p className="mt-2 text-xs leading-5 text-white/45">{status.detail}</p>
-                  </div>
-                  <Link href={`/product/${listing.id}`} className="shrink-0">
-                    <Button variant="outline" className="min-h-[44px] w-full sm:w-auto">
-                      View
-                    </Button>
-                  </Link>
+              <Link
+                key={listing.id}
+                href={`/product/${listing.id}`}
+                className="group grid grid-cols-[112px_1fr] overflow-hidden rounded-[20px] border border-white/10 bg-card transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-accent/40 sm:grid-cols-[140px_1fr]"
+              >
+                <div className="hv-sky relative">
+                  {listing.s3_url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={listing.s3_url}
+                      alt=""
+                      className="absolute inset-0 h-full w-full object-cover"
+                      loading="lazy"
+                      onError={(e) => (e.currentTarget.style.display = "none")}
+                    />
+                  ) : null}
                 </div>
-              </article>
+                <div className="min-w-0 p-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <span className={cn("rounded-full px-2.5 py-0.5 text-[11px] font-bold", TONE[listing.status] ?? "bg-white/10 text-primary")}>{status.title}</span>
+                    <span className="text-[11px] text-primary/45">{formatDate(listing.created_at)}</span>
+                  </div>
+                  <p className="mt-3 truncate font-display text-[1.45rem] font-extrabold uppercase leading-none text-primary">{listing.product_name}</p>
+                  <p className="mt-1 text-[12px] text-primary/55">{listing.brand ?? "No brand declared"}</p>
+                  <p className="mt-3 line-clamp-2 text-[12px] leading-5 text-primary/60">{status.detail}</p>
+                  <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-bold text-accent transition-[gap] group-hover:gap-2">
+                    View <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </span>
+                </div>
+              </Link>
             );
           })}
         </div>
-      </section>
-    </div>
-  );
-}
-
-function SummaryCard({
-  icon,
-  label,
-  value,
-  detail,
-}: {
-  icon: ReactNode;
-  label: string;
-  value: number | string;
-  detail: string;
-}) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-[#140a22] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-      <div className="flex items-center justify-between text-[#FFB089]">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em]">{label}</p>
-        {icon}
       </div>
-      <p className="mt-4 font-[family-name:var(--font-display)] text-4xl font-semibold not-italic tracking-tight text-white">{value}</p>
-      <p className="mt-3 text-xs leading-5 text-white/50">{detail}</p>
     </div>
   );
 }

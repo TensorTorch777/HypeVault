@@ -3,6 +3,7 @@ export const DEMO_LISTING_LABEL = "Demo listing — not verified";
 export const PENDING_LABEL = "Pending";
 export const REJECTED_LABEL = "Rejected";
 export const PUBLISHED_UNVERIFIED_LABEL = "Published — not verified";
+export const SCREENED_LISTED_LABEL = "Listed — photo screened, authenticity not verified";
 
 const SEED_CONFIDENCE = 0.965;
 
@@ -12,6 +13,8 @@ export type LabelSource = {
   verdict?: string | null;
   confidence?: number | null;
   s3_url?: string | null;
+  screening_code?: string | null;
+  screening_reason?: string | null;
 };
 
 function isSeedConstant(listing: LabelSource): boolean {
@@ -24,6 +27,7 @@ function isSeedConstant(listing: LabelSource): boolean {
 /** Publication visibility is not an authenticity claim. */
 export function customerLabel(listing: LabelSource): string {
   if (listing.customer_label) return listing.customer_label;
+  if (listing.status === "live" && listing.screening_code === "PASSED") return SCREENED_LISTED_LABEL;
   if (listing.status === "pending") return PENDING_LABEL;
   if (listing.status === "rejected") return REJECTED_LABEL;
   if (isSeedConstant(listing)) return DEMO_LISTING_LABEL;
@@ -41,6 +45,22 @@ export function customerStatusCopy(listing: LabelSource): { title: string; detai
       detail: "Demo data — not a live listing and not a verified authentic item.",
     };
   }
+  if (listing.status === "rejected" && listing.screening_reason) {
+    return { title: "Not listed", detail: listing.screening_reason };
+  }
+  if (listing.status === "live" && listing.screening_code === "PASSED") {
+    return {
+      title: "Listed — photo screened",
+      detail:
+        "A wristwatch was found and the photo looks like an original photograph. Screening is not a certificate of authenticity.",
+    };
+  }
+  if (listing.status === "pending" && listing.screening_code === null && listing.s3_url) {
+    return {
+      title: "Held — not listed",
+      detail: "Screening did not finish, so buyers cannot see this listing. Retry screening from the upload page.",
+    };
+  }
   if (listing.status === "rejected" || raw === REJECTED_LABEL) {
     return {
       title: "Rejected by screening workflow",
@@ -55,6 +75,6 @@ export function customerStatusCopy(listing: LabelSource): { title: string; detai
   }
   return {
     title: "Pending — not verified",
-    detail: "The listing is not published as authentic. A model result does not authorize publication.",
+    detail: "This listing has not been screened yet, so buyers cannot see it.",
   };
 }

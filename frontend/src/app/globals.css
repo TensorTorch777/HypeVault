@@ -3,318 +3,290 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────────────────────────
-   HYPEVAULT × GTA VI — Vice City retrowave theme
+   HYPEVAULT — "Dusk" theme, after the GTA VI site language
+   Deep navy pages, cinematic imagery doing the talking, pastel
+   dusk accents (peach → pink → lavender), soft pink pills.
+   Big Shoulders Display for condensed deco titles, Josefin Sans
+   for wide-tracked caps and salmon headlines, Plus Jakarta body.
+   Class names are stable so every page picks the theme up.
    ───────────────────────────────────────────────────────────── */
 
 :root {
   color-scheme: dark;
 
-  /* Surfaces */
-  --hv-bg:          #0B0118;            /* near-black w/ purple cast */
-  --hv-bg-alt:      #160329;            /* deeper magenta */
-  --hv-bg-card:     #1B0533;            /* tile bg */
-  --hv-bg-inverse:  #FFEDF6;            /* contrast cream-pink */
+  --hv-bg:          #0E0F1E;
+  --hv-bg-alt:      #13152A;
+  --hv-bg-card:     #171A31;
+  --hv-bg-raised:   #21243F;
+  --hv-bg-inverse:  #FBEFE6;
 
-  /* Brand neons */
-  --hv-pink:        #FF1FA4;
-  --hv-pink-soft:   #FF6FCB;
-  --hv-cyan:        #00E1FF;
-  --hv-orange:      #FF7A1A;
-  --hv-yellow:      #FFD24A;
-  --hv-violet:      #9B5BFF;
+  --hv-pink:        #FFB8D2;   /* pill */
+  --hv-salmon:      #F08AA8;   /* headline on dark */
+  --hv-peach:       #FFC08A;
+  --hv-sand:        #FFD9A0;
+  --hv-lavender:    #B9A3F0;
+  --hv-sky:         #A8D8F0;
+  --hv-mint:        #8EE3B8;
 
-  /* Text */
-  --hv-fg:          #FFEDF6;            /* warm white */
-  --hv-fg-muted:    rgba(255, 237, 246, 0.6);
-  --hv-fg-subtle:   rgba(255, 237, 246, 0.4);
+  --hv-dusk: linear-gradient(180deg, #2B2350 0%, #7A4C8E 32%, #E0789A 62%, #FFB98A 86%, #FFD9A0 100%);
+  --hv-dusk-text: linear-gradient(100deg, #FFD9A0 0%, #FFB8D2 45%, #B9A3F0 100%);
 
-  /* Borders */
-  --hv-border:      rgba(255, 31, 164, 0.22);
-  --hv-border-soft: rgba(255, 237, 246, 0.07);
+  /* legacy names */
+  --hv-gold:        var(--hv-salmon);
+  --hv-gold-strong: var(--hv-pink);
+  --hv-cyan:        var(--hv-sky);
+  --hv-orange:      var(--hv-peach);
+  --hv-yellow:      var(--hv-sand);
+  --hv-violet:      var(--hv-lavender);
 
-  /* Compatibility tokens (so old refs to #FF3B00 still work) */
-  --hv-accent:      var(--hv-pink);
-  --hv-link:        var(--hv-cyan);
-  --hv-success:     #38EFA1;
+  --hv-fg:          #F3EEF6;
+  --hv-fg-muted:    rgba(243, 238, 246, 0.72);
+  --hv-fg-subtle:   rgba(243, 238, 246, 0.52);
+  --hv-border:      rgba(243, 238, 246, 0.10);
+
+  --hv-success:     #8EE3B8;
+  --hv-danger:      #FF8A8A;
+  --hv-review:      #FFD58A;
+
+  --hv-ease:        cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
-  h1, h2, h3, h4 {
-    letter-spacing: -0.022em;
+  h1, h2, h3 {
+    font-family: var(--font-display), "Big Shoulders Display", system-ui, sans-serif;
     font-weight: 800;
-    font-style: italic;
+    letter-spacing: 0;
   }
-
-  ::selection {
-    background-color: var(--hv-pink);
-    color: #fff;
-  }
+  h4, h5, h6 { font-weight: 700; }
+  ::selection { background-color: var(--hv-pink); color: #14112A; }
+  :focus-visible { outline: 2px solid var(--hv-pink); outline-offset: 3px; }
 }
 
-html {
-  scrollbar-width: thin;
-  scrollbar-color: #6E1A8E var(--hv-bg);
-}
-html, body { overscroll-behavior: none; }
+html { scrollbar-width: thin; scrollbar-color: #2E3152 var(--hv-bg); }
+html, body { overscroll-behavior: none; overflow-x: clip; }
 
 body {
-  font-family: var(--font-sans), "SF Pro Display", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-sans), "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   background-color: var(--hv-bg);
   color: var(--hv-fg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Sunset gradient base */
-  background-image:
-    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(255, 122, 26, 0.18), transparent 65%),
-    radial-gradient(ellipse 100% 60% at 50% 110%, rgba(255, 31, 164, 0.20), transparent 55%);
-  background-attachment: fixed;
+}
+
+/* A whisper of film grain, so flat navy never looks digital. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
 ::-webkit-scrollbar           { width: 8px; }
 ::-webkit-scrollbar-track     { background: var(--hv-bg); }
-::-webkit-scrollbar-thumb     { background: linear-gradient(180deg, #FF1FA4, #6E1A8E); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #00E1FF, #FF1FA4); }
+::-webkit-scrollbar-thumb     { background: #2E3152; border-radius: 4px; }
 
 /* ─────────────────────────────────────────────────────────────
-   GTA VI UTILITIES
+   Typography
    ───────────────────────────────────────────────────────────── */
 
-.hv-display-xl  { font-size: clamp(3rem, 8.5vw, 7rem); line-height: 1.0; letter-spacing: -0.045em; font-weight: 900; font-style: italic; }
-.hv-display-lg  { font-size: clamp(2rem, 4.8vw, 3.5rem); line-height: 1.04; letter-spacing: -0.03em; font-weight: 800; font-style: italic; }
-.hv-display-md  { font-size: clamp(1.5rem, 2.8vw, 2.25rem); line-height: 1.12; letter-spacing: -0.02em; font-weight: 800; font-style: italic; }
+.hv-serif,
+.hv-display {
+  font-family: var(--font-display), "Big Shoulders Display", system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.005em;
+}
+.hv-num  { font-variant-numeric: tabular-nums lining-nums; }
 
-.hv-eyebrow {
-  font-size: 12px;
-  letter-spacing: 0.28em;
+.hv-display-xl,
+.hv-display-lg,
+.hv-display-md {
+  font-family: var(--font-display), "Big Shoulders Display", system-ui, sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
-  font-weight: 700;
-  color: var(--hv-cyan);
-  text-shadow: 0 0 16px rgba(0, 225, 255, 0.55);
+  letter-spacing: 0.005em;
+}
+.hv-display-xl { font-size: clamp(3.4rem, 8vw, 7.5rem); line-height: 0.88; }
+.hv-display-lg { font-size: clamp(2.4rem, 5vw, 4.4rem); line-height: 0.92; }
+.hv-display-md { font-size: clamp(1.8rem, 3vw, 2.6rem);  line-height: 0.95; }
+
+/* "LAUNCH TRAILER": geometric deco caps, very wide tracking. */
+.hv-wide {
+  font-family: var(--font-wide), "Josefin Sans", system-ui, sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+}
+.hv-mono {
+  font-family: var(--font-wide), "Josefin Sans", system-ui, sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
-/* Vice City gradient — use on continuous text or blocks; see span rule below */
-.hv-gradient-text {
-  background-image: linear-gradient(95deg, #FFD24A 0%, #FF7A1A 28%, #FF1FA4 58%, #9B5BFF 88%);
-  background-attachment: fixed;
-  background-size: 120vw 100%;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
+/* "Vice City, USA." — deco sans, mixed case, salmon on imagery. */
+.hv-headline {
+  font-family: var(--font-wide), "Josefin Sans", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--hv-salmon);
+}
+
+.hv-eyebrow {
+  font-family: var(--font-display), "Big Shoulders Display", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(243, 238, 246, 0.82);
+}
+
+.hv-gradient-text,
+.hv-gradient-text span {
+  background-image: var(--hv-dusk-text);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 22px rgba(255, 31, 164, 0.45));
 }
 
-/*
- * Per-letter spans need a clipped fill; `fixed` keeps one gradient field so letters
- * are not each painted with a squashed rainbow (striped “shabby” look).
- */
-.hv-gradient-text span {
-  -webkit-text-fill-color: transparent;
-  background-image: inherit;
-  background-attachment: fixed;
-  background-size: inherit;
-  background-position: inherit;
-  background-repeat: inherit;
+/* The monogram fill: painted sunset, top to bottom. */
+.hv-vi {
+  background-image: linear-gradient(170deg, #FFD9A0 0%, #FF9E8A 28%, #F27AA6 55%, #A46BD6 82%, #6E58C8 100%);
   -webkit-background-clip: text;
   background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Hero line 2 — single warm accent (earlier brand orange), not full multicolor */
-.hv-hero-accent-text {
-  color: #ff8a3b;
-  text-shadow:
-    0 0 14px rgba(255, 122, 26, 0.85),
-    0 0 32px rgba(255, 59, 0, 0.45),
-    0 0 48px rgba(255, 31, 164, 0.25);
-}
+.hv-hero-accent-text { color: var(--hv-peach); }
+.hv-neon-title       { color: var(--hv-fg); }
+.hv-neon-cyan        { color: var(--hv-sky); }
 
-/* Hot pink neon outline title */
-.hv-neon-title {
-  color: #FFEDF6;
-  text-shadow:
-    0 0 6px  rgba(255, 31, 164, 0.85),
-    0 0 18px rgba(255, 31, 164, 0.55),
-    0 0 40px rgba(255, 122, 26, 0.45);
-}
+/* ─────────────────────────────────────────────────────────────
+   Surfaces
+   ───────────────────────────────────────────────────────────── */
 
-/* Cards become "neon panels" */
 .hv-card {
-  background: linear-gradient(155deg, rgba(255,31,164,0.08), rgba(0,225,255,0.04) 60%, rgba(255,255,255,0.02));
+  background: var(--hv-bg-card);
   border-radius: 20px;
   border: 1px solid var(--hv-border);
-  box-shadow:
-    0 18px 50px -16px rgba(255, 31, 164, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px);
-  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 240ms;
+  transition: transform 400ms var(--hv-ease), border-color 400ms var(--hv-ease);
 }
-.hv-card:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 26px 70px -14px rgba(0, 225, 255, 0.40),
-    0 12px 30px -12px rgba(255, 31, 164, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  border-color: rgba(0, 225, 255, 0.45);
+.hv-card:hover { border-color: rgba(255, 184, 210, 0.35); }
+
+.hv-hud {
+  border-radius: 18px;
+  border: 1px solid rgba(243, 238, 246, 0.10);
+  background: rgba(23, 26, 49, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
-.hv-section-alt  { background: var(--hv-bg-alt); }
-.hv-section-dark { background: #000; color: var(--hv-fg); }
+.hv-hairline      { border-color: var(--hv-border); }
+.hv-section-alt   { background: var(--hv-bg-alt); }
+.hv-section-dark  { background: #0A0B17; color: var(--hv-fg); }
+.hv-section-ivory { background: var(--hv-bg-inverse); color: #14112A; }
 
-/* Neon pill button */
+.hv-glass {
+  background: rgba(14, 15, 30, 0.7);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+/* Painted dusk sky, used behind renders and until backdrops are generated. */
+.hv-sky {
+  background:
+    radial-gradient(ellipse 60% 40% at 70% 78%, rgba(255, 217, 160, 0.75), transparent 70%),
+    var(--hv-dusk);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Buttons and links — small pastel pills, sentence case
+   ───────────────────────────────────────────────────────────── */
+
 .hv-btn-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.85rem 1.6rem;
-  border-radius: 980px;
+  gap: 0.45rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
   font-size: 14px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  line-height: 1.3;
-  font-style: italic;
-  transition: all 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  line-height: 1.2;
+  transition: transform 250ms var(--hv-ease), background-color 250ms var(--hv-ease), color 250ms var(--hv-ease), border-color 250ms var(--hv-ease);
   min-height: 44px;
   white-space: nowrap;
+  cursor: pointer;
 }
+.hv-btn-primary { background: var(--hv-pink); color: #14112A; }
+.hv-btn-primary:hover { background: #FFD0E1; transform: translateY(-1px); }
+.hv-btn-blue { background: var(--hv-sand); color: #14112A; }
+.hv-btn-blue:hover { background: #FFE6BD; transform: translateY(-1px); }
+.hv-btn-secondary { background: rgba(14, 15, 30, 0.35); color: var(--hv-fg); border: 1px solid rgba(243, 238, 246, 0.3); }
+.hv-btn-secondary:hover { border-color: var(--hv-pink); color: var(--hv-pink); }
 
-/* Primary = hot pink with cyan halo */
-.hv-btn-primary {
-  background: linear-gradient(95deg, #FF1FA4, #FF7A1A);
-  color: #fff;
-  box-shadow:
-    0 12px 36px -10px rgba(255, 31, 164, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
-}
-.hv-btn-primary:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.07);
-  box-shadow:
-    0 18px 48px -10px rgba(255, 31, 164, 0.85),
-    0 0 30px 4px rgba(0, 225, 255, 0.35),
-    0 0 0 1px rgba(255, 255, 255, 0.16) inset;
-}
-
-/* "Blue" CTA → cyan neon */
-.hv-btn-blue {
-  background: linear-gradient(95deg, #00E1FF, #9B5BFF);
-  color: #0B0118;
-  box-shadow:
-    0 12px 36px -10px rgba(0, 225, 255, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.16) inset;
-}
-.hv-btn-blue:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.07);
-  box-shadow:
-    0 16px 50px -10px rgba(0, 225, 255, 0.8),
-    0 0 30px 4px rgba(255, 31, 164, 0.35);
-}
-
-.hv-btn-secondary {
-  background: transparent;
-  color: var(--hv-cyan);
-  border: 1px solid rgba(0, 225, 255, 0.35);
-}
-.hv-btn-secondary:hover { color: #fff; border-color: var(--hv-cyan); background: rgba(0,225,255,0.06); }
-
-/* Chevron link → cyan, glowing */
 .hv-chevron {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  color: var(--hv-cyan);
+  gap: 6px;
+  color: var(--hv-fg);
   font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-style: italic;
-  text-shadow: 0 0 18px rgba(0, 225, 255, 0.55);
-  transition: gap 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  font-weight: 600;
+  transition: gap 250ms var(--hv-ease), color 250ms var(--hv-ease);
 }
-.hv-chevron::after {
-  content: "›";
-  font-size: 18px;
-  transform: translateY(-1px);
-}
-.hv-chevron:hover { gap: 10px; color: #fff; }
-
-/* Marquee */
-@keyframes hv-marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.animate-hv-marquee      { animation: hv-marquee 40s linear infinite; }
-.animate-hv-marquee-slow { animation: hv-marquee 60s linear infinite; }
-.hv-marquee-mask {
-  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-}
-
-/* Scanline overlay (CRT vibe) — opt-in via class on a wrapper */
-.hv-scanlines::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.025) 0,
-    rgba(255, 255, 255, 0.025) 1px,
-    transparent 1px,
-    transparent 4px
-  );
-  mix-blend-mode: overlay;
-}
-
-/* Neon ring frame */
-.hv-neon-frame {
-  position: relative;
-}
-.hv-neon-frame::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: linear-gradient(115deg, #FF1FA4, #00E1FF, #FF7A1A, #FF1FA4);
-  background-size: 280% 280%;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  animation: hv-neon-spin 7s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes hv-neon-spin {
-  0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
-}
-
-/* Sunset stripe */
-.hv-sunset {
-  background: linear-gradient(180deg,
-    #FFD24A 0%,
-    #FF7A1A 18%,
-    #FF1FA4 48%,
-    #9B5BFF 78%,
-    #0B0118 100%
-  );
-}
+.hv-chevron::after { content: "→"; }
+.hv-chevron:hover { gap: 10px; color: var(--hv-pink); }
 
 .hv-link-underline { position: relative; }
 .hv-link-underline::after {
   content: "";
   position: absolute;
-  left: 0; bottom: -1px;
+  left: 0; bottom: -3px;
   height: 1px;
   width: 100%;
   background: currentColor;
   transform-origin: right center;
   transform: scaleX(0);
-  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 400ms var(--hv-ease);
 }
 .hv-link-underline:hover::after { transform-origin: left center; transform: scaleX(1); }
+
+/* ─────────────────────────────────────────────────────────────
+   Misc
+   ───────────────────────────────────────────────────────────── */
+
+@keyframes hv-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.animate-hv-marquee      { animation: hv-marquee 50s linear infinite; }
+.animate-hv-marquee-slow { animation: hv-marquee 80s linear infinite; }
+.hv-marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+.hv-scanlines::after { content: none; }
+.hv-neon-frame { position: relative; }
+.hv-sunset { background: var(--hv-dusk); }
+.hv-guilloche {
+  background-image: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(185, 163, 240, 0.12), transparent 70%);
+}
+
+@keyframes hv-kenburns { from { transform: scale(1.04); } to { transform: scale(1.14); } }
+.hv-kenburns { animation: hv-kenburns 24s var(--hv-ease) infinite alternate; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Renders are cropped through the bracelet; fade their top and bottom edges. */
+.hv-fade-y {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+}

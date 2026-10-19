@@ -7,31 +7,32 @@ import { useQuery } from "@tanstack/react-query";
 
 import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
 import { ImageUploader } from "@/components/ImageUploader";
-import { AuthBadge } from "@/components/AuthBadge";
+import { ScreeningResult, type ScreeningOutcome } from "@/components/ScreeningResult";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 
-import { api, fetchMe } from "@/lib/api";
+import { PageHero } from "@/components/layout/PageHero";
+import { ME_QUERY_KEY, api, fetchMe } from "@/lib/api";
+import { canSell } from "@/lib/roles";
 import { DECLARED_BRAND_NOTE, classifyHttpFailure, researchFailureMessage } from "@/lib/semanticCopy";
 
-const steps = ["Images", "Details", "Legacy check", "Result"] as const;
+const steps = ["Images", "Details", "Screening", "Result"] as const;
 
 export default function SellerUploadPage() {
   const router = useRouter();
   const meQuery = useQuery({
-    queryKey: ["auth-me-seller-upload"],
+    queryKey: ME_QUERY_KEY,
     queryFn: fetchMe,
     retry: false,
   });
   const authed = Boolean(meQuery.data);
-  const isSeller = meQuery.data?.role === "seller";
+  const isSeller = canSell(meQuery.data?.role);
 
   useEffect(() => {
     if (meQuery.isError) router.replace("/login");
-    else if (authed && !isSeller) router.replace("/");
-  }, [authed, isSeller, meQuery.isError, router]);
+  }, [meQuery.isError, router]);
   const [step, setStep] = useState(0);
   const [files, setFiles] = useState<File[]>([]);
   const [productName, setProductName] = useState("");
@@ -40,10 +41,8 @@ export default function SellerUploadPage() {
   const [condition, setCondition] = useState("");
   const [size, setSize] = useState("");
   const [listingId, setListingId] = useState<string | null>(null);
-  const [listingStatus, setListingStatus] = useState<string | null>(null);
+  const [outcome, setOutcome] = useState<ScreeningOutcome | null>(null);
   const [stage, setStage] = useState<"idle" | "creating" | "screening" | "screened" | "screening_failed" | "create_failed">("idle");
-  const [verdict, setVerdict] = useState<"AUTHENTIC" | "FAKE" | null>(null);
-  const [confidence, setConfidence] = useState<number | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
   const reduceMotion = useReducedMotion();
@@ -71,16 +70,14 @@ export default function SellerUploadPage() {
     fd.append("category", category);
     fd.append("listing_id", id);
     if (brand.trim()) fd.append("brand", brand.trim());
-    const { data } = await api.post<{
-      verdict: "AUTHENTIC" | "FAKE";
-      confidence: number;
-      s3_url: string;
-      listing_id: string;
-      listing_status: "live" | "rejected" | "pending";
-    }>("/verify/authenticate", fd);
-    setVerdict(data.verdict);
-    setConfidence(data.confidence);
-    setListingStatus(data.listing_status);
+    const { data } = await api.post<
+      ScreeningOutcome & { verdict: "AUTHENTIC" | "FAKE" | null; confidence: number | null; listing_id: string }
+    >("/verify/authenticate", fd);
+    setOutcome({
+      listing_status: data.listing_status,
+      screening_code: data.screening_code ?? null,
+      screening_reason: data.screening_reason ?? null,
+    });
     return data;
   }
 
@@ -108,7 +105,7 @@ export default function SellerUploadPage() {
         setErr(
           specific
             ? `${researchFailureMessage(kind)} Listing ${id} already exists and was not created again.`
-            : `Listing ${id} was created, but screening did not complete. It may still be pending and is not verified. Retry screening without creating another listing.`,
+            : `Listing ${id} was created, but screening did not complete. It is held and not visible to buyers. Retry screening without creating another listing.`,
         );
         return;
       }
@@ -120,27 +117,38 @@ export default function SellerUploadPage() {
   const busy = stage === "creating" || stage === "screening";
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10 md:px-6 md:py-14">
+    <div className="pb-24">
+    <PageHero
+      eyebrow="Seller desk · new listing"
+      title="List a watch"
+      subtitle="One clear photo of the watch, the house that made it, and a few seconds of screening. Not a watch, too small or AI-generated? You get told exactly why."
+      scene="convertible"
+      render="/renders/ap_royal_oak/hero.webp"
+      compact
+    />
+    <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
       {!authed || !isSeller ? (
         <Card className="mx-auto max-w-lg hover:translate-y-0">
           <CardHeader>
-            <h1 className="text-2xl font-semibold not-italic">Upload</h1>
+            <h2 className="font-display text-[1.8rem] font-extrabold uppercase leading-none">
+              {authed ? "Not a seller account" : "Sign in to list"}
+            </h2>
           </CardHeader>
           <CardContent className="space-y-3">
-            <p className="text-sm text-primary/65">Log in to upload a listing. The listing check uses legacy DINOv2, not the DINOv3 research demo.</p>
-            <Button className="min-h-[44px]" onClick={() => router.push("/login")}>
-              Log in
+            <p className="text-sm text-primary/65">
+              {authed
+                ? `${meQuery.data?.email} cannot list watches. Sign in with your Somaiya Google account to sell.`
+                : "Sign in with your Somaiya account to list a watch."}
+            </p>
+            <Button className="min-h-[44px]" onClick={() => router.push(authed ? "/market" : "/login")}>
+              {authed ? "Browse the market" : "Log in"}
             </Button>
           </CardContent>
         </Card>
       ) : (
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
-          <section className="min-w-0 rounded-2xl border border-white/10 bg-[#140a22]/90 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.35)] md:p-8">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#FFB089]">Seller flow</p>
-            <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold not-italic tracking-tight text-[#FFEDF6] md:text-4xl">
-              List an item
-            </h1>
-            <ol className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4" aria-label="Listing steps">
+          <section className="min-w-0 rounded-[22px] border border-white/10 bg-card/90 p-5 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.9)] backdrop-blur md:p-8">
+            <ol className="grid grid-cols-2 gap-3 sm:grid-cols-4" aria-label="Listing steps">
               {steps.map((label, index) => {
                 const complete = index < step || (index === 3 && stage === "screened");
                 const current = index === step;
@@ -152,21 +160,21 @@ export default function SellerUploadPage() {
                       <span
                         className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold ${
                           failed
-                            ? "bg-[#3a1218] text-[#ffb4ab]"
+                            ? "bg-[#3A1A2C] text-[#FF8A8A]"
                             : complete
-                              ? "bg-[#FF7A1A] text-[#1a0b12]"
+                              ? "bg-[#FFB8D2] text-[#14112A]"
                               : current
-                                ? "bg-white text-[#1a0b12]"
+                                ? "bg-white text-[#14112A]"
                                 : "bg-white/10 text-white/55"
                         }`}
                       >
                         {complete ? "✓" : index + 1}
                       </span>
-                      <span className={`truncate text-xs font-medium ${current ? "text-white" : "text-white/45"}`}>{label}</span>
+                      <span className={`truncate font-display text-[14px] font-bold uppercase tracking-[0.04em] ${current ? "text-white" : "text-white/45"}`}>{label}</span>
                     </div>
-                    <div className={`mt-2 h-0.5 rounded-full ${complete || current ? "bg-[#FF7A1A]" : "bg-white/10"}`} />
-                    {running ? <p className="mt-1 text-[10px] text-[#FFB089]">In progress</p> : null}
-                    {failed ? <p className="mt-1 text-[10px] text-[#ffb4ab]">Needs retry</p> : null}
+                    <div className={`mt-2 h-0.5 rounded-full ${complete || current ? "bg-[#FFB8D2]" : "bg-white/10"}`} />
+                    {running ? <p className="mt-1 text-[10px] text-[#F08AA8]">In progress</p> : null}
+                    {failed ? <p className="mt-1 text-[10px] text-[#FF8A8A]">Needs retry</p> : null}
                   </li>
                 );
               })}
@@ -225,16 +233,19 @@ export default function SellerUploadPage() {
               {step === 2 ? (
                 <motion.div key="s2" initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : -8 }} transition={stepMotion} className="mt-8 space-y-4">
                   <p className="text-sm leading-6 text-primary/70">
-                    This runs the legacy DINOv2 classifier. It is not the frozen DINOv3 research prototype, and it is not a production authenticity guarantee. An unsupported brand returns no authentic or fake verdict.
+                    Three checks run on your photo: it must be at least 400 px on its shorter side, show a wristwatch, and look like an
+                    original photograph rather than an AI-generated or heavily edited image (legacy DINOv2 model). Pass all three and the
+                    watch is listed; otherwise you get the reason. Screening checks the photo, not the watch — it is not an authenticity
+                    guarantee.
                   </p>
                   <div className="min-h-[4.5rem] rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3" aria-live="polite">
                     <p className="text-sm text-primary/75" role="status">
                       {stage === "creating" ? "Creating listing." : null}
-                      {stage === "screening" ? "Legacy screening in progress. The listing is not verified yet." : null}
+                      {stage === "screening" ? "Screening in progress. The listing is not visible to buyers yet." : null}
                       {stage === "screening_failed" && listingId ? `Listing ${listingId} exists. Screening did not complete.` : null}
                       {stage === "idle" || stage === "create_failed" ? "Listing creation and screening are separate steps." : null}
                     </p>
-                    {busy ? <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/10"><div className="h-full w-1/3 animate-pulse rounded-full bg-[#FF7A1A]" /></div> : null}
+                    {busy ? <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/10"><div className="h-full w-1/3 animate-pulse rounded-full bg-[#FFB8D2]" /></div> : null}
                   </div>
                   {err ? <p className="text-sm font-semibold text-danger" role="alert">{err}</p> : null}
                   <div className="flex justify-between gap-3">
@@ -242,7 +253,7 @@ export default function SellerUploadPage() {
                       Back
                     </Button>
                     <Button className="min-h-[44px]" disabled={busy} onClick={() => void runLegacyCheck()}>
-                      {listingId ? "Retry screening" : "Run legacy check"}
+                      {busy ? "Screening…" : listingId ? "Retry screening" : "Run screening"}
                     </Button>
                   </div>
                 </motion.div>
@@ -250,12 +261,24 @@ export default function SellerUploadPage() {
 
               {step === 3 ? (
                 <motion.div key="s3" initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : -8 }} transition={stepMotion} className="mt-8 space-y-5">
-                  <AuthBadge verdict={verdict} confidence={confidence} declaredBrand={brand} lane="legacy" />
-                  {listingId ? <p className="text-sm text-primary/70">Listing {listingId}. Workflow status: {listingStatus ?? "pending"} — not a verified authentic result.</p> : null}
+                  {outcome ? <ScreeningResult outcome={outcome} /> : null}
                   <div className="flex flex-wrap gap-3">
-                    {listingId ? (
+                    {outcome?.listing_status === "live" && listingId ? (
                       <Button className="min-h-[44px]" onClick={() => router.push(`/product/${listingId}`)}>
                         View listing
+                      </Button>
+                    ) : null}
+                    {outcome && outcome.listing_status !== "live" ? (
+                      <Button
+                        className="min-h-[44px]"
+                        onClick={() => {
+                          setFiles([]);
+                          setOutcome(null);
+                          setStage("idle");
+                          setStep(0);
+                        }}
+                      >
+                        Try another photo
                       </Button>
                     ) : null}
                     <Button variant="outline" className="min-h-[44px]" onClick={() => router.push("/seller/dashboard")}>
@@ -267,17 +290,19 @@ export default function SellerUploadPage() {
             </AnimatePresence>
           </section>
 
-          <aside className="rounded-2xl border border-white/10 bg-[#100818] p-5 text-sm text-primary/70 lg:sticky lg:top-6">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/45">This listing</p>
-            <p className="mt-3 text-base font-semibold text-white">{productName.trim() || "Untitled listing"}</p>
+          <aside className="rounded-[22px] border border-white/10 bg-[#13152A] p-6 text-sm text-primary/70 lg:sticky lg:top-24">
+            <p className="hv-eyebrow">This listing</p>
+            <p className="mt-2 font-display text-[1.6rem] font-extrabold uppercase leading-none text-white">{productName.trim() || "Untitled listing"}</p>
             <p className="mt-1">{brand || "Declared brand not selected"}</p>
             <p className="mt-4 text-xs leading-5 text-white/50">
-              {files.length} image{files.length === 1 ? "" : "s"} selected. A model classification is not a certificate, and a visible listing is not verified authentic.
+              {files.length} image{files.length === 1 ? "" : "s"} selected. Photos that are not a watch, too small or look generated are
+              turned away with the reason. A listed watch is screened, not verified authentic.
             </p>
             {listingId ? <p className="mt-4 break-all text-xs text-white/60">Listing {listingId}</p> : null}
           </aside>
         </div>
       )}
+    </div>
     </div>
   );
 }

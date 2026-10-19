@@ -1,38 +1,40 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { Search, ShoppingBag, User } from "lucide-react";
+import { Search, User } from "lucide-react";
 
-import { WobbleText } from "@/components/motion/BouncyText";
-import { fetchMe, logoutRemote } from "@/lib/api";
+import { ME_QUERY_KEY, fetchMe, logoutRemote } from "@/lib/api";
+import { Monogram } from "@/components/brand/Lockup";
+import { canSell } from "@/lib/roles";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { href: "/product/Luxury%20watches", label: "Watches" },
-  { href: "/#how",                     label: "Method" },
-  { href: "/research",                 label: "Research demo" },
+  { href: "/market", label: "Market" },
+  { href: "/benchmark", label: "Benchmark" },
+  { href: "/#method", label: "Method" },
+  { href: "/research", label: "Research" },
 ];
 
+export function Wordmark({ className }: { className?: string }) {
+  return (
+    <span className={cn("font-display text-[22px] font-extrabold uppercase leading-none tracking-[0.02em] text-primary", className)}>
+      Hype<span className="hv-gradient-text">vault</span>
+    </span>
+  );
+}
+
 export function TopNav() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-
-  const meQuery = useQuery({
-    queryKey: ["auth-me-nav"],
-    queryFn: fetchMe,
-    retry: false,
-  });
-
+  const meQuery = useQuery({ queryKey: ME_QUERY_KEY, queryFn: fetchMe, retry: false });
   const me = meQuery.data;
-  const isSeller = me?.role === "seller";
+  const isSeller = canSell(me?.role);
 
   useEffect(() => {
-    const read = () => {
-      const y = window.__hvScroll ?? window.scrollY;
-      setScrolled(y > 12);
-    };
+    const read = () => setScrolled((window.__hvScroll ?? window.scrollY) > 8);
     read();
     window.addEventListener("scroll", read, { passive: true });
     window.addEventListener("hv:scroll", read);
@@ -42,93 +44,72 @@ export function TopNav() {
     };
   }, []);
 
+  const linkClass = (href: string) =>
+    cn(
+      "hv-link-underline font-display text-[14px] font-bold uppercase tracking-[0.06em] transition-colors",
+      pathname === href ? "text-accent" : "text-primary/75 hover:text-primary"
+    );
+
   return (
-    <motion.header
-      initial={{ y: -32, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    <header
       className={cn(
-        "fixed inset-x-0 top-0 z-[90] transition-[background,backdrop-filter,border] duration-300",
-        scrolled
-          ? "border-b border-[rgba(255,31,164,0.18)] bg-[#0B0118]/72 backdrop-blur-xl backdrop-saturate-150"
-          : "border-b border-transparent bg-transparent"
+        "fixed inset-x-0 top-0 z-[90] border-b transition-colors duration-300",
+        scrolled ? "hv-glass border-primary/10" : "border-transparent bg-transparent"
       )}
     >
-      <div className="mx-auto flex h-[48px] max-w-[980px] items-center justify-between px-5">
-        <Link
-          href="/"
-          aria-label="HypeVault"
-          className="flex items-center gap-1.5 font-[family-name:var(--font-display)] text-[15px] font-extrabold italic tracking-tight"
-          style={{
-            background: "linear-gradient(95deg, #FFD24A, #FF7A1A 30%, #FF1FA4 60%, #9B5BFF)",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            color: "transparent",
-            filter: "drop-shadow(0 0 12px rgba(255,31,164,0.5))",
-          }}
-        >
-          <WobbleText text="HYPE/VAULT" />
+      <div className="mx-auto flex h-16 w-full max-w-[1240px] items-center justify-between gap-4 px-4 sm:px-6">
+        <Link href="/" aria-label="HypeVault home" className="shrink-0">
+          <Monogram />
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
           {NAV_LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#FFEDF6]/80 transition-colors hover:text-[#FFEDF6]"
-            >
+            <Link key={l.href} href={l.href} className={linkClass(l.href)}>
               {l.label}
             </Link>
           ))}
           {isSeller ? (
-            <>
-              <Link
-                href="/seller/upload"
-                className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#FFEDF6]/80 transition-colors hover:text-[#FFEDF6]"
-              >
-                Legacy check
-              </Link>
-              <Link
-                href="/seller/dashboard"
-                className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#FFEDF6]/80 transition-colors hover:text-[#FFEDF6]"
-              >
-                Sellers
-              </Link>
-            </>
+            <Link href="/seller/dashboard" className={linkClass("/seller/dashboard")}>
+              Seller desk
+            </Link>
           ) : null}
         </nav>
 
-        <div className="flex items-center gap-4">
-          <Link href="/product/Luxury%20watches" aria-label="Search" className="text-[#FFEDF6]/80 transition-colors hover:text-[#00E1FF]">
-            <Search className="h-[15px] w-[15px]" strokeWidth={1.6} />
+        <div className="flex shrink-0 items-center gap-1">
+          <Link
+            href="/market"
+            aria-label="Search the market"
+            className="grid h-11 w-11 place-items-center rounded-full text-primary/80 transition-colors hover:text-accent"
+          >
+            <Search className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden="true" />
           </Link>
           <Link
-            href={me?.role === "seller" ? "/seller/dashboard" : me ? "/" : "/login"}
-            aria-label="Account"
-            className="text-[#FFEDF6]/80 transition-colors hover:text-[#00E1FF]"
+            href={isSeller ? "/seller/dashboard" : me ? "/" : "/login"}
+            aria-label={me ? "Your account" : "Sign in"}
+            className="grid h-11 w-11 place-items-center rounded-full text-primary/80 transition-colors hover:text-accent"
           >
-            <User className="h-[15px] w-[15px]" strokeWidth={1.6} />
+            <User className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden="true" />
           </Link>
-          {isSeller ? (
-            <Link href="/seller/upload" aria-label="Bag" className="text-[#FFEDF6]/80 transition-colors hover:text-[#00E1FF]">
-              <ShoppingBag className="h-[15px] w-[15px]" strokeWidth={1.6} />
-            </Link>
-          ) : null}
           {me ? (
             <button
               type="button"
-              className="hidden text-[11px] font-bold uppercase tracking-[0.12em] text-[#FFEDF6]/75 transition-colors hover:text-[#FFEDF6] md:inline-flex"
-              onClick={() => {
-                void logoutRemote().then(() => {
-                  window.location.href = "/login";
-                });
-              }}
+              className="ml-2 hidden min-h-[44px] cursor-pointer font-display text-[14px] font-bold uppercase tracking-[0.06em] text-primary/70 transition-colors hover:text-primary lg:inline-flex lg:items-center"
+              onClick={() => void logoutRemote().then(() => (window.location.href = "/login"))}
             >
-              Log out
+              Sign out
             </button>
-          ) : null}
+          ) : (
+            <span className="ml-3 hidden sm:inline-flex">
+              <Link
+                href="/seller/upload"
+                className="hv-btn-pill hv-btn-primary !min-h-[36px] !px-4 !py-1.5 !text-[13px]"
+              >
+                Sell a watch
+              </Link>
+            </span>
+          )}
         </div>
       </div>
-    </motion.header>
+    </header>
   );
 }
