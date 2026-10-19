@@ -54,16 +54,16 @@ class CustomerLabelTests(unittest.TestCase):
         self.assertEqual(row.evidence_role, "SEED_CONSTANT")
         self.assertEqual(row.verdict, "AUTHENTIC")
 
-    def test_new_authentic_result_stays_pending_and_blocked(self) -> None:
-        from inference.publication_gate import (
-            AUTHENTICITY_MODEL_PRODUCTION_APPROVED,
-            legacy_publication_status,
-            publication_decision,
-        )
-        from listings.customer_label import customer_label
+    def test_screened_listing_is_labelled_screened_not_authentic(self) -> None:
+        from inference.publication_gate import AUTHENTICITY_MODEL_PRODUCTION_APPROVED, publication_decision
+        from listings.customer_label import SCREENED_LISTED_LABEL, customer_label
 
         self.assertFalse(AUTHENTICITY_MODEL_PRODUCTION_APPROVED)
-        self.assertEqual(legacy_publication_status("AUTHENTIC"), "pending")
+        self.assertEqual(
+            customer_label(status="live", verdict="AUTHENTIC", confidence=0.99, s3_url="listings/new.jpg", screening_code="PASSED"),
+            SCREENED_LISTED_LABEL,
+        )
+        self.assertIn("not verified", SCREENED_LISTED_LABEL)
         self.assertEqual(
             publication_decision(
                 model="LEGACY_DINOV2",
@@ -81,7 +81,7 @@ class CustomerLabelTests(unittest.TestCase):
         )
 
     def test_research_fake_and_model_error_do_not_certify(self) -> None:
-        from inference.publication_gate import legacy_publication_status, publication_decision
+        from inference.publication_gate import publication_decision
         from inference.research_access import research_success_body
         from listings.customer_label import customer_label
 
@@ -92,12 +92,10 @@ class CustomerLabelTests(unittest.TestCase):
             policy_version="shadow_v1",
         )
         self.assertEqual(research["publication_decision"], "BLOCKED")
-        self.assertEqual(legacy_publication_status("FAKE"), "rejected")
         self.assertEqual(
             customer_label(status="rejected", verdict="FAKE", confidence=0.91, s3_url="listings/fake.jpg"),
             "Rejected",
         )
-        self.assertEqual(legacy_publication_status(None), "pending")
         self.assertEqual(
             publication_decision(
                 model="LEGACY_DINOV2",
@@ -115,6 +113,7 @@ class CustomerLabelTests(unittest.TestCase):
 
         samples = [
             customer_label(status="live", verdict="AUTHENTIC", confidence=0.99, s3_url="a.jpg"),
+            customer_label(status="live", verdict="AUTHENTIC", confidence=0.99, s3_url="a.jpg", screening_code="PASSED"),
             customer_label(status="live", verdict="AUTHENTIC", confidence=0.965, s3_url=None),
             customer_label(status="pending", verdict="AUTHENTIC", confidence=0.99, s3_url="a.jpg"),
             customer_label(status="rejected", verdict="FAKE", confidence=0.2, s3_url="a.jpg"),

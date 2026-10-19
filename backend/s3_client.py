@@ -16,6 +16,18 @@ from config import settings
 _log = logging.getLogger(__name__)
 
 LOCAL_UPLOAD_DIR = Path(__file__).resolve().parent / "local_uploads"
+LOCAL_PREFIX = "/static/local/"
+
+
+def local_public_url(url: str | None) -> str | None:
+    """Rebuild a local-disk image URL on the current PUBLIC_API_BASE_URL.
+
+    Rows store an absolute URL from upload time, so a later base (localhost, a new or stopped
+    ngrok tunnel) would otherwise leave buyers with broken images. S3 URLs pass through unchanged.
+    """
+    if not url or LOCAL_PREFIX not in url:
+        return url
+    return f"{settings.public_api_base_url.rstrip('/')}{LOCAL_PREFIX}{url.rsplit(LOCAL_PREFIX, 1)[1]}"
 
 
 def _s3_configured() -> bool:

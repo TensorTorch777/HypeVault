@@ -1,0 +1,462 @@
+{
+  "run_id": "20261016T141531Z_smoke",
+  "mode": "SMOKE_TEST",
+  "protocol_sha256": "9206017181261f29f98dec4fa6022e85a244bacbedd2885760c70cfcd87d413d",
+  "manifest": "data/smoke_manifest.jsonl",
+  "manifest_sha256": "3cc7ab78c2b9fbdf359178618d36d26e52f8daba52dc3d279c92181335cf5070",
+  "checkpoint_sha256": {
+    "dinov2_legacy": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66",
+    "dinov3_experimental": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f"
+  },
+  "counts": {
+    "GENERATED|smoke_sdxl_base10|A. Lange & S\u00f6hne": 2,
+    "GENERATED|smoke_sdxl_base10|Audemars Piguet": 2,
+    "GENERATED|smoke_sdxl_base10|Patek Philippe": 2,
+    "GENERATED|smoke_sdxl_base10|Richard Mille": 2,
+    "GENERATED|smoke_sdxl_base10|Vacheron Constantin": 2
+  },
+  "host": "tensortorch26-MS-7E06",
+  "primary": null,
+  "secondary": {
+    "set": "REAL_PHOTO + sdxl_base10",
+    "n": 10,
+    "models": {
+      "dinov2_legacy": {
+        "confusion": {
+          "generated_as_fake": 0,
+          "generated_as_authentic": 10,
+          "real_as_fake": 0,
+          "real_as_authentic": 0
+        },
+        "review": {
+          "generated": 0,
+          "real": 0
+        },
+        "n": {
+          "generated": 10,
+          "real": 0
+        },
+        "coverage": 1.0,
+        "accuracy": 0.0,
+        "balanced_accuracy": null,
+        "precision_generated": null,
+        "recall_generated": 0.0,
+        "f1_generated": null,
+        "false_authentic": {
+          "k": 10,
+          "n": 10,
+          "rate": 1.0,
+          "upper95": 1.0
+        },
+        "false_fake": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "upper95": NaN
+        },
+        "roc_auc": null,
+        "pr_auc": null
+      },
+      "dinov3_experimental": {
+        "confusion": {
+          "generated_as_fake": 0,
+          "generated_as_authentic": 0,
+          "real_as_fake": 0,
+          "real_as_authentic": 0
+        },
+        "review": {
+          "generated": 10,
+          "real": 0
+        },
+        "n": {
+          "generated": 10,
+          "real": 0
+        },
+        "coverage": 0.0,
+        "accuracy": null,
+        "balanced_accuracy": null,
+        "precision_generated": null,
+        "recall_generated": null,
+        "f1_generated": null,
+        "false_authentic": {
+          "k": 0,
+          "n": 10,
+          "rate": 0.0,
+          "upper95": 0.2588655508930522
+        },
+        "false_fake": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "upper95": NaN
+        },
+        "roc_auc": null,
+        "pr_auc": null
+      }
+    },
+    "paired": {
+      "n_both_binary": 0,
+      "dinov3_only_correct": 0,
+      "dinov2_only_correct": 0,
+      "discordant": 0,
+      "mcnemar_p": 1.0
+    },
+    "by_brand": {
+      "A. Lange & S\u00f6hne": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 2,
+            "real_as_fake": 0,
+            "real_as_authentic": 0
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 2,
+            "real": 0
+          },
+          "coverage": 1.0,
+          "accuracy": 0.0,
+          "balanced_accuracy": null,
+          "precision_generated": null,
+          "recall_generated": 0.0,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "upper95": 1.0
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 0,
+            "rate": null,
+            "upper95": NaN
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 0,
+            "real_as_fake": 0,
+            "real_as_authentic": 0
+          },
+          "review": {
+            "generated": 2,
+            "real": 0
+          },
+          "n": {
+            "generated": 2,
+            "real": 0
+          },
+          "coverage": 0.0,
+          "accuracy": null,
+          "balanced_accuracy": null,
+          "precision_generated": null,
+          "recall_generated": null,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "upper95": 0.776393202250021
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 0,
+            "rate": null,
+            "upper95": NaN
+          }
+        }
+      },
+      "Audemars Piguet": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 2,
+            "real_as_fake": 0,
+            "real_as_authentic": 0
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 2,
+            "real": 0
+          },
+          "coverage": 1.0,
+          "accuracy": 0.0,
+          "balanced_accuracy": null,
+          "precision_generated": null,
+          "recall_generated": 0.0,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "upper95": 1.0
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 0,
+            "rate": null,
+            "upper95": NaN
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 0,
+            "real_as_fake": 0,
+            "real_as_authentic": 0
+          },
+          "review": {
+            "generated": 2,
+            "real": 0
+          },
+          "n": {
+            "generated": 2,
+            "real": 0
+          },
+          "coverage": 0.0,
+          "accuracy": null,
+          "balanced_accuracy": null,
+          "precision_generated": null,
+          "recall_generated": null,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "upper95": 0.776393202250021
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 0,
+            "rate": null,
+            "upper95": NaN
+          }
+        }
+      },
+      "Patek Philippe": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 2,
+            "real_as_fake": 0,
+            "real_as_authentic": 0
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 2,
+            "real": 0
+          },
+          "coverage": 1.0,
+          "accuracy": 0.0,
+          "balanced_accuracy": null,
+          "precision_generated": null,
+          "recall_generated": 0.0,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "upper95": 1.0
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 0,
+            "rate": null,
+            "upper95": NaN
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 0,
+            "real_as_fake": 0,
+            "real_as_authentic": 0
+          },
+          "review": {
+            "generated": 2,
+            "real": 0
+          },
+          "n": {
+            "generated": 2,
+            "real": 0
+          },
+          "coverage": 0.0,
+          "accuracy": null,
+          "balanced_accuracy": null,
+          "precision_generated": null,
+          "recall_generated": null,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "upper95": 0.776393202250021
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 0,
+            "rate": null,
+            "upper95": NaN
+          }
+        }
+      },
+      "Richard Mille": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 2,
+            "real_as_fake": 0,
+            "real_as_authentic": 0
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 2,
+            "real": 0
+          },
+          "coverage": 1.0,
+          "accuracy": 0.0,
+          "balanced_accuracy": null,
+          "precision_generated": null,
+          "recall_generated": 0.0,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "upper95": 1.0
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 0,
+            "rate": null,
+            "upper95": NaN
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 0,
+            "real_as_fake": 0,
+            "real_as_authentic": 0
+          },
+          "review": {
+            "generated": 2,
+            "real": 0
+          },
+          "n": {
+            "generated": 2,
+            "real": 0
+          },
+          "coverage": 0.0,
+          "accuracy": null,
+          "balanced_accuracy": null,
+          "precision_generated": null,
+          "recall_generated": null,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "upper95": 0.776393202250021
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 0,
+            "rate": null,
+            "upper95": NaN
+          }
+        }
+      },
+      "Vacheron Constantin": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 2,
+            "real_as_fake": 0,
+            "real_as_authentic": 0
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 2,
+            "real": 0
+          },
+          "coverage": 1.0,
+          "accuracy": 0.0,
+          "balanced_accuracy": null,
+          "precision_generated": null,
+          "recall_generated": 0.0,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "upper95": 1.0
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 0,
+            "rate": null,
+            "upper95": NaN
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 0,
+            "real_as_fake": 0,
+            "real_as_authentic": 0
+          },
+          "review": {
+            "generated": 2,
+            "real": 0
+          },
+          "n": {
+            "generated": 2,
+            "real": 0
+          },
+          "coverage": 0.0,
+          "accuracy": null,
+          "balanced_accuracy": null,
+          "precision_generated": null,
+          "recall_generated": null,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "upper95": 0.776393202250021
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 0,
+            "rate": null,
+            "upper95": NaN
+          }
+        }
+      }
+    }
+  },
+  "frontier": {
+    "outcome": "SMOKE_TEST",
+    "frontier_model": null,
+    "statement": "Sample minimums were not met. These numbers check the pipeline and may not be reported as results."
+  }
+}

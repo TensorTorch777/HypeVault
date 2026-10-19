@@ -1,11 +1,14 @@
-"""POST /authenticate — legacy DINOv2 listing check.
+"""POST /authenticate — listing photo screening.
 
-This route stays on DINOv2. It is not the frozen DINOv3 research candidate
-and it does not establish production authenticity validation.
+A photo must be large enough, show a wristwatch (zero-shot CLIP) and pass the legacy
+DINOv2 origin check. Passing lists the watch; failing rejects it with a seller-facing
+reason (inference.screening). This route stays on DINOv2, not the frozen DINOv3 research
+candidate, and a listed watch is screened, not authenticity-certified.
 """
 
 from __future__ import annotations
 
+import asyncio
 import io
 import logging
 import uuid
@@ -21,9 +24,10 @@ from auth.deps import get_current_user
 from config import settings
 from database import Listing, ListingCategory, ListingStatus, User, get_db
 from inference.engine import classify_image
-from inference.publication_gate import legacy_publication_status
 from inference.research_guard import deployment_mode, live_path_targets_dinov3
 from inference.schemas import AuthenticateResponse
+from inference.content_gate import score_watch
+from inference.screening import check_content, check_origin, check_size
 from inference.scope_gate import evaluate_declared_brand, failure_body, log_scope_request, unsupported_scope_body
 from inference.triton_client import preprocess_chw
 from inference.verdict import apply_min_authentic_confidence
@@ -37,9 +41,10 @@ ALLOWED_CT = {"image/jpeg", "image/png", "image/webp"}
 @router.post(
     "/authenticate",
     response_model=AuthenticateResponse,
-    summary="Legacy DINOv2 listing check",
+    summary="Listing photo screening",
     description=(
-        "Legacy DINOv2 classifier for an existing listing flow. "
+        "Screens a listing photo: size, wristwatch present (CLIP), and the legacy DINOv2 "
+        "real-vs-generated check. Passing lists the watch; failing rejects it with a reason. "
         "model is LEGACY_DINOV2, research_candidate is false, and "
         "production_validation is NOT_ESTABLISHED. "
         "The declared brand is not independently verified from the image. "
@@ -112,9 +117,6 @@ async def authenticate(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 content=failure_body("INVALID_INPUT", "Invalid image file"),
             )
-        arr = np.array(pil)  # HWC RGB uint8; resize + normalize in preprocess_chw
-        nchw = preprocess_chw(arr)
-
         list_uuid: uuid.UUID
         listing: Listing | None = None
         if listing_id:
@@ -163,54 +165,77 @@ async def authenticate(
                 content=failure_body("POLICY_ERROR", "DINOv3 candidate is blocked on the live DINOv2 route."),
             )
 
-        try:
-            raw_verdict, raw_confidence = await classify_image(nchw)
-        except Exception as exc:
-            _log.exception("inference_failed: %s", exc)
-            return JSONResponse(
-                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                content=failure_body("MODEL_ERROR", "The authenticity model did not return a result."),
-            )
+        # A new photo replaces any earlier evidence on this listing.
+        listing.s3_url = s3_url
+        listing.verdict = None
+        listing.confidence = None
 
-        verdict, confidence = apply_min_authentic_confidence(
-            raw_verdict,
-            raw_confidence,
-            settings.inference_min_authentic_confidence,
-        )
-        if raw_verdict == "AUTHENTIC" and verdict == "FAKE":
-            _log.info(
-                "authenticate_below_authentic_floor listing_id=%s raw_auth_conf=%.4f floor=%s",
-                list_uuid,
+        # 1. size, 2. is it a watch, 3. is it an original photo. Each can stop the listing.
+        outcome = check_size(pil.width, pil.height, settings.listing_min_short_side_px)
+        content = None
+        if outcome is None:
+            try:
+                content = await asyncio.to_thread(score_watch, pil)
+            except Exception as exc:
+                _log.exception("content_gate_failed: %s", exc)
+                listing.status = ListingStatus.pending
+                await db.commit()
+                return JSONResponse(
+                    status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                    content=failure_body("MODEL_ERROR", "The watch check did not run. The listing is held, not published."),
+                )
+            outcome = check_content(content)
+        if outcome is None and content is not None:
+            nchw = preprocess_chw(np.array(pil))  # HWC RGB uint8; resize + normalize in preprocess_chw
+            try:
+                raw_verdict, raw_confidence = await classify_image(nchw)
+            except Exception as exc:
+                _log.exception("inference_failed: %s", exc)
+                listing.status = ListingStatus.pending
+                await db.commit()
+                return JSONResponse(
+                    status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                    content=failure_body("MODEL_ERROR", "The authenticity model did not return a result."),
+                )
+            verdict, confidence = apply_min_authentic_confidence(
+                raw_verdict,
                 raw_confidence,
                 settings.inference_min_authentic_confidence,
             )
+            listing.verdict = verdict
+            listing.confidence = float(confidence)
+            outcome = check_origin(
+                raw_verdict=raw_verdict,
+                raw_confidence=float(raw_confidence),
+                min_authentic_confidence=settings.inference_min_authentic_confidence,
+                content=content,
+            )
+        assert outcome is not None
 
-        listing.s3_url = s3_url
-        listing.verdict = verdict
-        listing.confidence = float(confidence)
-        published = legacy_publication_status(verdict)
-        if published == "live":
-            raise RuntimeError("legacy DINOv2 cannot authorize publication")
-        listing.status = ListingStatus(published)
-
+        listing.status = ListingStatus(outcome.status)
+        listing.screening_code = outcome.code
+        listing.screening_reason = outcome.reason
+        listing.screening_details = outcome.details
         await db.commit()
 
         log_scope_request(
             _log,
             declared_brand=scope.canonical_brand,
-            decision=verdict,
+            decision=listing.verdict,
             mode=deployment_mode(),
-            status=verdict,
+            status=outcome.code,
         )
         return AuthenticateResponse(
-            verdict=verdict,  # type: ignore[arg-type]
-            confidence=float(confidence),
+            verdict=listing.verdict,  # type: ignore[arg-type]
+            confidence=listing.confidence,
             s3_url=s3_url,
             listing_id=str(list_uuid),
-            listing_status=listing.status.value,  # type: ignore[arg-type]
-            status=verdict,  # type: ignore[arg-type]
-            model_decision=verdict,  # type: ignore[arg-type]
-            publication_decision="BLOCKED",
+            listing_status=outcome.status,
+            status=listing.verdict,  # type: ignore[arg-type]
+            model_decision=listing.verdict,  # type: ignore[arg-type]
+            screening_code=outcome.code,
+            screening_reason=outcome.reason,
+            publication_decision="PUBLISHED" if outcome.status == "live" else "REJECTED",
             declared_brand=scope.canonical_brand or "",
         )
     except HTTPException:

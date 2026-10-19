@@ -19,6 +19,7 @@ from auth.routes import router as auth_router
 from config import settings
 from database import AsyncSessionLocal
 from inference.checkpoint_identity import CheckpointIdentityError, checkpoint_identity_ready, verify_frozen_checkpoint
+from inference.benchmark_routes import router as benchmark_router
 from inference.research_routes import router as research_router
 from inference.routes import router as inference_router
 from inference.triton_client import triton_ready
@@ -198,6 +199,7 @@ app.include_router(inference_router, prefix="/verify", tags=["legacy-dinov2"])
 app.include_router(research_router, prefix="/research", tags=["dinov3-research"])
 app.include_router(listings_router, prefix="/listings", tags=["listings"])
 app.include_router(market_router, prefix="/market", tags=["market"])
+app.include_router(benchmark_router, prefix="/benchmark", tags=["benchmark"])
 
 if LOCAL_UPLOAD_DIR.exists():
     app.mount("/static/local", StaticFiles(directory=str(LOCAL_UPLOAD_DIR)), name="local_uploads")

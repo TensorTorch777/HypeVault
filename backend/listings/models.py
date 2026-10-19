@@ -5,11 +5,12 @@ from __future__ import annotations
 from datetime import datetime
 from uuid import UUID
 
-from pydantic import BaseModel, Field, computed_field
+from pydantic import BaseModel, Field, computed_field, field_validator
 
 from database import ListingCategory, ListingStatus
 from listings.customer_label import customer_label as label_for_listing
 from listings.customer_label import evidence_role as role_for_listing
+from s3_client import local_public_url
 
 
 class ListingCreate(BaseModel):
@@ -40,9 +41,16 @@ class ListingRead(BaseModel):
     verdict: str | None
     confidence: float | None
     status: ListingStatus
+    screening_code: str | None = None
+    screening_reason: str | None = None
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+    @field_validator("s3_url")
+    @classmethod
+    def _current_image_host(cls, value: str | None) -> str | None:
+        return local_public_url(value)
 
     @computed_field
     @property
@@ -52,6 +60,7 @@ class ListingRead(BaseModel):
             verdict=self.verdict,
             confidence=self.confidence,
             s3_url=self.s3_url,
+            screening_code=self.screening_code,
         )
 
     @computed_field

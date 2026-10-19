@@ -10,10 +10,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from auth.deps import get_current_user, require_seller
-from database import Listing, ListingCategory, ListingStatus, User, get_db
+from auth.deps import get_current_user, get_optional_user, require_seller
+from database import Listing, ListingCategory, ListingStatus, User, UserRole, get_db
 from listings.models import ListingCreate, ListingRead, ListingUpdate, PresignRequest, PresignResponse
-from scraper.aggregator import aggregate_prices
+from market.routes import _redis_or_none
+from market.service import search_market
 from s3_client import generate_presigned_put_url
 
 _log = logging.getLogger(__name__)
@@ -67,7 +68,10 @@ async def list_my_listings(
     user: Annotated[User, Depends(get_current_user)],
 ) -> list[Listing]:
     try:
-        result = await db.execute(select(Listing).where(Listing.seller_id == user.id).order_by(Listing.created_at.desc()))
+        q = select(Listing).order_by(Listing.created_at.desc())
+        if user.role != UserRole.admin:  # admins review every seller's listings
+            q = q.where(Listing.seller_id == user.id)
+        result = await db.execute(q)
         return list(result.scalars().all())
     except Exception as exc:
         _log.exception("list_my_listings_failed: %s", exc)
@@ -97,12 +101,12 @@ async def recent_listings(
 
 
 @router.get("/compare")
-async def compare_prices(q: str) -> dict:
+async def compare_prices(q: str, db: Annotated[AsyncSession, Depends(get_db)], brand: str | None = None) -> dict:
     try:
         name = (q or "").strip()
         if len(name) < 2:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Query too short")
-        return await aggregate_prices(name)
+        return await search_market(db, await _redis_or_none(), name, brand)
     except HTTPException:
         raise
     except Exception as exc:
@@ -110,14 +114,26 @@ async def compare_prices(q: str) -> dict:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Comparison unavailable")
 
 
+def _visible(listing: Listing | None, viewer: User | None) -> bool:
+    """Live listings are public. Rejected or held listings are visible only to their seller."""
+    if listing is None:
+        return False
+    if listing.status == ListingStatus.live:
+        return True
+    return viewer is not None and (viewer.id == listing.seller_id or viewer.role == UserRole.admin)
+
+
 @router.get("/{listing_id}/comparison")
-async def price_comparison(listing_id: uuid.UUID, db: Annotated[AsyncSession, Depends(get_db)]) -> dict:
+async def price_comparison(
+    listing_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    viewer: Annotated[User | None, Depends(get_optional_user)],
+) -> dict:
     try:
         listing = await db.get(Listing, listing_id)
-        if listing is None:
+        if not _visible(listing, viewer):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Listing not found")
-        data = await aggregate_prices(listing.product_name)
-        return data
+        return await search_market(db, await _redis_or_none(), listing.product_name, listing.brand)
     except HTTPException:
         raise
     except Exception as exc:
@@ -129,10 +145,14 @@ async def price_comparison(listing_id: uuid.UUID, db: Annotated[AsyncSession, De
 
 
 @router.get("/{listing_id}", response_model=ListingRead)
-async def get_listing(listing_id: uuid.UUID, db: Annotated[AsyncSession, Depends(get_db)]) -> Listing:
+async def get_listing(
+    listing_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    viewer: Annotated[User | None, Depends(get_optional_user)],
+) -> Listing:
     try:
         listing = await db.get(Listing, listing_id)
-        if listing is None:
+        if not _visible(listing, viewer):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Listing not found")
         return listing
     except HTTPException:
