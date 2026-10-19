@@ -9,6 +9,7 @@ import unittest
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+_DATASET = REPO / "Label_0_Watches"
 _FROZEN_CHECKPOINT = REPO / "ml_rtx5080" / "experiments" / "v2_dinov3_cls_patch_attention" / "epoch_018.pt"
 sys.path.insert(0, str(REPO / "ml_rtx5080"))
 sys.path.insert(0, str(REPO / "backend"))
@@ -142,6 +143,7 @@ class BackendParityTests(unittest.TestCase):
         self.assertEqual(remapped, "FAKE")
         self.assertAlmostEqual(remapped_confidence, 0.30)
 
+    @unittest.skipUnless(_DATASET.is_dir(), "local dataset, not in git")
     def test_final_test_sample_is_rejected_without_opening_it(self) -> None:
         manifest = json.loads((REPO / "ml_rtx5080" / "experiments" / "dataset_audit" / "split_manifest_v2.json").read_text())
         test_path = Path(manifest["membership"]["test"][0])

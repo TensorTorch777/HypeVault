@@ -5,12 +5,14 @@ from __future__ import annotations
 import json
 import os
 import sys
+import importlib.util
 import unittest
 from pathlib import Path
 
 from PIL import Image
 
 REPO = Path(__file__).resolve().parents[1]
+_HAS_ONNXRUNTIME = importlib.util.find_spec("onnxruntime") is not None
 _DATASET = REPO / "Label_0_Watches"
 _FROZEN_CHECKPOINT = REPO / "ml_rtx5080" / "experiments" / "v2_dinov3_cls_patch_attention" / "epoch_018.pt"
 _DINOV3_ONNX = REPO / "models" / "dinov3_authenticity_classifier" / "1" / "model.onnx"
@@ -27,6 +29,7 @@ class GpuServingTests(unittest.TestCase):
         os.environ.pop("HYPEVAULT_SHADOW_SERVING", None)
         os.environ.pop("HYPEVAULT_DEPLOYMENT_MODE", None)
 
+    @unittest.skipUnless(_HAS_ONNXRUNTIME, "onnxruntime is not installed (GPU serving extra)")
     def test_execution_provider_names_are_not_treated_as_loaded(self) -> None:
         import onnxruntime as ort
         from dinov3_serving import probe_cuda_execution_provider, reset_onnx_session
@@ -49,6 +52,7 @@ class GpuServingTests(unittest.TestCase):
         self.assertEqual(probe["available"], False)
         self.assertIn("libcublasLt.so.12", probe["error"])
 
+    @unittest.skipUnless(_HAS_ONNXRUNTIME, "onnxruntime is not installed (GPU serving extra)")
     def test_onnx_cuda_and_triton_fail_closed(self) -> None:
         from inference.shadow import compose_shadow_record
         from policy_contract import SYSTEM_STATUS_ERROR
@@ -64,6 +68,7 @@ class GpuServingTests(unittest.TestCase):
             self.assertIn("POLICY_INFRASTRUCTURE_ERROR", record["shadow_reason_codes"])
             self.assertNotIn(record["shadow_decision"], {"AUTHENTIC", "FAKE", "REVIEW"})
 
+    @unittest.skipUnless(_HAS_ONNXRUNTIME, "onnxruntime is not installed (GPU serving extra)")
     def test_gpu_request_does_not_call_the_dinov2_loader(self) -> None:
         import inference.local_torch as local_torch
         from inference.shadow import compose_shadow_record
@@ -150,6 +155,7 @@ class GpuServingTests(unittest.TestCase):
             image_module.open = original
         self.assertFalse(opened["called"])
 
+    @unittest.skipUnless(_HAS_ONNXRUNTIME, "onnxruntime is not installed (GPU serving extra)")
     def test_gpu_batch_consistency_when_cuda_provider_loads(self) -> None:
         from dinov3_serving import probe_cuda_execution_provider
 
