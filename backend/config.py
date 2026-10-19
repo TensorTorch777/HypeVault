@@ -75,6 +75,15 @@ class Settings(BaseSettings):
     # Comma-separated account emails allowed to call /research/*. Empty → nobody. Never set from a request.
     research_user_emails: str = ""
 
+    # Market data (Phase 2a). eBay is read through the official Browse API only; HTML is never scraped.
+    ebay_client_id: str = ""
+    ebay_client_secret: str = ""
+    ebay_environment: str = "production"  # production | sandbox
+    ebay_marketplace_id: str = "EBAY_US"
+    # Salt for one-way seller pseudonyms. Seller usernames are never stored.
+    market_pseudonym_salt: str = "change-me"
+    market_cache_ttl_sec: int = 30 * 60
+
 
 def research_user_allowlist(raw: str | None = None) -> frozenset[str]:
     value = settings.research_user_emails if raw is None else raw

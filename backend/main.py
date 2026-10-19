@@ -23,8 +23,9 @@ from inference.research_routes import router as research_router
 from inference.routes import router as inference_router
 from inference.triton_client import triton_ready
 from listings.routes import router as listings_router
+from market.routes import router as market_router
+from market.service import ebay_configured
 from redis_client import close_redis, get_redis
-from scraper.readiness import check_scraper_readiness
 from s3_client import LOCAL_UPLOAD_DIR
 
 
@@ -169,15 +170,8 @@ async def health_ready() -> JSONResponse:
         _log.warning("health_ready_triton: %s", exc)
         checks["triton"] = "error"
         ok = False
-    try:
-        scraper_ok, scraper_state = check_scraper_readiness()
-        checks["scraper"] = "ok" if scraper_ok else f"error:{scraper_state}"
-        if not scraper_ok:
-            ok = False
-    except Exception as exc:
-        _log.warning("health_ready_scraper: %s", exc)
-        checks["scraper"] = "error"
-        ok = False
+    # Market data is optional context: report its state without failing readiness.
+    checks["market_ebay"] = "ok" if ebay_configured() else "not_configured"
     try:
         checks["dinov3_checkpoint"] = "ok" if checkpoint_identity_ready() else "error"
     except Exception as exc:
@@ -203,6 +197,7 @@ app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(inference_router, prefix="/verify", tags=["legacy-dinov2"])
 app.include_router(research_router, prefix="/research", tags=["dinov3-research"])
 app.include_router(listings_router, prefix="/listings", tags=["listings"])
+app.include_router(market_router, prefix="/market", tags=["market"])
 
 if LOCAL_UPLOAD_DIR.exists():
     app.mount("/static/local", StaticFiles(directory=str(LOCAL_UPLOAD_DIR)), name="local_uploads")
