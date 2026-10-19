@@ -1,22 +1,42 @@
 "use client";
 
-import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { ShieldCheck } from "lucide-react";
 
+import { Lockup } from "@/components/brand/Lockup";
 import { GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { api, fetchMe, getApiErrorMessage, googleLogin } from "@/lib/api";
 import { getLastSignedInEmail, setLastSignedInEmail } from "@/lib/auth";
+import { canSell } from "@/lib/roles";
+
+type AuthConfig = {
+  sso: { provider: "google"; configured: boolean; domains: string[] };
+  password_login: boolean;
+};
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [lastEmail, setLastEmail] = useState<string | null>(null);
+  const [showDev, setShowDev] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const config = useQuery({
+    queryKey: ["auth-config"],
+    queryFn: async () => (await api.get<AuthConfig>("/auth/config")).data,
+    staleTime: Infinity,
+  });
+  const domain = config.data?.sso.domains[0] ?? "somaiya.edu";
+  const ssoReady = Boolean(config.data?.sso.configured && process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID?.trim());
+  // The password form exists only for local development, and only until SSO is connected.
+  const devLogin = Boolean(config.data?.password_login) && !ssoReady;
 
   useEffect(() => {
     setLastEmail(getLastSignedInEmail());
@@ -27,11 +47,9 @@ export default function LoginPage() {
     void (async () => {
       try {
         const me = await fetchMe();
-        if (cancelled) return;
-        if (me.role === "seller") router.replace("/seller/dashboard");
-        else router.replace("/");
+        if (!cancelled) router.replace(canSell(me.role) ? "/seller/dashboard" : "/");
       } catch {
-        /* stale token is cleared by interceptor */
+        /* not signed in */
       }
     })();
     return () => {
@@ -42,8 +60,7 @@ export default function LoginPage() {
   const routePostLogin = useCallback(async () => {
     const me = await fetchMe();
     setLastSignedInEmail(me.email);
-    if (me.role === "seller") router.push("/seller/dashboard");
-    else router.push("/");
+    router.push(canSell(me.role) ? "/seller/dashboard" : "/");
   }, [router]);
 
   const onGoogleCredential = useCallback(
@@ -55,7 +72,7 @@ export default function LoginPage() {
           await googleLogin(idToken);
           await routePostLogin();
         } catch (e) {
-          setErr(getApiErrorMessage(e, "Google sign-in failed."));
+          setErr(getApiErrorMessage(e, "Sign-in failed."));
         } finally {
           setLoading(false);
         }
@@ -64,15 +81,12 @@ export default function LoginPage() {
     [routePostLogin]
   );
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onDevSubmit(e: React.FormEvent) {
     e.preventDefault();
     setErr(null);
     setLoading(true);
     try {
-      await api.post<{ access_token: string; refresh_token: string }>("/auth/login", {
-        email,
-        password,
-      });
+      await api.post("/auth/login", { email, password });
       await routePostLogin();
     } catch (e) {
       setErr(getApiErrorMessage(e, "Invalid credentials."));
@@ -82,79 +96,85 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="mx-auto grid min-h-[calc(100dvh-12rem)] w-full max-w-6xl items-center gap-10 px-4 py-10 md:px-6 lg:grid-cols-2 lg:gap-16">
-      <section className="hidden lg:block">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#FFB089]">HypeVault</p>
-        <h1 className="mt-4 max-w-md font-[family-name:var(--font-display)] text-5xl font-semibold not-italic leading-[1.05] tracking-tight text-white">
-          A research prototype for in-scope watch screening.
-        </h1>
-        <p className="mt-6 max-w-md text-base leading-7 text-white/65">
-          Declared brands are chosen by you. A model classification is not a certificate, and a visible listing is not verified authentic.
-        </p>
+    <div className="relative isolate -mt-16 grid min-h-[100svh] lg:grid-cols-[1.15fr_1fr]">
+      {/* Cinematic side */}
+      <section className="relative hidden overflow-hidden lg:block" aria-hidden="true">
+        <div className="hv-sky absolute inset-0" />
+        <Image src="/renders/backdrops/rooftop_pool_0.webp" alt="" fill priority sizes="58vw" className="hv-kenburns object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/10 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/40" />
+        <div className="absolute bottom-[-6%] left-[8%] aspect-square w-[min(40vw,560px)]">
+          <Image src="/renders/patek_nautilus/hero.webp" alt="" fill sizes="40vw" className="hv-fade-y object-contain drop-shadow-[0_40px_60px_rgba(10,11,23,0.7)]" />
+        </div>
+        <div className="absolute left-10 top-[22%]">
+          <Lockup compact />
+        </div>
       </section>
 
-      <section className="mx-auto w-full max-w-md rounded-2xl border border-white/10 bg-[#140a22]/95 p-6 shadow-[0_24px_70px_rgba(0,0,0,0.4)] sm:p-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#FFB089] lg:hidden">HypeVault</p>
-        <h1 className="mt-2 text-3xl font-semibold not-italic tracking-tight text-white">Log in</h1>
-        <p className="mt-2 min-h-[1.25rem] text-xs text-white/50">{lastEmail ? `Last signed in: ${lastEmail}` : "Welcome back"}</p>
-        <form onSubmit={(e) => void onSubmit(e)} className="mt-6 space-y-5">
-          <div>
-            <label className="text-xs font-semibold text-white/70" htmlFor="email">
-              Email
-            </label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              inputMode="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-2"
-              required
-            />
-          </div>
-          <div>
-            <label className="text-xs font-semibold text-white/70" htmlFor="pw">
-              Password
-            </label>
-            <Input
-              id="pw"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-2"
-              required
-            />
-          </div>
-          <div className="min-h-[1.25rem]" aria-live="polite">
-            {err ? <p className="text-sm font-semibold text-danger" role="alert">{err}</p> : null}
-          </div>
-          <Button className="w-full min-h-[48px]" type="submit" disabled={loading}>
-            {loading ? "Signing in…" : "Continue"}
-          </Button>
-          <div className="flex items-center gap-3 text-xs text-white/40">
-            <span className="h-px flex-1 bg-white/10" />
-            <span>or</span>
-            <span className="h-px flex-1 bg-white/10" />
-          </div>
-          <div className="flex justify-center">
-            <GoogleSignInButton
-              role="buyer"
-              disabled={loading}
-              onCredential={(token) => onGoogleCredential(token)}
-              onError={(message) => setErr(message)}
-            />
-          </div>
-          <p className="text-center text-sm text-white/60">
-            New here?{" "}
-            <Link href="/register" className="font-semibold text-[#FFB089] hover:underline">
-              Create an account
-            </Link>
+      {/* Sign-in side */}
+      <section className="relative flex items-center justify-center px-4 pb-16 pt-28 sm:px-8">
+        <div className="hv-sky absolute inset-0 -z-10 opacity-25 lg:hidden" aria-hidden="true" />
+        <div className="w-full min-w-0 max-w-[420px]">
+          <p className="hv-eyebrow">Somaiya single sign-on</p>
+          <h1 className="mt-1 font-display text-[clamp(3rem,6vw,4.4rem)] font-extrabold uppercase leading-[0.88] text-white">Sign in</h1>
+          <p className="mt-4 text-[15px] leading-7 text-primary/75">
+            Use your <span className="font-bold text-primary">@{domain}</span> Google account. Your HypeVault account is created the first time
+            you sign in. No separate password.
           </p>
-        </form>
+
+          <div className="mt-8 rounded-[20px] border border-white/10 bg-card/80 p-6 backdrop-blur">
+            {config.isLoading ? (
+              <div className="h-[44px] animate-pulse rounded-full bg-white/10" />
+            ) : ssoReady ? (
+              <div className="flex w-full justify-center">
+                <GoogleSignInButton
+                  role="seller"
+                  hostedDomain={domain}
+                  disabled={loading}
+                  onCredential={(token) => onGoogleCredential(token)}
+                  onError={(message) => setErr(message)}
+                />
+              </div>
+            ) : (
+              <div className="rounded-2xl bg-white/[0.04] p-4">
+                <p className="font-display text-[1.2rem] font-bold uppercase text-neon-yellow">SSO not connected yet</p>
+                <p className="mt-1 text-[13px] leading-6 text-primary/70">
+                  An administrator needs to add the Google OAuth client ID for @{domain} (GOOGLE_CLIENT_ID and NEXT_PUBLIC_GOOGLE_CLIENT_ID).
+                </p>
+              </div>
+            )}
+            <div className="mt-4 flex items-start gap-2 text-[12px] leading-5 text-primary/55">
+              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden="true" />
+              Only accounts managed by the {domain} Workspace are accepted; the server checks this on every sign-in.
+            </div>
+            {lastEmail ? <p className="mt-3 text-[12px] text-primary/45">Last signed in as {lastEmail}</p> : null}
+            <div className="mt-3 min-h-[1.25rem]" aria-live="polite">
+              {err ? (
+                <p className="text-sm font-semibold text-danger" role="alert">
+                  {err}
+                </p>
+              ) : null}
+            </div>
+          </div>
+
+          {devLogin ? (
+            <div className="mt-6">
+              <button type="button" className="text-[13px] font-semibold text-primary/50 underline-offset-4 hover:text-primary hover:underline" onClick={() => setShowDev((v) => !v)}>
+                {showDev ? "Hide" : "Use a"} development account
+              </button>
+              {showDev ? (
+                <form onSubmit={(e) => void onDevSubmit(e)} className="mt-4 space-y-3 rounded-[20px] border border-dashed border-white/15 p-5">
+                  <p className="text-[12px] text-primary/55">Local development only. Disappears once SSO is connected.</p>
+                  <Input aria-label="Email" type="email" autoComplete="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                  <Input aria-label="Password" type="password" autoComplete="current-password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                  <Button type="submit" variant="outline" className="w-full" disabled={loading}>
+                    {loading ? "Signing in…" : "Sign in"}
+                  </Button>
+                </form>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
       </section>
     </div>
   );

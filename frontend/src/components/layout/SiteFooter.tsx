@@ -1,109 +1,79 @@
-"use client";
-
 import Link from "next/link";
 
-import { WobbleText } from "@/components/motion/BouncyText";
+import { Lockup } from "@/components/brand/Lockup";
 
 const COLUMNS = [
   {
-    heading: "Shop",
+    title: "Market",
     links: [
-      { label: "Luxury watches",       href: "/product/Luxury%20watches" },
-      { label: "Recent listings", href: "/#recent" },
+      { label: "Search listings", href: "/market" },
+      { label: "Patek Philippe", href: "/market?brand=Patek%20Philippe" },
+      { label: "Audemars Piguet", href: "/market?brand=Audemars%20Piguet" },
+      { label: "Richard Mille", href: "/market?brand=Richard%20Mille" },
+      { label: "A. Lange & Söhne", href: "/market?brand=A.%20Lange%20%26%20S%C3%B6hne" },
+      { label: "Vacheron Constantin", href: "/market?brand=Vacheron%20Constantin" },
     ],
   },
   {
-    heading: "Sellers",
+    title: "Sellers",
     links: [
-      { label: "List an item",       href: "/seller/upload" },
-      { label: "Seller dashboard",   href: "/seller/dashboard" },
-      { label: "Pricing",            href: "/register" },
+      { label: "List a watch", href: "/seller/upload" },
+      { label: "Seller desk", href: "/seller/dashboard" },
+      { label: "Create an account", href: "/register" },
     ],
   },
   {
-    heading: "Trust",
+    title: "Research",
     links: [
-      { label: "Five-brand research scope", href: "/#how" },
-      { label: "Market comparison",         href: "/product/Luxury%20watches" },
-      { label: "Known limitations",         href: "/#how" },
-    ],
-  },
-  {
-    heading: "Company",
-    links: [
-      { label: "Mission",    href: "/" },
-      { label: "Research",   href: "/#how" },
-      { label: "Contact",    href: "/" },
+      { label: "Model benchmark", href: "/benchmark" },
+      { label: "How screening works", href: "/#method" },
+      { label: "Research console", href: "/research" },
     ],
   },
 ];
 
 export function SiteFooter() {
   return (
-    <footer className="relative overflow-hidden border-t border-[rgba(255,31,164,0.18)] bg-[#0B0118] pt-20 pb-12">
-      {/* sunset orb glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-32"
-        style={{
-          background:
-            "radial-gradient(ellipse 90% 100% at 50% 0%, rgba(255,31,164,0.18), transparent 60%)",
-        }}
-      />
-
-      <div className="relative mx-auto max-w-[1080px] px-5 text-[13px] text-[#FFEDF6]/60">
-        {/* Massive wordmark */}
-        <p
-          className="cursor-default font-[family-name:var(--font-display)] text-[clamp(3rem,11vw,9rem)] font-black italic leading-none tracking-tighter"
-          style={{
-            background:
-              "linear-gradient(95deg, #FFD24A, #FF7A1A 25%, #FF1FA4 60%, #9B5BFF)",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            color: "transparent",
-            filter: "drop-shadow(0 0 32px rgba(255,31,164,0.4))",
-          }}
-        >
-          <WobbleText text="HYPE/VAULT" />
-        </p>
-
-        <hr className="my-10 border-[rgba(255,31,164,0.14)]" />
-
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-4 md:gap-6">
-          {COLUMNS.map((c) => (
-            <div key={c.heading}>
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#FF1FA4]">
-                {c.heading}
-              </p>
-              <ul className="mt-3 space-y-2.5">
-                {c.links.map((l) => (
-                  <li key={`${c.heading}-${l.label}`}>
-                    <Link
-                      href={l.href}
-                      className="hv-link-underline inline-block text-[12px] text-[#FFEDF6]/65 transition-colors hover:text-[#00E1FF]"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        <hr className="my-10 border-[rgba(255,31,164,0.14)]" />
-
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <p className="text-[11px] leading-[1.5] text-[#FFEDF6]/40">
-            © {new Date().getFullYear()} HypeVault · Five-brand research prototype ·
-            Capstone — not a live marketplace.
+    <footer className="relative overflow-hidden border-t border-primary/10 bg-[#0A0B17] pb-28 pt-20 md:pb-14">
+      <div className="mx-auto grid max-w-[1240px] gap-14 px-4 sm:px-6 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+        <div className="max-w-sm">
+          <Lockup compact />
+          <p className="mt-5 text-[13px] leading-6 text-primary/65">
+            Market intelligence and AI-assisted listing screening for five houses of haute horlogerie. A university
+            research project, not a live marketplace.
           </p>
-          <div className="flex gap-4 text-[11px] text-[#FFEDF6]/55">
-            <Link href="/" className="hv-link-underline hover:text-[#00E1FF]">Privacy</Link>
-            <Link href="/" className="hv-link-underline hover:text-[#00E1FF]">Terms</Link>
-            <Link href="/" className="hv-link-underline hover:text-[#00E1FF]">Legal</Link>
-          </div>
         </div>
+        {COLUMNS.map((col) => (
+          <div key={col.title}>
+            <p className="hv-eyebrow">{col.title}</p>
+            <ul className="mt-5 space-y-3">
+              {col.links.map((l) => (
+                <li key={l.label}>
+                  <Link href={l.href} className="hv-link-underline text-[13px] text-primary/70 transition-colors hover:text-primary">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div className="mx-auto mt-16 flex max-w-[1240px] items-center gap-4 px-4 sm:px-6">
+        <div className="grid h-16 w-12 shrink-0 place-items-center border-2 border-primary/80 font-display text-[1.9rem] font-black leading-none text-primary" aria-hidden="true">
+          RP
+        </div>
+        <p className="max-w-sm text-[11px] leading-4 text-primary/65">
+          <span className="font-bold text-primary/85">Research Prototype.</span> Screening evidence, not a certificate of authenticity.
+          Studio watches are procedural models without logos; backdrops marked as generated are AI art.
+        </p>
+      </div>
+      <div className="mx-auto mt-10 flex max-w-[1240px] flex-col gap-3 border-t border-primary/10 px-4 pt-8 text-[11px] leading-5 text-primary/50 sm:px-6 md:flex-row md:justify-between">
+        <p>© {new Date().getFullYear()} HypeVault · K. J. Somaiya School of Engineering · Research prototype</p>
+        <p>
+          3D model: &ldquo;Richard Mille RM011&rdquo; by Denis V on Sketchfab,{" "}
+          <a href="https://creativecommons.org/licenses/by-nc/4.0/" className="underline hover:text-primary" rel="noreferrer" target="_blank">CC BY-NC 4.0</a>
+        </p>
+        <p>Model classifications are screening evidence, never a certificate of authenticity.</p>
       </div>
     </footer>
   );

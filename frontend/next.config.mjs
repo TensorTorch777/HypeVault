@@ -30,9 +30,12 @@ const nextConfig = {
     return config;
   },
   images: {
+    // Only listing photos load remotely (ProductVisualPanel). A "**" host would let anyone use
+    // /_next/image to fetch and resize arbitrary URLs through this server.
     remotePatterns: [
-      { protocol: "https", hostname: "**" },
       { protocol: "http", hostname: "localhost", port: "8000" },
+      { protocol: "https", hostname: "**.ngrok-free.dev" },
+      { protocol: "https", hostname: "**.amazonaws.com" },
     ],
   },
 };

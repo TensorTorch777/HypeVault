@@ -1,182 +1,156 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 
-import { PremiumHero } from "@/components/hero/PremiumHero";
-import { AppleBentoPromo } from "@/components/home/AppleBentoPromo";
-import { HowItWorks } from "@/components/home/HowItWorks";
-import { PhilosophyBento } from "@/components/home/PhilosophyBento";
-import { ClosingCTA } from "@/components/home/ClosingCTA";
-import { HomeVaultStats } from "@/components/campaign/HomeVaultStats";
-import { SearchBar } from "@/components/SearchBar";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { Lockup } from "@/components/brand/Lockup";
+import { CinematicBand } from "@/components/home/CinematicBand";
+import { KeyArtHero, type KeyArtPanel } from "@/components/home/KeyArtHero";
+import { Showdown } from "@/components/home/Showdown";
+import { Turnaround } from "@/components/home/Turnaround";
+import { BrandIndex } from "@/components/market/BrandIndex";
+import { STUDIO_WATCHES, backdropUrl, getRenderAssets, heroUrl } from "@/lib/renderAssets";
 
-const PhysicsBrandsCanvas = dynamic(
-  () => import("@/components/physics/PhysicsBrandsCanvas").then((m) => m.PhysicsBrandsCanvas),
-  { ssr: false, loading: () => <div className="h-[520px] w-full bg-[#0B0118]" /> }
-);
+// Painted skies per panel; a generated backdrop replaces each one once it exists.
+const SKIES = {
+  lavender: "linear-gradient(180deg,#2B2350 0%,#6B4A97 45%,#C77BB0 78%,#F6B3B0 100%)",
+  peach: "linear-gradient(180deg,#3A2552 0%,#9A4F86 40%,#F08AA8 70%,#FFC08A 100%)",
+  rose: "linear-gradient(180deg,#24204A 0%,#5A3F8C 35%,#E0789A 75%,#FFD9A0 100%)",
+  sea: "linear-gradient(180deg,#1C2550 0%,#3B4E9A 40%,#9C86C8 75%,#F6B3B0 100%)",
+  night: "linear-gradient(180deg,#0F1230 0%,#2A2160 50%,#7A3C78 85%,#E0789A 100%)",
+};
 
-const FEED_WATCH_IMAGES = [
-  "/products/feed-richard-mille.jpg",
-  "/products/feed-ap-2.jpg",
-  "/products/feed-patek-2.jpg",
-  "/products/watch-royal-oak.jpg",
+const METHOD = [
+  {
+    n: "01",
+    title: "Declare and shoot",
+    body: "The seller picks the manufacture from the five we cover and uploads a photo. It must be at least 400 px on its short side.",
+    watch: "lange_one",
+  },
+  {
+    n: "02",
+    title: "Screened, or sent back",
+    body: "CLIP checks there is a wristwatch in the photo, then a self-supervised transformer looks for the traces image generators leave behind. Fail either and the seller is told why. Pass and the watch is listed: screened, not certified.",
+    watch: "ap_royal_oak",
+  },
+  {
+    n: "03",
+    title: "Set against the street",
+    body: "Every listing sits beside real asking prices: live from the eBay Browse API and from a dated Chrono24 dataset, each labelled with where and when it was seen.",
+    watch: "vc_overseas",
+  },
 ];
 
-const GENERIC_RECENT_ITEMS = [
-  { name: "Rolex Submariner Date", brand: "Rolex", category: "watch", label: "Demo example — not live inventory" },
-  { name: "Omega Speedmaster Moonwatch", brand: "Omega", category: "watch", label: "Demo example — not live inventory" },
-  { name: "Audemars Piguet Royal Oak", brand: "Audemars Piguet", category: "watch", label: "Demo example — not live inventory" },
-  { name: "Patek Philippe Nautilus", brand: "Patek Philippe", category: "watch", label: "Demo example — not live inventory" },
-  { name: "Richard Mille RM 011", brand: "Richard Mille", category: "watch", label: "Demo example — not live inventory" },
-  { name: "Vacheron Constantin Overseas", brand: "Vacheron Constantin", category: "watch", label: "Demo example — not live inventory" },
-  { name: "A. Lange & Söhne Zeitwerk", brand: "A. Lange & Söhne", category: "watch", label: "Demo example — not live inventory" },
-  { name: "Patek Philippe Aquanaut", brand: "Patek Philippe", category: "watch", label: "Demo example — not live inventory" },
-] as const;
-
 export default function HomePage() {
+  const assets = getRenderAssets();
+  const hero = (id: string) => heroUrl(assets, id, "hero");
+  const flat = (id: string) => heroUrl(assets, id, "flat");
+
+  const panels: KeyArtPanel[] = [
+    { area: "a", render: hero("patek_nautilus"), backdrop: backdropUrl(assets, "marina"), label: "Patek Philippe", tint: SKIES.lavender },
+    { area: "b", render: flat("ap_royal_oak"), backdrop: backdropUrl(assets, "ocean_drive"), label: "Audemars Piguet", tint: SKIES.peach, fit: "dial" },
+    { area: "c", render: hero("rm_rm011"), backdrop: backdropUrl(assets, "neon_rain"), label: "Richard Mille", tint: SKIES.night },
+    { area: "d", render: hero("lange_one"), backdrop: backdropUrl(assets, "penthouse"), label: "A. Lange & Söhne", tint: SKIES.rose },
+    { area: "f", render: hero("vc_overseas"), backdrop: backdropUrl(assets, "rooftop_pool"), label: "Vacheron Constantin", tint: SKIES.sea },
+    { area: "g", render: flat("patek_nautilus"), backdrop: backdropUrl(assets, "bay_dusk"), label: "Five houses", tint: SKIES.peach, fit: "dial" },
+  ];
+
+  const turnaround = STUDIO_WATCHES.map((s) => ({
+    id: s.id,
+    brand: s.brand,
+    piece: s.piece,
+    frames: assets.watches[s.id]?.turntable_frames ?? 0,
+    hero: hero(s.id),
+  }));
+
+  const tints = [SKIES.lavender, SKIES.peach, SKIES.rose, SKIES.sea, SKIES.night];
+  const houses = STUDIO_WATCHES.map((s, i) => ({
+    brand: s.brand,
+    piece: s.piece,
+    city: s.city,
+    since: s.since,
+    render: hero(s.id),
+    backdrop: backdropUrl(assets, s.backdrop),
+    tint: tints[i],
+  }));
+
   return (
     <>
-      {/* 1. Hero */}
-      <PremiumHero />
+      <KeyArtHero panels={panels} quality={assets.quality} />
 
-      {/* 1b. Physics playground */}
-      <section className="relative border-y border-[rgba(255,31,164,0.18)] bg-[#0B0118]">
-        <div className="mx-auto flex max-w-[1080px] items-end justify-between gap-6 px-5 pt-10 pb-2">
-          <Reveal variant="slideLeft">
-            <p className="hv-eyebrow">Interactive demo — not live inventory</p>
-            <h2
-              className="mt-2 font-[family-name:var(--font-display)] font-extrabold italic text-[#FFEDF6]"
-              style={{ fontSize: "clamp(1.75rem, 3.4vw, 2.5rem)", letterSpacing: "-0.025em", lineHeight: 1.05 }}
-            >
-              THE LABELS THAT MATTER,{" "}
-              <span className="hv-gradient-text">ALL IN ONE VAULT</span>.
-            </h2>
-          </Reveal>
-          <Reveal variant="slideRight" delay={0.15}>
-            <p className="hidden max-w-[28ch] pb-2 text-right text-[12px] uppercase tracking-[0.18em] text-[#FFEDF6]/55 md:block">
-              Drag the pills. Throw them around.<br/>
-              They have weight, they collide.
-            </p>
-          </Reveal>
+      <Turnaround watches={turnaround} />
+
+      <CinematicBand backdrop={backdropUrl(assets, "bay_dusk")} render={hero("patek_nautilus")} />
+
+      {/* The five houses */}
+      <section aria-labelledby="houses" className="relative py-28">
+        <div className="mx-auto max-w-[1060px] px-4 sm:px-6">
+          <p className="hv-eyebrow">People &amp; places</p>
+          <h2 id="houses" className="mt-1 font-display text-[clamp(2.6rem,5vw,4.2rem)] font-extrabold uppercase leading-[0.9] text-primary">
+            Only in the vault
+          </h2>
+          <p className="mt-4 max-w-xl text-[15px] leading-7 text-primary/70">
+            Five manufactures, each with its live median asking price. Anything else is outside scope and gets no result at all.
+          </p>
         </div>
-        <Reveal variant="fadeIn" delay={0.25}>
-          <PhysicsBrandsCanvas height={520} />
-        </Reveal>
-      </section>
-
-      {/* 2. Apple bento */}
-      <AppleBentoPromo />
-
-      {/* 3. Search band */}
-      <section className="bg-[#0B0118] py-16 md:py-20">
-        <div className="mx-auto max-w-2xl px-5 text-center">
-          <Reveal>
-            <p className="hv-eyebrow">Find an item</p>
-            <h2 className="mx-auto mt-3 max-w-md font-[family-name:var(--font-display)] hv-display-md text-[#FFEDF6]">
-              FIVE IN-SCOPE BRANDS.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.15} className="mt-8">
-            <SearchBar variant="dark" />
-          </Reveal>
+        <div className="mt-12 px-4 sm:px-6">
+          <BrandIndex houses={houses} />
         </div>
       </section>
 
-      {/* 4. How it works */}
-      <HowItWorks />
-
-      {/* 5. Stats */}
-      <section className="bg-[#160329] py-24 md:py-32">
-        <div className="mx-auto max-w-[1080px] px-5">
-          <Reveal className="mb-14 max-w-xl">
-            <p className="hv-eyebrow">By the numbers</p>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] hv-display-lg text-[#FFEDF6]">
-              SCALE YOU CAN <span className="hv-gradient-text">MEASURE</span>.
+      {/* Method */}
+      <section id="method" aria-labelledby="method-title" className="scroll-mt-20 py-24">
+        <div className="mx-auto max-w-[1060px] px-4 sm:px-6">
+          <div className="flex items-end justify-between gap-6">
+            <h2 id="method-title" className="font-display text-[clamp(2.2rem,4vw,3.4rem)] font-extrabold uppercase leading-[0.9] text-primary">
+              How it works
             </h2>
-          </Reveal>
-          <HomeVaultStats />
-        </div>
-      </section>
-
-      {/* 6. Philosophy bento */}
-      <PhilosophyBento />
-
-      {/* 7. Recent listings */}
-      <section id="recent" className="bg-[#0B0118] py-24 md:py-32">
-        <div className="mx-auto max-w-[1080px] px-5">
-          <div className="mb-14 flex items-end justify-between gap-4">
-            <Reveal variant="slideLeft">
-              <p className="hv-eyebrow">Demo examples — not live inventory</p>
-              <h2 className="mt-3 font-[family-name:var(--font-display)] hv-display-lg text-[#FFEDF6]">
-                SAMPLE CARDS, NOT THE CATALOG.
-              </h2>
-            </Reveal>
-            <Reveal variant="slideRight" delay={0.1}>
-              <Link href="/seller/upload" className="hv-chevron hidden md:inline-flex">
-                List your item
-              </Link>
-            </Reveal>
+            <Link href="/research" className="hv-chevron shrink-0">
+              Research console
+            </Link>
           </div>
-
-          <Stagger gap={0.07} className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {GENERIC_RECENT_ITEMS.map((l, idx) => {
-              const fallback = FEED_WATCH_IMAGES[idx % FEED_WATCH_IMAGES.length];
+          <ol className="mt-10 grid gap-5 md:grid-cols-3">
+            {METHOD.map((m) => {
+              const img = flat(m.watch);
               return (
-                <StaggerItem key={`${l.category}-${l.name}`}>
-                  <div className="group block h-full">
-                    <motion.div
-                      whileHover={{ y: -8, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }}
-                      className="hv-card h-full overflow-hidden"
-                    >
-                      <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-[#1B0533] to-[#0B0118]">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <motion.img
-                          src={fallback}
-                          alt={l.name}
-                          className="h-full w-full object-cover"
-                          whileHover={{ scale: 1.06 }}
-                          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                        />
-                        <span className="absolute left-3 top-3 inline-flex max-w-[14rem] items-center gap-1 rounded-full bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase text-white">
-                          {l.label}
-                        </span>
-                      </div>
-                      <div className="p-5">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#FF1FA4]">
-                          {l.brand}
-                        </p>
-                        <p className="mt-1 line-clamp-2 text-[15px] font-bold italic text-[#FFEDF6]">
-                          {l.name}
-                        </p>
-                        <div className="mt-4 flex items-center justify-between border-t border-[rgba(255,31,164,0.14)] pt-3">
-                          <span className="text-[11px] font-bold uppercase tracking-wide text-[#00E1FF]">
-                            {l.label}
-                          </span>
-                          <motion.span
-                            className="inline-block text-[#FFEDF6]/55 group-hover:text-[#00E1FF]"
-                            whileHover={{ x: 3, y: -3 }}
-                            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                          >
-                            <ArrowUpRight className="h-4 w-4" />
-                          </motion.span>
-                        </div>
-                      </div>
-                    </motion.div>
+                <li key={m.n} className="hv-card overflow-hidden hover:-translate-y-1">
+                  <div className="hv-sky relative aspect-[16/10] overflow-hidden">
+                    {img ? <Image src={img} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className="scale-[1.6] object-contain" /> : null}
+                    <span className="absolute left-4 top-3 font-display text-[2.2rem] font-black text-white/90">{m.n}</span>
                   </div>
-                </StaggerItem>
+                  <div className="p-6">
+                    <h3 className="font-display text-[1.7rem] font-extrabold uppercase leading-none text-primary">{m.title}</h3>
+                    <p className="mt-3 text-[14px] leading-6 text-primary/70">{m.body}</p>
+                  </div>
+                </li>
               );
             })}
-          </Stagger>
-
+          </ol>
         </div>
       </section>
 
-      {/* 8. Closing CTA */}
-      <ClosingCTA />
+      <Showdown dials={[flat("ap_royal_oak"), flat("patek_nautilus")]} />
+
+      {/* Closing */}
+      <section aria-labelledby="closing" className="hv-sky relative isolate overflow-hidden">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-transparent to-[#14112A]/40" aria-hidden="true" />
+        <div className="mx-auto flex min-h-[80svh] max-w-[1060px] flex-col items-center justify-center px-4 py-28 text-center sm:px-6">
+          <Lockup />
+          <h2 id="closing" className="hv-wide mt-10 text-[clamp(1.2rem,2.6vw,2rem)] text-white">
+            List a watch. Bring the evidence.
+          </h2>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href="/seller/upload" className="hv-btn-pill hv-btn-primary">
+              Start a listing <span aria-hidden="true">→</span>
+            </Link>
+            <Link href="/market" className="hv-btn-pill hv-btn-secondary">
+              Browse the market
+            </Link>
+          </div>
+          <p className="mt-10 max-w-md text-[12px] font-medium leading-5 text-white/85">
+            A university research prototype. Model classifications are screening evidence, never a certificate of authenticity.
+            Studio watches are procedural models in the style of each house, without logos.
+          </p>
+        </div>
+      </section>
     </>
   );
 }

@@ -91,7 +91,7 @@ export function ResearchExplanation({
                       top: `${(patch.y / imageHeight) * 100}%`,
                       width: `${(patch.width / imageWidth) * 100}%`,
                       height: `${(patch.height / imageHeight) * 100}%`,
-                      background: `rgba(255, 122, 26, ${0.15 + strength * 0.55})`,
+                      background: `rgba(255,46,154, ${0.15 + strength * 0.55})`,
                     }}
                   />
                 );

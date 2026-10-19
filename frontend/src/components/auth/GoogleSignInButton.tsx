@@ -12,16 +12,19 @@ type GoogleAccountsId = {
   initialize: (options: {
     client_id: string;
     callback: (response: GoogleCredentialResponse) => void;
+    hd?: string;
+    ux_mode?: "popup" | "redirect";
   }) => void;
   renderButton: (
     parent: HTMLElement,
     options: {
       type: "standard";
-      theme: "outline";
-      text: "continue_with";
+      theme: "outline" | "filled_black";
+      text: "continue_with" | "signin_with";
       size: "large";
       width: number;
       shape: "pill";
+      logo_alignment?: "left" | "center";
     }
   ) => void;
 };
@@ -56,11 +59,14 @@ function loadGoogleScript(): Promise<void> {
 export function GoogleSignInButton({
   role,
   disabled,
+  hostedDomain,
   onCredential,
   onError,
 }: {
   role: Role;
   disabled?: boolean;
+  /** Restricts Google's account chooser to this Workspace domain. The server enforces it too. */
+  hostedDomain?: string;
   onCredential: (idToken: string, role: Role) => void;
   onError: (message: string) => void;
 }) {
@@ -86,6 +92,7 @@ export function GoogleSignInButton({
         mountRef.current.innerHTML = "";
         googleId.initialize({
           client_id: clientId,
+          ...(hostedDomain ? { hd: hostedDomain } : {}),
           callback: (response) => {
             const token = response.credential;
             if (!token) {
@@ -97,11 +104,13 @@ export function GoogleSignInButton({
         });
         googleId.renderButton(mountRef.current, {
           type: "standard",
-          theme: "outline",
-          text: "continue_with",
+          theme: "filled_black",
+          text: "signin_with",
           size: "large",
-          width: 320,
+          // Google accepts 200–400 px; fit the container so it never overflows a phone screen.
+          width: Math.max(200, Math.min(340, Math.floor(mountRef.current.clientWidth || 340))),
           shape: "pill",
+          logo_alignment: "left",
         });
       } catch (e) {
         const msg = e instanceof Error ? e.message : "Google sign-in is unavailable.";
@@ -111,8 +120,8 @@ export function GoogleSignInButton({
     return () => {
       cancelled = true;
     };
-  }, [clientId, disabled, onCredential, onError, role]);
+  }, [clientId, disabled, hostedDomain, onCredential, onError, role]);
 
-  return <div ref={mountRef} className="min-h-[44px]" />;
+  return <div ref={mountRef} className="flex min-h-[44px] w-full justify-center" />;
 }
 

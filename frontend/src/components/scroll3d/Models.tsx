@@ -24,9 +24,11 @@ export function Watch3D({ scale = 1 }: { scale?: number }) {
     const center = new THREE.Vector3();
     box.getSize(size);
     box.getCenter(center);
-    clone.position.sub(center);
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    clone.scale.setScalar(1.6 / maxDim); // fit within 1.6 world-unit bounding box
+    const fit = 1.6 / maxDim; // fit within 1.6 world-unit bounding box
+    clone.scale.setScalar(fit);
+    // The offset must be scaled too, or the model drifts off-centre.
+    clone.position.copy(center).multiplyScalar(-fit);
     return clone;
   }, [scene]);
 

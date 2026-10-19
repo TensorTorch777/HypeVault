@@ -31,24 +31,7 @@ export function researchFailureMessage(kind: FailureKind): string {
   }
 }
 
-export type ComparisonView = "missing" | "error" | "empty" | "data";
-
-export function comparisonView(data: {
-  error?: string;
-  stockx?: unknown[];
-  chrono24?: unknown[];
-  ebay?: unknown[];
-} | null | undefined): ComparisonView {
-  if (!data) return "missing";
-  if (typeof data.error === "string" && data.error.length > 0) return "error";
-  const count = (data.stockx?.length ?? 0) + (data.chrono24?.length ?? 0) + (data.ebay?.length ?? 0);
-  return count === 0 ? "empty" : "data";
-}
-
 export const SERVING_STATUS_LABEL = "Serving status";
 export const VALIDITY_NOT_ESTABLISHED = "Real-world authenticity validity: not established.";
-export const ILLUSTRATIVE_PRICE_LABEL = "Illustrative sample data — not live market prices.";
-export const ILLUSTRATIVE_SCAN_LABEL = "Illustration only — not a live scan or model-generated localization.";
-export const DEMO_INVENTORY_LABEL = "Demo examples — not live inventory";
 export const DECLARED_BRAND_NOTE =
   "Declared brand — selected by you, not verified from the image.";

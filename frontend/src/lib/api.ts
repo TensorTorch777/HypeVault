@@ -136,13 +136,16 @@ export function getApiErrorMessage(err: unknown, fallback: string): string {
 export type AuthUser = {
   id: string;
   email: string;
-  role: "buyer" | "seller";
+  role: "buyer" | "seller" | "admin";
 };
 
 export async function fetchMe(): Promise<AuthUser> {
   const { data } = await api.get<AuthUser>("/auth/me");
   return data;
 }
+
+/** One cache entry for the signed-in user, so the nav, mobile nav and seller pages share a single /auth/me request. */
+export const ME_QUERY_KEY = ["auth-me"] as const;
 
 export async function googleLogin(idToken: string, role: "buyer" | "seller" = "buyer"): Promise<void> {
   await api.post<{ access_token: string; refresh_token: string }>("/auth/google", {
@@ -230,6 +233,8 @@ export type Listing = {
   verdict: string | null;
   confidence: number | null;
   status: string;
+  screening_code?: string | null;
+  screening_reason?: string | null;
   created_at: string;
   customer_label?: string;
   evidence_role?: "SEED_CONSTANT" | "HISTORICAL_MODEL_EVIDENCE" | "NONE" | string;
@@ -260,50 +265,4 @@ export async function fetchRecentListings(
 export async function fetchListing(id: string): Promise<Listing> {
   const { data } = await api.get<Listing>(`/listings/${id}`);
   return data;
-}
-
-export type ComparisonPayload = {
-  stockx: Array<Record<string, unknown>>;
-  chrono24: Array<Record<string, unknown>>;
-  ebay: Array<Record<string, unknown>>;
-  scraped_at: string;
-  cache_ttl_sec?: number;
-  cache_remaining_sec?: number;
-  error?: string;
-};
-
-export async function fetchComparison(listingId: string): Promise<ComparisonPayload> {
-  try {
-    const { data } = await api.get<ComparisonPayload>(`/listings/${listingId}/comparison`);
-    return data;
-  } catch {
-    return {
-      stockx: [],
-      chrono24: [],
-      ebay: [],
-      scraped_at: new Date().toISOString(),
-      cache_ttl_sec: 30 * 60,
-      cache_remaining_sec: 0,
-      error: "unavailable",
-    };
-  }
-}
-
-export async function fetchComparisonByQuery(productName: string): Promise<ComparisonPayload> {
-  try {
-    const { data } = await api.get<ComparisonPayload>(`/listings/compare`, {
-      params: { q: productName },
-    });
-    return data;
-  } catch {
-    return {
-      stockx: [],
-      chrono24: [],
-      ebay: [],
-      scraped_at: new Date().toISOString(),
-      cache_ttl_sec: 30 * 60,
-      cache_remaining_sec: 0,
-      error: "unavailable",
-    };
-  }
 }
