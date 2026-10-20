@@ -90,7 +90,7 @@ export function ImageUploader({
     <div className="space-y-4">
       <div
         className={cn(
-          "group relative overflow-hidden rounded-[20px] border border-white/10 px-8 py-14 text-center transition-colors duration-300 hover:border-accent/40"
+          "group relative overflow-hidden rounded-[1.25rem] border border-white/10 px-8 py-14 text-center transition-colors duration-300 hover:border-accent/40"
         )}
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
@@ -108,10 +108,10 @@ export function ImageUploader({
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-[10px] rounded-[14px] border border-dashed border-white/15 transition-colors duration-200 group-hover:border-white/30"
+          className="pointer-events-none absolute inset-[0.625rem] rounded-[0.875rem] border border-dashed border-white/15 transition-colors duration-200 group-hover:border-white/30"
         />
         <p className="relative font-display text-[2.2rem] font-extrabold uppercase leading-none text-white">Drop your watch photo</p>
-        <p className="relative mx-auto mt-3 max-w-sm text-[14px] leading-6 text-primary/65">
+        <p className="relative mx-auto mt-3 max-w-sm text-[0.875rem] leading-6 text-primary/65">
           JPEG, PNG or WebP, at least 400 px on the short side. Dial and case in frame, no filters or text overlays.
           {minImages > 1 ? ` At least ${minImages} photos.` : ""}
         </p>
@@ -127,7 +127,7 @@ export function ImageUploader({
           <Button
             type="button"
             variant="primary"
-            className="min-h-[44px]"
+            className="min-h-[2.75rem]"
             onClick={() => document.getElementById("hv-up")?.click()}
           >
             Choose files
@@ -144,7 +144,7 @@ export function ImageUploader({
       {items.length > 0 ? (
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {items.map((it) => (
-            <div key={it.id} className="relative overflow-hidden rounded-[18px] border border-white/10 bg-card">
+            <div key={it.id} className="relative overflow-hidden rounded-[1.125rem] border border-white/10 bg-card">
               <div className="relative aspect-square">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

@@ -110,7 +110,7 @@ export default function SellerDashboardPage() {
         }
       />
 
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+      <div className="mx-auto max-w-[73.75rem] px-4 sm:px-6">
         {/* Stats */}
         <div className="-mt-2 grid grid-cols-2 gap-3 md:grid-cols-4">
           {(
@@ -123,8 +123,8 @@ export default function SellerDashboardPage() {
           ).map(([label, value, note, tone]) => (
             <div key={label} className="hv-hud px-5 py-4">
               <p className={cn("font-display text-[2.6rem] font-extrabold leading-none hv-num", tone)}>{q.isLoading ? "—" : value}</p>
-              <p className="mt-1 font-display text-[14px] font-bold uppercase tracking-[0.05em] text-primary/85">{label}</p>
-              <p className="text-[12px] text-primary/50">{note}</p>
+              <p className="mt-1 font-display text-[0.875rem] font-bold uppercase tracking-[0.05em] text-primary/85">{label}</p>
+              <p className="text-[0.75rem] text-primary/50">{note}</p>
             </div>
           ))}
         </div>
@@ -141,7 +141,7 @@ export default function SellerDashboardPage() {
                 aria-selected={filter === f.id}
                 onClick={() => setFilter(f.id)}
                 className={cn(
-                  "min-h-[36px] cursor-pointer rounded-full border px-4 text-[13px] font-bold transition-colors",
+                  "min-h-[2.25rem] cursor-pointer rounded-full border px-4 text-[0.8125rem] font-bold transition-colors",
                   filter === f.id ? "border-accent bg-accent text-ink" : "border-white/15 text-primary/70 hover:border-white/40 hover:text-primary"
                 )}
               >
@@ -154,8 +154,8 @@ export default function SellerDashboardPage() {
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {q.isLoading ? (
             <>
-              <Skeleton className="h-44 rounded-[20px]" />
-              <Skeleton className="h-44 rounded-[20px]" />
+              <Skeleton className="h-44 rounded-[1.25rem]" />
+              <Skeleton className="h-44 rounded-[1.25rem]" />
             </>
           ) : null}
           {q.isError ? (
@@ -168,7 +168,7 @@ export default function SellerDashboardPage() {
             </div>
           ) : null}
           {!q.isLoading && !q.isError && shown.length === 0 ? (
-            <div className="rounded-[20px] border border-dashed border-white/15 px-6 py-14 text-center md:col-span-2">
+            <div className="rounded-[1.25rem] border border-dashed border-white/15 px-6 py-14 text-center md:col-span-2">
               <p className="font-display text-[1.8rem] font-extrabold uppercase text-primary">Nothing here yet</p>
               <p className="mx-auto mt-2 max-w-md text-sm text-primary/60">Upload a photo of a watch from one of the five houses. Screening takes a few seconds.</p>
               <Link href="/seller/upload" className="hv-btn-pill hv-btn-primary mt-6">
@@ -182,7 +182,7 @@ export default function SellerDashboardPage() {
               <Link
                 key={listing.id}
                 href={`/product/${listing.id}`}
-                className="group grid grid-cols-[112px_1fr] overflow-hidden rounded-[20px] border border-white/10 bg-card transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-accent/40 sm:grid-cols-[140px_1fr]"
+                className="group grid grid-cols-[7rem_1fr] overflow-hidden rounded-[1.25rem] border border-white/10 bg-card transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-accent/40 sm:grid-cols-[8.75rem_1fr]"
               >
                 <div className="hv-sky relative">
                   {listing.s3_url ? (
@@ -198,13 +198,13 @@ export default function SellerDashboardPage() {
                 </div>
                 <div className="min-w-0 p-5">
                   <div className="flex items-start justify-between gap-3">
-                    <span className={cn("rounded-full px-2.5 py-0.5 text-[11px] font-bold", TONE[listing.status] ?? "bg-white/10 text-primary")}>{status.title}</span>
-                    <span className="text-[11px] text-primary/45">{formatDate(listing.created_at)}</span>
+                    <span className={cn("rounded-full px-2.5 py-0.5 text-[0.6875rem] font-bold", TONE[listing.status] ?? "bg-white/10 text-primary")}>{status.title}</span>
+                    <span className="text-[0.6875rem] text-primary/45">{formatDate(listing.created_at)}</span>
                   </div>
                   <p className="mt-3 truncate font-display text-[1.45rem] font-extrabold uppercase leading-none text-primary">{listing.product_name}</p>
-                  <p className="mt-1 text-[12px] text-primary/55">{listing.brand ?? "No brand declared"}</p>
-                  <p className="mt-3 line-clamp-2 text-[12px] leading-5 text-primary/60">{status.detail}</p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-bold text-accent transition-[gap] group-hover:gap-2">
+                  <p className="mt-1 text-[0.75rem] text-primary/55">{listing.brand ?? "No brand declared"}</p>
+                  <p className="mt-3 line-clamp-2 text-[0.75rem] leading-5 text-primary/60">{status.detail}</p>
+                  <span className="mt-3 inline-flex items-center gap-1 text-[0.75rem] font-bold text-accent transition-[gap] group-hover:gap-2">
                     View <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                   </span>
                 </div>

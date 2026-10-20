@@ -42,8 +42,8 @@ const pct = (x: number | null | undefined) => (x == null ? "—" : `${(100 * x).
 function ResultsTable({ rows }: { rows: BenchmarkModelRow[] }) {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[640px] text-left text-[13px]">
-        <thead className="text-[10px] uppercase tracking-[0.18em] text-primary/55">
+      <table className="w-full min-w-[40rem] text-left text-[0.8125rem]">
+        <thead className="text-[0.625rem] uppercase tracking-[0.18em] text-primary/55">
           <tr className="border-b border-primary/10">
             {["Model", "Coverage", "Balanced accuracy", "Generated passed as real", "Real flagged as generated", "ROC-AUC"].map((h) => (
               <th key={h} className="py-3 pr-4 font-medium">{h}</th>
@@ -74,19 +74,19 @@ export default function BenchmarkPage() {
   return (
     <div className="pb-24">
       <section className="hv-guilloche border-b border-primary/10">
-        <div className="mx-auto max-w-[1240px] px-4 pb-20 pt-36 sm:px-6">
+        <div className="mx-auto max-w-[77.5rem] px-4 pb-20 pt-36 sm:px-6">
           <p className="hv-eyebrow">Model benchmark</p>
           <h1 className="hv-display-lg mt-5 max-w-4xl text-primary">
             DINOv2 or DINOv3? <span className="hv-gradient-text">Decided by evidence</span>, written down first.
           </h1>
-          <p className="mt-7 max-w-2xl text-[15px] leading-7 text-primary/70">
+          <p className="mt-7 max-w-2xl text-[0.9375rem] leading-7 text-primary/70">
             Before a single image was collected, we fixed the question, the data, the analysis and the rule that names the
             frontier model. The numbers decide; the rule cannot move after the results are in.
           </p>
         </div>
       </section>
 
-      <div className="mx-auto max-w-[1240px] space-y-24 px-4 pt-20 sm:px-6">
+      <div className="mx-auto max-w-[77.5rem] space-y-24 px-4 pt-20 sm:px-6">
         {q.isLoading ? <Skeleton className="h-80 rounded-2xl" /> : null}
         {q.isError ? (
           <p role="alert" className="rounded-2xl border border-danger/30 p-6 text-danger">The benchmark summary could not be loaded.</p>
@@ -102,15 +102,15 @@ export default function BenchmarkPage() {
                     ? `${MODEL_INFO[s.confirmatory.frontier.frontier_model]?.name} is the frontier model`
                     : "No frontier model named yet"}
                 </h2>
-                <p className="mt-5 text-[15px] leading-7 text-primary/70">
+                <p className="mt-5 text-[0.9375rem] leading-7 text-primary/70">
                   {s.confirmatory
                     ? s.confirmatory.frontier.statement
                     : "The confirmatory run has not happened, so no model may be called better. DINOv2 stays on the live listing check and DINOv3 stays a research candidate until the rule below is met."}
                 </p>
                 {s.previous_evaluation ? (
                   <div className="mt-8 rounded-2xl border border-primary/10 bg-card p-6">
-                    <p className="text-[11px] uppercase tracking-[0.2em] text-primary/55">{s.previous_evaluation.name}</p>
-                    <p className="mt-3 text-[14px] leading-6 text-primary/75">{s.previous_evaluation.summary}</p>
+                    <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-primary/55">{s.previous_evaluation.name}</p>
+                    <p className="mt-3 text-[0.875rem] leading-6 text-primary/75">{s.previous_evaluation.summary}</p>
                   </div>
                 ) : null}
               </div>
@@ -129,11 +129,11 @@ export default function BenchmarkPage() {
                       {st.state === "done" ? <Check className="h-3.5 w-3.5" /> : st.state === "waiting" ? <Clock className="h-3.5 w-3.5" /> : <Circle className="h-2.5 w-2.5" />}
                     </span>
                     <div>
-                      <p className="text-[14px] text-primary">
+                      <p className="text-[0.875rem] text-primary">
                         {st.label}
                         <span className="sr-only"> — {st.state === "done" ? "complete" : st.state === "waiting" ? "waiting" : "not started"}</span>
                       </p>
-                      <p className="mt-1 text-[12px] leading-5 text-primary/60">{st.detail}</p>
+                      <p className="mt-1 text-[0.75rem] leading-5 text-primary/60">{st.detail}</p>
                     </div>
                   </li>
                 ))}
@@ -146,7 +146,7 @@ export default function BenchmarkPage() {
                 <h2 id="results" className="hv-display-md mt-4 text-primary">{s.confirmatory.primary.set} · {s.confirmatory.primary.n} images</h2>
                 <div className="mt-8 rounded-2xl border border-primary/10 bg-card p-6">
                   <ResultsTable rows={s.confirmatory.primary.models} />
-                  <p className="mt-5 text-[12px] text-primary/60">
+                  <p className="mt-5 text-[0.75rem] text-primary/60">
                     {s.confirmatory.primary.paired.discordant} images where the models disagreed · exact McNemar p ={" "}
                     {s.confirmatory.primary.paired.mcnemar_p.toFixed(4)}
                   </p>
@@ -160,14 +160,14 @@ export default function BenchmarkPage() {
               <div className="mt-10 grid gap-4 md:grid-cols-2">
                 {Object.entries(MODEL_INFO).map(([id, m]) => (
                   <article key={id} className="rounded-2xl border border-primary/10 bg-card p-7">
-                    <p className="text-[11px] uppercase tracking-[0.22em] text-gold">{m.role}</p>
+                    <p className="text-[0.6875rem] uppercase tracking-[0.22em] text-gold">{m.role}</p>
                     <h3 className="hv-serif mt-3 text-[2.2rem] text-primary">{m.name}</h3>
-                    <ul className="mt-5 space-y-2.5 text-[13px] leading-6 text-primary/70">
+                    <ul className="mt-5 space-y-2.5 text-[0.8125rem] leading-6 text-primary/70">
                       {m.spec.map((line) => (
                         <li key={line} className="flex gap-3"><span className="mt-2.5 h-px w-3 shrink-0 bg-gold" aria-hidden="true" />{line}</li>
                       ))}
                     </ul>
-                    <p className="mt-6 break-all font-mono text-[11px] text-primary/45">
+                    <p className="mt-6 break-all font-mono text-[0.6875rem] text-primary/45">
                       SHA-256 {s.protocol.models[id]?.checkpoint_sha256}
                     </p>
                   </article>
@@ -179,7 +179,7 @@ export default function BenchmarkPage() {
               <div>
                 <p className="hv-eyebrow">The decision rule</p>
                 <h2 id="rule" className="hv-display-md mt-4 text-primary">How a winner can be named</h2>
-                <p className="mt-5 text-[14px] leading-7 text-primary/70">
+                <p className="mt-5 text-[0.875rem] leading-7 text-primary/70">
                   Both models see the same images. The comparison counts only the images where they disagree and tests that
                   split with an exact McNemar test. With 49 disagreements the test has 80% power to detect a 70/30 split.
                 </p>
@@ -187,8 +187,8 @@ export default function BenchmarkPage() {
               <dl className="divide-y divide-primary/10 rounded-2xl border border-primary/10 bg-card">
                 {Object.entries(s.protocol.frontier_rule ?? {}).map(([k, v]) => (
                   <div key={k} className="p-6">
-                    <dt className="text-[11px] uppercase tracking-[0.2em] text-gold">{k.replace(/_/g, " ").toLowerCase()}</dt>
-                    <dd className="mt-2 text-[13px] leading-6 text-primary/75">{v}</dd>
+                    <dt className="text-[0.6875rem] uppercase tracking-[0.2em] text-gold">{k.replace(/_/g, " ").toLowerCase()}</dt>
+                    <dd className="mt-2 text-[0.8125rem] leading-6 text-primary/75">{v}</dd>
                   </div>
                 ))}
               </dl>
@@ -197,24 +197,24 @@ export default function BenchmarkPage() {
             <section aria-labelledby="design" className="grid gap-4 md:grid-cols-3">
               <h2 id="design" className="sr-only">Benchmark design</h2>
               <div className="rounded-2xl border border-primary/10 bg-card p-7">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-gold">Real photographs</p>
-                <p className="mt-4 text-[13px] leading-6 text-primary/75">{s.protocol.classes.REAL_PHOTO}.</p>
+                <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-gold">Real photographs</p>
+                <p className="mt-4 text-[0.8125rem] leading-6 text-primary/75">{s.protocol.classes.REAL_PHOTO}.</p>
               </div>
               <div className="rounded-2xl border border-primary/10 bg-card p-7">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-gold">Generated images</p>
-                <ul className="mt-4 space-y-2 text-[13px] leading-6 text-primary/75">
+                <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-gold">Generated images</p>
+                <ul className="mt-4 space-y-2 text-[0.8125rem] leading-6 text-primary/75">
                   {Object.entries(s.protocol.classes.GENERATED).map(([k, v]) => (
                     <li key={k}><span className="text-primary">{k.startsWith("heldout") ? "Primary · " : "Secondary · "}</span>{v}</li>
                   ))}
                 </ul>
               </div>
               <div className="rounded-2xl border border-primary/10 bg-card p-7">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-gold">Same treatment for every image</p>
-                <ul className="mt-4 space-y-2 text-[13px] leading-6 text-primary/75">
+                <p className="text-[0.6875rem] uppercase tracking-[0.2em] text-gold">Same treatment for every image</p>
+                <ul className="mt-4 space-y-2 text-[0.8125rem] leading-6 text-primary/75">
                   {(s.protocol.normalisation ?? []).map((n) => <li key={n}>{n}</li>)}
                 </ul>
               </div>
-              <p className="text-[12px] leading-6 text-primary/55 md:col-span-3">{s.protocol.scope_limit}</p>
+              <p className="text-[0.75rem] leading-6 text-primary/55 md:col-span-3">{s.protocol.scope_limit}</p>
             </section>
           </>
         ) : null}

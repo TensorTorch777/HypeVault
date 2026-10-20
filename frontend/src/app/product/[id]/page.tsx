@@ -44,7 +44,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const unlisted = listing != null && listing.status !== "live";
 
   return (
-    <div className="mx-auto max-w-[1240px] px-4 pb-28 pt-28 sm:px-6">
+    <div className="mx-auto max-w-[77.5rem] px-4 pb-28 pt-28 sm:px-6">
       <div className="grid gap-12 lg:grid-cols-2">
         <ProductVisualPanel
           title={listing?.product_name ?? "Listing"}
@@ -59,7 +59,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           {listingQ.isError ? (
             <div role="alert" className="hv-hud p-7">
               <p className="hv-serif text-[1.9rem] uppercase leading-tight text-primary">Listing not found</p>
-              <p className="mt-3 text-[14px] leading-7 text-primary/75">
+              <p className="mt-3 text-[0.875rem] leading-7 text-primary/75">
                 This listing could not be found. It may have been removed, or it did not pass screening and is visible only to its seller.
               </p>
               <Link href="/market" className="hv-btn-pill hv-btn-secondary mt-6">Browse the market</Link>
@@ -71,11 +71,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               <h1 className="hv-display-lg mt-4 text-primary">{listing.product_name}</h1>
 
               <div className={`hv-hud mt-10 p-7 ${unlisted ? "!border-danger/50" : ""}`}>
-                <p className="hv-mono text-[11px] uppercase tracking-[0.18em] text-primary/55">
+                <p className="hv-mono text-[0.6875rem] uppercase tracking-[0.18em] text-primary/55">
                   {unlisted ? "Only you can see this listing" : "Listing status"}
                 </p>
                 <p className={`hv-serif mt-3 text-[1.9rem] uppercase leading-tight ${unlisted ? "text-danger" : "text-primary"}`}>{status.title}</p>
-                <p className="mt-3 text-[14px] leading-7 text-primary/80">{status.detail}</p>
+                <p className="mt-3 text-[0.875rem] leading-7 text-primary/80">{status.detail}</p>
                 {unlisted ? (
                   <Link href="/seller/upload" className="hv-btn-pill hv-btn-primary mt-6">
                     List with a new photo
@@ -83,7 +83,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 ) : null}
               </div>
 
-              <dl className="mt-8 divide-y divide-primary/10 border-y border-primary/10 text-[13px]">
+              <dl className="mt-8 divide-y divide-primary/10 border-y border-primary/10 text-[0.8125rem]">
                 {[
                   ["Manufacture", listing.brand ? `${listing.brand} (declared by the seller)` : "Not supplied"],
                   ["Condition", listing.condition ?? "—"],
@@ -105,7 +105,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       <section aria-labelledby="market-title" className="mt-24 border-t border-primary/10 pt-16">
         <p className="hv-eyebrow">The market for this watch</p>
         <h2 id="market-title" className="hv-display-md mt-4 text-primary">What comparable pieces are asking</h2>
-        <p className="mt-4 max-w-2xl text-[14px] leading-7 text-primary/65">
+        <p className="mt-4 max-w-2xl text-[0.875rem] leading-7 text-primary/65">
           Matched on the listing title and declared manufacture. Prices are asking prices, not sale prices, and they say
           nothing about whether this particular watch is genuine.
         </p>

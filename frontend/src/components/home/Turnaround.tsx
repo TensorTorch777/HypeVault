@@ -118,7 +118,7 @@ export function Turnaround({ watches }: { watches: TurnaroundWatch[] }) {
           aria-hidden="true"
         />
         <div className="relative z-10 pt-24 text-center">
-          <p className="font-display text-[13px] font-bold uppercase tracking-[0.08em] text-primary/70">Watch</p>
+          <p className="font-display text-[0.8125rem] font-bold uppercase tracking-[0.08em] text-primary/70">Watch</p>
           <h2 id="turnaround-title" className="hv-wide mt-1 text-[clamp(1.6rem,3.6vw,3rem)] text-primary">
             The turnaround
           </h2>
@@ -131,7 +131,7 @@ export function Turnaround({ watches }: { watches: TurnaroundWatch[] }) {
                 aria-selected={i === selected}
                 onClick={() => setSelected(i)}
                 className={cn(
-                  "min-h-[36px] cursor-pointer rounded-full border px-3.5 text-[12px] font-semibold transition-colors",
+                  "min-h-[2.25rem] cursor-pointer rounded-full border px-3.5 text-[0.75rem] font-semibold transition-colors",
                   i === selected ? "border-accent bg-accent text-ink" : "border-primary/20 text-primary/75 hover:border-primary/50 hover:text-primary"
                 )}
               >
@@ -149,17 +149,17 @@ export function Turnaround({ watches }: { watches: TurnaroundWatch[] }) {
             <img src={watch.hero} alt={`${watch.brand} ${watch.piece}, studio render`} className="hv-fade-y absolute inset-0 m-auto h-full max-h-full w-auto object-contain" />
           ) : null}
           {hasSequence && loaded < watch.frames ? (
-            <p className="hv-mono absolute bottom-3 left-1/2 -translate-x-1/2 text-[10px] text-primary/45">
+            <p className="hv-mono absolute bottom-3 left-1/2 -translate-x-1/2 text-[0.625rem] text-primary/45">
               Loading frames {loaded}/{watch.frames}
             </p>
           ) : null}
         </div>
 
-        <div className="relative z-10 mx-auto grid w-full max-w-[1240px] gap-6 px-4 pb-10 sm:px-6 md:grid-cols-[1fr_auto] md:items-end">
-          <div className="min-h-[150px] max-w-xl">
+        <div className="relative z-10 mx-auto grid w-full max-w-[77.5rem] gap-6 px-4 pb-10 sm:px-6 md:grid-cols-[1fr_auto] md:items-end">
+          <div className="min-h-[9.375rem] max-w-xl">
             <motion.div key={chapter} initial={reduced ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
               <p className="hv-headline text-[clamp(1.8rem,3.4vw,2.8rem)] leading-[1.05]">{CHAPTERS[chapter].title}</p>
-              <p className="mt-3 text-[16px] leading-7 text-salmon/90 md:text-[18px]">{CHAPTERS[chapter].body}</p>
+              <p className="mt-3 text-[1rem] leading-7 text-salmon/90 md:text-[1.125rem]">{CHAPTERS[chapter].body}</p>
             </motion.div>
           </div>
           <div className="flex items-center gap-3 md:flex-col md:items-end" aria-hidden="true">
@@ -168,7 +168,7 @@ export function Turnaround({ watches }: { watches: TurnaroundWatch[] }) {
             ))}
           </div>
         </div>
-        <p className="hv-mono absolute bottom-3 right-4 text-[9px] text-primary/35">
+        <p className="hv-mono absolute bottom-3 right-4 text-[0.5625rem] text-primary/35">
           {watch.piece} · studio model, no logos · rendered in Blender Cycles
         </p>
       </div>

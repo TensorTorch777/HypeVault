@@ -37,12 +37,12 @@ export function ScreeningResult({ outcome }: { outcome: ScreeningOutcome }) {
       <div className="flex items-start gap-4">
         <Icon className="mt-1 h-8 w-8 shrink-0" style={{ color: tone }} strokeWidth={1.75} aria-hidden="true" />
         <div className="min-w-0">
-          <p className="hv-mono text-[11px] uppercase tracking-[0.18em]" style={{ color: tone }}>
+          <p className="hv-mono text-[0.6875rem] uppercase tracking-[0.18em]" style={{ color: tone }}>
             {subtitle}
           </p>
           <p className="hv-display mt-1 text-[2.2rem] uppercase leading-none text-primary">{title}</p>
-          {outcome.screening_reason ? <p className="mt-4 text-[15px] leading-7 text-primary/85">{outcome.screening_reason}</p> : null}
-          <p className="mt-4 text-[12px] leading-5 text-primary/55">
+          {outcome.screening_reason ? <p className="mt-4 text-[0.9375rem] leading-7 text-primary/85">{outcome.screening_reason}</p> : null}
+          <p className="mt-4 text-[0.75rem] leading-5 text-primary/55">
             {listed
               ? "Buyers can now see this listing. Screening checks the photo, not the watch: it is not a certificate of authenticity."
               : "Buyers cannot see this listing. Upload a new photo to screen it again; the same listing is reused."}

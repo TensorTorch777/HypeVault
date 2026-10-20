@@ -8,8 +8,8 @@ function Figure({ value, label, note }: { value: string; label: string; note: st
   return (
     <div className="hv-hud px-4 py-3.5">
       <p className="font-display text-[2.2rem] font-extrabold leading-none text-primary hv-num">{value}</p>
-      <p className="mt-1.5 font-display text-[13px] font-bold uppercase tracking-[0.05em] text-primary/85">{label}</p>
-      <p className="mt-0.5 text-[11px] leading-4 text-primary/55">{note}</p>
+      <p className="mt-1.5 font-display text-[0.8125rem] font-bold uppercase tracking-[0.05em] text-primary/85">{label}</p>
+      <p className="mt-0.5 text-[0.6875rem] leading-4 text-primary/55">{note}</p>
     </div>
   );
 }

@@ -63,6 +63,11 @@
 }
 
 html { scrollbar-width: thin; scrollbar-color: #2E3152 var(--hv-bg); }
+/* Large screens: sizes are in rem, so growing the root size above 1920px scales type, spacing and page
+   widths together. A 2560px display shows the same layout about 1.33x larger, capped at 1.5x. */
+@media (min-width: 1921px) {
+  html { font-size: min(calc(100vw / 120), 24px); }
+}
 html, body { overscroll-behavior: none; overflow-x: clip; }
 
 body {
@@ -136,7 +141,7 @@ body::after {
 
 .hv-eyebrow {
   font-family: var(--font-display), "Big Shoulders Display", system-ui, sans-serif;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -214,11 +219,11 @@ body::after {
   gap: 0.45rem;
   padding: 0.6rem 1.25rem;
   border-radius: 999px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.2;
   transition: transform 250ms var(--hv-ease), background-color 250ms var(--hv-ease), color 250ms var(--hv-ease), border-color 250ms var(--hv-ease);
-  min-height: 44px;
+  min-height: 2.75rem;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -232,14 +237,14 @@ body::after {
 .hv-chevron {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
   color: var(--hv-fg);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   transition: gap 250ms var(--hv-ease), color 250ms var(--hv-ease);
 }
 .hv-chevron::after { content: "→"; }
-.hv-chevron:hover { gap: 10px; color: var(--hv-pink); }
+.hv-chevron:hover { gap: 0.625rem; color: var(--hv-pink); }
 
 .hv-link-underline { position: relative; }
 .hv-link-underline::after {

@@ -33,10 +33,10 @@ export function PriceRange({ stats, className }: { stats: PriceStats; className?
   const at = ((Math.log(Math.max(stats.median, 1)) - lo) / (hi - lo || 1)) * 100;
   return (
     <div className={className}>
-      <div className="relative h-[3px] rounded-full bg-gradient-to-r from-neon-violet via-salmon to-neon-yellow">
-        <span className="absolute -top-[5px] h-[13px] w-[13px] -translate-x-1/2 rounded-full border-2 border-background bg-white" style={{ left: `${at}%` }} />
+      <div className="relative h-[0.1875rem] rounded-full bg-gradient-to-r from-neon-violet via-salmon to-neon-yellow">
+        <span className="absolute -top-[0.3125rem] h-[0.8125rem] w-[0.8125rem] -translate-x-1/2 rounded-full border-2 border-background bg-white" style={{ left: `${at}%` }} />
       </div>
-      <div className="mt-2 flex justify-between text-[11px] text-primary/55">
+      <div className="mt-2 flex justify-between text-[0.6875rem] text-primary/55">
         <span>{formatPrice(stats.min, "USD", true)}</span>
         <span>{formatPrice(stats.max, "USD", true)}</span>
       </div>
@@ -56,7 +56,7 @@ function Distribution({ bins, stats }: { bins: HistogramBin[]; stats: PriceStats
     <div>
       <div className="flex items-end justify-between gap-4">
         <p className="hv-eyebrow">Where the asking prices sit</p>
-        <p className="min-h-[18px] text-right text-[12px] text-primary/70" aria-live="polite">
+        <p className="min-h-[1.125rem] text-right text-[0.75rem] text-primary/70" aria-live="polite">
           {active ? (
             <>
               <span className="font-bold text-primary">{active.count.toLocaleString("en-US")}</span> listings between {formatPrice(active.from, "USD", true)} and{" "}
@@ -68,7 +68,7 @@ function Distribution({ bins, stats }: { bins: HistogramBin[]; stats: PriceStats
         </p>
       </div>
       <div className="relative mt-5 h-40" onMouseLeave={() => setHover(null)}>
-        <div className="absolute inset-0 flex items-end gap-[3px]">
+        <div className="absolute inset-0 flex items-end gap-[0.1875rem]">
           {bins.map((b, i) => (
             <button
               key={i}
@@ -80,7 +80,7 @@ function Distribution({ bins, stats }: { bins: HistogramBin[]; stats: PriceStats
             >
               <span
                 className={cn(
-                  "absolute inset-x-0 bottom-0 rounded-t-[3px] bg-gradient-to-t from-neon-violet/70 via-salmon/80 to-neon-yellow/90 transition-opacity duration-200",
+                  "absolute inset-x-0 bottom-0 rounded-t-[0.1875rem] bg-gradient-to-t from-neon-violet/70 via-salmon/80 to-neon-yellow/90 transition-opacity duration-200",
                   hover !== null && hover !== i ? "opacity-35" : "opacity-100"
                 )}
                 style={{ height: `${b.count ? Math.max(3, (b.count / peak) * 100) : 0}%` }}
@@ -89,12 +89,12 @@ function Distribution({ bins, stats }: { bins: HistogramBin[]; stats: PriceStats
           ))}
         </div>
         <div className="pointer-events-none absolute inset-y-0 w-px bg-white" style={{ left: `${medianAt}%` }}>
-          <span className="absolute -bottom-7 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-ink">
+          <span className="absolute -bottom-7 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full bg-white px-2 py-0.5 text-[0.625rem] font-bold text-ink">
             Median {formatPrice(stats.median, "USD", true)}
           </span>
         </div>
       </div>
-      <div className="mt-1 flex justify-between border-t border-white/10 pt-2 text-[11px] text-primary/55">
+      <div className="mt-1 flex justify-between border-t border-white/10 pt-2 text-[0.6875rem] text-primary/55">
         <span>{formatPrice(stats.min, "USD", true)}</span>
         <span>{formatPrice(stats.max, "USD", true)}</span>
       </div>
@@ -114,20 +114,20 @@ function ListingCard({ item }: { item: MarketItem }) {
         <p className="font-display text-[2rem] font-extrabold leading-none text-primary hv-num">{formatPrice(item.price, item.currency)}</p>
         {item.item_url ? <ArrowUpRight className="h-4 w-4 shrink-0 text-primary/40 transition-colors group-hover:text-accent" aria-hidden="true" /> : null}
       </div>
-      <p className="mt-3 line-clamp-2 min-h-[2.6rem] text-[14px] font-semibold leading-5 text-primary/90">{item.title}</p>
+      <p className="mt-3 line-clamp-2 min-h-[2.6rem] text-[0.875rem] font-semibold leading-5 text-primary/90">{item.title}</p>
       <div className="mt-3 flex flex-wrap gap-1.5">
         {meta.slice(0, 3).map((m) => (
-          <span key={m} className="rounded-full bg-white/[0.07] px-2.5 py-0.5 text-[11px] font-semibold text-primary/70">
+          <span key={m} className="rounded-full bg-white/[0.07] px-2.5 py-0.5 text-[0.6875rem] font-semibold text-primary/70">
             {m}
           </span>
         ))}
       </div>
-      <p className="mt-4 text-[11px] text-primary/45">
+      <p className="mt-4 text-[0.6875rem] text-primary/45">
         {SOURCE_LABEL[item.source]} · seen {formatDate(item.observed_on)}
       </p>
     </>
   );
-  const cls = "group block rounded-[18px] border border-white/10 bg-card p-5 transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-accent/40";
+  const cls = "group block rounded-[1.125rem] border border-white/10 bg-card p-5 transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-accent/40";
   return item.item_url ? (
     <a href={item.item_url} target="_blank" rel="noreferrer" className={cls}>
       {body}
@@ -153,8 +153,8 @@ export function MarketPanel({
   if (loading) {
     return (
       <div className="grid gap-4">
-        <Skeleton className="h-72 rounded-[22px]" />
-        <Skeleton className="h-56 rounded-[22px]" />
+        <Skeleton className="h-72 rounded-[1.375rem]" />
+        <Skeleton className="h-56 rounded-[1.375rem]" />
       </div>
     );
   }
@@ -162,7 +162,7 @@ export function MarketPanel({
     return (
       <div role="alert" className="hv-hud p-7">
         <p className="font-display text-[1.6rem] font-extrabold uppercase text-danger">Market data could not be loaded</p>
-        <p className="mt-2 text-[14px] leading-6 text-primary/70">
+        <p className="mt-2 text-[0.875rem] leading-6 text-primary/70">
           Nothing is estimated in the meantime. No prices are shown rather than stale or estimated ones.
         </p>
       </div>
@@ -183,14 +183,14 @@ export function MarketPanel({
   return (
     <div className="space-y-5">
       {/* Price board */}
-      <section className="relative overflow-hidden rounded-[22px] border border-white/10 bg-card p-6 md:p-8" aria-label="Price summary">
+      <section className="relative overflow-hidden rounded-[1.375rem] border border-white/10 bg-card p-6 md:p-8" aria-label="Price summary">
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-salmon/10 blur-3xl" aria-hidden="true" />
         {stats ? (
           <div className="relative grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.4fr)]">
             <div>
               <p className="hv-eyebrow">Median asking price</p>
               <p className="mt-2 font-display text-[clamp(3.6rem,8vw,6rem)] font-black leading-[0.85] text-white hv-num">{formatPrice(stats.median)}</p>
-              <dl className="mt-6 grid grid-cols-3 gap-3 text-[12px]">
+              <dl className="mt-6 grid grid-cols-3 gap-3 text-[0.75rem]">
                 {[
                   ["Listings", stats.count.toLocaleString("en-US")],
                   ["Lowest", formatPrice(stats.min, "USD", true)],
@@ -202,7 +202,7 @@ export function MarketPanel({
                   </div>
                 ))}
               </dl>
-              <div className="mt-6 flex flex-wrap gap-2 text-[11px] font-bold">
+              <div className="mt-6 flex flex-wrap gap-2 text-[0.6875rem] font-bold">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-neon-yellow/15 px-3 py-1 text-neon-yellow">
                   <Database className="h-3.5 w-3.5" aria-hidden="true" /> Chrono24 · Snapshot {formatDate(c24.snapshot_date)}
                 </span>
@@ -220,10 +220,10 @@ export function MarketPanel({
         ) : (
           <div className="relative">
             <p className="font-display text-[1.8rem] font-extrabold uppercase text-primary">No dataset listing matches</p>
-            <p className="mt-2 max-w-lg text-[14px] text-primary/65">Try a model name or reference number. No prices are shown rather than stale or estimated ones.</p>
+            <p className="mt-2 max-w-lg text-[0.875rem] text-primary/65">Try a model name or reference number. No prices are shown rather than stale or estimated ones.</p>
           </div>
         )}
-        <p className="relative mt-6 border-t border-white/10 pt-4 text-[12px] leading-5 text-primary/50">
+        <p className="relative mt-6 border-t border-white/10 pt-4 text-[0.75rem] leading-5 text-primary/50">
           Asking prices, not sale prices. The Chrono24 figures are a dated dataset of public listings, a reference level rather than today&rsquo;s price.
           {ebay.status === "not_configured" ? " Live eBay prices appear once an eBay developer key is connected. Nothing is estimated in the meantime." : ""}
         </p>
@@ -245,7 +245,7 @@ export function MarketPanel({
                   aria-selected={sort === s.id}
                   onClick={() => onSort(s.id)}
                   className={cn(
-                    "min-h-[36px] cursor-pointer rounded-full border px-4 text-[13px] font-bold transition-colors",
+                    "min-h-[2.25rem] cursor-pointer rounded-full border px-4 text-[0.8125rem] font-bold transition-colors",
                     sort === s.id ? "border-accent bg-accent text-ink" : "border-white/15 text-primary/70 hover:border-white/40 hover:text-primary"
                   )}
                 >
@@ -262,7 +262,7 @@ export function MarketPanel({
             ))}
           </div>
         ) : (
-          <p className="mt-5 rounded-[18px] border border-dashed border-white/15 p-8 text-center text-[14px] text-primary/60">No listings match this search yet.</p>
+          <p className="mt-5 rounded-[1.125rem] border border-dashed border-white/15 p-8 text-center text-[0.875rem] text-primary/60">No listings match this search yet.</p>
         )}
       </section>
     </div>

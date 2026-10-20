@@ -30,12 +30,12 @@ export function CinematicBand({ backdrop, render }: { backdrop: string | null; r
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-background/85 via-background/30 to-transparent" aria-hidden="true" />
 
       {render ? (
-        <motion.div style={{ y: watchY }} className="absolute right-[-6%] top-[12%] -z-10 hidden aspect-square w-[min(52vw,760px)] md:block">
+        <motion.div style={{ y: watchY }} className="absolute right-[-6%] top-[12%] -z-10 hidden aspect-square w-[min(52vw,47.5rem)] md:block">
           <Image src={render} alt="" fill sizes="52vw" className="hv-fade-y object-contain drop-shadow-[0_40px_60px_rgba(10,11,23,0.7)]" />
         </motion.div>
       ) : null}
 
-      <div className="mx-auto flex min-h-[110svh] max-w-[1240px] flex-col justify-end px-4 pb-24 sm:px-6">
+      <div className="mx-auto flex min-h-[110svh] max-w-[77.5rem] flex-col justify-end px-4 pb-24 sm:px-6">
         <motion.div
           initial={reduced ? false : { opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
