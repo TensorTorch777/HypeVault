@@ -43,7 +43,7 @@ export function ProductVisualPanel({
   return (
     <div
       className={cn(
-        "relative flex h-full min-h-[min(420px,50vh)] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0D0D0D]",
+        "relative flex h-full min-h-[min(26.25rem,50vh)] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0D0D0D]",
         "shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
       )}
       style={{
@@ -53,9 +53,9 @@ export function ProductVisualPanel({
     >
       <div className="relative flex flex-1 flex-col px-6 pb-6 pt-10 md:px-8">
         {showHero ? (
-          <div className="relative mx-auto mt-2 aspect-square w-full max-w-[min(100%,380px)] flex-1 overflow-hidden rounded-xl border border-white/10">
+          <div className="relative mx-auto mt-2 aspect-square w-full max-w-[min(100%,23.75rem)] flex-1 overflow-hidden rounded-xl border border-white/10">
             <Image src={listing!.s3_url!} alt="" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
-            <span className="absolute left-3 top-3 max-w-[16rem] rounded-md bg-black/80 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-white shadow-lg">
+            <span className="absolute left-3 top-3 max-w-[16rem] rounded-md bg-black/80 px-2.5 py-1 text-[0.625rem] font-extrabold uppercase tracking-[0.12em] text-white shadow-lg">
               {label}
             </span>
           </div>
@@ -65,17 +65,17 @@ export function ProductVisualPanel({
           <div className="relative flex flex-1 flex-col items-center justify-center text-center">
             <div className="pointer-events-none absolute h-36 w-36 rounded-full bg-[#FFB8D2]/10 blur-3xl" aria-hidden />
             <Icon className="relative z-[1] h-20 w-20 text-[#FFB8D2]" strokeWidth={1.25} aria-hidden />
-            <h2 className="relative z-[1] mt-6 max-w-md px-2 font-[family-name:var(--font-display)] text-[32px] font-extrabold leading-tight tracking-tight text-white">
+            <h2 className="relative z-[1] mt-6 max-w-md px-2 font-[family-name:var(--font-display)] text-[2rem] font-extrabold leading-tight tracking-tight text-white">
               {title}
             </h2>
             <div className="relative z-[1] mt-4 flex flex-wrap justify-center gap-2">
-              <span className="rounded-full bg-white/[0.08] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[#a1a1aa]">
+              <span className="rounded-full bg-white/[0.08] px-3 py-1 text-[0.6875rem] font-medium uppercase tracking-[0.08em] text-[#a1a1aa]">
                 {label ?? "Not a stored listing"}
               </span>
-              <span className="rounded-full bg-white/[0.08] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[#a1a1aa]">
+              <span className="rounded-full bg-white/[0.08] px-3 py-1 text-[0.6875rem] font-medium uppercase tracking-[0.08em] text-[#a1a1aa]">
                 Watches
               </span>
-              <span className="rounded-full bg-white/[0.08] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[#a1a1aa]">
+              <span className="rounded-full bg-white/[0.08] px-3 py-1 text-[0.6875rem] font-medium uppercase tracking-[0.08em] text-[#a1a1aa]">
                 Market compared
               </span>
             </div>

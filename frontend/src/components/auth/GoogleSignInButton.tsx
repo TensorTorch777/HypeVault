@@ -122,6 +122,6 @@ export function GoogleSignInButton({
     };
   }, [clientId, disabled, hostedDomain, onCredential, onError, role]);
 
-  return <div ref={mountRef} className="flex min-h-[44px] w-full justify-center" />;
+  return <div ref={mountRef} className="flex min-h-[2.75rem] w-full justify-center" />;
 }
 

@@ -11,7 +11,7 @@ export function Lockup({ className, compact = false }: { className?: string; com
   return (
     <svg
       viewBox="0 0 330 210"
-      className={cn("h-auto select-none", compact ? "w-[150px]" : "w-[clamp(220px,30vw,400px)]", className)}
+      className={cn("h-auto select-none", compact ? "w-[9.375rem]" : "w-[clamp(13.75rem,30vw,25rem)]", className)}
       role="img"
       aria-label="HypeVault"
     >
@@ -54,7 +54,7 @@ export function Lockup({ className, compact = false }: { className?: string; com
 /** Small monogram for the header, like the corner "VI". */
 export function Monogram({ className }: { className?: string }) {
   return (
-    <span className={cn("hv-vi font-display text-[30px] font-black leading-none tracking-[-0.03em]", className)} aria-hidden="true">
+    <span className={cn("hv-vi font-display text-[1.875rem] font-black leading-none tracking-[-0.03em]", className)} aria-hidden="true">
       HV
     </span>
   );

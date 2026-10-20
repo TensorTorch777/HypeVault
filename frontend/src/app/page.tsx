@@ -82,12 +82,12 @@ export default function HomePage() {
 
       {/* The five houses */}
       <section aria-labelledby="houses" className="relative py-28">
-        <div className="mx-auto max-w-[1060px] px-4 sm:px-6">
+        <div className="mx-auto max-w-[66.25rem] px-4 sm:px-6">
           <p className="hv-eyebrow">People &amp; places</p>
           <h2 id="houses" className="mt-1 font-display text-[clamp(2.6rem,5vw,4.2rem)] font-extrabold uppercase leading-[0.9] text-primary">
             Only in the vault
           </h2>
-          <p className="mt-4 max-w-xl text-[15px] leading-7 text-primary/70">
+          <p className="mt-4 max-w-xl text-[0.9375rem] leading-7 text-primary/70">
             Five manufactures, each with its live median asking price. Anything else is outside scope and gets no result at all.
           </p>
         </div>
@@ -98,7 +98,7 @@ export default function HomePage() {
 
       {/* Method */}
       <section id="method" aria-labelledby="method-title" className="scroll-mt-20 py-24">
-        <div className="mx-auto max-w-[1060px] px-4 sm:px-6">
+        <div className="mx-auto max-w-[66.25rem] px-4 sm:px-6">
           <div className="flex items-end justify-between gap-6">
             <h2 id="method-title" className="font-display text-[clamp(2.2rem,4vw,3.4rem)] font-extrabold uppercase leading-[0.9] text-primary">
               How it works
@@ -118,7 +118,7 @@ export default function HomePage() {
                   </div>
                   <div className="p-6">
                     <h3 className="font-display text-[1.7rem] font-extrabold uppercase leading-none text-primary">{m.title}</h3>
-                    <p className="mt-3 text-[14px] leading-6 text-primary/70">{m.body}</p>
+                    <p className="mt-3 text-[0.875rem] leading-6 text-primary/70">{m.body}</p>
                   </div>
                 </li>
               );
@@ -132,7 +132,7 @@ export default function HomePage() {
       {/* Closing */}
       <section aria-labelledby="closing" className="hv-sky relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-transparent to-[#14112A]/40" aria-hidden="true" />
-        <div className="mx-auto flex min-h-[80svh] max-w-[1060px] flex-col items-center justify-center px-4 py-28 text-center sm:px-6">
+        <div className="mx-auto flex min-h-[80svh] max-w-[66.25rem] flex-col items-center justify-center px-4 py-28 text-center sm:px-6">
           <Lockup />
           <h2 id="closing" className="hv-wide mt-10 text-[clamp(1.2rem,2.6vw,2rem)] text-white">
             List a watch. Bring the evidence.
@@ -145,7 +145,7 @@ export default function HomePage() {
               Browse the market
             </Link>
           </div>
-          <p className="mt-10 max-w-md text-[12px] font-medium leading-5 text-white/85">
+          <p className="mt-10 max-w-md text-[0.75rem] font-medium leading-5 text-white/85">
             A university research prototype. Model classifications are screening evidence, never a certificate of authenticity.
             Studio watches are procedural models in the style of each house, without logos.
           </p>

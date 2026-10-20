@@ -16,7 +16,7 @@ export function DeclaredBrandSelect({
   return (
     <select
       id={id}
-      className="mt-2 flex h-11 w-full rounded-xl border border-white/12 bg-[#0E0F1E] px-3 text-[15px] text-primary focus:border-accent focus:outline-none"
+      className="mt-2 flex h-11 w-full rounded-xl border border-white/12 bg-[#0E0F1E] px-3 text-[0.9375rem] text-primary focus:border-accent focus:outline-none"
       value={value}
       disabled={disabled}
       onChange={(event) => onChange(event.target.value)}

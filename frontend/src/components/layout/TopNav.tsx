@@ -20,7 +20,7 @@ const NAV_LINKS = [
 
 export function Wordmark({ className }: { className?: string }) {
   return (
-    <span className={cn("font-display text-[22px] font-extrabold uppercase leading-none tracking-[0.02em] text-primary", className)}>
+    <span className={cn("font-display text-[1.375rem] font-extrabold uppercase leading-none tracking-[0.02em] text-primary", className)}>
       Hype<span className="hv-gradient-text">vault</span>
     </span>
   );
@@ -46,7 +46,7 @@ export function TopNav() {
 
   const linkClass = (href: string) =>
     cn(
-      "hv-link-underline font-display text-[14px] font-bold uppercase tracking-[0.06em] transition-colors",
+      "hv-link-underline font-display text-[0.875rem] font-bold uppercase tracking-[0.06em] transition-colors",
       pathname === href ? "text-accent" : "text-primary/75 hover:text-primary"
     );
 
@@ -57,7 +57,7 @@ export function TopNav() {
         scrolled ? "hv-glass border-primary/10" : "border-transparent bg-transparent"
       )}
     >
-      <div className="mx-auto flex h-16 w-full max-w-[1240px] items-center justify-between gap-4 px-4 sm:px-6">
+      <div className="mx-auto flex h-16 w-full max-w-[77.5rem] items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" aria-label="HypeVault home" className="shrink-0">
           <Monogram />
         </Link>
@@ -81,19 +81,19 @@ export function TopNav() {
             aria-label="Search the market"
             className="grid h-11 w-11 place-items-center rounded-full text-primary/80 transition-colors hover:text-accent"
           >
-            <Search className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden="true" />
+            <Search className="h-[1.125rem] w-[1.125rem]" strokeWidth={1.5} aria-hidden="true" />
           </Link>
           <Link
             href={isSeller ? "/seller/dashboard" : me ? "/" : "/login"}
             aria-label={me ? "Your account" : "Sign in"}
             className="grid h-11 w-11 place-items-center rounded-full text-primary/80 transition-colors hover:text-accent"
           >
-            <User className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden="true" />
+            <User className="h-[1.125rem] w-[1.125rem]" strokeWidth={1.5} aria-hidden="true" />
           </Link>
           {me ? (
             <button
               type="button"
-              className="ml-2 hidden min-h-[44px] cursor-pointer font-display text-[14px] font-bold uppercase tracking-[0.06em] text-primary/70 transition-colors hover:text-primary lg:inline-flex lg:items-center"
+              className="ml-2 hidden min-h-[2.75rem] cursor-pointer font-display text-[0.875rem] font-bold uppercase tracking-[0.06em] text-primary/70 transition-colors hover:text-primary lg:inline-flex lg:items-center"
               onClick={() => void logoutRemote().then(() => (window.location.href = "/login"))}
             >
               Sign out
@@ -102,7 +102,7 @@ export function TopNav() {
             <span className="ml-3 hidden sm:inline-flex">
               <Link
                 href="/seller/upload"
-                className="hv-btn-pill hv-btn-primary !min-h-[36px] !px-4 !py-1.5 !text-[13px]"
+                className="hv-btn-pill hv-btn-primary !min-h-[2.25rem] !px-4 !py-1.5 !text-[0.8125rem]"
               >
                 Sell a watch
               </Link>

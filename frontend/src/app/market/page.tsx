@@ -56,15 +56,15 @@ function MarketView() {
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/80 via-background/30 to-background" aria-hidden="true" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-background/85 via-background/25 to-transparent" aria-hidden="true" />
         {house ? (
-          <div key={house.id} className="absolute bottom-[-10%] right-[2%] -z-10 hidden aspect-square w-[min(34vw,440px)] animate-in fade-in slide-in-from-bottom-6 duration-700 md:block" aria-hidden="true">
+          <div key={house.id} className="absolute bottom-[-10%] right-[2%] -z-10 hidden aspect-square w-[min(34vw,27.5rem)] animate-in fade-in slide-in-from-bottom-6 duration-700 md:block" aria-hidden="true">
             <Image src={`/renders/${house.id}/hero.webp`} alt="" fill sizes="34vw" className="hv-fade-y object-contain drop-shadow-[0_30px_50px_rgba(10,11,23,0.7)]" />
           </div>
         ) : null}
 
-        <div className="mx-auto max-w-[1180px] px-4 pb-10 pt-28 sm:px-6 md:pt-36">
+        <div className="mx-auto max-w-[73.75rem] px-4 pb-10 pt-28 sm:px-6 md:pt-36">
           <p className="hv-eyebrow">{house ? `${house.city} · since ${house.since}` : "Market intelligence"}</p>
           <h1 className="mt-1 max-w-3xl font-display text-[clamp(3rem,7vw,5.6rem)] font-extrabold uppercase leading-[0.86] text-white">{title}</h1>
-          <p className="mt-4 max-w-xl text-[15px] leading-7 text-white/80">
+          <p className="mt-4 max-w-xl text-[0.9375rem] leading-7 text-white/80">
             Asking prices from a dated Chrono24 dataset and the live eBay Browse API. Every figure names its source and date; nothing is
             estimated where data is missing.
           </p>
@@ -87,7 +87,7 @@ function MarketView() {
               onChange={(e) => setDraft(e.target.value)}
               placeholder="Nautilus 5711, Royal Oak 15500, Lange 1…"
               autoComplete="off"
-              className="min-w-0 flex-1 bg-transparent px-2 text-[15px] text-primary placeholder:text-primary/40 focus:outline-none"
+              className="min-w-0 flex-1 bg-transparent px-2 text-[0.9375rem] text-primary placeholder:text-primary/40 focus:outline-none"
             />
             <button type="submit" className="hv-btn-pill hv-btn-primary">
               Search
@@ -96,7 +96,7 @@ function MarketView() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
+      <div className="mx-auto max-w-[73.75rem] px-4 sm:px-6">
         {/* House tabs */}
         <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:px-0" role="group" aria-label="Filter by manufacture">
           {[null, ...STUDIO_WATCHES].map((w) => {
@@ -109,7 +109,7 @@ function MarketView() {
                 aria-pressed={active}
                 onClick={() => go({ brand: b, q: "" })}
                 className={cn(
-                  "flex min-h-[48px] shrink-0 cursor-pointer items-center gap-2 rounded-full border py-1 pl-1 pr-4 text-[13px] font-bold transition-colors",
+                  "flex min-h-[3rem] shrink-0 cursor-pointer items-center gap-2 rounded-full border py-1 pl-1 pr-4 text-[0.8125rem] font-bold transition-colors",
                   active ? "border-accent bg-accent text-ink" : "border-white/12 bg-card text-primary/80 hover:border-white/35 hover:text-primary"
                 )}
               >
@@ -128,7 +128,7 @@ function MarketView() {
           ) : (
             <>
               <h2 className="font-display text-[2.2rem] font-extrabold uppercase leading-none text-primary">The five houses</h2>
-              <p className="mt-2 text-[14px] text-primary/60">Median asking price and range in the Chrono24 dataset. Pick a house to see its market.</p>
+              <p className="mt-2 text-[0.875rem] text-primary/60">Median asking price and range in the Chrono24 dataset. Pick a house to see its market.</p>
               <div className="mt-8">
                 <BrandIndexAuto />
               </div>

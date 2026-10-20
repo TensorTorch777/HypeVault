@@ -243,7 +243,7 @@ export default function ResearchDemoPage() {
             </label>
             <select
               id="research-model"
-              className="mt-2 flex h-11 w-full rounded-xl border border-white/12 bg-[#0E0F1E] px-3 text-[15px] text-primary focus:border-accent focus:outline-none"
+              className="mt-2 flex h-11 w-full rounded-xl border border-white/12 bg-[#0E0F1E] px-3 text-[0.9375rem] text-primary focus:border-accent focus:outline-none"
              
               value={modelId ?? ""}
               disabled={!readiness || pending}
@@ -313,7 +313,7 @@ export default function ResearchDemoPage() {
             </label>
             <Input
               id="research-image"
-              className="mt-2 cursor-pointer py-2 file:mr-4 file:cursor-pointer file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-1.5 file:text-[13px] file:font-bold file:text-ink"
+              className="mt-2 cursor-pointer py-2 file:mr-4 file:cursor-pointer file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-1.5 file:text-[0.8125rem] file:font-bold file:text-ink"
               type="file"
               accept="image/jpeg,image/png,image/webp"
               onChange={(event) => {
@@ -335,7 +335,7 @@ export default function ResearchDemoPage() {
           </div>
           <div className="flex flex-wrap gap-3">
             <Button
-              className="min-h-[44px]"
+              className="min-h-[2.75rem]"
               disabled={pending || !brand || !modelId || !selectedStatus?.ready}
               onClick={() => void submit()}
             >
@@ -343,7 +343,7 @@ export default function ResearchDemoPage() {
             </Button>
             <Button
               variant="outline"
-              className="min-h-[44px]"
+              className="min-h-[2.75rem]"
               disabled={pending || !file || !brand}
               onClick={() => void compareBoth()}
             >

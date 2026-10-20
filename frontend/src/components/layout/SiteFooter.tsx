@@ -35,10 +35,10 @@ const COLUMNS = [
 export function SiteFooter() {
   return (
     <footer className="relative overflow-hidden border-t border-primary/10 bg-[#0A0B17] pb-28 pt-20 md:pb-14">
-      <div className="mx-auto grid max-w-[1240px] gap-14 px-4 sm:px-6 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+      <div className="mx-auto grid max-w-[77.5rem] gap-14 px-4 sm:px-6 md:grid-cols-[1.4fr_repeat(3,1fr)]">
         <div className="max-w-sm">
           <Lockup compact />
-          <p className="mt-5 text-[13px] leading-6 text-primary/65">
+          <p className="mt-5 text-[0.8125rem] leading-6 text-primary/65">
             Market intelligence and AI-assisted listing screening for five houses of haute horlogerie. A university
             research project, not a live marketplace.
           </p>
@@ -49,7 +49,7 @@ export function SiteFooter() {
             <ul className="mt-5 space-y-3">
               {col.links.map((l) => (
                 <li key={l.label}>
-                  <Link href={l.href} className="hv-link-underline text-[13px] text-primary/70 transition-colors hover:text-primary">
+                  <Link href={l.href} className="hv-link-underline text-[0.8125rem] text-primary/70 transition-colors hover:text-primary">
                     {l.label}
                   </Link>
                 </li>
@@ -58,16 +58,16 @@ export function SiteFooter() {
           </div>
         ))}
       </div>
-      <div className="mx-auto mt-16 flex max-w-[1240px] items-center gap-4 px-4 sm:px-6">
+      <div className="mx-auto mt-16 flex max-w-[77.5rem] items-center gap-4 px-4 sm:px-6">
         <div className="grid h-16 w-12 shrink-0 place-items-center border-2 border-primary/80 font-display text-[1.9rem] font-black leading-none text-primary" aria-hidden="true">
           RP
         </div>
-        <p className="max-w-sm text-[11px] leading-4 text-primary/65">
+        <p className="max-w-sm text-[0.6875rem] leading-4 text-primary/65">
           <span className="font-bold text-primary/85">Research Prototype.</span> Screening evidence, not a certificate of authenticity.
           Studio watches are procedural models without logos; backdrops marked as generated are AI art.
         </p>
       </div>
-      <div className="mx-auto mt-10 flex max-w-[1240px] flex-col gap-3 border-t border-primary/10 px-4 pt-8 text-[11px] leading-5 text-primary/50 sm:px-6 md:flex-row md:justify-between">
+      <div className="mx-auto mt-10 flex max-w-[77.5rem] flex-col gap-3 border-t border-primary/10 px-4 pt-8 text-[0.6875rem] leading-5 text-primary/50 sm:px-6 md:flex-row md:justify-between">
         <p>© {new Date().getFullYear()} HypeVault · K. J. Somaiya School of Engineering · Research prototype</p>
         <p>
           3D model: &ldquo;Richard Mille RM011&rdquo; by Denis V on Sketchfab,{" "}

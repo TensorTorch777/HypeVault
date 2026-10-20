@@ -140,14 +140,14 @@ export default function SellerUploadPage() {
                 ? `${meQuery.data?.email} cannot list watches. Sign in with your Somaiya Google account to sell.`
                 : "Sign in with your Somaiya account to list a watch."}
             </p>
-            <Button className="min-h-[44px]" onClick={() => router.push(authed ? "/market" : "/login")}>
+            <Button className="min-h-[2.75rem]" onClick={() => router.push(authed ? "/market" : "/login")}>
               {authed ? "Browse the market" : "Log in"}
             </Button>
           </CardContent>
         </Card>
       ) : (
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_280px]">
-          <section className="min-w-0 rounded-[22px] border border-white/10 bg-card/90 p-5 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.9)] backdrop-blur md:p-8">
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_17.5rem]">
+          <section className="min-w-0 rounded-[1.375rem] border border-white/10 bg-card/90 p-5 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.9)] backdrop-blur md:p-8">
             <ol className="grid grid-cols-2 gap-3 sm:grid-cols-4" aria-label="Listing steps">
               {steps.map((label, index) => {
                 const complete = index < step || (index === 3 && stage === "screened");
@@ -158,7 +158,7 @@ export default function SellerUploadPage() {
                   <li key={label} className="min-w-0">
                     <div className="flex items-center gap-2">
                       <span
-                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold ${
+                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[0.6875rem] font-semibold ${
                           failed
                             ? "bg-[#3A1A2C] text-[#FF8A8A]"
                             : complete
@@ -170,11 +170,11 @@ export default function SellerUploadPage() {
                       >
                         {complete ? "✓" : index + 1}
                       </span>
-                      <span className={`truncate font-display text-[14px] font-bold uppercase tracking-[0.04em] ${current ? "text-white" : "text-white/45"}`}>{label}</span>
+                      <span className={`truncate font-display text-[0.875rem] font-bold uppercase tracking-[0.04em] ${current ? "text-white" : "text-white/45"}`}>{label}</span>
                     </div>
                     <div className={`mt-2 h-0.5 rounded-full ${complete || current ? "bg-[#FFB8D2]" : "bg-white/10"}`} />
-                    {running ? <p className="mt-1 text-[10px] text-[#F08AA8]">In progress</p> : null}
-                    {failed ? <p className="mt-1 text-[10px] text-[#FF8A8A]">Needs retry</p> : null}
+                    {running ? <p className="mt-1 text-[0.625rem] text-[#F08AA8]">In progress</p> : null}
+                    {failed ? <p className="mt-1 text-[0.625rem] text-[#FF8A8A]">Needs retry</p> : null}
                   </li>
                 );
               })}
@@ -185,7 +185,7 @@ export default function SellerUploadPage() {
                 <motion.div key="s0" initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : -8 }} transition={stepMotion} className="mt-8">
                   <ImageUploader minImages={1} onChange={setFiles} />
                   <div className="mt-6 flex justify-end">
-                    <Button className="min-h-[44px]" disabled={files.length < 1} onClick={() => setStep(1)}>
+                    <Button className="min-h-[2.75rem]" disabled={files.length < 1} onClick={() => setStep(1)}>
                       Continue
                     </Button>
                   </div>
@@ -220,10 +220,10 @@ export default function SellerUploadPage() {
                     </div>
                   </div>
                   <div className="flex justify-between gap-3 pt-2">
-                    <Button variant="outline" className="min-h-[44px]" onClick={() => setStep(0)}>
+                    <Button variant="outline" className="min-h-[2.75rem]" onClick={() => setStep(0)}>
                       Back
                     </Button>
-                    <Button className="min-h-[44px]" disabled={!brand} onClick={() => setStep(2)}>
+                    <Button className="min-h-[2.75rem]" disabled={!brand} onClick={() => setStep(2)}>
                       Continue
                     </Button>
                   </div>
@@ -249,10 +249,10 @@ export default function SellerUploadPage() {
                   </div>
                   {err ? <p className="text-sm font-semibold text-danger" role="alert">{err}</p> : null}
                   <div className="flex justify-between gap-3">
-                    <Button variant="outline" className="min-h-[44px]" onClick={() => setStep(1)} disabled={busy}>
+                    <Button variant="outline" className="min-h-[2.75rem]" onClick={() => setStep(1)} disabled={busy}>
                       Back
                     </Button>
-                    <Button className="min-h-[44px]" disabled={busy} onClick={() => void runLegacyCheck()}>
+                    <Button className="min-h-[2.75rem]" disabled={busy} onClick={() => void runLegacyCheck()}>
                       {busy ? "Screening…" : listingId ? "Retry screening" : "Run screening"}
                     </Button>
                   </div>
@@ -264,13 +264,13 @@ export default function SellerUploadPage() {
                   {outcome ? <ScreeningResult outcome={outcome} /> : null}
                   <div className="flex flex-wrap gap-3">
                     {outcome?.listing_status === "live" && listingId ? (
-                      <Button className="min-h-[44px]" onClick={() => router.push(`/product/${listingId}`)}>
+                      <Button className="min-h-[2.75rem]" onClick={() => router.push(`/product/${listingId}`)}>
                         View listing
                       </Button>
                     ) : null}
                     {outcome && outcome.listing_status !== "live" ? (
                       <Button
-                        className="min-h-[44px]"
+                        className="min-h-[2.75rem]"
                         onClick={() => {
                           setFiles([]);
                           setOutcome(null);
@@ -281,7 +281,7 @@ export default function SellerUploadPage() {
                         Try another photo
                       </Button>
                     ) : null}
-                    <Button variant="outline" className="min-h-[44px]" onClick={() => router.push("/seller/dashboard")}>
+                    <Button variant="outline" className="min-h-[2.75rem]" onClick={() => router.push("/seller/dashboard")}>
                       Dashboard
                     </Button>
                   </div>
@@ -290,7 +290,7 @@ export default function SellerUploadPage() {
             </AnimatePresence>
           </section>
 
-          <aside className="rounded-[22px] border border-white/10 bg-[#13152A] p-6 text-sm text-primary/70 lg:sticky lg:top-24">
+          <aside className="rounded-[1.375rem] border border-white/10 bg-[#13152A] p-6 text-sm text-primary/70 lg:sticky lg:top-24">
             <p className="hv-eyebrow">This listing</p>
             <p className="mt-2 font-display text-[1.6rem] font-extrabold uppercase leading-none text-white">{productName.trim() || "Untitled listing"}</p>
             <p className="mt-1">{brand || "Declared brand not selected"}</p>

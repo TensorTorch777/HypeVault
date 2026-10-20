@@ -35,8 +35,8 @@ export function Showdown({ dials }: { dials: [string | null, string | null] }) {
 
   return (
     <section aria-labelledby="showdown" className="relative py-28">
-      <div className="mx-auto max-w-[1060px] px-4 sm:px-6">
-        <p className="text-center font-display text-[13px] font-bold uppercase tracking-[0.08em] text-primary/70">Watch</p>
+      <div className="mx-auto max-w-[66.25rem] px-4 sm:px-6">
+        <p className="text-center font-display text-[0.8125rem] font-bold uppercase tracking-[0.08em] text-primary/70">Watch</p>
         <h2 id="showdown" className="hv-wide mt-1 text-center text-[clamp(1.6rem,3.6vw,3rem)] text-primary">
           The showdown
         </h2>
@@ -49,7 +49,7 @@ export function Showdown({ dials }: { dials: [string | null, string | null] }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: i * 0.12, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-[22px] border border-white/10 p-7"
+              className="relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-[1.375rem] border border-white/10 p-7"
               style={{ background: p.sky }}
             >
               {dials[i] ? (
@@ -57,7 +57,7 @@ export function Showdown({ dials }: { dials: [string | null, string | null] }) {
               ) : null}
               {/* the patch grid this model actually reads the photo through */}
               <div
-                className="absolute inset-[12%] rounded-[6px] border border-white/30"
+                className="absolute inset-[12%] rounded-[0.375rem] border border-white/30"
                 style={{
                   backgroundImage:
                     "linear-gradient(rgba(255,255,255,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.16) 1px, transparent 1px)",
@@ -73,7 +73,7 @@ export function Showdown({ dials }: { dials: [string | null, string | null] }) {
                 <p className="mt-1 font-display text-[clamp(3.6rem,8vw,6rem)] font-black uppercase leading-[0.85] text-white">{p.name}</p>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {p.stats.map((s) => (
-                    <li key={s} className="rounded-full bg-white/10 px-3 py-1 text-[12px] font-semibold text-white/90 backdrop-blur">
+                    <li key={s} className="rounded-full bg-white/10 px-3 py-1 text-[0.75rem] font-semibold text-white/90 backdrop-blur">
                       {s}
                     </li>
                   ))}
@@ -93,7 +93,7 @@ export function Showdown({ dials }: { dials: [string | null, string | null] }) {
           <p className="hv-headline text-[clamp(1.6rem,3vw,2.4rem)] leading-tight">
             {q.isLoading ? "Loading the verdict…" : frontier ? (frontier.frontier_model ?? frontier.outcome.replaceAll("_", " ").toLowerCase()) : "Fight not yet scored."}
           </p>
-          <p className="text-[15px] leading-7 text-primary/70">
+          <p className="text-[0.9375rem] leading-7 text-primary/70">
             {frontier?.statement ??
               `The rules were written before any data: at least ${typeof required === "number" ? required : "the pre-registered number of"} photos where the two disagree, an exact McNemar test below 0.05, and the winner's false-authentic upper bound at or below 10%. Until then DINOv2 stays live.`}
           </p>

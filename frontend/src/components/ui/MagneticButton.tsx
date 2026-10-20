@@ -56,7 +56,7 @@ export function MagneticButton({
       onMouseLeave={onLeave}
       style={{ x: sx, y: sy, rotate }}
       className={cn(
-        "relative inline-flex min-h-[52px] items-center justify-center gap-2 overflow-hidden rounded-full px-8 text-sm font-bold tracking-wide transition-[background,border] duration-200",
+        "relative inline-flex min-h-[3.25rem] items-center justify-center gap-2 overflow-hidden rounded-full px-8 text-sm font-bold tracking-wide transition-[background,border] duration-200",
         variants,
         className
       )}
