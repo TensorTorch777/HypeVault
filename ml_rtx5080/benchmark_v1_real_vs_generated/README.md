@@ -7,16 +7,18 @@ exclusions, sample sizes, analysis and the rule that decides the frontier model.
 **Scope.** This answers "is this listing photo real or AI-generated?". It does not test whether a
 watch is genuine, so it cannot lift the repository's `NO_GO_FOR_AUTHENTICITY_CLAIMS` status.
 
-## Status (16 Oct 2026)
+## Status (20 Oct 2026)
 
 | Step | State |
 |---|---|
 | Protocol | Pre-registered |
 | Pipeline smoke test (tiny test generator, CPU) | Passed: generation, normalisation, exclusion checks, paired Triton scoring, report |
-| Real photos (eBay Browse API) | Waiting for eBay developer keys |
-| Held-out generated set (Kandinsky 2.2) | Waiting for a free GPU |
-| SDXL secondary set | Waiting for a free GPU |
-| Confirmatory run | Not started |
+| Real photos (eBay Browse API) | 300 admitted (125 excluded, 109 of them near-copies of training images) |
+| Held-out generated set (Kandinsky 2.2) | 284 admitted |
+| SDXL secondary set | 150 admitted |
+| Confirmatory run | `results/20261020T110244Z`: **UNDERPOWERED** (16 discordant images, 49 required). DINOv3 coverage 76.5% < 0.85, so the engineering-selection rule does not apply. **DINOv2 remains the live model.** |
+
+Both models miss most Kandinsky 2.2 images: DINOv2 accepts 271/284 as real, and DINOv3 accepts 170/284 and sends 102 to REVIEW. These images became development data for Phases 71–73. Fresh tests are in `../benchmark_v2_fresh/` and `../benchmark_v3_fresh/`.
 
 ## Run order
 

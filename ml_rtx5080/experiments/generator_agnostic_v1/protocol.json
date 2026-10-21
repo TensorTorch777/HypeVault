@@ -1,0 +1,37 @@
+{
+  "protocol": "generator_agnostic_v1",
+  "phase": 71,
+  "written_on": "2026-10-20",
+  "written_before_any_feature_extraction": true,
+  "question": "Does a frozen foundation backbone with a linear head, trained only on real photos and their autoencoder reconstructions, detect images from a generator family it never saw (Kandinsky 2.2) better than the fine-tuned DINOv2 and DINOv3 models?",
+  "scope_limit": "Real photograph versus AI-generated image only. Nothing here says whether a watch is genuine.",
+  "training_data": {
+    "real": "Label_0 train split of split_manifest_v2.json, the first 1,000 per brand in manifest order (5,000 photos)",
+    "fake": "Each of those photos passed through two public autoencoders: stabilityai SD 1.5 VAE (runwayml/stable-diffusion-v1-5/vae, fp16) and SDXL VAE (stabilityai/stable-diffusion-xl-base-1.0/vae, fp32). Encode, take the latent mode, decode. No text prompt and no diffusion sampling.",
+    "label_1_used_in_training": false,
+    "kandinsky_movq_used": false
+  },
+  "image_pipeline": {
+    "base": "EXIF transpose, RGB, centre-crop to square, Lanczos resize to 512 x 512. Reconstruction happens on this base image.",
+    "clean_view": "JPEG quality 90",
+    "augmented_view": "with p = 0.5 resize by a factor U(0.5, 1.0) and back (bicubic); with p = 0.3 Gaussian blur radius U(0.2, 1.5); JPEG quality uniform integer 60-95. Seeded per sample and view; identical rules for real and fake.",
+    "train_views": "clean and augmented, for real and both reconstructions",
+    "evaluation_views": "clean only. Benchmark images (already 768 x 768 JPEG q90) go through the same base + clean step."
+  },
+  "candidates": {
+    "clip_vitl14_linear": "openai/clip-vit-large-patch14, frozen, L2-normalised projected image embedding (768-d), logistic regression",
+    "dinov3_vitb16_linear": "timm vit_base_patch16_dinov3.lvd1689m pretrained weights (not the HypeVault fine-tune), frozen, 512 input, pooled CLS (768-d), logistic regression"
+  },
+  "classifier": "scikit-learn LogisticRegression, standardised features, C = 1.0, class_weight balanced, max_iter 5000. Not tuned.",
+  "selection": "Validation only. Label_0 validation split (200 per brand, clean) against Label_1 validation split (200 per brand, clean). Label_1 is a generator neither candidate trained on. Higher ROC-AUC is selected.",
+  "threshold": "99th percentile of P(fake) on the 1,000 Label_0 validation photos, so about 1% of our real validation photos are rejected. Fixed before the final evaluation.",
+  "final_evaluation": {
+    "runs_once": true,
+    "primary": "benchmark_v1 REAL_PHOTO (300 eBay photos) + heldout_kandinsky22 (284). Kandinsky's decoder was never used.",
+    "secondary": "benchmark_v1 sdxl_base10 (150). The SDXL decoder was used in training, so this set is NOT unseen for the new model.",
+    "in_distribution": "Label_0 test (1,506) and Label_1 test (1,500) of split_manifest_v2.json",
+    "metrics": "detection rate of generated images and false-fake rate on real photos at the fixed threshold, with exact Clopper-Pearson 95% intervals; ROC-AUC",
+    "comparison": "benchmark_v1 run 20261020T110244Z results for dinov2_legacy and dinov3_experimental on the same images"
+  },
+  "success_criterion": "Kandinsky detection at the fixed threshold is higher than the best earlier model (DINOv3: 12/284 FAKE) with non-overlapping 95% intervals, while the false-fake rate on the 300 eBay real photos stays at or below 5%."
+}

@@ -1,0 +1,152 @@
+{
+  "run_id": "20261020T203323Z",
+  "protocol_sha256": "a2b3cc801a900c503326f7bbe00504b97f29d2de3315eb36a99519b9c53b75ca",
+  "fusion_rule_v1_sha256": "9f37f3286169ed22180dbe82ae0ae09e7b1160dbca0a94cf14994e8a5cda6d5b",
+  "fusion_rule_v2_sha256": "2bb10caffd342f51d8931743cf3501361c1fb5fc94eb65b2dce7ef4dec83066e",
+  "counts": {
+    "REAL_PHOTO|real_ebay_v3": 300,
+    "GENERATED|stable_cascade_lite": 296,
+    "GENERATED|kandinsky22_v3": 281
+  },
+  "analysis": {
+    "dinov3_alone": {
+      "real_rejected": {
+        "k": 1,
+        "n": 300,
+        "rate": 0.0033333333333333335,
+        "ci95": [
+          8.43891323178003e-05,
+          0.018431252048067254
+        ]
+      },
+      "real_review": 41,
+      "kandinsky22_v3": {
+        "k": 8,
+        "n": 281,
+        "rate": 0.028469750889679714,
+        "ci95": [
+          0.012369687827180401,
+          0.05532392743940735
+        ],
+        "review": 106
+      },
+      "stable_cascade_lite": {
+        "k": 204,
+        "n": 296,
+        "rate": 0.6891891891891891,
+        "ci95": [
+          0.6330693368920439,
+          0.7414738192633323
+        ],
+        "review": 39
+      }
+    },
+    "dinov2_alone": {
+      "real_rejected": {
+        "k": 2,
+        "n": 300,
+        "rate": 0.006666666666666667,
+        "ci95": [
+          0.0008083864127991502,
+          0.023873497572173677
+        ]
+      },
+      "real_review": 0,
+      "kandinsky22_v3": {
+        "k": 29,
+        "n": 281,
+        "rate": 0.10320284697508897,
+        "ci95": [
+          0.0702128394314715,
+          0.14484658219951918
+        ],
+        "review": 0
+      },
+      "stable_cascade_lite": {
+        "k": 164,
+        "n": 296,
+        "rate": 0.5540540540540541,
+        "ci95": [
+          0.4954379043959206,
+          0.6115773773411288
+        ],
+        "review": 0
+      }
+    },
+    "watch_forensics_v1": {
+      "real_rejected": {
+        "k": 9,
+        "n": 300,
+        "rate": 0.03,
+        "ci95": [
+          0.013807819555527238,
+          0.05618354824161542
+        ]
+      },
+      "real_review": 41,
+      "kandinsky22_v3": {
+        "k": 66,
+        "n": 281,
+        "rate": 0.23487544483985764,
+        "ci95": [
+          0.18656058139248843,
+          0.2888768476847454
+        ],
+        "review": 87
+      },
+      "stable_cascade_lite": {
+        "k": 259,
+        "n": 296,
+        "rate": 0.875,
+        "ci95": [
+          0.8318404635673311,
+          0.9104403510743064
+        ],
+        "review": 18
+      }
+    },
+    "watch_forensics_v2": {
+      "real_rejected": {
+        "k": 6,
+        "n": 300,
+        "rate": 0.02,
+        "ci95": [
+          0.00737416200172647,
+          0.043021082673516245
+        ]
+      },
+      "real_review": 45,
+      "kandinsky22_v3": {
+        "k": 79,
+        "n": 281,
+        "rate": 0.28113879003558717,
+        "ci95": [
+          0.2293535263464005,
+          0.33760671576293955
+        ],
+        "review": 112
+      },
+      "stable_cascade_lite": {
+        "k": 272,
+        "n": 296,
+        "rate": 0.918918918918919,
+        "ci95": [
+          0.8817593468181393,
+          0.9473601414391886
+        ],
+        "review": 19
+      }
+    },
+    "paired_primary": {
+      "n_binary": 242,
+      "v2_only_caught": 33,
+      "dinov3_only_caught": 0,
+      "mcnemar_p": 2.3283064365386963e-10
+    },
+    "success": {
+      "more_caught_and_significant": true,
+      "real_rejection_within_3_points": true,
+      "met": true
+    }
+  }
+}

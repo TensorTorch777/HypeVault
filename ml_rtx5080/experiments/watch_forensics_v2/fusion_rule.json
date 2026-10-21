@@ -1,0 +1,128 @@
+{
+  "rule": "watch_forensics_v2",
+  "phase": 73,
+  "frozen_before_any_v3_scoring": true,
+  "inputs": {
+    "dinov3_logit": "logit of fine-tuned DINOv3 calibrated P(fake) (T = 0.2404), benchmark serving path",
+    "dinov3_review": "1 if the DINOv3 benchmark policy returned REVIEW",
+    "probe_logit": "logit of the Phase 73 five-decoder probe P(fake)",
+    "brand_any": "1 if any of the four literal readers read the declared brand's word",
+    "brand_readers": "fraction of the four readers (rapid_full, rapid_crop, doctr_full, doctr_crop) that read it"
+  },
+  "probe": {
+    "path": "ml_rtx5080/experiments/generator_agnostic_v2/dinov3_vitb16_linear_5dec.joblib",
+    "sha256": "26dd8480c13d23e798b631f5f9511341410fceaf2ff742a4e994948fd2233675"
+  },
+  "readers": {
+    "rapidocr": "3.10.0, PP-OCRv6 det",
+    "doctr": "1.1.0, db_mobilenet_v3_large + crnn_mobilenet_v3_small",
+    "crop": "central 60% upscaled to 1024px",
+    "min_confidence": 0.6
+  },
+  "combiner": {
+    "features": [
+      "dinov3_logit",
+      "dinov3_review",
+      "probe_logit",
+      "brand_any",
+      "brand_readers"
+    ],
+    "scaler_mean": [
+      -6.745778669014918,
+      0.2788104089219331,
+      0.5923127311977613,
+      0.3215613382899628,
+      0.20693928128872366
+    ],
+    "scaler_scale": [
+      11.930110013196913,
+      0.4484140550860526,
+      6.303999878325965,
+      0.46707562985787,
+      0.33349495466808954
+    ],
+    "coef": [
+      3.02463637589021,
+      0.4257855341974395,
+      1.1949727970411739,
+      -2.3264088771445337,
+      -1.0615815567250886
+    ],
+    "intercept": 1.3317384891286266,
+    "trained_on": "benchmark_v1 + benchmark_v2 (600 real, 1,014 generated)"
+  },
+  "thresholds": {
+    "t_fake": 0.888057,
+    "t_review": 0.77398,
+    "source": "real photos only: 600 eBay (out-of-fold) + 1,000 Label_0 validation; at most 1% FAKE and at most 5% more REVIEW"
+  },
+  "decision": "FAKE if score >= t_fake; REVIEW if score >= t_review or DINOv3 REVIEW; else AUTHENTIC",
+  "development_results": {
+    "amused512|dinov3_alone": {
+      "REVIEW": 158,
+      "FAKE": 123,
+      "AUTHENTIC": 12
+    },
+    "amused512|watch_forensics_v2": {
+      "FAKE": 293
+    },
+    "heldout_kandinsky22|dinov3_alone": {
+      "AUTHENTIC": 170,
+      "REVIEW": 102,
+      "FAKE": 12
+    },
+    "heldout_kandinsky22|watch_forensics_v2": {
+      "REVIEW": 99,
+      "AUTHENTIC": 89,
+      "FAKE": 96
+    },
+    "kandinsky22_fresh|dinov3_alone": {
+      "AUTHENTIC": 163,
+      "FAKE": 17,
+      "REVIEW": 107
+    },
+    "kandinsky22_fresh|watch_forensics_v2": {
+      "FAKE": 100,
+      "REVIEW": 121,
+      "AUTHENTIC": 66
+    },
+    "label0|dinov3_alone": {
+      "AUTHENTIC": 886,
+      "REVIEW": 114
+    },
+    "label0|watch_forensics_v2": {
+      "AUTHENTIC": 847,
+      "REVIEW": 144,
+      "FAKE": 9
+    },
+    "real_ebay|dinov3_alone": {
+      "AUTHENTIC": 265,
+      "REVIEW": 35
+    },
+    "real_ebay|watch_forensics_v2": {
+      "AUTHENTIC": 258,
+      "REVIEW": 41,
+      "FAKE": 1
+    },
+    "real_ebay_v2|dinov3_alone": {
+      "AUTHENTIC": 259,
+      "REVIEW": 40,
+      "FAKE": 1
+    },
+    "real_ebay_v2|watch_forensics_v2": {
+      "AUTHENTIC": 250,
+      "REVIEW": 44,
+      "FAKE": 6
+    },
+    "sdxl_base10|dinov3_alone": {
+      "AUTHENTIC": 23,
+      "FAKE": 119,
+      "REVIEW": 8
+    },
+    "sdxl_base10|watch_forensics_v2": {
+      "AUTHENTIC": 9,
+      "FAKE": 125,
+      "REVIEW": 16
+    }
+  }
+}

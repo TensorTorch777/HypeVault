@@ -1,0 +1,34 @@
+{
+  "protocol": "benchmark_v2_fresh",
+  "phase": 72,
+  "status": "PRE_REGISTERED",
+  "written_on": "2026-10-20",
+  "written_before_any_data": true,
+  "question": "On fresh images, does the Phase 72 'watch forensics' ensemble (fine-tuned DINOv3 + Phase 71 frozen probe + dial-text brand consistency) catch more AI-generated watch images than fine-tuned DINOv3 alone, at a comparable rate of real photos rejected?",
+  "scope_limit": "Real photograph versus AI-generated image only. No physical-counterfeit or authenticity claim.",
+  "why_a_new_benchmark": "benchmark_v1 images were used for the Phase 71 final test and are used to design the Phase 72 fusion rule, so they are development data now.",
+  "classes": {
+    "REAL_PHOTO": "Primary image of eBay listings (Browse API, category 31387, price >= 1000 USD, five brands), 60 per brand, excluding every listing and every image (SHA-256 or dHash within 2 bits) already in benchmark_v1 or in the 30,000 training images",
+    "GENERATED": {
+      "kandinsky22_fresh": "kandinsky-community/kandinsky-2-2-decoder, same prompt templates as v1, new seeds (base 72000), 60 per brand",
+      "amused512": "amused/amused-512 (masked-token transformer with a VQ-GAN decoder; not a diffusion model; never used by any HypeVault model), same prompt templates, seeds base 73000, 60 per brand"
+    }
+  },
+  "normalisation": "EXIF transpose, RGB, centre-crop square, Lanczos resize to exactly 512 x 512, JPEG quality 90, metadata stripped. Sources below 512 px on the short side are excluded. Every class gets the same treatment.",
+  "exclusions": "Same rules as benchmark_v1 (exact SHA-256 and dHash <= 2 bits against training and within the benchmark), plus all benchmark_v1 images.",
+  "no_peeking": "No model score, OCR reading or fusion output may be computed on v2 images until ml_rtx5080/experiments/watch_forensics_v1/fusion_rule.json is written and its SHA-256 recorded in v2 results. Generation and collection may happen earlier.",
+  "systems_compared": {
+    "dinov3_alone": "fine-tuned DINOv3 epoch_018 with its frozen benchmark policy (REVIEW gate, T = 0.2404, threshold 0.50), scored through Triton as in benchmark_v1",
+    "dinov2_alone": "live DINOv2 with its legacy policy, for reference",
+    "phase71_probe": "frozen DINOv3 + logistic head with its fixed threshold 0.9791",
+    "watch_forensics": "the fusion rule frozen in fusion_rule.json"
+  },
+  "primary_analysis": {
+    "generated_caught": "images whose decision is FAKE, per generator group and pooled, with Clopper-Pearson 95% intervals",
+    "real_rejected": "real photos whose decision is FAKE, with intervals",
+    "review": "REVIEW counts reported separately; REVIEW is neither caught nor rejected",
+    "paired": "exact McNemar test, watch_forensics vs dinov3_alone, on generated images where both give a binary decision"
+  },
+  "success_criterion": "watch_forensics catches more pooled generated images than dinov3_alone with McNemar p < 0.05, and its real-photo rejection rate is at most 3 percentage points above dinov3_alone's",
+  "runs_once": true
+}

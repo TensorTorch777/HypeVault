@@ -1,0 +1,20 @@
+{
+  "candidates": {
+    "clip_vitl14_linear": {
+      "val_auc_label0_vs_label1": 0.78836,
+      "val_auc_real_vs_reconstruction": 0.803535,
+      "threshold_p99_real_val": 0.8791729869310526,
+      "val_label1_detected_at_threshold": 141,
+      "val_label1_n": 1000
+    },
+    "dinov3_vitb16_linear": {
+      "val_auc_label0_vs_label1": 0.898097,
+      "val_auc_real_vs_reconstruction": 0.925179,
+      "threshold_p99_real_val": 0.9790914547543371,
+      "val_label1_detected_at_threshold": 361,
+      "val_label1_n": 1000
+    }
+  },
+  "selected": "dinov3_vitb16_linear",
+  "threshold": 0.9790914547543371
+}

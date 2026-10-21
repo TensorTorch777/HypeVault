@@ -1,0 +1,11 @@
+{
+  "decoders": [
+    "sd15",
+    "sdxl",
+    "amused_vq",
+    "taesd",
+    "taesdxl"
+  ],
+  "val_auc_label0_vs_label1": 0.910767,
+  "threshold_p99_real_val": 0.95760895954604
+}
