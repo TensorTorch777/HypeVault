@@ -33,7 +33,7 @@ class PublicationSafetyTests(unittest.TestCase):
         routes = (REPO / "backend" / "inference" / "routes.py").read_text()
         self.assertNotIn("ListingStatus.live", routes)
         self.assertIn("check_content", routes)
-        self.assertLess(routes.index("check_content"), routes.index("classify_image(nchw)"))
+        self.assertLess(routes.index("check_content"), routes.index("classify_listing_photo(pil)"))
 
     def test_fake_error_and_research_results_block_publication(self) -> None:
         from inference.publication_gate import publication_decision

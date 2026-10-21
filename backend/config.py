@@ -49,7 +49,11 @@ class Settings(BaseSettings):
     cors_origins: str = ""
 
     # ── Inference backend ───────────────────────────────────────────────────
-    # triton = NVIDIA Triton gRPC (production). torch = load LOCAL_MODEL_PATH in-process.
+    # Origin check for listing photos: dinov2_legacy (the settings below) or dinov3_frozen (in-process
+    # on CUDA). DINOv2 stays the default: benchmark_v1 did not name DINOv3 the frontier model.
+    # See inference/live_screening.py.
+    live_screening_model: str = "dinov2_legacy"
+    # Legacy DINOv2 route: triton = NVIDIA Triton gRPC. torch = load LOCAL_MODEL_PATH in-process.
     inference_backend: str = "triton"
     # Path to .pt from training (`torch.save({"model_state": ...})`). Relative paths are under repo root.
     local_model_path: str = ""
@@ -71,6 +75,9 @@ class Settings(BaseSettings):
     content_gate_model: str = "openai/clip-vit-base-patch16"
     content_gate_device: str = "cpu"
     content_gate_min_watch_score: float = 0.5
+    # Read the dial with OCR after screening and tell the seller when the brand name is unreadable.
+    # Informational only: it never changes whether a listing goes live.
+    dial_text_check: bool = True
     listing_min_short_side_px: int = 400
     # Deprecated: use inference_min_authentic_confidence. Kept for older .env files (unused in authenticate).
     inference_live_conf_threshold: float = 0.90

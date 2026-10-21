@@ -68,7 +68,7 @@ class ScopeLockTests(unittest.TestCase):
         self.assertNotIn("dinov2_model", source)
         self.assertNotIn("sigmoid", source)
         routes = (REPO / "backend" / "inference" / "routes.py").read_text()
-        self.assertLess(routes.index("evaluate_declared_brand"), routes.index("classify_image("))
+        self.assertLess(routes.index("evaluate_declared_brand"), routes.index("classify_listing_photo("))
         self.assertNotIn("UNSUPPORTED_SCOPE", (REPO / "backend" / "inference" / "dinov2_model.py").read_text())
 
     def test_frozen_checkpoint_and_temperature(self) -> None:

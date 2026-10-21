@@ -7,6 +7,8 @@ export type ScreeningOutcome = {
   listing_status: "live" | "rejected" | "pending";
   screening_code: string | null;
   screening_reason: string | null;
+  /** Set when dial OCR could not read the declared brand's name. Informational only. */
+  seller_hint?: string | null;
 };
 
 const CODE_TITLE: Record<string, string> = {
@@ -42,6 +44,11 @@ export function ScreeningResult({ outcome }: { outcome: ScreeningOutcome }) {
           </p>
           <p className="hv-display mt-1 text-[2.2rem] uppercase leading-none text-primary">{title}</p>
           {outcome.screening_reason ? <p className="mt-4 text-[0.9375rem] leading-7 text-primary/85">{outcome.screening_reason}</p> : null}
+          {outcome.seller_hint ? (
+            <p className="mt-4 rounded-lg border border-[#F5C451]/40 bg-[#F5C451]/10 px-3 py-2 text-[0.8125rem] leading-6 text-primary/85">
+              {outcome.seller_hint}
+            </p>
+          ) : null}
           <p className="mt-4 text-[0.75rem] leading-5 text-primary/55">
             {listed
               ? "Buyers can now see this listing. Screening checks the photo, not the watch: it is not a certificate of authenticity."

@@ -14,7 +14,6 @@ import logging
 import uuid
 from typing import Annotated
 
-import numpy as np
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
 from fastapi.responses import JSONResponse
 from PIL import Image
@@ -23,13 +22,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from auth.deps import get_current_user
 from config import settings
 from database import Listing, ListingCategory, ListingStatus, User, get_db
-from inference.engine import classify_image
-from inference.research_guard import deployment_mode, live_path_targets_dinov3
+from inference.live_screening import RESPONSE_MODEL, LiveModelConfigurationError, classify_listing_photo
+from inference.research_guard import deployment_mode
 from inference.schemas import AuthenticateResponse
 from inference.content_gate import score_watch
+from inference.dial_text import NOT_FOUND_HINT, read_dial_brand
 from inference.screening import check_content, check_origin, check_size
 from inference.scope_gate import evaluate_declared_brand, failure_body, log_scope_request, unsupported_scope_body
-from inference.triton_client import preprocess_chw
 from inference.verdict import apply_min_authentic_confidence
 from s3_client import upload_file_bytes
 
@@ -43,12 +42,12 @@ ALLOWED_CT = {"image/jpeg", "image/png", "image/webp"}
     response_model=AuthenticateResponse,
     summary="Listing photo screening",
     description=(
-        "Screens a listing photo: size, wristwatch present (CLIP), and the legacy DINOv2 "
-        "real-vs-generated check. Passing lists the watch; failing rejects it with a reason. "
-        "model is LEGACY_DINOV2, research_candidate is false, and "
+        "Screens a listing photo: size, wristwatch present (CLIP), and a real-vs-generated check "
+        "by the model set in LIVE_SCREENING_MODEL (DINOV3_FROZEN or LEGACY_DINOV2, named in `model`). "
+        "Passing lists the watch; failing rejects it with a reason. research_candidate is false and "
         "production_validation is NOT_ESTABLISHED. "
         "The declared brand is not independently verified from the image. "
-        "This is not the frozen DINOv3 research prototype and not a universal authenticity guarantee."
+        "Screening checks the photo, not the watch; it is not an authenticity guarantee."
     ),
 )
 async def authenticate(
@@ -64,7 +63,7 @@ async def authenticate(
     if logical_model not in (None, "", "dinov2_legacy"):
         return JSONResponse(
             status_code=status.HTTP_403_FORBIDDEN,
-            content=failure_body("POLICY_ERROR", "DINOv3 candidate is blocked on the live DINOv2 route."),
+            content=failure_body("POLICY_ERROR", "The screening model is set by the server, not by the request."),
         )
     try:
         ct = (image.content_type or "application/octet-stream").lower()
@@ -155,16 +154,6 @@ async def authenticate(
         s3_key = f"listings/{list_uuid}/{uuid.uuid4()}_{fname}"
         s3_url = await upload_file_bytes(key=s3_key, body=raw, content_type=ct)
 
-        if live_path_targets_dinov3(
-            settings.local_model_path,
-            settings.triton_model_name,
-            settings.dinov2_model_name,
-        ):
-            return JSONResponse(
-                status_code=status.HTTP_403_FORBIDDEN,
-                content=failure_body("POLICY_ERROR", "DINOv3 candidate is blocked on the live DINOv2 route."),
-            )
-
         # A new photo replaces any earlier evidence on this listing.
         listing.s3_url = s3_url
         listing.verdict = None
@@ -173,6 +162,7 @@ async def authenticate(
         # 1. size, 2. is it a watch, 3. is it an original photo. Each can stop the listing.
         outcome = check_size(pil.width, pil.height, settings.listing_min_short_side_px)
         content = None
+        live_model_id = None
         if outcome is None:
             try:
                 content = await asyncio.to_thread(score_watch, pil)
@@ -186,9 +176,16 @@ async def authenticate(
                 )
             outcome = check_content(content)
         if outcome is None and content is not None:
-            nchw = preprocess_chw(np.array(pil))  # HWC RGB uint8; resize + normalize in preprocess_chw
             try:
-                raw_verdict, raw_confidence = await classify_image(nchw)
+                raw_verdict, raw_confidence, live_model_id = await classify_listing_photo(pil)
+            except LiveModelConfigurationError as exc:
+                _log.error("live_model_misconfigured: %s", exc)
+                listing.status = ListingStatus.pending
+                await db.commit()
+                return JSONResponse(
+                    status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                    content=failure_body("POLICY_ERROR", "The screening model is misconfigured. The listing is held, not published."),
+                )
             except Exception as exc:
                 _log.exception("inference_failed: %s", exc)
                 listing.status = ListingStatus.pending
@@ -209,13 +206,19 @@ async def authenticate(
                 raw_confidence=float(raw_confidence),
                 min_authentic_confidence=settings.inference_min_authentic_confidence,
                 content=content,
+                origin_model=RESPONSE_MODEL[live_model_id],
             )
         assert outcome is not None
+
+        # Only photos that reached the origin check show a watch, so only they get a dial reading.
+        dial_text = None
+        if live_model_id is not None and settings.dial_text_check:
+            dial_text = await asyncio.to_thread(read_dial_brand, pil, scope.canonical_brand)
 
         listing.status = ListingStatus(outcome.status)
         listing.screening_code = outcome.code
         listing.screening_reason = outcome.reason
-        listing.screening_details = outcome.details
+        listing.screening_details = {**outcome.details, **({"dial_brand_text": dial_text} if dial_text else {})}
         await db.commit()
 
         log_scope_request(
@@ -237,6 +240,9 @@ async def authenticate(
             screening_reason=outcome.reason,
             publication_decision="PUBLISHED" if outcome.status == "live" else "REJECTED",
             declared_brand=scope.canonical_brand or "",
+            model=RESPONSE_MODEL.get(live_model_id),
+            dial_brand_text=dial_text,
+            seller_hint=NOT_FOUND_HINT if dial_text == "NOT_FOUND" else None,
         )
     except HTTPException:
         raise

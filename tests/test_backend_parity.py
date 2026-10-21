@@ -114,6 +114,8 @@ class BackendParityTests(unittest.TestCase):
                 "model_decision",
                 "screening_code",
                 "screening_reason",
+                "dial_brand_text",
+                "seller_hint",
                 "publication_decision",
                 "declared_brand",
                 "brand_verification",
@@ -123,7 +125,7 @@ class BackendParityTests(unittest.TestCase):
                 "production_validation",
             },
         )
-        self.assertEqual(AuthenticateResponse.model_fields["model"].default, "LEGACY_DINOV2")
+        self.assertIsNone(AuthenticateResponse.model_fields["model"].default)
         self.assertIs(AuthenticateResponse.model_fields["research_candidate"].default, False)
         self.assertNotIn("checkpoint_sha", AuthenticateResponse.model_fields)
         self.assertNotIn("verified_brand", AuthenticateResponse.model_fields)

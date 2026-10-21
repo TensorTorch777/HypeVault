@@ -68,7 +68,7 @@ class ResearchDemoHardeningTests(unittest.TestCase):
             self.assertNotIn(body["status"], {"AUTHENTIC", "FAKE", "REVIEW"})
         self.assertNotIn("verified_brand", AuthenticateResponse.model_fields)
         self.assertEqual(AuthenticateResponse.model_fields["brand_verification"].default, "NOT_PERFORMED")
-        self.assertEqual(AuthenticateResponse.model_fields["model"].default, "LEGACY_DINOV2")
+        self.assertIsNone(AuthenticateResponse.model_fields["model"].default)
         self.assertIs(AuthenticateResponse.model_fields["research_candidate"].default, False)
         self.assertEqual(AuthenticateResponse.model_fields["production_validation"].default, "NOT_ESTABLISHED")
 
@@ -90,8 +90,10 @@ class ResearchDemoHardeningTests(unittest.TestCase):
                 "dinov2_vitg14_reg",
             )
         )
+        # The legacy loader refuses DINOv3 paths before it runs.
+        live = (REPO / "backend" / "inference" / "live_screening.py").read_text()
+        self.assertLess(live.index("live_path_targets_dinov3("), live.index("classify_image("))
         routes = (REPO / "backend" / "inference" / "routes.py").read_text()
-        self.assertLess(routes.index("live_path_targets_dinov3"), routes.index("classify_image("))
         self.assertNotIn("verified_brand", routes)
         self.assertNotIn("shadow_v1", routes)
         for name in ("verdict.py", "dinov2_model.py", "local_torch.py", "triton_client.py"):
