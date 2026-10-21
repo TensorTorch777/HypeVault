@@ -107,8 +107,9 @@ class CustomerBoundaryTests(unittest.TestCase):
             model_decision="FAKE",
             declared_brand="Patek Philippe",
         )
-        self.assertEqual(legacy.model, "LEGACY_DINOV2")
-        self.assertEqual(legacy.model_status, "LEGACY")
+        # model names the origin model only after it ran; screening is never authenticity approval.
+        self.assertIsNone(legacy.model)
+        self.assertEqual(legacy.model_status, "PHOTO_SCREENING")
         self.assertFalse(legacy.research_candidate)
         self.assertEqual(legacy.production_validation, "NOT_ESTABLISHED")
         self.assertNotIn("checkpoint_sha", legacy.model_dump())

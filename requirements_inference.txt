@@ -2,3 +2,6 @@
 # pip install -r requirements_inference.txt
 torch>=2.1.0,<2.5.0
 timm>=0.9.12
+# Dial OCR for the seller hint (backend/inference/dial_text.py). Needs an ONNX Runtime build:
+# onnxruntime, or onnxruntime-gpu on a CUDA machine (do not install both).
+rapidocr==3.10.0

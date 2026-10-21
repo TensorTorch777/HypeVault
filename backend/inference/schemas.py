@@ -8,16 +8,16 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class AuthenticateResponse(BaseModel):
-    """Listing screening result (watch check + legacy DINOv2 origin check).
+    """Listing screening result (watch check + origin check).
 
     `listing_status` and `screening_reason` say whether the listing went live or was
-    rejected, and why. `verdict` is null when the photo was stopped before DINOv2 ran
-    (too small, or no wristwatch found). Going live is a screening result, never an
+    rejected, and why. `verdict` and `model` are null when the photo was stopped before
+    the origin model ran (too small, or no wristwatch found). `model` names the origin
+    model chosen by LIVE_SCREENING_MODEL. Going live is a screening result, never an
     authenticity certificate.
 
-    This is not the frozen DINOv3 research candidate. `declared_brand` is the
-    caller's scope parameter. This schema has no `verified_brand` field and
-    does not carry the DINOv3 checkpoint or temperature.
+    `declared_brand` is the caller's scope parameter. This schema has no
+    `verified_brand` field and does not carry the DINOv3 checkpoint or temperature.
     """
 
     model_config = ConfigDict(protected_namespaces=("settings_",))
@@ -31,11 +31,14 @@ class AuthenticateResponse(BaseModel):
     model_decision: Literal["AUTHENTIC", "FAKE"] | None
     screening_code: str | None = None
     screening_reason: str | None = None
+    # Dial OCR after screening: whether the declared brand's name was readable. Informational only.
+    dial_brand_text: Literal["FOUND", "NOT_FOUND", "UNKNOWN"] | None = None
+    seller_hint: str | None = None
     publication_decision: Literal["PUBLISHED", "REJECTED", "BLOCKED"] = "BLOCKED"
     declared_brand: str
     brand_verification: Literal["NOT_PERFORMED"] = "NOT_PERFORMED"
-    model: Literal["LEGACY_DINOV2"] = "LEGACY_DINOV2"
-    model_status: Literal["LEGACY"] = "LEGACY"
+    model: Literal["DINOV3_FROZEN", "LEGACY_DINOV2"] | None = None
+    model_status: Literal["PHOTO_SCREENING"] = "PHOTO_SCREENING"
     research_candidate: Literal[False] = False
     production_validation: Literal["NOT_ESTABLISHED"] = "NOT_ESTABLISHED"
 

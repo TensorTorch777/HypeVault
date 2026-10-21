@@ -77,6 +77,7 @@ export default function SellerUploadPage() {
       listing_status: data.listing_status,
       screening_code: data.screening_code ?? null,
       screening_reason: data.screening_reason ?? null,
+      seller_hint: data.seller_hint ?? null,
     });
     return data;
   }

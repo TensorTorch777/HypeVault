@@ -355,7 +355,8 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
 
     def test_live_route_rejects_a_dinov3_selector_before_inference(self) -> None:
         routes = (REPO / "backend" / "inference" / "routes.py").read_text()
-        self.assertLess(routes.index("DINOv3 candidate is blocked"), routes.index("classify_image("))
+        # A request cannot pick the model; the refusal comes before any inference.
+        self.assertLess(routes.index("set by the server, not by the request"), routes.index("classify_listing_photo("))
         research = (REPO / "frontend" / "src" / "app" / "research" / "page.tsx").read_text()
         seller = (REPO / "frontend" / "src" / "app" / "seller" / "upload" / "page.tsx").read_text()
         self.assertIn("EXPERIMENTAL — NOT APPROVED FOR PRODUCTION", research)

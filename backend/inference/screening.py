@@ -75,12 +75,13 @@ def check_origin(
     raw_confidence: float,
     min_authentic_confidence: float,
     content: ContentCheck,
+    origin_model: str = "LEGACY_DINOV2",
 ) -> ScreeningOutcome:
-    """Decide from the DINOv2 result once size and content have passed."""
+    """Decide from the origin model's result once size and content have passed."""
     details = {
         "watch_score": round(content.watch_score, 4),
         "content_model": content.model,
-        "origin_model": "LEGACY_DINOV2",
+        "origin_model": origin_model,
         "origin_verdict": raw_verdict,
         "origin_confidence": round(float(raw_confidence), 4),
         "min_original_confidence": min_authentic_confidence,
