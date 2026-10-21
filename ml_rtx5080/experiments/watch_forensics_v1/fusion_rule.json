@@ -1,0 +1,23 @@
+{
+  "rule": "watch_forensics_fusion_A",
+  "frozen_on": "2026-10-20",
+  "frozen_before_any_v2_scoring": true,
+  "inputs": {
+    "dinov3_decision": "fine-tuned DINOv3 epoch_018 benchmark policy decision: FAKE, REVIEW or AUTHENTIC (Triton, as in benchmark_v1)",
+    "p71": "Phase 71 probe P(fake): frozen pretrained DINOv3 ViT-B/16 + logistic head (generator_agnostic_v1/dinov3_vitb16_linear.joblib), image through the Phase 71 base + clean view",
+    "brand_text": "true when RapidOCR (literal reader, line confidence >= 0.6) reads a word containing one of the declared brand's words: LANGE/SOHNE/GLASHUTTE, AUDEMARS/PIGUET, PATEK/PHILIPPE, RICHARD/MILLE, VACHERON/CONSTANTIN. Gemma 4 readings are recorded but not used: on development data its 'other brand' answers were guesses on unreadable dials."
+  },
+  "thresholds": {
+    "T71": 0.9790914547543371,
+    "T71_source": "Phase 71 protocol: 99th percentile of P(fake) on Label_0 validation photos",
+    "t_low": 0.8743,
+    "t_low_source": "Label_0 validation real photos only: the lowest grid value at which photos without brand text and t_low <= p71 < T71 are at most 2% of all 1,000 photos. No generated image was used."
+  },
+  "decision": "FAKE if dinov3_decision == FAKE, or p71 >= T71, or (not brand_text and p71 >= t_low). Otherwise REVIEW if dinov3_decision == REVIEW, else AUTHENTIC.",
+  "rejected_variant": "fusion_B (also FAKE when not brand_text and dinov3_decision == REVIEW) rejected 14/300 real eBay development photos (4.7%), above the protocol's 3-point limit.",
+  "development_results_benchmark_v1": {
+    "dinov3_alone": {"kandinsky_fake": "12/284", "sdxl_fake": "119/150", "real_rejected": "0/300 (35 REVIEW)"},
+    "phase71_alone": {"kandinsky_fake": "40/284", "sdxl_fake": "45/150", "real_rejected": "4/300"},
+    "fusion_A": {"kandinsky_fake": "73/284", "sdxl_fake": "134/150", "real_rejected": "6/300 (34 REVIEW)"}
+  }
+}

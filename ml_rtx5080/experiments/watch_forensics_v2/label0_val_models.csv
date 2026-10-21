@@ -1,0 +1,1001 @@
+sample_id,brand,dinov2_decision,dinov3_decision,dinov3_score_fake
+Label_0_Watches/A. Lange & Söhne/00472dd996ed.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.03553486772415e-09
+Label_0_Watches/A. Lange & Söhne/006e47b9f108.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.899348776296585e-09
+Label_0_Watches/A. Lange & Söhne/00f8b2b613c7.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.883100551728196e-09
+Label_0_Watches/A. Lange & Söhne/019f94d72b65.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.8573512232450355e-09
+Label_0_Watches/A. Lange & Söhne/01dafa0d7ed4.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,3.84213151158983e-09
+Label_0_Watches/A. Lange & Söhne/036505556ace.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.989996315913456e-09
+Label_0_Watches/A. Lange & Söhne/03eeec26e9a1.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.5288349582333605e-09
+Label_0_Watches/A. Lange & Söhne/049e5739b972.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.917871541909123e-09
+Label_0_Watches/A. Lange & Söhne/04b85c405289.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,3.860619878660363e-09
+Label_0_Watches/A. Lange & Söhne/052174d47e9d.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.989917168573217e-09
+Label_0_Watches/A. Lange & Söhne/060d5b562a4b.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.5323577271357374e-09
+Label_0_Watches/A. Lange & Söhne/0803b2046ba2.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.111627826748056e-09
+Label_0_Watches/A. Lange & Söhne/08817c6b8ba5.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.7954913435640705e-09
+Label_0_Watches/A. Lange & Söhne/09490aac53bf.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.677006800639794e-09
+Label_0_Watches/A. Lange & Söhne/09bfb14a1586.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.080548843131581e-09
+Label_0_Watches/A. Lange & Söhne/09f8be76f661.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.9499439615532326e-09
+Label_0_Watches/A. Lange & Söhne/0a6eeefa030e.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.95879214554803e-09
+Label_0_Watches/A. Lange & Söhne/0aab62f802bd.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.055589392712442e-09
+Label_0_Watches/A. Lange & Söhne/0ddf25e6ea0c.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,3.878743232030123e-09
+Label_0_Watches/A. Lange & Söhne/0e0f263f6221.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.039379167569408e-09
+Label_0_Watches/A. Lange & Söhne/0f3ce9ebc70c.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.973378253299326e-09
+Label_0_Watches/A. Lange & Söhne/11a1ce87d9cd.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,3.859478979477786e-09
+Label_0_Watches/A. Lange & Söhne/11affbeca24b.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.8230111775847016e-09
+Label_0_Watches/A. Lange & Söhne/11fa795b78fb.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.051906489319854e-09
+Label_0_Watches/A. Lange & Söhne/126d888577e8.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.983977687490221e-09
+Label_0_Watches/A. Lange & Söhne/1297eb317b0e.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.069708625728026e-09
+Label_0_Watches/A. Lange & Söhne/12cfd5e0d37b.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.230114462984117e-09
+Label_0_Watches/A. Lange & Söhne/134ccbc4fefe.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,3.9035201699747796e-09
+Label_0_Watches/A. Lange & Söhne/13639fa46d34.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.964198638779708e-09
+Label_0_Watches/A. Lange & Söhne/1389d7870de4.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,3.995714904676345e-09
+Label_0_Watches/A. Lange & Söhne/13ab70db34f8.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.5458790437611034e-09
+Label_0_Watches/A. Lange & Söhne/150827c92e56.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.611632514189556e-09
+Label_0_Watches/A. Lange & Söhne/1580ae55de8a.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.8950736675157205e-09
+Label_0_Watches/A. Lange & Söhne/190ab65fa5ad.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.112011180781897e-09
+Label_0_Watches/A. Lange & Söhne/196aa86944d7.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.9503122407397495e-09
+Label_0_Watches/A. Lange & Söhne/1a26d4b5c47e.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.1660019980735705e-09
+Label_0_Watches/A. Lange & Söhne/1b395bd4658c.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.958525155477942e-09
+Label_0_Watches/A. Lange & Söhne/1c3a3345a68c.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.940865390638866e-09
+Label_0_Watches/A. Lange & Söhne/1d901cc2443a.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,3.812711421750489e-09
+Label_0_Watches/A. Lange & Söhne/1e92959defde.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.993282315477165e-09
+Label_0_Watches/A. Lange & Söhne/1eff9965ce12.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.150124231207768e-09
+Label_0_Watches/A. Lange & Söhne/1f2f9f58c5fa.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.5538291402767604e-09
+Label_0_Watches/A. Lange & Söhne/1f871b267eb2.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.801338331085733e-09
+Label_0_Watches/A. Lange & Söhne/20ba688e4d8f.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.137071665566314e-09
+Label_0_Watches/A. Lange & Söhne/20d2735301e0.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.074248145084709e-09
+Label_0_Watches/A. Lange & Söhne/21b46a68f53f.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.905464215401874e-09
+Label_0_Watches/A. Lange & Söhne/223207b2e9f9.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.874644431256166e-09
+Label_0_Watches/A. Lange & Söhne/2309ff8daba1.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.975238804866598e-09
+Label_0_Watches/A. Lange & Söhne/238c64bf4811.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.024702459824682e-09
+Label_0_Watches/A. Lange & Söhne/2424439af1e0.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.921137033328084e-09
+Label_0_Watches/A. Lange & Söhne/25b47f95f707.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.819281881218983e-09
+Label_0_Watches/A. Lange & Söhne/260b7d132346.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.117602420225489e-09
+Label_0_Watches/A. Lange & Söhne/26accadad435.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.1949682074695115e-09
+Label_0_Watches/A. Lange & Söhne/27b22f8e3d7e.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.4351798790784852e-09
+Label_0_Watches/A. Lange & Söhne/2aac6bf13377.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.890162700662349e-09
+Label_0_Watches/A. Lange & Söhne/2aaed42e4026.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.504238993388182e-09
+Label_0_Watches/A. Lange & Söhne/2b56863f2f80.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.367669283322044e-09
+Label_0_Watches/A. Lange & Söhne/2c4696884dcf.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.781595758215014e-09
+Label_0_Watches/A. Lange & Söhne/2d1e255d696c.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.020258018184049e-09
+Label_0_Watches/A. Lange & Söhne/2e3551aa845b.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.920219310916141e-09
+Label_0_Watches/A. Lange & Söhne/2e58dcf55eeb.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.196974146220278e-09
+Label_0_Watches/A. Lange & Söhne/2e95cdbc57e4.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.822427287280502e-09
+Label_0_Watches/A. Lange & Söhne/2f3f02fbeaaa.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.076358077534105e-09
+Label_0_Watches/A. Lange & Söhne/2f722da1cbf2.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.237555537891956e-09
+Label_0_Watches/A. Lange & Söhne/2f7b6afb836a.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.270736719590627e-09
+Label_0_Watches/A. Lange & Söhne/2fb3cc290c16.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.8609185589656695e-09
+Label_0_Watches/A. Lange & Söhne/3342e7cf550d.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.987100545851417e-09
+Label_0_Watches/A. Lange & Söhne/35078ccee070.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.980944139546771e-09
+Label_0_Watches/A. Lange & Söhne/36020f7c356d.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.951182142790783e-09
+Label_0_Watches/A. Lange & Söhne/376190471f2c.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.338362470790284e-09
+Label_0_Watches/A. Lange & Söhne/37edce5e2534.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.162251854285024e-09
+Label_0_Watches/A. Lange & Söhne/383d6336b928.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.3799894911225365e-09
+Label_0_Watches/A. Lange & Söhne/39040d2d80e8.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.097818343111623e-09
+Label_0_Watches/A. Lange & Söhne/3a10ab7b3aab.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.7479970374238816e-09
+Label_0_Watches/A. Lange & Söhne/3a48738ab921.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.000997213276177e-09
+Label_0_Watches/A. Lange & Söhne/3a6d9658cd65.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.235698244032941e-09
+Label_0_Watches/A. Lange & Söhne/3b2815314af1.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.081957518493395e-09
+Label_0_Watches/A. Lange & Söhne/3d76deec82bc.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.110143686548394e-09
+Label_0_Watches/A. Lange & Söhne/3e711007789f.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.964536789660981e-09
+Label_0_Watches/A. Lange & Söhne/3f34fc6aaca8.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.981773395789513e-09
+Label_0_Watches/A. Lange & Söhne/3fcc7eeb57d0.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.989109955375792e-09
+Label_0_Watches/A. Lange & Söhne/41bc871f6373.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.168688647330683e-09
+Label_0_Watches/A. Lange & Söhne/42dfff987446.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.020042703227514e-09
+Label_0_Watches/A. Lange & Söhne/45c5c1850177.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.0400603105708995e-09
+Label_0_Watches/A. Lange & Söhne/45ed5eaae560.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.385118664545616e-09
+Label_0_Watches/A. Lange & Söhne/4601d2394868.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.8323655617603286e-09
+Label_0_Watches/A. Lange & Söhne/4668a65e99d1.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.074862418816013e-09
+Label_0_Watches/A. Lange & Söhne/46cb59d23964.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.0054680346103606e-09
+Label_0_Watches/A. Lange & Söhne/47088c99ff0e.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.187111842918454e-09
+Label_0_Watches/A. Lange & Söhne/47e539cf9673.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.7677286238801126e-09
+Label_0_Watches/A. Lange & Söhne/48480e7d1117.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.983977687490221e-09
+Label_0_Watches/A. Lange & Söhne/4901e249565b.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.843343520963975e-09
+Label_0_Watches/A. Lange & Söhne/4a5a14da4ee4.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.0785176448208e-09
+Label_0_Watches/A. Lange & Söhne/4ac40301b920.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.5190281949412435e-09
+Label_0_Watches/A. Lange & Söhne/4d134c25fb22.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.805269003262361e-09
+Label_0_Watches/A. Lange & Söhne/4db1e43a68ea.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.137071665566314e-09
+Label_0_Watches/A. Lange & Söhne/4e9e575aba92.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.202947695757289e-09
+Label_0_Watches/A. Lange & Söhne/4ea0672ec933.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.5580473044456993e-09
+Label_0_Watches/A. Lange & Söhne/4ead4e881cfe.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.920903693706039e-09
+Label_0_Watches/A. Lange & Söhne/4f47227563b2.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.050395698201459e-09
+Label_0_Watches/A. Lange & Söhne/4f6a55bf8d46.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.975065326803204e-09
+Label_0_Watches/A. Lange & Söhne/508fde2afaa6.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.73818115136495e-09
+Label_0_Watches/A. Lange & Söhne/5126fa1749e2.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.069708625728026e-09
+Label_0_Watches/A. Lange & Söhne/518a4adc527b.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.945527288442578e-09
+Label_0_Watches/A. Lange & Söhne/52464ad8bc51.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.851143052803794e-09
+Label_0_Watches/A. Lange & Söhne/5440baec045b.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.379589841668996e-09
+Label_0_Watches/A. Lange & Söhne/54ce4dada35e.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.384057563436979e-09
+Label_0_Watches/A. Lange & Söhne/55ac2c2ea51b.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.791954372022345e-09
+Label_0_Watches/A. Lange & Söhne/55d5a670b910.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.195034779261008e-09
+Label_0_Watches/A. Lange & Söhne/562d7910ed87.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.920950360519576e-09
+Label_0_Watches/A. Lange & Söhne/57ebf9665431.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.0971030803638796e-09
+Label_0_Watches/A. Lange & Söhne/582f5b88894c.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.5827295493287454e-09
+Label_0_Watches/A. Lange & Söhne/5839204072a0.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.360164060730035e-09
+Label_0_Watches/A. Lange & Söhne/591ced850868.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.080807873379113e-09
+Label_0_Watches/A. Lange & Söhne/59d13f8d432f.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.0033233231349265e-09
+Label_0_Watches/A. Lange & Söhne/59ed91befdf3.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.116720377172566e-09
+Label_0_Watches/A. Lange & Söhne/59f9c9c96866.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.095421079509236e-09
+Label_0_Watches/A. Lange & Söhne/5a549e5f42c7.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.202947695757289e-09
+Label_0_Watches/A. Lange & Söhne/5b032ab21fc1.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.0062149815502455e-09
+Label_0_Watches/A. Lange & Söhne/5ca84dc4a8de.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.833186679327548e-09
+Label_0_Watches/A. Lange & Söhne/5cfd955ca3de.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.099306164366291e-09
+Label_0_Watches/A. Lange & Söhne/5d78b5a48ffe.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.1158793454729404e-09
+Label_0_Watches/A. Lange & Söhne/5d9a6188328d.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.858728773222878e-09
+Label_0_Watches/A. Lange & Söhne/5e044297812d.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,3.836807775943325e-09
+Label_0_Watches/A. Lange & Söhne/5fa25a6e02d2.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.290598083355537e-09
+Label_0_Watches/A. Lange & Söhne/60fa8c2e6687.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.989655993489413e-09
+Label_0_Watches/A. Lange & Söhne/6191650bfa10.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.509938650954701e-09
+Label_0_Watches/A. Lange & Söhne/637093aaa7ef.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.142072480995619e-09
+Label_0_Watches/A. Lange & Söhne/65a13bdff6c5.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.1060447001281665e-09
+Label_0_Watches/A. Lange & Söhne/694173bdd9c4.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.1157078940784016e-09
+Label_0_Watches/A. Lange & Söhne/6950b842a9ec.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.205216035988728e-09
+Label_0_Watches/A. Lange & Söhne/6ac6ceb5fd3a.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.6271581360027553e-09
+Label_0_Watches/A. Lange & Söhne/6b1062c20c11.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.082872608340955e-09
+Label_0_Watches/A. Lange & Söhne/6cf705441d87.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.002815115470026e-09
+Label_0_Watches/A. Lange & Söhne/700850fd9be1.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.600786695193628e-09
+Label_0_Watches/A. Lange & Söhne/72934c0ff652.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.014990102306553e-09
+Label_0_Watches/A. Lange & Söhne/72b2eaaf3963.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.656277703829945e-09
+Label_0_Watches/A. Lange & Söhne/733a7e75dc44.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.185824638169805e-09
+Label_0_Watches/A. Lange & Söhne/733b8fb9dd91.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.961085860646382e-09
+Label_0_Watches/A. Lange & Söhne/73c70a8de9d0.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.2969094498905256e-09
+Label_0_Watches/A. Lange & Söhne/7582e70d0f32.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.353310715366394e-09
+Label_0_Watches/A. Lange & Söhne/75c405f9696a.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.545105406535743e-09
+Label_0_Watches/A. Lange & Söhne/75de0de70811.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,5.874941243724e-09
+Label_0_Watches/A. Lange & Söhne/79313cbd6863.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.313169118283168e-09
+Label_0_Watches/A. Lange & Söhne/7998323325a9.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.052453084446887e-09
+Label_0_Watches/A. Lange & Söhne/79ecb5bf8c4f.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.066625932685929e-09
+Label_0_Watches/A. Lange & Söhne/7a44bf06a2d3.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.025948103173666e-09
+Label_0_Watches/A. Lange & Söhne/7ab191bcb25c.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.730536393697532e-09
+Label_0_Watches/A. Lange & Söhne/7b6703dd964c.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.980944139546771e-09
+Label_0_Watches/A. Lange & Söhne/7b785996223a.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.268958031580346e-09
+Label_0_Watches/A. Lange & Söhne/7cda41e24fb3.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.981662818310773e-09
+Label_0_Watches/A. Lange & Söhne/7da69a6d49ee.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.220936151481872e-09
+Label_0_Watches/A. Lange & Söhne/7decc1523125.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.822427287280502e-09
+Label_0_Watches/A. Lange & Söhne/7e7abed01414.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.981552243902858e-09
+Label_0_Watches/A. Lange & Söhne/7eb8736f6ffc.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.989996315913456e-09
+Label_0_Watches/A. Lange & Söhne/7ecf5f7f1f20.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.95731607298086e-09
+Label_0_Watches/A. Lange & Söhne/7f59bc0bb415.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.279675239959673e-09
+Label_0_Watches/A. Lange & Söhne/80260740eaa7.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.0575689277420625e-09
+Label_0_Watches/A. Lange & Söhne/802917473982.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.272261899158293e-09
+Label_0_Watches/A. Lange & Söhne/804e0f6c7fb7.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.763717272120982e-09
+Label_0_Watches/A. Lange & Söhne/821bf5838424.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.101738247866325e-09
+Label_0_Watches/A. Lange & Söhne/827ce5e26359.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.05074120179488e-09
+Label_0_Watches/A. Lange & Söhne/833ae3d7833a.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.1120193376390086e-09
+Label_0_Watches/A. Lange & Söhne/8484de007c92.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.179087809896096e-09
+Label_0_Watches/A. Lange & Söhne/853823c091ab.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.8139141504885e-09
+Label_0_Watches/A. Lange & Söhne/857e7bab0c75.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.091068961843603e-09
+Label_0_Watches/A. Lange & Söhne/85a42c053c7e.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.122538812728192e-09
+Label_0_Watches/A. Lange & Söhne/860535d23cec.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.26938146152201e-09
+Label_0_Watches/A. Lange & Söhne/8610f6f885ad.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.077684417806905e-09
+Label_0_Watches/A. Lange & Söhne/86e76704a162.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.384709849283572e-09
+Label_0_Watches/A. Lange & Söhne/8727d51678c5.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,3.781783298260632e-09
+Label_0_Watches/A. Lange & Söhne/87a6c4d2daa1.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.0183365406940235e-09
+Label_0_Watches/A. Lange & Söhne/87b407083f6c.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.961730225090488e-09
+Label_0_Watches/A. Lange & Söhne/87fc194eb492.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.8842099086449805e-09
+Label_0_Watches/A. Lange & Söhne/887c5ad446c6.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.890116400280888e-09
+Label_0_Watches/A. Lange & Söhne/89a4bfa2dd0b.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.115446648543788e-09
+Label_0_Watches/A. Lange & Söhne/8d61f29f2a60.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.219956633561903e-09
+Label_0_Watches/A. Lange & Söhne/8f4adbeb4473.jpg,A. Lange & Söhne,AUTHENTIC,REVIEW,4.513294725351184e-09
+Label_0_Watches/A. Lange & Söhne/90d1a88ee082.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.918881998545893e-09
+Label_0_Watches/A. Lange & Söhne/926bbb9ac5f0.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.09863129326106e-09
+Label_0_Watches/A. Lange & Söhne/932fee5d0010.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.200713910183335e-09
+Label_0_Watches/A. Lange & Söhne/9502286f6a2e.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.984744339983776e-09
+Label_0_Watches/A. Lange & Söhne/954de8994fe8.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.878343158228054e-09
+Label_0_Watches/A. Lange & Söhne/958ab35807ab.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.924887927686149e-09
+Label_0_Watches/A. Lange & Söhne/960248858471.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.0785176448208e-09
+Label_0_Watches/A. Lange & Söhne/961dea9112f1.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.271609394579345e-09
+Label_0_Watches/A. Lange & Söhne/97444c3fe616.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.949936126198894e-09
+Label_0_Watches/A. Lange & Söhne/976aaa2de838.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.910634970568165e-09
+Label_0_Watches/A. Lange & Söhne/979fbd367c0f.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.188332977008013e-09
+Label_0_Watches/A. Lange & Söhne/98ef81d11011.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.858039936750537e-09
+Label_0_Watches/A. Lange & Söhne/9973ed1811f0.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.847355786601856e-09
+Label_0_Watches/A. Lange & Söhne/9b6d4681d045.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.864795839918927e-09
+Label_0_Watches/A. Lange & Söhne/9cec28104149.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.8573665266538285e-09
+Label_0_Watches/A. Lange & Söhne/9d4722341213.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.078169772065697e-09
+Label_0_Watches/A. Lange & Söhne/9e10830f158e.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.843343520963975e-09
+Label_0_Watches/A. Lange & Söhne/9e3a459bc58d.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.0120125244272155e-09
+Label_0_Watches/A. Lange & Söhne/9efffe6917a4.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,3.920569264462506e-09
+Label_0_Watches/A. Lange & Söhne/9f4bccf4b40e.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.050395698201459e-09
+Label_0_Watches/A. Lange & Söhne/9fc5371c493f.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.1841145139529055e-09
+Label_0_Watches/A. Lange & Söhne/a0ae0c1abbce.jpg,A. Lange & Söhne,AUTHENTIC,AUTHENTIC,4.098582511704372e-09
+Label_0_Watches/Audemars Piguet/003f2279536b.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.5702927336282177e-09
+Label_0_Watches/Audemars Piguet/00589b1cce0d.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.273880879771271e-09
+Label_0_Watches/Audemars Piguet/0141dd38897a.jpg,Audemars Piguet,AUTHENTIC,REVIEW,3.773832271437336e-09
+Label_0_Watches/Audemars Piguet/019101beb02a.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.913677048588172e-09
+Label_0_Watches/Audemars Piguet/0193c2044ed1.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.024862136149246e-09
+Label_0_Watches/Audemars Piguet/045e0d424338.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.96805369493819e-09
+Label_0_Watches/Audemars Piguet/047c1a9baf19.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.114401832221018e-09
+Label_0_Watches/Audemars Piguet/04ed7666ef71.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.983432426529188e-09
+Label_0_Watches/Audemars Piguet/0735877add06.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.379650655537742e-09
+Label_0_Watches/Audemars Piguet/07f35da2ec26.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.278843355876413e-09
+Label_0_Watches/Audemars Piguet/0a3acd9096ec.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.8207746788474e-09
+Label_0_Watches/Audemars Piguet/0a4b598b858d.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.161269445592428e-09
+Label_0_Watches/Audemars Piguet/0ba5f2c39741.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.97178364601253e-09
+Label_0_Watches/Audemars Piguet/0de4c1a8419a.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.935662470957775e-09
+Label_0_Watches/Audemars Piguet/0def6c82daeb.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.771459950431947e-09
+Label_0_Watches/Audemars Piguet/0e655b24f6af.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.919014154449487e-09
+Label_0_Watches/Audemars Piguet/0f0714423921.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.588319954961159e-09
+Label_0_Watches/Audemars Piguet/0f40d2de3393.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.918874224808008e-09
+Label_0_Watches/Audemars Piguet/11d74821e854.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.150717010119959e-09
+Label_0_Watches/Audemars Piguet/1213d7620a48.jpg,Audemars Piguet,FAKE,AUTHENTIC,4.3887910116785205e-09
+Label_0_Watches/Audemars Piguet/128f30040e7f.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.198931068254711e-09
+Label_0_Watches/Audemars Piguet/13921507b033.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.5674234340406335e-09
+Label_0_Watches/Audemars Piguet/140fe37d372c.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.340850275620761e-09
+Label_0_Watches/Audemars Piguet/145631e9d889.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.644001182903481e-09
+Label_0_Watches/Audemars Piguet/14d9ca1daf45.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.550873263471037e-09
+Label_0_Watches/Audemars Piguet/14fe279fe55e.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.062981364204059e-09
+Label_0_Watches/Audemars Piguet/158cc345e53e.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.399110896380767e-09
+Label_0_Watches/Audemars Piguet/164894cf65b1.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.951354578554704e-09
+Label_0_Watches/Audemars Piguet/17f4d829c4a8.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.101380258766059e-09
+Label_0_Watches/Audemars Piguet/1832aa418be2.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.0468780609831145e-09
+Label_0_Watches/Audemars Piguet/1844c0638c25.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.067908759350121e-09
+Label_0_Watches/Audemars Piguet/18826afa31e9.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.1402241853709375e-09
+Label_0_Watches/Audemars Piguet/196863f7d61e.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.968234738640074e-09
+Label_0_Watches/Audemars Piguet/1b0c3a52f190.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.281237581695881e-09
+Label_0_Watches/Audemars Piguet/1b56f49e0524.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.71998989336763e-09
+Label_0_Watches/Audemars Piguet/1b594fa53d15.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.762455737887385e-09
+Label_0_Watches/Audemars Piguet/1b795f075a5d.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.20854570622969e-09
+Label_0_Watches/Audemars Piguet/20208f73b9ba.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.1705579231534374e-09
+Label_0_Watches/Audemars Piguet/2031ecaea18c.jpg,Audemars Piguet,AUTHENTIC,REVIEW,6.32990860044244e-09
+Label_0_Watches/Audemars Piguet/23432069ab76.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.758196521427645e-09
+Label_0_Watches/Audemars Piguet/236508e6f990.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.127915085461333e-09
+Label_0_Watches/Audemars Piguet/237af227b966.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.309149729214083e-09
+Label_0_Watches/Audemars Piguet/2829e38c4077.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.041775696891812e-09
+Label_0_Watches/Audemars Piguet/287e6c3b5c5b.jpg,Audemars Piguet,AUTHENTIC,REVIEW,3.754902855728302e-09
+Label_0_Watches/Audemars Piguet/2bd7f307e73b.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.506942668357383e-09
+Label_0_Watches/Audemars Piguet/2c17c2e4bb6f.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.91356836220708e-09
+Label_0_Watches/Audemars Piguet/2c86c3a88eaf.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.608191346522714e-09
+Label_0_Watches/Audemars Piguet/2d877e39dc44.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.216827049378354e-09
+Label_0_Watches/Audemars Piguet/2ed7b31aa987.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.935287751241196e-09
+Label_0_Watches/Audemars Piguet/2ee63f8b8d98.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.378738536166628e-09
+Label_0_Watches/Audemars Piguet/2efc299670c6.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.305356129930211e-09
+Label_0_Watches/Audemars Piguet/3135a48379fe.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.245565503013151e-09
+Label_0_Watches/Audemars Piguet/316432205fbe.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.935662470957775e-09
+Label_0_Watches/Audemars Piguet/329a06422fcd.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.235790669270152e-09
+Label_0_Watches/Audemars Piguet/32f2df71c038.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.181641881258209e-09
+Label_0_Watches/Audemars Piguet/33f748e7e5f7.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.808402868884495e-09
+Label_0_Watches/Audemars Piguet/3442c42e6f99.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.994153756942233e-09
+Label_0_Watches/Audemars Piguet/369e3a80feff.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.043106825262801e-09
+Label_0_Watches/Audemars Piguet/382c8a5b3a1b.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.152281694358859e-09
+Label_0_Watches/Audemars Piguet/39f6d53d7283.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.025940117052789e-09
+Label_0_Watches/Audemars Piguet/3c49f44dcd94.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.075606137247028e-09
+Label_0_Watches/Audemars Piguet/3c8830adb83e.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.1085785808590616e-09
+Label_0_Watches/Audemars Piguet/3d770a3bfaab.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.769395674070863e-09
+Label_0_Watches/Audemars Piguet/3e49c7d041f6.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.149021229171081e-09
+Label_0_Watches/Audemars Piguet/3f82c8bf05d5.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.093398717983796e-09
+Label_0_Watches/Audemars Piguet/4095e92958fc.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.860336536652711e-09
+Label_0_Watches/Audemars Piguet/41a63c6e2a55.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.924599868861355e-09
+Label_0_Watches/Audemars Piguet/41b75142d372.jpg,Audemars Piguet,AUTHENTIC,REVIEW,3.760866359164354e-09
+Label_0_Watches/Audemars Piguet/432ad9518878.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.355245498588367e-09
+Label_0_Watches/Audemars Piguet/43735a265aea.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.300200829111285e-09
+Label_0_Watches/Audemars Piguet/43c684316170.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.045754346473164e-09
+Label_0_Watches/Audemars Piguet/43ec82c6eca5.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.116197774154819e-09
+Label_0_Watches/Audemars Piguet/44a91c0451ed.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.264083146081267e-09
+Label_0_Watches/Audemars Piguet/44af3d414c08.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.141226269949118e-09
+Label_0_Watches/Audemars Piguet/44d29755d4b7.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.265529796417449e-09
+Label_0_Watches/Audemars Piguet/45e936790b1c.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.206350665148755e-09
+Label_0_Watches/Audemars Piguet/480d5d0513df.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.190103007282967e-09
+Label_0_Watches/Audemars Piguet/4cde0c028bd8.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.312022782883014e-09
+Label_0_Watches/Audemars Piguet/4ce8da25761d.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.330649883502932e-09
+Label_0_Watches/Audemars Piguet/4d6e08c67e10.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.988302905488323e-09
+Label_0_Watches/Audemars Piguet/4e580e90e87c.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.847355786601856e-09
+Label_0_Watches/Audemars Piguet/4ec1811ca18e.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.973709304700311e-09
+Label_0_Watches/Audemars Piguet/4f91909c57db.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.070007335283885e-09
+Label_0_Watches/Audemars Piguet/5016a836fc96.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.979736103900478e-09
+Label_0_Watches/Audemars Piguet/506e9d4dc2f9.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.009498431122959e-09
+Label_0_Watches/Audemars Piguet/507dd01161b5.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.982436925154352e-09
+Label_0_Watches/Audemars Piguet/50c99e21a5a8.jpg,Audemars Piguet,AUTHENTIC,REVIEW,3.609537196125663e-09
+Label_0_Watches/Audemars Piguet/515159d29228.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.331242672350265e-09
+Label_0_Watches/Audemars Piguet/519faa596d43.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.101380258766059e-09
+Label_0_Watches/Audemars Piguet/51b2e4044cbd.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.221396687181371e-09
+Label_0_Watches/Audemars Piguet/51ed47e8bbf2.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.86233569061584e-09
+Label_0_Watches/Audemars Piguet/5240b1d83ba0.jpg,Audemars Piguet,AUTHENTIC,REVIEW,3.6657767193025387e-09
+Label_0_Watches/Audemars Piguet/5249e521b0bc.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.865194516235806e-09
+Label_0_Watches/Audemars Piguet/52a2cf004191.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.209205276856293e-09
+Label_0_Watches/Audemars Piguet/5309a0b68f97.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.44840976670519e-09
+Label_0_Watches/Audemars Piguet/535911581145.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.303545949920859e-09
+Label_0_Watches/Audemars Piguet/544a5d53a086.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,5.170635997122805e-09
+Label_0_Watches/Audemars Piguet/55721e3794a3.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.382701119686699e-09
+Label_0_Watches/Audemars Piguet/55e3a3ee5f8c.jpg,Audemars Piguet,AUTHENTIC,REVIEW,3.996190502355639e-09
+Label_0_Watches/Audemars Piguet/5650f4414ed0.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.115111951936683e-09
+Label_0_Watches/Audemars Piguet/57c7c8f1e9ab.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.3720901534793615e-09
+Label_0_Watches/Audemars Piguet/5807bf7a0246.jpg,Audemars Piguet,FAKE,AUTHENTIC,4.823137403538856e-09
+Label_0_Watches/Audemars Piguet/59327bfc2247.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.338379682532359e-09
+Label_0_Watches/Audemars Piguet/593cdc027b3a.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.94881583054141e-09
+Label_0_Watches/Audemars Piguet/5942e6c271c2.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.367418034872555e-09
+Label_0_Watches/Audemars Piguet/596545ecab87.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.0593400620367156e-09
+Label_0_Watches/Audemars Piguet/59c112b3b9ae.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.0915640255042625e-09
+Label_0_Watches/Audemars Piguet/5a6e5e844954.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.065674159328573e-09
+Label_0_Watches/Audemars Piguet/5c3382d01d5e.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.121336861329442e-09
+Label_0_Watches/Audemars Piguet/5c81d4cebc23.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.748821619665379e-09
+Label_0_Watches/Audemars Piguet/5d13e2728705.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.1121824781794405e-09
+Label_0_Watches/Audemars Piguet/5dda544954b4.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.796575671543454e-09
+Label_0_Watches/Audemars Piguet/5e1bf722a3fc.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.20517432751477e-09
+Label_0_Watches/Audemars Piguet/5e36ac5bfc07.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.5558811670577136e-09
+Label_0_Watches/Audemars Piguet/5ed1ede76763.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.912365250379559e-09
+Label_0_Watches/Audemars Piguet/5edf8432b6a1.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.239237048799009e-09
+Label_0_Watches/Audemars Piguet/60958d99a88a.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.92713083820068e-09
+Label_0_Watches/Audemars Piguet/6139eab1d25f.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.011630535319399e-09
+Label_0_Watches/Audemars Piguet/614592274ccb.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.855117576953932e-09
+Label_0_Watches/Audemars Piguet/627ead1638c8.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.1902775578152915e-09
+Label_0_Watches/Audemars Piguet/632fc4bd014c.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.189346705660479e-09
+Label_0_Watches/Audemars Piguet/65e7d8aca0b0.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.020042703227514e-09
+Label_0_Watches/Audemars Piguet/674c80baa417.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.340850275620761e-09
+Label_0_Watches/Audemars Piguet/67f055d733ae.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.117292050196727e-09
+Label_0_Watches/Audemars Piguet/67f995340af1.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.019261286565703e-09
+Label_0_Watches/Audemars Piguet/686b4d27da7c.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.148198284342243e-09
+Label_0_Watches/Audemars Piguet/692b15a57f6d.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.21064166159207e-09
+Label_0_Watches/Audemars Piguet/6a4697102fc1.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.74759558149477e-09
+Label_0_Watches/Audemars Piguet/6a5bc344bb29.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.208704327699905e-09
+Label_0_Watches/Audemars Piguet/6b75991fbe63.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.815858986022443e-09
+Label_0_Watches/Audemars Piguet/6bbbbe546f76.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.177736773562758e-09
+Label_0_Watches/Audemars Piguet/6e8caf513953.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.134626833182556e-09
+Label_0_Watches/Audemars Piguet/6eaa06f29e5b.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.817623059797961e-09
+Label_0_Watches/Audemars Piguet/708ffbf6a4fe.jpg,Audemars Piguet,AUTHENTIC,REVIEW,3.987005638161527e-09
+Label_0_Watches/Audemars Piguet/70b64f434094.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.112174320998698e-09
+Label_0_Watches/Audemars Piguet/7221123bebcd.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.880467098719602e-09
+Label_0_Watches/Audemars Piguet/74e629915ec6.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.098094728069028e-09
+Label_0_Watches/Audemars Piguet/75be7ff50d71.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.3637722279555726e-09
+Label_0_Watches/Audemars Piguet/76998b92c374.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.141226269949118e-09
+Label_0_Watches/Audemars Piguet/773a6ae9e8ab.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.941115553883325e-09
+Label_0_Watches/Audemars Piguet/798d672b89c2.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.843861981309985e-09
+Label_0_Watches/Audemars Piguet/7b23bb22a2e9.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.836335926808799e-09
+Label_0_Watches/Audemars Piguet/7b36582af2fb.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.939567923627734e-09
+Label_0_Watches/Audemars Piguet/7d3e6fbab5d2.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.888511661024255e-09
+Label_0_Watches/Audemars Piguet/7de754e17202.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.264937541049519e-09
+Label_0_Watches/Audemars Piguet/7e4636b42060.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.113414398184114e-09
+Label_0_Watches/Audemars Piguet/7e5ed727073b.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.260887028194389e-09
+Label_0_Watches/Audemars Piguet/7ec34a991417.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.947500084915259e-09
+Label_0_Watches/Audemars Piguet/7f14bc35a5a7.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.116018144690186e-09
+Label_0_Watches/Audemars Piguet/7f8f3cd56d88.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.677254803182442e-09
+Label_0_Watches/Audemars Piguet/7fa4733bcf67.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.191956939110841e-09
+Label_0_Watches/Audemars Piguet/802f976c10ba.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.0673681478449455e-09
+Label_0_Watches/Audemars Piguet/80919eaeb6be.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.287152469903694e-09
+Label_0_Watches/Audemars Piguet/809cfbf0f0bc.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.786542423761129e-09
+Label_0_Watches/Audemars Piguet/81044c871d6f.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.884687646027366e-09
+Label_0_Watches/Audemars Piguet/821ae2f0b187.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.024327245396685e-09
+Label_0_Watches/Audemars Piguet/82e0538ccc78.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.5183993841413975e-09
+Label_0_Watches/Audemars Piguet/83edda267b10.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.5788867614224267e-09
+Label_0_Watches/Audemars Piguet/849d99e8b402.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.2503349051319055e-09
+Label_0_Watches/Audemars Piguet/85e78f567a26.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.927224320615705e-09
+Label_0_Watches/Audemars Piguet/86f722f787c8.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.241339875774202e-09
+Label_0_Watches/Audemars Piguet/8830c792fc11.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.233321087993653e-09
+Label_0_Watches/Audemars Piguet/89c47e6442f7.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.841194181638742e-09
+Label_0_Watches/Audemars Piguet/8af93121de23.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.506799626460153e-09
+Label_0_Watches/Audemars Piguet/8b1478b80d6c.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.493659174842253e-09
+Label_0_Watches/Audemars Piguet/8b8ec430695d.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.771250479575433e-09
+Label_0_Watches/Audemars Piguet/8b912d535e78.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.149580924907292e-09
+Label_0_Watches/Audemars Piguet/8bd055436646.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.764822395069545e-09
+Label_0_Watches/Audemars Piguet/8bd94f4f8f61.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.183848926291891e-09
+Label_0_Watches/Audemars Piguet/8dbc19f0c6cd.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.667049482409803e-09
+Label_0_Watches/Audemars Piguet/8f1adc2e0612.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.038714162279703e-09
+Label_0_Watches/Audemars Piguet/8fbbc54f1623.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.124763756106568e-09
+Label_0_Watches/Audemars Piguet/90eb6c5bd3cb.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.899495744032983e-09
+Label_0_Watches/Audemars Piguet/91efc065321e.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.162623413802846e-09
+Label_0_Watches/Audemars Piguet/92fc2137f115.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.992300191246064e-09
+Label_0_Watches/Audemars Piguet/946daaf44e67.jpg,Audemars Piguet,AUTHENTIC,REVIEW,3.990035890172336e-09
+Label_0_Watches/Audemars Piguet/968c8c714cfc.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.955636532509336e-09
+Label_0_Watches/Audemars Piguet/9698dca89113.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.284737937265292e-09
+Label_0_Watches/Audemars Piguet/9a97df4cbbec.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.9809362426985526e-09
+Label_0_Watches/Audemars Piguet/9bf9d967f2f2.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.548472607422443e-09
+Label_0_Watches/Audemars Piguet/9c751e0c6fe0.jpg,Audemars Piguet,AUTHENTIC,REVIEW,3.896047330442293e-09
+Label_0_Watches/Audemars Piguet/9cc36217c9ef.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.74276661427754e-09
+Label_0_Watches/Audemars Piguet/9d53268e0626.jpg,Audemars Piguet,AUTHENTIC,REVIEW,3.799159728446392e-09
+Label_0_Watches/Audemars Piguet/9da0ff4746f9.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.284737937265292e-09
+Label_0_Watches/Audemars Piguet/9e06e55e5f5b.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.8752055493808455e-09
+Label_0_Watches/Audemars Piguet/9f9fba68c73c.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.329181147751817e-09
+Label_0_Watches/Audemars Piguet/a3aa92a94f6f.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.043868812822077e-09
+Label_0_Watches/Audemars Piguet/a55960df5b49.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.064972570790538e-09
+Label_0_Watches/Audemars Piguet/a72a4976fd08.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.363071127353006e-09
+Label_0_Watches/Audemars Piguet/a78e0fe67ad2.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.158925810518699e-09
+Label_0_Watches/Audemars Piguet/a7928fbf4ebb.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.858101161679461e-09
+Label_0_Watches/Audemars Piguet/a7c8e71fb8e5.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.378425853256846e-09
+Label_0_Watches/Audemars Piguet/a82d89351494.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.19218977774484e-09
+Label_0_Watches/Audemars Piguet/a8abe36f9174.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.767212959513503e-09
+Label_0_Watches/Audemars Piguet/aa044b5ef643.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.3338983309416735e-09
+Label_0_Watches/Audemars Piguet/aa8eee47e8bc.jpg,Audemars Piguet,AUTHENTIC,REVIEW,3.990906623180189e-09
+Label_0_Watches/Audemars Piguet/ab72fedb566d.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.2849419296627055e-09
+Label_0_Watches/Audemars Piguet/ac91790b6663.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,4.20009732783522e-09
+Label_0_Watches/Audemars Piguet/ad14fdefa099.jpg,Audemars Piguet,AUTHENTIC,REVIEW,4.014727285979268e-09
+Label_0_Watches/Audemars Piguet/ad47ab901767.jpg,Audemars Piguet,AUTHENTIC,AUTHENTIC,3.856065953630352e-09
+Label_0_Watches/Patek Philippe/00afaa8f779e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.1001763428923235e-09
+Label_0_Watches/Patek Philippe/01b12f41ace0.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.649098290664513e-09
+Label_0_Watches/Patek Philippe/0386051ca9a7.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.960221633910063e-09
+Label_0_Watches/Patek Philippe/0388ec87fb95.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.5548018789547234e-09
+Label_0_Watches/Patek Philippe/03efd6e86787.jpg,Patek Philippe,AUTHENTIC,REVIEW,4.3419956616342775e-09
+Label_0_Watches/Patek Philippe/052b9c9809ce.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.0356069146787296e-09
+Label_0_Watches/Patek Philippe/052ec775063a.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.826410127057305e-09
+Label_0_Watches/Patek Philippe/0651b5061f62.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.599636910538801e-09
+Label_0_Watches/Patek Philippe/0a3fc55336f7.jpg,Patek Philippe,AUTHENTIC,REVIEW,4.174000905759844e-09
+Label_0_Watches/Patek Philippe/0a68a9fb9ad0.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.7524382226793255e-09
+Label_0_Watches/Patek Philippe/0a9c85fd0645.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.7991748009899666e-09
+Label_0_Watches/Patek Philippe/0b7cbe2ab02c.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.814844823553992e-09
+Label_0_Watches/Patek Philippe/0b8a676a7424.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.703623462272385e-09
+Label_0_Watches/Patek Philippe/0cf385a401fe.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.985100053606522e-09
+Label_0_Watches/Patek Philippe/0d0551903872.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.3555046866270334e-09
+Label_0_Watches/Patek Philippe/0d3f976f56aa.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.424348715481947e-09
+Label_0_Watches/Patek Philippe/0e2e39dbeef8.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.1028449571967226e-09
+Label_0_Watches/Patek Philippe/0eb9568004b0.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.87652795723099e-09
+Label_0_Watches/Patek Philippe/0ee5388186c1.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,5.025027540011345e-09
+Label_0_Watches/Patek Philippe/0eef9bd8da76.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.775037712440467e-09
+Label_0_Watches/Patek Philippe/1059982e76de.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.832046285766251e-09
+Label_0_Watches/Patek Philippe/11f6b3f215c0.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.971376768207272e-09
+Label_0_Watches/Patek Philippe/1214d1654b4b.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.179842259482912e-09
+Label_0_Watches/Patek Philippe/125950fbe0f8.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.3555046866270334e-09
+Label_0_Watches/Patek Philippe/128616fa2371.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.216868873428316e-09
+Label_0_Watches/Patek Philippe/13b66525332d.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.5591679703931175e-09
+Label_0_Watches/Patek Philippe/13f6da867d03.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.431060111289378e-09
+Label_0_Watches/Patek Philippe/149d0ec73d08.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.932494091818629e-09
+Label_0_Watches/Patek Philippe/150e10455c0a.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.381101751105709e-09
+Label_0_Watches/Patek Philippe/16b1c1f15672.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.876389544572633e-09
+Label_0_Watches/Patek Philippe/17bef4b2215e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.977644621840952e-09
+Label_0_Watches/Patek Philippe/17fc9815342b.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.940505808794269e-09
+Label_0_Watches/Patek Philippe/1889d424a076.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.866114695471966e-09
+Label_0_Watches/Patek Philippe/1b9b0a9a4aa3.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.237883380161103e-09
+Label_0_Watches/Patek Philippe/1bb4073f4014.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.983598367616919e-09
+Label_0_Watches/Patek Philippe/1bbd152968fd.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.983788023038903e-09
+Label_0_Watches/Patek Philippe/1e5436e865b3.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.802695877555055e-09
+Label_0_Watches/Patek Philippe/1e8d616e58ac.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.510278619499851e-09
+Label_0_Watches/Patek Philippe/1f5ecd27adea.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.057713809698649e-09
+Label_0_Watches/Patek Philippe/1fcfc7a5b0d3.jpg,Patek Philippe,AUTHENTIC,REVIEW,3.999108740059405e-09
+Label_0_Watches/Patek Philippe/2081a0449dd2.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.353923879488914e-09
+Label_0_Watches/Patek Philippe/20fe35213a31.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.589736720863523e-09
+Label_0_Watches/Patek Philippe/2133a99656e8.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.127120887359009e-09
+Label_0_Watches/Patek Philippe/21acc9c17e66.jpg,Patek Philippe,FAKE,AUTHENTIC,3.811645168294278e-09
+Label_0_Watches/Patek Philippe/22d645b8c0e0.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.910355714633571e-09
+Label_0_Watches/Patek Philippe/2358637acec0.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.028392600416415e-09
+Label_0_Watches/Patek Philippe/2367708f582f.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.095331717145899e-09
+Label_0_Watches/Patek Philippe/23873242ff3b.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.6680680110600276e-09
+Label_0_Watches/Patek Philippe/257b97167f8e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.76680944532614e-09
+Label_0_Watches/Patek Philippe/25a9e2048636.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.147614092603486e-09
+Label_0_Watches/Patek Philippe/2630913abc57.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.368683087657581e-09
+Label_0_Watches/Patek Philippe/26b7ee2d3c48.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.426737671309039e-09
+Label_0_Watches/Patek Philippe/28434d370f41.jpg,Patek Philippe,FAKE,AUTHENTIC,3.726941662987349e-09
+Label_0_Watches/Patek Philippe/288901dabf31.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.999600609393469e-09
+Label_0_Watches/Patek Philippe/28b910237061.jpg,Patek Philippe,AUTHENTIC,REVIEW,4.513008242898267e-09
+Label_0_Watches/Patek Philippe/28ea3354ea70.jpg,Patek Philippe,AUTHENTIC,REVIEW,3.6534501952047208e-09
+Label_0_Watches/Patek Philippe/2aa3fe46471e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.9451516294834635e-09
+Label_0_Watches/Patek Philippe/2ac9f8e6048d.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.7156106670627375e-09
+Label_0_Watches/Patek Philippe/2befb94a9c50.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.081933226867679e-09
+Label_0_Watches/Patek Philippe/2c069d09b455.jpg,Patek Philippe,AUTHENTIC,REVIEW,4.0715335180584606e-09
+Label_0_Watches/Patek Philippe/2d819fb90ef5.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.174770999663261e-09
+Label_0_Watches/Patek Philippe/2e3c9d699384.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.7287311985924705e-09
+Label_0_Watches/Patek Philippe/2f9fb0d627d3.jpg,Patek Philippe,AUTHENTIC,REVIEW,3.7177266095829175e-09
+Label_0_Watches/Patek Philippe/2fc5c3659d97.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.970463039536862e-09
+Label_0_Watches/Patek Philippe/30ac193b3fb3.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.061063634428954e-09
+Label_0_Watches/Patek Philippe/320405f9c58d.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.073795581589838e-09
+Label_0_Watches/Patek Philippe/32d3dec38b06.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.9615887702581724e-09
+Label_0_Watches/Patek Philippe/3385234f115e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.827715883545745e-09
+Label_0_Watches/Patek Philippe/33fe9003eb66.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.085748782926394e-09
+Label_0_Watches/Patek Philippe/35ed64523f1f.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.746777933906931e-09
+Label_0_Watches/Patek Philippe/3666c24efc6e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.360198657271268e-09
+Label_0_Watches/Patek Philippe/368fe3d34442.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.950782434279352e-09
+Label_0_Watches/Patek Philippe/373b0e21aade.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.003807768622844e-09
+Label_0_Watches/Patek Philippe/39f4807b76b7.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.944666456263836e-09
+Label_0_Watches/Patek Philippe/3a760259d851.jpg,Patek Philippe,AUTHENTIC,REVIEW,4.219504625037489e-09
+Label_0_Watches/Patek Philippe/3acfdfb5176f.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.9803992937675976e-09
+Label_0_Watches/Patek Philippe/3c93871f00b5.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.3166356414912666e-09
+Label_0_Watches/Patek Philippe/3dd60da87ced.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.646448852482754e-09
+Label_0_Watches/Patek Philippe/3e50924eaf27.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.076544062657597e-09
+Label_0_Watches/Patek Philippe/3e680c00c623.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.122874113388132e-09
+Label_0_Watches/Patek Philippe/3eae2c7405c1.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.675715998736019e-09
+Label_0_Watches/Patek Philippe/3f873c74383b.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.8019189999716746e-09
+Label_0_Watches/Patek Philippe/40f9cc1457ae.jpg,Patek Philippe,AUTHENTIC,REVIEW,4.2382280622025746e-09
+Label_0_Watches/Patek Philippe/414b7c1ebf4d.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.161682194105238e-09
+Label_0_Watches/Patek Philippe/41d2739c7cdd.jpg,Patek Philippe,FAKE,REVIEW,4.399878882951938e-09
+Label_0_Watches/Patek Philippe/420e46c15aac.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.77373495448845e-09
+Label_0_Watches/Patek Philippe/42d964be7b45.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.041775696891812e-09
+Label_0_Watches/Patek Philippe/42f614f58f67.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.911829790544247e-09
+Label_0_Watches/Patek Philippe/4388b4efec59.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.0055157079133754e-09
+Label_0_Watches/Patek Philippe/44694b923408.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.6529284327650617e-09
+Label_0_Watches/Patek Philippe/44d8045fbaf8.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.098379261467553e-09
+Label_0_Watches/Patek Philippe/45535d1d4f44.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.040493096374463e-09
+Label_0_Watches/Patek Philippe/468a9518e85a.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.067287465722667e-09
+Label_0_Watches/Patek Philippe/47928489e83f.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.0249260084528686e-09
+Label_0_Watches/Patek Philippe/48531ecefb75.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.027937140428224e-09
+Label_0_Watches/Patek Philippe/48ff76b5a5c9.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.781213205359443e-09
+Label_0_Watches/Patek Philippe/491188969f47.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.106802256262517e-09
+Label_0_Watches/Patek Philippe/49ebad211f8f.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.914251583889791e-09
+Label_0_Watches/Patek Philippe/4afc6f80b2bd.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.0318861717418405e-09
+Label_0_Watches/Patek Philippe/4b4201166e2b.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.154250740077334e-09
+Label_0_Watches/Patek Philippe/4b7e6cd5e2e3.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.011932940363682e-09
+Label_0_Watches/Patek Philippe/4ea380a27f59.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.005666677116288e-09
+Label_0_Watches/Patek Philippe/51762fa59a6d.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.567064682530679e-09
+Label_0_Watches/Patek Philippe/527c6c462088.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.133380361052703e-09
+Label_0_Watches/Patek Philippe/53f9702bdc5d.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.898629487808427e-09
+Label_0_Watches/Patek Philippe/542e0baac1df.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.434612587495324e-09
+Label_0_Watches/Patek Philippe/5602d83fa9b0.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.117961825277604e-09
+Label_0_Watches/Patek Philippe/56786a2ce709.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.234060131364951e-09
+Label_0_Watches/Patek Philippe/56e43698ae4c.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.761545307346603e-09
+Label_0_Watches/Patek Philippe/57d9b873b0df.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.245498129340153e-09
+Label_0_Watches/Patek Philippe/57def3e95531.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.995342392696303e-09
+Label_0_Watches/Patek Philippe/57e95f34d7a5.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.64215478494948e-09
+Label_0_Watches/Patek Philippe/58df958a8cac.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.116687712540158e-09
+Label_0_Watches/Patek Philippe/591653643ac2.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.955746387194326e-09
+Label_0_Watches/Patek Philippe/5bd09b3c9476.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.084387411234071e-09
+Label_0_Watches/Patek Philippe/5c58d74ed554.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.741022288795279e-09
+Label_0_Watches/Patek Philippe/5c6fc8492b1c.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.80845575139649e-09
+Label_0_Watches/Patek Philippe/5cf24a8b0a29.jpg,Patek Philippe,FAKE,AUTHENTIC,4.18399831727678e-09
+Label_0_Watches/Patek Philippe/5d1e028ad7f4.jpg,Patek Philippe,AUTHENTIC,REVIEW,3.651436024000051e-09
+Label_0_Watches/Patek Philippe/5d96fc6d233d.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.808939282698544e-09
+Label_0_Watches/Patek Philippe/5f105431b2d3.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.20999021708627e-09
+Label_0_Watches/Patek Philippe/606203c3fe67.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.984538831029818e-09
+Label_0_Watches/Patek Philippe/61edae372fee.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.61853432797843e-09
+Label_0_Watches/Patek Philippe/621233f8da43.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.249104122788185e-09
+Label_0_Watches/Patek Philippe/6244e247225e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.133790343299528e-09
+Label_0_Watches/Patek Philippe/62ff7bbe273f.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.936864937609517e-09
+Label_0_Watches/Patek Philippe/63fa799f2207.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.7690367848395535e-09
+Label_0_Watches/Patek Philippe/64bdbef7e6c2.jpg,Patek Philippe,AUTHENTIC,REVIEW,4.189180503822616e-09
+Label_0_Watches/Patek Philippe/65f9e78d91af.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.008170416907387e-09
+Label_0_Watches/Patek Philippe/671cc085bc02.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.974450329214696e-09
+Label_0_Watches/Patek Philippe/676b220d26af.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.063763219685748e-09
+Label_0_Watches/Patek Philippe/684ac574c8b9.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.426737671309039e-09
+Label_0_Watches/Patek Philippe/68a3b3955719.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.3317582068695904e-09
+Label_0_Watches/Patek Philippe/6e176f4e2030.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.952154151792673e-09
+Label_0_Watches/Patek Philippe/6e8d77e24311.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.184106214083307e-09
+Label_0_Watches/Patek Philippe/6f761f637137.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.8397619565688466e-09
+Label_0_Watches/Patek Philippe/6fe6780d36e1.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.109092065457931e-09
+Label_0_Watches/Patek Philippe/7374897f6050.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.631837943625725e-09
+Label_0_Watches/Patek Philippe/74795c762d2f.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.209998568301088e-09
+Label_0_Watches/Patek Philippe/74ddaee72e85.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.918804261860854e-09
+Label_0_Watches/Patek Philippe/751db3496d22.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.927333386245733e-09
+Label_0_Watches/Patek Philippe/75f5b40c16d8.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.209998568301088e-09
+Label_0_Watches/Patek Philippe/75fbe118cfc5.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.7222131448671287e-09
+Label_0_Watches/Patek Philippe/7609a97c8c56.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.776041292334847e-09
+Label_0_Watches/Patek Philippe/778c45c39fcd.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.943633705562487e-09
+Label_0_Watches/Patek Philippe/78321401a889.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.029831233254164e-09
+Label_0_Watches/Patek Philippe/78823dc79d02.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.952138472331007e-09
+Label_0_Watches/Patek Philippe/7ab40772319f.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.999108740059405e-09
+Label_0_Watches/Patek Philippe/7af0966a0e7e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.5587178748510314e-09
+Label_0_Watches/Patek Philippe/7c9ed61a2bbf.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.415126668648455e-09
+Label_0_Watches/Patek Philippe/7ed19875fc62.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.909843797211582e-09
+Label_0_Watches/Patek Philippe/7ef747924a12.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.6504818339092485e-09
+Label_0_Watches/Patek Philippe/8024b75c8370.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.948298878180199e-09
+Label_0_Watches/Patek Philippe/8039ca29707f.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.018990218317337e-09
+Label_0_Watches/Patek Philippe/810f9cbc5b45.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.5915102459790947e-09
+Label_0_Watches/Patek Philippe/818d58c66384.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.2999108136524904e-09
+Label_0_Watches/Patek Philippe/860df93cf447.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.770008855565534e-09
+Label_0_Watches/Patek Philippe/8829f225743e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.018599593294175e-09
+Label_0_Watches/Patek Philippe/895f2396c2e0.jpg,Patek Philippe,FAKE,AUTHENTIC,3.999180136693359e-09
+Label_0_Watches/Patek Philippe/89f333b8595d.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.10939366568996e-09
+Label_0_Watches/Patek Philippe/8ae6be109468.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.945762093456473e-09
+Label_0_Watches/Patek Philippe/8b333e1d2935.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.591906148282307e-09
+Label_0_Watches/Patek Philippe/8b9e13076876.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.215012285226868e-09
+Label_0_Watches/Patek Philippe/8c0d4f9de554.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.217111461098616e-09
+Label_0_Watches/Patek Philippe/8c452fcc59d7.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.990281259338431e-09
+Label_0_Watches/Patek Philippe/8ca9e161faab.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.812212287261344e-09
+Label_0_Watches/Patek Philippe/8d3131579ad3.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.002156129740989e-09
+Label_0_Watches/Patek Philippe/8e3addcb1c81.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.335145075032826e-09
+Label_0_Watches/Patek Philippe/8f01ec87e054.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.607833492284074e-09
+Label_0_Watches/Patek Philippe/9060d233402a.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.863009968217657e-09
+Label_0_Watches/Patek Philippe/92a4ffb7b354.jpg,Patek Philippe,FAKE,AUTHENTIC,4.208938096553161e-09
+Label_0_Watches/Patek Philippe/92f8dc6ce742.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.261292751607768e-09
+Label_0_Watches/Patek Philippe/93dcb26102cf.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.890702912499048e-09
+Label_0_Watches/Patek Philippe/944af51f488b.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.976626901952244e-09
+Label_0_Watches/Patek Philippe/957699f48c29.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.065472541029213e-09
+Label_0_Watches/Patek Philippe/969675360807.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.853366752471772e-09
+Label_0_Watches/Patek Philippe/97f44e864f3c.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.760836518100134e-09
+Label_0_Watches/Patek Philippe/986593da60c0.jpg,Patek Philippe,FAKE,AUTHENTIC,4.1512604651685284e-09
+Label_0_Watches/Patek Philippe/98c39cd5a12d.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.100135676230545e-09
+Label_0_Watches/Patek Philippe/997d55e101a9.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.811047894218145e-09
+Label_0_Watches/Patek Philippe/9a9294c44829.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.024670525319952e-09
+Label_0_Watches/Patek Philippe/9d9478d8c715.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.903047858904215e-09
+Label_0_Watches/Patek Philippe/9f0b0763ae36.jpg,Patek Philippe,AUTHENTIC,REVIEW,3.963852653780566e-09
+Label_0_Watches/Patek Philippe/9f837b3fab2e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.992648659289366e-09
+Label_0_Watches/Patek Philippe/a0a748981ba7.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.738207663218233e-09
+Label_0_Watches/Patek Philippe/a0c086626cd0.jpg,Patek Philippe,FAKE,AUTHENTIC,4.5511531215995615e-09
+Label_0_Watches/Patek Philippe/a1af639b50b6.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.089584130237538e-09
+Label_0_Watches/Patek Philippe/a27310ca642c.jpg,Patek Philippe,AUTHENTIC,REVIEW,4.239329551254863e-09
+Label_0_Watches/Patek Philippe/a2811943420c.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.112370097802509e-09
+Label_0_Watches/Patek Philippe/a2b556fa5d6c.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.848050348696886e-09
+Label_0_Watches/Patek Philippe/a4f440c72d51.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.097038062668808e-09
+Label_0_Watches/Patek Philippe/a5b22e3bb554.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.83788868135518e-09
+Label_0_Watches/Patek Philippe/a5cd06a6d564.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.8019189999716746e-09
+Label_0_Watches/Patek Philippe/abbe67b4a00e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.760306878609699e-09
+Label_0_Watches/Patek Philippe/adc88f091c5e.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.109092065457931e-09
+Label_0_Watches/Patek Philippe/aedf556ad278.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.301719464631816e-09
+Label_0_Watches/Patek Philippe/b004ce929424.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.2860640614609365e-09
+Label_0_Watches/Patek Philippe/b0723312bc38.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.979751892851225e-09
+Label_0_Watches/Patek Philippe/b101b6f97716.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,3.929702415613918e-09
+Label_0_Watches/Patek Philippe/b1830f6f0554.jpg,Patek Philippe,AUTHENTIC,AUTHENTIC,4.109352907608272e-09
+Label_0_Watches/Richard Mille/00241dc342d1.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.035975174757188e-09
+Label_0_Watches/Richard Mille/00fa9411fbb0.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.240826689806295e-09
+Label_0_Watches/Richard Mille/0281184eb8a2.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.069563315492736e-09
+Label_0_Watches/Richard Mille/031d8590a194.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.169217914724162e-09
+Label_0_Watches/Richard Mille/03869a0034a5.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.048066327128154e-09
+Label_0_Watches/Richard Mille/0386e0fe3741.jpg,Richard Mille,AUTHENTIC,REVIEW,4.182985882815249e-09
+Label_0_Watches/Richard Mille/039c912a1e0a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.1847951592903334e-09
+Label_0_Watches/Richard Mille/03dc2ac86db7.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.904139680961408e-09
+Label_0_Watches/Richard Mille/046478f4152a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.324065937894834e-09
+Label_0_Watches/Richard Mille/046552cb6d97.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.316455827376668e-09
+Label_0_Watches/Richard Mille/05a3af7472f8.jpg,Richard Mille,AUTHENTIC,REVIEW,4.024997866006022e-09
+Label_0_Watches/Richard Mille/063942766e8b.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.338809998277366e-09
+Label_0_Watches/Richard Mille/07f606f66849.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.112688254988309e-09
+Label_0_Watches/Richard Mille/096354c3a5fd.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.0235849029118505e-09
+Label_0_Watches/Richard Mille/0a3c1cd5cef1.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.13694856898841e-09
+Label_0_Watches/Richard Mille/0b054e103a6a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.847668705653267e-09
+Label_0_Watches/Richard Mille/0b645f030f0d.jpg,Richard Mille,AUTHENTIC,REVIEW,4.24144083770054e-09
+Label_0_Watches/Richard Mille/0bb5a827e76c.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.05390030984393e-09
+Label_0_Watches/Richard Mille/0be7f4c7c8b0.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.382857611005629e-09
+Label_0_Watches/Richard Mille/0cf5aa6f2aec.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.088221480607311e-09
+Label_0_Watches/Richard Mille/0df69c3e1c7a.jpg,Richard Mille,AUTHENTIC,REVIEW,4.014193742114482e-09
+Label_0_Watches/Richard Mille/0fbb99510bee.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.250764919962073e-09
+Label_0_Watches/Richard Mille/10626af54e40.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.7353230448079026e-09
+Label_0_Watches/Richard Mille/13a2e546ad8a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.865324861644031e-09
+Label_0_Watches/Richard Mille/14474ca33bae.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.944650806508256e-09
+Label_0_Watches/Richard Mille/14bca9c48c3b.jpg,Richard Mille,AUTHENTIC,REVIEW,4.074781588034046e-09
+Label_0_Watches/Richard Mille/1803fa5ef0d4.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.09218090994805e-09
+Label_0_Watches/Richard Mille/195eb35f92e3.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.220810559556531e-09
+Label_0_Watches/Richard Mille/1ab6f44ba251.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.977439479047409e-09
+Label_0_Watches/Richard Mille/1b399fd37f69.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.999656146828582e-09
+Label_0_Watches/Richard Mille/1b4b17717798.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.08311558700751e-09
+Label_0_Watches/Richard Mille/1b5c2fdf7c48.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.351411318473508e-09
+Label_0_Watches/Richard Mille/1b9e799f56d1.jpg,Richard Mille,AUTHENTIC,REVIEW,4.364958296511489e-09
+Label_0_Watches/Richard Mille/1eb06f75341b.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.077854285226557e-09
+Label_0_Watches/Richard Mille/1fca6bcc71c4.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.22805913652895e-09
+Label_0_Watches/Richard Mille/229b795bfca8.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.486311212905008e-09
+Label_0_Watches/Richard Mille/2407f471380f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.4727070000566195e-09
+Label_0_Watches/Richard Mille/2468f3871625.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.144554601527025e-09
+Label_0_Watches/Richard Mille/24c78ddcd581.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.883793862665766e-09
+Label_0_Watches/Richard Mille/252d56a5076e.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.115071137139482e-09
+Label_0_Watches/Richard Mille/26865b3ffc5b.jpg,Richard Mille,AUTHENTIC,REVIEW,4.388756188267679e-09
+Label_0_Watches/Richard Mille/287d0bd9daad.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.159024810639806e-09
+Label_0_Watches/Richard Mille/290a24414b4e.jpg,Richard Mille,FAKE,REVIEW,4.701991400764112e-09
+Label_0_Watches/Richard Mille/2b08241f31c1.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.195467521657682e-09
+Label_0_Watches/Richard Mille/2b2e95b0ef93.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.011789693027526e-09
+Label_0_Watches/Richard Mille/2b91c8db0119.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.109092065457931e-09
+Label_0_Watches/Richard Mille/2d9724e76054.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.316455827376668e-09
+Label_0_Watches/Richard Mille/2dbdc4b011e6.jpg,Richard Mille,AUTHENTIC,REVIEW,3.935428266953757e-09
+Label_0_Watches/Richard Mille/30404d63294b.jpg,Richard Mille,AUTHENTIC,REVIEW,4.126465993594638e-09
+Label_0_Watches/Richard Mille/30f730ad6c7b.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.141259129287308e-09
+Label_0_Watches/Richard Mille/3163bbfe932d.jpg,Richard Mille,AUTHENTIC,REVIEW,4.609099233646749e-09
+Label_0_Watches/Richard Mille/31d9692d4949.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.091474747302103e-09
+Label_0_Watches/Richard Mille/31fef560836f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.17467162472483e-09
+Label_0_Watches/Richard Mille/322c82ed791e.jpg,Richard Mille,AUTHENTIC,REVIEW,4.4560492094464575e-09
+Label_0_Watches/Richard Mille/32d4a04f4377.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.998077597511929e-09
+Label_0_Watches/Richard Mille/345ec9d5135b.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.274364149908472e-09
+Label_0_Watches/Richard Mille/34fdead59acc.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.144127110554388e-09
+Label_0_Watches/Richard Mille/352eee22a919.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.335557869327917e-09
+Label_0_Watches/Richard Mille/356d75ad4927.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.332308177992161e-09
+Label_0_Watches/Richard Mille/35ad09fdee3a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.163267528875074e-09
+Label_0_Watches/Richard Mille/36d04182d9dc.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.329885391613413e-09
+Label_0_Watches/Richard Mille/36f88a0f9783.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.103235631779232e-09
+Label_0_Watches/Richard Mille/372b4fdc7a65.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.010484786200262e-09
+Label_0_Watches/Richard Mille/37c5c87be0ba.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.124109236373052e-09
+Label_0_Watches/Richard Mille/38882e40b23d.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.971179826150735e-09
+Label_0_Watches/Richard Mille/38d8b5298883.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.013516960144919e-09
+Label_0_Watches/Richard Mille/3949e75f9f20.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.405363408201678e-09
+Label_0_Watches/Richard Mille/3a873ce9f80b.jpg,Richard Mille,AUTHENTIC,REVIEW,4.375873111785308e-09
+Label_0_Watches/Richard Mille/3ad2b6884ad3.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.154910043439934e-09
+Label_0_Watches/Richard Mille/3b2c747d6dc3.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.830997423338303e-09
+Label_0_Watches/Richard Mille/3b355c5ecf74.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.299177332442347e-09
+Label_0_Watches/Richard Mille/3b6dee3af3dc.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.069418010445794e-09
+Label_0_Watches/Richard Mille/3bb5c85ec610.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.340566128886325e-09
+Label_0_Watches/Richard Mille/3c53245a1501.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.3345431538029335e-09
+Label_0_Watches/Richard Mille/3ca4e3543993.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.286591224789592e-09
+Label_0_Watches/Richard Mille/3d5e3a33d1b2.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.499662242757271e-09
+Label_0_Watches/Richard Mille/3dd7181636b7.jpg,Richard Mille,AUTHENTIC,REVIEW,3.94343031684578e-09
+Label_0_Watches/Richard Mille/3e6c28dea815.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.277018870537585e-09
+Label_0_Watches/Richard Mille/3f25987dcf4e.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.283301765736927e-09
+Label_0_Watches/Richard Mille/3f7ee5f044f2.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.171559074617239e-09
+Label_0_Watches/Richard Mille/4095b9e8711c.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.0144883769741684e-09
+Label_0_Watches/Richard Mille/41b07ea9d2e6.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.304826658900815e-09
+Label_0_Watches/Richard Mille/41c274def2fa.jpg,Richard Mille,AUTHENTIC,REVIEW,4.309577145694846e-09
+Label_0_Watches/Richard Mille/42253dc137b8.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.258892783213104e-09
+Label_0_Watches/Richard Mille/435e2bfc7dab.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.401476375268562e-09
+Label_0_Watches/Richard Mille/4388e3721fa6.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.307867734097584e-09
+Label_0_Watches/Richard Mille/44075825cd4a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.0720666055805894e-09
+Label_0_Watches/Richard Mille/465da15fa96e.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.005571327484039e-09
+Label_0_Watches/Richard Mille/47b6f44f7af3.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.169300618824229e-09
+Label_0_Watches/Richard Mille/48861842c5f6.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.132535925776147e-09
+Label_0_Watches/Richard Mille/48f18c6c1ba5.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.412482505981129e-09
+Label_0_Watches/Richard Mille/492e424599ad.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.204381945103284e-09
+Label_0_Watches/Richard Mille/49991d575dae.jpg,Richard Mille,AUTHENTIC,REVIEW,4.619680559018138e-09
+Label_0_Watches/Richard Mille/49fd46e2343a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.089438110341082e-09
+Label_0_Watches/Richard Mille/4a2316eb132f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.269872692871248e-09
+Label_0_Watches/Richard Mille/4bb4fd9f7fe1.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.291057707667075e-09
+Label_0_Watches/Richard Mille/4c70f7f58515.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.608678679215414e-09
+Label_0_Watches/Richard Mille/4c86bd1fbb0c.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.152578227306155e-09
+Label_0_Watches/Richard Mille/4d0ecdd1938e.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.276823739105069e-09
+Label_0_Watches/Richard Mille/4e9970b6dee1.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.152199327853741e-09
+Label_0_Watches/Richard Mille/4ea9440e63d0.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.9781022862011315e-09
+Label_0_Watches/Richard Mille/4f2c4948dec6.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.171087427874964e-09
+Label_0_Watches/Richard Mille/5028d294731d.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.715610101376922e-09
+Label_0_Watches/Richard Mille/5220b5912725.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.1645064918541895e-09
+Label_0_Watches/Richard Mille/54cae313d0c3.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.322145005945015e-09
+Label_0_Watches/Richard Mille/569b6781d2e8.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.356489741855187e-09
+Label_0_Watches/Richard Mille/57165930543d.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.363408680247799e-09
+Label_0_Watches/Richard Mille/571ca7f4c55f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.510359142119364e-09
+Label_0_Watches/Richard Mille/57682ecc0e48.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.0624172320474254e-09
+Label_0_Watches/Richard Mille/59c3134d48c0.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.272041561791885e-09
+Label_0_Watches/Richard Mille/59f9df68ab45.jpg,Richard Mille,AUTHENTIC,REVIEW,4.122342551824348e-09
+Label_0_Watches/Richard Mille/5c8dea480ca8.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.330555388431297e-09
+Label_0_Watches/Richard Mille/5cccc4371c76.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.980494044198396e-09
+Label_0_Watches/Richard Mille/5d4747931852.jpg,Richard Mille,AUTHENTIC,REVIEW,3.948596509152621e-09
+Label_0_Watches/Richard Mille/5e0740108e58.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.117332887021765e-09
+Label_0_Watches/Richard Mille/5e56f2628a4d.jpg,Richard Mille,AUTHENTIC,REVIEW,4.0026483738879495e-09
+Label_0_Watches/Richard Mille/5eb30d85c16b.jpg,Richard Mille,AUTHENTIC,REVIEW,3.966149300925796e-09
+Label_0_Watches/Richard Mille/5eb6269d7252.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.445040217901541e-09
+Label_0_Watches/Richard Mille/5fff1bca984f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.342047340307783e-09
+Label_0_Watches/Richard Mille/60035571d690.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.628945370451626e-09
+Label_0_Watches/Richard Mille/603ae76e686a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.000608337079846e-09
+Label_0_Watches/Richard Mille/61e946a53aa8.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.954710735663064e-09
+Label_0_Watches/Richard Mille/62547bf14c05.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.386997965280442e-09
+Label_0_Watches/Richard Mille/62676b04a9c2.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.032638045183806e-09
+Label_0_Watches/Richard Mille/62d653e1ca46.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.247612487883675e-09
+Label_0_Watches/Richard Mille/639d7193e795.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.470507198796214e-09
+Label_0_Watches/Richard Mille/63fdff8ecd3c.jpg,Richard Mille,AUTHENTIC,REVIEW,4.554268833522194e-09
+Label_0_Watches/Richard Mille/652e4ee6348f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.220375203146807e-09
+Label_0_Watches/Richard Mille/660c17810873.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.1460840648566285e-09
+Label_0_Watches/Richard Mille/662fbd115581.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.97271623323518e-09
+Label_0_Watches/Richard Mille/6676c0e1e5c9.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.35189472267824e-09
+Label_0_Watches/Richard Mille/68dd242487e2.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.446610004112086e-09
+Label_0_Watches/Richard Mille/6922a058396d.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.096079171505334e-09
+Label_0_Watches/Richard Mille/69273e65685c.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.915260819699981e-09
+Label_0_Watches/Richard Mille/6b0e8a5898c5.jpg,Richard Mille,AUTHENTIC,REVIEW,4.49505887673174e-09
+Label_0_Watches/Richard Mille/6b2f7016b59a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.308628338512261e-09
+Label_0_Watches/Richard Mille/6c1bfe76360e.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.9918092197145924e-09
+Label_0_Watches/Richard Mille/6ecfdc6a4cdf.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.445040217901541e-09
+Label_0_Watches/Richard Mille/6f1499bddde8.jpg,Richard Mille,AUTHENTIC,REVIEW,4.85267620717113e-09
+Label_0_Watches/Richard Mille/6f22ec65ee75.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.199297572080306e-09
+Label_0_Watches/Richard Mille/702dd1eac96a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.763397948323564e-09
+Label_0_Watches/Richard Mille/71f3716e1bbd.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.089438110341082e-09
+Label_0_Watches/Richard Mille/7278f77b9420.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.2154638125156585e-09
+Label_0_Watches/Richard Mille/7292845a0f39.jpg,Richard Mille,FAKE,AUTHENTIC,4.2836501418162926e-09
+Label_0_Watches/Richard Mille/7293a60052c3.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.2794205643912915e-09
+Label_0_Watches/Richard Mille/73bcfab6a5b6.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.4424133892780795e-09
+Label_0_Watches/Richard Mille/7664dccf664f.jpg,Richard Mille,AUTHENTIC,REVIEW,3.929258113781037e-09
+Label_0_Watches/Richard Mille/76e919b4edd5.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.7781841538503446e-09
+Label_0_Watches/Richard Mille/7735c07a98c6.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.2186007532302864e-09
+Label_0_Watches/Richard Mille/77e1daefdb3d.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.908343031531124e-09
+Label_0_Watches/Richard Mille/77e76818795e.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.209196927215098e-09
+Label_0_Watches/Richard Mille/7a11c0888313.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.264421499854019e-09
+Label_0_Watches/Richard Mille/7a21ec3bc433.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.4563409160565185e-09
+Label_0_Watches/Richard Mille/7a3c14ee86bd.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.0523083903261595e-09
+Label_0_Watches/Richard Mille/7cd154c47a89.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.958179665645741e-09
+Label_0_Watches/Richard Mille/7da1b24a8d6a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.132535925776147e-09
+Label_0_Watches/Richard Mille/7da9b6af7ff5.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.309970406299984e-09
+Label_0_Watches/Richard Mille/7e4ae359d88f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.927738513676609e-09
+Label_0_Watches/Richard Mille/7f07c522bcbb.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.959106274567696e-09
+Label_0_Watches/Richard Mille/80b9de0e11bb.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.885196269744368e-09
+Label_0_Watches/Richard Mille/818194c00445.jpg,Richard Mille,FAKE,AUTHENTIC,4.0037759999096516e-09
+Label_0_Watches/Richard Mille/826eaa2fec9f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.408965249502239e-09
+Label_0_Watches/Richard Mille/83c49523cad4.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.144398397789927e-09
+Label_0_Watches/Richard Mille/83efb5f4a008.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.301309892136742e-09
+Label_0_Watches/Richard Mille/8827a97f025a.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.14119341087164e-09
+Label_0_Watches/Richard Mille/88df810f015e.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.958179665645741e-09
+Label_0_Watches/Richard Mille/88e8acf77f09.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.203139456572031e-09
+Label_0_Watches/Richard Mille/88e99b5a726f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.077174858002879e-09
+Label_0_Watches/Richard Mille/894fdcdf0581.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.855086988041647e-09
+Label_0_Watches/Richard Mille/8aafcd2978f8.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.010166580633945e-09
+Label_0_Watches/Richard Mille/8b44cf7c0a8f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.140100994991323e-09
+Label_0_Watches/Richard Mille/8b72d50217a3.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.341496132833198e-09
+Label_0_Watches/Richard Mille/8b7f063299c8.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.925728868972805e-09
+Label_0_Watches/Richard Mille/8b7f7bc27791.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.9260092227728955e-09
+Label_0_Watches/Richard Mille/8b8f5f50269f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.131134380183353e-09
+Label_0_Watches/Richard Mille/8dd256d966bb.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.519942639325405e-09
+Label_0_Watches/Richard Mille/8e3df3c1eee1.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.149037689732815e-09
+Label_0_Watches/Richard Mille/8ea66def92cc.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.199914037022742e-09
+Label_0_Watches/Richard Mille/90ac97f75bfe.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.5803161889460804e-09
+Label_0_Watches/Richard Mille/91693c77b67c.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.9172653929901975e-09
+Label_0_Watches/Richard Mille/9524ae66ad39.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.439814534221679e-09
+Label_0_Watches/Richard Mille/96b11570afe2.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.366820294940054e-09
+Label_0_Watches/Richard Mille/97a473e01f2f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.370607363300523e-09
+Label_0_Watches/Richard Mille/97b830dc9a9e.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.181409628465484e-09
+Label_0_Watches/Richard Mille/9889927c9b8d.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.1282098782804495e-09
+Label_0_Watches/Richard Mille/98f15c7724df.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.794624803658374e-09
+Label_0_Watches/Richard Mille/992376b4fb3d.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.394514508415143e-09
+Label_0_Watches/Richard Mille/9b1cfb53f5d2.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.401109686412361e-09
+Label_0_Watches/Richard Mille/9c99613d3cbd.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.768796373554842e-09
+Label_0_Watches/Richard Mille/9eda705bd8c9.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,0.005573095573218122
+Label_0_Watches/Richard Mille/9eebdf223233.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.244150880382168e-09
+Label_0_Watches/Richard Mille/9f2a424f212d.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.169259266569124e-09
+Label_0_Watches/Richard Mille/a21b5c9dfaec.jpg,Richard Mille,AUTHENTIC,REVIEW,4.220040344157707e-09
+Label_0_Watches/Richard Mille/a44fc6a0820f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.127825014076604e-09
+Label_0_Watches/Richard Mille/a59513f5715f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,3.818918242254821e-09
+Label_0_Watches/Richard Mille/a652747876fc.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.1609062607632955e-09
+Label_0_Watches/Richard Mille/a6f0cb1fa2d3.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.35942894912128e-09
+Label_0_Watches/Richard Mille/a7599e55901f.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.264023936931209e-09
+Label_0_Watches/Richard Mille/a7a46c3281ac.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.172080430433077e-09
+Label_0_Watches/Richard Mille/a7b1aa4e83a5.jpg,Richard Mille,AUTHENTIC,AUTHENTIC,4.0373284188090015e-09
+Label_0_Watches/Vacheron Constantin/01c08c0d4eda.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.0439570522368825e-09
+Label_0_Watches/Vacheron Constantin/02c2fb6c9776.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.039082705902947e-09
+Label_0_Watches/Vacheron Constantin/03703bbdfef8.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.951770022888814e-09
+Label_0_Watches/Vacheron Constantin/03bd2b482c01.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.281347986105231e-09
+Label_0_Watches/Vacheron Constantin/062cc17b233f.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.6341080219698937e-09
+Label_0_Watches/Vacheron Constantin/067983ec0e34.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,4.05657099259792e-09
+Label_0_Watches/Vacheron Constantin/08505a174450.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.4592636755126764e-09
+Label_0_Watches/Vacheron Constantin/08bb076c6cc1.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.459011360702276e-09
+Label_0_Watches/Vacheron Constantin/09c2541a5f57.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.1187134099429905e-09
+Label_0_Watches/Vacheron Constantin/0c5f8706b071.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,3.783756783203574e-09
+Label_0_Watches/Vacheron Constantin/0cdebf202a23.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.6653477158923883e-09
+Label_0_Watches/Vacheron Constantin/0d0bdbd6b613.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.9737250697407205e-09
+Label_0_Watches/Vacheron Constantin/0e6fcfcc3a60.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.5569817104573347e-09
+Label_0_Watches/Vacheron Constantin/10e8a10f01eb.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.98879344576158e-09
+Label_0_Watches/Vacheron Constantin/12e30f60d257.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.124027428709328e-09
+Label_0_Watches/Vacheron Constantin/140c94794797.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.736023922967014e-09
+Label_0_Watches/Vacheron Constantin/146a487008ad.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,3.920903693706039e-09
+Label_0_Watches/Vacheron Constantin/1887b51b6b1c.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.860765386691892e-09
+Label_0_Watches/Vacheron Constantin/18a59497a5a5.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.108920896794863e-09
+Label_0_Watches/Vacheron Constantin/19690306fe5b.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.448082971022215e-09
+Label_0_Watches/Vacheron Constantin/1a687b12d8f0.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.113136980032839e-09
+Label_0_Watches/Vacheron Constantin/1cee7c9af87b.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.228746930500153e-09
+Label_0_Watches/Vacheron Constantin/1d5739b3afa7.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,4.190501990612821e-09
+Label_0_Watches/Vacheron Constantin/1f0b7527d701.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.029479520012021e-09
+Label_0_Watches/Vacheron Constantin/1f0f98c33842.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.932135273808038e-09
+Label_0_Watches/Vacheron Constantin/23438e320fb2.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.747402303235906e-09
+Label_0_Watches/Vacheron Constantin/23dbff41fa27.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.989600594911953e-09
+Label_0_Watches/Vacheron Constantin/2453d1a830f8.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,3.888912783766899e-09
+Label_0_Watches/Vacheron Constantin/24e8fbb6b1a2.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.191582761256123e-09
+Label_0_Watches/Vacheron Constantin/24fdbd528db7.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.9276761836595126e-09
+Label_0_Watches/Vacheron Constantin/2567ec7bb414.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.032614047057039e-09
+Label_0_Watches/Vacheron Constantin/25d0c7f7ba4f.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.725396846144765e-09
+Label_0_Watches/Vacheron Constantin/27a82b44ab04.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.430462449622967e-09
+Label_0_Watches/Vacheron Constantin/2825f1d954ec.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.781258209569035e-09
+Label_0_Watches/Vacheron Constantin/292a8329585c.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.9813784903231425e-09
+Label_0_Watches/Vacheron Constantin/293906e0c5f5.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.299313784588716e-09
+Label_0_Watches/Vacheron Constantin/2956a8aeae92.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.914686423424901e-09
+Label_0_Watches/Vacheron Constantin/2a65747da046.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.281347986105231e-09
+Label_0_Watches/Vacheron Constantin/2bfb0fb173f4.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.6083702869524043e-09
+Label_0_Watches/Vacheron Constantin/2c63af98add5.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.9592005181340724e-09
+Label_0_Watches/Vacheron Constantin/2d3286c7a9db.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,4.13652186254164e-09
+Label_0_Watches/Vacheron Constantin/2f3ab878254a.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,4.457127735147256e-09
+Label_0_Watches/Vacheron Constantin/2fda22a14c56.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.0071130914988394e-09
+Label_0_Watches/Vacheron Constantin/310b24b533f1.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.929663439758811e-09
+Label_0_Watches/Vacheron Constantin/3144092e2207.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,4.4472980626363485e-09
+Label_0_Watches/Vacheron Constantin/32e021a1d6b0.jpg,Vacheron Constantin,FAKE,AUTHENTIC,4.1410455482494825e-09
+Label_0_Watches/Vacheron Constantin/332c3d2a8cff.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.298597459133363e-09
+Label_0_Watches/Vacheron Constantin/35acf860f965.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.856387230879839e-09
+Label_0_Watches/Vacheron Constantin/3676dcc408fd.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.719688802971786e-09
+Label_0_Watches/Vacheron Constantin/3679f04f57dd.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.9812837188392656e-09
+Label_0_Watches/Vacheron Constantin/36b1389c8f3c.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,4.0335180751261986e-09
+Label_0_Watches/Vacheron Constantin/378c10c28589.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.831134215198745e-09
+Label_0_Watches/Vacheron Constantin/3872b89a63ac.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.8523655466814046e-09
+Label_0_Watches/Vacheron Constantin/388681949555.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,3.563705232828228e-09
+Label_0_Watches/Vacheron Constantin/39a870ed8463.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.1710460578978026e-09
+Label_0_Watches/Vacheron Constantin/3b2d4e8cc45e.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.863048282978989e-09
+Label_0_Watches/Vacheron Constantin/3bbe7a7f8db2.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.110820453257546e-09
+Label_0_Watches/Vacheron Constantin/3cfaceda1066.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.020577024503034e-09
+Label_0_Watches/Vacheron Constantin/3d68b0e89ca8.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.8596321007145555e-09
+Label_0_Watches/Vacheron Constantin/3e0b27a69314.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.897237693442988e-09
+Label_0_Watches/Vacheron Constantin/3eb72de955e0.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.710867080452283e-09
+Label_0_Watches/Vacheron Constantin/40bc9a5ccb2a.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.881252327577578e-09
+Label_0_Watches/Vacheron Constantin/4197a3c2b236.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.111970396738971e-09
+Label_0_Watches/Vacheron Constantin/435133bf25cd.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.213415604513106e-09
+Label_0_Watches/Vacheron Constantin/43623c75d5a5.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.562164481656315e-09
+Label_0_Watches/Vacheron Constantin/4403be9e0611.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.4682198441061905e-09
+Label_0_Watches/Vacheron Constantin/445f9900a604.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.6759274550103465e-09
+Label_0_Watches/Vacheron Constantin/48921f4b555f.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.565161784412563e-09
+Label_0_Watches/Vacheron Constantin/4978e7cd9e50.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.934156002091424e-09
+Label_0_Watches/Vacheron Constantin/49ead100a02f.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.079755665274872e-09
+Label_0_Watches/Vacheron Constantin/49f717270ea3.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.3796072169738924e-09
+Label_0_Watches/Vacheron Constantin/4a32b59d7c73.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.821676702210041e-09
+Label_0_Watches/Vacheron Constantin/4cbfdc3bac86.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.635175088352099e-09
+Label_0_Watches/Vacheron Constantin/4e33acf944b8.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.088262029099692e-09
+Label_0_Watches/Vacheron Constantin/4e696b2013ac.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.158661821716602e-09
+Label_0_Watches/Vacheron Constantin/4f410d51dbd6.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.833947130236711e-09
+Label_0_Watches/Vacheron Constantin/4f92f78e0e3d.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,3.792947401251267e-09
+Label_0_Watches/Vacheron Constantin/4fad74d1cd89.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,3.972330105803548e-09
+Label_0_Watches/Vacheron Constantin/4ff3e93adf50.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.952483434857469e-09
+Label_0_Watches/Vacheron Constantin/51d64e3f9ff7.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.817539759006071e-09
+Label_0_Watches/Vacheron Constantin/528e6bd3c86a.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.0961929265187985e-09
+Label_0_Watches/Vacheron Constantin/536f962c778b.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.201330583046923e-09
+Label_0_Watches/Vacheron Constantin/55a59bf8b6fb.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.758449999961543e-09
+Label_0_Watches/Vacheron Constantin/56196fad16ee.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.973236382570489e-09
+Label_0_Watches/Vacheron Constantin/5686c663d3f6.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.815662187151074e-09
+Label_0_Watches/Vacheron Constantin/569e2dbbd3f8.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.7062104195689723e-09
+Label_0_Watches/Vacheron Constantin/56a4a0a303aa.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.196915868915752e-09
+Label_0_Watches/Vacheron Constantin/5706b036b8ae.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.656916101715949e-09
+Label_0_Watches/Vacheron Constantin/577c513d0ceb.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.926367481764699e-09
+Label_0_Watches/Vacheron Constantin/580002db863b.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.956758763228645e-09
+Label_0_Watches/Vacheron Constantin/5867fef2123f.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.9692581844281325e-09
+Label_0_Watches/Vacheron Constantin/599b5e090cc0.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.213942191501464e-09
+Label_0_Watches/Vacheron Constantin/5b1b7c3f207f.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.074652262117945e-09
+Label_0_Watches/Vacheron Constantin/5badce8c1641.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.5855521126143357e-09
+Label_0_Watches/Vacheron Constantin/5bb19e34dea3.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.121099783055123e-09
+Label_0_Watches/Vacheron Constantin/5c358f0d99d0.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.260143302263175e-09
+Label_0_Watches/Vacheron Constantin/5cce3188a21a.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.272965359875523e-09
+Label_0_Watches/Vacheron Constantin/5da4a0b668f1.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.859662725690906e-09
+Label_0_Watches/Vacheron Constantin/5e1e36ed571c.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.006175246822746e-09
+Label_0_Watches/Vacheron Constantin/5f1b9e223e0d.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.797901381993753e-09
+Label_0_Watches/Vacheron Constantin/5fa8b0bfa18d.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.277799485301024e-09
+Label_0_Watches/Vacheron Constantin/607aae9f1a13.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.768558319017739e-09
+Label_0_Watches/Vacheron Constantin/60fb9f0357da.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.0540691864696214e-09
+Label_0_Watches/Vacheron Constantin/625dc7d3af11.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.566024683010555e-09
+Label_0_Watches/Vacheron Constantin/62cca27197ce.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.877589285150522e-09
+Label_0_Watches/Vacheron Constantin/68111caeeae6.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.140996261881986e-09
+Label_0_Watches/Vacheron Constantin/6860f3eefa75.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.658831590417262e-09
+Label_0_Watches/Vacheron Constantin/6891e8b65151.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.2846529432992665e-09
+Label_0_Watches/Vacheron Constantin/6905ae02b084.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.180704654359805e-09
+Label_0_Watches/Vacheron Constantin/6a1ba1128fea.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.565982240491853e-09
+Label_0_Watches/Vacheron Constantin/6a70c117568c.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.269330647711532e-09
+Label_0_Watches/Vacheron Constantin/6d64ac66337e.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.168854036173214e-09
+Label_0_Watches/Vacheron Constantin/6d76e4cedec5.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.006175246822746e-09
+Label_0_Watches/Vacheron Constantin/6ec279405e7b.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.796560609311458e-09
+Label_0_Watches/Vacheron Constantin/6f3b8c451282.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.0410060877323555e-09
+Label_0_Watches/Vacheron Constantin/6feaa987a064.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.933414687753861e-09
+Label_0_Watches/Vacheron Constantin/70b12bf4a6d0.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.181343272894053e-09
+Label_0_Watches/Vacheron Constantin/710b378ddb29.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.016376145668082e-09
+Label_0_Watches/Vacheron Constantin/727f6eb1c3d1.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,3.662513193156279e-09
+Label_0_Watches/Vacheron Constantin/72fa104f9154.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.959106274567696e-09
+Label_0_Watches/Vacheron Constantin/740e6499e7b3.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.25221548686118e-09
+Label_0_Watches/Vacheron Constantin/74651563bc17.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.941529921689199e-09
+Label_0_Watches/Vacheron Constantin/7676ced2e61d.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.928657996332114e-09
+Label_0_Watches/Vacheron Constantin/7706f59b5473.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.949834268006894e-09
+Label_0_Watches/Vacheron Constantin/77c37e0e2aea.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.4168786418277196e-09
+Label_0_Watches/Vacheron Constantin/781650de2e61.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,3.7876467353273334e-09
+Label_0_Watches/Vacheron Constantin/78a2a3c02eb6.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.8897151533909605e-09
+Label_0_Watches/Vacheron Constantin/7aba390abf8d.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.97143979172812e-09
+Label_0_Watches/Vacheron Constantin/7abad1743e65.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,4.2302487231351345e-09
+Label_0_Watches/Vacheron Constantin/7af63ea681f5.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.776430813100574e-09
+Label_0_Watches/Vacheron Constantin/7b3acc4a2300.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.026762770725392e-09
+Label_0_Watches/Vacheron Constantin/7b55faec4bac.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,3.961101575605346e-09
+Label_0_Watches/Vacheron Constantin/7c33ba0f1593.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.964733402270535e-09
+Label_0_Watches/Vacheron Constantin/7ced46474438.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.190618367906902e-09
+Label_0_Watches/Vacheron Constantin/7cfef426a074.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.205065887418462e-09
+Label_0_Watches/Vacheron Constantin/7d41bd7b9e6a.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.794672358520092e-09
+Label_0_Watches/Vacheron Constantin/7dbdc9c0d8b0.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.0213985822905285e-09
+Label_0_Watches/Vacheron Constantin/7e38a78e5dc8.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,8.253346256195174e-09
+Label_0_Watches/Vacheron Constantin/7ee139ce1abe.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.90034671874902e-09
+Label_0_Watches/Vacheron Constantin/7f4492487cd7.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.2810932109948305e-09
+Label_0_Watches/Vacheron Constantin/8079e80f8af4.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.020050677649892e-09
+Label_0_Watches/Vacheron Constantin/81a0e0717067.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.302589935679551e-09
+Label_0_Watches/Vacheron Constantin/82e9b967c029.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.789690936706395e-09
+Label_0_Watches/Vacheron Constantin/830b00466807.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.7698892025636315e-09
+Label_0_Watches/Vacheron Constantin/831b1adf19c7.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.892802733526244e-09
+Label_0_Watches/Vacheron Constantin/84f4c5158ba7.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.174597095073344e-09
+Label_0_Watches/Vacheron Constantin/87f1b991fd3d.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.87096458907022e-09
+Label_0_Watches/Vacheron Constantin/8995e347ec7b.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.130495236553666e-09
+Label_0_Watches/Vacheron Constantin/89d39cb0facf.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.0400603105708995e-09
+Label_0_Watches/Vacheron Constantin/8a092770c253.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.1246164801104206e-09
+Label_0_Watches/Vacheron Constantin/8add1ba407b6.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.789262464916055e-09
+Label_0_Watches/Vacheron Constantin/8b241a3e87f3.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.992925871498367e-09
+Label_0_Watches/Vacheron Constantin/8b7b8497c70a.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.054125480241515e-09
+Label_0_Watches/Vacheron Constantin/8cd0a664c4d1.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.251043188034741e-09
+Label_0_Watches/Vacheron Constantin/8d17fee7d350.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.136784445915374e-09
+Label_0_Watches/Vacheron Constantin/8e934607716d.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.072074683201017e-09
+Label_0_Watches/Vacheron Constantin/8ede0b30b781.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.2135326181568126e-09
+Label_0_Watches/Vacheron Constantin/8f6d1cd513ed.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.950077164955009e-09
+Label_0_Watches/Vacheron Constantin/8ff8a71724bc.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.6783710216371625e-09
+Label_0_Watches/Vacheron Constantin/95a53665d558.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.209656182077445e-09
+Label_0_Watches/Vacheron Constantin/96516c845ae6.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.9592005181340724e-09
+Label_0_Watches/Vacheron Constantin/97a425d50d21.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.6195609213850087e-09
+Label_0_Watches/Vacheron Constantin/98e9f1518c9a.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.074038020067155e-09
+Label_0_Watches/Vacheron Constantin/99477759e5a0.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.725330337313983e-09
+Label_0_Watches/Vacheron Constantin/998c43864c83.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.9929179508824405e-09
+Label_0_Watches/Vacheron Constantin/9be03536a9be.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.7556105266820596e-09
+Label_0_Watches/Vacheron Constantin/9d1315012648.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.147844468252317e-09
+Label_0_Watches/Vacheron Constantin/9e023c39d511.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.0847682254652775e-09
+Label_0_Watches/Vacheron Constantin/9fb0e71c7a7f.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.828049985842812e-09
+Label_0_Watches/Vacheron Constantin/9fda77906d26.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.286863334456342e-09
+Label_0_Watches/Vacheron Constantin/a0d0945f35f9.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.937177326711538e-09
+Label_0_Watches/Vacheron Constantin/a0d3ca347560.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.084217271670009e-09
+Label_0_Watches/Vacheron Constantin/a15083d720b2.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.967368952166932e-09
+Label_0_Watches/Vacheron Constantin/a1c3dc546b9a.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.634468482329853e-09
+Label_0_Watches/Vacheron Constantin/a2c6bec05ad3.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.938724017838748e-09
+Label_0_Watches/Vacheron Constantin/a2f3ddd36c85.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.5096303421907782e-09
+Label_0_Watches/Vacheron Constantin/a3a4ec3b6413.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.9104565547539665e-09
+Label_0_Watches/Vacheron Constantin/a557e359f0e5.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.7353495813217214e-09
+Label_0_Watches/Vacheron Constantin/a6708c58eb22.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.8895145454662615e-09
+Label_0_Watches/Vacheron Constantin/a68d4b32a6ab.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.963270838015511e-09
+Label_0_Watches/Vacheron Constantin/a86a395f1847.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.72741484505187e-09
+Label_0_Watches/Vacheron Constantin/a8b383b125d0.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.211385099606982e-09
+Label_0_Watches/Vacheron Constantin/a93371ba4f1e.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.875051810306508e-09
+Label_0_Watches/Vacheron Constantin/a9f6fd94f35c.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.111970396738971e-09
+Label_0_Watches/Vacheron Constantin/aa95d664f0cb.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.9839381733182385e-09
+Label_0_Watches/Vacheron Constantin/aa96d4d00525.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,3.7876467353273334e-09
+Label_0_Watches/Vacheron Constantin/ab83b905467d.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.896248275305796e-09
+Label_0_Watches/Vacheron Constantin/aba4a96bf4d9.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.475112052856687e-09
+Label_0_Watches/Vacheron Constantin/ac4db4cebe8a.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.5611894880864783e-09
+Label_0_Watches/Vacheron Constantin/af5db4f1e823.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,4.170764752934531e-09
+Label_0_Watches/Vacheron Constantin/b030e6ec5bd1.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.241827880682781e-09
+Label_0_Watches/Vacheron Constantin/b150d699bf93.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.018264802064296e-09
+Label_0_Watches/Vacheron Constantin/b1f344a455f4.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.882184030606732e-09
+Label_0_Watches/Vacheron Constantin/b366113eff46.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.1053442887088e-09
+Label_0_Watches/Vacheron Constantin/b4046aabc7d5.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.2028559871559655e-09
+Label_0_Watches/Vacheron Constantin/b58120b4551f.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.011853357878812e-09
+Label_0_Watches/Vacheron Constantin/b5bf0700feb2.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.1741333849154055e-09
+Label_0_Watches/Vacheron Constantin/b662c8687015.jpg,Vacheron Constantin,AUTHENTIC,REVIEW,4.446063161736012e-09
+Label_0_Watches/Vacheron Constantin/b71049f3d176.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,4.176411027715331e-09
+Label_0_Watches/Vacheron Constantin/b7f0e27daad7.jpg,Vacheron Constantin,AUTHENTIC,AUTHENTIC,3.8553011155247256e-09

@@ -1,0 +1,171 @@
+{
+  "selected": "dinov3_vitb16_linear",
+  "threshold": 0.9790914547543371,
+  "models": {
+    "clip_vitl14_linear": {
+      "threshold": 0.8791729869310526,
+      "sets": {
+        "bench_real_ebay__vs__bench_heldout_kandinsky22": {
+          "generated_detected": {
+            "k": 40,
+            "n": 284,
+            "rate": 0.14084507042253522,
+            "ci95": [
+              0.10256551343355577,
+              0.1868165075743875
+            ]
+          },
+          "real_rejected": {
+            "k": 8,
+            "n": 300,
+            "rate": 0.02666666666666667,
+            "ci95": [
+              0.011581567754335054,
+              0.051865811960931166
+            ]
+          },
+          "roc_auc": 0.6254929577464788
+        },
+        "bench_real_ebay__vs__bench_sdxl_base10": {
+          "generated_detected": {
+            "k": 18,
+            "n": 150,
+            "rate": 0.12,
+            "ci95": [
+              0.07269346669679311,
+              0.1830088770247616
+            ]
+          },
+          "real_rejected": {
+            "k": 8,
+            "n": 300,
+            "rate": 0.02666666666666667,
+            "ci95": [
+              0.011581567754335054,
+              0.051865811960931166
+            ]
+          },
+          "roc_auc": 0.7218444444444444
+        },
+        "test_label0__vs__test_label1": {
+          "generated_detected": {
+            "k": 210,
+            "n": 1500,
+            "rate": 0.14,
+            "ci95": [
+              0.12282492060138872,
+              0.15859759093042136
+            ]
+          },
+          "real_rejected": {
+            "k": 28,
+            "n": 1506,
+            "rate": 0.01859229747675963,
+            "ci95": [
+              0.012389110304953599,
+              0.026759632117984572
+            ]
+          },
+          "roc_auc": 0.7809114652501107
+        }
+      }
+    },
+    "dinov3_vitb16_linear": {
+      "threshold": 0.9790914547543371,
+      "sets": {
+        "bench_real_ebay__vs__bench_heldout_kandinsky22": {
+          "generated_detected": {
+            "k": 40,
+            "n": 284,
+            "rate": 0.14084507042253522,
+            "ci95": [
+              0.10256551343355577,
+              0.1868165075743875
+            ]
+          },
+          "real_rejected": {
+            "k": 4,
+            "n": 300,
+            "rate": 0.013333333333333334,
+            "ci95": [
+              0.003644514052064309,
+              0.033784896261918176
+            ]
+          },
+          "roc_auc": 0.6638849765258216
+        },
+        "bench_real_ebay__vs__bench_sdxl_base10": {
+          "generated_detected": {
+            "k": 45,
+            "n": 150,
+            "rate": 0.3,
+            "ci95": [
+              0.22797001580238763,
+              0.38012123362422023
+            ]
+          },
+          "real_rejected": {
+            "k": 4,
+            "n": 300,
+            "rate": 0.013333333333333334,
+            "ci95": [
+              0.003644514052064309,
+              0.033784896261918176
+            ]
+          },
+          "roc_auc": 0.8543777777777778
+        },
+        "test_label0__vs__test_label1": {
+          "generated_detected": {
+            "k": 552,
+            "n": 1500,
+            "rate": 0.368,
+            "ci95": [
+              0.3435398909512666,
+              0.39297817220286857
+            ]
+          },
+          "real_rejected": {
+            "k": 12,
+            "n": 1506,
+            "rate": 0.00796812749003984,
+            "ci95": [
+              0.004123829012634762,
+              0.013877308552442635
+            ]
+          },
+          "roc_auc": 0.9029986719787516
+        }
+      }
+    }
+  },
+  "earlier_models_same_benchmark": {
+    "dinov2_legacy__heldout_kandinsky22": {
+      "AUTHENTIC": 271,
+      "FAKE": 13
+    },
+    "dinov2_legacy__sdxl_base10": {
+      "AUTHENTIC": 80,
+      "FAKE": 70
+    },
+    "dinov2_legacy__real_ebay": {
+      "AUTHENTIC": 299,
+      "FAKE": 1
+    },
+    "dinov3_experimental__heldout_kandinsky22": {
+      "AUTHENTIC": 170,
+      "FAKE": 12,
+      "REVIEW": 102
+    },
+    "dinov3_experimental__sdxl_base10": {
+      "AUTHENTIC": 23,
+      "FAKE": 119,
+      "REVIEW": 8
+    },
+    "dinov3_experimental__real_ebay": {
+      "AUTHENTIC": 265,
+      "REVIEW": 35
+    }
+  },
+  "real_ebay_n": 300
+}

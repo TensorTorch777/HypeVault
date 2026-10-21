@@ -91,3 +91,7 @@ ml_rtx5080/experiments/*/corpus/
 # Personal documents and tool prompts.
 ml_rtx5080/*.pdf
 ml_rtx5080/phase55_*
+
+# Phase 71-73: cached features and OCR readings are large and rebuilt by the scripts
+ml_rtx5080/experiments/generator_agnostic_v*/features/
+ml_rtx5080/experiments/watch_forensics_v*/readings/

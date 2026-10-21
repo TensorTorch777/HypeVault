@@ -1,0 +1,33 @@
+{
+  "protocol": "benchmark_v3_fresh",
+  "phase": 73,
+  "status": "PRE_REGISTERED",
+  "written_on": "2026-10-21",
+  "written_before_any_data": true,
+  "question": "Does the Phase 73 watch-forensics v2 system (fixes 1-5) catch significantly more AI-generated images than fine-tuned DINOv3 alone on a generator family no HypeVault component has seen, while rejecting at most 3 percentage points more real photos?",
+  "scope_limit": "Real photograph versus AI-generated image only. No physical-counterfeit or authenticity claim.",
+  "development_data": "benchmark_v1, benchmark_v2 and Label_0/Label_1 validation are development data for Phase 73. benchmark_v3 is used once.",
+  "classes": {
+    "REAL_PHOTO": "Primary image of eBay listings (Browse API, category 31387, price >= 1000 USD, five brands), up to 60 per brand, excluding every listing and image already in benchmark_v1 or benchmark_v2 and every training image. Minimum 30 per brand.",
+    "GENERATED": {
+      "stable_cascade_lite": "PRIMARY. stabilityai/stable-cascade-prior (prior_lite, bf16) + stabilityai/stable-cascade (decoder_lite, bf16). Wuerstchen architecture with its own Paella VQ-GAN; no HypeVault component used it. 60 per brand, same prompt templates, seeds base 74000",
+      "kandinsky22_v3": "SECONDARY. Kandinsky 2.2, new seeds (base 75000), 60 per brand. Kandinsky images were development data for Phase 73, so this set is not an unseen generator."
+    }
+  },
+  "normalisation": "Same as benchmark_v2: centre-crop square, Lanczos to 512 x 512, JPEG q90, metadata stripped; sources below 512 px excluded.",
+  "no_peeking": "No model, OCR or fusion output may be computed on v3 images until ml_rtx5080/experiments/watch_forensics_v2/fusion_rule.json is written and its SHA-256 recorded. Generated or collected images are not opened for viewing.",
+  "systems_compared": {
+    "dinov3_alone": "fine-tuned DINOv3 epoch_018 benchmark policy (Triton)",
+    "dinov2_alone": "live DINOv2 legacy policy (Triton), reference",
+    "watch_forensics_v1": "Phase 72 fusion A, unchanged (fusion_rule.json SHA-256 9f37f328...)",
+    "watch_forensics_v2": "Phase 73 system frozen in watch_forensics_v2/fusion_rule.json, with three outcomes: FAKE, REVIEW, AUTHENTIC"
+  },
+  "primary_analysis": {
+    "set": "REAL_PHOTO + stable_cascade_lite",
+    "generated_caught": "FAKE decisions, Clopper-Pearson 95% intervals",
+    "real_rejected": "real photos decided FAKE, with intervals; REVIEW reported separately and never counted as caught or rejected",
+    "paired": "exact McNemar, watch_forensics_v2 vs dinov3_alone, on generated images where both give a binary decision"
+  },
+  "success_criterion": "On the primary set, watch_forensics_v2 catches more generated images than dinov3_alone with McNemar p < 0.05, and its real-photo FAKE rate is at most 3 percentage points above dinov3_alone's.",
+  "runs_once": true
+}

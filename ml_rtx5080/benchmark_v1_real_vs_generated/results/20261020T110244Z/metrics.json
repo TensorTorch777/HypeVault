@@ -1,0 +1,922 @@
+{
+  "run_id": "20261020T110244Z",
+  "mode": "CONFIRMATORY",
+  "protocol_sha256": "9206017181261f29f98dec4fa6022e85a244bacbedd2885760c70cfcd87d413d",
+  "manifest": "data/manifest.jsonl",
+  "manifest_sha256": "9a01b16c864b0e6b5a823e8a5122a116df6fe4dac82aa950d83dd7716200f82b",
+  "checkpoint_sha256": {
+    "dinov2_legacy": "fe1daa0bf71c5e9b73267d40784442748b8fd1999a8d107979f1338c52f0fa66",
+    "dinov3_experimental": "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f"
+  },
+  "counts": {
+    "GENERATED|heldout_kandinsky22|A. Lange & S\u00f6hne": 57,
+    "GENERATED|heldout_kandinsky22|Audemars Piguet": 54,
+    "GENERATED|heldout_kandinsky22|Patek Philippe": 56,
+    "GENERATED|heldout_kandinsky22|Richard Mille": 59,
+    "GENERATED|heldout_kandinsky22|Vacheron Constantin": 58,
+    "GENERATED|sdxl_base10|A. Lange & S\u00f6hne": 30,
+    "GENERATED|sdxl_base10|Audemars Piguet": 30,
+    "GENERATED|sdxl_base10|Patek Philippe": 30,
+    "GENERATED|sdxl_base10|Richard Mille": 30,
+    "GENERATED|sdxl_base10|Vacheron Constantin": 30,
+    "REAL_PHOTO|real_ebay|A. Lange & S\u00f6hne": 60,
+    "REAL_PHOTO|real_ebay|Audemars Piguet": 60,
+    "REAL_PHOTO|real_ebay|Patek Philippe": 60,
+    "REAL_PHOTO|real_ebay|Richard Mille": 60,
+    "REAL_PHOTO|real_ebay|Vacheron Constantin": 60
+  },
+  "host": "tensortorch26-MS-7E06",
+  "primary": {
+    "set": "REAL_PHOTO + heldout_kandinsky22",
+    "n": 584,
+    "models": {
+      "dinov2_legacy": {
+        "confusion": {
+          "generated_as_fake": 13,
+          "generated_as_authentic": 271,
+          "real_as_fake": 1,
+          "real_as_authentic": 299
+        },
+        "review": {
+          "generated": 0,
+          "real": 0
+        },
+        "n": {
+          "generated": 284,
+          "real": 300
+        },
+        "coverage": 1.0,
+        "accuracy": 0.5342465753424658,
+        "balanced_accuracy": 0.5212206572769953,
+        "precision_generated": 0.9285714285714286,
+        "recall_generated": 0.045774647887323945,
+        "f1_generated": 0.087248322147651,
+        "false_authentic": {
+          "k": 271,
+          "n": 284,
+          "rate": 0.954225352112676,
+          "upper95": 0.972714914614619
+        },
+        "false_fake": {
+          "k": 1,
+          "n": 300,
+          "rate": 0.0033333333333333335,
+          "upper95": 0.01571455489158395
+        },
+        "roc_auc": 0.6092370892018779,
+        "pr_auc": 0.605121376509113
+      },
+      "dinov3_experimental": {
+        "confusion": {
+          "generated_as_fake": 12,
+          "generated_as_authentic": 170,
+          "real_as_fake": 0,
+          "real_as_authentic": 265
+        },
+        "review": {
+          "generated": 102,
+          "real": 35
+        },
+        "n": {
+          "generated": 284,
+          "real": 300
+        },
+        "coverage": 0.7654109589041096,
+        "accuracy": 0.6196868008948546,
+        "balanced_accuracy": 0.532967032967033,
+        "precision_generated": 1.0,
+        "recall_generated": 0.06593406593406594,
+        "f1_generated": 0.12371134020618557,
+        "false_authentic": {
+          "k": 170,
+          "n": 284,
+          "rate": 0.5985915492957746,
+          "upper95": 0.6472575701725796
+        },
+        "false_fake": {
+          "k": 0,
+          "n": 300,
+          "rate": 0.0,
+          "upper95": 0.009936081944457708
+        },
+        "roc_auc": 0.8275,
+        "pr_auc": 0.8374650812767905
+      }
+    },
+    "paired": {
+      "n_both_binary": 447,
+      "dinov3_only_correct": 11,
+      "dinov2_only_correct": 5,
+      "discordant": 16,
+      "mcnemar_p": 0.210113525390625,
+      "accuracy_difference_dinov3_minus_dinov2": {
+        "point": 0.013422818791946308,
+        "ci95": [
+          -0.010238907849829351,
+          0.035955056179775284
+        ]
+      }
+    },
+    "by_brand": {
+      "A. Lange & S\u00f6hne": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 57,
+            "real_as_fake": 0,
+            "real_as_authentic": 60
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 57,
+            "real": 60
+          },
+          "coverage": 1.0,
+          "accuracy": 0.5128205128205128,
+          "balanced_accuracy": 0.5,
+          "precision_generated": null,
+          "recall_generated": 0.0,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 57,
+            "n": 57,
+            "rate": 1.0,
+            "upper95": 1.0
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 2,
+            "generated_as_authentic": 50,
+            "real_as_fake": 0,
+            "real_as_authentic": 53
+          },
+          "review": {
+            "generated": 5,
+            "real": 7
+          },
+          "n": {
+            "generated": 57,
+            "real": 60
+          },
+          "coverage": 0.8974358974358975,
+          "accuracy": 0.5238095238095238,
+          "balanced_accuracy": 0.5192307692307693,
+          "precision_generated": 1.0,
+          "recall_generated": 0.038461538461538464,
+          "f1_generated": 0.07407407407407407,
+          "false_authentic": {
+            "k": 50,
+            "n": 57,
+            "rate": 0.8771929824561403,
+            "upper95": 0.9409190639170791
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        }
+      },
+      "Audemars Piguet": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 6,
+            "generated_as_authentic": 48,
+            "real_as_fake": 1,
+            "real_as_authentic": 59
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 54,
+            "real": 60
+          },
+          "coverage": 1.0,
+          "accuracy": 0.5701754385964912,
+          "balanced_accuracy": 0.5472222222222222,
+          "precision_generated": 0.8571428571428571,
+          "recall_generated": 0.1111111111111111,
+          "f1_generated": 0.19672131147540986,
+          "false_authentic": {
+            "k": 48,
+            "n": 54,
+            "rate": 0.8888888888888888,
+            "upper95": 0.95049106366636
+          },
+          "false_fake": {
+            "k": 1,
+            "n": 60,
+            "rate": 0.016666666666666666,
+            "upper95": 0.07663999493450441
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 5,
+            "generated_as_authentic": 28,
+            "real_as_fake": 0,
+            "real_as_authentic": 49
+          },
+          "review": {
+            "generated": 21,
+            "real": 11
+          },
+          "n": {
+            "generated": 54,
+            "real": 60
+          },
+          "coverage": 0.7192982456140351,
+          "accuracy": 0.6585365853658537,
+          "balanced_accuracy": 0.5757575757575758,
+          "precision_generated": 1.0,
+          "recall_generated": 0.15151515151515152,
+          "f1_generated": 0.2631578947368421,
+          "false_authentic": {
+            "k": 28,
+            "n": 54,
+            "rate": 0.5185185185185185,
+            "upper95": 0.636567683805551
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        }
+      },
+      "Patek Philippe": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 5,
+            "generated_as_authentic": 51,
+            "real_as_fake": 0,
+            "real_as_authentic": 60
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 56,
+            "real": 60
+          },
+          "coverage": 1.0,
+          "accuracy": 0.5603448275862069,
+          "balanced_accuracy": 0.5446428571428571,
+          "precision_generated": 1.0,
+          "recall_generated": 0.08928571428571429,
+          "f1_generated": 0.1639344262295082,
+          "false_authentic": {
+            "k": 51,
+            "n": 56,
+            "rate": 0.9107142857142857,
+            "upper95": 0.9641572396527948
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 4,
+            "generated_as_authentic": 24,
+            "real_as_fake": 0,
+            "real_as_authentic": 53
+          },
+          "review": {
+            "generated": 28,
+            "real": 7
+          },
+          "n": {
+            "generated": 56,
+            "real": 60
+          },
+          "coverage": 0.6982758620689655,
+          "accuracy": 0.7037037037037037,
+          "balanced_accuracy": 0.5714285714285714,
+          "precision_generated": 1.0,
+          "recall_generated": 0.14285714285714285,
+          "f1_generated": 0.25,
+          "false_authentic": {
+            "k": 24,
+            "n": 56,
+            "rate": 0.42857142857142855,
+            "upper95": 0.547113928377319
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        }
+      },
+      "Richard Mille": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 59,
+            "real_as_fake": 0,
+            "real_as_authentic": 60
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 59,
+            "real": 60
+          },
+          "coverage": 1.0,
+          "accuracy": 0.5042016806722689,
+          "balanced_accuracy": 0.5,
+          "precision_generated": null,
+          "recall_generated": 0.0,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 59,
+            "n": 59,
+            "rate": 1.0,
+            "upper95": 1.0
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 1,
+            "generated_as_authentic": 23,
+            "real_as_fake": 0,
+            "real_as_authentic": 54
+          },
+          "review": {
+            "generated": 35,
+            "real": 6
+          },
+          "n": {
+            "generated": 59,
+            "real": 60
+          },
+          "coverage": 0.6554621848739496,
+          "accuracy": 0.7051282051282052,
+          "balanced_accuracy": 0.5208333333333334,
+          "precision_generated": 1.0,
+          "recall_generated": 0.041666666666666664,
+          "f1_generated": 0.07999999999999999,
+          "false_authentic": {
+            "k": 23,
+            "n": 59,
+            "rate": 0.3898305084745763,
+            "upper95": 0.5051636361942882
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        }
+      },
+      "Vacheron Constantin": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 2,
+            "generated_as_authentic": 56,
+            "real_as_fake": 0,
+            "real_as_authentic": 60
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 58,
+            "real": 60
+          },
+          "coverage": 1.0,
+          "accuracy": 0.5254237288135594,
+          "balanced_accuracy": 0.5172413793103449,
+          "precision_generated": 1.0,
+          "recall_generated": 0.034482758620689655,
+          "f1_generated": 0.06666666666666667,
+          "false_authentic": {
+            "k": 56,
+            "n": 58,
+            "rate": 0.9655172413793104,
+            "upper95": 0.9938385982306763
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 0,
+            "generated_as_authentic": 45,
+            "real_as_fake": 0,
+            "real_as_authentic": 56
+          },
+          "review": {
+            "generated": 13,
+            "real": 4
+          },
+          "n": {
+            "generated": 58,
+            "real": 60
+          },
+          "coverage": 0.8559322033898306,
+          "accuracy": 0.5544554455445545,
+          "balanced_accuracy": 0.5,
+          "precision_generated": null,
+          "recall_generated": 0.0,
+          "f1_generated": null,
+          "false_authentic": {
+            "k": 45,
+            "n": 58,
+            "rate": 0.7758620689655172,
+            "upper95": 0.8620222793965548
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        }
+      }
+    }
+  },
+  "secondary": {
+    "set": "REAL_PHOTO + sdxl_base10",
+    "n": 450,
+    "models": {
+      "dinov2_legacy": {
+        "confusion": {
+          "generated_as_fake": 70,
+          "generated_as_authentic": 80,
+          "real_as_fake": 1,
+          "real_as_authentic": 299
+        },
+        "review": {
+          "generated": 0,
+          "real": 0
+        },
+        "n": {
+          "generated": 150,
+          "real": 300
+        },
+        "coverage": 1.0,
+        "accuracy": 0.82,
+        "balanced_accuracy": 0.7316666666666667,
+        "precision_generated": 0.9859154929577465,
+        "recall_generated": 0.4666666666666667,
+        "f1_generated": 0.6334841628959276,
+        "false_authentic": {
+          "k": 80,
+          "n": 150,
+          "rate": 0.5333333333333333,
+          "upper95": 0.6027088729751028
+        },
+        "false_fake": {
+          "k": 1,
+          "n": 300,
+          "rate": 0.0033333333333333335,
+          "upper95": 0.01571455489158395
+        },
+        "roc_auc": 0.8592888888888889,
+        "pr_auc": 0.8054208032147955
+      },
+      "dinov3_experimental": {
+        "confusion": {
+          "generated_as_fake": 119,
+          "generated_as_authentic": 23,
+          "real_as_fake": 0,
+          "real_as_authentic": 265
+        },
+        "review": {
+          "generated": 8,
+          "real": 35
+        },
+        "n": {
+          "generated": 150,
+          "real": 300
+        },
+        "coverage": 0.9044444444444445,
+        "accuracy": 0.9434889434889435,
+        "balanced_accuracy": 0.9190140845070423,
+        "precision_generated": 1.0,
+        "recall_generated": 0.8380281690140845,
+        "f1_generated": 0.9118773946360154,
+        "false_authentic": {
+          "k": 23,
+          "n": 150,
+          "rate": 0.15333333333333332,
+          "upper95": 0.21018280734609943
+        },
+        "false_fake": {
+          "k": 0,
+          "n": 300,
+          "rate": 0.0,
+          "upper95": 0.009936081944457708
+        },
+        "roc_auc": 0.9804888888888889,
+        "pr_auc": 0.9822364754807633
+      }
+    },
+    "paired": {
+      "n_both_binary": 407,
+      "dinov3_only_correct": 56,
+      "dinov2_only_correct": 3,
+      "discordant": 59,
+      "mcnemar_p": 1.189326415129699e-13,
+      "accuracy_difference_dinov3_minus_dinov2": {
+        "point": 0.13022113022113022,
+        "ci95": [
+          0.051829268292682924,
+          0.20208333333333334
+        ]
+      }
+    },
+    "by_brand": {
+      "A. Lange & S\u00f6hne": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 17,
+            "generated_as_authentic": 13,
+            "real_as_fake": 0,
+            "real_as_authentic": 60
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 30,
+            "real": 60
+          },
+          "coverage": 1.0,
+          "accuracy": 0.8555555555555555,
+          "balanced_accuracy": 0.7833333333333333,
+          "precision_generated": 1.0,
+          "recall_generated": 0.5666666666666667,
+          "f1_generated": 0.7234042553191489,
+          "false_authentic": {
+            "k": 13,
+            "n": 30,
+            "rate": 0.43333333333333335,
+            "upper95": 0.5983710526353454
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 23,
+            "generated_as_authentic": 3,
+            "real_as_fake": 0,
+            "real_as_authentic": 53
+          },
+          "review": {
+            "generated": 4,
+            "real": 7
+          },
+          "n": {
+            "generated": 30,
+            "real": 60
+          },
+          "coverage": 0.8777777777777778,
+          "accuracy": 0.9620253164556962,
+          "balanced_accuracy": 0.9423076923076923,
+          "precision_generated": 1.0,
+          "recall_generated": 0.8846153846153846,
+          "f1_generated": 0.9387755102040816,
+          "false_authentic": {
+            "k": 3,
+            "n": 30,
+            "rate": 0.1,
+            "upper95": 0.23859785729325092
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        }
+      },
+      "Audemars Piguet": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 11,
+            "generated_as_authentic": 19,
+            "real_as_fake": 1,
+            "real_as_authentic": 59
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 30,
+            "real": 60
+          },
+          "coverage": 1.0,
+          "accuracy": 0.7777777777777778,
+          "balanced_accuracy": 0.6749999999999999,
+          "precision_generated": 0.9166666666666666,
+          "recall_generated": 0.36666666666666664,
+          "f1_generated": 0.5238095238095238,
+          "false_authentic": {
+            "k": 19,
+            "n": 30,
+            "rate": 0.6333333333333333,
+            "upper95": 0.7789405501539864
+          },
+          "false_fake": {
+            "k": 1,
+            "n": 60,
+            "rate": 0.016666666666666666,
+            "upper95": 0.07663999493450441
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 22,
+            "generated_as_authentic": 8,
+            "real_as_fake": 0,
+            "real_as_authentic": 49
+          },
+          "review": {
+            "generated": 0,
+            "real": 11
+          },
+          "n": {
+            "generated": 30,
+            "real": 60
+          },
+          "coverage": 0.8777777777777778,
+          "accuracy": 0.8987341772151899,
+          "balanced_accuracy": 0.8666666666666667,
+          "precision_generated": 1.0,
+          "recall_generated": 0.7333333333333333,
+          "f1_generated": 0.846153846153846,
+          "false_authentic": {
+            "k": 8,
+            "n": 30,
+            "rate": 0.26666666666666666,
+            "upper95": 0.42993393380629297
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        }
+      },
+      "Patek Philippe": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 16,
+            "generated_as_authentic": 14,
+            "real_as_fake": 0,
+            "real_as_authentic": 60
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 30,
+            "real": 60
+          },
+          "coverage": 1.0,
+          "accuracy": 0.8444444444444444,
+          "balanced_accuracy": 0.7666666666666666,
+          "precision_generated": 1.0,
+          "recall_generated": 0.5333333333333333,
+          "f1_generated": 0.6956521739130436,
+          "false_authentic": {
+            "k": 14,
+            "n": 30,
+            "rate": 0.4666666666666667,
+            "upper95": 0.6300524448838063
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 24,
+            "generated_as_authentic": 3,
+            "real_as_fake": 0,
+            "real_as_authentic": 53
+          },
+          "review": {
+            "generated": 3,
+            "real": 7
+          },
+          "n": {
+            "generated": 30,
+            "real": 60
+          },
+          "coverage": 0.8888888888888888,
+          "accuracy": 0.9625,
+          "balanced_accuracy": 0.9444444444444444,
+          "precision_generated": 1.0,
+          "recall_generated": 0.8888888888888888,
+          "f1_generated": 0.9411764705882353,
+          "false_authentic": {
+            "k": 3,
+            "n": 30,
+            "rate": 0.1,
+            "upper95": 0.23859785729325092
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        }
+      },
+      "Richard Mille": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 10,
+            "generated_as_authentic": 20,
+            "real_as_fake": 0,
+            "real_as_authentic": 60
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 30,
+            "real": 60
+          },
+          "coverage": 1.0,
+          "accuracy": 0.7777777777777778,
+          "balanced_accuracy": 0.6666666666666666,
+          "precision_generated": 1.0,
+          "recall_generated": 0.3333333333333333,
+          "f1_generated": 0.5,
+          "false_authentic": {
+            "k": 20,
+            "n": 30,
+            "rate": 0.6666666666666666,
+            "upper95": 0.8066915788794069
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 28,
+            "generated_as_authentic": 2,
+            "real_as_fake": 0,
+            "real_as_authentic": 54
+          },
+          "review": {
+            "generated": 0,
+            "real": 6
+          },
+          "n": {
+            "generated": 30,
+            "real": 60
+          },
+          "coverage": 0.9333333333333333,
+          "accuracy": 0.9761904761904762,
+          "balanced_accuracy": 0.9666666666666667,
+          "precision_generated": 1.0,
+          "recall_generated": 0.9333333333333333,
+          "f1_generated": 0.9655172413793104,
+          "false_authentic": {
+            "k": 2,
+            "n": 30,
+            "rate": 0.06666666666666667,
+            "upper95": 0.19532604365492595
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        }
+      },
+      "Vacheron Constantin": {
+        "dinov2_legacy": {
+          "confusion": {
+            "generated_as_fake": 16,
+            "generated_as_authentic": 14,
+            "real_as_fake": 0,
+            "real_as_authentic": 60
+          },
+          "review": {
+            "generated": 0,
+            "real": 0
+          },
+          "n": {
+            "generated": 30,
+            "real": 60
+          },
+          "coverage": 1.0,
+          "accuracy": 0.8444444444444444,
+          "balanced_accuracy": 0.7666666666666666,
+          "precision_generated": 1.0,
+          "recall_generated": 0.5333333333333333,
+          "f1_generated": 0.6956521739130436,
+          "false_authentic": {
+            "k": 14,
+            "n": 30,
+            "rate": 0.4666666666666667,
+            "upper95": 0.6300524448838063
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        },
+        "dinov3_experimental": {
+          "confusion": {
+            "generated_as_fake": 22,
+            "generated_as_authentic": 7,
+            "real_as_fake": 0,
+            "real_as_authentic": 56
+          },
+          "review": {
+            "generated": 1,
+            "real": 4
+          },
+          "n": {
+            "generated": 30,
+            "real": 60
+          },
+          "coverage": 0.9444444444444444,
+          "accuracy": 0.9176470588235294,
+          "balanced_accuracy": 0.8793103448275862,
+          "precision_generated": 1.0,
+          "recall_generated": 0.7586206896551724,
+          "f1_generated": 0.8627450980392156,
+          "false_authentic": {
+            "k": 7,
+            "n": 30,
+            "rate": 0.23333333333333334,
+            "upper95": 0.3939474225223633
+          },
+          "false_fake": {
+            "k": 0,
+            "n": 60,
+            "rate": 0.0,
+            "upper95": 0.04870291331009749
+          }
+        }
+      }
+    }
+  },
+  "frontier": {
+    "outcome": "UNDERPOWERED",
+    "frontier_model": "dinov2_legacy",
+    "statement": "No performance winner, and DINOv3 did not meet the engineering-selection conditions. DINOv2 remains the live model."
+  }
+}
