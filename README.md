@@ -141,7 +141,7 @@ flowchart LR
 backend/      FastAPI app, auth, listings, inference, scraper
 frontend/     Next.js UI and client integrations
 infra/        Docker and deployment helper artifacts
-ml/           Training and model utility scripts (DINOv2-Giant; RTX 6000 Pro Blackwell reference run)
+ml/           Training and model utility scripts (DINOv2-Giant reference pipeline)
 ml_rtx5080/   ViT-B / 504px training pipeline and checkpoints (RTX 5080)
 scripts/      Python utilities; optional local *.sh helpers are gitignored
 ```
@@ -320,32 +320,52 @@ Switch back to `INFERENCE_BACKEND=triton` for production parity.
 
 ## Model training results
 
-Binary authenticity classifier: **Authentic (label 0)** vs **Deepfake (label 1)** — see dataset layout in `ml/train.py`.  
-Below: **training curves** and **validation confusion-matrix dashboards** for two training setups.
+Binary classifier: **real photograph (label 0)** vs **AI-generated image (label 1)** for the five supported brands. All runs are on an **NVIDIA GeForce RTX 5080** (16 GB) with `ml_rtx5080/`. The classifier does not judge whether a watch is genuine.
 
-### NVIDIA RTX 6000 Pro Blackwell (`ml/`)
+### Training and locked test
 
-Full fine-tune pipeline (**DINOv2-Giant**, Stage 2). Validation eval figure summarizes ~**6,000** held-out images (Authentic vs Deepfake).
+Four configurations (DINOv2 ViT-B/14 and DINOv3 ViT-B/16, each CLS-only or CLS + patch attention) were trained on 20,999 images for 30 epochs in BF16. The selection rule was written before the test set was opened, and it picked **DINOv3 ViT-B/16 + CLS + patch attention, epoch 18** (temperature T = 0.2404).
 
 <p align="center">
-  <img src="ml/checkpoints/training_curves.png" alt="HypeVault training curves — DINOv2-Giant on RTX 6000 Pro Blackwell (ml/checkpoints)" width="780">
+  <img src="ml_rtx5080/checkpoints/training_curves.png" alt="Training and validation loss per epoch for the four RTX 5080 configurations" width="780">
 </p>
 
 <p align="center">
-  <img src="ml/checkpoints/confusion_matrix_eval.png" alt="HypeVault confusion matrix and eval metrics — RTX 6000 Pro Blackwell (ml/checkpoints)" width="780">
+  <img src="ml_rtx5080/checkpoints/confusion_matrix_eval.png" alt="Locked final test: confusion matrix and logit distribution, 3,006 images" width="780">
 </p>
 
-### NVIDIA GeForce RTX 5080 (`ml_rtx5080/`)
+| Measure | Result |
+|---|---|
+| Peak training GPU memory | 8.26–9.09 GiB |
+| Locked final test (3,006 images, opened once) | 0 errors; false-authentic 0 / 1,500 (95% upper bound 0.26%) |
+| Calibration (2,998 images) | ECE 0.0098 → 0 after temperature scaling |
+| Leave-one-brand-out, surface-normalized images | 9 / 13,500 generated accepted (0.067%) |
+| Triton serving, batch 1, p95 latency | 16.55 ms (DINOv3), 20.03 ms (DINOv2) |
+| Triton throughput, batch 1 | 61.8 img/s (DINOv3), 51.6 img/s (DINOv2) |
+| Repeatability | 0 logit changes in 1,800 requests |
 
-Smaller backbone / resolution run (see `ml_rtx5080/train.py`).
+The locked test uses images from the same sources as training, so it shows in-distribution separation only.
+
+### Fresh pre-registered benchmarks (new eBay photos, new generators)
+
+Each benchmark had a protocol written before its images existed, rules frozen on earlier data, and a single scoring run.
+
+| Benchmark | Question | Result |
+|---|---|---|
+| v1: 300 eBay, 284 Kandinsky 2.2, 150 SDXL | DINOv2 or DINOv3? | Underpowered (16 discordant, p = 0.21). **DINOv2 stays live.** Both models accept most Kandinsky images |
+| v2: 300 eBay, 287 Kandinsky 2.2, 293 aMUSEd | Watch forensics v1 vs DINOv3 | 63.4% vs 24.1% caught, but 3.7% of real photos rejected. **Not met** (limit +3 points) |
+| v3: 300 eBay, 296 Stable Cascade, 281 Kandinsky 2.2 | Watch forensics v2 vs DINOv3 | Stable Cascade 91.9% vs 68.9% caught (p = 2.3 × 10⁻¹⁰); real photos rejected 2.0% vs 0.3%. **Met** |
 
 <p align="center">
-  <img src="ml_rtx5080/checkpoints/training_curves.png" alt="HypeVault training curves — RTX 5080 (ml_rtx5080/checkpoints)" width="780">
+  <img src="docs/assets/benchmark_v3.png" alt="Benchmark v3: generated images caught and real photos rejected or sent to review, per system" width="780">
 </p>
 
-<p align="center">
-  <img src="ml_rtx5080/checkpoints/confusion_matrix_eval.png" alt="HypeVault confusion matrix eval — RTX 5080 (ml_rtx5080/checkpoints)" width="780">
-</p>
+Watch forensics v2 combines the fine-tuned DINOv3, a decoder-trace probe and a dial-text check. Its limits:
+
+- Kandinsky 2.2 is still mostly missed (28.1% caught).
+- 15% of real photos go to human review.
+
+It is a research result. The live app screens with DINOv2, and only the dial-text check is live, as a hint to the seller. Details: `ml_rtx5080/benchmark_v3_fresh/report.md`.
 
 > Checkpoint weights (`.pt`, `.onnx`, etc.) stay **gitignored**; only these PNG artifacts are tracked for documentation.
 
