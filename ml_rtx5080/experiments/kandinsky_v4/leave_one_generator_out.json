@@ -1,0 +1,62 @@
+{
+  "ft|kandinsky": {
+    "caught": 1154,
+    "n": 1386,
+    "ebay_real_fake_oof": 0.013333333333333334
+  },
+  "ft|amused512": {
+    "caught": 292,
+    "n": 293,
+    "ebay_real_fake_oof": 0.012222222222222223
+  },
+  "ft|sdxl_base10": {
+    "caught": 148,
+    "n": 150,
+    "ebay_real_fake_oof": 0.012222222222222223
+  },
+  "ft|stable_cascade_lite": {
+    "caught": 293,
+    "n": 296,
+    "ebay_real_fake_oof": 0.013333333333333334
+  },
+  "pre|kandinsky": {
+    "caught": 1183,
+    "n": 1386,
+    "ebay_real_fake_oof": 0.008888888888888889
+  },
+  "pre|amused512": {
+    "caught": 290,
+    "n": 293,
+    "ebay_real_fake_oof": 0.008888888888888889
+  },
+  "pre|sdxl_base10": {
+    "caught": 97,
+    "n": 150,
+    "ebay_real_fake_oof": 0.013333333333333334
+  },
+  "pre|stable_cascade_lite": {
+    "caught": 289,
+    "n": 296,
+    "ebay_real_fake_oof": 0.011111111111111112
+  },
+  "pre+ft|kandinsky": {
+    "caught": 1294,
+    "n": 1386,
+    "ebay_real_fake_oof": 0.015555555555555555
+  },
+  "pre+ft|amused512": {
+    "caught": 291,
+    "n": 293,
+    "ebay_real_fake_oof": 0.013333333333333334
+  },
+  "pre+ft|sdxl_base10": {
+    "caught": 147,
+    "n": 150,
+    "ebay_real_fake_oof": 0.012222222222222223
+  },
+  "pre+ft|stable_cascade_lite": {
+    "caught": 292,
+    "n": 296,
+    "ebay_real_fake_oof": 0.015555555555555555
+  }
+}

@@ -1,0 +1,1142 @@
+{
+  "aero_l1_768": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        1,
+        300
+      ],
+      "heldout_kandinsky22": [
+        59,
+        284,
+        0.9168
+      ],
+      "sdxl_base10": [
+        0,
+        150,
+        0.6233
+      ],
+      "val_label1": [
+        0,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        4,
+        300
+      ],
+      "amused512": [
+        5,
+        293,
+        0.8892
+      ],
+      "kandinsky22_fresh": [
+        68,
+        287,
+        0.9133
+      ],
+      "val_label1": [
+        0,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        5,
+        300
+      ],
+      "kandinsky22_v3": [
+        76,
+        281,
+        0.9149
+      ],
+      "stable_cascade_lite": [
+        4,
+        296,
+        0.8017
+      ],
+      "val_label1": [
+        0,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        203,
+        852
+      ],
+      "real_fake": [
+        10,
+        900
+      ]
+    }
+  },
+  "aero_l1_512": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        2,
+        300
+      ],
+      "heldout_kandinsky22": [
+        90,
+        284,
+        0.9
+      ],
+      "sdxl_base10": [
+        0,
+        150,
+        0.5855
+      ],
+      "val_label1": [
+        0,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        3,
+        300
+      ],
+      "amused512": [
+        15,
+        293,
+        0.923
+      ],
+      "kandinsky22_fresh": [
+        70,
+        287,
+        0.8956
+      ],
+      "val_label1": [
+        0,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        5,
+        300
+      ],
+      "kandinsky22_v3": [
+        91,
+        281,
+        0.8971
+      ],
+      "stable_cascade_lite": [
+        6,
+        296,
+        0.8078
+      ],
+      "val_label1": [
+        0,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        251,
+        852
+      ],
+      "real_fake": [
+        10,
+        900
+      ]
+    }
+  },
+  "aligned_patch": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        3,
+        300
+      ],
+      "heldout_kandinsky22": [
+        75,
+        284,
+        0.78
+      ],
+      "sdxl_base10": [
+        38,
+        150,
+        0.8443
+      ],
+      "val_label1": [
+        381,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        7,
+        300
+      ],
+      "amused512": [
+        205,
+        293,
+        0.9666
+      ],
+      "kandinsky22_fresh": [
+        70,
+        287,
+        0.7905
+      ],
+      "val_label1": [
+        427,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        5,
+        300
+      ],
+      "kandinsky22_v3": [
+        79,
+        281,
+        0.7636
+      ],
+      "stable_cascade_lite": [
+        133,
+        296,
+        0.8839
+      ],
+      "val_label1": [
+        425,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        224,
+        852
+      ],
+      "real_fake": [
+        15,
+        900
+      ]
+    }
+  },
+  "aligned_pre": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        11,
+        300
+      ],
+      "heldout_kandinsky22": [
+        127,
+        284,
+        0.8967
+      ],
+      "sdxl_base10": [
+        40,
+        150,
+        0.8502
+      ],
+      "val_label1": [
+        857,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        5,
+        300
+      ],
+      "amused512": [
+        122,
+        293,
+        0.8886
+      ],
+      "kandinsky22_fresh": [
+        138,
+        287,
+        0.8925
+      ],
+      "val_label1": [
+        842,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        3,
+        300
+      ],
+      "kandinsky22_v3": [
+        125,
+        281,
+        0.878
+      ],
+      "stable_cascade_lite": [
+        175,
+        296,
+        0.9466
+      ],
+      "val_label1": [
+        833,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        390,
+        852
+      ],
+      "real_fake": [
+        19,
+        900
+      ]
+    }
+  },
+  "kshot_patch": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        0,
+        300
+      ],
+      "heldout_kandinsky22": [
+        284,
+        284,
+        1.0
+      ],
+      "sdxl_base10": [
+        14,
+        150,
+        0.6528
+      ],
+      "val_label1": [
+        1,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        8,
+        300
+      ],
+      "amused512": [
+        127,
+        293,
+        0.9332
+      ],
+      "kandinsky22_fresh": [
+        287,
+        287,
+        1.0
+      ],
+      "val_label1": [
+        2,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        8,
+        300
+      ],
+      "kandinsky22_v3": [
+        281,
+        281,
+        1.0
+      ],
+      "stable_cascade_lite": [
+        133,
+        296,
+        0.9292
+      ],
+      "val_label1": [
+        2,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        852,
+        852
+      ],
+      "real_fake": [
+        16,
+        900
+      ]
+    }
+  },
+  "kshot_pre": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        1,
+        300
+      ],
+      "heldout_kandinsky22": [
+        284,
+        284,
+        1.0
+      ],
+      "sdxl_base10": [
+        25,
+        150,
+        0.8837
+      ],
+      "val_label1": [
+        22,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        9,
+        300
+      ],
+      "amused512": [
+        183,
+        293,
+        0.9659
+      ],
+      "kandinsky22_fresh": [
+        287,
+        287,
+        1.0
+      ],
+      "val_label1": [
+        32,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        5,
+        300
+      ],
+      "kandinsky22_v3": [
+        281,
+        281,
+        1.0
+      ],
+      "stable_cascade_lite": [
+        207,
+        296,
+        0.9798
+      ],
+      "val_label1": [
+        29,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        852,
+        852
+      ],
+      "real_fake": [
+        15,
+        900
+      ]
+    }
+  },
+  "kshot_ft": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        5,
+        300
+      ],
+      "heldout_kandinsky22": [
+        284,
+        284,
+        1.0
+      ],
+      "sdxl_base10": [
+        141,
+        150,
+        0.9916
+      ],
+      "val_label1": [
+        999,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        6,
+        300
+      ],
+      "amused512": [
+        291,
+        293,
+        0.9992
+      ],
+      "kandinsky22_fresh": [
+        287,
+        287,
+        1.0
+      ],
+      "val_label1": [
+        1000,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        5,
+        300
+      ],
+      "kandinsky22_v3": [
+        281,
+        281,
+        1.0
+      ],
+      "stable_cascade_lite": [
+        287,
+        296,
+        0.9967
+      ],
+      "val_label1": [
+        1000,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        852,
+        852
+      ],
+      "real_fake": [
+        16,
+        900
+      ]
+    }
+  },
+  "kshot_pre+ft": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        2,
+        300
+      ],
+      "heldout_kandinsky22": [
+        284,
+        284,
+        1.0
+      ],
+      "sdxl_base10": [
+        109,
+        150,
+        0.9887
+      ],
+      "val_label1": [
+        646,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        7,
+        300
+      ],
+      "amused512": [
+        275,
+        293,
+        0.9948
+      ],
+      "kandinsky22_fresh": [
+        287,
+        287,
+        1.0
+      ],
+      "val_label1": [
+        729,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        7,
+        300
+      ],
+      "kandinsky22_v3": [
+        281,
+        281,
+        1.0
+      ],
+      "stable_cascade_lite": [
+        278,
+        296,
+        0.9942
+      ],
+      "val_label1": [
+        919,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        852,
+        852
+      ],
+      "real_fake": [
+        16,
+        900
+      ]
+    }
+  },
+  "kshot_pre+aligned": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        8,
+        300
+      ],
+      "heldout_kandinsky22": [
+        271,
+        284,
+        0.995
+      ],
+      "sdxl_base10": [
+        50,
+        150,
+        0.8826
+      ],
+      "val_label1": [
+        916,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        6,
+        300
+      ],
+      "amused512": [
+        192,
+        293,
+        0.9457
+      ],
+      "kandinsky22_fresh": [
+        280,
+        287,
+        0.9964
+      ],
+      "val_label1": [
+        914,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        4,
+        300
+      ],
+      "kandinsky22_v3": [
+        271,
+        281,
+        0.9972
+      ],
+      "stable_cascade_lite": [
+        230,
+        296,
+        0.977
+      ],
+      "val_label1": [
+        907,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        822,
+        852
+      ],
+      "real_fake": [
+        18,
+        900
+      ]
+    }
+  },
+  "kshot_pre+ft+movq": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        2,
+        300
+      ],
+      "heldout_kandinsky22": [
+        284,
+        284,
+        1.0
+      ],
+      "sdxl_base10": [
+        104,
+        150,
+        0.991
+      ],
+      "val_label1": [
+        560,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        6,
+        300
+      ],
+      "amused512": [
+        274,
+        293,
+        0.9955
+      ],
+      "kandinsky22_fresh": [
+        287,
+        287,
+        1.0
+      ],
+      "val_label1": [
+        643,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        7,
+        300
+      ],
+      "kandinsky22_v3": [
+        281,
+        281,
+        1.0
+      ],
+      "stable_cascade_lite": [
+        286,
+        296,
+        0.9962
+      ],
+      "val_label1": [
+        941,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        852,
+        852
+      ],
+      "real_fake": [
+        15,
+        900
+      ]
+    }
+  },
+  "kshot_ft+ebay": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        4,
+        300
+      ],
+      "heldout_kandinsky22": [
+        284,
+        284,
+        1.0
+      ],
+      "sdxl_base10": [
+        140,
+        150,
+        0.9914
+      ],
+      "val_label1": [
+        997,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        3,
+        300
+      ],
+      "amused512": [
+        290,
+        293,
+        0.9994
+      ],
+      "kandinsky22_fresh": [
+        287,
+        287,
+        1.0
+      ],
+      "val_label1": [
+        996,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        4,
+        300
+      ],
+      "kandinsky22_v3": [
+        281,
+        281,
+        1.0
+      ],
+      "stable_cascade_lite": [
+        287,
+        296,
+        0.9978
+      ],
+      "val_label1": [
+        997,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        852,
+        852
+      ],
+      "real_fake": [
+        11,
+        900
+      ]
+    }
+  },
+  "kshot_pre+ft+ebay": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        2,
+        300
+      ],
+      "heldout_kandinsky22": [
+        284,
+        284,
+        1.0
+      ],
+      "sdxl_base10": [
+        114,
+        150,
+        0.9918
+      ],
+      "val_label1": [
+        698,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        5,
+        300
+      ],
+      "amused512": [
+        283,
+        293,
+        0.9972
+      ],
+      "kandinsky22_fresh": [
+        287,
+        287,
+        1.0
+      ],
+      "val_label1": [
+        818,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        2,
+        300
+      ],
+      "kandinsky22_v3": [
+        281,
+        281,
+        1.0
+      ],
+      "stable_cascade_lite": [
+        274,
+        296,
+        0.9951
+      ],
+      "val_label1": [
+        795,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        852,
+        852
+      ],
+      "real_fake": [
+        9,
+        900
+      ]
+    }
+  },
+  "gen_ft+ebay": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        3,
+        300
+      ],
+      "heldout_kandinsky22": [
+        284,
+        284,
+        0.9999
+      ],
+      "sdxl_base10": [
+        148,
+        150,
+        0.9979
+      ],
+      "val_label1": [
+        1000,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        3,
+        300
+      ],
+      "amused512": [
+        292,
+        293,
+        1.0
+      ],
+      "kandinsky22_fresh": [
+        287,
+        287,
+        1.0
+      ],
+      "val_label1": [
+        1000,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        5,
+        300
+      ],
+      "kandinsky22_v3": [
+        281,
+        281,
+        1.0
+      ],
+      "stable_cascade_lite": [
+        294,
+        296,
+        0.9995
+      ],
+      "val_label1": [
+        1000,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        852,
+        852
+      ],
+      "real_fake": [
+        11,
+        900
+      ]
+    }
+  },
+  "gen_pre+ft+ebay": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        2,
+        300
+      ],
+      "heldout_kandinsky22": [
+        284,
+        284,
+        1.0
+      ],
+      "sdxl_base10": [
+        147,
+        150,
+        0.9992
+      ],
+      "val_label1": [
+        1000,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        3,
+        300
+      ],
+      "amused512": [
+        290,
+        293,
+        0.9996
+      ],
+      "kandinsky22_fresh": [
+        287,
+        287,
+        1.0
+      ],
+      "val_label1": [
+        1000,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        6,
+        300
+      ],
+      "kandinsky22_v3": [
+        281,
+        281,
+        1.0
+      ],
+      "stable_cascade_lite": [
+        294,
+        296,
+        0.9993
+      ],
+      "val_label1": [
+        1000,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        852,
+        852
+      ],
+      "real_fake": [
+        11,
+        900
+      ]
+    }
+  },
+  "gen_pre+ft+movq+ebay": {
+    "k_train_n": 534,
+    "v1": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        3,
+        300
+      ],
+      "heldout_kandinsky22": [
+        284,
+        284,
+        1.0
+      ],
+      "sdxl_base10": [
+        148,
+        150,
+        0.9991
+      ],
+      "val_label1": [
+        1000,
+        1000
+      ]
+    },
+    "v2": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        2,
+        300
+      ],
+      "amused512": [
+        289,
+        293,
+        0.9996
+      ],
+      "kandinsky22_fresh": [
+        287,
+        287,
+        1.0
+      ],
+      "val_label1": [
+        1000,
+        1000
+      ]
+    },
+    "v3": {
+      "threshold_real_fake_rate": 0.01,
+      "real_fake": [
+        4,
+        300
+      ],
+      "kandinsky22_v3": [
+        281,
+        281,
+        1.0
+      ],
+      "stable_cascade_lite": [
+        294,
+        296,
+        0.9994
+      ],
+      "val_label1": [
+        1000,
+        1000
+      ]
+    },
+    "pooled": {
+      "kandinsky_caught": [
+        852,
+        852
+      ],
+      "real_fake": [
+        9,
+        900
+      ]
+    }
+  }
+}

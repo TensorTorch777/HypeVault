@@ -1,0 +1,41 @@
+{
+  "protocol": "benchmark_v4_fresh",
+  "phase": 74,
+  "status": "PRE_REGISTERED",
+  "written_on": "2026-10-22",
+  "written_before_any_data": true,
+  "question": "Does the Phase 74 DINOv3 Kandinsky-aware system catch at least 80% of fresh Kandinsky 2.2 images, including images from scene prompts never used in development, while calling at most 3% of fresh real eBay photos FAKE?",
+  "scope_limit": "Real photograph versus AI-generated image only. No physical-counterfeit or authenticity claim. Kandinsky 2.2 is a SEEN generator in Phase 74 (its images and its MoVQ autoencoder are used in development); this is not an unseen-generator result.",
+  "literature_basis": [
+    "Rajan et al., Aligned Datasets Improve Detection of Latent Diffusion-Generated Images, ICLR 2025 (arXiv 2410.11835): train on real photos versus their own autoencoder reconstructions",
+    "Ricker et al., AEROBLADE, CVPR 2024 (arXiv 2401.17879): autoencoder reconstruction distance",
+    "Cozzolino et al., Raising the Bar of AI-generated Image Detection with CLIP, CVPRW 2024 (arXiv 2312.00195): few-shot linear heads on frozen foundation features",
+    "Rethinking Cross-Generator Image Forgery Detection through DINOv3 (arXiv 2511.22471): frozen DINOv3 patch tokens with a linear probe",
+    "Koutlis and Papadopoulos, RINE, ECCV 2024: intermediate-layer foundation features",
+    "Grommelt et al., Fake or JPEG?, ECCVW 2024 (arXiv 2403.17608): identical JPEG and size handling for both classes",
+    "Chen et al., DRCT, ICML 2024; Guillaro et al., B-Free, CVPR 2025; Park and Owens, Community Forensics, CVPR 2025: reconstruction-aligned and diverse training data"
+  ],
+  "development_data": "benchmark_v1, benchmark_v2 and benchmark_v3 (all groups), Label_0 train/validation photos, and a new Kandinsky 2.2 training set (group kandinsky22_train, seeds base 78000, scene templates T1-T8 only, stored apart from benchmark_v4). benchmark_v4 is used once.",
+  "classes": {
+    "REAL_PHOTO": "real_ebay_v4: primary image of eBay listings (Browse API, category 31387, price >= 1000 USD, five brands), up to 60 per brand, excluding every listing and image in benchmark_v1, v2 or v3 and every training image. Minimum 30 per brand.",
+    "GENERATED": {
+      "kandinsky22_v4": "PRIMARY. kandinsky-community/kandinsky-2-2-decoder, 768 px, 50 steps, guidance 4.0, seeds base 76000, 60 per brand. Scenes alternate between the eight development templates T1-T8 and eight new templates T9-T16 that no development or training image used (30 + 30 per brand).",
+      "stable_cascade_v4": "SECONDARY (regression check). Same Stable Cascade lite settings as benchmark_v3, seeds base 77000, templates T1-T8, 60 per brand. A development generator since Phase 73 scoring."
+    }
+  },
+  "normalisation": "Same as benchmark_v2 and v3: centre-crop square, Lanczos to 512 x 512, JPEG q90, metadata stripped; sources below 512 px excluded.",
+  "no_peeking": "No model, OCR or fusion output may be computed on benchmark_v4 images until ml_rtx5080/experiments/kandinsky_v4/fusion_rule.json is written and its SHA-256 recorded in benchmark_v4_fresh/score.py. Generated or collected benchmark_v4 images are not opened for viewing.",
+  "systems_compared": {
+    "dinov3_alone": "fine-tuned DINOv3 epoch_018, calibrated P(fake) (T = 0.2404), benchmark policy as in benchmark_v3",
+    "watch_forensics_v2": "Phase 73 rule, unchanged (fusion_rule.json SHA-256 2bb10caf...)",
+    "dinov3_kandinsky_v4": "Phase 74 system frozen in experiments/kandinsky_v4/fusion_rule.json: FAKE, REVIEW, AUTHENTIC"
+  },
+  "primary_analysis": {
+    "set": "real_ebay_v4 + kandinsky22_v4",
+    "generated_caught": "FAKE decisions, Clopper-Pearson 95% intervals; also reported separately for T1-T8 and T9-T16 scenes",
+    "real_rejected": "real photos decided FAKE, with intervals; REVIEW reported separately and never counted as caught or rejected",
+    "paired": "exact McNemar, dinov3_kandinsky_v4 vs dinov3_alone, on generated images where both give a binary decision"
+  },
+  "success_criterion": "On the primary set, dinov3_kandinsky_v4 calls at least 80.0% of kandinsky22_v4 images FAKE, and calls at most 3.0% of real_ebay_v4 photos FAKE.",
+  "runs_once": true
+}
