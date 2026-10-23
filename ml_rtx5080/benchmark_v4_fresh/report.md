@@ -60,6 +60,6 @@ eBay real photos called FAKE (out-of-fold) were 0.9–1.6%. Training on several 
 
 - **Kandinsky 2.2 and Stable Cascade are seen generators now.** Their images were in training. This is not an unseen-generator result. The disk had 7 GB free, so no new generator could be downloaded for an unseen check.
 - On development data, the head caught most images from generators held out of training (Stable Cascade 294/296 when v3 was held out). That is one held-out generator per fold, not a fresh test.
-- 13% of real photos go to REVIEW (34 / 270), mostly through DINOv3's own REVIEW gate. That is a human-review workload.
+- 13% of real photos go to REVIEW (34 / 270): 24 through DINOv3's own REVIEW gate, 10 through the head's review band. That is a human-review workload.
 - Single run, 270 real photos. The real-photo FAKE rate has a wide interval (0.7%, 95% CI 0.1–2.7%).
 - The prompts are templated watch scenes. Real-world generated listings may differ in content and post-processing.
