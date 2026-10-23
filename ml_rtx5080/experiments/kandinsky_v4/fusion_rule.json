@@ -1,0 +1,36 @@
+{
+  "rule": "dinov3_kandinsky_v4",
+  "phase": 74,
+  "frozen_before_any_v4_scoring": true,
+  "selected_candidate": "gen_ft+ebay",
+  "features": "ft",
+  "inputs": "fine-tuned DINOv3 epoch_018 (hash-checked, FP32): CLS token and attention-pooled patch embedding, the two vectors its own head already uses; one forward pass, no extra model",
+  "head": "StandardScaler + logistic regression (C = 0.05, balanced classes)",
+  "trained_on": {
+    "real": "5,000 Label_0 training photos + 900 benchmark_v1-v3 eBay photos",
+    "generated": "Kandinsky 2.2: benchmark_v1-v3 (852) + kandinsky22_train (534, scenes T1-T8); SDXL (150), aMUSEd (293), Stable Cascade lite (296) from benchmark_v1-v3"
+  },
+  "model": {
+    "path": "ml_rtx5080/experiments/kandinsky_v4/dinov3_kandinsky_v4_head.joblib",
+    "sha256": "a9f932bc5d8f06a5c4a06dab5ce4df882f91e82d9cbfb93a8bdc0227dfe0bbbf"
+  },
+  "thresholds": {
+    "t_fake": -2.183386278428146,
+    "t_review": -4.936944131479362,
+    "source": "real photos only: 1,000 Label_0 validation + 900 eBay (out-of-fold); at most 1% FAKE and at most 5% more REVIEW"
+  },
+  "decision": "FAKE if score >= t_fake; REVIEW if score >= t_review or DINOv3 REVIEW; else AUTHENTIC (score = head decision function)",
+  "development_results": {
+    "leave_one_version_out": {
+      "kandinsky_caught": [
+        852,
+        852
+      ],
+      "real_fake": [
+        11,
+        900
+      ]
+    },
+    "scene_holdout": "trained on T1-T4 scenes: 100% of T5-T8 Kandinsky caught; trained on T5-T8: 97.9-100% of T1-T4"
+  }
+}

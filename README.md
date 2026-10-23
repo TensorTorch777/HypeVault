@@ -355,6 +355,7 @@ Each benchmark had a protocol written before its images existed, rules frozen on
 | v1: 300 eBay, 284 Kandinsky 2.2, 150 SDXL | DINOv2 or DINOv3? | Underpowered (16 discordant, p = 0.21). **DINOv2 stays live.** Both models accept most Kandinsky images |
 | v2: 300 eBay, 287 Kandinsky 2.2, 293 aMUSEd | Watch forensics v1 vs DINOv3 | 63.4% vs 24.1% caught, but 3.7% of real photos rejected. **Not met** (limit +3 points) |
 | v3: 300 eBay, 296 Stable Cascade, 281 Kandinsky 2.2 | Watch forensics v2 vs DINOv3 | Stable Cascade 91.9% vs 68.9% caught (p = 2.3 × 10⁻¹⁰); real photos rejected 2.0% vs 0.3%. **Met** |
+| v4: 270 eBay, 283 Kandinsky 2.2 (143 from new scene prompts), 297 Stable Cascade | DINOv3 Kandinsky v4 head: ≥ 80% of Kandinsky, ≤ 3% of real photos | Kandinsky 283/283 (100%) vs 8.1% for DINOv3 alone; Stable Cascade 297/297; real photos rejected 2/270 (0.7%). **Met.** Kandinsky and Stable Cascade were in its training data |
 
 <p align="center">
   <img src="docs/assets/benchmark_v3.png" alt="Benchmark v3: generated images caught and real photos rejected or sent to review, per system" width="780">
@@ -366,6 +367,8 @@ Watch forensics v2 combines the fine-tuned DINOv3, a decoder-trace probe and a d
 - 15% of real photos go to human review.
 
 It is a research result. The live app screens with DINOv2, and only the dial-text check is live, as a hint to the seller. Details: `ml_rtx5080/benchmark_v3_fresh/report.md`.
+
+Phase 74 adds one logistic-regression head on the fine-tuned DINOv3's own CLS and attention-pooled features, trained on several generators (Kandinsky 2.2, SDXL, aMUSEd, Stable Cascade). On benchmark_v4 it caught every Kandinsky and Stable Cascade image, but both generators were in its training data. In a later development-data check, each generator was left out of training in turn. Never-seen Kandinsky was still caught 83.3% of the time (93.4% with pretrained DINOv3 features added), and the other three 98.7–99.7%. Real-photo false alarms were 0.9–1.6%. A pre-registered test on a newer unseen generator is next. Details: `ml_rtx5080/benchmark_v4_fresh/report.md`.
 
 > Checkpoint weights (`.pt`, `.onnx`, etc.) stay **gitignored**; only these PNG artifacts are tracked for documentation.
 
