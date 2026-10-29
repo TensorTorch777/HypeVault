@@ -2,11 +2,10 @@
 
 `LIVE_SCREENING_MODEL` picks the model:
 
-- `dinov2_legacy` (default): the DINOv2 route (`LOCAL_MODEL_PATH` / Triton), uncalibrated.
-- `dinov3_frozen` (opt-in): the frozen DINOv3 checkpoint `epoch_018.pt`, loaded through the
-  research loader, which refuses any file whose SHA-256 differs from the frozen digest. The raw
-  logit is divided by the frozen temperature before the sigmoid, so P(fake) is calibrated.
-  benchmark_v1 did not name DINOv3 the frontier model, so it is not the default.
+- `dinov3_frozen` (default, the current model): the frozen DINOv3 checkpoint `epoch_018.pt`, loaded
+  through the research loader, which refuses any file whose SHA-256 differs from the frozen digest.
+  The raw logit is divided by the frozen temperature before the sigmoid, so P(fake) is calibrated.
+- `dinov2_legacy` (the earlier model): the DINOv2 route (`LOCAL_MODEL_PATH` / Triton), uncalibrated.
 
 Both return the same (verdict, confidence) pair as `verdict.logits_to_verdict`: FAKE with
 P(fake) when P(fake) >= 0.50, otherwise AUTHENTIC with 1 - P(fake). The 0.88 listing rule in
