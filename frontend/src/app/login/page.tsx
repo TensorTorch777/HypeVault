@@ -34,6 +34,8 @@ export default function LoginPage() {
     staleTime: Infinity,
   });
   const domain = config.data?.sso.domains[0] ?? "somaiya.edu";
+  // "*" on the server means any verified Google account may sign in.
+  const anyAccount = Boolean(config.data?.sso.domains.includes("*"));
   const ssoReady = Boolean(config.data?.sso.configured && process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID?.trim());
   // The password form exists only for local development, and only until SSO is connected.
   const devLogin = Boolean(config.data?.password_login) && !ssoReady;
@@ -115,11 +117,17 @@ export default function LoginPage() {
       <section className="relative flex items-center justify-center px-4 pb-16 pt-28 sm:px-8">
         <div className="hv-sky absolute inset-0 -z-10 opacity-25 lg:hidden" aria-hidden="true" />
         <div className="w-full min-w-0 max-w-[26.25rem]">
-          <p className="hv-eyebrow">Somaiya single sign-on</p>
+          <p className="hv-eyebrow">{anyAccount ? "Google sign-in" : "Somaiya single sign-on"}</p>
           <h1 className="mt-1 font-display text-[clamp(3rem,6vw,4.4rem)] font-extrabold uppercase leading-[0.88] text-white">Sign in</h1>
           <p className="mt-4 text-[0.9375rem] leading-7 text-primary/75">
-            Use your <span className="font-bold text-primary">@{domain}</span> Google account. Your HypeVault account is created the first time
-            you sign in. No separate password.
+            {anyAccount ? (
+              "Use your Google account."
+            ) : (
+              <>
+                Use your <span className="font-bold text-primary">@{domain}</span> Google account.
+              </>
+            )}{" "}
+            Your HypeVault account is created the first time you sign in. No separate password.
           </p>
 
           <div className="mt-8 rounded-[1.25rem] border border-white/10 bg-card/80 p-6 backdrop-blur">
@@ -129,7 +137,7 @@ export default function LoginPage() {
               <div className="flex w-full justify-center">
                 <GoogleSignInButton
                   role="seller"
-                  hostedDomain={domain}
+                  hostedDomain={anyAccount ? undefined : domain}
                   disabled={loading}
                   onCredential={(token) => onGoogleCredential(token)}
                   onError={(message) => setErr(message)}
@@ -145,7 +153,9 @@ export default function LoginPage() {
             )}
             <div className="mt-4 flex items-start gap-2 text-[0.75rem] leading-5 text-primary/55">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden="true" />
-              Only accounts managed by the {domain} Workspace are accepted; the server checks this on every sign-in.
+              {anyAccount
+                ? "Admin access is limited to the project owner; the server checks this on every request."
+                : `Only accounts managed by the ${domain} Workspace are accepted; the server checks this on every sign-in.`}
             </div>
             {lastEmail ? <p className="mt-3 text-[0.75rem] text-primary/45">Last signed in as {lastEmail}</p> : null}
             <div className="mt-3 min-h-[1.25rem]" aria-live="polite">

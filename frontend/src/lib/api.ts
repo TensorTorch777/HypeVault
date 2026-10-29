@@ -238,6 +238,8 @@ export type Listing = {
   created_at: string;
   customer_label?: string;
   evidence_role?: "SEED_CONSTANT" | "HISTORICAL_MODEL_EVIDENCE" | "NONE" | string;
+  /** Present only on the admin desk (/listings/all). */
+  seller_email?: string | null;
 };
 
 export type RecentListingsResult =
