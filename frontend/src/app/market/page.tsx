@@ -1,14 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { Search } from "lucide-react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { Loader2, Search } from "lucide-react";
 
 import { BrandIndexAuto } from "@/components/market/BrandIndex";
 import { MarketPanel } from "@/components/market/MarketPanel";
-import { type MarketSort, searchMarket } from "@/lib/market";
+import { FoundBanner, IdentifyResultCard, PhotoPicker, pickPhoto } from "@/components/market/PhotoIdentify";
+import { type IdentifyCandidate, type MarketSort, identifyWatch, searchMarket } from "@/lib/market";
 import { STUDIO_WATCHES } from "@/lib/studioWatches";
 import { cn } from "@/lib/utils";
 
@@ -19,29 +20,71 @@ function MarketView() {
   const params = useSearchParams();
   const brand = params.get("brand");
   const q = params.get("q") ?? "";
+  const alt = params.get("alt");
   const sortParam = params.get("sort") as MarketSort | null;
   const sort: MarketSort = sortParam && SORTS.includes(sortParam) ? sortParam : "near_median";
   const [draft, setDraft] = useState(q);
   useEffect(() => setDraft(q), [q]);
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [photoError, setPhotoError] = useState<string | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const textInput = useRef<HTMLInputElement>(null);
+  const identify = useMutation({ mutationFn: (v: { photo: File | null; text: string }) => identifyWatch(v.photo, v.text) });
 
   const house = STUDIO_WATCHES.find((w) => w.brand === brand) ?? null;
   const effectiveQuery = q.trim().length >= 2 ? q.trim() : brand ?? "";
   const query = useQuery({
-    queryKey: ["market-search", effectiveQuery, brand, sort],
-    queryFn: () => searchMarket(effectiveQuery, brand, { sort, limit: 24 }),
+    queryKey: ["market-search", effectiveQuery, brand, sort, alt],
+    queryFn: () => searchMarket(effectiveQuery, brand, { sort, limit: 24, fallback: alt }),
     enabled: effectiveQuery.length >= 2,
     placeholderData: (prev) => prev,
   });
 
-  const go = (next: { q?: string; brand?: string | null; sort?: MarketSort }) => {
+  const go = (next: { q?: string; brand?: string | null; sort?: MarketSort; alt?: string | null }) => {
     const sp = new URLSearchParams();
     const nq = next.q ?? q;
     const nb = next.brand === undefined ? brand : next.brand;
     const ns = next.sort ?? sort;
+    // The shorter fallback name only belongs to the query it was made for.
+    const na = next.alt !== undefined ? next.alt : next.q === undefined && next.brand === undefined ? alt : null;
     if (nq.trim()) sp.set("q", nq.trim());
     if (nb) sp.set("brand", nb);
+    if (na && na !== nq.trim()) sp.set("alt", na);
     if (ns !== "near_median") sp.set("sort", ns);
     router.push(`/market${sp.toString() ? `?${sp}` : ""}`, { scroll: false });
+  };
+
+  // A new photo starts a new search: the box still holds the previous query, which would
+  // otherwise be sent as if the user had typed it and outweigh the photo.
+  const choosePhoto = (f: File | null) => {
+    setPhoto(f);
+    identify.reset();
+    if (f) setDraft("");
+  };
+
+  const pick = (c: IdentifyCandidate) => {
+    identify.reset();
+    setPhoto(null);
+    go({ q: c.query, brand: c.brand, alt: c.short_query });
+  };
+
+  // Photo and/or typed name -> identify first, so the search uses the watch's proper name.
+  const submit = () => {
+    const text = draft.trim();
+    if (!photo && text.length < 2) return;
+    identify.mutate(
+      { photo, text },
+      {
+        onSuccess: (res) => {
+          if (res.status === "free_text") {
+            identify.reset();
+            go({ q: text, brand: null, alt: null });
+          } else if (!photo && res.status === "recognised" && res.candidates.length === 1) {
+            pick(res.candidates[0]); // a typed name or reference with one clear match needs no confirmation
+          }
+        },
+      }
+    );
   };
 
   const scene = house?.backdrop ?? "bay_dusk";
@@ -71,28 +114,70 @@ function MarketView() {
 
           <form
             role="search"
-            className="mt-8 flex max-w-2xl gap-2 rounded-full border border-white/15 bg-background/60 p-1.5 backdrop-blur-xl focus-within:border-accent/60"
+            className={cn(
+              "mt-8 flex max-w-2xl gap-1 rounded-full border bg-background/60 p-1.5 backdrop-blur-xl focus-within:border-accent/60",
+              dragging ? "border-accent" : "border-white/15"
+            )}
             onSubmit={(e) => {
               e.preventDefault();
-              go({ q: draft });
+              submit();
+            }}
+            onDragOver={(e) => {
+              e.preventDefault();
+              setDragging(true);
+            }}
+            onDragLeave={() => setDragging(false)}
+            onDrop={async (e) => {
+              e.preventDefault();
+              setDragging(false);
+              const file = e.dataTransfer.files?.[0];
+              if (file) await pickPhoto(file, choosePhoto, setPhotoError);
             }}
           >
             <label htmlFor="market-q" className="sr-only">
-              Search by model or reference
+              Search by model, reference or photo
             </label>
             <Search className="ml-3 h-5 w-5 shrink-0 self-center text-primary/50" aria-hidden="true" />
             <input
               id="market-q"
+              ref={textInput}
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
-              placeholder="Nautilus 5711, Royal Oak 15500, Lange 1…"
+              placeholder={photo ? "Add anything you can read on it (optional)" : "Nautilus 5711, Royal Oak… or add a photo"}
               autoComplete="off"
               className="min-w-0 flex-1 bg-transparent px-2 text-[0.9375rem] text-primary placeholder:text-primary/40 focus:outline-none"
             />
-            <button type="submit" className="hv-btn-pill hv-btn-primary">
-              Search
+            <PhotoPicker
+              photo={photo}
+              onPhoto={choosePhoto}
+              onError={setPhotoError}
+            />
+            <button type="submit" className="hv-btn-pill hv-btn-primary" disabled={identify.isPending}>
+              {identify.isPending ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+              {identify.isPending ? (photo ? "Looking…" : "Searching…") : "Search"}
             </button>
           </form>
+          {photoError ? (
+            <p role="alert" className="mt-3 text-[0.8125rem] font-semibold text-danger">
+              {photoError}
+            </p>
+          ) : null}
+          {identify.isError ? (
+            <p role="alert" className="mt-3 text-[0.8125rem] font-semibold text-danger">
+              We couldn&rsquo;t identify the watch right now. You can still search by name.
+            </p>
+          ) : null}
+          {identify.data && !identify.isPending && identify.data.status !== "free_text" ? (
+            <IdentifyResultCard
+              result={identify.data}
+              onPick={pick}
+              onDismiss={() => identify.reset()}
+              onTypeInstead={() => {
+                identify.reset();
+                textInput.current?.focus();
+              }}
+            />
+          ) : null}
         </div>
       </header>
 
@@ -123,6 +208,7 @@ function MarketView() {
         </div>
 
         <section className="mt-10" aria-live="polite">
+          {effectiveQuery.length >= 2 && query.data && !query.isLoading ? <FoundBanner data={query.data} /> : null}
           {effectiveQuery.length >= 2 ? (
             <MarketPanel data={query.data} loading={query.isLoading} error={query.isError} sort={sort} onSort={(s) => go({ sort: s })} />
           ) : (

@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
 import { ImageUploader } from "@/components/ImageUploader";
 import { ScreeningResult, type ScreeningOutcome } from "@/components/ScreeningResult";
+import { WatchMarketLookup } from "@/components/market/WatchMarketLookup";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -286,6 +287,7 @@ export default function SellerUploadPage() {
                       Dashboard
                     </Button>
                   </div>
+                  {outcome && files[0] ? <WatchMarketLookup photo={files[0]} compact className="mt-4" /> : null}
                 </motion.div>
               ) : null}
             </AnimatePresence>

@@ -95,3 +95,6 @@ ml_rtx5080/phase55_*
 # Phase 71-73: cached features and OCR readings are large and rebuilt by the scripts
 ml_rtx5080/experiments/generator_agnostic_v*/features/
 ml_rtx5080/experiments/watch_forensics_v*/readings/
+
+# Watch-identification gallery (derived from eBay listing photos; rebuilt by scripts/build_watch_gallery.py)
+backend/identify/data/

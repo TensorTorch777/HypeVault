@@ -83,6 +83,10 @@ class Settings(BaseSettings):
     inference_live_conf_threshold: float = 0.90
     upload_min_side_px: int = 400
     upload_max_bytes: int = 10 * 1024 * 1024
+    # Watch identification (search by photo). The gallery is built by scripts/build_watch_gallery.py;
+    # a relative path is resolved from the repository root.
+    identify_gallery_path: str = "backend/identify/data/watch_gallery.npz"
+    identify_min_side_px: int = 200
 
     # Comma-separated account emails allowed to call /research/*. Empty → nobody. Never set from a request.
     research_user_emails: str = ""

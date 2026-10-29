@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { ArrowUpRight, Database, Radio } from "lucide-react";
 
@@ -110,6 +111,18 @@ function ListingCard({ item }: { item: MarketItem }) {
   );
   const body = (
     <>
+      {/* eBay listings carry the seller's photo; the Chrono24 dataset has none, so its cards stay compact. */}
+      {item.image_url ? (
+        <div className="relative -mx-5 -mt-5 mb-4 aspect-[4/3] overflow-hidden rounded-t-[1.125rem] bg-white">
+          <Image
+            src={item.image_url}
+            alt={item.title}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+          />
+        </div>
+      ) : null}
       <div className="flex items-start justify-between gap-3">
         <p className="font-display text-[2rem] font-extrabold leading-none text-primary hv-num">{formatPrice(item.price, item.currency)}</p>
         {item.item_url ? <ArrowUpRight className="h-4 w-4 shrink-0 text-primary/40 transition-colors group-hover:text-accent" aria-hidden="true" /> : null}
@@ -143,12 +156,15 @@ export function MarketPanel({
   error,
   sort,
   onSort,
+  compact = false,
 }: {
   data: MarketSearch | undefined;
   loading: boolean;
   error: boolean;
   sort?: MarketSort;
   onSort?: (s: MarketSort) => void;
+  /** For narrow columns: the price sits above the chart and listings run two to a row. */
+  compact?: boolean;
 }) {
   if (loading) {
     return (
@@ -186,10 +202,12 @@ export function MarketPanel({
       <section className="relative overflow-hidden rounded-[1.375rem] border border-white/10 bg-card p-6 md:p-8" aria-label="Price summary">
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-salmon/10 blur-3xl" aria-hidden="true" />
         {stats ? (
-          <div className="relative grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.4fr)]">
+          <div className={cn("relative grid gap-10", !compact && "lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.4fr)]")}>
             <div>
               <p className="hv-eyebrow">Median asking price</p>
-              <p className="mt-2 font-display text-[clamp(3.6rem,8vw,6rem)] font-black leading-[0.85] text-white hv-num">{formatPrice(stats.median)}</p>
+              <p className={cn("mt-2 font-display font-black leading-[0.85] text-white hv-num", compact ? "text-[3.6rem]" : "text-[clamp(3.6rem,8vw,6rem)]")}>
+                {formatPrice(stats.median)}
+              </p>
               <dl className="mt-6 grid grid-cols-3 gap-3 text-[0.75rem]">
                 {[
                   ["Listings", stats.count.toLocaleString("en-US")],
@@ -256,7 +274,7 @@ export function MarketPanel({
           ) : null}
         </div>
         {items.length ? (
-          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className={cn("mt-5 grid gap-3 sm:grid-cols-2", !compact && "lg:grid-cols-3")}>
             {items.map((it, i) => (
               <ListingCard key={`${it.source}-${i}-${it.title}`} item={it} />
             ))}
