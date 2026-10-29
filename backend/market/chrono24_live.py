@@ -108,6 +108,17 @@ def _as_str(value: Any) -> str | None:
     return str(value).strip() or None
 
 
+def _clean_year(value: Any) -> str | None:
+    """'2023 (Approximation)' -> 'c. 2023'; 'Unknown' -> None."""
+    text = _as_str(value)
+    if not text:
+        return None
+    match = _YEAR_RE.search(text)
+    if not match:
+        return None
+    return f"c. {match.group(1)}" if "approx" in text.lower() else match.group(1)
+
+
 def _fallback_id(url: str, title: str) -> str:
     match = _ID_RE.search(url or "")
     if match:
@@ -179,8 +190,9 @@ def parse_apify_item(row: dict) -> Chrono24Listing | None:
         location = _as_str(loc) or _as_str(row.get("sellerLocation"))
     seller = detail.get("seller") or {}
     rating = seller.get("rating")
+    # Full-size detail photos first: mainImage/imageUrls are 210px search thumbnails.
     images = _uniq(
-        [row.get("mainImage"), row.get("imageUrl"), *(row.get("imageUrls") or []), *(detail.get("fullImageUrls") or [])]
+        [*(detail.get("fullImageUrls") or []), row.get("mainImage"), row.get("imageUrl"), *(row.get("imageUrls") or [])]
     )
     price = row.get("price") if row.get("price") is not None else detail.get("price")
     return Chrono24Listing(
@@ -193,7 +205,7 @@ def parse_apify_item(row: dict) -> Chrono24Listing | None:
         model=_as_str(detail.get("model") or row.get("model")),
         reference=_as_str(detail.get("referenceNumber") or row.get("referenceNumber")),
         condition=_as_str(detail.get("condition") or row.get("condition")),
-        year=_as_str(detail.get("yearOfProduction") or row.get("year")),
+        year=_clean_year(detail.get("yearOfProduction") or row.get("year")),
         location=location,
         seller_type=_as_str(row.get("sellerType")),
         seller_name=_as_str(seller.get("name")),

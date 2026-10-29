@@ -99,8 +99,12 @@ class ApifyMappingTests(unittest.TestCase):
         self.assertEqual((item.condition, item.year), ("Very good", "2019"))
         self.assertEqual(item.location, "Geneva, Switzerland")
         self.assertEqual((item.seller_name, item.seller_rating), ("Swiss Dealer SA", "4.9"))
-        self.assertEqual(item.image_url, "https://img.chrono24.com/images/uhren/1-a.jpg")
-        self.assertEqual(len(item.image_urls), 3)  # deduplicated, full-size appended
+        self.assertEqual(item.image_url, "https://img.chrono24.com/images/uhren/1-full.jpg")  # full-size first
+        self.assertEqual(len(item.image_urls), 3)  # deduplicated
+
+    def test_approximate_year(self):
+        row = {**APIFY_ROWS[0], "detail": {**APIFY_ROWS[0]["detail"], "yearOfProduction": "2023 (Approximation)"}}
+        self.assertEqual(parse_apify_item(row).year, "c. 2023")
 
     def test_unknown_year_and_missing_url(self):
         self.assertIsNone(parse_apify_item(APIFY_ROWS[2]).year)
