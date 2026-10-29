@@ -15,6 +15,7 @@ const CODE_TITLE: Record<string, string> = {
   NOT_A_WATCH: "No watch found",
   IMAGE_TOO_SMALL: "Photo too small",
   LIKELY_GENERATED: "Looks AI-generated",
+  AI_LABEL: "Labelled as AI-made",
   NOT_CONFIDENTLY_ORIGINAL: "Couldn't confirm an original photo",
 };
 

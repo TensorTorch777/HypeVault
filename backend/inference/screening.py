@@ -2,11 +2,13 @@
 
 Checks, in order, each of which can stop the listing:
   1. size    — short side at least `listing_min_short_side_px`, so dial details are readable
-  2. watch   — zero-shot CLIP finds a wristwatch (inference.content_gate)
-  3. origin  — the DINOv2 listing model does not flag the photo as AI-generated, and is
+  2. label   — the file carries no signed Content Credentials label saying an AI made it
+               (inference.provenance; ChatGPT and Gemini sign their images)
+  3. watch   — zero-shot CLIP finds a wristwatch (inference.content_gate)
+  4. origin  — the DINOv2 listing model does not flag the photo as AI-generated, and is
                confident (≥ `inference_min_authentic_confidence`) that it is an original photo
 
-Passing all three lists the watch. That is a photo-screening result, not an authenticity
+Passing all four lists the watch. That is a photo-screening result, not an authenticity
 certificate: a real photograph of a counterfeit watch can pass. Customer copy says so.
 """
 
@@ -16,11 +18,13 @@ from dataclasses import dataclass, field
 from typing import Literal
 
 from inference.content_gate import ContentCheck
+from inference.provenance import AiLabel
 
 Status = Literal["live", "rejected", "pending"]
 
 PASSED = "PASSED"
 IMAGE_TOO_SMALL = "IMAGE_TOO_SMALL"
+AI_LABEL = "AI_LABEL"
 NOT_A_WATCH = "NOT_A_WATCH"
 LIKELY_GENERATED = "LIKELY_GENERATED"
 NOT_CONFIDENTLY_ORIGINAL = "NOT_CONFIDENTLY_ORIGINAL"
@@ -51,6 +55,22 @@ def check_size(width: int, height: int, min_short_side: int) -> ScreeningOutcome
             "so the dial and case details are readable."
         ),
         details={"width": width, "height": height, "min_short_side": min_short_side},
+    )
+
+
+def check_label(label: AiLabel | None) -> ScreeningOutcome | None:
+    if label is None:
+        return None
+    made_with = f" ({label.tool})" if label.tool else ""
+    return ScreeningOutcome(
+        status="rejected",
+        code=AI_LABEL,
+        reason=(
+            f"This image carries a Content Credentials label signed by {label.maker} saying it was made "
+            f"with AI{made_with}. Upload an original photo you took of the watch."
+        ),
+        details={"label_maker": label.maker, "label_tool": label.tool, "label_source_type": label.source_type,
+                 "label_validation": label.validation_state},
     )
 
 
