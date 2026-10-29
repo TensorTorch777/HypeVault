@@ -109,3 +109,4 @@ ml_rtx5080/experiments/frontier_v5/metadata_shards/
 ml_rtx5080/experiments/frontier_v5/metadata.jsonl
 ml_rtx5080/experiments/frontier_v5/features/
 ml_rtx5080/benchmark_v5_frontier/data/
+ml_rtx5080/experiments/phase76_probe/v5_features.npz
