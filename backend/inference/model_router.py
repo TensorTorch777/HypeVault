@@ -14,6 +14,7 @@ from __future__ import annotations
 import math
 from typing import Any
 
+from config import settings
 from inference.triton_client import (
     infer_named_model,
     named_model_ready,
@@ -126,6 +127,10 @@ async def _availability(spec: dict[str, Any]) -> tuple[bool, str | None, list[st
     return True, None, sorted(kinds)
 
 
+# The live listing check model (LIVE_SCREENING_MODEL) that runs the same checkpoint as each research model.
+_LIVE_EQUIVALENT = {DINOV2_LEGACY: "dinov2_legacy", DINOV3_EXPERIMENTAL: "dinov3_frozen"}
+
+
 async def model_readiness(model_id: str) -> dict[str, Any]:
     spec = resolve_model(model_id)
     ready, reason, kinds = await _availability(spec)
@@ -135,7 +140,7 @@ async def model_readiness(model_id: str) -> dict[str, Any]:
         "triton_name": spec["triton_name"],
         "version": spec["version"],
         "architecture": spec["architecture"],
-        "same_model_as_live_route": spec["same_model_as_live_route"],
+        "same_model_as_live_route": settings.live_screening_model == _LIVE_EQUIVALENT[spec["logical_id"]],
         "served_instance_kinds": kinds,
         "validated_instance_kinds": sorted(spec["validated_serving"]),
         "ready": ready,

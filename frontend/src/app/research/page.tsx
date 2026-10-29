@@ -22,17 +22,30 @@ import {
 
 const DINOV2_LEGACY = "dinov2_legacy";
 const DINOV3_EXPERIMENTAL = "dinov3_experimental";
-const MODEL_IDS = [DINOV2_LEGACY, DINOV3_EXPERIMENTAL] as const;
+// DINOv3 is the current model; DINOv2 is the earlier model, kept here so the two can be compared.
+const MODEL_IDS = [DINOV3_EXPERIMENTAL, DINOV2_LEGACY] as const;
 type ModelId = (typeof MODEL_IDS)[number];
+const COMPARE = "compare";
+type Choice = ModelId | typeof COMPARE;
 
 const MODEL_LABELS: Record<ModelId, string> = {
-  [DINOV2_LEGACY]: "DINOv2 — Legacy",
-  [DINOV3_EXPERIMENTAL]: "DINOv3 — Experimental — Not approved for production",
+  [DINOV3_EXPERIMENTAL]: "DINOv3 — Current model",
+  [DINOV2_LEGACY]: "DINOv2 — Earlier model (research comparison)",
+};
+
+const MODEL_NOTES: Record<ModelId, string> = {
+  [DINOV3_EXPERIMENTAL]: "Current model. Research result, not a production certificate.",
+  [DINOV2_LEGACY]: "Earlier model, kept for research comparison. Not a production certificate.",
 };
 
 const EXPECTED_MODEL: Record<ModelId, ResearchResult["model"]> = {
   [DINOV2_LEGACY]: "LEGACY_DINOV2",
   [DINOV3_EXPERIMENTAL]: "DINOV3_RESEARCH_PROTOTYPE",
+};
+
+const RAN_LABEL: Record<ResearchResult["model"], string> = {
+  LEGACY_DINOV2: "DINOv2 (earlier model)",
+  DINOV3_RESEARCH_PROTOTYPE: "DINOv3 (current model)",
 };
 
 type ResearchResult = {
@@ -67,7 +80,7 @@ const UNAVAILABLE_REASONS: Record<string, string> = {
 type LaneOutcome =
   | { state: "unavailable" }
   | { state: "error"; message: string }
-  | { state: "ok"; body: ResearchResult };
+  | { state: "ok"; body: ResearchResult; explanation: ResearchExplanationPayload };
 
 type ReadinessReport = {
   server: { live: boolean; ready: boolean };
@@ -77,7 +90,7 @@ type ReadinessReport = {
 export default function ResearchDemoPage() {
   const [brand, setBrand] = useState("");
   const [file, setFile] = useState<File | null>(null);
-  const [modelId, setModelId] = useState<ModelId | null>(null);
+  const [modelId, setModelId] = useState<Choice | null>(null);
   const [readiness, setReadiness] = useState<ReadinessReport | null>(null);
   const [readinessErr, setReadinessErr] = useState<string | null>(null);
   const [result, setResult] = useState<{ selected: ModelId; body: ResearchResult } | null>(null);
@@ -112,11 +125,12 @@ export default function ResearchDemoPage() {
 
   const statusFor = (id: ModelId) => readiness?.models.find((m) => m.logical_id === id) ?? null;
   const isReady = (id: ModelId) => Boolean(statusFor(id)?.ready);
-  const experimental = modelId === DINOV3_EXPERIMENTAL;
-  const selectedStatus = modelId ? statusFor(modelId) : null;
+  const single = modelId && modelId !== COMPARE ? modelId : null;
+  const comparing = modelId === COMPARE;
+  const canRun = comparing ? MODEL_IDS.some(isReady) : Boolean(single && isReady(single));
 
   async function submit() {
-    if (!modelId || !isReady(modelId)) {
+    if (!single || !isReady(single)) {
       setErr("Serving status: unavailable. No other model will be used, and no result was produced.");
       return;
     }
@@ -124,7 +138,7 @@ export default function ResearchDemoPage() {
       setErr("Choose an image before running the research demo.");
       return;
     }
-    const selected = modelId;
+    const selected = single;
     setErr(null);
     setResult(null);
     setComparison(null);
@@ -202,7 +216,19 @@ export default function ResearchDemoPage() {
             };
             return;
           }
-          next[id] = { state: "ok", body: data };
+          // Each lane gets its own patch map, checked against that lane's classification.
+          let explanation: ResearchExplanationPayload;
+          try {
+            const explainBody = new FormData();
+            explainBody.append("image", file);
+            explainBody.append("brand", brand);
+            explainBody.append("logical_model", id);
+            const explained = await api.post<ResearchExplanationPayload>("/research/explain", explainBody);
+            explanation = explanationForVerifiedResult({ model: data.model, decision: data.decision }, explained.data);
+          } catch {
+            explanation = { status: "unavailable", reason: "The explanation request failed.", publication_decision: "BLOCKED" };
+          }
+          next[id] = { state: "ok", body: data, explanation };
         } catch (error) {
           const status = axios.isAxiosError(error) ? error.response?.status : undefined;
           const bodyStatus = axios.isAxiosError(error)
@@ -248,8 +274,9 @@ export default function ResearchDemoPage() {
               value={modelId ?? ""}
               disabled={!readiness || pending}
               onChange={(event) => {
-                setModelId(event.target.value as ModelId);
+                setModelId(event.target.value as Choice);
                 setResult(null);
+                setComparison(null);
                 setErr(null);
               }}
             >
@@ -264,6 +291,9 @@ export default function ResearchDemoPage() {
                   {readiness && !isReady(id) ? " (unavailable)" : ""}
                 </option>
               ))}
+              <option value={COMPARE} disabled={!MODEL_IDS.some(isReady)}>
+                Compare both models (side by side)
+              </option>
             </select>
             {!readiness && !readinessErr ? <p className="mt-2 text-sm text-primary/60">Checking serving status</p> : null}
             {readinessErr ? <p className="mt-2 text-sm font-semibold text-danger" role="alert">{readinessErr}</p> : null}
@@ -285,10 +315,8 @@ export default function ResearchDemoPage() {
                 })}
               </ul>
             ) : null}
-            {modelId ? <p className="mt-2 text-sm text-primary/70">Selected model: {MODEL_LABELS[modelId]}</p> : null}
-            {experimental ? (
-              <p className="mt-2 text-sm font-semibold text-danger">EXPERIMENTAL — NOT APPROVED FOR PRODUCTION</p>
-            ) : null}
+            {single ? <p className="mt-2 text-sm text-primary/70">Selected model: {MODEL_LABELS[single]}</p> : null}
+            {comparing ? <p className="mt-2 text-sm text-primary/70">Selected: both models, side by side</p> : null}
           </div>
           <div>
             <label className="text-xs font-semibold text-primary/55" htmlFor="research-brand">
@@ -336,18 +364,10 @@ export default function ResearchDemoPage() {
           <div className="flex flex-wrap gap-3">
             <Button
               className="min-h-[2.75rem]"
-              disabled={pending || !brand || !modelId || !selectedStatus?.ready}
-              onClick={() => void submit()}
+              disabled={pending || !brand || !file || !canRun}
+              onClick={() => void (comparing ? compareBoth() : submit())}
             >
-              {pending ? "Running research demo" : "Run research demo"}
-            </Button>
-            <Button
-              variant="outline"
-              className="min-h-[2.75rem]"
-              disabled={pending || !file || !brand}
-              onClick={() => void compareBoth()}
-            >
-              Compare both models
+              {pending ? "Running" : comparing ? "Compare both models" : "Run research demo"}
             </Button>
           </div>
           <p className="text-xs text-primary/60">
@@ -363,13 +383,11 @@ export default function ResearchDemoPage() {
                 declaredBrand={result.body.declared_brand}
               />
               <p className="text-sm text-primary/70">
-                Model that ran: {result.body.model}
+                Model that ran: {RAN_LABEL[result.body.model]}
                 {result.body.model_version ? ` version ${result.body.model_version}` : ""} (selected{" "}
                 {MODEL_LABELS[result.selected]})
               </p>
-              {result.body.model === "DINOV3_RESEARCH_PROTOTYPE" ? (
-                <p className="text-sm font-semibold text-danger">EXPERIMENTAL — NOT APPROVED FOR PRODUCTION</p>
-              ) : null}
+              <p className="text-sm text-primary/70">{MODEL_NOTES[result.selected]}</p>
               <p className="text-sm text-primary/70">Declared brand: {result.body.declared_brand}</p>
               <p className="text-sm text-primary/70">
                 brand_verification = {result.body.brand_verification} (the brand was not checked from the image)
@@ -398,11 +416,7 @@ export default function ResearchDemoPage() {
                   return (
                     <div key={id} className="rounded-xl border border-primary/15 p-4">
                       <p className="text-sm font-semibold">{MODEL_LABELS[id]}</p>
-                      {id === DINOV3_EXPERIMENTAL ? (
-                        <p className="mt-1 text-xs font-semibold text-danger">EXPERIMENTAL — NOT APPROVED FOR PRODUCTION</p>
-                      ) : (
-                        <p className="mt-1 text-xs text-primary/60">Legacy research path. Not a production certificate.</p>
-                      )}
+                      <p className="mt-1 text-xs text-primary/60">{MODEL_NOTES[id]}</p>
                       {lane?.state === "unavailable" ? (
                         <p className="mt-3 text-sm text-primary/70" role="status">Serving status: unavailable. No result was produced for this model.</p>
                       ) : null}
@@ -413,8 +427,15 @@ export default function ResearchDemoPage() {
                         <div className="mt-3 space-y-2">
                           <p className="text-sm">Model classification: {lane.body.decision} — research screening result, not verified.</p>
                           <p className="text-sm text-primary/70">Declared brand: {lane.body.declared_brand}</p>
-                          <p className="text-sm text-primary/70">Model that ran: {lane.body.model}</p>
+                          <p className="text-sm text-primary/70">Model that ran: {RAN_LABEL[lane.body.model]}</p>
                           <p className="text-xs text-primary/55">This lane cannot publish a listing.</p>
+                          <ResearchExplanation
+                            imageUrl={previewUrl}
+                            imageWidth={previewSize.width}
+                            imageHeight={previewSize.height}
+                            payload={lane.explanation}
+                            pending={false}
+                          />
                         </div>
                       ) : null}
                     </div>

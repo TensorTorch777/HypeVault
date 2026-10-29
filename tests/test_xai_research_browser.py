@@ -165,14 +165,10 @@ class ResearchExplanationBrowserTests(unittest.TestCase):
             page.get_by_role("heading", name="Five-brand prototype").wait_for()
             page.get_by_text("Serving status").first.wait_for()
             serving = page.locator("li").all_inner_texts()
-            dinov2 = next(item for item in serving if "DINOv2 — Legacy" in item and "Serving status" in item)
-            dinov3 = next(item for item in serving if "DINOv3 — Experimental" in item and "Serving status" in item)
+            dinov2 = next(item for item in serving if "DINOv2 — Earlier model" in item and "Serving status" in item)
+            dinov3 = next(item for item in serving if "DINOv3 — Current model" in item and "Serving status" in item)
             check("DINOv2 serving state is available", "available" in dinov2, dinov2)
-            check(
-                "DINOv3 stays labeled experimental and available",
-                "available" in dinov3 and "Not approved for production" in dinov3,
-                dinov3,
-            )
+            check("DINOv3 serving state is available", "available" in dinov3, dinov3)
 
             page.locator("#research-brand").select_option(brand)
             page.locator("#research-model").select_option("dinov2_legacy")
