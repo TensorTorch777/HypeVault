@@ -252,7 +252,7 @@ async def google_login(
             )
         result = await db.execute(select(User).where(User.email == email))
         user = result.scalar_one_or_none()
-        role = role_for(email, user.role if user else None, admin_email_set())
+        role = role_for(email, admin_email_set())
         if user is None:
             user = User(
                 email=email,

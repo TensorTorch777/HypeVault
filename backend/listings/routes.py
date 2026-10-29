@@ -10,9 +10,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from auth.deps import get_current_user, get_optional_user, require_seller
+from auth.deps import get_current_user, get_optional_user, require_admin, require_seller
 from database import Listing, ListingCategory, ListingStatus, User, UserRole, get_db
-from listings.models import ListingCreate, ListingRead, ListingUpdate, PresignRequest, PresignResponse
+from listings.models import AdminListingRead, ListingCreate, ListingRead, ListingUpdate, PresignRequest, PresignResponse
 from market.routes import _redis_or_none
 from market.service import search_market
 from s3_client import generate_presigned_put_url
@@ -68,9 +68,8 @@ async def list_my_listings(
     user: Annotated[User, Depends(get_current_user)],
 ) -> list[Listing]:
     try:
-        q = select(Listing).order_by(Listing.created_at.desc())
-        if user.role != UserRole.admin:  # admins review every seller's listings
-            q = q.where(Listing.seller_id == user.id)
+        # Everyone, the admin included, sees only their own listings here; /all is the admin review queue.
+        q = select(Listing).where(Listing.seller_id == user.id).order_by(Listing.created_at.desc())
         result = await db.execute(q)
         return list(result.scalars().all())
     except Exception as exc:
@@ -78,9 +77,24 @@ async def list_my_listings(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Could not load listings")
 
 
+@router.get("/all", response_model=list[AdminListingRead])
+async def list_all_listings(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    _admin: Annotated[User, Depends(require_admin)],
+) -> list[AdminListingRead]:
+    try:
+        q = select(Listing, User.email).join(User, User.id == Listing.seller_id).order_by(Listing.created_at.desc())
+        result = await db.execute(q)
+        return [AdminListingRead.model_validate(listing).model_copy(update={"seller_email": email}) for listing, email in result.all()]
+    except Exception as exc:
+        _log.exception("list_all_listings_failed: %s", exc)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Could not load listings")
+
+
 @router.get("/recent", response_model=list[ListingRead])
 async def recent_listings(
     db: Annotated[AsyncSession, Depends(get_db)],
+    _admin: Annotated[User, Depends(require_admin)],
     limit: int = 6,
     category: ListingCategory | None = None,
     brand: str | None = None,

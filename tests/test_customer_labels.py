@@ -130,6 +130,8 @@ class CustomerLabelTests(unittest.TestCase):
             "frontend/src/app/page.tsx",
             "frontend/src/app/product/[id]/page.tsx",
             "frontend/src/app/seller/dashboard/page.tsx",
+            "frontend/src/app/admin/page.tsx",
+            "frontend/src/components/seller/ListingsDesk.tsx",
         ]
         badge = (REPO / "frontend/src/components/AuthBadge.tsx").read_text()
         self.assertIn("Pending", badge)

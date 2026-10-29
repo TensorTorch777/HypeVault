@@ -73,6 +73,12 @@ class ListingRead(BaseModel):
         )
 
 
+class AdminListingRead(ListingRead):
+    """A listing in the admin review queue, with the seller it belongs to."""
+
+    seller_email: str | None = None
+
+
 class PresignRequest(BaseModel):
     listing_id: UUID
     filename: str = Field(..., max_length=255)
