@@ -116,3 +116,52 @@ Inspect `manifest.jsonl` rows with `duplicate_status=NEAR_DUPLICATE_CANDIDATE` a
 ## Rights reminder
 
 Before `--allow-network`, confirm that collecting and storing images from the chosen provider is permitted for your intended research use. Catalog CSVs and downloaded bytes remain local and must stay out of Git.
+
+## Chrono24 (live search + bulk collection)
+
+After a listing passes screening, the site searches Chrono24 for that watch (declared brand + product name)
+and shows the matching listings: photo, asking price, reference, year, condition, location and seller.
+They appear on the upload result screen and on the listing page (`GET /listings/{id}/chrono24`).
+Free-text search: `GET /market/chrono24?q=Patek+Philippe+Nautilus+5711`.
+
+Code: `backend/market/chrono24_live.py` (providers, parsing, export) and `backend/market/chrono24_service.py`
+(provider choice, Redis cache, fallback to the imported dataset).
+
+Set in `.env`:
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `CHRONO24_PROVIDER` | `auto` | `auto` = `apify` if `APIFY_TOKEN` is set, else `dataset`. Or `apify`, `playwright`, `dataset` |
+| `APIFY_TOKEN` | empty | Token from console.apify.com → Settings → Integrations |
+| `CHRONO24_APIFY_ACTOR` | `epicscrapers~chrono24-scraper` | Hosted Chrono24 scraper used through Apify |
+| `CHRONO24_ENRICH_DETAILS` | `true` | Adds reference, condition, year, seller and full-size photos (one extra request per listing) |
+| `CHRONO24_CURRENCY` | `USD` | Price currency |
+| `CHRONO24_CACHE_TTL_SEC` | `21600` | Redis cache per search (6 h) |
+| `CHRONO24_EXPORT_DIR` | `local_data/chrono24` | Every live search appended to `listings.jsonl` + `listings.csv`; empty disables |
+
+Providers:
+
+- **apify** (recommended): Apify runs the browsers and proxies; this repo never contacts chrono24.com.
+  Pay-per-result, about $1.40 per 1,000 listings; the free plan's monthly credit covers a demo.
+- **playwright**: headless Chromium on your machine (`pip install playwright && playwright install chromium`).
+  Reads chrono24 robots.txt first and refuses disallowed paths; Chrono24 may show a bot challenge.
+  No selectors: it parses listing links (`--id<n>.htm`) and JSON-LD, so small layout changes don't break it.
+- **dataset**: no live search; the imported Chrono24 snapshot is shown instead. Also the automatic fallback
+  when a live search fails.
+
+Bulk collection for luxury watches (listing data, optionally photos):
+
+```bash
+python scraper/chrono24_scraper.py --dry-run                         # plan only
+APIFY_TOKEN=... python scraper/chrono24_scraper.py --allow-network --per-brand 200
+APIFY_TOKEN=... python scraper/chrono24_scraper.py --allow-network --supported-only --download-images
+```
+
+Default brand list: the five supported brands plus Rolex, Omega, Cartier, JLC, IWC, Breguet, Blancpain,
+Hublot, Panerai, Tudor, Breitling, Zenith, Grand Seiko, F.P. Journe, Moser, Glashütte Original, Chopard,
+Piaget, Ulysse Nardin, Girard-Perregaux, Bvlgari and TAG Heuer (`--brands` to override, `--queries` for models).
+Output: `local_data/chrono24/bulk/listings.{csv,jsonl}`. With `--download-images`, photos go through the
+research image pipeline as `UNVERIFIED_WEB_IMAGE` — a Chrono24 photo is not evidence of authenticity.
+
+Chrono24's terms restrict automated access. Keep volumes low, keep the cache on, and treat this as part of
+the research prototype, not a production data feed.

@@ -14,6 +14,7 @@ from auth.deps import get_current_user, get_optional_user, require_seller
 from database import Listing, ListingCategory, ListingStatus, User, UserRole, get_db
 from listings.models import ListingCreate, ListingRead, ListingUpdate, PresignRequest, PresignResponse
 from market.routes import _redis_or_none
+from market.chrono24_service import search_chrono24
 from market.service import search_market
 from s3_client import generate_presigned_put_url
 
@@ -142,6 +143,26 @@ async def price_comparison(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Price comparison unavailable. Please try again.",
         )
+
+
+@router.get("/{listing_id}/chrono24")
+async def chrono24_matches(
+    listing_id: uuid.UUID,
+    db: Annotated[AsyncSession, Depends(get_db)],
+    viewer: Annotated[User | None, Depends(get_optional_user)],
+    limit: int = 12,
+) -> dict:
+    """Chrono24 listings for this watch. Only for listings that passed screening (status live)."""
+    listing = await db.get(Listing, listing_id)
+    if not _visible(listing, viewer):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Listing not found")
+    if listing.status != ListingStatus.live:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Chrono24 search runs after the listing passes screening")
+    try:
+        return await search_chrono24(db, await _redis_or_none(), listing.product_name, listing.brand, limit=max(1, min(limit, 48)))
+    except Exception as exc:
+        _log.exception("chrono24_matches_failed: %s", exc)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Chrono24 search unavailable")
 
 
 @router.get("/{listing_id}", response_model=ListingRead)

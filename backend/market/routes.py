@@ -9,6 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database import get_db
+from market.chrono24_service import search_chrono24
 from market.service import market_status, price_history, search_market
 from redis_client import get_redis
 
@@ -51,6 +52,21 @@ async def market_history(
     except Exception as exc:
         _log.exception("market_history_failed: %s", exc)
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Market history unavailable")
+
+
+@router.get("/chrono24")
+async def market_chrono24(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    q: Annotated[str, Query(min_length=2, max_length=200)],
+    brand: Annotated[str | None, Query(max_length=64)] = None,
+    limit: Annotated[int, Query(ge=1, le=48)] = 12,
+) -> dict:
+    """Chrono24 listings for a watch: live when a provider is configured, else the imported snapshot."""
+    try:
+        return await search_chrono24(db, await _redis_or_none(), q, brand, limit=limit)
+    except Exception as exc:
+        _log.exception("market_chrono24_failed: %s", exc)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Chrono24 search unavailable")
 
 
 @router.get("/status")

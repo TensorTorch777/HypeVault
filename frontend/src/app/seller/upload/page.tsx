@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
 import { ImageUploader } from "@/components/ImageUploader";
 import { ScreeningResult, type ScreeningOutcome } from "@/components/ScreeningResult";
+import { Chrono24Results } from "@/components/market/Chrono24Results";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -263,6 +264,11 @@ export default function SellerUploadPage() {
               {step === 3 ? (
                 <motion.div key="s3" initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : -8 }} transition={stepMotion} className="mt-8 space-y-5">
                   {outcome ? <ScreeningResult outcome={outcome} /> : null}
+                  {outcome?.listing_status === "live" && listingId ? (
+                    <div className="border-t border-white/10 pt-6">
+                      <Chrono24Results listingId={listingId} limit={8} title="This watch on Chrono24" />
+                    </div>
+                  ) : null}
                   <div className="flex flex-wrap gap-3">
                     {outcome?.listing_status === "live" && listingId ? (
                       <Button className="min-h-[2.75rem]" onClick={() => router.push(`/product/${listingId}`)}>

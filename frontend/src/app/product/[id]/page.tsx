@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+import { Chrono24Results } from "@/components/market/Chrono24Results";
 import { MarketPanel } from "@/components/market/MarketPanel";
 import { ProductVisualPanel } from "@/components/product/ProductVisualPanel";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -112,6 +113,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         <div className="mt-10">
           <MarketPanel data={marketQ.data} loading={listingQ.isLoading || marketQ.isLoading} error={marketQ.isError} />
         </div>
+        {listing?.id ? (
+          <div className="mt-16">
+            <Chrono24Results listingId={String(listing.id)} />
+          </div>
+        ) : null}
       </section>
       )}
     </div>

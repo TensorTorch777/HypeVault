@@ -45,6 +45,18 @@ class Settings(BaseSettings):
     # Price comparison scraper (Playwright). Use regional host, e.g. https://www.chrono24.in
     chrono24_search_base: str = "https://www.chrono24.in"
 
+    # Live Chrono24 search shown after a listing passes screening (market/chrono24_live.py).
+    # auto = apify when APIFY_TOKEN is set, else dataset (imported snapshot only). Or: apify | playwright | dataset.
+    chrono24_provider: str = "auto"
+    apify_token: str = ""
+    chrono24_apify_actor: str = "epicscrapers~chrono24-scraper"
+    chrono24_currency: str = "USD"
+    # One extra request per listing on Apify: adds brand, model, reference, condition, year, seller, full photos.
+    chrono24_enrich_details: bool = True
+    chrono24_cache_ttl_sec: int = 6 * 60 * 60
+    # Every live search is appended here as listings.jsonl + listings.csv. Empty disables the export.
+    chrono24_export_dir: str = "local_data/chrono24"
+
     # Comma-separated origins for browser dev (e.g. Next on :3001). Empty → sensible localhost defaults.
     cors_origins: str = ""
 

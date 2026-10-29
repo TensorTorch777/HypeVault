@@ -86,6 +86,50 @@ export async function fetchListingMarket(listingId: string): Promise<MarketSearc
   return data;
 }
 
+export type Chrono24Listing = {
+  listing_id: string;
+  title: string;
+  listing_url: string;
+  price: number | null;
+  currency: string | null;
+  brand: string | null;
+  model: string | null;
+  reference: string | null;
+  condition: string | null;
+  year: string | null;
+  location: string | null;
+  seller_type: string | null;
+  seller_name: string | null;
+  seller_rating: string | null;
+  image_url: string | null;
+  image_urls: string[];
+};
+
+export type Chrono24Search = {
+  status: "ok" | "no_match";
+  provider: "apify" | "playwright" | "dataset";
+  query: string;
+  brand: string | null;
+  fetched_at: string;
+  count: number;
+  price_range: { min: number; max: number; currency: string | null } | null;
+  items: Chrono24Listing[];
+  note?: string;
+  cached?: boolean;
+};
+
+/** Chrono24 listings for a live (screened) listing. */
+export async function fetchListingChrono24(listingId: string, limit = 12): Promise<Chrono24Search> {
+  const { data } = await api.get<Chrono24Search>(`/listings/${listingId}/chrono24`, { params: { limit } });
+  return data;
+}
+
+/** Chrono24 listings for free text, e.g. "Patek Philippe Nautilus 5711". */
+export async function searchChrono24(q: string, brand?: string | null, limit = 12): Promise<Chrono24Search> {
+  const { data } = await api.get<Chrono24Search>("/market/chrono24", { params: { q, limit, ...(brand ? { brand } : {}) } });
+  return data;
+}
+
 export async function fetchMarketHistory(q: string, brand?: string | null): Promise<MarketHistory> {
   const { data } = await api.get<MarketHistory>("/market/history", { params: { q, ...(brand ? { brand } : {}) } });
   return data;
