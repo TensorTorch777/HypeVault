@@ -1,0 +1,76 @@
+number	name	scene_type	prompt
+1	patek_nautilus5712_G01	wrist	A realistic phone photo of a Patek Philippe Nautilus 5712 steel watch with a blue dial and moon phase on the wrist of a hand resting on a car steering wheel, daylight through the windscreen.
+2	patek_nautilus5712_G02	wrist	A realistic phone photo of a Patek Philippe Nautilus 5712 steel watch with a blue dial and moon phase on a woman's wrist at a café table with a cup of coffee, soft afternoon light.
+3	patek_nautilus5712_G03	wrist	A mirror selfie in a gym locker room, a Patek Philippe Nautilus 5712 steel watch with a blue dial and moon phase visible on the wrist, phone flash, slightly grainy.
+4	patek_nautilus5712_G04	wrist	A low-light phone photo of a Patek Philippe Nautilus 5712 steel watch with a blue dial and moon phase on a wrist resting on a restaurant table at night, candle light, visible noise.
+5	patek_nautilus5712_G05	wrist	A realistic photo of a Patek Philippe Nautilus 5712 steel watch with a blue dial and moon phase on an older man's wrist while he reads a newspaper, soft window light.
+6	patek_aquanaut5168_G06	surface	A top-down phone photo of a Patek Philippe Aquanaut 5168G in white gold with a khaki green dial and strap on a white bed sheet next to sunglasses and a leather wallet.
+7	patek_aquanaut5168_G07	surface	A realistic photo of a Patek Philippe Aquanaut 5168G in white gold with a khaki green dial and strap lying on a black granite kitchen counter under harsh overhead light, with reflections.
+8	patek_aquanaut5168_G08	surface	A realistic photo of a Patek Philippe Aquanaut 5168G in white gold with a khaki green dial and strap lying on an open hardcover book, warm lamp light, evening.
+9	patek_aquanaut5168_G09	surface	A realistic phone photo of a Patek Philippe Aquanaut 5168G in white gold with a khaki green dial and strap on the edge of a marble bathroom sink, morning light.
+10	patek_aquanaut5168_G10	display	A realistic photo of a Patek Philippe Aquanaut 5168G in white gold with a khaki green dial and strap turning on a watch winder inside a wardrobe, dim light.
+11	patek_calatrava6119_G11	display	A photo of a Patek Philippe Calatrava 6119 in white gold with a black leather strap inside a jeweller's glass display case with a small price tag, shop lighting and reflections on the glass.
+12	patek_calatrava6119_G12	listing	A second-hand seller's listing photo of a Patek Philippe Calatrava 6119 in white gold with a black leather strap on plain white paper with a ruler beside it, taken with the phone flash.
+13	patek_calatrava6119_G13	box_papers	A top-down photo of a Patek Philippe Calatrava 6119 in white gold with a black leather strap next to its warranty card and a shop receipt on a desk, taken by a seller as proof of purchase.
+14	patek_calatrava6119_G14	closeup	A close-up of the caseback of a Patek Philippe Calatrava 6119 in white gold with a black leather strap showing the movement, held between two fingers.
+15	patek_calatrava6119_G15	closeup	A macro photo of the side of a Patek Philippe Calatrava 6119 in white gold with a black leather strap showing the crown, shallow depth of field.
+16	ap_royaloak15202_G16	closeup	A macro photo of the dial of an Audemars Piguet Royal Oak 15202 Jumbo Extra-Thin steel watch with a blue dial with a little dust on the crystal, edges slightly out of focus.
+17	ap_royaloak15202_G17	hand	A realistic photo of an Audemars Piguet Royal Oak 15202 Jumbo Extra-Thin steel watch with a blue dial held up against a rainy window at night, blurred city lights behind.
+18	ap_royaloak15202_G18	hand	A realistic photo of an Audemars Piguet Royal Oak 15202 Jumbo Extra-Thin steel watch with a blue dial held in an open palm at the beach, sand and sea behind, bright sun.
+19	ap_royaloak15202_G19	wrist	A realistic phone photo of an Audemars Piguet Royal Oak 15202 Jumbo Extra-Thin steel watch with a blue dial on a wrist outdoors in the snow, winter jacket sleeve, overcast sky.
+20	ap_royaloak15202_G20	workbench	A realistic photo of an Audemars Piguet Royal Oak 15202 Jumbo Extra-Thin steel watch with a blue dial on a watchmaker's workbench among small tools, bright task lamp.
+21	ap_offshore26470_G21	surface	A top-down phone photo of an Audemars Piguet Royal Oak Offshore 26470 chronograph with a blue dial and rubber strap with its strap removed and a spring-bar tool beside it on a cutting mat.
+22	ap_offshore26470_G22	surface	A realistic phone photo of an Audemars Piguet Royal Oak Offshore 26470 chronograph with a blue dial and rubber strap on an airplane tray table next to a travel pouch, cabin light.
+23	ap_offshore26470_G23	wrist	A candid phone photo of a child pointing at an Audemars Piguet Royal Oak Offshore 26470 chronograph with a blue dial and rubber strap on a parent's wrist in a living room.
+24	ap_offshore26470_G24	wrist	A night-mode phone photo of an Audemars Piguet Royal Oak Offshore 26470 chronograph with a blue dial and rubber strap on a wrist on a city street, neon reflections on the crystal.
+25	ap_offshore26470_G25	display	A realistic photo of an Audemars Piguet Royal Oak Offshore 26470 chronograph with a blue dial and rubber strap in a velvet tray at a pawn shop counter, fluorescent light.
+26	ap_code1159chrono_G01	wrist	A realistic phone photo of an Audemars Piguet Code 11.59 chronograph in white gold with a blue dial on the wrist of a hand resting on a car steering wheel, daylight through the windscreen.
+27	ap_code1159chrono_G02	wrist	A realistic phone photo of an Audemars Piguet Code 11.59 chronograph in white gold with a blue dial on a woman's wrist at a café table with a cup of coffee, soft afternoon light.
+28	ap_code1159chrono_G03	wrist	A mirror selfie in a gym locker room, an Audemars Piguet Code 11.59 chronograph in white gold with a blue dial visible on the wrist, phone flash, slightly grainy.
+29	ap_code1159chrono_G04	wrist	A low-light phone photo of an Audemars Piguet Code 11.59 chronograph in white gold with a blue dial on a wrist resting on a restaurant table at night, candle light, visible noise.
+30	ap_code1159chrono_G05	wrist	A realistic photo of an Audemars Piguet Code 11.59 chronograph in white gold with a blue dial on an older man's wrist while he reads a newspaper, soft window light.
+31	lange_lange1moon_G06	surface	A top-down phone photo of an A. Lange & Söhne Lange 1 Moon Phase in white gold with a grey dial on a white bed sheet next to sunglasses and a leather wallet.
+32	lange_lange1moon_G07	surface	A realistic photo of an A. Lange & Söhne Lange 1 Moon Phase in white gold with a grey dial lying on a black granite kitchen counter under harsh overhead light, with reflections.
+33	lange_lange1moon_G08	surface	A realistic photo of an A. Lange & Söhne Lange 1 Moon Phase in white gold with a grey dial lying on an open hardcover book, warm lamp light, evening.
+34	lange_lange1moon_G09	surface	A realistic phone photo of an A. Lange & Söhne Lange 1 Moon Phase in white gold with a grey dial on the edge of a marble bathroom sink, morning light.
+35	lange_lange1moon_G10	display	A realistic photo of an A. Lange & Söhne Lange 1 Moon Phase in white gold with a grey dial turning on a watch winder inside a wardrobe, dim light.
+36	lange_datograph_G11	display	A photo of an A. Lange & Söhne Datograph Up/Down chronograph in rose gold with a black dial inside a jeweller's glass display case with a small price tag, shop lighting and reflections on the glass.
+37	lange_datograph_G12	listing	A second-hand seller's listing photo of an A. Lange & Söhne Datograph Up/Down chronograph in rose gold with a black dial on plain white paper with a ruler beside it, taken with the phone flash.
+38	lange_datograph_G13	box_papers	A top-down photo of an A. Lange & Söhne Datograph Up/Down chronograph in rose gold with a black dial next to its warranty card and a shop receipt on a desk, taken by a seller as proof of purchase.
+39	lange_datograph_G14	closeup	A close-up of the caseback of an A. Lange & Söhne Datograph Up/Down chronograph in rose gold with a black dial showing the movement, held between two fingers.
+40	lange_datograph_G15	closeup	A macro photo of the side of an A. Lange & Söhne Datograph Up/Down chronograph in rose gold with a black dial showing the crown, shallow depth of field.
+41	lange_1815_G16	closeup	A macro photo of the dial of an A. Lange & Söhne 1815 watch in yellow gold with a white dial and blued hands with a little dust on the crystal, edges slightly out of focus.
+42	lange_1815_G17	hand	A realistic photo of an A. Lange & Söhne 1815 watch in yellow gold with a white dial and blued hands held up against a rainy window at night, blurred city lights behind.
+43	lange_1815_G18	hand	A realistic photo of an A. Lange & Söhne 1815 watch in yellow gold with a white dial and blued hands held in an open palm at the beach, sand and sea behind, bright sun.
+44	lange_1815_G19	wrist	A realistic phone photo of an A. Lange & Söhne 1815 watch in yellow gold with a white dial and blued hands on a wrist outdoors in the snow, winter jacket sleeve, overcast sky.
+45	lange_1815_G20	workbench	A realistic photo of an A. Lange & Söhne 1815 watch in yellow gold with a white dial and blued hands on a watchmaker's workbench among small tools, bright task lamp.
+46	rm_rm6701_G21	surface	A top-down phone photo of a Richard Mille RM 67-01 ultra-thin watch with a titanium case with its strap removed and a spring-bar tool beside it on a cutting mat.
+47	rm_rm6701_G22	surface	A realistic phone photo of a Richard Mille RM 67-01 ultra-thin watch with a titanium case on an airplane tray table next to a travel pouch, cabin light.
+48	rm_rm6701_G23	wrist	A candid phone photo of a child pointing at a Richard Mille RM 67-01 ultra-thin watch with a titanium case on a parent's wrist in a living room.
+49	rm_rm6701_G24	wrist	A night-mode phone photo of a Richard Mille RM 67-01 ultra-thin watch with a titanium case on a wrist on a city street, neon reflections on the crystal.
+50	rm_rm6701_G25	display	A realistic photo of a Richard Mille RM 67-01 ultra-thin watch with a titanium case in a velvet tray at a pawn shop counter, fluorescent light.
+51	rm_rm030_G01	wrist	A realistic phone photo of a Richard Mille RM 030 automatic watch with a skeleton dial and black rubber strap on the wrist of a hand resting on a car steering wheel, daylight through the windscreen.
+52	rm_rm030_G02	wrist	A realistic phone photo of a Richard Mille RM 030 automatic watch with a skeleton dial and black rubber strap on a woman's wrist at a café table with a cup of coffee, soft afternoon light.
+53	rm_rm030_G03	wrist	A mirror selfie in a gym locker room, a Richard Mille RM 030 automatic watch with a skeleton dial and black rubber strap visible on the wrist, phone flash, slightly grainy.
+54	rm_rm030_G04	wrist	A low-light phone photo of a Richard Mille RM 030 automatic watch with a skeleton dial and black rubber strap on a wrist resting on a restaurant table at night, candle light, visible noise.
+55	rm_rm030_G05	wrist	A realistic photo of a Richard Mille RM 030 automatic watch with a skeleton dial and black rubber strap on an older man's wrist while he reads a newspaper, soft window light.
+56	rm_rm1103_G06	surface	A top-down phone photo of a Richard Mille RM 11-03 flyback chronograph in carbon with an orange strap on a white bed sheet next to sunglasses and a leather wallet.
+57	rm_rm1103_G07	surface	A realistic photo of a Richard Mille RM 11-03 flyback chronograph in carbon with an orange strap lying on a black granite kitchen counter under harsh overhead light, with reflections.
+58	rm_rm1103_G08	surface	A realistic photo of a Richard Mille RM 11-03 flyback chronograph in carbon with an orange strap lying on an open hardcover book, warm lamp light, evening.
+59	rm_rm1103_G09	surface	A realistic phone photo of a Richard Mille RM 11-03 flyback chronograph in carbon with an orange strap on the edge of a marble bathroom sink, morning light.
+60	rm_rm1103_G10	display	A realistic photo of a Richard Mille RM 11-03 flyback chronograph in carbon with an orange strap turning on a watch winder inside a wardrobe, dim light.
+61	vc_overseaschrono_G11	display	A photo of a Vacheron Constantin Overseas chronograph in steel with a blue dial inside a jeweller's glass display case with a small price tag, shop lighting and reflections on the glass.
+62	vc_overseaschrono_G12	listing	A second-hand seller's listing photo of a Vacheron Constantin Overseas chronograph in steel with a blue dial on plain white paper with a ruler beside it, taken with the phone flash.
+63	vc_overseaschrono_G13	box_papers	A top-down photo of a Vacheron Constantin Overseas chronograph in steel with a blue dial next to its warranty card and a shop receipt on a desk, taken by a seller as proof of purchase.
+64	vc_overseaschrono_G14	closeup	A close-up of the caseback of a Vacheron Constantin Overseas chronograph in steel with a blue dial showing the movement, held between two fingers.
+65	vc_overseaschrono_G15	closeup	A macro photo of the side of a Vacheron Constantin Overseas chronograph in steel with a blue dial showing the crown, shallow depth of field.
+66	vc_traditionnelle_G16	closeup	A macro photo of the dial of a Vacheron Constantin Traditionnelle in rose gold with a silver dial with a little dust on the crystal, edges slightly out of focus.
+67	vc_traditionnelle_G17	hand	A realistic photo of a Vacheron Constantin Traditionnelle in rose gold with a silver dial held up against a rainy window at night, blurred city lights behind.
+68	vc_traditionnelle_G18	hand	A realistic photo of a Vacheron Constantin Traditionnelle in rose gold with a silver dial held in an open palm at the beach, sand and sea behind, bright sun.
+69	vc_traditionnelle_G19	wrist	A realistic phone photo of a Vacheron Constantin Traditionnelle in rose gold with a silver dial on a wrist outdoors in the snow, winter jacket sleeve, overcast sky.
+70	vc_traditionnelle_G20	workbench	A realistic photo of a Vacheron Constantin Traditionnelle in rose gold with a silver dial on a watchmaker's workbench among small tools, bright task lamp.
+71	vc_fiftysix_G21	surface	A top-down phone photo of a Vacheron Constantin Fiftysix automatic in steel with a grey dial with its strap removed and a spring-bar tool beside it on a cutting mat.
+72	vc_fiftysix_G22	surface	A realistic phone photo of a Vacheron Constantin Fiftysix automatic in steel with a grey dial on an airplane tray table next to a travel pouch, cabin light.
+73	vc_fiftysix_G23	wrist	A candid phone photo of a child pointing at a Vacheron Constantin Fiftysix automatic in steel with a grey dial on a parent's wrist in a living room.
+74	vc_fiftysix_G24	wrist	A night-mode phone photo of a Vacheron Constantin Fiftysix automatic in steel with a grey dial on a wrist on a city street, neon reflections on the crystal.
+75	vc_fiftysix_G25	display	A realistic photo of a Vacheron Constantin Fiftysix automatic in steel with a grey dial in a velvet tray at a pawn shop counter, fluorescent light.

@@ -1,0 +1,72 @@
+{
+  "protocol": "benchmark_v5_frontier",
+  "phase": 75,
+  "status": "PRE_REGISTERED",
+  "written_on": "2026-10-23",
+  "written_before_any_data": true,
+  "trigger": "A frontier-generator image of a Patek Philippe Grandmaster Chime on a wrist (testtest.jpeg, 877x826, no provenance metadata) passed live listing screening. DINOv2 live scored it 99.4% original; DINOv3 epoch_018 P(fake)=0.000; the Phase 74 head scored -8.77 (AUTHENTIC); Thermostatic/community-forensics-frontier-detector-2026-08 P(AI)=0.0007; CommunityForensics-DeepfakeDet-ViT P(AI)=0.0000. The frontier detector also called 47/270 real eBay photos and 32/200 Label_0 photos AI (experiments/external_detectors_v1/report.json), so it was not deployed.",
+  "question": "Does the Phase 75 frontier-aware DINOv3 head catch at least 80% of fresh ChatGPT and Gemini watch images made for this benchmark, for each of the two generators separately, while calling at most 3% of fresh real eBay photos FAKE?",
+  "scope_limit": "Real photograph versus AI-generated image only. No physical-counterfeit or authenticity claim. ChatGPT and Gemini (via their free web apps) are frontier generators whose relatives (GPT Image, Imagen) appear in the development corpus, so this is a seen-family result, not an unseen-generator result. Claude does not generate images and is not a generator here.",
+  "literature_basis": [
+    "Park and Owens, Community Forensics, CVPR 2025 (arXiv 2411.04125): generator diversity drives generalisation",
+    "Cozzolino et al., Raising the Bar of AI-generated Image Detection with CLIP, CVPRW 2024 (arXiv 2312.00195): linear heads on frozen foundation features",
+    "Rethinking Cross-Generator Image Forgery Detection through DINOv3 (arXiv 2511.22471): frozen DINOv3 features with a linear probe",
+    "Grommelt et al., Fake or JPEG?, ECCVW 2024 (arXiv 2403.17608): identical JPEG and size handling for both classes"
+  ],
+  "development_data": "Thermostatic/frontier-synthetic-images-2026 (training-only corpus; rows with watch prompts plus a generator-balanced sample of the rest), benchmark_v1-v4 (all groups; benchmark_v4 is spent and now development data), Label_0 train/validation photos. testtest.jpeg is never used for training, selection or thresholds; it is reported separately as the motivating case (n = 1). Real non-watch photos: a seeded sample of 2,000 COCO val2017 images (training reals only, never used for thresholds), so that content cannot stand in for generator traces.",
+  "classes": {
+    "REAL_PHOTO": "real_ebay_v5: primary image of eBay listings fetched on the scoring day (Browse API, category 31387, price >= 1000 USD, five brands), up to 40 per brand, excluding every listing in benchmark_v1-v4, the identification gallery (backend/identify/data/watch_gallery.npz) and market_listings before the scoring day. Minimum 30 per brand.",
+    "GENERATED": {
+      "chatgpt_v5": "PRIMARY. Made by the user in the free ChatGPT web app from benchmark_v5_frontier/PROMPTS.md (75 prompts; one image each, optionally a second image per prompt from a new chat, suffix _b), downloaded with the app's download button. Minimum 50 images, at most 150.",
+      "gemini_v5": "PRIMARY. Made in the free Gemini web app from benchmark_v5_frontier/PROMPTS_GEMINI.md: 75 prompts, 15 watch models not used in the ChatGPT prompts, 25 scenes each used 3 times (scene_type in prompts_gemini.tsv), one new chat per prompt, downloaded with Gemini's download button. Optional second image per prompt from a new chat (suffix _b). Minimum 50 images, at most 150."
+    }
+  },
+  "normalisation": "Both classes: RGB, Lanczos resize so the short side is 512 px, centre square crop, JPEG quality 90 (benchmark_v4 rule, Grommelt et al.).",
+  "no_peeking": "The user places the generated images directly in benchmark_v5_frontier/data/{chatgpt_v5,gemini_v5}/. No model is trained, selected or thresholded on them, and nobody inspects model scores on them before the single scoring run. Development (head training, threshold choice) is finished and frozen, with the head's SHA-256 recorded in experiments/frontier_v5/frozen_rule.json, before the scoring run.",
+  "threshold_rule": "FAKE threshold chosen on development real photos only (Label_0 validation + benchmark_v1-v4 real eBay, out-of-fold): at most 1% of them FAKE.",
+  "systems_compared": [
+    "LEGACY_DINOV2 live (0.88 rule)",
+    "DINOv3 epoch_018 frozen",
+    "Phase 74 head",
+    "Phase 75 head"
+  ],
+  "primary_analysis": "Per generator: images caught / total with a one-sided 95% Clopper-Pearson lower bound. Real: FAKE / total with a 95% Clopper-Pearson upper bound. Two images from the same prompt count separately; a prompt-clustered bootstrap interval is reported alongside.",
+  "success_criterion": "Caught >= 80% on chatgpt_v5 AND on gemini_v5, and real_ebay_v5 FAKE <= 3%.",
+  "known_confound": "Generated images are wrist, desk and box scenes; real eBay photos are mostly product shots, with some wrist shots. Results are reported per scene type as well, so a scene shortcut would show. The Gemini prompts use 25 varied scenes (wrist, surface, display, listing, box_papers, closeup, hand, workbench), so results are also reported per scene type for both apps.",
+  "runs_once": true,
+  "candidate_selection": "Candidates p74_ft (Phase 74 recipe, baseline), front_ft, front_pre+ft, front_ft+coco and front_pre+ft+coco (ml_rtx5080/frontier_v5.py). Eligible: development real watch photos FAKE <= 1% AND, fitted on all development data, at most 5% FAKE on 1,000 held-out real COCO val2017 photos that no candidate trains on (a content-shortcut check added on 2026-10-23 after the leave-one-generator-out results and before any test data existed, because nearly all frontier development images are not watches while all development reals were). Selected: the highest leave-one-frontier-generator-out catch rate among eligible candidates; ties go to the simpler view (ft).",
+  "data_collection_log": [
+    {
+      "date": "2026-10-24",
+      "set": "chatgpt_v5",
+      "images": 74,
+      "how": "Generated on 2026-10-23 22:38-00:31 in the free ChatGPT web app by a browser assistant (Claude in Chrome) working in the user's account, not by hand. Deviation from PROMPTS.md: prompt 1 was made in its own chat; prompts 2-75 were made in ONE shared chat, so later images could copy earlier ones (the browser assistant reported near-identical box-and-papers layouts across Richard Mille models, the same sleeve in wrist shots and the same outdoor background in hand shots). Prompt 10 (patek_aquanaut_S5) was not downloaded.",
+      "file_mapping": "74 PNGs in ~/Downloads ordered by download time; a single 170 s gap (others 71-108 s) after the Aquanaut close-up identified prompt 10 as the missing one. Copies, with original names, download times and SHA-256: benchmark_v5_frontier/data/chatgpt_v5_manifest.jsonl.",
+      "blindness": "The browser assistant saw every image while generating it. It does not train or select models. The Phase 75 head was frozen before these images existed (frozen_rule.json), and the session running the benchmark matched files by name and time only and did not open them.",
+      "consequence": "Images within a scene are correlated beyond prompt level, so the effective sample size is below 74. Results on this set are reported with that caveat, alongside any images regenerated in new chats (_b)."
+    },
+    {
+      "date": "2026-10-24",
+      "set": "gemini_v5",
+      "change": "Before any Gemini image existed, the user asked for different Gemini prompts so the test is not limited to the five ChatGPT scenes. PROMPTS_GEMINI.md replaces PROMPTS.md for Gemini. The frozen Phase 75 head is unchanged; these images remain test-only."
+    },
+    {
+      "date": "2026-10-24",
+      "set": "gemini_v5",
+      "images": 74,
+      "how": "Generated in the free Gemini web app by a browser assistant (Claude in Chrome) in the user's account, not by hand. Deviation from PROMPTS_GEMINI.md: all prompts were made in ONE shared chat (the file asks for a new chat per prompt). Gemini's daily limit paused the run after prompt 36; the browser assistant reported that the model selector then showed 'Flash-Lite', so prompts 37-75 may come from a different Gemini model than 1-36. Some prompts produced more than one image (79 download buttons); one image per prompt was downloaded. A first download attempt saved only 2 files (Chrome blocks repeated downloads); those 2 PNGs were later removed and all images were downloaded again at 09:46-10:00 as Gemini_Generated_Image (n).jpeg.",
+      "file_mapping": "74 files (numbers 0-73, none missing) for 75 prompts. Files 46-57 were downloaded out of prompt order. Names were assigned without anyone viewing the images: CLIP ViT-L/14 similarity between each image and a scene-only version of each prompt (watch description replaced by 'a luxury watch'), matched one-to-one (Hungarian algorithm) within +/-6 positions of the download order, where every scene is unique. Most likely missing prompt: 59 (rm_rm1103_G09). 12 names have low confidence (margin < 0.01) and are flagged in data/gemini_v5_manifest.jsonl; per-scene results will be reported with and without them. No exact duplicates; the most similar pairs are the same scene 25 prompts apart (CLIP image similarity up to 0.955).",
+      "consequence": "As with chatgpt_v5, images are correlated beyond prompt level (one chat), so the effective sample size is below 74. Results are also reported separately for prompts 1-36 and 37-75 (possible model change)."
+    },
+    {
+      "date": "2026-10-24",
+      "set": "real_ebay_v5",
+      "change": "With the full exclusion rule, eBay gave only 13 fresh A. Lange & Söhne and 0 fresh Richard Mille listings (Richard Mille: 287 live listings, all already used). For these two brands only, listings that appear just in the identification gallery or market_listings are allowed. Neither was ever used to train, select or threshold any detector. Every benchmark_v1-v4 listing and every training-set near-duplicate stays excluded. Decided before any model scored any v5 image."
+    },
+    {
+      "date": "2026-10-24",
+      "set": "real_ebay_v5",
+      "result": "144 real photos admitted: Patek Philippe 40, Audemars Piguet 40, Vacheron Constantin 40, A. Lange & Söhne 24, Richard Mille 0. Below the pre-registered minimum of 30 per brand for Lange and Richard Mille: eBay returned 285 live Richard Mille listings, 284 of them already in benchmark_v1-v4 (detector development data) and 1 without an image. Proceeding at the user's instruction ('start'); the real-photo FAKE rate therefore covers four brands (Lange under-sampled) and is reported per brand. The generated sets cover all five brands. The Label_0 SEALED_FINAL_TEST photos were not used: they belong to a separate final holdout."
+    }
+  ]
+}
