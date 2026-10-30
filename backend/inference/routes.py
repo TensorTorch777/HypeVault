@@ -47,7 +47,7 @@ from inference.screening import (
 )
 from inference.scope_gate import evaluate_declared_brand, failure_body, log_scope_request, unsupported_scope_body
 from inference.verdict import apply_min_authentic_confidence
-from s3_client import upload_file_bytes
+from storage import upload_file_bytes
 
 _log = logging.getLogger(__name__)
 

@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field, computed_field, field_validator
 from database import ListingCategory, ListingStatus
 from listings.customer_label import customer_label as label_for_listing
 from listings.customer_label import evidence_role as role_for_listing
-from s3_client import local_public_url
+from storage import local_public_url
 
 
 class ListingCreate(BaseModel):
@@ -92,14 +92,3 @@ class ReviewDecision(BaseModel):
     decision: Literal["approve", "reject"]
     note: str | None = Field(default=None, max_length=500)
 
-
-class PresignRequest(BaseModel):
-    listing_id: UUID
-    filename: str = Field(..., max_length=255)
-    content_type: str = Field(..., max_length=128)
-
-
-class PresignResponse(BaseModel):
-    url: str
-    key: str
-    dev: bool | None = None

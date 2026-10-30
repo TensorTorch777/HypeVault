@@ -32,7 +32,7 @@ from inference.engine import classify_image  # noqa: E402
 from inference.screening import check_content, check_origin, check_size  # noqa: E402
 from inference.triton_client import preprocess_chw  # noqa: E402
 from inference.verdict import apply_min_authentic_confidence  # noqa: E402
-from s3_client import LOCAL_UPLOAD_DIR  # noqa: E402
+from storage import LOCAL_UPLOAD_DIR  # noqa: E402
 
 
 def local_path(s3_url: str | None) -> Path | None:
