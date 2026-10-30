@@ -98,3 +98,14 @@ ml_rtx5080/experiments/watch_forensics_v*/readings/
 
 # Watch-identification gallery (derived from eBay listing photos; rebuilt by scripts/build_watch_gallery.py)
 backend/identify/data/
+
+# Third-party detector weights (downloaded, pinned by SHA-256 in backend/inference/ai_image_detector.py)
+models/external/
+
+# Phase 75 downloads and test images (large; rebuilt by ml_rtx5080/frontier_v5.py)
+ml_rtx5080/experiments/frontier_v5/train_images/
+ml_rtx5080/experiments/frontier_v5/coco/
+ml_rtx5080/experiments/frontier_v5/metadata_shards/
+ml_rtx5080/experiments/frontier_v5/metadata.jsonl
+ml_rtx5080/experiments/frontier_v5/features/
+ml_rtx5080/benchmark_v5_frontier/data/
