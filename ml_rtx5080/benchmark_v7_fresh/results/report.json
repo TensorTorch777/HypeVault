@@ -1,0 +1,669 @@
+{
+  "benchmark": "benchmark_v7_fresh",
+  "phase": 77,
+  "scored_at": "2026-10-30T07:29:22+00:00",
+  "protocol_sha256": "d947d4cf06e79433e46eea4815a0722871c671b7ea59dce222a85f55908641ec",
+  "lock": {
+    "written_on": "2026-10-30T12:36:13+05:30",
+    "written_before": "any benchmark_v7 image was fetched",
+    "protocol_sha256": "d947d4cf06e79433e46eea4815a0722871c671b7ea59dce222a85f55908641ec",
+    "phase76_rule_sha256": "a68d34bd57a6b86315a8d16f1481c9a922a31802e54ea82c8cdd91633bc1a5b8",
+    "phase77_rule_sha256": "68ff5513a75f1b276cae716941ba20aa8fc0bf0ad87dfed30bd3789b85dc56f1",
+    "phase77_head_sha256": "407a8bee9c32da9a270a90f89fc5070538965c59bf456fa79be204100f1b2c27",
+    "phase77_candidate": "d3+pe+pe512+mid / p77"
+  },
+  "cuts": {
+    "phase76": -2.1848080566651094,
+    "phase77": -1.7511829563363257
+  },
+  "note": "For generated groups the rate is the share caught (called FAKE); for real groups the share wrongly called FAKE.",
+  "groups": {
+    "illustrious": {
+      "all": {
+        "phase76": {
+          "k": 56,
+          "n": 56,
+          "rate": 1.0,
+          "ci95": [
+            0.9362,
+            1.0
+          ]
+        },
+        "phase77": {
+          "k": 56,
+          "n": 56,
+          "rate": 1.0,
+          "ci95": [
+            0.9362,
+            1.0
+          ]
+        }
+      },
+      "by_model": {
+        "illustrious": {
+          "phase76": {
+            "k": 56,
+            "n": 56,
+            "rate": 1.0,
+            "ci95": [
+              0.9362,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 56,
+            "n": 56,
+            "rate": 1.0,
+            "ci95": [
+              0.9362,
+              1.0
+            ]
+          }
+        }
+      },
+      "phase77_vs_phase76": {
+        "only_phase77": 0,
+        "only_phase76": 0,
+        "p_one_sided": 1.0
+      }
+    },
+    "real_ebay_v7": {
+      "all": {
+        "phase76": {
+          "k": 3,
+          "n": 122,
+          "rate": 0.0246,
+          "ci95": [
+            0.0051,
+            0.0702
+          ]
+        },
+        "phase77": {
+          "k": 5,
+          "n": 122,
+          "rate": 0.041,
+          "ci95": [
+            0.0134,
+            0.0931
+          ]
+        }
+      },
+      "by_brand": {
+        "A. Lange & S\u00f6hne": {
+          "phase76": {
+            "k": 0,
+            "n": 1,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.975
+            ]
+          },
+          "phase77": {
+            "k": 0,
+            "n": 1,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.975
+            ]
+          }
+        },
+        "Audemars Piguet": {
+          "phase76": {
+            "k": 1,
+            "n": 40,
+            "rate": 0.025,
+            "ci95": [
+              0.0006,
+              0.1316
+            ]
+          },
+          "phase77": {
+            "k": 1,
+            "n": 40,
+            "rate": 0.025,
+            "ci95": [
+              0.0006,
+              0.1316
+            ]
+          }
+        },
+        "Patek Philippe": {
+          "phase76": {
+            "k": 1,
+            "n": 40,
+            "rate": 0.025,
+            "ci95": [
+              0.0006,
+              0.1316
+            ]
+          },
+          "phase77": {
+            "k": 2,
+            "n": 40,
+            "rate": 0.05,
+            "ci95": [
+              0.0061,
+              0.1692
+            ]
+          }
+        },
+        "Richard Mille": {
+          "phase76": {
+            "k": 0,
+            "n": 1,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.975
+            ]
+          },
+          "phase77": {
+            "k": 1,
+            "n": 1,
+            "rate": 1.0,
+            "ci95": [
+              0.025,
+              1.0
+            ]
+          }
+        },
+        "Vacheron Constantin": {
+          "phase76": {
+            "k": 1,
+            "n": 40,
+            "rate": 0.025,
+            "ci95": [
+              0.0006,
+              0.1316
+            ]
+          },
+          "phase77": {
+            "k": 1,
+            "n": 40,
+            "rate": 0.025,
+            "ci95": [
+              0.0006,
+              0.1316
+            ]
+          }
+        }
+      }
+    },
+    "real_general": {
+      "all": {
+        "phase76": {
+          "k": 68,
+          "n": 93,
+          "rate": 0.7312,
+          "ci95": [
+            0.6292,
+            0.8179
+          ]
+        },
+        "phase77": {
+          "k": 31,
+          "n": 93,
+          "rate": 0.3333,
+          "ci95": [
+            0.2389,
+            0.4387
+          ]
+        }
+      }
+    },
+    "seen_family_by_phase76": {
+      "all": {
+        "phase76": {
+          "k": 404,
+          "n": 406,
+          "rate": 0.9951,
+          "ci95": [
+            0.9823,
+            0.9994
+          ]
+        },
+        "phase77": {
+          "k": 386,
+          "n": 406,
+          "rate": 0.9507,
+          "ci95": [
+            0.9249,
+            0.9697
+          ]
+        }
+      },
+      "by_model": {
+        "aurora-20-1-25": {
+          "phase76": {
+            "k": 30,
+            "n": 30,
+            "rate": 1.0,
+            "ci95": [
+              0.8843,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 30,
+            "n": 30,
+            "rate": 1.0,
+            "ci95": [
+              0.8843,
+              1.0
+            ]
+          }
+        },
+        "flux.2-klein-9b": {
+          "phase76": {
+            "k": 30,
+            "n": 30,
+            "rate": 1.0,
+            "ci95": [
+              0.8843,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 25,
+            "n": 30,
+            "rate": 0.8333,
+            "ci95": [
+              0.6528,
+              0.9436
+            ]
+          }
+        },
+        "frames-23-1-25": {
+          "phase76": {
+            "k": 29,
+            "n": 29,
+            "rate": 1.0,
+            "ci95": [
+              0.8806,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 29,
+            "n": 29,
+            "rate": 1.0,
+            "ci95": [
+              0.8806,
+              1.0
+            ]
+          }
+        },
+        "gpt-image-1.5": {
+          "phase76": {
+            "k": 30,
+            "n": 30,
+            "rate": 1.0,
+            "ci95": [
+              0.8843,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 28,
+            "n": 30,
+            "rate": 0.9333,
+            "ci95": [
+              0.7793,
+              0.9918
+            ]
+          }
+        },
+        "gpt-image-2": {
+          "phase76": {
+            "k": 29,
+            "n": 29,
+            "rate": 1.0,
+            "ci95": [
+              0.8806,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 28,
+            "n": 29,
+            "rate": 0.9655,
+            "ci95": [
+              0.8224,
+              0.9991
+            ]
+          }
+        },
+        "halfmoon-4-4-25": {
+          "phase76": {
+            "k": 29,
+            "n": 29,
+            "rate": 1.0,
+            "ci95": [
+              0.8806,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 27,
+            "n": 29,
+            "rate": 0.931,
+            "ci95": [
+              0.7723,
+              0.9915
+            ]
+          }
+        },
+        "ideogram-2.0": {
+          "phase76": {
+            "k": 27,
+            "n": 27,
+            "rate": 1.0,
+            "ci95": [
+              0.8723,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 26,
+            "n": 27,
+            "rate": 0.963,
+            "ci95": [
+              0.8103,
+              0.9991
+            ]
+          }
+        },
+        "lumina-17-2-25": {
+          "phase76": {
+            "k": 30,
+            "n": 30,
+            "rate": 1.0,
+            "ci95": [
+              0.8843,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 30,
+            "n": 30,
+            "rate": 1.0,
+            "ci95": [
+              0.8843,
+              1.0
+            ]
+          }
+        },
+        "midjourney-7": {
+          "phase76": {
+            "k": 29,
+            "n": 30,
+            "rate": 0.9667,
+            "ci95": [
+              0.8278,
+              0.9992
+            ]
+          },
+          "phase77": {
+            "k": 30,
+            "n": 30,
+            "rate": 1.0,
+            "ci95": [
+              0.8843,
+              1.0
+            ]
+          }
+        },
+        "nano-banana-pro": {
+          "phase76": {
+            "k": 28,
+            "n": 28,
+            "rate": 1.0,
+            "ci95": [
+              0.8766,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 27,
+            "n": 28,
+            "rate": 0.9643,
+            "ci95": [
+              0.8165,
+              0.9991
+            ]
+          }
+        },
+        "recraft-v2": {
+          "phase76": {
+            "k": 28,
+            "n": 28,
+            "rate": 1.0,
+            "ci95": [
+              0.8766,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 28,
+            "n": 28,
+            "rate": 1.0,
+            "ci95": [
+              0.8766,
+              1.0
+            ]
+          }
+        },
+        "recraft-v3": {
+          "phase76": {
+            "k": 25,
+            "n": 26,
+            "rate": 0.9615,
+            "ci95": [
+              0.8036,
+              0.999
+            ]
+          },
+          "phase77": {
+            "k": 20,
+            "n": 26,
+            "rate": 0.7692,
+            "ci95": [
+              0.5635,
+              0.9103
+            ]
+          }
+        },
+        "seedream-v5.0": {
+          "phase76": {
+            "k": 30,
+            "n": 30,
+            "rate": 1.0,
+            "ci95": [
+              0.8843,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 30,
+            "n": 30,
+            "rate": 1.0,
+            "ci95": [
+              0.8843,
+              1.0
+            ]
+          }
+        },
+        "z-image-turbo": {
+          "phase76": {
+            "k": 30,
+            "n": 30,
+            "rate": 1.0,
+            "ci95": [
+              0.8843,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 28,
+            "n": 30,
+            "rate": 0.9333,
+            "ci95": [
+              0.7793,
+              0.9918
+            ]
+          }
+        }
+      },
+      "phase77_vs_phase76": {
+        "only_phase77": 1,
+        "only_phase76": 19,
+        "p_one_sided": 0.999999
+      }
+    },
+    "unseen_both": {
+      "all": {
+        "phase76": {
+          "k": 583,
+          "n": 586,
+          "rate": 0.9949,
+          "ci95": [
+            0.9851,
+            0.9989
+          ]
+        },
+        "phase77": {
+          "k": 568,
+          "n": 586,
+          "rate": 0.9693,
+          "ci95": [
+            0.9519,
+            0.9817
+          ]
+        }
+      },
+      "by_model": {
+        "ernie-image": {
+          "phase76": {
+            "k": 116,
+            "n": 116,
+            "rate": 1.0,
+            "ci95": [
+              0.9687,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 116,
+            "n": 116,
+            "rate": 1.0,
+            "ci95": [
+              0.9687,
+              1.0
+            ]
+          }
+        },
+        "ernie-image-turbo": {
+          "phase76": {
+            "k": 119,
+            "n": 119,
+            "rate": 1.0,
+            "ci95": [
+              0.9695,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 110,
+            "n": 119,
+            "rate": 0.9244,
+            "ci95": [
+              0.8613,
+              0.9648
+            ]
+          }
+        },
+        "sora-2": {
+          "phase76": {
+            "k": 118,
+            "n": 120,
+            "rate": 0.9833,
+            "ci95": [
+              0.9411,
+              0.998
+            ]
+          },
+          "phase77": {
+            "k": 115,
+            "n": 120,
+            "rate": 0.9583,
+            "ci95": [
+              0.9054,
+              0.9863
+            ]
+          }
+        },
+        "veo-3": {
+          "phase76": {
+            "k": 117,
+            "n": 118,
+            "rate": 0.9915,
+            "ci95": [
+              0.9537,
+              0.9998
+            ]
+          },
+          "phase77": {
+            "k": 115,
+            "n": 118,
+            "rate": 0.9746,
+            "ci95": [
+              0.9275,
+              0.9947
+            ]
+          }
+        },
+        "wan-video-2.5": {
+          "phase76": {
+            "k": 113,
+            "n": 113,
+            "rate": 1.0,
+            "ci95": [
+              0.9679,
+              1.0
+            ]
+          },
+          "phase77": {
+            "k": 112,
+            "n": 113,
+            "rate": 0.9912,
+            "ci95": [
+              0.9517,
+              0.9998
+            ]
+          }
+        }
+      },
+      "phase77_vs_phase76": {
+        "only_phase77": 0,
+        "only_phase76": 15,
+        "p_one_sided": 1.0
+      }
+    }
+  },
+  "auc_unseen_both_vs_real_ebay_v7": {
+    "phase76": 0.9996,
+    "phase77": 0.9958
+  },
+  "success_criterion": {
+    "rule": {
+      "superiority": "On unseen_both pooled, Phase 77 catches more images than Phase 76, one-sided exact McNemar p < 0.05.",
+      "no_more_false_alarms": "On real_ebay_v7, Phase 77 FAKE count <= Phase 76 FAKE count + max(1, 1% of n), and Phase 77 FAKE rate <= 3%. On real_general, Phase 77 FAKE rate <= 5%.",
+      "decision": "Phase 77 is called better, and may replace Phase 76 on main, only if both hold. Otherwise Phase 76 stays and Phase 77 is reported as not better."
+    },
+    "superiority": false,
+    "no_more_false_alarms": false,
+    "phase77_better": false
+  }
+}
