@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 
 import { PageHero } from "@/components/layout/PageHero";
+import { ReviewQueue } from "@/components/admin/ReviewQueue";
 import { ListingsDesk } from "@/components/seller/ListingsDesk";
 import { ME_QUERY_KEY, fetchMe, logoutRemote } from "@/lib/api";
 import { isAdmin } from "@/lib/roles";
@@ -61,6 +62,7 @@ export default function AdminDeskPage() {
       queryKey={["all-listings", me.id]}
       totalNote="Across every seller"
       showSeller
+      beforeListings={<ReviewQueue queryKey={["all-listings", me.id]} />}
       actions={
         <>
           <Link href="/seller/dashboard" className="hv-btn-pill hv-btn-primary">

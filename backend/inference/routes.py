@@ -23,6 +23,7 @@ from auth.deps import get_current_user
 from config import settings
 from database import Listing, ListingCategory, ListingStatus, User, get_db
 from inference.live_screening import (
+    PHASE76_FUSION,
     RESPONSE_MODEL,
     LiveModelConfigurationError,
     classify_listing_photo,
@@ -33,7 +34,8 @@ from inference.schemas import AuthenticateResponse
 from inference.content_gate import score_watch
 from inference.dial_text import NOT_FOUND_HINT, read_dial_brand
 from inference.provenance import read_ai_label
-from inference.screening import check_content, check_label, check_origin, check_size
+from inference import known_ai
+from inference.screening import AI_LABEL, LIKELY_GENERATED, check_content, check_known_ai, check_label, check_origin, check_size
 from inference.scope_gate import evaluate_declared_brand, failure_body, log_scope_request, unsupported_scope_body
 from inference.verdict import apply_min_authentic_confidence
 from s3_client import upload_file_bytes
@@ -165,10 +167,25 @@ async def authenticate(
         listing.verdict = None
         listing.confidence = None
 
-        # 1. size, 2. AI label in the file, 3. is it a watch, 4. is it an original photo. Each can stop the listing.
+        # 1. size, 2. AI label in the file, 3. copy of a known AI image, 4. is it a watch, 5. is it an original photo.
+        # Each can stop the listing; a borderline origin score holds it for a proof photo.
         outcome = check_size(pil.width, pil.height, settings.listing_min_short_side_px)
         if outcome is None and settings.provenance_check:
             outcome = check_label(await asyncio.to_thread(read_ai_label, raw, ct))
+        known = None
+        if settings.known_ai_check and (outcome is None or outcome.code == AI_LABEL):
+            try:
+                known = await asyncio.to_thread(known_ai.check, pil)
+            except Exception as exc:
+                _log.exception("known_ai_failed: %s", exc)
+                listing.status = ListingStatus.pending
+                await db.commit()
+                return JSONResponse(
+                    status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                    content=failure_body("MODEL_ERROR", "The known-image check did not run. The listing is held, not published."),
+                )
+        if outcome is None and known is not None:
+            outcome = check_known_ai(known.similarity, settings.known_ai_min_similarity, known.source)
         content = None
         live_model_id = None
         if outcome is None:
@@ -215,8 +232,12 @@ async def authenticate(
                 min_authentic_confidence=min_authentic_confidence(live_model_id),
                 content=content,
                 origin_model=RESPONSE_MODEL[live_model_id],
+                hold_from_p_fake=settings.proof_hold_min_p_fake if live_model_id == PHASE76_FUSION else None,
             )
         assert outcome is not None
+        if known is not None and outcome.code in (AI_LABEL, LIKELY_GENERATED):
+            # Remember it, so a crop or screenshot of this image is caught next time.
+            await asyncio.to_thread(known_ai.remember, known.vector, f"upload:{outcome.code}:{list_uuid}")
 
         # Only photos that reached the origin check show a watch, so only they get a dial reading.
         dial_text = None
@@ -226,7 +247,11 @@ async def authenticate(
         listing.status = ListingStatus(outcome.status)
         listing.screening_code = outcome.code
         listing.screening_reason = outcome.reason
-        listing.screening_details = {**outcome.details, **({"dial_brand_text": dial_text} if dial_text else {})}
+        listing.screening_details = {
+            **outcome.details,
+            **({"dial_brand_text": dial_text} if dial_text else {}),
+            **({"known_ai_similarity": round(known.similarity, 4)} if known is not None else {}),
+        }
         await db.commit()
 
         log_scope_request(
@@ -246,7 +271,7 @@ async def authenticate(
             model_decision=listing.verdict,  # type: ignore[arg-type]
             screening_code=outcome.code,
             screening_reason=outcome.reason,
-            publication_decision="PUBLISHED" if outcome.status == "live" else "REJECTED",
+            publication_decision={"live": "PUBLISHED", "rejected": "REJECTED"}.get(outcome.status, "BLOCKED"),
             declared_brand=scope.canonical_brand or "",
             model=RESPONSE_MODEL.get(live_model_id),
             dial_brand_text=dial_text,

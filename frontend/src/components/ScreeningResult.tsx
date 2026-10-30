@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { CheckCircle2, Clock3, XCircle } from "lucide-react";
 
 export type ScreeningOutcome = {
   listing_status: "live" | "rejected" | "pending";
@@ -17,16 +17,24 @@ const CODE_TITLE: Record<string, string> = {
   LIKELY_GENERATED: "Looks AI-generated",
   AI_LABEL: "Labelled as AI-made",
   NOT_CONFIDENTLY_ORIGINAL: "Couldn't confirm an original photo",
+  KNOWN_AI_MATCH: "Copy of a known AI image",
+  NEEDS_PROOF: "Proof photo needed",
+  PROOF_SUBMITTED: "Waiting for an admin check",
+  REVIEW_REJECTED: "Not approved by an admin",
+  REVIEW_APPROVED: "Approved after an admin check",
 };
 
 /** Seller-facing result of listing screening: listed, or rejected with the reason. */
 export function ScreeningResult({ outcome }: { outcome: ScreeningOutcome }) {
   const reduced = useReducedMotion();
   const listed = outcome.listing_status === "live";
-  const Icon = listed ? CheckCircle2 : XCircle;
-  const tone = listed ? "#3EF2A6" : "#FF5A5F";
-  const title = listed ? "Listed" : outcome.listing_status === "pending" ? "Held — not listed" : "Not listed";
-  const subtitle = listed ? "Passed photo screening" : (outcome.screening_code && CODE_TITLE[outcome.screening_code]) || "Screening stopped this photo";
+  const held = outcome.listing_status === "pending";
+  const Icon = listed ? CheckCircle2 : held ? Clock3 : XCircle;
+  const tone = listed ? "#3EF2A6" : held ? "#F5C451" : "#FF5A5F";
+  const title = listed ? "Listed" : held ? "Held — not listed yet" : "Not listed";
+  const subtitle =
+    (outcome.screening_code && CODE_TITLE[outcome.screening_code]) ||
+    (listed ? "Passed photo screening" : "Screening stopped this photo");
 
   return (
     <motion.div
@@ -53,7 +61,9 @@ export function ScreeningResult({ outcome }: { outcome: ScreeningOutcome }) {
           <p className="mt-4 text-[0.75rem] leading-5 text-primary/55">
             {listed
               ? "Buyers can now see this listing. Screening checks the photo, not the watch: it is not a certificate of authenticity."
-              : "Buyers cannot see this listing. Upload a new photo to screen it again; the same listing is reused."}
+              : held
+                ? "Buyers cannot see this listing until an admin approves it."
+                : "Buyers cannot see this listing. Upload a new photo to screen it again; the same listing is reused."}
           </p>
         </div>
       </div>

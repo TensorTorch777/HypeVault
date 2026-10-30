@@ -240,6 +240,8 @@ export type Listing = {
   evidence_role?: "SEED_CONSTANT" | "HISTORICAL_MODEL_EVIDENCE" | "NONE" | string;
   /** Present only on the admin desk (/listings/all). */
   seller_email?: string | null;
+  screening_details?: Record<string, unknown> | null;
+  proof_url?: string | null;
 };
 
 export type RecentListingsResult =

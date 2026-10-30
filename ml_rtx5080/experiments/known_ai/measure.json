@@ -1,0 +1,29 @@
+{
+ "descriptor": "SSCD sscd_disc_mixup (Pizzi et al., CVPR 2022; Meta, MIT licence), Resize(288) + ImageNet normalisation, cosine similarity",
+ "model_sha256": "9f26bd4c848cc19b73d2ae92eea6e04886f61a7b764ceb7a13aeee62e6a6db56",
+ "library": "2382 AI watch images: benchmark_v1-v4 generated, benchmark_v5/v6 ChatGPT and Gemini, testtest.jpeg",
+ "edited_copies": "each benchmark_v6 AI image and testtest.jpeg: centre crop 95/85/70%, corner crop 75%, half size, JPEG q55, brightness+contrast; plus the real screenshot that was listed on 2026-10-30",
+ "real_photos": "1224 real watch photos never in the library: benchmark_v6/v7 real eBay (224) + Label_0 validation (1000)",
+ "real_max_similarity": {
+  "median": 0.303,
+  "p99": 0.53,
+  "max": 0.597
+ },
+ "edited_min_similarity": {
+  "SCREENSHOT": 0.835,
+  "bright": 0.926,
+  "corner75": 0.669,
+  "crop70": 0.65,
+  "crop85": 0.801,
+  "crop95": 0.931,
+  "down50": 0.963,
+  "jpeg55": 0.952
+ },
+ "cut": 0.65,
+ "at_cut": {
+  "edited_ai_matched": 0.9977,
+  "real_matched": 0,
+  "real_n": 1224
+ },
+ "caveat": "The cut was chosen on these same edits (development numbers). The library only knows images already seen; new AI images are left to the pixel detector."
+}

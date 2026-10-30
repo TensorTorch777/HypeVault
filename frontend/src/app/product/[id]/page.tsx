@@ -8,6 +8,7 @@ import axios from "axios";
 
 import { MarketPanel } from "@/components/market/MarketPanel";
 import { ProductVisualPanel } from "@/components/product/ProductVisualPanel";
+import { ProofPhotoForm } from "@/components/ProofPhotoForm";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchListing } from "@/lib/api";
 import { customerStatusCopy } from "@/lib/customerLabel";
@@ -76,7 +77,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 </p>
                 <p className={`hv-serif mt-3 text-[1.9rem] uppercase leading-tight ${unlisted ? "text-danger" : "text-primary"}`}>{status.title}</p>
                 <p className="mt-3 text-[0.875rem] leading-7 text-primary/80">{status.detail}</p>
-                {unlisted ? (
+                {listing.status === "pending" && listing.screening_code === "NEEDS_PROOF" ? (
+                  <div className="mt-6">
+                    <ProofPhotoForm listingId={listing.id} onSent={() => void listingQ.refetch()} />
+                  </div>
+                ) : unlisted && listing.status === "rejected" ? (
                   <Link href="/seller/upload" className="hv-btn-pill hv-btn-primary mt-6">
                     List with a new photo
                   </Link>

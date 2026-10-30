@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, Field, computed_field, field_validator
@@ -74,9 +75,22 @@ class ListingRead(BaseModel):
 
 
 class AdminListingRead(ListingRead):
-    """A listing in the admin review queue, with the seller it belongs to."""
+    """A listing in the admin review queue, with the seller it belongs to and the screening evidence."""
 
     seller_email: str | None = None
+    screening_details: dict | None = None
+
+    @computed_field
+    @property
+    def proof_url(self) -> str | None:
+        """The seller's proof photo (watch beside today's date), when one was sent."""
+        proof = (self.screening_details or {}).get("proof") or {}
+        return local_public_url(proof.get("url"))
+
+
+class ReviewDecision(BaseModel):
+    decision: Literal["approve", "reject"]
+    note: str | None = Field(default=None, max_length=500)
 
 
 class PresignRequest(BaseModel):

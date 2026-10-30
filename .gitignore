@@ -113,3 +113,8 @@ ml_rtx5080/experiments/phase76_probe/v5_features.npz
 ml_rtx5080/experiments/phase76_probe/backbone_features.npz
 ml_rtx5080/experiments/phase76_probe/fusion_features/
 ml_rtx5080/benchmark_v6_fresh/data/
+
+# Known-AI copy check: SSCD weights are downloaded and hash-checked at runtime; learned uploads stay local
+ml_rtx5080/experiments/known_ai/*.pt
+ml_rtx5080/experiments/known_ai/*.part
+backend/local_known_ai/

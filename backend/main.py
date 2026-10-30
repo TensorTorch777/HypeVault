@@ -19,6 +19,7 @@ from starlette.responses import Response
 from auth.routes import router as auth_router
 from config import settings
 from database import AsyncSessionLocal
+from inference.known_ai import preload as preload_known_ai
 from inference.live_screening import preload as preload_live_model
 from inference.checkpoint_identity import CheckpointIdentityError, checkpoint_identity_ready, verify_frozen_checkpoint
 from inference.benchmark_routes import router as benchmark_router
@@ -59,9 +60,10 @@ async def lifespan(app: FastAPI):
             verify_frozen_checkpoint()
         except CheckpointIdentityError as exc:
             _log.exception("dinov3_checkpoint_identity_failed: %s", exc)
-        preload_task = asyncio.create_task(asyncio.to_thread(preload_live_model))
+        preload_tasks = [asyncio.create_task(asyncio.to_thread(f)) for f in (preload_live_model, preload_known_ai)]
         yield
-        preload_task.cancel()
+        for task in preload_tasks:
+            task.cancel()
     finally:
         try:
             await close_redis()
