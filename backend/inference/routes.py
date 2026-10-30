@@ -35,7 +35,16 @@ from inference.content_gate import score_watch
 from inference.dial_text import NOT_FOUND_HINT, read_dial_brand
 from inference.provenance import read_ai_label
 from inference import known_ai
-from inference.screening import AI_LABEL, LIKELY_GENERATED, check_content, check_known_ai, check_label, check_origin, check_size
+from inference.screening import (
+    IMAGE_TOO_SMALL,
+    LIKELY_GENERATED,
+    check_content,
+    check_known_ai,
+    check_label,
+    check_origin,
+    check_size,
+    with_evidence,
+)
 from inference.scope_gate import evaluate_declared_brand, failure_body, log_scope_request, unsupported_scope_body
 from inference.verdict import apply_min_authentic_confidence
 from s3_client import upload_file_bytes
@@ -167,13 +176,15 @@ async def authenticate(
         listing.verdict = None
         listing.confidence = None
 
-        # 1. size, 2. AI label in the file, 3. copy of a known AI image, 4. is it a watch, 5. is it an original photo.
-        # Each can stop the listing; a borderline origin score holds it for a proof photo.
+        # 1. size, 2. is it a watch, 3. the model's decision (Phase 76 rejects, Phase 78 / a borderline score holds).
+        # A signed AI label or a copy of a known AI image also stops the listing, but the model still runs so the
+        # seller sees what it decided (with_evidence).
         outcome = check_size(pil.width, pil.height, settings.listing_min_short_side_px)
+        label_outcome = known_outcome = None
         if outcome is None and settings.provenance_check:
-            outcome = check_label(await asyncio.to_thread(read_ai_label, raw, ct))
+            label_outcome = check_label(await asyncio.to_thread(read_ai_label, raw, ct))
         known = None
-        if settings.known_ai_check and (outcome is None or outcome.code == AI_LABEL):
+        if outcome is None and settings.known_ai_check:
             try:
                 known = await asyncio.to_thread(known_ai.check, pil)
             except Exception as exc:
@@ -184,8 +195,7 @@ async def authenticate(
                     status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                     content=failure_body("MODEL_ERROR", "The known-image check did not run. The listing is held, not published."),
                 )
-        if outcome is None and known is not None:
-            outcome = check_known_ai(known.similarity, settings.known_ai_min_similarity, known.source)
+            known_outcome = check_known_ai(known.similarity, settings.known_ai_min_similarity, known.source)
         content = None
         live_model_id = None
         if outcome is None:
@@ -236,7 +246,9 @@ async def authenticate(
                 edited_copy_margin=edited_copy_margin,
             )
         assert outcome is not None
-        if known is not None and outcome.code in (AI_LABEL, LIKELY_GENERATED):
+        if outcome.code != IMAGE_TOO_SMALL:
+            outcome = with_evidence(outcome, label=label_outcome, known=known_outcome)
+        if known is not None and (label_outcome is not None or outcome.code == LIKELY_GENERATED):
             # Remember it, so a crop or screenshot of this image is caught next time.
             await asyncio.to_thread(known_ai.remember, known.vector, f"upload:{outcome.code}:{list_uuid}")
 

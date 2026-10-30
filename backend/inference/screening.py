@@ -123,6 +123,25 @@ def check_content(content: ContentCheck) -> ScreeningOutcome | None:
     )
 
 
+MODEL_NAMES = {
+    "PHASE76_DINOV3_PE": "DINOv3 + Perception Encoder model",
+    "DINOV3_FROZEN": "DINOv3 model",
+    "LEGACY_DINOV2": "DINOv2 model",
+}
+
+
+def model_sentence(*, origin_model: str, p_fake: float, decision: str) -> str:
+    """The model's own verdict in one sentence, shown first in every result that reached it."""
+    name = MODEL_NAMES.get(origin_model, "screening model")
+    verdicts = {
+        LIKELY_GENERATED: "it calls the photo AI-generated",
+        NOT_CONFIDENTLY_ORIGINAL: "it cannot confirm an original photograph",
+        NEEDS_PROOF: "on its own it would hold the listing for a proof photo",
+        PASSED: "it calls the photo an original photograph",
+    }
+    return f"Our {name} rates this photo {p_fake:.0%} likely AI-generated: {verdicts[decision]}."
+
+
 def check_origin(
     *,
     raw_verdict: str,
@@ -137,8 +156,10 @@ def check_origin(
 
     With `hold_from_p_fake`, a photo that passes but whose P(AI) is at least that value is held for a
     proof photo and an admin check instead of going live. So is one the Phase 78 head (trained on
-    screenshot-style copies) calls AI: `edited_copy_margin` >= 0.
+    screenshot-style copies) calls AI: `edited_copy_margin` >= 0. Every reason starts with the model's
+    own verdict (`details["model_says"]`).
     """
+    p_fake = float(raw_confidence) if raw_verdict == "FAKE" else 1.0 - float(raw_confidence)
     details = {
         "watch_score": round(content.watch_score, 4),
         "content_model": content.model,
@@ -146,35 +167,59 @@ def check_origin(
         "origin_verdict": raw_verdict,
         "origin_confidence": round(float(raw_confidence), 4),
         "min_original_confidence": min_authentic_confidence,
+        "p_ai": round(p_fake, 4),
     }
+
+    def outcome(status: Status, code: str, advice: str) -> ScreeningOutcome:
+        says = model_sentence(origin_model=origin_model, p_fake=p_fake, decision=code)
+        return ScreeningOutcome(status=status, code=code, reason=f"{says} {advice}".strip(), details=details | {"model_says": says})
+
     if raw_verdict == "FAKE":
-        return ScreeningOutcome(
-            status="rejected",
-            code=LIKELY_GENERATED,
-            reason=(
-                f"The photo shows traces typical of AI-generated or heavily edited images "
-                f"(model score {raw_confidence:.0%}). Upload an original, unedited photo you took of the watch."
-            ),
-            details=details,
-        )
+        return outcome("rejected", LIKELY_GENERATED, "Upload an original, unedited photo you took of the watch.")
     if raw_confidence < min_authentic_confidence:
-        return ScreeningOutcome(
-            status="rejected",
-            code=NOT_CONFIDENTLY_ORIGINAL,
-            reason=(
-                f"The screening model could not confirm this is an original photograph "
-                f"(confidence {raw_confidence:.0%}; listings need {min_authentic_confidence:.0%}). "
-                "Try a sharper, well-lit photo without filters, text overlays or collage edits."
-            ),
-            details=details,
-        )
-    p_fake = 1.0 - float(raw_confidence)
+        return outcome("rejected", NOT_CONFIDENTLY_ORIGINAL,
+                       f"Its confidence in an original photo is {raw_confidence:.0%}; listings need {min_authentic_confidence:.0%}. "
+                       "Try a sharper, well-lit photo without filters, text overlays or collage edits.")
     if edited_copy_margin is not None:
         details = details | {"edited_copy_margin": round(edited_copy_margin, 4)}
     borderline = hold_from_p_fake is not None and p_fake >= hold_from_p_fake
     edited_copy = edited_copy_margin is not None and edited_copy_margin >= 0
     if borderline or edited_copy:
-        return ScreeningOutcome(status="pending", code=NEEDS_PROOF, reason=NEEDS_PROOF_REASON,
-                                details=details | {"p_ai": round(p_fake, 4), "hold_from_p_ai": hold_from_p_fake,
-                                                   "held_by": "edited_copy_model" if edited_copy and not borderline else "borderline_score"})
-    return ScreeningOutcome(status="live", code=PASSED, reason=PASSED_REASON, details=details)
+        details = details | {"hold_from_p_ai": hold_from_p_fake,
+                             "held_by": "edited_copy_model" if edited_copy and not borderline else "borderline_score"}
+        if edited_copy and not borderline:
+            return outcome("pending", NEEDS_PROOF,
+                           "Its screenshot-trained check says the photo looks like an edited copy of an AI image, so it is held. "
+                           + NEEDS_PROOF_REASON)
+        return outcome("pending", NEEDS_PROOF, NEEDS_PROOF_REASON)
+    return outcome("live", PASSED, PASSED_REASON)
+
+
+def with_evidence(
+    model: ScreeningOutcome, *, label: ScreeningOutcome | None = None, known: ScreeningOutcome | None = None
+) -> ScreeningOutcome:
+    """Combine the model's decision with a signed AI label or a known-AI match. Either one stops the listing,
+    but the reason still says first what the model decided, and whether the evidence agrees with it."""
+    if label is None and known is None:
+        return model
+    model_says = model.details.get("model_says")
+    model_ai = model.code == LIKELY_GENERATED
+    parts = [model_says] if model_says else []
+    details = dict(model.details)
+    if label is not None:
+        tool = f" ({label.details['label_tool']})" if label.details.get("label_tool") else ""
+        parts.append(
+            f"{'The file’s signed Content Credentials label agrees' if model_ai else 'However, the file carries a signed Content Credentials label'}: "
+            f"{label.details['label_maker']} says it was made with AI{tool}."
+        )
+        details |= label.details
+    if known is not None:
+        lead = "It is also" if model_ai or label is not None else "However, it is"
+        parts.append(f"{lead} a copy of an AI-generated image we have already seen (match {known.details['known_ai_similarity']:.0%}).")
+        details |= known.details
+    if model.code == NOT_A_WATCH:
+        parts.insert(0, model.reason)
+    else:
+        parts.append("It is not listed. Upload an original photo you took of the watch.")
+    code = model.code if model.code in (LIKELY_GENERATED, NOT_A_WATCH) else (AI_LABEL if label is not None else KNOWN_AI_MATCH)
+    return ScreeningOutcome(status="rejected", code=code, reason=" ".join(parts), details=details)
