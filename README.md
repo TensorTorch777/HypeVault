@@ -1,436 +1,391 @@
-# HypeVault
-
 <p align="center">
-  <strong>Five-brand authenticity research prototype</strong><br/>
-  Not a universal luxury-watch authenticator, and not ready for production promotion.
+  <img src="docs/assets/readme/hero.svg" alt="HypeVault: AI-photo screening for luxury-watch listings" width="100%">
 </p>
 
 <p align="center">
-  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-111111?style=for-the-badge"></a>
-  <img alt="Frontend" src="https://img.shields.io/badge/frontend-Next.js%2014-000000?style=for-the-badge">
-  <img alt="Backend" src="https://img.shields.io/badge/backend-FastAPI-0A0A0A?style=for-the-badge">
-  <img alt="Inference" src="https://img.shields.io/badge/inference-Triton%20%7C%20Torch-222222?style=for-the-badge">
-  <img alt="Database" src="https://img.shields.io/badge/database-PostgreSQL%20%7C%20Redis-1B1B1B?style=for-the-badge">
+  <img alt="Live model" src="https://img.shields.io/badge/live%20model-DINOv3%20%2B%20Perception%20Encoder-FF7EB6?style=for-the-badge&labelColor=1A1233">
+  <img alt="Phase" src="https://img.shields.io/badge/phase-78-F5C451?style=for-the-badge&labelColor=1A1233">
+  <img alt="Brands" src="https://img.shields.io/badge/brands-5-5EEAD4?style=for-the-badge&labelColor=1A1233">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-A78BFA?style=for-the-badge&labelColor=1A1233"></a>
 </p>
 
 <p align="center">
-  <img alt="Status" src="https://img.shields.io/badge/status-active%20development-5B21B6?style=flat-square">
-  <img alt="API" src="https://img.shields.io/badge/api-FastAPI%20Async-0E7490?style=flat-square">
-  <img alt="UI" src="https://img.shields.io/badge/ui-Tailwind%20%2B%20Motion-7C3AED?style=flat-square">
-  <img alt="Auth" src="https://img.shields.io/badge/auth-JWT%20%2B%20OAuth-334155?style=flat-square">
-  <img alt="Observability" src="https://img.shields.io/badge/metrics-Prometheus-7F1D1D?style=flat-square">
+  <img alt="Next.js" src="https://img.shields.io/badge/Next.js%2014-000000?style=flat-square&logo=nextdotjs&logoColor=white">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white">
+  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white">
+  <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white">
+  <img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white">
+  <img alt="NVIDIA Triton" src="https://img.shields.io/badge/Triton-76B900?style=flat-square&logo=nvidia&logoColor=white">
+  <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white">
+  <img alt="Redis" src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white">
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white">
 </p>
 
----
+<p align="center">
+  <a href="#-what-it-does">What it does</a> ·
+  <a href="#-screening-pipeline">Pipeline</a> ·
+  <a href="#-screenshots">Screenshots</a> ·
+  <a href="#-the-model">Model</a> ·
+  <a href="#-results">Results</a> ·
+  <a href="#-classification-reports">Reports</a> ·
+  <a href="#-quick-start">Quick start</a> ·
+  <a href="#-api">API</a>
+</p>
 
-## Quick Navigation
+<p align="center"><img src="docs/assets/readme/divider.svg" width="100%" alt=""></p>
 
-- [Overview](#overview)
-- [Screenshots](#screenshots)
-- [Core Capabilities](#core-capabilities)
-- [Architecture Snapshot](#architecture-snapshot)
-- [Repository Structure](#repository-structure)
-- [Quick Start](#quick-start)
-- [Command Center by Role](#command-center-by-role)
-- [API Surface (Key Routes)](#api-surface-key-routes)
-- [Demo Script (Presentation Flow)](#demo-script-presentation-flow)
-- [Inference Modes](#inference-modes)
-- [Model training results](#model-training-results)
-- [Security and Secret Handling](#security-and-secret-handling)
-- [Production Notes](#production-notes)
-- [License](#license)
+## ✨ What it does
 
----
-
-## Current status
-
-`NOT_READY_FOR_PROMOTION`
-
-## Scope
-
-Five-brand authenticity research prototype.
-
-Supported brands:
-
-1. A. Lange & Söhne
-2. Audemars Piguet
-3. Patek Philippe
-4. Richard Mille
-5. Vacheron Constantin
-
-General luxury-watch authenticity is unsupported. Open-set rejection is not validated. `production_ood_threshold` is null.
-
-## Validation summary
-
-- Final test: 3,006 in-distribution samples, five brands, calibrated ROC-AUC 1.0, PR-AUC 1.0, F1 1.0, false-authentic 0, false-fake 0. This is not universal authenticity evidence.
-- Calibration: 2,998 samples, frozen temperature `0.24038200410185356`.
-- Robustness: clean false-authentic 0 and false-fake 0. Quality policy caught 8 of 9 known stress false-fake events. Resize/recompression remains uncovered.
-- OOD: Phase 35 is `OOD_FAIL` (337/408 authentic escape; unseen luxury about 88.1%). Phase 36 is `WATCH_OOD_UNRESOLVED` (25 holdout images).
-- Serving: live listing checks stay on DINOv2 (`dinov2_vitb14_live`, ViT-B/14 at 504). The frozen research candidate is DINOv3 (`dinov3_authenticity_candidate`). Both are served together on NVIDIA Triton 26.01 GPU with exact FP32 (`use_tf32=0`). The old ViT-G/14 `dinov2_classifier` is not routed. `AUTHENTICITY_MODEL_PRODUCTION_APPROVED` remains false.
-
-## Known blockers
-
-- OOD fail
-- Runtime parity between the live DINOv2 path and the frozen DINOv3 candidate
-- Serving infrastructure
-- Policy approval
-
-## Overview
-
-HypeVault is a marketplace codebase aimed at luxury-watch listings.
-The authenticity model is a research prototype for the five brands above.
-A declared brand outside that list returns `UNSUPPORTED_SCOPE` and no authentic or fake verdict.
-
-Core principles:
-- No authenticity verdict outside the five-brand scope
-- Comparable market context is separate from authenticity
-- Customer-facing production promotion is forbidden
-
----
-
-## Screenshots
+HypeVault is a marketplace for luxury-watch listings with an AI-photo gate in front of it. When a seller uploads a photo, HypeVault decides whether it is a **real photograph of a watch** or an **AI-generated image**, and tells the seller why.
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/assets/screenshots/home.jpg" alt="Home page: a collage of the five supported houses with an Enter the market button"></td>
-    <td width="50%"><img src="docs/assets/screenshots/market_search.jpg" alt="Market page for Patek Philippe Nautilus 5711: median asking price, price spread chart and live eBay listings"></td>
-  </tr>
-  <tr>
-    <td><b>Home.</b> The five houses HypeVault covers.</td>
-    <td><b>Market.</b> A search shows the median asking price and its spread from the dated Chrono24 dataset and live eBay listings, each figure with its source and date.</td>
-  </tr>
-  <tr>
-    <td><img src="docs/assets/screenshots/upload_ai_label.jpg" alt="Seller upload result: Not listed, labelled as AI-made by an OpenAI Content Credentials label, followed by what this watch sells for"></td>
-    <td><img src="docs/assets/screenshots/research_compare.jpg" alt="Research page: DINOv3 and DINOv2 side by side on a ChatGPT image, both saying authentic, with masked-patch maps"></td>
-  </tr>
-  <tr>
-    <td><b>Seller upload.</b> A ChatGPT image is turned away because its signed Content Credentials label says AI made it. The watch is still identified from the photo, with matching eBay listings and prices.</td>
-    <td><b>Research.</b> DINOv3 and DINOv2 side by side, with the patches that moved each score. Both call this ChatGPT image authentic; the Phase 76 head below catches it.</td>
+    <td width="33%" valign="top">
+      <h3>🛡️ Screen</h3>
+      Every listing photo passes seven checks. The live model is a <b>DINOv3 + Perception Encoder</b> hybrid. Every message starts with its own verdict, for example <i>"rates this photo 100% likely AI-generated"</i>.
+    </td>
+    <td width="33%" valign="top">
+      <h3>⏸️ Hold</h3>
+      Edited, cropped or screenshotted AI images are caught by a copy check. Borderline photos are <b>held</b> until the seller sends a proof photo with today's date, and an admin approves it.
+    </td>
+    <td width="33%" valign="top">
+      <h3>📈 Price</h3>
+      The watch is identified from the photo or its name. Prices come from live <b>eBay</b> listings (Browse API) and an imported, dated <b>Chrono24</b> dataset, with source and date on every figure.
+    </td>
   </tr>
 </table>
 
----
+> [!IMPORTANT]
+> HypeVault screens the **photo**, not the watch. A listed watch is not certified authentic. The model covers five brands only: **A. Lange & Söhne, Audemars Piguet, Patek Philippe, Richard Mille and Vacheron Constantin**. Any other brand returns `UNSUPPORTED_SCOPE` with no verdict. It is a research prototype (`AUTHENTICITY_MODEL_PRODUCTION_APPROVED = false`).
 
-## Core Capabilities
+<p align="center">
+  <img src="docs/assets/readme/results.svg" alt="Headline results: 47 of 47 ChatGPT and Gemini images caught, 583 of 586 never-seen generators caught, 99.8% of edited AI copies matched, 2 of 102 real eBay photos flagged" width="100%">
+</p>
 
-- AI-backed listing verification with Triton or local Torch fallback
-- Rejection of photos whose signed Content Credentials (C2PA) label says an AI made them (ChatGPT, Gemini)
-- Watch identification from a photo or a name (DINOv3 gallery, dial text, eBay image search), then eBay and Chrono24 prices
-- Role-based buyer/seller experiences with JWT session flows
-- Google sign-in support (buyer path) plus email/password auth
-- Multi-source market comparison (StockX, Chrono24, eBay)
-- Cache freshness metadata for comparison responses
-- Health, readiness, and metrics endpoints for runtime visibility
+<p align="center"><img src="docs/assets/readme/divider.svg" width="100%" alt=""></p>
 
----
+## 🔬 Screening pipeline
 
-## Architecture Snapshot
+<p align="center">
+  <img src="docs/assets/readme/pipeline.svg" alt="Seven checks in order: size, signed AI label, known-AI copy, is it a watch, DINOv3 + Perception Encoder, edited-copy hold, admin review" width="100%">
+</p>
+
+| # | Check | What it does | Outcome |
+|:-:|---|---|---|
+| 1 | 📏 **Size** | The short side must be at least 400 px | Too small → not listed |
+| 2 | 🏷️ **AI label** | Reads a signed C2PA *Content Credentials* label (ChatGPT, Gemini) | AI label → not listed, as evidence beside the model's verdict |
+| 3 | 🧬 **Known AI copy** | [SSCD](https://github.com/facebookresearch/sscd-copy-detection) copy detection against 2,382 known AI watch images plus every upload rejected as AI. Cosine similarity ≥ 0.65 is a copy | Copy → not listed, as evidence |
+| 4 | ⌚ **Is it a watch?** | Zero-shot CLIP | Not a watch → not listed |
+| 5 | 🧠 **DINOv3 + PE** | Phase 76 hybrid: P(AI) = σ(score − t<sub>fake</sub>) | AI → **not listed** |
+| 6 | ✂️ **Edited copy** | Phase 78 head, trained on screenshot-style copies, or a borderline score (P(AI) ≥ 20%) | Unsure → **held for a proof photo** |
+| 7 | 🧑‍⚖️ **Admin review** | The admin compares the first photo with a proof photo (watch + handwritten date + name) | Approve → listed · reject → not listed |
+
+The model always runs, even when the label or the copy check has already decided. The seller first sees what the model decided, then the evidence.
+
+<p align="center"><img src="docs/assets/readme/divider.svg" width="100%" alt=""></p>
+
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/assets/screenshots/upload_passed.jpg" alt="Seller upload result: Listed. Our DINOv3 + Perception Encoder model rates this photo 0% likely AI-generated"></td>
+    <td width="50%"><img src="docs/assets/screenshots/upload_held_for_proof.jpg" alt="Seller upload result: Held, not listed yet, with a form to send a proof photo"></td>
+  </tr>
+  <tr>
+    <td>🟢 <b>Passed.</b> A real photo: the hybrid rates it 0% likely AI and the watch goes live.</td>
+    <td>🟡 <b>Held for proof.</b> A borderline score (26%): the seller is asked for a photo of the watch next to today's date and their name.</td>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/screenshots/upload_known_ai_copy.jpg" alt="Seller upload result: Not listed, the photo is a copy of a known AI-generated image (match 97%)"></td>
+    <td><img src="docs/assets/screenshots/upload_ai_label.jpg" alt="Seller upload result: Not listed, the model rates it 100% AI and the OpenAI Content Credentials label agrees"></td>
+  </tr>
+  <tr>
+    <td>🔴 <b>Known AI copy.</b> An edited copy of an AI image already seen (match 97%).</td>
+    <td>🔴 <b>AI label.</b> The model says 100% AI first. The signed OpenAI Content Credentials label agrees.</td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="docs/assets/screenshots/admin_review_queue.jpg" alt="Admin review queue: first photo next to the proof photo, the AI chance of each, and Approve and Reject buttons"></td>
+  </tr>
+  <tr>
+    <td colspan="2">🧑‍⚖️ <b>Admin review queue.</b> The first photo next to the proof photo, with each one's AI chance, the closest known AI image and why the listing was held.</td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="docs/assets/screenshots/research_compare_three.jpg" alt="Research tab: the hybrid, DINOv3 and DINOv2 side by side on one image; the hybrid says FAKE, the other two say AUTHENTIC"></td>
+  </tr>
+  <tr>
+    <td colspan="2">🔬 <b>Research tab: compare all three.</b> On the same Gemini image, the hybrid says <b>FAKE</b> while DINOv3 and DINOv2 alone say authentic. Masked-patch maps show which parts of the image moved each score.</td>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/screenshots/home.jpg" alt="Home page: a collage of the five supported houses"></td>
+    <td><img src="docs/assets/screenshots/market_search.jpg" alt="Market page: median asking price, price spread and live eBay listings"></td>
+  </tr>
+  <tr>
+    <td>🏠 <b>Home.</b> The five houses HypeVault covers.</td>
+    <td>💹 <b>Market.</b> Median asking price and spread from the dated Chrono24 dataset and live eBay listings.</td>
+  </tr>
+</table>
+
+<p align="center"><img src="docs/assets/readme/divider.svg" width="100%" alt=""></p>
+
+## 🧠 The model
 
 ```mermaid
 flowchart LR
-  U[Buyer / Seller] --> F[Next.js Frontend]
-  F --> B[FastAPI Backend]
-  B --> PG[(PostgreSQL)]
-  B --> R[(Redis)]
-  B --> T[Triton Inference]
-  B --> S3[(S3 or Local Upload Storage)]
-  B --> SC[Scraper Workers]
-  SC --> X[StockX]
-  SC --> C[Chrono24]
-  SC --> E[eBay]
+  P([📷 listing photo]):::photo --> N[centre square · Lanczos 512 px · JPEG q90]:::step
+  N --> D3[DINOv3 ViT-B/16<br/>pretrained + fine-tuned<br/>4,608 features]:::dino
+  N --> PE[Perception Encoder L/14-336<br/>pooled<br/>1,024 features]:::pe
+  D3 --> H76{{Phase 76 head<br/>logistic regression}}:::head
+  PE --> H76
+  D3 --> H78{{Phase 78 head<br/>+ screenshot-style copies}}:::hold
+  PE --> H78
+  H76 -->|AI| R([🔴 not listed]):::bad
+  H78 -->|edited copy| HD([🟡 held for proof]):::warn
+  H76 -->|real| OK([🟢 listed]):::good
+  classDef photo fill:#1A1233,stroke:#A78BFA,color:#F2F0FA
+  classDef step fill:#12132A,stroke:#5EEAD4,color:#F2F0FA
+  classDef dino fill:#2A1030,stroke:#FF7EB6,color:#FFE6F2
+  classDef pe fill:#0F2A2A,stroke:#5EEAD4,color:#E6FFFA
+  classDef head fill:#2A2410,stroke:#F5C451,color:#FFF6DC
+  classDef hold fill:#2A2410,stroke:#F5C451,color:#FFF6DC,stroke-dasharray:5 3
+  classDef good fill:#0F2A1E,stroke:#34D399,color:#D1FAE5
+  classDef warn fill:#2A2410,stroke:#F5C451,color:#FEF3C7
+  classDef bad fill:#2A1014,stroke:#F87171,color:#FEE2E2
 ```
 
-### Frontend
-- Next.js 14 App Router
-- TypeScript + Tailwind CSS
-- TanStack Query + Axios
-- Framer Motion + Recharts
+| | Phase 76 (rejects) | Phase 78 (holds only) |
+|---|---|---|
+| Features | DINOv3 ViT-B/16 (pretrained + fine-tuned `epoch_018`) and Perception Encoder `vit_pe_core_large_patch14_336.fb` | same |
+| Head | StandardScaler + logistic regression (C = 0.05, balanced) | same, with 2 screenshot-style copies of every training image |
+| Training | 8,314 real photos (Label_0, eBay v1–v5, COCO) · 5,429 generated (benchmarks v1–v4, Kandinsky, frontier generators) · 150 ChatGPT v5 + Gemini v5 images, each ×10 | Phase 76 set + its edited copies |
+| Cut | t<sub>fake</sub> = −2.185, set on real photos only (≤ 1% FAKE) | t<sub>fake</sub> = −3.047 |
+| Serving | in-process on the RTX 5080 (CUDA) | in-process, same features |
 
-### Backend
-- FastAPI (async)
-- SQLAlchemy 2 + asyncpg
-- Redis (auth token rotation + scraper cache)
-- Playwright scrapers
-- Triton gRPC inference client
-- Prometheus metrics endpoint
+<p align="center"><img src="docs/assets/readme/divider.svg" width="100%" alt=""></p>
 
-### Infrastructure
-- Docker Compose for local Postgres/Redis/Triton
-- Docker and Triton configs under `infra/`
-- Listing photos stored on local disk (`backend/local_uploads`)
+## 📊 Results
 
----
+Every benchmark has a protocol written **before** its images existed, a rule frozen on earlier data, and **one** scoring run.
 
-## Repository Structure
+### benchmark_v6 — Phase 76 goes live
+
+<p align="center"><img src="docs/assets/results/benchmark_v6_phase76.png" alt="benchmark_v6: Phase 76 caught 30/30 ChatGPT, 17/17 Gemini and 13/13 Gemini Edu images and flagged 2/102 real eBay photos" width="100%"></p>
+
+| Group | DINOv2 (live then) | Phase 75 | **Phase 76** |
+|---|:-:|:-:|:-:|
+| ChatGPT (30) | 4 / 30 | 2 / 30 | **30 / 30** ✅ |
+| Gemini (17) | 0 / 17 | 10 / 17 | **17 / 17** ✅ |
+| Gemini, second account (13) | 1 / 13 | 4 / 13 | **13 / 13** ✅ |
+| Real eBay wrongly flagged (102) | 4 / 102 | 4 / 102 | **2 / 102** ✅ |
+
+The pass bar was met. ChatGPT and Gemini were in Phase 76's training data, so this is a seen-app result.
+
+### benchmark_v7 — never-seen generators (Phase 77 vs Phase 76)
+
+<p align="center"><img src="docs/assets/results/benchmark_v7_phase77.png" alt="benchmark_v7: Phase 76 caught 583/586 images from never-seen generators; Phase 77 caught 568/586 and was not better" width="100%"></p>
+
+| Group | **Phase 76 (live)** | Phase 77 |
+|---|:-:|:-:|
+| Never-seen generators: ERNIE, ERNIE Turbo, Sora 2, Veo 3, Wan 2.5 | **583 / 586** | 568 / 586 |
+| Anime SDXL (Illustrious) | 56 / 56 | 56 / 56 |
+| Real eBay watches wrongly flagged | **3 / 122** | 5 / 122 |
+| AUC, never-seen vs real eBay | **0.9996** | 0.9958 |
+
+Phase 77 was **not better**, so it was not merged. Phase 76 stays live.
+
+### Phase 78 — screenshots and crops · known-AI copy check
+
+<p align="center"><img src="docs/assets/results/phase78_edited_copies.png" alt="Phase 78 catches more edited AI copies but flags more real photos, so it only holds" width="100%"></p>
+
+| benchmark_v6 AI images, edited | Phase 76 | Phase 78 |
+|---|:-:|:-:|
+| Original | 59 / 60 | 60 / 60 |
+| Screenshot-style | 37 / 60 | **60 / 60** |
+| 70% crop | 9 / 60 | **52 / 60** |
+| Half size | 41 / 60 | **60 / 60** |
+| Real eBay wrongly flagged (original) | **5 / 224** | 10 / 224 |
+
+Phase 78 catches edited copies far better, but it flags twice as many real photos. So it **only holds** a listing for a proof photo, and never rejects one.
+
+<p align="center"><img src="docs/assets/results/known_ai_similarity.png" alt="Known-AI copy check: 99.8% of edited copies matched, 0 of 1,224 real photos matched at the 0.65 cut" width="85%"></p>
+
+At the 0.65 cut, the SSCD copy check matched **99.8%** of edited AI copies and **0 of 1,224** real watch photos. The highest real photo scored 0.597.
+
+<details>
+<summary><b>📜 Full benchmark history (v1–v7)</b></summary>
+
+| Benchmark | Question | Result |
+|---|---|---|
+| v1: 300 eBay, 284 Kandinsky 2.2, 150 SDXL | DINOv2 or DINOv3? | Underpowered (16 discordant, p = 0.21); DINOv2 stayed live |
+| v2: 300 eBay, 287 Kandinsky 2.2, 293 aMUSEd | Watch forensics v1 vs DINOv3 | 63.4% vs 24.1% caught, but 3.7% of real photos rejected. **Not met** |
+| v3: 300 eBay, 296 Stable Cascade, 281 Kandinsky 2.2 | Watch forensics v2 vs DINOv3 | Stable Cascade 91.9% vs 68.9% (p = 2.3 × 10⁻¹⁰); real 2.0% vs 0.3%. **Met** |
+| v4: 270 eBay, 283 Kandinsky 2.2, 297 Stable Cascade | Phase 74 Kandinsky head | Kandinsky 283/283, Stable Cascade 297/297, real 2/270. **Met** (both generators seen in training) |
+| v5: 144 eBay, 75 ChatGPT, 75 Gemini | Phase 75 frontier head | ChatGPT 12%, Gemini 36%. **Not met** |
+| v6: 102 eBay, 30 ChatGPT, 17 + 13 Gemini | Phase 76 DINOv3 + PE | 30/30, 17/17, 13/13; real 2/102. **Met** → live |
+| v7: 122 eBay, 586 never-seen, 56 anime, 406 seen-family | Phase 77 vs Phase 76 | Phase 77 not better (568 vs 583). **Phase 76 stays** |
+
+<p align="center"><img src="docs/assets/benchmark_v3.png" alt="Benchmark v3: generated images caught and real photos rejected or sent to review, per system" width="85%"></p>
+
+Details live next to each benchmark: `ml_rtx5080/benchmark_v*_fresh/protocol.json` and `report.md`.
+
+</details>
+
+<p align="center"><img src="docs/assets/readme/divider.svg" width="100%" alt=""></p>
+
+## 🧾 Classification reports
+
+### Locked final test: fine-tuned DINOv3 (3,006 images, opened once)
+
+<p align="center"><img src="docs/assets/results/final_test_confusion.png" alt="Locked final test: confusion matrix with 1,506 real and 1,500 AI-generated all correct, and the raw logit distribution" width="90%"></p>
+
+| | Predicted real | Predicted AI | Precision | Recall | F1 |
+|---|:-:|:-:|:-:|:-:|:-:|
+| **Real photo** (1,506) | 1,506 | 0 | 1.000 | 1.000 | 1.000 |
+| **AI-generated** (1,500) | 0 | 1,500 | 1.000 | 1.000 | 1.000 |
+
+ROC-AUC 1.0 and PR-AUC 1.0. False-authentic is 0 / 1,500 (95% upper bound 0.26%). The test images come from the same sources as training, so this shows in-distribution separation only. The fresh benchmarks above test new data.
+
+### Training: four RTX 5080 configurations, 30 epochs, BF16
+
+<p align="center"><img src="ml_rtx5080/checkpoints/training_curves.png" alt="Training and validation loss per epoch for the four RTX 5080 configurations" width="85%"></p>
+
+The selection rule was written before the test set was opened. It picked **DINOv3 ViT-B/16 + CLS + patch attention, epoch 18** (temperature 0.2404).
+
+<details>
+<summary><b>DINOv2-Base 504 px validation report (6,000 images)</b></summary>
+
+<p align="center"><img src="ml_rtx5080/checkpoints/confusion_matrix_eval.png" alt="DINOv2-Base 504 px validation report: accuracy 99.35%, F1 0.9935, ROC-AUC 0.9991, PR-AUC 0.9992" width="100%"></p>
+
+Accuracy 99.35% · F1 0.9935 · ROC-AUC 0.9991 · PR-AUC 0.9992 · TN 2,986 · FP 14 · FN 25 · TP 2,975.
+
+</details>
+
+| Measure | Result |
+|---|---|
+| Peak training GPU memory | 8.26–9.09 GiB |
+| Calibration (2,998 images) | ECE 0.0098 → 0 after temperature scaling |
+| Leave-one-brand-out, surface-normalised images | 9 / 13,500 generated accepted (0.067%) |
+| Triton serving, batch 1, p95 latency | 16.55 ms (DINOv3) · 20.03 ms (DINOv2) |
+| Repeatability | 0 logit changes in 1,800 requests |
+
+> [!WARNING]
+> **Known limits.**
+> - On general scenes (not watches), the hybrid wrongly called 68 of 93 real photos AI on benchmark_v7. That's why the CLIP watch check runs first.
+> - Never-seen generators were tested on general images; watch images from never-seen generators are not tested yet.
+> - Open-set rejection is not validated: Phase 35 is `OOD_FAIL`.
+> - Five of the 60 benchmark_v6 AI images were caught by less than 1.0 logit.
+
+<p align="center"><img src="docs/assets/readme/divider.svg" width="100%" alt=""></p>
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart LR
+  U([👤 buyer · seller · admin]):::user --> F[Next.js 14 frontend]:::fe
+  F --> B[FastAPI backend]:::be
+  B --> PG[(PostgreSQL 15)]:::db
+  B --> R[(Redis 7)]:::db
+  B --> L[(local disk<br/>listing photos)]:::db
+  B --> G[GPU in-process<br/>DINOv3 + PE · SSCD · CLIP]:::gpu
+  B --> T[NVIDIA Triton<br/>DINOv2 · DINOv3 research]:::gpu
+  B --> E[eBay Browse API]:::ext
+  B --> C[Chrono24 dataset<br/>imported CSV]:::ext
+  classDef user fill:#1A1233,stroke:#A78BFA,color:#F2F0FA
+  classDef fe fill:#12132A,stroke:#5EEAD4,color:#F2F0FA
+  classDef be fill:#2A1030,stroke:#FF7EB6,color:#FFE6F2
+  classDef db fill:#0F1A2A,stroke:#60A5FA,color:#DBEAFE
+  classDef gpu fill:#14260F,stroke:#76B900,color:#ECFCCB
+  classDef ext fill:#2A2410,stroke:#F5C451,color:#FFF6DC
+```
+
+| Layer | Stack |
+|---|---|
+| 🎨 Frontend | Next.js 14 App Router · TypeScript · Tailwind CSS · TanStack Query · Framer Motion · Recharts |
+| ⚙️ Backend | FastAPI (async) · SQLAlchemy 2 + asyncpg · Redis token rotation · Prometheus metrics |
+| 🧠 Models | DINOv3 + Perception Encoder (live) · SSCD · CLIP · DINOv2 and DINOv3 on Triton for the Research tab |
+| 🗄️ Data | PostgreSQL 15 and Redis 7 in Docker · listing photos on local disk (`backend/local_uploads`) |
+| 🖥️ Hardware | one NVIDIA GeForce RTX 5080 (16 GB) for training and serving |
 
 ```text
-backend/      FastAPI app, auth, listings, inference, scraper
-frontend/     Next.js UI and client integrations
-infra/        Docker and deployment helper artifacts
-ml/           Training and model utility scripts (DINOv2-Giant reference pipeline)
-ml_rtx5080/   ViT-B / 504px training pipeline and checkpoints (RTX 5080)
-scripts/      Python utilities; optional local *.sh helpers are gitignored
+backend/      FastAPI app: auth, listings, screening, research, market
+frontend/     Next.js UI
+infra/        Docker Compose and Triton model configs
+ml_rtx5080/   training, Phases 55–78, benchmarks v1–v7 (RTX 5080)
+ml/           earlier DINOv2-Giant reference pipeline
+scripts/      Python utilities (seed, export, import, rescreen)
+tests/        backend unit tests
 ```
 
----
+<p align="center"><img src="docs/assets/readme/divider.svg" width="100%" alt=""></p>
 
-## Quick Start
-
-### 1) Fast path
-
-From repo root (with Docker running). Shell helpers under `scripts/` are **not** tracked in git; use the manual path below or keep your own local `dev_setup.sh`.
-
-### 2) Manual path (recommended clone)
+## 🚀 Quick start
 
 ```bash
-python3 -m venv .venv
-. .venv/bin/activate
+python3 -m venv .venv && . .venv/bin/activate
 pip install -r requirements.txt
 docker compose -f infra/docker-compose.yml up -d postgres redis
 cd backend && alembic upgrade head && cd ..
 python3 scripts/seed_database.py
 ```
 
-Start API:
+Settings are read from a `.env` file in the repo root. The defaults and every setting are in `backend/config.py`.
 
 ```bash
-cd backend
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+# API (research mode enables the Research tab)
+cd backend && HYPEVAULT_DEPLOYMENT_MODE=research uvicorn main:app --host 127.0.0.1 --port 8000
+
+# Frontend, in a new terminal
+cd frontend && npm install && npm run dev
 ```
 
-Start frontend:
+| Service | URL |
+|---|---|
+| 🌐 Frontend | `http://localhost:3000` |
+| ⚙️ API | `http://localhost:8000` |
+| 🧠 Triton gRPC (Research tab) | `localhost:18001` |
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+The live hybrid needs a CUDA GPU and the model files under `ml_rtx5080/experiments/`. These are gitignored, except the small heads and rules.
 
-Application URLs:
-- Frontend: `http://localhost:3000`
-- API: `http://localhost:8000`
-- Triton gRPC (host): `localhost:18001`
+<p align="center"><img src="docs/assets/readme/divider.svg" width="100%" alt=""></p>
 
-Environment template:
-- Copy `.env.example` to `.env` and fill runtime credentials before non-local deployment.
-
----
-
-## Command Center by Role
-
-<table>
-  <tr>
-    <td width="33%" valign="top">
-      <h3>Developer</h3>
-      <p>Run application stack for feature work.</p>
-      <pre><code>cd ~/Desktop/HypeVault
-python3 -m venv .venv && . .venv/bin/activate
-pip install -r requirements.txt
-docker compose -f infra/docker-compose.yml up -d postgres redis
-cd backend && alembic upgrade head && cd .. && python scripts/seed_database.py
-cd backend && uvicorn main:app --reload --host 0.0.0.0 --port 8000
-# new terminal
-cd frontend && npm install && npm run dev</code></pre>
-    </td>
-    <td width="33%" valign="top">
-      <h3>Infrastructure</h3>
-      <p>Bring dependencies and readiness online.</p>
-      <pre><code>cd ~/Desktop/HypeVault
-docker compose -f infra/docker-compose.yml up -d postgres redis triton
-curl -sS http://localhost:8000/health
-curl -sS -i http://localhost:8000/health/ready</code></pre>
-    </td>
-    <td width="33%" valign="top">
-      <h3>ML / Inference</h3>
-      <p>Export and run model path.</p>
-      <pre><code>cd ~/Desktop/HypeVault
-. .venv/bin/activate
-python scripts/export_tensorrt.py
-# fallback mode
-export INFERENCE_BACKEND=torch
-export LOCAL_MODEL_PATH=models/hypevault_classifier.pt</code></pre>
-    </td>
-  </tr>
-</table>
-
----
-
-## API Surface (Key Routes)
+## 🔌 API
 
 <details open>
-  <summary><strong>Authentication</strong></summary>
+<summary><b>Screening and listings</b></summary>
 
-- `POST /auth/register`
-- `POST /auth/login`
-- `POST /auth/google`
-- `POST /auth/refresh`
-- `POST /auth/logout`
-- `GET /auth/me`
-
-</details>
-
-<details open>
-  <summary><strong>Verification and Listings</strong></summary>
-
-- `POST /verify/authenticate` — legacy DINOv2 listing check. `model = LEGACY_DINOV2`, `research_candidate = false`, `production_validation = NOT_ESTABLISHED`. It is not the DINOv3 research prototype. The brand field is user-declared. Unsupported brands return HTTP 422 `UNSUPPORTED_SCOPE` with `decision = null`.
-- `POST /research/verify` — frozen DINOv3 five-brand research prototype. Requires `HYPEVAULT_DEPLOYMENT_MODE=research` or `shadow`. Production, missing, and unknown modes return `POLICY_ERROR` with `decision = null`. `brand_verification = NOT_PERFORMED`, `research_only = true`, `production_ready = false`.
-- `POST /listings/`
-- `GET /listings/`
-- `GET /listings/recent`
-- `GET /listings/compare?q=...`
-- `GET /listings/{id}/comparison`
+| Route | What it does |
+|---|---|
+| `POST /verify/authenticate` | Screens a listing photo with the live model (`LIVE_SCREENING_MODEL=phase76_fusion`): listed, held or not listed, with a reason |
+| `POST /listings/{id}/proof` | Seller sends the proof photo for a held listing |
+| `POST /listings/{id}/review` | Admin approves or rejects a held listing |
+| `GET /listings/` · `GET /listings/all` · `GET /listings/recent` | Seller's, admin's and public listings |
+| `GET /listings/{id}` · `PATCH /listings/{id}` | One listing |
 
 </details>
 
 <details>
-  <summary><strong>Operations</strong></summary>
+<summary><b>Research, market, auth and operations</b></summary>
 
-- `GET /health`
-- `GET /health/ready`
-- `GET /metrics`
+| Route | What it does |
+|---|---|
+| `POST /research/verify` | One of `dinov2_legacy`, `dinov3_experimental`, `phase76_fusion` (needs `HYPEVAULT_DEPLOYMENT_MODE=research` or `shadow`) |
+| `POST /research/explain` | Masked-patch map for a research result |
+| `GET /research/models` | Readiness of the three research models |
+| `GET /market/search` · `POST /market/identify` · `GET /market/history` | Prices and watch identification |
+| `POST /auth/register` · `/login` · `/google` · `/refresh` · `/logout` · `GET /auth/me` | Email and Google sign-in, JWT with rotation |
+| `GET /health` · `GET /health/ready` · `GET /metrics` | Health and Prometheus metrics |
 
 </details>
 
----
+<p align="center"><img src="docs/assets/readme/divider.svg" width="100%" alt=""></p>
 
-## Demo Script (Presentation Flow)
+## 🔐 Security
 
-Use this minimal runbook for a polished live demo:
+- Secrets live in `.env` only; `.env*`, keys, certificates and service-account JSON are gitignored.
+- Only free and open-source tools and data sources are used. Chrono24 is not scraped; its prices come from an imported dataset.
+- The Phase 76 head, the DINOv3 checkpoint and the SSCD model are checked by SHA-256 when loaded. A mismatch fails closed with no verdict.
 
-1. **Open landing page** and position the narrative: AI-gated trust layer for luxury commerce.
-2. **Authenticate as seller**, create/upload listing, run verification.
-3. **Show verdict + confidence** and explain gating logic.
-4. **Open comparison panel** and highlight cross-market pricing context.
-5. **Switch to buyer perspective** and show curated discovery flow.
-6. **Close with operations proof** using `GET /health/ready` and `GET /metrics`.
+## 📄 License
 
-Presentation-ready command block:
+MIT. See [`LICENSE`](LICENSE).
 
-```bash
-curl -sS http://localhost:8000/health
-curl -sS -i http://localhost:8000/health/ready
-curl -sS http://localhost:8000/metrics | sed -n '1,20p'
-```
-
----
-
-## Inference Modes
-
-Two allowlisted Triton models, selected by a logical id. Triton model names are server-side and are rejected as client selectors.
-
-| Logical id | Triton model | Artifact | Input | Role |
-| --- | --- | --- | --- | --- |
-| `dinov2_legacy` | `dinov2_vitb14_live` v1 | live ViT-B/14 checkpoint `fe1daa0b…fa66` | `[1,3,504,504]` FP32 | live listing check and research selector |
-| `dinov3_experimental` | `dinov3_authenticity_candidate` v1 | frozen `epoch_018.pt` `5a38c93f…d28f`, temperature `0.24038200410185356` | `[1,3,512,512]` FP32 | research/shadow only |
-
-Validated GPU serving is `KIND_GPU` with `use_tf32=0`. The SHA-256 of the DINOv3 checkpoint is verified at API startup and cached; a mismatch fails closed (`decision = null`) and is not hashed again on every request. Production mode cannot select DINOv3. Neither model auto-publishes a listing.
-
-The unrouted `dinov2_classifier` ViT-G/14 518 artifact is not a substitute for either selector model.
-
-### Local Torch fallback
-Use when Triton is unavailable for the live DINOv2 listing path:
-
-```bash
-pip install -r requirements_inference.txt
-```
-
-Then configure in `.env`:
-- `INFERENCE_BACKEND=torch`
-- `LOCAL_MODEL_PATH=models/hypevault_classifier.pt`
-- `DINOV2_MODEL_NAME=dinov2_vitg14_reg`
-
-Switch back to `INFERENCE_BACKEND=triton` for production parity.
-
----
-
-## Model training results
-
-Binary classifier: **real photograph (label 0)** vs **AI-generated image (label 1)** for the five supported brands. All runs are on an **NVIDIA GeForce RTX 5080** (16 GB) with `ml_rtx5080/`. The classifier does not judge whether a watch is genuine.
-
-### Training and locked test
-
-Four configurations (DINOv2 ViT-B/14 and DINOv3 ViT-B/16, each CLS-only or CLS + patch attention) were trained on 20,999 images for 30 epochs in BF16. The selection rule was written before the test set was opened, and it picked **DINOv3 ViT-B/16 + CLS + patch attention, epoch 18** (temperature T = 0.2404).
-
-<p align="center">
-  <img src="ml_rtx5080/checkpoints/training_curves.png" alt="Training and validation loss per epoch for the four RTX 5080 configurations" width="780">
-</p>
-
-<p align="center">
-  <img src="ml_rtx5080/checkpoints/confusion_matrix_eval.png" alt="Locked final test: confusion matrix and logit distribution, 3,006 images" width="780">
-</p>
-
-| Measure | Result |
-|---|---|
-| Peak training GPU memory | 8.26–9.09 GiB |
-| Locked final test (3,006 images, opened once) | 0 errors; false-authentic 0 / 1,500 (95% upper bound 0.26%) |
-| Calibration (2,998 images) | ECE 0.0098 → 0 after temperature scaling |
-| Leave-one-brand-out, surface-normalized images | 9 / 13,500 generated accepted (0.067%) |
-| Triton serving, batch 1, p95 latency | 16.55 ms (DINOv3), 20.03 ms (DINOv2) |
-| Triton throughput, batch 1 | 61.8 img/s (DINOv3), 51.6 img/s (DINOv2) |
-| Repeatability | 0 logit changes in 1,800 requests |
-
-The locked test uses images from the same sources as training, so it shows in-distribution separation only.
-
-### Fresh pre-registered benchmarks (new eBay photos, new generators)
-
-Each benchmark had a protocol written before its images existed, rules frozen on earlier data, and a single scoring run.
-
-| Benchmark | Question | Result |
-|---|---|---|
-| v1: 300 eBay, 284 Kandinsky 2.2, 150 SDXL | DINOv2 or DINOv3? | Underpowered (16 discordant, p = 0.21). **DINOv2 stays live.** Both models accept most Kandinsky images |
-| v2: 300 eBay, 287 Kandinsky 2.2, 293 aMUSEd | Watch forensics v1 vs DINOv3 | 63.4% vs 24.1% caught, but 3.7% of real photos rejected. **Not met** (limit +3 points) |
-| v3: 300 eBay, 296 Stable Cascade, 281 Kandinsky 2.2 | Watch forensics v2 vs DINOv3 | Stable Cascade 91.9% vs 68.9% caught (p = 2.3 × 10⁻¹⁰); real photos rejected 2.0% vs 0.3%. **Met** |
-| v4: 270 eBay, 283 Kandinsky 2.2 (143 from new scene prompts), 297 Stable Cascade | DINOv3 Kandinsky v4 head: ≥ 80% of Kandinsky, ≤ 3% of real photos | Kandinsky 283/283 (100%) vs 8.1% for DINOv3 alone; Stable Cascade 297/297; real photos rejected 2/270 (0.7%). **Met.** Kandinsky and Stable Cascade were in its training data |
-| v5: 144 eBay, 75 ChatGPT, 75 Gemini watch images | Phase 75 frontier head: ≥ 80% of each app, ≤ 3% of real photos | ChatGPT 12%, Gemini 36% caught; real photos rejected 2.1%. **Not met** |
-| v6: 102 eBay, 30 ChatGPT, 17 Gemini (+13 from a second Gemini account, reported apart) | Phase 76 DINOv3 + Perception Encoder head: ≥ 80% of each app, ≤ 3% of real photos | ChatGPT 30/30, Gemini 17/17 (+13/13) vs 13% / 0% for DINOv2; real photos rejected 2/102. **Met.** ChatGPT and Gemini were in its training data |
-
-<p align="center">
-  <img src="docs/assets/benchmark_v3.png" alt="Benchmark v3: generated images caught and real photos rejected or sent to review, per system" width="780">
-</p>
-
-Watch forensics v2 combines the fine-tuned DINOv3, a decoder-trace probe and a dial-text check. Its limits:
-
-- Kandinsky 2.2 is still mostly missed (28.1% caught).
-- 15% of real photos go to human review.
-
-It is a research result. The live app screens with DINOv2, and only the dial-text check is live, as a hint to the seller. Details: `ml_rtx5080/benchmark_v3_fresh/report.md`.
-
-Phase 74 adds one logistic-regression head on the fine-tuned DINOv3's own CLS and attention-pooled features, trained on several generators (Kandinsky 2.2, SDXL, aMUSEd, Stable Cascade). On benchmark_v4 it caught every Kandinsky and Stable Cascade image, but both generators were in its training data. In a later development-data check, each generator was left out of training in turn. Never-seen Kandinsky was still caught 83.3% of the time (93.4% with pretrained DINOv3 features added), and the other three 98.7–99.7%. Real-photo false alarms were 0.9–1.6%. A pre-registered test on a newer unseen generator is next. Details: `ml_rtx5080/benchmark_v4_fresh/report.md`.
-
-Phase 76 fuses two frozen backbones, DINOv3 (pretrained and fine-tuned) and Meta's Perception Encoder L/14, with one logistic-regression head. It was trained on the spent benchmark_v5 ChatGPT and Gemini images among others. On the fresh benchmark_v6 it caught every ChatGPT and Gemini watch image, and beat DINOv2 and Phase 75 in every group (McNemar p < 0.01). Five of the 60 images were caught by less than 1.0 logit. It is a seen-app result: unseen generators are not tested. Deviations are logged in `ml_rtx5080/benchmark_v6_fresh/protocol.json`. The Content Credentials label was present on all 60 original files, and the live upload check rejects them on that label alone.
-
-> Checkpoint weights (`.pt`, `.onnx`, etc.) stay **gitignored**; only these PNG artifacts are tracked for documentation.
-
----
-
-## Security and Secret Handling
-
-- Never commit secrets.
-- Keep runtime values in environment variables only.
-- Use a local env template (keep secrets out of git).
-- `.gitignore` is configured to exclude:
-  - `.env*` and `.env.example`
-  - key/cert artifacts
-  - service-account JSON files
-  - heavyweight training and dataset folders
-
-Before each push:
-- verify no secret-bearing files are staged
-- keep machine-specific `.env` and credential material local-only
-
----
-
-## Production Notes
-
-Customer-facing promotion of the authenticity model is forbidden. The notes below are operational only.
-
-- Ensure Redis is healthy for token rotation and cache paths
-- Treat external scraping as best-effort and failure-tolerant
-- Monitor readiness and metrics before exposing user traffic
-- Keep Triton model readiness green before enabling verification-dependent flows
-
----
-
-## License
-
-MIT License. See `LICENSE`.
+<p align="center"><img src="docs/assets/readme/divider.svg" width="100%" alt=""></p>
