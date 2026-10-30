@@ -35,9 +35,9 @@ export function HomeFigures() {
       />
       <Figure value="5" label="Manufactures" note="In scope for screening and pricing" />
       <Figure
-        value="2"
+        value="3"
         label="Vision models"
-        note={bench.data?.confirmatory?.frontier.frontier_model ? "Frontier picked by benchmark" : "DINOv2 live · DINOv3 on trial"}
+        note={bench.data?.live_model ? `${bench.data.live_model.name} live · DINOv3, DINOv2 for research` : bench.isError ? "Unavailable" : "Loading"}
       />
     </div>
   );
