@@ -78,6 +78,8 @@ class Settings(BaseSettings):
     # Read the dial with OCR after screening and tell the seller when the brand name is unreadable.
     # Informational only: it never changes whether a listing goes live.
     dial_text_check: bool = True
+    # Reject files whose signed Content Credentials (C2PA) label says an AI made them (inference.provenance).
+    provenance_check: bool = True
     listing_min_short_side_px: int = 400
     # Deprecated: use inference_min_authentic_confidence. Kept for older .env files (unused in authenticate).
     inference_live_conf_threshold: float = 0.90

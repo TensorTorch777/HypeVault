@@ -1,6 +1,6 @@
 """POST /authenticate — listing photo screening.
 
-A photo must be large enough, show a wristwatch (zero-shot CLIP) and pass the legacy
+A photo must be large enough, carry no signed "made by AI" label (C2PA), show a wristwatch (zero-shot CLIP) and pass the legacy
 DINOv2 origin check. Passing lists the watch; failing rejects it with a seller-facing
 reason (inference.screening). This route stays on DINOv2, not the frozen DINOv3 research
 candidate, and a listed watch is screened, not authenticity-certified.
@@ -27,7 +27,8 @@ from inference.research_guard import deployment_mode
 from inference.schemas import AuthenticateResponse
 from inference.content_gate import score_watch
 from inference.dial_text import NOT_FOUND_HINT, read_dial_brand
-from inference.screening import check_content, check_origin, check_size
+from inference.provenance import read_ai_label
+from inference.screening import check_content, check_label, check_origin, check_size
 from inference.scope_gate import evaluate_declared_brand, failure_body, log_scope_request, unsupported_scope_body
 from inference.verdict import apply_min_authentic_confidence
 from s3_client import upload_file_bytes
@@ -159,8 +160,10 @@ async def authenticate(
         listing.verdict = None
         listing.confidence = None
 
-        # 1. size, 2. is it a watch, 3. is it an original photo. Each can stop the listing.
+        # 1. size, 2. AI label in the file, 3. is it a watch, 4. is it an original photo. Each can stop the listing.
         outcome = check_size(pil.width, pil.height, settings.listing_min_short_side_px)
+        if outcome is None and settings.provenance_check:
+            outcome = check_label(await asyncio.to_thread(read_ai_label, raw, ct))
         content = None
         live_model_id = None
         if outcome is None:

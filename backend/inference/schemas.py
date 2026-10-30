@@ -12,7 +12,7 @@ class AuthenticateResponse(BaseModel):
 
     `listing_status` and `screening_reason` say whether the listing went live or was
     rejected, and why. `verdict` and `model` are null when the photo was stopped before
-    the origin model ran (too small, or no wristwatch found). `model` names the origin
+    the origin model ran (too small, an AI label in the file, or no wristwatch found). `model` names the origin
     model chosen by LIVE_SCREENING_MODEL. Going live is a screening result, never an
     authenticity certificate.
 
