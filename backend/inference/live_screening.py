@@ -5,7 +5,9 @@
 - `phase76_fusion` (default): the frozen Phase 76 head, DINOv3 (pretrained + fine-tuned) and
   Perception Encoder L/14 features with one logistic regression (ml_rtx5080/phase76.py, hash-checked).
   It passed the pre-registered benchmark_v6 (ChatGPT 30/30, Gemini 17/17, real eBay FAKE 2/102).
-  P(fake) is sigmoid(score - t_fake), so 0.5 is exactly its frozen cut.
+  P(fake) is sigmoid(score - t_fake), so 0.5 is exactly its frozen cut. The Phase 78 head (same
+  features, also trained on screenshot-style copies, ml_rtx5080/phase78.py) reads the same features;
+  it never rejects, it only holds a listing for a proof photo (`phase78_hold`).
 - `dinov3_frozen`: the frozen DINOv3 checkpoint `epoch_018.pt`, loaded through the research
   loader, which refuses any file whose SHA-256 differs from the frozen digest. The raw logit is
   divided by the frozen temperature before the sigmoid, so P(fake) is calibrated.
@@ -47,6 +49,7 @@ _log = logging.getLogger(__name__)
 _dinov3_lock = threading.Lock()
 _phase76_lock = threading.Lock()
 _phase76_head = None
+_phase78: tuple[dict, float] | None = None
 
 
 class LiveModelConfigurationError(RuntimeError):
@@ -115,6 +118,25 @@ def phase76_unavailable_reason() -> str | None:
     return None
 
 
+def phase76_and_78_margins(pil: Image.Image) -> tuple[float, float | None]:
+    """(Phase 76 margin, Phase 78 margin) from one feature pass; each is score minus its frozen cut, AI when >= 0.
+    The Phase 78 margin is None when `phase78_hold` is off."""
+    global _phase78
+    with _phase76_lock:
+        head = _phase76()
+        x = head.features_image(pil)
+        m76 = float(head.model.decision_function(x[None])[0]) - head.rule["t_fake"]
+        if not settings.phase78_hold:
+            return m76, None
+        if _phase78 is None:
+            from phase78 import load_head
+
+            _phase78 = load_head()  # refuses arrays whose SHA-256 differs from frozen_rule.json
+        arrays, cut = _phase78
+        m78 = float(((x - arrays["mu"]) / arrays["sd"]) @ arrays["w"] + arrays["b"]) - cut
+        return m76, m78
+
+
 def _phase76_probability(pil: Image.Image) -> float:
     return 1.0 / (1.0 + math.exp(-phase76_margin(pil)))
 
@@ -140,6 +162,16 @@ def _dinov3_probability(pil: Image.Image) -> float:
         backend.load()
         batch = backend.preprocess(pil).unsqueeze(0)
         return float(backend.predict_probability(batch).reshape(-1)[0])
+
+
+async def classify_listing_photo_with_hold(pil: Image.Image) -> tuple[Literal["AUTHENTIC", "FAKE"], float, str, float | None]:
+    """(verdict, confidence, model id, Phase 78 margin or None) for an RGB listing photo."""
+    if live_model() == PHASE76_FUSION:
+        m76, m78 = await asyncio.to_thread(phase76_and_78_margins, pil)
+        verdict, confidence = verdict_from_probability(1.0 / (1.0 + math.exp(-m76)))
+        return verdict, confidence, PHASE76_FUSION, m78
+    verdict, confidence, model = await classify_listing_photo(pil)
+    return verdict, confidence, model, None
 
 
 async def classify_listing_photo(pil: Image.Image) -> tuple[Literal["AUTHENTIC", "FAKE"], float, str]:

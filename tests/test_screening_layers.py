@@ -105,6 +105,33 @@ class HoldTests(unittest.TestCase):
     def test_no_hold_band_lists_as_before(self) -> None:
         self.assertEqual(self._origin(0.3, hold=None).code, PASSED)
 
+    def test_the_edited_copy_model_holds_but_never_rejects(self) -> None:
+        def origin(p_fake, margin):
+            verdict = "FAKE" if p_fake >= 0.5 else "AUTHENTIC"
+            conf = p_fake if verdict == "FAKE" else 1 - p_fake
+            return check_origin(raw_verdict=verdict, raw_confidence=conf, min_authentic_confidence=0.5, content=WATCH,
+                                origin_model="PHASE76_DINOV3_PE", hold_from_p_fake=0.2, edited_copy_margin=margin)
+
+        held = origin(0.05, 0.4)
+        self.assertEqual((held.status, held.code, held.details["held_by"]), ("pending", NEEDS_PROOF, "edited_copy_model"))
+        self.assertEqual(origin(0.05, -0.4).code, PASSED)
+        self.assertEqual(origin(0.05, None).code, PASSED)
+        self.assertEqual(origin(0.7, -5.0).status, "rejected")  # Phase 76 still decides rejections
+        self.assertEqual(origin(0.3, 0.4).details["held_by"], "borderline_score")
+
+
+class Phase78HeadTests(unittest.TestCase):
+    def test_the_frozen_arrays_load_hash_checked_on_phase76_features(self) -> None:
+        sys.path.insert(0, str(REPO / "ml_rtx5080"))
+        import phase78
+
+        arrays, cut = phase78.load_head()
+        self.assertEqual(arrays["w"].shape, (5632,))
+        self.assertEqual(arrays["mu"].shape, arrays["sd"].shape)
+        self.assertLess(cut, 0)
+        rule = __import__("json").loads(phase78.RULE.read_text())
+        self.assertEqual(rule["training"]["copies_per_image"], 2)
+
 
 class _Db:
     def __init__(self, listing, seller):

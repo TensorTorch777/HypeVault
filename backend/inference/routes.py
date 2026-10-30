@@ -26,7 +26,7 @@ from inference.live_screening import (
     PHASE76_FUSION,
     RESPONSE_MODEL,
     LiveModelConfigurationError,
-    classify_listing_photo,
+    classify_listing_photo_with_hold,
     min_authentic_confidence,
 )
 from inference.research_guard import deployment_mode
@@ -202,7 +202,7 @@ async def authenticate(
             outcome = check_content(content)
         if outcome is None and content is not None:
             try:
-                raw_verdict, raw_confidence, live_model_id = await classify_listing_photo(pil)
+                raw_verdict, raw_confidence, live_model_id, edited_copy_margin = await classify_listing_photo_with_hold(pil)
             except LiveModelConfigurationError as exc:
                 _log.error("live_model_misconfigured: %s", exc)
                 listing.status = ListingStatus.pending
@@ -233,6 +233,7 @@ async def authenticate(
                 content=content,
                 origin_model=RESPONSE_MODEL[live_model_id],
                 hold_from_p_fake=settings.proof_hold_min_p_fake if live_model_id == PHASE76_FUSION else None,
+                edited_copy_margin=edited_copy_margin,
             )
         assert outcome is not None
         if known is not None and outcome.code in (AI_LABEL, LIKELY_GENERATED):

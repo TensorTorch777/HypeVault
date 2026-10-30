@@ -79,6 +79,10 @@ export function ReviewQueue({ queryKey }: { queryKey: readonly unknown[] }) {
                   <div className="flex justify-between gap-4"><dt>First photo, chance it is AI</dt><dd>{pct(d.p_ai)}</dd></div>
                   <div className="flex justify-between gap-4"><dt>Proof photo, chance it is AI</dt><dd>{pct(proof.p_ai)}</dd></div>
                   <div className="flex justify-between gap-4"><dt>Closest known AI image</dt><dd>{pct(d.known_ai_similarity)}</dd></div>
+                  <div className="flex justify-between gap-4">
+                    <dt>Held because</dt>
+                    <dd>{d.held_by === "edited_copy_model" ? "looks like an edited AI copy" : "borderline AI score"}</dd>
+                  </div>
                 </dl>
                 <input
                   className="mt-4 w-full rounded-lg border border-white/12 bg-[#0E0F1E] px-3 py-2 text-sm text-primary"
