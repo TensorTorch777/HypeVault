@@ -40,7 +40,11 @@ EARLIER = [
     ML / "benchmark_v4_fresh" / "data" / "manifest.jsonl",
     ML / "benchmark_v5_frontier" / "data" / "manifest.jsonl",
 ]
-GENERATED = {"chatgpt_v6": "chatgpt_v6_manifest.jsonl", "gemini_v6": "gemini_v6_manifest.jsonl"}
+GENERATED = {"chatgpt_v6": "chatgpt_v6_manifest.jsonl", "gemini_v6": "gemini_v6_manifest.jsonl",
+             "gemini_edu_v6": "gemini_edu_v6_manifest.jsonl"}
+# Deviation (protocol.json): Gemini showed web sources (sothebys.com, Chrono24) under these replies,
+# so the model may have seen real listing photos. Reported with and without them.
+WEB_SEARCH_SHOWN = {"gemini_edu_v6": {23, 29}}
 BRAND_CODES = {"patek": "Patek Philippe", "ap": "Audemars Piguet", "lange": "A. Lange & Söhne",
                "rm": "Richard Mille", "vc": "Vacheron Constantin"}
 
@@ -105,7 +109,7 @@ def real(per_brand: int, relax_brands: tuple[str, ...] = ()) -> None:
 
 
 def ingest(src: Path) -> None:
-    """Copy the user's downloads named chatgpt_<name>.* / gemini_<name>.* (names from prompts.tsv) into data/<group>/.
+    """Copy downloads named chatgpt_<name>.* / gemini_<name>.* / gemini_edu_<name>.* (names from prompts.tsv) into data/<group>/.
 
     Matching is by file name only; the images are not opened except to read the C2PA label from the
     original bytes, which is recorded for the label-check report.
@@ -118,13 +122,13 @@ def ingest(src: Path) -> None:
 
     prompts = {r["name"]: r for r in csv.DictReader((HERE / "prompts.tsv").open(), delimiter="\t")}
     mime = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp"}
-    for group, app in (("chatgpt_v6", "chatgpt"), ("gemini_v6", "gemini")):
+    for group, app in (("chatgpt_v6", "chatgpt"), ("gemini_v6", "gemini"), ("gemini_edu_v6", "gemini_edu")):
         out = DATA / group
         out.mkdir(parents=True, exist_ok=True)
         records = []
         for f in sorted(src.iterdir()):
             stem, ext = f.stem, f.suffix.lower()
-            if ext not in mime or not stem.startswith(app + "_"):
+            if ext not in mime or not stem.startswith(app + "_") or (app == "gemini" and stem.startswith("gemini_edu_")):
                 continue
             name = stem[len(app) + 1:]
             base = name[:-4] if name.endswith("_alt") else name
@@ -137,7 +141,8 @@ def ingest(src: Path) -> None:
             r = prompts[base]
             records.append({"name": name, "file": f.name, "prompt_number": int(r["number"]), "scene_type": r["scene_type"],
                             "sha256": hashlib.sha256(raw).hexdigest(), "c2pa_ai_label": label is not None,
-                            "c2pa_maker": label.maker if label else None})
+                            "c2pa_maker": label.maker if label else None,
+                            "web_search_sources_shown": int(r["number"]) in WEB_SEARCH_SHOWN.get(group, set())})
         (DATA / GENERATED[group]).write_text("".join(json.dumps(r) + "\n" for r in records))
         print(f"{group}: {len(records)} images, {sum(r['c2pa_ai_label'] for r in records)} with a C2PA AI label", flush=True)
 
@@ -158,7 +163,8 @@ def generated() -> None:
             sample = v2._admit(
                 (DATA / group / r["file"]).read_bytes(), sample_id=sample_id, label="GENERATED", group=group, brand=brand,
                 unit_id=sample_id, out_dir=NORMALISED / group, training=training, dedup=dedup,
-                meta={k: r.get(k) for k in ("prompt_number", "name", "scene_type", "file", "sha256", "c2pa_ai_label", "c2pa_maker")},
+                meta={k: r.get(k) for k in ("prompt_number", "name", "scene_type", "file", "sha256", "c2pa_ai_label", "c2pa_maker",
+                                            "web_search_sources_shown")},
             )
             append_manifest(MANIFEST, [sample])
             n += sample.excluded is None

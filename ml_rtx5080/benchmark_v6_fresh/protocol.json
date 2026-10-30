@@ -53,5 +53,17 @@
   ],
   "motivating_case": "testtest.jpeg is never trained on. Note for honesty: its score under each feature combination was printed during the exploratory fusion probe that chose DINOv3 + PE, so its Phase 76 result (FAKE, score -1.67 vs t_fake -2.18) is not independent evidence and is reported apart.",
   "runs_once": true,
-  "scoring_day": "2026-10-31, before the jury presentation."
+  "scoring_day": "2026-10-31, before the jury presentation.",
+  "deviations": {
+    "logged_on": "2026-10-30, before scoring and before any v6 score was computed",
+    "file_names": "The apps saved their own file names (ChatGPT: a title per image; Gemini: Gemini_Generated_Image_<random>.png), not chatgpt_<name>.png / gemini_<name>.png. Byte-identical repeat downloads were dropped (ChatGPT: 3 copies of prompt 8; Gemini: a second copy of prompt 5 and a re-download of every Edu image). ChatGPT: matched by download order; the titles agree with the prompts one by one. Gemini: a first match by download order was wrong (it assumed prompts 1-18); Claude then looked at a contact sheet of the Gemini images, only to tell which prompt each showed, and matched them to prompts 1-5 and 18-30. No model scored anything before this. Mapping: rename_log.json.",
+    "chatgpt_made_by": "The user made the ChatGPT images by hand, as PROMPTS.md asks.",
+    "gemini_made_by": "The Gemini images were made by a browser assistant in the user's accounts, not by hand. It reported one new chat per prompt and Gemini's full-size download button.",
+    "gemini_accounts": "The browser assistant reported prompts 1-17 made on the user's main account and 18-30 on the Somaiya Edu account with the Pro model, probably a different image generator. Main-account prompts 6-17 did not reach the computer during the run; the user downloaded them from the main-account chats on 2026-10-30 07:34-07:36 (in reverse order, matched by contact sheet), with Gemini's standard download: JPEG at about 1200x896, not the full-size PNG of prompts 1-5. gemini_v6, the primary group, is prompts 1-17 (17 images: Patek Philippe 6, Audemars Piguet 6, A. Lange & Söhne 5), below the minimum of 20. Prompts 18-30 (13 images) form gemini_edu_v6, reported apart and not in the success criterion. Both Gemini groups together are also reported, as exploratory.",
+    "gemini_prompt30": "Prompt 30 stalled on the Edu account and was run again in a new chat; two prompt-30 images exist. The one downloaded during the run (01:19) is kept; the later one (01:57) is dropped.",
+    "gemini_web_search": "The browser assistant reported that Gemini showed web sources (sothebys.com, Chrono24) under its replies for prompts 23 (RM 016) and 29 (VC Harmony) on the Edu account, so the model may have seen real listing photos. gemini_edu_v6 is reported with and without them.",
+    "gemini_resolution": "Main-account prompts 1-5: PNG 2400x1792 or 1792x2400; main-account prompts 6-17: JPEG 896-1376 px wide; Edu-account images: PNG 1376-1408 x 768 or 896x1200. All images are normalised to 512 px before scoring.",
+    "real_relaxation": "Fresh eBay listings ran short for A. Lange & Söhne (6) and Richard Mille (0), so the pre-registered relaxation was applied to those two brands (gallery and market_listings listings allowed, never earlier benchmark listings): Lange 11, Richard Mille 1. real_ebay_v6 = 102 photos (Patek 30, AP 30, VC 30, Lange 11, RM 1).",
+    "scoring_day": "Scored on 2026-10-30 instead of 2026-10-31 so the result is ready for the 2026-10-30 presentation, at the user's request. The real eBay photos were fetched the same day, so market_listings rows observed before 2026-10-30 are excluded."
+  }
 }

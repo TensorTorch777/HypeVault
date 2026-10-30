@@ -32,7 +32,8 @@ PROTOCOL = HERE / "protocol.json"
 MANIFEST = HERE / "data" / "manifest.jsonl"
 RESULTS = HERE / "results"
 SYSTEMS = ("dinov2_live", "phase75_head", "phase76_head")
-APPS = ("chatgpt_v6", "gemini_v6")
+APPS = ("chatgpt_v6", "gemini_v6")  # primary
+REPORTED = APPS + ("gemini_edu_v6",)  # Gemini on the Edu account (Pro): reported apart, not in the criterion
 
 
 def sha256(path: Path) -> str:
@@ -117,6 +118,7 @@ def main() -> None:
         rows.append({
             "id": s.sample_id, "group": s.group, "brand": s.brand, "scene_type": (s.meta or {}).get("scene_type"),
             "c2pa_ai_label": (s.meta or {}).get("c2pa_ai_label"),
+            "web_search_sources_shown": bool((s.meta or {}).get("web_search_sources_shown")),
             "dinov2_live": d2_verdict == "FAKE", "dinov2_confidence": d2_conf,
             "phase75_head": bool(s75[i] >= p75["t_fake"]), "phase75_score": round(float(s75[i]), 4),
             "phase76_head": bool(s76[i] >= head76.rule["t_fake"]), "phase76_score": round(float(s76[i]), 4),
@@ -136,13 +138,19 @@ def main() -> None:
     for group in sorted({r["group"] for r in rows}):
         sub = [r for r in rows if r["group"] == group]
         g = {"all": summarise(sub), "by_brand": {b: summarise([r for r in sub if r["brand"] == b]) for b in sorted({r["brand"] for r in sub})}}
-        if group in APPS:
+        if group in REPORTED:
             g["by_scene_type"] = {t: summarise([r for r in sub if r["scene_type"] == t]) for t in sorted({r["scene_type"] for r in sub})}
             g["c2pa_ai_label_on_original"] = rate(sum(bool(r["c2pa_ai_label"]) for r in sub), len(sub))
             g["phase76_vs_dinov2_live"] = mcnemar_one_sided(sub, "phase76_head", "dinov2_live")
             g["phase76_vs_phase75"] = mcnemar_one_sided(sub, "phase76_head", "phase75_head")
+            if any(r["web_search_sources_shown"] for r in sub):
+                g["all_without_web_search"] = summarise([r for r in sub if not r["web_search_sources_shown"]])
         report["groups"][group] = g
 
+    both = [r for r in rows if r["group"] in ("gemini_v6", "gemini_edu_v6")]
+    report["exploratory_gemini_both_accounts"] = {"all": summarise(both),
+                                                  "phase76_vs_dinov2_live": mcnemar_one_sided(both, "phase76_head", "dinov2_live"),
+                                                  "phase76_vs_phase75": mcnemar_one_sided(both, "phase76_head", "phase75_head")}
     res = {g: report["groups"][g]["all"]["phase76_head"] for g in report["groups"]}
     report["success_criterion"] = {
         "rule": protocol["success_criterion"],
@@ -151,7 +159,7 @@ def main() -> None:
     }
     report["secondary"] = {a: {"beats_dinov2_live": report["groups"][a]["phase76_vs_dinov2_live"]["p_one_sided"] < 0.05,
                                "beats_phase75": report["groups"][a]["phase76_vs_phase75"]["p_one_sided"] < 0.05}
-                           for a in APPS if a in report["groups"]}
+                           for a in REPORTED if a in report["groups"]}
     RESULTS.mkdir(parents=True, exist_ok=True)
     (RESULTS / "scores.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
     (RESULTS / "report.json").write_text(json.dumps(report, indent=2) + "\n")
