@@ -193,3 +193,51 @@ class ReviewTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ModelFirstReasonTests(unittest.TestCase):
+    """Every result that reached the model starts with what the DINOv3 + Perception Encoder model decided."""
+
+    def _origin(self, p_fake: float):
+        from inference.screening import check_origin
+
+        verdict = "FAKE" if p_fake >= 0.5 else "AUTHENTIC"
+        conf = p_fake if verdict == "FAKE" else 1 - p_fake
+        return check_origin(raw_verdict=verdict, raw_confidence=conf, min_authentic_confidence=0.5, content=WATCH,
+                            origin_model="PHASE76_DINOV3_PE", hold_from_p_fake=0.2)
+
+    def _label(self):
+        from inference.screening import ScreeningOutcome
+
+        return ScreeningOutcome(status="rejected", code="AI_LABEL", reason="label",
+                                details={"label_maker": "OpenAI OpCo, LLC", "label_tool": "ChatGPT gpt-image"})
+
+    def test_a_labelled_image_the_model_also_flags_names_both(self) -> None:
+        from inference.screening import LIKELY_GENERATED, with_evidence
+
+        out = with_evidence(self._origin(0.87), label=self._label())
+        self.assertEqual((out.status, out.code), ("rejected", LIKELY_GENERATED))
+        self.assertTrue(out.reason.startswith("Our DINOv3 + Perception Encoder model rates this photo 87% likely AI-generated"))
+        self.assertIn("label agrees: OpenAI OpCo, LLC says it was made with AI (ChatGPT gpt-image)", out.reason)
+
+    def test_a_labelled_image_the_model_passes_says_so_honestly(self) -> None:
+        from inference.screening import AI_LABEL, with_evidence
+
+        out = with_evidence(self._origin(0.04), label=self._label())
+        self.assertEqual((out.status, out.code), ("rejected", AI_LABEL))
+        self.assertIn("4% likely AI-generated: it calls the photo an original photograph", out.reason)
+        self.assertIn("However, the file carries a signed Content Credentials label", out.reason)
+        self.assertIn("It is not listed", out.reason)
+
+    def test_a_known_copy_keeps_the_model_verdict_first(self) -> None:
+        from inference.screening import KNOWN_AI_MATCH, with_evidence
+
+        known = check_known_ai(0.83, 0.65, "seed")
+        out = with_evidence(self._origin(0.06), known=known)
+        self.assertEqual(out.code, KNOWN_AI_MATCH)
+        self.assertTrue(out.reason.startswith("Our DINOv3 + Perception Encoder model rates this photo 6%"))
+        self.assertIn("However, it is a copy of an AI-generated image we have already seen (match 83%)", out.reason)
+
+    def test_passed_and_held_reasons_show_the_model_too(self) -> None:
+        self.assertIn("2% likely AI-generated: it calls the photo an original photograph", self._origin(0.02).reason)
+        self.assertIn("30% likely AI-generated: on its own it would hold", self._origin(0.30).reason)
