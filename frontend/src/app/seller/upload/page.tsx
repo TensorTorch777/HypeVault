@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
 import { ImageUploader } from "@/components/ImageUploader";
+import { ProofPhotoForm } from "@/components/ProofPhotoForm";
 import { ScreeningResult, type ScreeningOutcome } from "@/components/ScreeningResult";
 import { WatchMarketLookup } from "@/components/market/WatchMarketLookup";
 import { Button } from "@/components/ui/button";
@@ -264,13 +265,25 @@ export default function SellerUploadPage() {
               {step === 3 ? (
                 <motion.div key="s3" initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : -8 }} transition={stepMotion} className="mt-8 space-y-5">
                   {outcome ? <ScreeningResult outcome={outcome} /> : null}
+                  {outcome?.screening_code === "NEEDS_PROOF" && listingId ? (
+                    <ProofPhotoForm
+                      listingId={listingId}
+                      onSent={(l) =>
+                        setOutcome({
+                          listing_status: l.status as ScreeningOutcome["listing_status"],
+                          screening_code: l.screening_code ?? null,
+                          screening_reason: l.screening_reason ?? null,
+                        })
+                      }
+                    />
+                  ) : null}
                   <div className="flex flex-wrap gap-3">
                     {outcome?.listing_status === "live" && listingId ? (
                       <Button className="min-h-[2.75rem]" onClick={() => router.push(`/product/${listingId}`)}>
                         View listing
                       </Button>
                     ) : null}
-                    {outcome && outcome.listing_status !== "live" ? (
+                    {outcome && outcome.listing_status === "rejected" ? (
                       <Button
                         className="min-h-[2.75rem]"
                         onClick={() => {

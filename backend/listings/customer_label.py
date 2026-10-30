@@ -65,7 +65,7 @@ def customer_label(
     screening_code: str | None = None,
 ) -> str:
     state = _status_value(status)
-    if state == "live" and screening_code == "PASSED":
+    if state == "live" and screening_code in ("PASSED", "REVIEW_APPROVED"):
         label = SCREENED_LISTED_LABEL
     elif state == "pending":
         label = PENDING_LABEL

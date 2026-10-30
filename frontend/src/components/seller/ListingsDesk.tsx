@@ -38,6 +38,7 @@ export function ListingsDesk({
   queryKey,
   totalNote,
   showSeller = false,
+  beforeListings,
 }: {
   eyebrow: string;
   title: string;
@@ -48,6 +49,8 @@ export function ListingsDesk({
   totalNote: string;
   /** Show whose listing each card is. Only the admin desk loads listings from other sellers. */
   showSeller?: boolean;
+  /** Rendered between the stats and the listing cards (the admin review queue). */
+  beforeListings?: ReactNode;
 }) {
   const [filter, setFilter] = useState<Filter>("all");
   const q = useQuery({
@@ -79,7 +82,7 @@ export function ListingsDesk({
               ["Listings", counts.all, totalNote, "text-primary"],
               ["Listed", counts.live, "Visible to buyers", "text-success"],
               ["Not listed", counts.rejected, "Stopped by screening, with a reason", "text-danger"],
-              ["Held", counts.pending, "Screening did not finish", "text-review"],
+              ["Held", counts.pending, "Not live yet: waiting for a check", "text-review"],
             ] as const
           ).map(([label, value, note, tone]) => (
             <div key={label} className="hv-hud px-5 py-4">
@@ -90,6 +93,9 @@ export function ListingsDesk({
           ))}
         </div>
 
+      </div>
+      {beforeListings}
+      <div className="mx-auto max-w-[73.75rem] px-4 sm:px-6">
         {/* Filters */}
         <div className="mt-12 flex flex-wrap items-center justify-between gap-4">
           <h2 className="font-display text-[2rem] font-extrabold uppercase leading-none text-primary">Listings</h2>

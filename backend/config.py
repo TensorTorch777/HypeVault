@@ -80,6 +80,14 @@ class Settings(BaseSettings):
     dial_text_check: bool = True
     # Reject files whose signed Content Credentials (C2PA) label says an AI made them (inference.provenance).
     provenance_check: bool = True
+    # Reject copies (crops, rescales, screenshots) of AI images already seen (inference.known_ai, SSCD).
+    known_ai_check: bool = True
+    known_ai_min_similarity: float = 0.65
+    # Uploads rejected as AI are added here; a relative path is resolved from backend/.
+    known_ai_store: str = "local_known_ai"
+    # Phase 76 photos with P(AI) from this value up to its cut are held until the seller sends a proof photo
+    # and an admin approves (1.8% of 224 real eBay photos, 0 of 60 AI watch images fell in the band).
+    proof_hold_min_p_fake: float = 0.20
     listing_min_short_side_px: int = 400
     # Deprecated: use inference_min_authentic_confidence. Kept for older .env files (unused in authenticate).
     inference_live_conf_threshold: float = 0.90

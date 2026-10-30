@@ -4,11 +4,14 @@ Checks, in order, each of which can stop the listing:
   1. size    — short side at least `listing_min_short_side_px`, so dial details are readable
   2. label   — the file carries no signed Content Credentials label saying an AI made it
                (inference.provenance; ChatGPT and Gemini sign their images)
-  3. watch   — zero-shot CLIP finds a wristwatch (inference.content_gate)
-  4. origin  — the DINOv2 listing model does not flag the photo as AI-generated, and is
-               confident (≥ `inference_min_authentic_confidence`) that it is an original photo
+  3. known   — the photo is not a copy (crop, rescale, screenshot) of an AI image already seen
+               (inference.known_ai)
+  4. watch   — zero-shot CLIP finds a wristwatch (inference.content_gate)
+  5. origin  — the live model does not flag the photo as AI-generated, and is confident enough
+               that it is an original photo. A borderline score holds the listing for a proof photo
+               and an admin check instead of listing it.
 
-Passing all four lists the watch. That is a photo-screening result, not an authenticity
+Passing every check lists the watch. That is a photo-screening result, not an authenticity
 certificate: a real photograph of a counterfeit watch can pass. Customer copy says so.
 """
 
@@ -28,10 +31,27 @@ AI_LABEL = "AI_LABEL"
 NOT_A_WATCH = "NOT_A_WATCH"
 LIKELY_GENERATED = "LIKELY_GENERATED"
 NOT_CONFIDENTLY_ORIGINAL = "NOT_CONFIDENTLY_ORIGINAL"
+KNOWN_AI_MATCH = "KNOWN_AI_MATCH"
+NEEDS_PROOF = "NEEDS_PROOF"
+PROOF_SUBMITTED = "PROOF_SUBMITTED"
+REVIEW_APPROVED = "REVIEW_APPROVED"
+REVIEW_REJECTED = "REVIEW_REJECTED"
+# Codes that send a listing to the admin review queue
+AWAITING_REVIEW = (NEEDS_PROOF, PROOF_SUBMITTED)
 
 PASSED_REASON = (
     "Passed photo screening: a wristwatch was found and the photo looks like an original photograph. "
     "This is not a certificate of authenticity."
+)
+NEEDS_PROOF_REASON = (
+    "Held for a quick check before it goes live: the photo screening was not sure enough. Add a second photo of the "
+    "watch next to a piece of paper with today's date and your name handwritten on it. An admin compares it with "
+    "your first photo, usually within a day."
+)
+PROOF_SUBMITTED_REASON = "Proof photo received. An admin will compare it with your first photo before the listing goes live."
+REVIEW_APPROVED_REASON = (
+    "Listed after an admin checked your proof photo. Screening checks the photo, not the watch: "
+    "this is not a certificate of authenticity."
 )
 
 
@@ -74,6 +94,20 @@ def check_label(label: AiLabel | None) -> ScreeningOutcome | None:
     )
 
 
+def check_known_ai(similarity: float, min_similarity: float, source: str | None) -> ScreeningOutcome | None:
+    if similarity < min_similarity:
+        return None
+    return ScreeningOutcome(
+        status="rejected",
+        code=KNOWN_AI_MATCH,
+        reason=(
+            f"This photo is a copy of an AI-generated image we have already seen (match {similarity:.0%}), "
+            "even if it was cropped, resized or screenshotted. Upload an original photo you took of the watch."
+        ),
+        details={"known_ai_similarity": round(similarity, 4), "known_ai_source": source},
+    )
+
+
 def check_content(content: ContentCheck) -> ScreeningOutcome | None:
     details = {"watch_score": round(content.watch_score, 4), "content_model": content.model}
     if content.is_watch:
@@ -96,8 +130,13 @@ def check_origin(
     min_authentic_confidence: float,
     content: ContentCheck,
     origin_model: str = "LEGACY_DINOV2",
+    hold_from_p_fake: float | None = None,
 ) -> ScreeningOutcome:
-    """Decide from the origin model's result once size and content have passed."""
+    """Decide from the origin model's result once size and content have passed.
+
+    With `hold_from_p_fake`, a photo that passes but whose P(AI) is at least that value is held for a
+    proof photo and an admin check instead of going live.
+    """
     details = {
         "watch_score": round(content.watch_score, 4),
         "content_model": content.model,
@@ -127,4 +166,8 @@ def check_origin(
             ),
             details=details,
         )
+    p_fake = 1.0 - float(raw_confidence)
+    if hold_from_p_fake is not None and p_fake >= hold_from_p_fake:
+        return ScreeningOutcome(status="pending", code=NEEDS_PROOF, reason=NEEDS_PROOF_REASON,
+                                details=details | {"p_ai": round(p_fake, 4), "hold_from_p_ai": hold_from_p_fake})
     return ScreeningOutcome(status="live", code=PASSED, reason=PASSED_REASON, details=details)
