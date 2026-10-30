@@ -1,4 +1,4 @@
-"""Live origin check: model selection, calibrated decision and the 0.88 listing rule."""
+"""Live origin check: model selection, calibrated decision and the listing rule per model."""
 
 from __future__ import annotations
 
@@ -19,10 +19,35 @@ from inference.verdict import apply_min_authentic_confidence  # noqa: E402
 
 
 class LiveScreeningTests(unittest.TestCase):
-    def test_default_stays_on_dinov2(self) -> None:
-        # benchmark_v1 named no frontier model, so DINOv3 is opt-in only.
+    def test_default_is_the_phase76_hybrid(self) -> None:
+        # Phase 76 (DINOv3 + Perception Encoder) passed the pre-registered benchmark_v6.
         config = (REPO / "backend" / "config.py").read_text()
-        self.assertIn('live_screening_model: str = "dinov2_legacy"', config)
+        self.assertIn('live_screening_model: str = "phase76_fusion"', config)
+
+    def test_phase76_path_reports_its_own_model(self) -> None:
+        image = Image.new("RGB", (600, 600), "white")
+        with mock.patch.object(settings, "live_screening_model", "phase76_fusion"), \
+                mock.patch.object(live_screening, "_phase76_probability", return_value=0.3) as probability:
+            verdict, confidence, model = asyncio.run(live_screening.classify_listing_photo(image))
+        probability.assert_called_once_with(image)
+        self.assertEqual((verdict, confidence, model), ("AUTHENTIC", 0.7, "phase76_fusion"))
+        self.assertEqual(live_screening.RESPONSE_MODEL[model], "PHASE76_DINOV3_PE")
+
+    def test_phase76_probability_is_half_at_the_frozen_cut(self) -> None:
+        head = mock.Mock(rule={"t_fake": -2.185})
+        image = Image.new("RGB", (600, 600), "white")
+        with mock.patch.object(live_screening, "_phase76_head", head):
+            for score, expected in ((-2.185, 0.5), (-12.0, 0.0), (8.0, 1.0)):
+                head.score_image.return_value = score
+                self.assertAlmostEqual(live_screening._phase76_probability(image), expected, places=3)
+
+    def test_phase76_lists_every_photo_below_its_cut(self) -> None:
+        # benchmark_v6 measured the frozen cut alone; the 0.88 margin stays for the DINO models.
+        self.assertEqual(live_screening.min_authentic_confidence("phase76_fusion"), 0.5)
+        self.assertEqual(live_screening.min_authentic_confidence("dinov3_frozen"), settings.inference_min_authentic_confidence)
+        just_below = apply_min_authentic_confidence(*live_screening.verdict_from_probability(0.45),
+                                                    live_screening.min_authentic_confidence("phase76_fusion"))
+        self.assertEqual(just_below[0], "AUTHENTIC")
 
     def test_unknown_model_fails_closed(self) -> None:
         with mock.patch.object(settings, "live_screening_model", "dinov3_experimental"):

@@ -22,7 +22,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from auth.deps import get_current_user
 from config import settings
 from database import Listing, ListingCategory, ListingStatus, User, get_db
-from inference.live_screening import RESPONSE_MODEL, LiveModelConfigurationError, classify_listing_photo
+from inference.live_screening import (
+    RESPONSE_MODEL,
+    LiveModelConfigurationError,
+    classify_listing_photo,
+    min_authentic_confidence,
+)
 from inference.research_guard import deployment_mode
 from inference.schemas import AuthenticateResponse
 from inference.content_gate import score_watch
@@ -44,7 +49,7 @@ ALLOWED_CT = {"image/jpeg", "image/png", "image/webp"}
     summary="Listing photo screening",
     description=(
         "Screens a listing photo: size, wristwatch present (CLIP), and a real-vs-generated check "
-        "by the model set in LIVE_SCREENING_MODEL (DINOV3_FROZEN or LEGACY_DINOV2, named in `model`). "
+        "by the model set in LIVE_SCREENING_MODEL (PHASE76_DINOV3_PE, DINOV3_FROZEN or LEGACY_DINOV2, named in `model`). "
         "Passing lists the watch; failing rejects it with a reason. research_candidate is false and "
         "production_validation is NOT_ESTABLISHED. "
         "The declared brand is not independently verified from the image. "
@@ -200,14 +205,14 @@ async def authenticate(
             verdict, confidence = apply_min_authentic_confidence(
                 raw_verdict,
                 raw_confidence,
-                settings.inference_min_authentic_confidence,
+                min_authentic_confidence(live_model_id),
             )
             listing.verdict = verdict
             listing.confidence = float(confidence)
             outcome = check_origin(
                 raw_verdict=raw_verdict,
                 raw_confidence=float(raw_confidence),
-                min_authentic_confidence=settings.inference_min_authentic_confidence,
+                min_authentic_confidence=min_authentic_confidence(live_model_id),
                 content=content,
                 origin_model=RESPONSE_MODEL[live_model_id],
             )

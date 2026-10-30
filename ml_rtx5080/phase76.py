@@ -146,6 +146,16 @@ class FrozenFusionHead:
             out += self.model.decision_function(x).tolist()
         return [float(v) for v in out]
 
+    def score_image(self, img) -> float:
+        """Score one PIL image with the benchmark normalisation (RGB, centre square, Lanczos 512 px, JPEG q90)."""
+        from PIL import Image
+
+        img = img.convert("RGB")
+        s = min(img.size)
+        left, top = (img.width - s) // 2, (img.height - s) // 2
+        img = img.crop((left, top, left + s, top + s)).resize((512, 512), Image.LANCZOS)
+        return self.scores_images([self.k4.jpeg90(img)])[0]
+
     def scores(self, paths: list[Path]) -> list[float]:
         return self.scores_images([self.k4.jpeg90(self.k4.square(p, 512)) for p in paths])
 
