@@ -1,0 +1,54 @@
+{
+  "leave_one_out": {
+    "cls": {
+      "labelled_photos": 2544,
+      "model_top1": 0.691,
+      "model_top3": 0.86,
+      "brand_top1": 0.91,
+      "median_top_similarity_when_right": 0.916,
+      "median_top_similarity_when_wrong": 0.888
+    },
+    "patch_mean": {
+      "labelled_photos": 2544,
+      "model_top1": 0.148,
+      "model_top3": 0.279,
+      "brand_top1": 0.52,
+      "median_top_similarity_when_right": 0.946,
+      "median_top_similarity_when_wrong": 0.949
+    }
+  },
+  "gallery_size": 2686,
+  "gallery_built_on": "2026-10-23",
+  "unseen_label0_photos": {
+    "photos": 100,
+    "brand_top1": 0.95,
+    "status_counts": {
+      "recognised": 83,
+      "unsure": 17
+    },
+    "dial_text_named_a_brand_or_model": 80,
+    "brand_top1_by_brand": {
+      "A. Lange & S\u00f6hne": "18/20",
+      "Audemars Piguet": "20/20",
+      "Patek Philippe": "19/20",
+      "Richard Mille": "20/20",
+      "Vacheron Constantin": "18/20"
+    }
+  },
+  "unseen_label0_photos_with_ebay_photo_search": {
+    "photos": 100,
+    "brand_top1": 0.96,
+    "status_counts": {
+      "unsure": 33,
+      "recognised": 67
+    },
+    "dial_text_named_a_brand_or_model": 80,
+    "brand_top1_by_brand": {
+      "A. Lange & S\u00f6hne": "18/20",
+      "Audemars Piguet": "20/20",
+      "Patek Philippe": "19/20",
+      "Richard Mille": "20/20",
+      "Vacheron Constantin": "19/20"
+    }
+  }
+}

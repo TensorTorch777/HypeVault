@@ -6,6 +6,7 @@ import axios from "axios";
 import { AuthBadge } from "@/components/AuthBadge";
 import { ResearchExplanation, type ResearchExplanationPayload } from "@/components/ResearchExplanation";
 import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
+import { WatchMarketLookup } from "@/components/market/WatchMarketLookup";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -447,6 +448,12 @@ export default function ResearchDemoPage() {
         </CardContent>
       </Card>
     </div>
+    {/* Once the photo has been classified, show what the watch in it sells for. */}
+    {file && (result || comparison) ? (
+      <div className="mx-auto mt-8 max-w-6xl px-4">
+        <WatchMarketLookup photo={file} />
+      </div>
+    ) : null}
     </div>
   );
 }

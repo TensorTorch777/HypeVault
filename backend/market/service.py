@@ -113,19 +113,48 @@ async def _chrono24_section(session: AsyncSession, query: str, brand: str | None
     }
 
 
+def found_in(ebay: dict, chrono24: dict) -> dict:
+    """Per source: True (has listings), False (searched, none), None (eBay not connected or failed)."""
+    return {
+        SOURCE_EBAY: bool(ebay["items"]) if ebay["status"] == "ok" else None,
+        SOURCE_CHRONO24_DATASET: bool(chrono24["items"]),
+    }
+
+
 async def search_market(
-    session: AsyncSession, redis, query: str, brand: str | None = None, *, sort: str = "lowest", limit: int = 12
+    session: AsyncSession,
+    redis,
+    query: str,
+    brand: str | None = None,
+    *,
+    sort: str = "lowest",
+    limit: int = 12,
+    fallback_query: str | None = None,
 ) -> dict:
+    """Search both sources. When nothing matches anywhere and a shorter `fallback_query` is given
+    ("Nautilus" for "Nautilus 5711/1A"), search again with it."""
     query = " ".join((query or "").split())[:200]
+    fallback = " ".join((fallback_query or "").split())[:200]
     canonical = canonical_brand(brand) if brand else None
     sort = sort if sort in repository.SORTS else "lowest"
+    limit = max(1, min(limit, 48))
+    tried = [query]
     ebay = await _ebay_section(session, redis, query, canonical)
-    chrono24 = await _chrono24_section(session, query, canonical, sort, max(1, min(limit, 48)))
+    chrono24 = await _chrono24_section(session, query, canonical, sort, limit)
+    used = query
+    if fallback and fallback.casefold() != query.casefold() and not any(found_in(ebay, chrono24).values()):
+        tried.append(fallback)
+        ebay = await _ebay_section(session, redis, fallback, canonical)
+        chrono24 = await _chrono24_section(session, fallback, canonical, sort, limit)
+        used = fallback
     return {
         "query": query,
+        "query_used": used,
+        "tried": tried,
         "brand": canonical,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "currency": "USD",
+        "found": found_in(ebay, chrono24),
         "sources": {SOURCE_EBAY: ebay, SOURCE_CHRONO24_DATASET: chrono24},
     }
 
