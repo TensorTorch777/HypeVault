@@ -1,0 +1,39 @@
+{
+ "protocol": "benchmark_v7_fresh",
+ "phase": 77,
+ "status": "PRE_REGISTERED",
+ "written_on": "2026-10-30T11:05+05:30",
+ "written_before": "any benchmark_v7 image was fetched, and before the Phase 77 head was chosen or frozen",
+ "question": "Does the frozen Phase 77 head catch more AI-generated images than the frozen Phase 76 head (live since 2026-10-30) from generator families that neither was trained on, without calling more real photos FAKE?",
+ "why": "Phase 76 caught every fresh ChatGPT and Gemini image on benchmark_v6, but both apps were in its training data. The open question is generators it has never seen. Phase 77 adds new features and training data; the user asked to make it live only if it is better than the current model.",
+ "expectation_stated_in_advance": "Unknown. Development numbers (experiments/phase77_probe/compare.json, leave-one-family-out) are optimistic because several candidates were compared on them.",
+ "scope_limit": "Real photograph versus AI-generated image only; no counterfeit or authenticity claim. The OpenFake images are general news, people and scene content, not watches; only the real eBay photos are watches.",
+ "systems": {
+  "phase76": {"rule": "ml_rtx5080/experiments/phase76_fusion/frozen_rule.json", "rule_sha256": "a68d34bd57a6b86315a8d16f1481c9a922a31802e54ea82c8cdd91633bc1a5b8", "head_sha256": "5303d274770e5b3836a7622fae77bb07c445c16fb9148e31668ac37cbd1c881f"},
+  "phase77": {"rule": "ml_rtx5080/experiments/phase77/frozen_rule.json", "rule_sha256": "recorded in lock.json at freeze, before any benchmark_v7 image is fetched"}
+ },
+ "each_system_uses": "its own frozen FAKE cut; the same normalised 512 px images (centre square, Lanczos, JPEG q90) for both",
+ "source": {
+  "dataset": "ComplexDataLab/OpenFake v2, config core, split test (CC-BY-NC-4.0); text columns read first, image bytes fetched per parquet row group",
+  "selection": "phase77_openfake.plan_test(): seeded greedy row-group plan (seed 7) filling the quotas below, at most 120 row groups; shortfalls are accepted and reported"
+ },
+ "classes": {
+  "GENERATED": {
+   "unseen_both": "PRIMARY. Families in no training set of either system: veo-3, sora-2, wan-video-2.5, ernie-image, ernie-image-turbo. Up to 120 images per model.",
+   "illustrious": "SECONDARY, reported apart: Illustrious anime SDXL. Phase 77 trains on other anime SDXL checkpoints, Phase 76 on SDXL base, so it is not clean. Up to 60 images.",
+   "seen_family_by_phase76": "SECONDARY, reported apart: families Phase 76 met in the frontier pool (flux.2-klein-9b, z-image-turbo, gpt-image-1.5, gpt-image-2, midjourney-7, recraft-v2/v3, lumina, aurora, frames, halfmoon, ideogram-2.0, seedream-v5.0, nano-banana-pro). Up to 30 images per model. Any image matching a training image (SHA-256 or dHash) is dropped."
+  },
+  "REAL_PHOTO": {
+   "real_general": "OpenFake test reals (imagenet, docci): up to 300, from the same row groups.",
+   "real_ebay_v7": "PRIMARY for false alarms. Primary photo of eBay listings (Browse API, category 31387, the five brands) fetched on the scoring day, up to 40 per brand, excluding every listing in benchmark_v1-v6 and every training image. Listings already in the identification gallery or market_listings are allowed for all brands (they were never used to train, select or threshold a detector): the benchmark_v6 relaxation, applied to every brand from the start because fresh listings ran out on 2026-10-29."
+  }
+ },
+ "admission": "benchmark_v1 admission code with the benchmark_v2+ settings (min size, centre square, Lanczos 512 px, JPEG q90, training-set and in-benchmark duplicate checks). Nothing is excluded after scoring.",
+ "success_criterion": {
+  "superiority": "On unseen_both pooled, Phase 77 catches more images than Phase 76, one-sided exact McNemar p < 0.05.",
+  "no_more_false_alarms": "On real_ebay_v7, Phase 77 FAKE count <= Phase 76 FAKE count + max(1, 1% of n), and Phase 77 FAKE rate <= 3%. On real_general, Phase 77 FAKE rate <= 5%.",
+  "decision": "Phase 77 is called better, and may replace Phase 76 on main, only if both hold. Otherwise Phase 76 stays and Phase 77 is reported as not better."
+ },
+ "reported_also": ["per-model catch rates with Clopper-Pearson 95% intervals", "the secondary groups", "AUC of each system on unseen_both vs real_ebay_v7", "the Grandmaster motivating image score (not independent)"],
+ "runs_once": "score.py refuses to run when results/ is not empty. benchmark_v7 is spent after scoring."
+}
