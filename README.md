@@ -156,8 +156,8 @@ flowchart LR
 
 ### Infrastructure
 - Docker Compose for local Postgres/Redis/Triton
-- ECS/SQS helper assets under `infra/`
-- S3 upload flow with local fallback
+- Docker and Triton configs under `infra/`
+- Listing photos stored on local disk (`backend/local_uploads`)
 
 ---
 
@@ -279,7 +279,6 @@ export LOCAL_MODEL_PATH=models/hypevault_classifier.pt</code></pre>
 - `GET /listings/recent`
 - `GET /listings/compare?q=...`
 - `GET /listings/{id}/comparison`
-- `POST /listings/presign`
 
 </details>
 
@@ -425,7 +424,6 @@ Before each push:
 
 Customer-facing promotion of the authenticity model is forbidden. The notes below are operational only.
 
-- Prefer S3 pre-signed uploads via `POST /listings/presign`
 - Ensure Redis is healthy for token rotation and cache paths
 - Treat external scraping as best-effort and failure-tolerant
 - Monitor readiness and metrics before exposing user traffic

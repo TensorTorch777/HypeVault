@@ -35,7 +35,6 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "http", hostname: "localhost", port: "8000" },
       { protocol: "https", hostname: "**.ngrok-free.dev" },
-      { protocol: "https", hostname: "**.amazonaws.com" },
       // eBay listing photos on the market page (the Browse API returns these URLs).
       { protocol: "https", hostname: "i.ebayimg.com" },
     ],

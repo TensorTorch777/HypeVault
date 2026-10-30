@@ -30,16 +30,11 @@ class Settings(BaseSettings):
     auth_access_token_expire_hours: int = 24
     auth_refresh_token_expire_days: int = 7
 
-    aws_access_key_id: str = ""
-    aws_secret_access_key: str = ""
-    aws_region: str = "ap-south-1"
-    s3_bucket: str = "hypevault-listings"
-    sqs_queue_url: str = ""
 
     triton_host: str = "localhost"
     triton_port: int = 8001
 
-    # Local dev: serve uploads when S3 is not configured
+    # Listing photos are saved on local disk and served from this base URL
     public_api_base_url: str = "http://localhost:8000"
 
     # Price comparison scraper (Playwright). Use regional host, e.g. https://www.chrono24.in

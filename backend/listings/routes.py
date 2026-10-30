@@ -23,13 +23,11 @@ from listings.models import (
     ListingCreate,
     ListingRead,
     ListingUpdate,
-    PresignRequest,
-    PresignResponse,
     ReviewDecision,
 )
 from market.routes import _redis_or_none
 from market.service import search_market
-from s3_client import generate_presigned_put_url, upload_file_bytes
+from storage import upload_file_bytes
 
 _log = logging.getLogger(__name__)
 
@@ -317,23 +315,3 @@ async def review_listing(
     seller = await db.get(User, listing.seller_id)
     return AdminListingRead.model_validate(listing).model_copy(update={"seller_email": seller.email if seller else None})
 
-
-@router.post("/presign", response_model=PresignResponse)
-async def presign_upload(
-    body: PresignRequest,
-    db: Annotated[AsyncSession, Depends(get_db)],
-    user: Annotated[User, Depends(require_seller)],
-) -> PresignResponse:
-    try:
-        listing = await db.get(Listing, body.listing_id)
-        if listing is None or listing.seller_id != user.id:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Listing not found")
-        safe = body.filename.replace("..", "").replace("/", "")
-        key = f"listings/{body.listing_id}/{uuid.uuid4()}_{safe}"
-        out = await generate_presigned_put_url(key=key, content_type=body.content_type)
-        return PresignResponse(url=out["url"], key=out["key"], dev=out.get("dev"))
-    except HTTPException:
-        raise
-    except Exception as exc:
-        _log.exception("presign_failed: %s", exc)
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Could not create upload URL")

@@ -19,8 +19,6 @@ services:
       JWT_SECRET: dev-secret-change-me
       TRITON_HOST: triton
       TRITON_PORT: "8001"
-      AWS_REGION: ap-south-1
-      S3_BUCKET: hypevault-listings
     depends_on:
       postgres:
         condition: service_healthy

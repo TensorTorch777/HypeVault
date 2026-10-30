@@ -30,7 +30,7 @@ from listings.routes import router as listings_router
 from market.routes import router as market_router
 from market.service import ebay_configured
 from redis_client import close_redis, get_redis
-from s3_client import LOCAL_UPLOAD_DIR
+from storage import LOCAL_UPLOAD_DIR
 
 
 def _cors_allow_origins() -> list[str]:
