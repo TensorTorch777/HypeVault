@@ -37,7 +37,7 @@ class AuthenticateResponse(BaseModel):
     publication_decision: Literal["PUBLISHED", "REJECTED", "BLOCKED"] = "BLOCKED"
     declared_brand: str
     brand_verification: Literal["NOT_PERFORMED"] = "NOT_PERFORMED"
-    model: Literal["DINOV3_FROZEN", "LEGACY_DINOV2"] | None = None
+    model: Literal["PHASE76_DINOV3_PE", "DINOV3_FROZEN", "LEGACY_DINOV2"] | None = None
     model_status: Literal["PHOTO_SCREENING"] = "PHOTO_SCREENING"
     research_candidate: Literal[False] = False
     production_validation: Literal["NOT_ESTABLISHED"] = "NOT_ESTABLISHED"

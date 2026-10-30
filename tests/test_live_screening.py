@@ -33,6 +33,13 @@ class LiveScreeningTests(unittest.TestCase):
         self.assertEqual((verdict, confidence, model), ("AUTHENTIC", 0.7, "phase76_fusion"))
         self.assertEqual(live_screening.RESPONSE_MODEL[model], "PHASE76_DINOV3_PE")
 
+    def test_every_live_model_label_is_a_valid_response(self) -> None:
+        from inference.schemas import AuthenticateResponse
+
+        for label in live_screening.RESPONSE_MODEL.values():
+            AuthenticateResponse(verdict="FAKE", s3_url="", listing_id="x", listing_status="rejected", status="FAKE",
+                                 model_decision="FAKE", declared_brand="Patek Philippe", model=label)
+
     def test_phase76_probability_is_half_at_the_frozen_cut(self) -> None:
         head = mock.Mock(rule={"t_fake": -2.185})
         image = Image.new("RGB", (600, 600), "white")
