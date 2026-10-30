@@ -1,0 +1,482 @@
+[
+ {
+  "app": "chatgpt",
+  "download": "Luxury Blue World-Time Watch.png",
+  "prompt_number": 1,
+  "name": "patek_worldtime5230_V01"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Watch at the Laptop.png",
+  "prompt_number": 2,
+  "name": "patek_annualcal5205_V02"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Patek Philippe Unboxing Set.png",
+  "prompt_number": 3,
+  "name": "patek_perpetual5320_V03"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Watch and Chanel Shopping Bag.png",
+  "prompt_number": 4,
+  "name": "patek_twenty4_V04"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Green Dial Luxury Watch Close-Up.png",
+  "prompt_number": 5,
+  "name": "patek_cubitus5821_V05"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Rose Gold Patek Philippe Elegance.png",
+  "prompt_number": 6,
+  "name": "patek_goldenellipse_V06"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Blue Dive Watch on Wood.png",
+  "prompt_number": 7,
+  "name": "ap_rooffshorediver_V07"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Watch at the Petrol Station.png",
+  "prompt_number": 8,
+  "name": "ap_rojumbo16202_V08"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Watch at the Petrol Station (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Watch at the Petrol Station (2).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Audemars Piguet Royal Oak Presentation (1).png",
+  "prompt_number": 9,
+  "name": "ap_roperpetual26574_V09"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Chronograph Watch with Measuring Tape.png",
+  "prompt_number": 10,
+  "name": "ap_rochrono26240_V10"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Watch on Monocle Magazines.png",
+  "prompt_number": 11,
+  "name": "ap_millenary_V11"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Neon Nightlife and Skeletonised Luxury Watch.png",
+  "prompt_number": 12,
+  "name": "ap_roconcept_V12"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Blue-Dial Collector’s Watch.png",
+  "prompt_number": 13,
+  "name": "lange_odysseus_V13"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Train Journey with Coffee and Watch.png",
+  "prompt_number": 14,
+  "name": "lange_littlelange1_V14"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Open Richard Lange_ Dial and Movement.png",
+  "prompt_number": 15,
+  "name": "lange_richardlange_V15"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Lange & Söhne Watch Presentation.png",
+  "prompt_number": 16,
+  "name": "lange_grandlange1_V16"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Chronograph Watch in Hand.png",
+  "prompt_number": 17,
+  "name": "lange_1815chrono_V17"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Perpetual Calendar Desk Still Life.png",
+  "prompt_number": 18,
+  "name": "lange_lange1tourbillon_V18"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Carbon Chronograph Watch on White Tabletop.png",
+  "prompt_number": 19,
+  "name": "rm_rm6501_V19"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Skeleton Watch Aboard a Yacht.png",
+  "prompt_number": 20,
+  "name": "rm_rm7201_V20"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Diamond Watch at an Elegant Dinner.png",
+  "prompt_number": 21,
+  "name": "rm_rm0701_V21"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Rose Gold Skeleton Watch Display.png",
+  "prompt_number": 22,
+  "name": "rm_rm010_V22"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Richard Mille Watch Set on Marble Counter.png",
+  "prompt_number": 23,
+  "name": "rm_rm016_V23"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Rose-Gold Skeleton Watch Close-Up.png",
+  "prompt_number": 24,
+  "name": "rm_rm029_V24"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Elegant Diagonal Luxury Watch.png",
+  "prompt_number": 25,
+  "name": "vc_american1921_V25"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Watch on an Autumn Bench.png",
+  "prompt_number": 26,
+  "name": "vc_egerie_V26"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Rainy City Skeleton Watch.png",
+  "prompt_number": 27,
+  "name": "vc_quaidelile_V27"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Luxury Vacheron Constantin Unboxing.png",
+  "prompt_number": 28,
+  "name": "vc_cornesdevache_V28"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Rose Gold Chronograph Watch in Hand.png",
+  "prompt_number": 29,
+  "name": "vc_harmony_V29"
+ },
+ {
+  "app": "chatgpt",
+  "download": "Enamel Bird Métiers d’Art Watch.png",
+  "prompt_number": 30,
+  "name": "vc_metiersdart_V30"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image_q1mg3gq1mg3gq1mg.png",
+  "prompt_number": 1,
+  "name": "patek_worldtime5230_V01"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image_425ht9425ht9425h.png",
+  "prompt_number": 2,
+  "name": "patek_annualcal5205_V02"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image_fuhuxxfuhuxxfuhu.png",
+  "prompt_number": 3,
+  "name": "patek_perpetual5320_V03"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image_t7zdbvt7zdbvt7zd.png",
+  "prompt_number": 4,
+  "name": "patek_twenty4_V04"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image_nmmxz1nmmxz1nmmx.png",
+  "prompt_number": 5,
+  "name": "patek_cubitus5821_V05"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_nmmxz1nmmxz1nmmx (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_gsdqyigsdqyigsdq.png",
+  "prompt_number": 18,
+  "name": "lange_lange1tourbillon_V18"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_sgx92wsgx92wsgx9.png",
+  "prompt_number": 19,
+  "name": "rm_rm6501_V19"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_7rg3gs7rg3gs7rg3.png",
+  "prompt_number": 20,
+  "name": "rm_rm7201_V20"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_qwlt1gqwlt1gqwlt.png",
+  "prompt_number": 21,
+  "name": "rm_rm0701_V21"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_5usb115usb115usb.png",
+  "prompt_number": 22,
+  "name": "rm_rm010_V22"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_ebwfrwebwfrwebwf.png",
+  "prompt_number": 23,
+  "name": "rm_rm016_V23"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_fgsavlfgsavlfgsa.png",
+  "prompt_number": 24,
+  "name": "rm_rm029_V24"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_vp9bnmvp9bnmvp9b.png",
+  "prompt_number": 25,
+  "name": "vc_american1921_V25"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_jxe2q0jxe2q0jxe2.png",
+  "prompt_number": 26,
+  "name": "vc_egerie_V26"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_g5ovxpg5ovxpg5ov.png",
+  "prompt_number": 27,
+  "name": "vc_quaidelile_V27"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_etydj3etydj3etyd.png",
+  "prompt_number": 28,
+  "name": "vc_cornesdevache_V28"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_8uulae8uulae8uul.png",
+  "prompt_number": 29,
+  "name": "vc_harmony_V29"
+ },
+ {
+  "app": "gemini_edu",
+  "account": "Somaiya Edu account, Pro",
+  "download": "Gemini_Generated_Image_ttxwn5ttxwn5ttxw.png",
+  "prompt_number": 30,
+  "name": "vc_metiersdart_V30"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_gsdqyigsdqyigsdq (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_sgx92wsgx92wsgx9 (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_7rg3gs7rg3gs7rg3 (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_qwlt1gqwlt1gqwlt (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_5usb115usb115usb (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_ebwfrwebwfrwebwf (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_fgsavlfgsavlfgsa (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_vp9bnmvp9bnmvp9b (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_jxe2q0jxe2q0jxe2 (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_g5ovxpg5ovxpg5ov (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_etydj3etydj3etyd (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_8uulae8uulae8uul (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image_ttxwn5ttxwn5ttxw (1).png",
+  "dropped": "byte-identical repeat download"
+ },
+ {
+  "app": "gemini_edu",
+  "download": "Gemini_Generated_Image_4homj14homj14hom.png",
+  "dropped": "second image for prompt 30 (the retry after it stalled), downloaded after the run; the first, downloaded during the run, is kept"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (74).jpeg",
+  "prompt_number": 17,
+  "name": "lange_1815chrono_V17"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (75).jpeg",
+  "prompt_number": 16,
+  "name": "lange_grandlange1_V16"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (76).jpeg",
+  "prompt_number": 15,
+  "name": "lange_richardlange_V15"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (77).jpeg",
+  "prompt_number": 14,
+  "name": "lange_littlelange1_V14"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (78).jpeg",
+  "prompt_number": 13,
+  "name": "lange_odysseus_V13"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (79).jpeg",
+  "prompt_number": 12,
+  "name": "ap_roconcept_V12"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (80).jpeg",
+  "prompt_number": 11,
+  "name": "ap_millenary_V11"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (81).jpeg",
+  "prompt_number": 10,
+  "name": "ap_rochrono26240_V10"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (82).jpeg",
+  "prompt_number": 9,
+  "name": "ap_roperpetual26574_V09"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (83).jpeg",
+  "prompt_number": 8,
+  "name": "ap_rojumbo16202_V08"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (84).jpeg",
+  "prompt_number": 7,
+  "name": "ap_rooffshorediver_V07"
+ },
+ {
+  "app": "gemini",
+  "account": "main account",
+  "download": "Gemini_Generated_Image (85).jpeg",
+  "prompt_number": 6,
+  "name": "patek_goldenellipse_V06"
+ },
+ {
+  "app": "gemini",
+  "download": "Gemini_Generated_Image (86).jpeg",
+  "dropped": "smaller JPEG copy of prompt 5 (same picture as the full-size PNG kept)"
+ }
+]
