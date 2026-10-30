@@ -1,4 +1,4 @@
-"""Allowlisted research router for DINOv2 and DINOv3.
+"""Allowlisted research router for DINOv2, DINOv3 and the Phase 76 DINOv3 + Perception Encoder head.
 
 Logical identifiers are the only values a client may send. Triton model
 names, versions, and checkpoint paths are server-side. A missing model
@@ -7,10 +7,15 @@ returns an error. The other model is never used as a substitute.
 A model is selectable only when Triton serves it on an instance kind, with
 the CUDA execution-provider settings, that passed Triton parity.
 `validated_serving` changes only in a reviewed commit that cites the result.
+
+Phase 76 is not served by Triton. It runs in-process on the GPU with the same frozen,
+hash-checked head as the live listing check (`inference.live_screening`), and its output is
+score - t_fake, so 0 is its frozen cut.
 """
 
 from __future__ import annotations
 
+import asyncio
 import math
 from typing import Any
 
@@ -27,6 +32,8 @@ EXACT_FP32_GPU = {"use_tf32": "0"}
 
 DINOV2_LEGACY = "dinov2_legacy"
 DINOV3_EXPERIMENTAL = "dinov3_experimental"
+PHASE76_FUSION = "phase76_fusion"
+IN_PROCESS_GPU = "IN_PROCESS_GPU"
 
 FROZEN_DINOV3_SHA256 = "5a38c93fd442b03653c65d2a5ecc9c2687ef152f7c5c020763e4ce1fd9c7d28f"
 FROZEN_DINOV3_TEMPERATURE = 0.24038200410185356
@@ -89,6 +96,25 @@ _MODELS: dict[str, dict[str, Any]] = {
         "research_only": True,
         "production_route": False,
     },
+    PHASE76_FUSION: {
+        "logical_id": PHASE76_FUSION,
+        "response_model": "PHASE76_DINOV3_PE",
+        "triton_name": None,
+        "version": "1",
+        "output_meaning": "score_minus_t_fake",
+        "temperature": None,
+        "decision_threshold": 0.0,
+        "decision_policy": "phase76_frozen_cut",
+        "preprocessing": "center_square_lanczos_512_jpeg90",
+        "precision": "FP32",
+        "architecture": "DINOv3 ViT-B/16 (pretrained + fine-tuned) + Perception Encoder L/14-336, one logistic regression (Phase 76)",
+        "validated_serving": {IN_PROCESS_GPU: {}},
+        "validation_evidence": {
+            IN_PROCESS_GPU: "benchmark_v6_fresh/results/report.json (pre-registered; live path matches it within 0.02)",
+        },
+        "research_only": False,
+        "production_route": True,
+    },
 }
 
 
@@ -111,6 +137,11 @@ def resolve_model(model_id: str) -> dict[str, Any]:
 
 
 async def _availability(spec: dict[str, Any]) -> tuple[bool, str | None, list[str]]:
+    if spec["logical_id"] == PHASE76_FUSION:
+        from inference.live_screening import phase76_unavailable_reason
+
+        reason = phase76_unavailable_reason()
+        return reason is None, reason, [IN_PROCESS_GPU] if reason is None else []
     if not await named_model_ready(spec["triton_name"], spec["version"]):
         return False, "TRITON_MODEL_NOT_READY", []
     profile = await named_model_serving_profile(spec["triton_name"], spec["version"])
@@ -128,7 +159,7 @@ async def _availability(spec: dict[str, Any]) -> tuple[bool, str | None, list[st
 
 
 # The live listing check model (LIVE_SCREENING_MODEL) that runs the same checkpoint as each research model.
-_LIVE_EQUIVALENT = {DINOV2_LEGACY: "dinov2_legacy", DINOV3_EXPERIMENTAL: "dinov3_frozen"}
+_LIVE_EQUIVALENT = {DINOV2_LEGACY: "dinov2_legacy", DINOV3_EXPERIMENTAL: "dinov3_frozen", PHASE76_FUSION: "phase76_fusion"}
 
 
 async def model_readiness(model_id: str) -> dict[str, Any]:
@@ -163,26 +194,34 @@ async def readiness_report() -> dict[str, Any]:
 
 
 async def infer_allowlisted_model(model_id: str, array_nchw) -> dict[str, Any]:
-    """Run one allowlisted model. Unavailable, unvalidated, and failed calls do not switch models."""
+    """Run one allowlisted model. Unavailable, unvalidated, and failed calls do not switch models.
+
+    Phase 76 takes the RGB PIL image itself (it applies its own normalisation); the others an NCHW array.
+    """
     spec = resolve_model(model_id)
     ready, reason, _kinds = await _availability(spec)
     if not ready:
         raise ModelRoutingError(
             "MODEL_UNAVAILABLE",
-            f"{spec['triton_name']} is not available ({reason}). No other model was used.",
+            f"{spec['triton_name'] or spec['logical_id']} is not available ({reason}). No other model was used.",
         )
     try:
-        output = await infer_named_model(
-            spec["triton_name"],
-            spec["version"],
-            array_nchw,
-            spec["input_name"],
-            spec["output_name"],
-        )
-        values = output.reshape(-1)
-        if values.size != array_nchw.shape[0]:
-            raise ValueError(f"expected {array_nchw.shape[0]} logits, got {values.size}")
-        logit = float(values[0])
+        if spec["logical_id"] == PHASE76_FUSION:
+            from inference.live_screening import phase76_margin
+
+            logit = float(await asyncio.to_thread(phase76_margin, array_nchw))
+        else:
+            output = await infer_named_model(
+                spec["triton_name"],
+                spec["version"],
+                array_nchw,
+                spec["input_name"],
+                spec["output_name"],
+            )
+            values = output.reshape(-1)
+            if values.size != array_nchw.shape[0]:
+                raise ValueError(f"expected {array_nchw.shape[0]} logits, got {values.size}")
+            logit = float(values[0])
     except Exception as exc:
         raise ModelRoutingError(
             "INFERENCE_ERROR",

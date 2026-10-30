@@ -23,30 +23,38 @@ import {
 
 const DINOV2_LEGACY = "dinov2_legacy";
 const DINOV3_EXPERIMENTAL = "dinov3_experimental";
-// DINOv3 is the current model; DINOv2 is the earlier model, kept here so the two can be compared.
-const MODEL_IDS = [DINOV3_EXPERIMENTAL, DINOV2_LEGACY] as const;
+const PHASE76_FUSION = "phase76_fusion";
+// The Phase 76 hybrid is the current model; DINOv3 and DINOv2 are kept here so all three can be compared.
+const MODEL_IDS = [PHASE76_FUSION, DINOV3_EXPERIMENTAL, DINOV2_LEGACY] as const;
 type ModelId = (typeof MODEL_IDS)[number];
 const COMPARE = "compare";
 type Choice = ModelId | typeof COMPARE;
 
 const MODEL_LABELS: Record<ModelId, string> = {
-  [DINOV3_EXPERIMENTAL]: "DINOv3 — Current model",
+  [PHASE76_FUSION]: "Hybrid DINOv3 + Perception Encoder — Current model",
+  [DINOV3_EXPERIMENTAL]: "DINOv3 — Previous model (research comparison)",
   [DINOV2_LEGACY]: "DINOv2 — Earlier model (research comparison)",
 };
 
+// Benchmark figures are the pre-registered benchmark_v6_fresh results (results/report.json).
 const MODEL_NOTES: Record<ModelId, string> = {
-  [DINOV3_EXPERIMENTAL]: "Current model. Research result, not a production certificate.",
-  [DINOV2_LEGACY]: "Earlier model, kept for research comparison. Not a production certificate.",
+  [PHASE76_FUSION]:
+    "Current model: DINOv3 and Perception Encoder features with one frozen classifier. On the fresh benchmark_v6 it caught 30/30 ChatGPT and 17/17 Gemini images and flagged 2 of 102 real eBay photos. Research result, not a production certificate.",
+  [DINOV3_EXPERIMENTAL]: "Previous model: DINOv3 alone, kept for research comparison. Not a production certificate.",
+  [DINOV2_LEGACY]:
+    "Earlier model, kept for research comparison. On the fresh benchmark_v6 it caught 4/30 ChatGPT and 0/17 Gemini images and flagged 4 of 102 real eBay photos. Not a production certificate.",
 };
 
 const EXPECTED_MODEL: Record<ModelId, ResearchResult["model"]> = {
+  [PHASE76_FUSION]: "PHASE76_DINOV3_PE",
   [DINOV2_LEGACY]: "LEGACY_DINOV2",
   [DINOV3_EXPERIMENTAL]: "DINOV3_RESEARCH_PROTOTYPE",
 };
 
 const RAN_LABEL: Record<ResearchResult["model"], string> = {
+  PHASE76_DINOV3_PE: "Hybrid DINOv3 + Perception Encoder (current model)",
   LEGACY_DINOV2: "DINOv2 (earlier model)",
-  DINOV3_RESEARCH_PROTOTYPE: "DINOv3 (current model)",
+  DINOV3_RESEARCH_PROTOTYPE: "DINOv3 (previous model)",
 };
 
 type ResearchResult = {
@@ -58,7 +66,7 @@ type ResearchResult = {
   research_only: true;
   production_ready: false;
   checkpoint_sha: string | null;
-  model: "LEGACY_DINOV2" | "DINOV3_RESEARCH_PROTOTYPE";
+  model: "LEGACY_DINOV2" | "DINOV3_RESEARCH_PROTOTYPE" | "PHASE76_DINOV3_PE";
   model_version?: string;
 };
 
@@ -76,6 +84,8 @@ const UNAVAILABLE_REASONS: Record<string, string> = {
   TRITON_MODEL_NOT_READY: "not loaded in Triton",
   INSTANCE_KIND_UNKNOWN: "Triton instance kind unknown",
   PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE: "Triton parity not validated for this instance",
+  CUDA_UNAVAILABLE: "no GPU on this server",
+  HEAD_FILES_MISSING: "frozen head files missing",
 };
 
 type LaneOutcome =
@@ -187,9 +197,9 @@ export default function ResearchDemoPage() {
     }
   }
 
-  async function compareBoth() {
+  async function compareAll() {
     if (!file) {
-      setErr("Choose an image before comparing the two research models.");
+      setErr("Choose an image before comparing the research models.");
       return;
     }
     setErr(null);
@@ -248,7 +258,7 @@ export default function ResearchDemoPage() {
     <PageHero
       eyebrow="Research console"
       title="Five-brand prototype"
-      subtitle="Run a photo through DINOv2 or the DINOv3 candidate and see which patches drove the score. Research only: nothing here publishes a listing."
+      subtitle="Run a photo through the DINOv3 + Perception Encoder hybrid, DINOv3 or DINOv2 and see which patches drove the score. Research only: nothing here publishes a listing."
       scene="neon_rain"
       render="/renders/rm_rm011/hero.webp"
       compact
@@ -260,7 +270,7 @@ export default function ResearchDemoPage() {
           <h2 className="mt-1 font-display text-[2rem] font-extrabold uppercase leading-none">Run a screening</h2>
           <p className="mt-3 text-sm text-primary/70">
             Authorized research selector. The selected brand is user-declared and is not independently verified from
-            the image. Neither model publishes a listing.
+            the image. No model here publishes a listing.
           </p>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -293,7 +303,7 @@ export default function ResearchDemoPage() {
                 </option>
               ))}
               <option value={COMPARE} disabled={!MODEL_IDS.some(isReady)}>
-                Compare both models (side by side)
+                Compare all three models (side by side)
               </option>
             </select>
             {!readiness && !readinessErr ? <p className="mt-2 text-sm text-primary/60">Checking serving status</p> : null}
@@ -317,7 +327,7 @@ export default function ResearchDemoPage() {
               </ul>
             ) : null}
             {single ? <p className="mt-2 text-sm text-primary/70">Selected model: {MODEL_LABELS[single]}</p> : null}
-            {comparing ? <p className="mt-2 text-sm text-primary/70">Selected: both models, side by side</p> : null}
+            {comparing ? <p className="mt-2 text-sm text-primary/70">Selected: all three models, side by side</p> : null}
           </div>
           <div>
             <label className="text-xs font-semibold text-primary/55" htmlFor="research-brand">
@@ -366,13 +376,13 @@ export default function ResearchDemoPage() {
             <Button
               className="min-h-[2.75rem]"
               disabled={pending || !brand || !file || !canRun}
-              onClick={() => void (comparing ? compareBoth() : submit())}
+              onClick={() => void (comparing ? compareAll() : submit())}
             >
-              {pending ? "Running" : comparing ? "Compare both models" : "Run research demo"}
+              {pending ? "Running" : comparing ? "Compare all three models" : "Run research demo"}
             </Button>
           </div>
           <p className="text-xs text-primary/60">
-            Comparison runs each research model separately on this image and declared brand. The two classifications are not combined, and neither one is treated as more accurate. Neither result publishes a listing.
+            Comparison runs each research model separately on this image and declared brand. The classifications are not combined, and on a single image no one result is treated as more accurate; each model&apos;s benchmark record is in its note. No result publishes a listing.
           </p>
           {err ? <p className="text-sm font-semibold text-danger" role="alert">{err}</p> : null}
           {result ? (
@@ -407,47 +417,49 @@ export default function ResearchDemoPage() {
               />
             </div>
           ) : null}
-          {comparison ? (
-            <div className="space-y-3">
-              <p className="text-sm font-semibold text-primary">Research-only side-by-side classification</p>
-              <p className="text-sm text-primary/70">{DECLARED_BRAND_NOTE} {VALIDITY_NOT_ESTABLISHED}</p>
-              <div className="grid gap-3 md:grid-cols-2">
-                {MODEL_IDS.map((id) => {
-                  const lane = comparison[id];
-                  return (
-                    <div key={id} className="rounded-xl border border-primary/15 p-4">
-                      <p className="text-sm font-semibold">{MODEL_LABELS[id]}</p>
-                      <p className="mt-1 text-xs text-primary/60">{MODEL_NOTES[id]}</p>
-                      {lane?.state === "unavailable" ? (
-                        <p className="mt-3 text-sm text-primary/70" role="status">Serving status: unavailable. No result was produced for this model.</p>
-                      ) : null}
-                      {lane?.state === "error" ? (
-                        <p className="mt-3 text-sm font-semibold text-danger" role="alert">{lane.message}</p>
-                      ) : null}
-                      {lane?.state === "ok" ? (
-                        <div className="mt-3 space-y-2">
-                          <p className="text-sm">Model classification: {lane.body.decision} — research screening result, not verified.</p>
-                          <p className="text-sm text-primary/70">Declared brand: {lane.body.declared_brand}</p>
-                          <p className="text-sm text-primary/70">Model that ran: {RAN_LABEL[lane.body.model]}</p>
-                          <p className="text-xs text-primary/55">This lane cannot publish a listing.</p>
-                          <ResearchExplanation
-                            imageUrl={previewUrl}
-                            imageWidth={previewSize.width}
-                            imageHeight={previewSize.height}
-                            payload={lane.explanation}
-                            pending={false}
-                          />
-                        </div>
-                      ) : null}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ) : null}
         </CardContent>
       </Card>
     </div>
+    {comparison ? (
+    <div className="mx-auto mt-6 max-w-6xl px-4">
+      <div className="space-y-3">
+        <p className="text-sm font-semibold text-primary">Research-only side-by-side classification</p>
+        <p className="text-sm text-primary/70">{DECLARED_BRAND_NOTE} {VALIDITY_NOT_ESTABLISHED}</p>
+        <div className="grid gap-3 lg:grid-cols-3">
+          {MODEL_IDS.map((id) => {
+            const lane = comparison[id];
+            return (
+              <div key={id} className="rounded-xl border border-primary/15 p-4">
+                <p className="text-sm font-semibold">{MODEL_LABELS[id]}</p>
+                <p className="mt-1 text-xs text-primary/60">{MODEL_NOTES[id]}</p>
+                {lane?.state === "unavailable" ? (
+                  <p className="mt-3 text-sm text-primary/70" role="status">Serving status: unavailable. No result was produced for this model.</p>
+                ) : null}
+                {lane?.state === "error" ? (
+                  <p className="mt-3 text-sm font-semibold text-danger" role="alert">{lane.message}</p>
+                ) : null}
+                {lane?.state === "ok" ? (
+                  <div className="mt-3 space-y-2">
+                    <p className="text-sm">Model classification: {lane.body.decision} — research screening result, not verified.</p>
+                    <p className="text-sm text-primary/70">Declared brand: {lane.body.declared_brand}</p>
+                    <p className="text-sm text-primary/70">Model that ran: {RAN_LABEL[lane.body.model]}</p>
+                    <p className="text-xs text-primary/55">This lane cannot publish a listing.</p>
+                    <ResearchExplanation
+                      imageUrl={previewUrl}
+                      imageWidth={previewSize.width}
+                      imageHeight={previewSize.height}
+                      payload={lane.explanation}
+                      pending={false}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+    ) : null}
     {/* Once the photo has been classified, show what the watch in it sells for. */}
     {file && (result || comparison) ? (
       <div className="mx-auto mt-8 max-w-6xl px-4">
