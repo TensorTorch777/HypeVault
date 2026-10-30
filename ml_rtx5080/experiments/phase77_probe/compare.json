@@ -1,0 +1,1318 @@
+{
+ "results": {
+  "p76 / p76": {
+   "features": [
+    "d3",
+    "pe"
+   ],
+   "data": "p76",
+   "caught": {
+    "Anime-SDXL": [
+     200,
+     200
+    ],
+    "ByteDance": [
+     264,
+     264
+    ],
+    "FLUX": [
+     376,
+     376
+    ],
+    "GLM": [
+     68,
+     68
+    ],
+    "Google": [
+     607,
+     637
+    ],
+    "HiDream": [
+     100,
+     100
+    ],
+    "Hunyuan": [
+     128,
+     128
+    ],
+    "Ideogram": [
+     60,
+     60
+    ],
+    "Janus": [
+     60,
+     60
+    ],
+    "Kandinsky": [
+     1505,
+     1669
+    ],
+    "Kling": [
+     68,
+     68
+    ],
+    "Kolors": [
+     40,
+     40
+    ],
+    "Lumina": [
+     60,
+     60
+    ],
+    "Midjourney": [
+     60,
+     60
+    ],
+    "OpenAI": [
+     395,
+     429
+    ],
+    "Playground": [
+     40,
+     40
+    ],
+    "Pony-SDXL": [
+     160,
+     160
+    ],
+    "Qwen": [
+     298,
+     304
+    ],
+    "Recraft": [
+     120,
+     120
+    ],
+    "SD-family": [
+     862,
+     870
+    ],
+    "SD3": [
+     100,
+     100
+    ],
+    "Sana": [
+     60,
+     60
+    ],
+    "Stable Cascade": [
+     593,
+     593
+    ],
+    "Z-Image": [
+     60,
+     60
+    ],
+    "aMUSEd": [
+     293,
+     293
+    ],
+    "frames-23-1-25": [
+     60,
+     60
+    ],
+    "halfmoon-4-4-25": [
+     60,
+     60
+    ],
+    "xAI": [
+     99,
+     100
+    ]
+   },
+   "coco_holdout_fake": 0.032,
+   "testtest_margin": 1.511,
+   "ebay_oof_fake": [
+    51,
+    1416
+   ],
+   "macro_caught": 0.9906,
+   "dims": 5632
+  },
+  "d3+pe512 / p76": {
+   "features": [
+    "d3",
+    "pe512"
+   ],
+   "data": "p76",
+   "caught": {
+    "Anime-SDXL": [
+     200,
+     200
+    ],
+    "ByteDance": [
+     264,
+     264
+    ],
+    "FLUX": [
+     376,
+     376
+    ],
+    "GLM": [
+     68,
+     68
+    ],
+    "Google": [
+     601,
+     637
+    ],
+    "HiDream": [
+     100,
+     100
+    ],
+    "Hunyuan": [
+     128,
+     128
+    ],
+    "Ideogram": [
+     60,
+     60
+    ],
+    "Janus": [
+     60,
+     60
+    ],
+    "Kandinsky": [
+     1541,
+     1669
+    ],
+    "Kling": [
+     68,
+     68
+    ],
+    "Kolors": [
+     40,
+     40
+    ],
+    "Lumina": [
+     60,
+     60
+    ],
+    "Midjourney": [
+     60,
+     60
+    ],
+    "OpenAI": [
+     406,
+     429
+    ],
+    "Playground": [
+     40,
+     40
+    ],
+    "Pony-SDXL": [
+     160,
+     160
+    ],
+    "Qwen": [
+     298,
+     304
+    ],
+    "Recraft": [
+     120,
+     120
+    ],
+    "SD-family": [
+     860,
+     870
+    ],
+    "SD3": [
+     100,
+     100
+    ],
+    "Sana": [
+     60,
+     60
+    ],
+    "Stable Cascade": [
+     593,
+     593
+    ],
+    "Z-Image": [
+     60,
+     60
+    ],
+    "aMUSEd": [
+     293,
+     293
+    ],
+    "frames-23-1-25": [
+     60,
+     60
+    ],
+    "halfmoon-4-4-25": [
+     60,
+     60
+    ],
+    "xAI": [
+     99,
+     100
+    ]
+   },
+   "coco_holdout_fake": 0.038,
+   "testtest_margin": 0.259,
+   "ebay_oof_fake": [
+    42,
+    1416
+   ],
+   "macro_caught": 0.9919,
+   "dims": 5632
+  },
+  "d3+pe+pe512 / p76": {
+   "features": [
+    "d3",
+    "pe",
+    "pe512"
+   ],
+   "data": "p76",
+   "caught": {
+    "Anime-SDXL": [
+     200,
+     200
+    ],
+    "ByteDance": [
+     264,
+     264
+    ],
+    "FLUX": [
+     376,
+     376
+    ],
+    "GLM": [
+     68,
+     68
+    ],
+    "Google": [
+     605,
+     637
+    ],
+    "HiDream": [
+     100,
+     100
+    ],
+    "Hunyuan": [
+     128,
+     128
+    ],
+    "Ideogram": [
+     60,
+     60
+    ],
+    "Janus": [
+     60,
+     60
+    ],
+    "Kandinsky": [
+     1566,
+     1669
+    ],
+    "Kling": [
+     68,
+     68
+    ],
+    "Kolors": [
+     40,
+     40
+    ],
+    "Lumina": [
+     60,
+     60
+    ],
+    "Midjourney": [
+     60,
+     60
+    ],
+    "OpenAI": [
+     407,
+     429
+    ],
+    "Playground": [
+     40,
+     40
+    ],
+    "Pony-SDXL": [
+     160,
+     160
+    ],
+    "Qwen": [
+     301,
+     304
+    ],
+    "Recraft": [
+     120,
+     120
+    ],
+    "SD-family": [
+     867,
+     870
+    ],
+    "SD3": [
+     100,
+     100
+    ],
+    "Sana": [
+     60,
+     60
+    ],
+    "Stable Cascade": [
+     593,
+     593
+    ],
+    "Z-Image": [
+     60,
+     60
+    ],
+    "aMUSEd": [
+     293,
+     293
+    ],
+    "frames-23-1-25": [
+     60,
+     60
+    ],
+    "halfmoon-4-4-25": [
+     60,
+     60
+    ],
+    "xAI": [
+     99,
+     100
+    ]
+   },
+   "coco_holdout_fake": 0.035,
+   "testtest_margin": 1.568,
+   "ebay_oof_fake": [
+    46,
+    1416
+   ],
+   "macro_caught": 0.9933,
+   "dims": 6656
+  },
+  "d3+pe512+mid / p76": {
+   "features": [
+    "d3",
+    "pe512",
+    "pe512_m12",
+    "pe512_m18"
+   ],
+   "data": "p76",
+   "caught": {
+    "Anime-SDXL": [
+     199,
+     200
+    ],
+    "ByteDance": [
+     264,
+     264
+    ],
+    "FLUX": [
+     375,
+     376
+    ],
+    "GLM": [
+     67,
+     68
+    ],
+    "Google": [
+     615,
+     637
+    ],
+    "HiDream": [
+     100,
+     100
+    ],
+    "Hunyuan": [
+     128,
+     128
+    ],
+    "Ideogram": [
+     60,
+     60
+    ],
+    "Janus": [
+     60,
+     60
+    ],
+    "Kandinsky": [
+     1496,
+     1669
+    ],
+    "Kling": [
+     68,
+     68
+    ],
+    "Kolors": [
+     40,
+     40
+    ],
+    "Lumina": [
+     60,
+     60
+    ],
+    "Midjourney": [
+     60,
+     60
+    ],
+    "OpenAI": [
+     408,
+     429
+    ],
+    "Playground": [
+     40,
+     40
+    ],
+    "Pony-SDXL": [
+     160,
+     160
+    ],
+    "Qwen": [
+     303,
+     304
+    ],
+    "Recraft": [
+     120,
+     120
+    ],
+    "SD-family": [
+     863,
+     870
+    ],
+    "SD3": [
+     100,
+     100
+    ],
+    "Sana": [
+     60,
+     60
+    ],
+    "Stable Cascade": [
+     593,
+     593
+    ],
+    "Z-Image": [
+     60,
+     60
+    ],
+    "aMUSEd": [
+     293,
+     293
+    ],
+    "frames-23-1-25": [
+     60,
+     60
+    ],
+    "halfmoon-4-4-25": [
+     60,
+     60
+    ],
+    "xAI": [
+     99,
+     100
+    ]
+   },
+   "coco_holdout_fake": 0.027,
+   "testtest_margin": -0.594,
+   "ebay_oof_fake": [
+    43,
+    1416
+   ],
+   "macro_caught": 0.9918,
+   "dims": 7680
+  },
+  "d3+pe+pe512+mid / p76": {
+   "features": [
+    "d3",
+    "pe",
+    "pe512",
+    "pe512_m12",
+    "pe512_m18"
+   ],
+   "data": "p76",
+   "caught": {
+    "Anime-SDXL": [
+     199,
+     200
+    ],
+    "ByteDance": [
+     264,
+     264
+    ],
+    "FLUX": [
+     375,
+     376
+    ],
+    "GLM": [
+     67,
+     68
+    ],
+    "Google": [
+     613,
+     637
+    ],
+    "HiDream": [
+     100,
+     100
+    ],
+    "Hunyuan": [
+     128,
+     128
+    ],
+    "Ideogram": [
+     60,
+     60
+    ],
+    "Janus": [
+     60,
+     60
+    ],
+    "Kandinsky": [
+     1533,
+     1669
+    ],
+    "Kling": [
+     68,
+     68
+    ],
+    "Kolors": [
+     40,
+     40
+    ],
+    "Lumina": [
+     60,
+     60
+    ],
+    "Midjourney": [
+     60,
+     60
+    ],
+    "OpenAI": [
+     409,
+     429
+    ],
+    "Playground": [
+     40,
+     40
+    ],
+    "Pony-SDXL": [
+     160,
+     160
+    ],
+    "Qwen": [
+     303,
+     304
+    ],
+    "Recraft": [
+     120,
+     120
+    ],
+    "SD-family": [
+     867,
+     870
+    ],
+    "SD3": [
+     100,
+     100
+    ],
+    "Sana": [
+     60,
+     60
+    ],
+    "Stable Cascade": [
+     593,
+     593
+    ],
+    "Z-Image": [
+     60,
+     60
+    ],
+    "aMUSEd": [
+     293,
+     293
+    ],
+    "frames-23-1-25": [
+     60,
+     60
+    ],
+    "halfmoon-4-4-25": [
+     60,
+     60
+    ],
+    "xAI": [
+     99,
+     100
+    ]
+   },
+   "coco_holdout_fake": 0.023,
+   "testtest_margin": 0.47,
+   "ebay_oof_fake": [
+    41,
+    1416
+   ],
+   "macro_caught": 0.9927,
+   "dims": 8704
+  },
+  "p76 / p77": {
+   "features": [
+    "d3",
+    "pe"
+   ],
+   "data": "p77",
+   "caught": {
+    "Anime-SDXL": [
+     200,
+     200
+    ],
+    "ByteDance": [
+     262,
+     264
+    ],
+    "FLUX": [
+     371,
+     376
+    ],
+    "GLM": [
+     68,
+     68
+    ],
+    "Google": [
+     617,
+     637
+    ],
+    "HiDream": [
+     99,
+     100
+    ],
+    "Hunyuan": [
+     128,
+     128
+    ],
+    "Ideogram": [
+     60,
+     60
+    ],
+    "Janus": [
+     52,
+     60
+    ],
+    "Kandinsky": [
+     1341,
+     1669
+    ],
+    "Kling": [
+     68,
+     68
+    ],
+    "Kolors": [
+     40,
+     40
+    ],
+    "Lumina": [
+     60,
+     60
+    ],
+    "Midjourney": [
+     60,
+     60
+    ],
+    "OpenAI": [
+     410,
+     429
+    ],
+    "Playground": [
+     40,
+     40
+    ],
+    "Pony-SDXL": [
+     160,
+     160
+    ],
+    "Qwen": [
+     288,
+     304
+    ],
+    "Recraft": [
+     120,
+     120
+    ],
+    "SD-family": [
+     852,
+     870
+    ],
+    "SD3": [
+     99,
+     100
+    ],
+    "Sana": [
+     60,
+     60
+    ],
+    "Stable Cascade": [
+     593,
+     593
+    ],
+    "Z-Image": [
+     60,
+     60
+    ],
+    "aMUSEd": [
+     293,
+     293
+    ],
+    "frames-23-1-25": [
+     60,
+     60
+    ],
+    "halfmoon-4-4-25": [
+     60,
+     60
+    ],
+    "xAI": [
+     98,
+     100
+    ]
+   },
+   "coco_holdout_fake": 0.02,
+   "testtest_margin": 1.748,
+   "ebay_oof_fake": [
+    44,
+    1416
+   ],
+   "macro_caught": 0.9807,
+   "dims": 5632
+  },
+  "d3+pe512 / p77": {
+   "features": [
+    "d3",
+    "pe512"
+   ],
+   "data": "p77",
+   "caught": {
+    "Anime-SDXL": [
+     200,
+     200
+    ],
+    "ByteDance": [
+     264,
+     264
+    ],
+    "FLUX": [
+     372,
+     376
+    ],
+    "GLM": [
+     68,
+     68
+    ],
+    "Google": [
+     619,
+     637
+    ],
+    "HiDream": [
+     99,
+     100
+    ],
+    "Hunyuan": [
+     128,
+     128
+    ],
+    "Ideogram": [
+     60,
+     60
+    ],
+    "Janus": [
+     51,
+     60
+    ],
+    "Kandinsky": [
+     1384,
+     1669
+    ],
+    "Kling": [
+     68,
+     68
+    ],
+    "Kolors": [
+     40,
+     40
+    ],
+    "Lumina": [
+     60,
+     60
+    ],
+    "Midjourney": [
+     60,
+     60
+    ],
+    "OpenAI": [
+     415,
+     429
+    ],
+    "Playground": [
+     40,
+     40
+    ],
+    "Pony-SDXL": [
+     160,
+     160
+    ],
+    "Qwen": [
+     291,
+     304
+    ],
+    "Recraft": [
+     120,
+     120
+    ],
+    "SD-family": [
+     847,
+     870
+    ],
+    "SD3": [
+     100,
+     100
+    ],
+    "Sana": [
+     60,
+     60
+    ],
+    "Stable Cascade": [
+     593,
+     593
+    ],
+    "Z-Image": [
+     60,
+     60
+    ],
+    "aMUSEd": [
+     293,
+     293
+    ],
+    "frames-23-1-25": [
+     60,
+     60
+    ],
+    "halfmoon-4-4-25": [
+     58,
+     60
+    ],
+    "xAI": [
+     98,
+     100
+    ]
+   },
+   "coco_holdout_fake": 0.024,
+   "testtest_margin": 1.926,
+   "ebay_oof_fake": [
+    59,
+    1416
+   ],
+   "macro_caught": 0.9813,
+   "dims": 5632
+  },
+  "d3+pe+pe512 / p77": {
+   "features": [
+    "d3",
+    "pe",
+    "pe512"
+   ],
+   "data": "p77",
+   "caught": {
+    "Anime-SDXL": [
+     200,
+     200
+    ],
+    "ByteDance": [
+     261,
+     264
+    ],
+    "FLUX": [
+     370,
+     376
+    ],
+    "GLM": [
+     68,
+     68
+    ],
+    "Google": [
+     621,
+     637
+    ],
+    "HiDream": [
+     98,
+     100
+    ],
+    "Hunyuan": [
+     128,
+     128
+    ],
+    "Ideogram": [
+     60,
+     60
+    ],
+    "Janus": [
+     52,
+     60
+    ],
+    "Kandinsky": [
+     1376,
+     1669
+    ],
+    "Kling": [
+     68,
+     68
+    ],
+    "Kolors": [
+     40,
+     40
+    ],
+    "Lumina": [
+     60,
+     60
+    ],
+    "Midjourney": [
+     60,
+     60
+    ],
+    "OpenAI": [
+     418,
+     429
+    ],
+    "Playground": [
+     40,
+     40
+    ],
+    "Pony-SDXL": [
+     160,
+     160
+    ],
+    "Qwen": [
+     290,
+     304
+    ],
+    "Recraft": [
+     120,
+     120
+    ],
+    "SD-family": [
+     855,
+     870
+    ],
+    "SD3": [
+     100,
+     100
+    ],
+    "Sana": [
+     60,
+     60
+    ],
+    "Stable Cascade": [
+     593,
+     593
+    ],
+    "Z-Image": [
+     60,
+     60
+    ],
+    "aMUSEd": [
+     293,
+     293
+    ],
+    "frames-23-1-25": [
+     60,
+     60
+    ],
+    "halfmoon-4-4-25": [
+     58,
+     60
+    ],
+    "xAI": [
+     98,
+     100
+    ]
+   },
+   "coco_holdout_fake": 0.02,
+   "testtest_margin": 2.159,
+   "ebay_oof_fake": [
+    43,
+    1416
+   ],
+   "macro_caught": 0.9813,
+   "dims": 6656
+  },
+  "d3+pe512+mid / p77": {
+   "features": [
+    "d3",
+    "pe512",
+    "pe512_m12",
+    "pe512_m18"
+   ],
+   "data": "p77",
+   "caught": {
+    "Anime-SDXL": [
+     200,
+     200
+    ],
+    "ByteDance": [
+     264,
+     264
+    ],
+    "FLUX": [
+     374,
+     376
+    ],
+    "GLM": [
+     68,
+     68
+    ],
+    "Google": [
+     626,
+     637
+    ],
+    "HiDream": [
+     100,
+     100
+    ],
+    "Hunyuan": [
+     128,
+     128
+    ],
+    "Ideogram": [
+     60,
+     60
+    ],
+    "Janus": [
+     49,
+     60
+    ],
+    "Kandinsky": [
+     1220,
+     1669
+    ],
+    "Kling": [
+     68,
+     68
+    ],
+    "Kolors": [
+     40,
+     40
+    ],
+    "Lumina": [
+     60,
+     60
+    ],
+    "Midjourney": [
+     60,
+     60
+    ],
+    "OpenAI": [
+     421,
+     429
+    ],
+    "Playground": [
+     40,
+     40
+    ],
+    "Pony-SDXL": [
+     160,
+     160
+    ],
+    "Qwen": [
+     299,
+     304
+    ],
+    "Recraft": [
+     120,
+     120
+    ],
+    "SD-family": [
+     858,
+     870
+    ],
+    "SD3": [
+     100,
+     100
+    ],
+    "Sana": [
+     60,
+     60
+    ],
+    "Stable Cascade": [
+     593,
+     593
+    ],
+    "Z-Image": [
+     60,
+     60
+    ],
+    "aMUSEd": [
+     293,
+     293
+    ],
+    "frames-23-1-25": [
+     60,
+     60
+    ],
+    "halfmoon-4-4-25": [
+     59,
+     60
+    ],
+    "xAI": [
+     100,
+     100
+    ]
+   },
+   "coco_holdout_fake": 0.028,
+   "testtest_margin": 1.25,
+   "ebay_oof_fake": [
+    60,
+    1416
+   ],
+   "macro_caught": 0.9807,
+   "dims": 7680
+  },
+  "d3+pe+pe512+mid / p77": {
+   "features": [
+    "d3",
+    "pe",
+    "pe512",
+    "pe512_m12",
+    "pe512_m18"
+   ],
+   "data": "p77",
+   "caught": {
+    "Anime-SDXL": [
+     200,
+     200
+    ],
+    "ByteDance": [
+     264,
+     264
+    ],
+    "FLUX": [
+     374,
+     376
+    ],
+    "GLM": [
+     67,
+     68
+    ],
+    "Google": [
+     626,
+     637
+    ],
+    "HiDream": [
+     99,
+     100
+    ],
+    "Hunyuan": [
+     128,
+     128
+    ],
+    "Ideogram": [
+     60,
+     60
+    ],
+    "Janus": [
+     51,
+     60
+    ],
+    "Kandinsky": [
+     1265,
+     1669
+    ],
+    "Kling": [
+     68,
+     68
+    ],
+    "Kolors": [
+     40,
+     40
+    ],
+    "Lumina": [
+     60,
+     60
+    ],
+    "Midjourney": [
+     60,
+     60
+    ],
+    "OpenAI": [
+     419,
+     429
+    ],
+    "Playground": [
+     40,
+     40
+    ],
+    "Pony-SDXL": [
+     160,
+     160
+    ],
+    "Qwen": [
+     296,
+     304
+    ],
+    "Recraft": [
+     120,
+     120
+    ],
+    "SD-family": [
+     862,
+     870
+    ],
+    "SD3": [
+     100,
+     100
+    ],
+    "Sana": [
+     60,
+     60
+    ],
+    "Stable Cascade": [
+     593,
+     593
+    ],
+    "Z-Image": [
+     60,
+     60
+    ],
+    "aMUSEd": [
+     293,
+     293
+    ],
+    "frames-23-1-25": [
+     60,
+     60
+    ],
+    "halfmoon-4-4-25": [
+     59,
+     60
+    ],
+    "xAI": [
+     99,
+     100
+    ]
+   },
+   "coco_holdout_fake": 0.017,
+   "testtest_margin": 1.419,
+   "ebay_oof_fake": [
+    38,
+    1416
+   ],
+   "macro_caught": 0.9813,
+   "dims": 8704
+  }
+ },
+ "eligible": [
+  "d3+pe+pe512+mid / p76",
+  "d3+pe+pe512+mid / p77",
+  "d3+pe512 / p76"
+ ],
+ "selected": "d3+pe512 / p76",
+ "override": {
+  "selected": "d3+pe+pe512+mid / p77",
+  "decided_on": "2026-10-30, after compare.json and before any benchmark_v7 image was fetched",
+  "rule_pick": "d3+pe512 / p76",
+  "reason": "The macro mean is at ceiling (most families 100% for every candidate) and its differences come from one family, Kandinsky watch images; the rule's pick won on the dimension tie-break. The override is the candidate best on every product measure: OpenAI 419/429 and Google 626/637 caught when held out, real eBay FAKE 38/1416, COCO hold-out FAKE 1.7%. Its cost: Kandinsky held out 1265/1669. This is a post-hoc development choice; benchmark_v7 remains the one confirmatory test."
+ }
+}

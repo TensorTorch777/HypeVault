@@ -1,0 +1,46 @@
+{
+  "rule": "phase77",
+  "phase": 77,
+  "candidate": "d3+pe+pe512+mid / p77",
+  "selection_override": {
+    "selected": "d3+pe+pe512+mid / p77",
+    "decided_on": "2026-10-30, after compare.json and before any benchmark_v7 image was fetched",
+    "rule_pick": "d3+pe512 / p76",
+    "reason": "The macro mean is at ceiling (most families 100% for every candidate) and its differences come from one family, Kandinsky watch images; the rule's pick won on the dimension tie-break. The override is the candidate best on every product measure: OpenAI 419/429 and Google 626/637 caught when held out, real eBay FAKE 38/1416, COCO hold-out FAKE 1.7%. Its cost: Kandinsky held out 1265/1669. This is a post-hoc development choice; benchmark_v7 remains the one confirmatory test."
+  },
+  "features": [
+    "d3",
+    "pe",
+    "pe512",
+    "pe512_m12",
+    "pe512_m18"
+  ],
+  "data": "p77",
+  "pe_model": "vit_pe_core_large_patch14_336.fb",
+  "timm_version": "1.0.26",
+  "dinov3_view": "pre+ft",
+  "pe512": {
+    "side": 512,
+    "mid_blocks_one_based": [
+      12,
+      18
+    ],
+    "mid_pool": "mean of patch tokens"
+  },
+  "head": "StandardScaler + logistic regression (C = 0.05, balanced classes, app images weighted x10)",
+  "model": {
+    "path": "ml_rtx5080/experiments/phase77/phase77_head.joblib",
+    "sha256": "407a8bee9c32da9a270a90f89fc5070538965c59bf456fa79be204100f1b2c27"
+  },
+  "t_fake": -1.7511829563363257,
+  "training_rows": {
+    "real": 9616,
+    "generated": 7039
+  },
+  "threshold_source": "real watch photos only: Label_0 validation + benchmark_v1-v6 eBay (5-fold out-of-fold), at most 1% FAKE",
+  "development_real_fake_rate": 0.0099,
+  "coco_holdout_fake_rate": 0.008,
+  "motivating_case_score_in_training_context": -2.407,
+  "normalisation": "RGB, Lanczos short side 512, centre square, JPEG q90",
+  "frozen_before_any_v7_data": true
+}

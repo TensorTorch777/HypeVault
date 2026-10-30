@@ -1,0 +1,9 @@
+{
+ "written_on": "2026-10-30T12:36:13+05:30",
+ "written_before": "any benchmark_v7 image was fetched",
+ "protocol_sha256": "d947d4cf06e79433e46eea4815a0722871c671b7ea59dce222a85f55908641ec",
+ "phase76_rule_sha256": "a68d34bd57a6b86315a8d16f1481c9a922a31802e54ea82c8cdd91633bc1a5b8",
+ "phase77_rule_sha256": "68ff5513a75f1b276cae716941ba20aa8fc0bf0ad87dfed30bd3789b85dc56f1",
+ "phase77_head_sha256": "407a8bee9c32da9a270a90f89fc5070538965c59bf456fa79be204100f1b2c27",
+ "phase77_candidate": "d3+pe+pe512+mid / p77"
+}
