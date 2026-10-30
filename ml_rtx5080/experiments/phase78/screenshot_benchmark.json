@@ -1,0 +1,47 @@
+{
+ "AI caught \u00b7 original": {
+  "phase76": "59/60",
+  "phase78": "60/60"
+ },
+ "AI caught \u00b7 screenshot_style": {
+  "phase76": "37/60",
+  "phase78": "60/60"
+ },
+ "AI caught \u00b7 crop70": {
+  "phase76": "9/60",
+  "phase78": "52/60"
+ },
+ "AI caught \u00b7 half_size": {
+  "phase76": "41/60",
+  "phase78": "60/60"
+ },
+ "AI caught \u00b7 your_screenshot": {
+  "phase76": "0/1",
+  "phase78": "1/1"
+ },
+ "AI caught \u00b7 grandmaster_original": {
+  "phase76": "1/1",
+  "phase78": "1/1"
+ },
+ "real photos wrongly flagged \u00b7 original": {
+  "phase76": "5/224",
+  "phase78": "10/224"
+ },
+ "real photos wrongly flagged \u00b7 screenshot_style": {
+  "phase76": "1/224",
+  "phase78": "13/224"
+ },
+ "real photos wrongly flagged \u00b7 crop70": {
+  "phase76": "0/224",
+  "phase78": "8/224"
+ },
+ "real photos wrongly flagged \u00b7 half_size": {
+  "phase76": "1/224",
+  "phase78": "9/224"
+ },
+ "pass_rule_met": false,
+ "auc_original_ai_vs_real": {
+  "phase76": 0.9932,
+  "phase78": 0.992
+ }
+}

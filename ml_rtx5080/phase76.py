@@ -137,24 +137,33 @@ class FrozenFusionHead:
         self.pre, self.ft = k4.Pretrained(), k4.FineTuned()
         self.enc = fp.Encoders(("pe",))
 
-    def scores_images(self, images) -> list[float]:
+    def features_images(self, images) -> np.ndarray:
+        """The head's input: DINOv3 view + Perception Encoder, one row per normalised image (Phase 78 reads it too)."""
         out = []
         for s in range(0, len(images), self.k4.BATCH):
             chunk = images[s:s + self.k4.BATCH]
             feats = {**self.pre.features(chunk), **self.ft.features(chunk)}
-            x = np.concatenate([self.d74.view(feats, self.rule["dinov3_view"]), self.enc(chunk)["pe"]], axis=1)
-            out += self.model.decision_function(x).tolist()
-        return [float(v) for v in out]
+            out.append(np.concatenate([self.d74.view(feats, self.rule["dinov3_view"]), self.enc(chunk)["pe"]], axis=1))
+        return np.concatenate(out)
 
-    def score_image(self, img) -> float:
-        """Score one PIL image with the benchmark normalisation (RGB, centre square, Lanczos 512 px, JPEG q90)."""
+    def scores_images(self, images) -> list[float]:
+        return [float(v) for v in self.model.decision_function(self.features_images(images))]
+
+    def normalise(self, img):
+        """The benchmark normalisation: RGB, centre square, Lanczos 512 px, JPEG q90."""
         from PIL import Image
 
         img = img.convert("RGB")
         s = min(img.size)
         left, top = (img.width - s) // 2, (img.height - s) // 2
-        img = img.crop((left, top, left + s, top + s)).resize((512, 512), Image.LANCZOS)
-        return self.scores_images([self.k4.jpeg90(img)])[0]
+        return self.k4.jpeg90(img.crop((left, top, left + s, top + s)).resize((512, 512), Image.LANCZOS))
+
+    def features_image(self, img) -> np.ndarray:
+        return self.features_images([self.normalise(img)])[0]
+
+    def score_image(self, img) -> float:
+        """Score one PIL image with the benchmark normalisation."""
+        return float(self.model.decision_function(self.features_image(img)[None])[0])
 
     def scores(self, paths: list[Path]) -> list[float]:
         return self.scores_images([self.k4.jpeg90(self.k4.square(p, 512)) for p in paths])

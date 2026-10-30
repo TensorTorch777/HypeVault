@@ -1,0 +1,20 @@
+{
+  "rule": "phase78",
+  "phase": 78,
+  "features": "Phase 76: DINOv3 pre+ft view + Perception Encoder L/14-336",
+  "head": "standardise + logistic regression (C = 0.05, balanced, app images x10), L-BFGS on GPU, frozen as arrays",
+  "training": {
+    "originals": 13893,
+    "edited_copies": 27786,
+    "copies_per_image": 2,
+    "edit": "random crop 55-95% at a random position, shrink 40-100%, PNG or JPEG q60-95, 30% brightness/contrast +-15%"
+  },
+  "model": {
+    "path": "ml_rtx5080/experiments/phase78/phase78_head.npz",
+    "sha256": "56189f186046a2a581f6f6ed4a8673954fd3ce0d1687fa3a07937431d1e9bb74"
+  },
+  "t_fake": -3.0467424392700195,
+  "threshold_source": "original real watch photos: Label_0 validation + benchmark_v1-v5 eBay (5-fold out-of-fold), at most 1% FAKE",
+  "development_real_fake_rate": 0.0099,
+  "coco_holdout_fake_rate": 0.022
+}

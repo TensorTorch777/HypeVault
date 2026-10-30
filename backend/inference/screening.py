@@ -131,11 +131,13 @@ def check_origin(
     content: ContentCheck,
     origin_model: str = "LEGACY_DINOV2",
     hold_from_p_fake: float | None = None,
+    edited_copy_margin: float | None = None,
 ) -> ScreeningOutcome:
     """Decide from the origin model's result once size and content have passed.
 
     With `hold_from_p_fake`, a photo that passes but whose P(AI) is at least that value is held for a
-    proof photo and an admin check instead of going live.
+    proof photo and an admin check instead of going live. So is one the Phase 78 head (trained on
+    screenshot-style copies) calls AI: `edited_copy_margin` >= 0.
     """
     details = {
         "watch_score": round(content.watch_score, 4),
@@ -167,7 +169,12 @@ def check_origin(
             details=details,
         )
     p_fake = 1.0 - float(raw_confidence)
-    if hold_from_p_fake is not None and p_fake >= hold_from_p_fake:
+    if edited_copy_margin is not None:
+        details = details | {"edited_copy_margin": round(edited_copy_margin, 4)}
+    borderline = hold_from_p_fake is not None and p_fake >= hold_from_p_fake
+    edited_copy = edited_copy_margin is not None and edited_copy_margin >= 0
+    if borderline or edited_copy:
         return ScreeningOutcome(status="pending", code=NEEDS_PROOF, reason=NEEDS_PROOF_REASON,
-                                details=details | {"p_ai": round(p_fake, 4), "hold_from_p_ai": hold_from_p_fake})
+                                details=details | {"p_ai": round(p_fake, 4), "hold_from_p_ai": hold_from_p_fake,
+                                                   "held_by": "edited_copy_model" if edited_copy and not borderline else "borderline_score"})
     return ScreeningOutcome(status="live", code=PASSED, reason=PASSED_REASON, details=details)

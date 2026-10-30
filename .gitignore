@@ -118,3 +118,6 @@ ml_rtx5080/benchmark_v6_fresh/data/
 ml_rtx5080/experiments/known_ai/*.pt
 ml_rtx5080/experiments/known_ai/*.part
 backend/local_known_ai/
+# Phase 78 edited-copy features (rebuilt by ml_rtx5080/phase78.py extract)
+ml_rtx5080/experiments/phase78/aug_features.npz
+ml_rtx5080/experiments/phase78/aug_parts/

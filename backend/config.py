@@ -88,6 +88,8 @@ class Settings(BaseSettings):
     # Phase 76 photos with P(AI) from this value up to its cut are held until the seller sends a proof photo
     # and an admin approves (1.8% of 224 real eBay photos, 0 of 60 AI watch images fell in the band).
     proof_hold_min_p_fake: float = 0.20
+    # Also hold (never reject) when the Phase 78 head, trained on screenshot-style copies, calls the photo AI.
+    phase78_hold: bool = True
     listing_min_short_side_px: int = 400
     # Deprecated: use inference_min_authentic_confidence. Kept for older .env files (unused in authenticate).
     inference_live_conf_threshold: float = 0.90
