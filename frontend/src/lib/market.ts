@@ -169,7 +169,35 @@ export type BenchmarkModelRow = {
   review: { generated: number; real: number } | null;
 };
 
+export type KN = { k: number; n: number } | null;
+
+export type LiveModelEvidence = {
+  id: string;
+  name: string;
+  phase: number | null;
+  features: string;
+  benchmark: {
+    name: string | null;
+    written_on: string | null;
+    scored_at: string | null;
+    question: string | null;
+    rule: string | null;
+    met: boolean | null;
+    systems: Record<string, string>;
+    groups: { id: string; label: string; kind: "real" | "generated"; systems: Record<string, KN> }[];
+    caveat: string;
+  };
+  unseen_generators: null | { name: string | null; caught: KN; real_ebay_flagged: KN; generators: string; note: string };
+  edited_copy_hold: null | {
+    rows: { edit: string; phase76: string | null; phase78: string | null }[];
+    real_flagged: { phase76: string; phase78: string } | null;
+    role: string;
+  };
+  known_ai: null | { cut: number | null; edited_matched: number | null; real_matched: number | null; real_n: number | null };
+};
+
 export type BenchmarkSummary = {
+  live_model: LiveModelEvidence | null;
   protocol: {
     name: string | null;
     status: string | null;

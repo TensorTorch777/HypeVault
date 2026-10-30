@@ -28,7 +28,7 @@ const METHOD = [
   {
     n: "02",
     title: "Screened, or sent back",
-    body: "CLIP checks there is a wristwatch in the photo, then a self-supervised transformer looks for the traces image generators leave behind. Fail either and the seller is told why. Pass and the watch is listed: screened, not certified.",
+    body: "A signed AI label or a copy of a known AI image is stopped. CLIP checks there is a wristwatch, then the DINOv3 + Perception Encoder model looks for the traces image generators leave behind. A borderline or edited photo is held until the seller sends a proof photo. Pass and the watch is listed: screened, not certified.",
     watch: "ap_royal_oak",
   },
   {
@@ -127,7 +127,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Showdown dials={[flat("ap_royal_oak"), flat("patek_nautilus")]} />
+      <Showdown dials={[flat("ap_royal_oak"), flat("patek_nautilus"), flat("vc_overseas")]} />
 
       {/* Closing */}
       <section aria-labelledby="closing" className="hv-sky relative isolate overflow-hidden">

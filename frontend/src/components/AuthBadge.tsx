@@ -18,7 +18,7 @@ export function AuthBadge({
     lane === "research"
       ? "No listing was published. This is not a marketplace status."
       : verdict === "FAKE"
-        ? "Listing workflow: Rejected by the legacy screening workflow. That is not independent proof of counterfeit status."
+        ? "Listing workflow: Rejected by photo screening. That is not independent proof of counterfeit status."
         : "Listing workflow: pending. The model result does not publish the listing or verify authenticity.";
 
   if (!verdict) {
@@ -27,8 +27,8 @@ export function AuthBadge({
         <p className="text-sm font-semibold">{lane === "research" ? "Research demo pending" : "Pending"}</p>
         <p className="mt-2 text-sm text-primary/55">
           {lane === "research"
-            ? "DINOv3 research prototype. Not production. The brand is user-declared."
-            : "Legacy DINOv2 listing check. Not the DINOv3 research candidate."}
+            ? "Research models: the DINOv3 + Perception Encoder hybrid, DINOv3 and DINOv2. Not production. The brand is user-declared."
+            : "Live listing check: the DINOv3 + Perception Encoder model."}
         </p>
       </div>
     );
@@ -43,7 +43,7 @@ export function AuthBadge({
     >
       <div className="min-w-0">
         <p className="text-xs font-semibold uppercase tracking-wider text-primary/55">
-          {lane === "research" ? "Research result — not verified" : "Legacy DINOv2 screening result — not verified"}
+          {lane === "research" ? "Research result — not verified" : "Photo screening result — not verified"}
         </p>
         <p className="mt-2 text-2xl font-semibold tracking-tight">Model classification: {verdict}</p>
         <p className="mt-2 text-sm text-primary/70">{workflow}</p>

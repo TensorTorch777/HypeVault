@@ -75,7 +75,7 @@ app = FastAPI(
     title="HypeVault API",
     version="1.0.0",
     description=(
-        "Legacy DINOv2 listing checks and a separate DINOv3 research prototype. "
+        "Listing photo screening with the DINOv3 + Perception Encoder model, and a research console comparing it with DINOv3 and DINOv2. "
         "Neither endpoint is a universal authenticity guarantee or an image-level brand verification."
     ),
     lifespan=lifespan,

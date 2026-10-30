@@ -1,9 +1,10 @@
 """POST /authenticate — listing photo screening.
 
-A photo must be large enough, carry no signed "made by AI" label (C2PA), show a wristwatch (zero-shot CLIP) and pass the legacy
-DINOv2 origin check. Passing lists the watch; failing rejects it with a seller-facing
-reason (inference.screening). This route stays on DINOv2, not the frozen DINOv3 research
-candidate, and a listed watch is screened, not authenticity-certified.
+A photo must be large enough, carry no signed "made by AI" label (C2PA), not copy a known AI image (SSCD), show a
+wristwatch (zero-shot CLIP) and pass the origin check of the model set in LIVE_SCREENING_MODEL (default: the Phase 76
+DINOv3 + Perception Encoder hybrid). Passing lists the watch; an unsure or edited-looking photo is held for a proof
+photo (Phase 78); failing rejects it with a seller-facing reason (inference.screening). A listed watch is screened,
+not authenticity-certified.
 """
 
 from __future__ import annotations
