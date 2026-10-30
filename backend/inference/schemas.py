@@ -46,7 +46,8 @@ class AuthenticateResponse(BaseModel):
 class ResearchVerifyResponse(BaseModel):
     """Research result inside a user-declared five-brand scope.
 
-    `checkpoint_sha` is the frozen DINOv3 checkpoint for DINOv3 results and null for DINOv2.
+    `checkpoint_sha` is the frozen DINOv3 checkpoint for DINOv3 results, the hash-checked head for
+    Phase 76, and null for DINOv2.
     """
 
     model_config = ConfigDict(protected_namespaces=("settings_",))
@@ -60,6 +61,6 @@ class ResearchVerifyResponse(BaseModel):
     publication_decision: Literal["BLOCKED"] = "BLOCKED"
     checkpoint_sha: str | None
     policy_version: str
-    model: Literal["DINOV3_RESEARCH_PROTOTYPE", "LEGACY_DINOV2"] = "DINOV3_RESEARCH_PROTOTYPE"
+    model: Literal["DINOV3_RESEARCH_PROTOTYPE", "LEGACY_DINOV2", "PHASE76_DINOV3_PE"] = "DINOV3_RESEARCH_PROTOTYPE"
     model_version: str = "1"
-    model_scope: Literal["FIVE_BRAND_RESEARCH_PROTOTYPE", "LEGACY_DINOV2"] = "FIVE_BRAND_RESEARCH_PROTOTYPE"
+    model_scope: Literal["FIVE_BRAND_RESEARCH_PROTOTYPE", "LEGACY_DINOV2", "PHASE76_DINOV3_PE"] = "FIVE_BRAND_RESEARCH_PROTOTYPE"

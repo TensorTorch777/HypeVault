@@ -31,6 +31,11 @@ def _score_note(model_id: str) -> str:
             "The stored DINOv3 score is a calibrated P(fake) from sigmoid(logit / frozen temperature). "
             "It is not the probability that the watch is genuinely authentic."
         )
+    if model_id == "PHASE76_DINOV3_PE":
+        return (
+            "The Phase 76 score is the head's raw score minus its frozen cut, so 0 is where it starts calling FAKE. "
+            "It is not the probability that the watch is genuinely authentic."
+        )
     return (
         "The legacy DINOv2 class comes from the existing logit policy. "
         "The raw logit change below is not a calibrated probability that the watch is authentic."

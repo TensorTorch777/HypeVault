@@ -1,4 +1,4 @@
-"""POST /research/verify — allowlisted DINOv2 or DINOv3 research inference.
+"""POST /research/verify — allowlisted DINOv2, DINOv3 or Phase 76 (DINOv3 + Perception Encoder) research inference.
 
 The selected logical id is resolved on the server. This route does not
 create a listing and does not run when the deployment mode is production,
@@ -30,6 +30,7 @@ from inference.research_access import (
 from inference.model_router import (
     DINOV2_LEGACY,
     DINOV3_EXPERIMENTAL,
+    PHASE76_FUSION,
     ModelRoutingError,
     infer_allowlisted_model,
     readiness_report,
@@ -45,7 +46,7 @@ ALLOWED_CT = {"image/jpeg", "image/png", "image/webp"}
 
 _RESEARCH_DESCRIPTION = (
     "Research classification within five user-declared watch brands, using an allowlisted "
-    "DINOv2 or DINOv3 Triton model. Requires a server-side research entitlement. "
+    "DINOv2 or DINOv3 Triton model, or the in-process Phase 76 DINOv3 + Perception Encoder head. Requires a server-side research entitlement. "
     "The brand is not independently verified from the image. "
     "This is not a production authenticity service. "
     "Production, missing, and unknown deployment modes return POLICY_ERROR and no verdict."
@@ -60,7 +61,7 @@ def frozen_checkpoint_digest() -> str:
 @router.post(
     "/verify",
     response_model=ResearchVerifyResponse,
-    summary="Allowlisted DINOv2 or DINOv3 five-brand research classification",
+    summary="Allowlisted DINOv2, DINOv3 or Phase 76 five-brand research classification",
     description=_RESEARCH_DESCRIPTION,
 )
 async def research_verify(
@@ -260,6 +261,31 @@ async def research_verify(
         )
         return ResearchVerifyResponse(**body)
 
+    if spec["logical_id"] == PHASE76_FUSION:
+        from inference.live_screening import phase76_head_sha256
+
+        verdict = _phase76_decision(routed["logit"])
+        head_sha = phase76_head_sha256()
+        body = research_success_body(
+            decision=verdict,
+            declared_brand=scope.canonical_brand or "",
+            checkpoint_sha=head_sha,
+            policy_version=spec["decision_policy"],
+            model=spec["response_model"],
+            model_version=str(routed["version"]),
+            model_scope=spec["response_model"],
+        )
+        log_research_event(
+            _log,
+            model=spec["logical_id"],
+            declared_brand=scope.canonical_brand,
+            decision=verdict,
+            status=verdict,
+            checkpoint_sha=head_sha,
+            error=False,
+        )
+        return ResearchVerifyResponse(**body)
+
     from inference.shadow import _policy_batch
     import torch
 
@@ -362,6 +388,8 @@ async def research_explain(
                 confidence,
                 settings.inference_min_authentic_confidence,
             )
+        elif spec["logical_id"] == PHASE76_FUSION:
+            decision = _phase76_decision(baseline)
         else:
             from inference.shadow import _policy_batch
 
@@ -471,8 +499,15 @@ async def _prepare_research_image(image: UploadFile, brand: str | None, logical_
     return spec, pil, digest
 
 
+def _phase76_decision(margin: float) -> str:
+    """The frozen Phase 76 cut, the same one the live listing check applies (score - t_fake >= 0 is FAKE)."""
+    return "FAKE" if margin >= 0.0 else "AUTHENTIC"
+
+
 def _array_for_model(spec: dict, pil: Image.Image):
-    """Use the authoritative preprocess for the selected model only."""
+    """Use the authoritative preprocess for the selected model only. Phase 76 normalises the PIL image itself."""
+    if spec["logical_id"] == PHASE76_FUSION:
+        return pil
     if spec["logical_id"] == DINOV3_EXPERIMENTAL:
         import sys
         from pathlib import Path

@@ -166,7 +166,7 @@ class ResearchExplanationBrowserTests(unittest.TestCase):
             page.get_by_text("Serving status").first.wait_for()
             serving = page.locator("li").all_inner_texts()
             dinov2 = next(item for item in serving if "DINOv2 — Earlier model" in item and "Serving status" in item)
-            dinov3 = next(item for item in serving if "DINOv3 — Current model" in item and "Serving status" in item)
+            dinov3 = next(item for item in serving if "DINOv3 — Previous model" in item and "Serving status" in item)
             check("DINOv2 serving state is available", "available" in dinov2, dinov2)
             check("DINOv3 serving state is available", "available" in dinov3, dinov3)
 

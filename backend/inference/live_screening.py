@@ -86,11 +86,37 @@ def _phase76() -> object:
     return _phase76_head
 
 
-def _phase76_probability(pil: Image.Image) -> float:
+def phase76_margin(pil: Image.Image) -> float:
+    """Phase 76 score minus its frozen cut: FAKE when >= 0. The research tab scores with this too."""
     with _phase76_lock:
         head = _phase76()
-        score = head.score_image(pil)
-        return 1.0 / (1.0 + math.exp(-(score - head.rule["t_fake"])))
+        return head.score_image(pil) - head.rule["t_fake"]
+
+
+def phase76_head_sha256() -> str:
+    with _phase76_lock:
+        return _phase76().rule["model"]["sha256"]
+
+
+def phase76_unavailable_reason() -> str | None:
+    """None when the Phase 76 head can serve here: CUDA, and the frozen rule and head on disk."""
+    if _phase76_head is not None:
+        return None
+    try:
+        import torch
+    except ImportError:
+        return "CUDA_UNAVAILABLE"
+    if not torch.cuda.is_available():
+        return "CUDA_UNAVAILABLE"
+    rule = _ML / "experiments" / "phase76_fusion" / "frozen_rule.json"
+    head = _ML / "experiments" / "phase76_fusion" / "dinov3_pe_v6_head.joblib"
+    if not (rule.exists() and head.exists()):
+        return "HEAD_FILES_MISSING"
+    return None
+
+
+def _phase76_probability(pil: Image.Image) -> float:
+    return 1.0 / (1.0 + math.exp(-phase76_margin(pil)))
 
 
 def preload() -> None:
