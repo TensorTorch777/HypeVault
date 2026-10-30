@@ -2,21 +2,29 @@
 
 `LIVE_SCREENING_MODEL` picks the model:
 
-- `dinov2_legacy` (default): the DINOv2 route (`LOCAL_MODEL_PATH` / Triton), uncalibrated.
-- `dinov3_frozen` (opt-in): the frozen DINOv3 checkpoint `epoch_018.pt`, loaded through the
-  research loader, which refuses any file whose SHA-256 differs from the frozen digest. The raw
-  logit is divided by the frozen temperature before the sigmoid, so P(fake) is calibrated.
-  benchmark_v1 did not name DINOv3 the frontier model, so it is not the default.
+- `phase76_fusion` (default): the frozen Phase 76 head, DINOv3 (pretrained + fine-tuned) and
+  Perception Encoder L/14 features with one logistic regression (ml_rtx5080/phase76.py, hash-checked).
+  It passed the pre-registered benchmark_v6 (ChatGPT 30/30, Gemini 17/17, real eBay FAKE 2/102).
+  P(fake) is sigmoid(score - t_fake), so 0.5 is exactly its frozen cut.
+- `dinov3_frozen`: the frozen DINOv3 checkpoint `epoch_018.pt`, loaded through the research
+  loader, which refuses any file whose SHA-256 differs from the frozen digest. The raw logit is
+  divided by the frozen temperature before the sigmoid, so P(fake) is calibrated.
+- `dinov2_legacy`: the DINOv2 route (`LOCAL_MODEL_PATH` / Triton), uncalibrated.
 
-Both return the same (verdict, confidence) pair as `verdict.logits_to_verdict`: FAKE with
-P(fake) when P(fake) >= 0.50, otherwise AUTHENTIC with 1 - P(fake). The 0.88 listing rule in
-`verdict.apply_min_authentic_confidence` is applied afterwards by the route, for either model.
+All return the same (verdict, confidence) pair as `verdict.logits_to_verdict`: FAKE with
+P(fake) when P(fake) >= 0.50, otherwise AUTHENTIC with 1 - P(fake). The route then needs
+`min_authentic_confidence(model)` in an original photo: 0.88 for the DINO models, and the frozen
+cut alone for Phase 76, which is how benchmark_v6 measured it.
 """
 
 from __future__ import annotations
 
 import asyncio
+import logging
+import math
+import sys
 import threading
+from pathlib import Path
 from typing import Literal
 
 import numpy as np
@@ -25,15 +33,20 @@ from PIL import Image
 from config import settings
 from inference.research_guard import live_path_targets_dinov3
 
+PHASE76_FUSION = "phase76_fusion"
 DINOV3_FROZEN = "dinov3_frozen"
 DINOV2_LEGACY = "dinov2_legacy"
-LIVE_MODELS = (DINOV3_FROZEN, DINOV2_LEGACY)
+LIVE_MODELS = (PHASE76_FUSION, DINOV3_FROZEN, DINOV2_LEGACY)
 FAKE_THRESHOLD = 0.5
 
 # Response labels for AuthenticateResponse.model
-RESPONSE_MODEL = {DINOV3_FROZEN: "DINOV3_FROZEN", DINOV2_LEGACY: "LEGACY_DINOV2"}
+RESPONSE_MODEL = {PHASE76_FUSION: "PHASE76_DINOV3_PE", DINOV3_FROZEN: "DINOV3_FROZEN", DINOV2_LEGACY: "LEGACY_DINOV2"}
 
+_ML = Path(__file__).resolve().parents[2] / "ml_rtx5080"
+_log = logging.getLogger(__name__)
 _dinov3_lock = threading.Lock()
+_phase76_lock = threading.Lock()
+_phase76_head = None
 
 
 class LiveModelConfigurationError(RuntimeError):
@@ -53,6 +66,46 @@ def verdict_from_probability(prob_fake: float) -> tuple[Literal["AUTHENTIC", "FA
     return "AUTHENTIC", round(1.0 - prob_fake, 6)
 
 
+def min_authentic_confidence(model: str) -> float:
+    """Confidence in an original photo needed to list it.
+
+    Phase 76 lists every photo below its frozen cut: benchmark_v6 measured that rule, and adding the
+    0.88 margin would have turned away 2 more of its 102 real photos.
+    """
+    return FAKE_THRESHOLD if model == PHASE76_FUSION else settings.inference_min_authentic_confidence
+
+
+def _phase76() -> object:
+    global _phase76_head
+    if _phase76_head is None:
+        if str(_ML) not in sys.path:
+            sys.path.insert(0, str(_ML))
+        from phase76 import FrozenFusionHead
+
+        _phase76_head = FrozenFusionHead()  # refuses a head whose SHA-256 differs from frozen_rule.json
+    return _phase76_head
+
+
+def _phase76_probability(pil: Image.Image) -> float:
+    with _phase76_lock:
+        head = _phase76()
+        score = head.score_image(pil)
+        return 1.0 / (1.0 + math.exp(-(score - head.rule["t_fake"])))
+
+
+def preload() -> None:
+    """Load the Phase 76 backbones at startup so the first listing is not slow. Errors are logged only."""
+    try:
+        import torch
+
+        if live_model() == PHASE76_FUSION and torch.cuda.is_available():
+            with _phase76_lock:
+                _phase76()
+            _log.info("phase76_live_head_loaded")
+    except Exception as exc:
+        _log.exception("phase76_preload_failed: %s", exc)
+
+
 def _dinov3_probability(pil: Image.Image) -> float:
     from inference.dinov3_model import shared_backend
 
@@ -66,6 +119,11 @@ def _dinov3_probability(pil: Image.Image) -> float:
 async def classify_listing_photo(pil: Image.Image) -> tuple[Literal["AUTHENTIC", "FAKE"], float, str]:
     """Return (verdict, confidence, model id) for an RGB listing photo."""
     model = live_model()
+    if model == PHASE76_FUSION:
+        prob_fake = await asyncio.to_thread(_phase76_probability, pil)
+        verdict, confidence = verdict_from_probability(prob_fake)
+        return verdict, confidence, model
+
     if model == DINOV3_FROZEN:
         prob_fake = await asyncio.to_thread(_dinov3_probability, pil)
         verdict, confidence = verdict_from_probability(prob_fake)

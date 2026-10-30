@@ -49,10 +49,10 @@ class Settings(BaseSettings):
     cors_origins: str = ""
 
     # ── Inference backend ───────────────────────────────────────────────────
-    # Origin check for listing photos: dinov2_legacy (the settings below) or dinov3_frozen (in-process
-    # on CUDA). DINOv2 stays the default: benchmark_v1 did not name DINOv3 the frontier model.
-    # See inference/live_screening.py.
-    live_screening_model: str = "dinov2_legacy"
+    # Origin check for listing photos: phase76_fusion (DINOv3 + Perception Encoder head, in-process on
+    # CUDA; passed benchmark_v6), dinov3_frozen (in-process on CUDA) or dinov2_legacy (the settings
+    # below). See inference/live_screening.py.
+    live_screening_model: str = "phase76_fusion"
     # Legacy DINOv2 route: triton = NVIDIA Triton gRPC. torch = load LOCAL_MODEL_PATH in-process.
     inference_backend: str = "triton"
     # Path to .pt from training (`torch.save({"model_state": ...})`). Relative paths are under repo root.
