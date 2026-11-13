@@ -193,4 +193,16 @@ python scraper/dealer_scraper.py --allow-network --more-brands --download-images
 The site shows the matches under "From dealers" on the listing page and the upload result screen
 (`GET /listings/{id}/dealers`, free text: `GET /market/dealers?q=...`), using rows from the last
 `DEALER_MAX_AGE_DAYS` (default 30). Re-run the crawl (e.g. weekly) to keep it current.
-Prices are in each dealer's currency (Watchfinder: GBP).
+Prices are in each dealer's currency.
+
+Status from a live probe (Nov 2026):
+
+- **The 1916 Company** — works. Full data from the embedded product JSON (price, reference, condition,
+  box/papers, case size and material, dial). Prices USD. Production year is not always published.
+- **Chronext** — works. Title, price, currency, reference, condition and product photos from JSON-LD.
+  Year, box/papers and case specs are rendered by JavaScript and are not in the server HTML, so they
+  stay blank (we do not run a headless browser to get them).
+- **Watchfinder & Co.** — blocked. Every page is behind an AWS WAF JavaScript bot challenge, which a
+  polite HTTP crawler cannot pass without a real browser. The crawler detects the challenge and reports
+  the site as blocked rather than trying to bypass it. Use The 1916 Company and Chronext (plus Chrono24
+  and eBay) for Patek, AP and Vacheron coverage.

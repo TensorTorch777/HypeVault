@@ -32,6 +32,10 @@ _CHALLENGE_MARKERS = (
     "verify you are human",
     "access denied",
     "request unsuccessful. incapsula",
+    "awswafintegration",  # AWS WAF JS challenge (e.g. Watchfinder)
+    "awswafcookiedomainlist",
+    "token.awswaf.com",
+    "challenge-container",
 )
 
 

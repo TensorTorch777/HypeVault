@@ -116,6 +116,14 @@ class DealerSite:
     def model_from_url(self, url: str) -> str | None:
         return None
 
+    def embedded(self, html: str) -> dict[str, str]:
+        """Extra spec values pulled from the page's own embedded JSON. Overrides scraped rows."""
+        return {}
+
+    def extra_images(self, html: str) -> list[str]:
+        """Image URLs from embedded JSON, tried before og:image."""
+        return []
+
     # ── discovery ───────────────────────────────────────────────────────────
 
     async def _all_sitemap_urls(self, fetcher: PoliteFetcher) -> list[str]:
@@ -194,6 +202,8 @@ class DealerSite:
         meta = meta_tags(html)
         lines = visible_lines(html)
         specs = label_values(lines, self.spec_labels)
+        # Values a site embeds in page JSON (more reliable than visible rows) win over scraped rows.
+        specs = {**specs, **{k: v for k, v in self.embedded(html).items() if v not in (None, "")}}
 
         h1 = _H1_RE.search(html)
         h1_text = " ".join(_TAG_RE.sub(" ", h1.group(1)).split()) if h1 else None
@@ -233,6 +243,7 @@ class DealerSite:
         condition_raw = specs.get("condition") or str(offers.get("itemCondition", "")).rsplit("/", 1)[-1]
         condition = _CONDITION_SCHEMA.get(condition_raw.casefold(), condition_raw) or self.default_condition
 
+        # Embedded booleans (e.g. 1916's c_hasBox) arrive as the strings "true"/"false".
         box = yes_no(specs.get("box"))
         papers = yes_no(specs.get("papers"))
         combined = (specs.get("box_papers") or "").casefold()
@@ -242,8 +253,8 @@ class DealerSite:
             if papers is None:
                 papers = True if ("paper" in combined or "certificate" in combined) and "no paper" not in combined else (False if combined.startswith("no") else None)
 
-        images = _images(product.get("image")) + _images(meta.get("og:image"))
-        images = list(dict.fromkeys(images))
+        images = _images(product.get("image")) + self.extra_images(html) + _images(meta.get("og:image"))
+        images = [u for u in dict.fromkeys(images) if "/chronext.jpg" not in u]  # drop the logo placeholder
 
         return DealerListing(
             source=self.source,
@@ -310,6 +321,31 @@ class The1916Company(DealerSite):
     def model_from_url(self, url: str) -> str | None:
         segs = path_segments(url)
         return segs[2].replace("-", " ").title() if len(segs) >= 4 else None
+
+    # 1916 embeds the product as a JS object with c_* keys (Salesforce Commerce Cloud).
+    _C = {
+        "year": "c_year",
+        "condition": "c_condition",
+        "case_size": "c_caseSize",
+        "case_material": "c_displayedMaterial",
+        "dial": "c_dialColor",
+        "movement": "c_movement",
+        "reference": "c_baseRefNum",
+        "model": "c_brandFamily",
+    }
+    _BOOL = {"box": "c_hasBox", "papers": "c_hasPapers"}
+
+    def embedded(self, html: str) -> dict[str, str]:
+        out: dict[str, str] = {}
+        for field, key in self._C.items():
+            m = re.search(rf'"{key}"\s*:\s*"((?:[^"\\]|\\.)*)"', html)
+            if m:
+                out[field] = m.group(1).encode().decode("unicode_escape")
+        for field, key in self._BOOL.items():
+            m = re.search(rf'"{key}"\s*:\s*(true|false)', html)
+            if m:
+                out[field] = "Yes" if m.group(1) == "true" else "No"
+        return out
 
 
 class Watchfinder(DealerSite):
@@ -391,6 +427,16 @@ class Chronext(DealerSite):
     def model_from_url(self, url: str) -> str | None:
         segs = path_segments(url)
         return segs[1].replace("-", " ").title() if len(segs) >= 3 else None
+
+    _IMG_RE = re.compile(r"https://cdn-products\.chronext\.com/[A-Za-z0-9/_-]+\.(?:png|jpe?g|webp)")
+
+    def extra_images(self, html: str) -> list[str]:
+        # Real product shots live on cdn-products.chronext.com; og:image is the logo.
+        out: list[str] = []
+        for u in self._IMG_RE.findall(html):
+            if u not in out:
+                out.append(u)
+        return out[:6]
 
 
 SITES: dict[str, type[DealerSite]] = {cls.source: cls for cls in (The1916Company, Watchfinder, Chronext)}

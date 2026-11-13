@@ -66,6 +66,20 @@ PCX = """<html><head><meta property="og:title" content="Patek Philippe Nautilus 
 SOLD = PWF.replace("InStock", "OutOfStock")
 
 
+# The 1916 Company embeds the product as Salesforce Commerce Cloud c_* fields; booleans for box/papers.
+P1916_EMBEDDED = (
+    P1916
+    + '<script>window.__d={"c_baseRefNum":"5146/1G-010","c_condition":"Pre-Owned","c_caseSize":"39mm",'
+    '"c_displayedMaterial":"White Gold","c_dialColor":"Gray","c_hasBox":false,"c_hasPapers":false,"c_brandFamily":"Complications"}</script>'
+)
+
+# Watchfinder's category/product pages come back as an AWS WAF JavaScript challenge.
+WF_WAF = """<!DOCTYPE html><html><head><title></title>
+<script>window.awsWafCookieDomainList=[];window.gokuProps={"key":"AQI","iv":"x","context":"y"};</script>
+<script src="https://c0a.token.awswaf.com/x/challenge.js"></script></head>
+<body><div id="challenge-container"></div></body></html>"""
+
+
 def _run(coro):
     return asyncio.run(coro)
 
@@ -134,6 +148,25 @@ class SiteParseTests(unittest.TestCase):
         self.assertEqual((item.price, item.currency), (119740.0, "USD"))  # not the "Was" price
         self.assertEqual((item.condition, item.year, item.box, item.papers), ("Like New", "2019", True, True))
         self.assertEqual((item.reference, item.case_size), ("5711/1A-010", "40 mm"))
+
+    def test_1916_embedded_overrides_rows(self):
+        url = "https://www.the1916company.com/pre-owned/patek-philippe/complications/5100103/"
+        item = The1916Company().parse(url, P1916_EMBEDDED, "Patek Philippe")
+        # Embedded c_hasBox/c_hasPapers=false win; on this watch both are absent in the body.
+        self.assertEqual((item.box, item.papers), (False, False))
+        self.assertEqual((item.case_material, item.dial), ("White Gold", "Gray"))
+
+    def test_watchfinder_waf_is_a_challenge(self):
+        from market.dealers.http import looks_like_challenge
+
+        self.assertTrue(looks_like_challenge(WF_WAF))
+
+    def test_chronext_prefers_product_image(self):
+        html = PCX.replace(
+            "</body>", '<img src="https://cdn-products.chronext.com/V/6/V68563/V68563_1_det.png"></body>'
+        )
+        item = Chronext().parse("https://www.chronext.com/patek-philippe/nautilus/5711-1a-010-c1", html, "Patek Philippe")
+        self.assertTrue(item.image_url.startswith("https://cdn-products.chronext.com/"))
 
     def test_product_url_rules(self):
         s = The1916Company()
