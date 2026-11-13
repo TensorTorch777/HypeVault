@@ -12,7 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from config import settings
 from market import repository
-from market.chrono24_live import build_query
+from market.dealers.extract import build_query
 from market.dealers.sites import SITES, SOURCE_LABELS
 from market.types import canonical_brand
 

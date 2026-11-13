@@ -278,3 +278,14 @@ def clean_title(title: str | None, site_names: Iterable[str] = ()) -> str | None
             t = head
     t = re.sub(r"^(pre-?owned|used|certified pre-?owned)\s+", "", t, flags=re.IGNORECASE)
     return t.strip() or None
+
+
+def build_query(product_name: str | None, brand: str | None) -> str:
+    """'Nautilus 5711' + 'Patek Philippe' -> 'Patek Philippe Nautilus 5711' (brand not repeated)."""
+    name = " ".join((product_name or "").split())
+    brand = " ".join((brand or "").split())
+    if name.lower() in {"", "untitled listing"}:
+        return brand
+    if brand and brand.casefold() not in name.casefold():
+        return f"{brand} {name}"
+    return name
