@@ -57,6 +57,10 @@ class Settings(BaseSettings):
     # Every live search is appended here as listings.jsonl + listings.csv. Empty disables the export.
     chrono24_export_dir: str = "local_data/chrono24"
 
+    # Dealer listings (The 1916 Company, Watchfinder, Chronext) come from our own crawler
+    # (scraper/dealer_scraper.py --save-db). The site ignores rows older than this.
+    dealer_max_age_days: int = 30
+
     # Comma-separated origins for browser dev (e.g. Next on :3001). Empty → sensible localhost defaults.
     cors_origins: str = ""
 

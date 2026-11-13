@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 import { Chrono24Results } from "@/components/market/Chrono24Results";
+import { DealerResults } from "@/components/market/DealerResults";
 import { MarketPanel } from "@/components/market/MarketPanel";
 import { ProductVisualPanel } from "@/components/product/ProductVisualPanel";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -116,6 +117,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         {listing?.id ? (
           <div className="mt-16">
             <Chrono24Results listingId={String(listing.id)} />
+          </div>
+        ) : null}
+        {listing?.id ? (
+          <div className="mt-16">
+            <DealerResults listingId={String(listing.id)} />
           </div>
         ) : null}
       </section>

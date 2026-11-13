@@ -9,6 +9,7 @@ import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
 import { ImageUploader } from "@/components/ImageUploader";
 import { ScreeningResult, type ScreeningOutcome } from "@/components/ScreeningResult";
 import { Chrono24Results } from "@/components/market/Chrono24Results";
+import { DealerResults } from "@/components/market/DealerResults";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -267,6 +268,11 @@ export default function SellerUploadPage() {
                   {outcome?.listing_status === "live" && listingId ? (
                     <div className="border-t border-white/10 pt-6">
                       <Chrono24Results listingId={listingId} limit={8} title="This watch on Chrono24" />
+                    </div>
+                  ) : null}
+                  {outcome?.listing_status === "live" && listingId ? (
+                    <div className="border-t border-white/10 pt-6">
+                      <DealerResults listingId={listingId} limit={4} title="At dealers" />
                     </div>
                   ) : null}
                   <div className="flex flex-wrap gap-3">

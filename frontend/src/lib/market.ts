@@ -130,6 +130,49 @@ export async function searchChrono24(q: string, brand?: string | null, limit = 1
   return data;
 }
 
+export type DealerItem = {
+  source: string;
+  title: string;
+  brand: string;
+  model: string | null;
+  reference: string | null;
+  price: number;
+  currency: string;
+  condition: string | null;
+  year: string | null;
+  item_url: string | null;
+  image_url: string | null;
+  image_urls: string[];
+  box: boolean | null;
+  papers: boolean | null;
+  case_size: string | null;
+  observed_on: string;
+};
+
+export type DealerSection = {
+  source: "the1916company" | "watchfinder" | "chronext" | string;
+  label: string;
+  count: number;
+  broadened: boolean;
+  last_seen: string | null;
+  items: DealerItem[];
+};
+
+export type DealerSearch = {
+  query: string;
+  brand: string | null;
+  max_age_days: number;
+  total: number;
+  sections: DealerSection[];
+  note: string;
+};
+
+/** Dealer listings (The 1916 Company, Watchfinder, Chronext) for a live listing, from our crawler's snapshot. */
+export async function fetchListingDealers(listingId: string, limit = 8): Promise<DealerSearch> {
+  const { data } = await api.get<DealerSearch>(`/listings/${listingId}/dealers`, { params: { limit } });
+  return data;
+}
+
 export async function fetchMarketHistory(q: string, brand?: string | null): Promise<MarketHistory> {
   const { data } = await api.get<MarketHistory>("/market/history", { params: { q, ...(brand ? { brand } : {}) } });
   return data;

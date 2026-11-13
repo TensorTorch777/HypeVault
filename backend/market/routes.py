@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database import get_db
 from market.chrono24_service import search_chrono24
+from market.dealers.service import search_dealers
 from market.service import market_status, price_history, search_market
 from redis_client import get_redis
 
@@ -67,6 +68,21 @@ async def market_chrono24(
     except Exception as exc:
         _log.exception("market_chrono24_failed: %s", exc)
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Chrono24 search unavailable")
+
+
+@router.get("/dealers")
+async def market_dealers(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    q: Annotated[str, Query(min_length=2, max_length=200)],
+    brand: Annotated[str | None, Query(max_length=64)] = None,
+    limit: Annotated[int, Query(ge=1, le=24)] = 8,
+) -> dict:
+    """Listings from The 1916 Company, Watchfinder and Chronext (our crawler's latest snapshot)."""
+    try:
+        return await search_dealers(db, q, brand, limit=limit)
+    except Exception as exc:
+        _log.exception("market_dealers_failed: %s", exc)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Dealer search unavailable")
 
 
 @router.get("/status")

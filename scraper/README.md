@@ -165,3 +165,32 @@ research image pipeline as `UNVERIFIED_WEB_IMAGE` — a Chrono24 photo is not ev
 
 Chrono24's terms restrict automated access. Keep volumes low, keep the cache on, and treat this as part of
 the research prototype, not a production data feed.
+
+## Dealer crawlers: The 1916 Company, Watchfinder & Co., Chronext
+
+Our own crawlers, no scraping service. Code: `backend/market/dealers/` (`http.py` polite fetcher,
+`extract.py` parsing, `sites.py` one class per dealer, `crawl.py` runner/export, `service.py` site search)
+and `scraper/dealer_scraper.py` (CLI).
+
+How it works:
+
+1. **Discovery**: product URLs from the dealer's XML sitemaps (listed in robots.txt), filtered by brand;
+   if that finds too few, it pages through the brand's category listing.
+2. **Product pages**: schema.org JSON-LD and OpenGraph tags when present, then the labelled spec rows on
+   the page (Reference, Year, Box, Papers, Case size, ...). No fragile CSS selectors.
+3. **Politeness**: robots.txt is honoured (including Crawl-delay), one request per site every 3 s by
+   default (`--delay`, minimum 1 s), backoff on 429/5xx. A 403 or a bot-challenge page **stops** that
+   site; the crawler never tries to get past it. It identifies itself as `HypeVaultResearchBot/1.0`.
+4. **Output**: `local_data/dealers/<source>/listings.{csv,jsonl}`; with `--save-db`, rows for the five
+   supported brands go into `market_listings` (sources `the1916company`, `watchfinder`, `chronext`).
+
+```bash
+python scraper/dealer_scraper.py --probe --allow-network                  # 1 page per site; shows parsed fields
+python scraper/dealer_scraper.py --allow-network --per-brand 30 --save-db  # five brands, all three sites
+python scraper/dealer_scraper.py --allow-network --more-brands --download-images
+```
+
+The site shows the matches under "From dealers" on the listing page and the upload result screen
+(`GET /listings/{id}/dealers`, free text: `GET /market/dealers?q=...`), using rows from the last
+`DEALER_MAX_AGE_DAYS` (default 30). Re-run the crawl (e.g. weekly) to keep it current.
+Prices are in each dealer's currency (Watchfinder: GBP).
