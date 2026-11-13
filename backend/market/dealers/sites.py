@@ -348,52 +348,6 @@ class The1916Company(DealerSite):
         return out
 
 
-class Watchfinder(DealerSite):
-    source = "watchfinder"
-    label = "Watchfinder & Co."
-    base_url = "https://www.watchfinder.co.uk"
-    default_currency = "GBP"
-    default_condition = "Pre-owned"
-    site_names = ("Watchfinder", "Watchfinder & Co.")
-    spec_labels = {
-        "reference": ("Model number", "Model No.", "Reference number", "Reference"),
-        "year": ("Year", "Year of manufacture", "Year of production"),
-        "box": ("Box",),
-        "papers": ("Papers",),
-        "box_papers": ("Box and papers", "Box & papers", "Box/papers"),
-        "condition": ("Condition",),
-        "case_size": ("Case size", "Case diameter"),
-        "case_material": ("Case material",),
-        "dial": ("Dial colour", "Dial color", "Dial"),
-        "movement": ("Movement", "Calibre"),
-        "model": ("Series", "Collection"),
-        "brand": ("Brand",),
-    }
-
-    def is_product_url(self, url: str, slug: str) -> bool:
-        clean = url.split("?")[0]
-        if re.match(rf"^https?://(?:www\.)?watchfinder\.co\.uk/watches/{re.escape(slug)}/[^/]+/[^/]+/\d{{4,}}/?$", clean, re.I):
-            return True
-        # Older format: /Patek%20Philippe/Nautilus/5711/59625/item/261134
-        if re.match(r"^https?://(?:www\.)?watchfinder\.co\.uk/.+/item/\d+/?$", clean, re.I):
-            first = path_segments(clean)[0].casefold().replace(" ", "-").replace("&", "and")
-            return first == slug or first.replace("-", "") == slug.replace("-", "")
-        return False
-
-    def category_url(self, slug: str, page: int) -> str:
-        return f"{self.base_url}/watches/{slug}" + (f"?p={page}" if page > 1 else "")
-
-    def listing_id(self, url: str, specs: dict[str, str]) -> str:
-        nums = [s for s in path_segments(url) if s.isdigit()]
-        return nums[-1] if nums else path_segments(url)[-1]
-
-    def model_from_url(self, url: str) -> str | None:
-        segs = path_segments(url)
-        if segs and segs[0] == "watches" and len(segs) >= 3:
-            return segs[2].replace("-", " ").title()
-        return segs[1] if len(segs) >= 2 else None
-
-
 class Chronext(DealerSite):
     source = "chronext"
     label = "Chronext"
@@ -439,7 +393,7 @@ class Chronext(DealerSite):
         return out[:6]
 
 
-SITES: dict[str, type[DealerSite]] = {cls.source: cls for cls in (The1916Company, Watchfinder, Chronext)}
+SITES: dict[str, type[DealerSite]] = {cls.source: cls for cls in (The1916Company, Chronext)}
 SOURCE_LABELS = {cls.source: cls.label for cls in SITES.values()}
 
 

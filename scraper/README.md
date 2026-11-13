@@ -166,7 +166,7 @@ research image pipeline as `UNVERIFIED_WEB_IMAGE` — a Chrono24 photo is not ev
 Chrono24's terms restrict automated access. Keep volumes low, keep the cache on, and treat this as part of
 the research prototype, not a production data feed.
 
-## Dealer crawlers: The 1916 Company, Watchfinder & Co., Chronext
+## Dealer crawlers: The 1916 Company, Chronext
 
 Our own crawlers, no scraping service. Code: `backend/market/dealers/` (`http.py` polite fetcher,
 `extract.py` parsing, `sites.py` one class per dealer, `crawl.py` runner/export, `service.py` site search)
@@ -182,11 +182,11 @@ How it works:
    default (`--delay`, minimum 1 s), backoff on 429/5xx. A 403 or a bot-challenge page **stops** that
    site; the crawler never tries to get past it. It identifies itself as `HypeVaultResearchBot/1.0`.
 4. **Output**: `local_data/dealers/<source>/listings.{csv,jsonl}`; with `--save-db`, rows for the five
-   supported brands go into `market_listings` (sources `the1916company`, `watchfinder`, `chronext`).
+   supported brands go into `market_listings` (sources `the1916company`, `chronext`).
 
 ```bash
 python scraper/dealer_scraper.py --probe --allow-network                  # 1 page per site; shows parsed fields
-python scraper/dealer_scraper.py --allow-network --per-brand 30 --save-db  # five brands, all three sites
+python scraper/dealer_scraper.py --allow-network --per-brand 30 --save-db  # five brands, both sites
 python scraper/dealer_scraper.py --allow-network --more-brands --download-images
 ```
 
@@ -202,7 +202,7 @@ Status from a live probe (Nov 2026):
 - **Chronext** — works. Title, price, currency, reference, condition and product photos from JSON-LD.
   Year, box/papers and case specs are rendered by JavaScript and are not in the server HTML, so they
   stay blank (we do not run a headless browser to get them).
-- **Watchfinder & Co.** — blocked. Every page is behind an AWS WAF JavaScript bot challenge, which a
-  polite HTTP crawler cannot pass without a real browser. The crawler detects the challenge and reports
-  the site as blocked rather than trying to bypass it. Use The 1916 Company and Chronext (plus Chrono24
-  and eBay) for Patek, AP and Vacheron coverage.
+**Watchfinder & Co. was evaluated and dropped.** Every page sits behind an AWS WAF JavaScript bot
+challenge that a polite HTTP crawler cannot pass without a real browser, which would conflict with the
+responsible-crawling stance here. The challenge is still detected by the fetcher (`looks_like_challenge`)
+so any site that newly deploys one is reported as blocked rather than silently returning nothing.

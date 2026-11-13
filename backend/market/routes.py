@@ -77,7 +77,7 @@ async def market_dealers(
     brand: Annotated[str | None, Query(max_length=64)] = None,
     limit: Annotated[int, Query(ge=1, le=24)] = 8,
 ) -> dict:
-    """Listings from The 1916 Company, Watchfinder and Chronext (our crawler's latest snapshot)."""
+    """Listings from The 1916 Company and Chronext (our crawler's latest snapshot)."""
     try:
         return await search_dealers(db, q, brand, limit=limit)
     except Exception as exc:

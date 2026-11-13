@@ -1,4 +1,4 @@
-"""Our own crawlers for pre-owned luxury-watch dealers (The 1916 Company, Watchfinder & Co., Chronext).
+"""Our own crawlers for pre-owned luxury-watch dealers (The 1916 Company and Chronext).
 
 No third-party scraping service. Each site is crawled politely: robots.txt is honoured, requests are
 spaced per host, and a bot challenge stops the crawl instead of being worked around.

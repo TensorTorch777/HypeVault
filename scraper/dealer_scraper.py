@@ -1,4 +1,4 @@
-"""Crawl pre-owned luxury-watch dealers ourselves: The 1916 Company, Watchfinder & Co., Chronext.
+"""Crawl pre-owned luxury-watch dealers ourselves: The 1916 Company and Chronext.
 
 No third-party scraping service. robots.txt is honoured, requests to each site are spaced (3 s by default),
 and a bot challenge or 403 stops that site instead of being worked around.
@@ -11,7 +11,7 @@ Importing this module does nothing. Network access needs --allow-network.
 
   python scraper/dealer_scraper.py --probe --allow-network          # check one page per site, print what parsed
   python scraper/dealer_scraper.py --allow-network --per-brand 40 --save-db
-  python scraper/dealer_scraper.py --allow-network --sites watchfinder --brands "Patek Philippe" --download-images
+  python scraper/dealer_scraper.py --allow-network --sites chronext --brands "Patek Philippe" --download-images
 """
 
 from __future__ import annotations
@@ -39,7 +39,7 @@ LOGGER = logging.getLogger("hypevault.scraper.dealers")
 
 SUPPORTED_BRANDS = ["Patek Philippe", "Audemars Piguet", "Vacheron Constantin", "A. Lange & Söhne", "Richard Mille"]
 EXTRA_BRANDS = ["Rolex", "Omega", "Cartier", "Jaeger-LeCoultre", "IWC", "Breguet", "Hublot", "Panerai", "Tudor", "F.P. Journe"]
-ALL_SITES = ("the1916company", "watchfinder", "chronext")
+ALL_SITES = ("the1916company", "chronext")
 PROBE_FIELDS = ("title", "price", "currency", "brand", "model", "reference", "year", "condition", "box", "papers",
                 "case_size", "case_material", "dial", "image_url")
 

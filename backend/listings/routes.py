@@ -173,7 +173,7 @@ async def dealer_matches(
     viewer: Annotated[User | None, Depends(get_optional_user)],
     limit: int = 8,
 ) -> dict:
-    """Dealer listings (1916 Company, Watchfinder, Chronext) for this watch, after it passes screening."""
+    """Dealer listings (1916 Company, Chronext) for this watch, after it passes screening."""
     listing = await db.get(Listing, listing_id)
     if not _visible(listing, viewer):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Listing not found")

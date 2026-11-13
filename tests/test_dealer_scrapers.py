@@ -1,4 +1,9 @@
-"""Dealer crawlers (1916 Company, Watchfinder, Chronext): parsing, discovery, politeness, export. No network."""
+"""Dealer crawlers (The 1916 Company, Chronext): parsing, discovery, politeness, export. No network.
+
+PWF is a generic schema.org Product fixture used to exercise JSON-LD parsing and the crawl runner; it
+does not imply Watchfinder is a supported source (it is blocked by an AWS WAF challenge and excluded).
+WF_WAF guards that we detect such a challenge.
+"""
 
 from __future__ import annotations
 
@@ -29,7 +34,7 @@ from market.dealers.extract import (  # noqa: E402
     year_of,
 )
 from market.dealers.http import BlockedError, DisallowedError, PoliteFetcher  # noqa: E402
-from market.dealers.sites import Chronext, The1916Company, Watchfinder  # noqa: E402
+from market.dealers.sites import Chronext, The1916Company  # noqa: E402
 
 # Shaped after the live pages: SFCC page with og tags and spec rows, no JSON-LD.
 P1916 = """<html><head>
@@ -63,7 +68,6 @@ PCX = """<html><head><meta property="og:title" content="Patek Philippe Nautilus 
 <ul><li>Condition: Like New</li><li>Year: 2019</li><li>Scope of delivery: Box and papers</li><li>Case diameter: 40 mm</li></ul>
 </body></html>"""
 
-SOLD = PWF.replace("InStock", "OutOfStock")
 
 
 # The 1916 Company embeds the product as Salesforce Commerce Cloud c_* fields; booleans for box/papers.
@@ -132,16 +136,6 @@ class SiteParseTests(unittest.TestCase):
         self.assertTrue(item.image_url.startswith("https://watchbox-cdn.imgix.net/"))
         self.assertEqual(item.condition, "Pre-owned")
 
-    def test_watchfinder(self):
-        url = "https://www.watchfinder.co.uk/watches/patek-philippe/nautilus/5726-1a-001/455474"
-        item = Watchfinder().parse(url, PWF, "Patek Philippe")
-        self.assertEqual((item.price, item.currency, item.listing_id), (88500.0, "GBP", "455474"))
-        self.assertEqual((item.brand, item.reference, item.year, item.condition), ("Patek Philippe", "5726/1A-001", "2016", "Pre-owned"))
-        self.assertEqual((item.box, item.papers), (True, True))
-        self.assertEqual(len(item.image_urls), 2)
-        self.assertTrue(item.available)
-        self.assertFalse(Watchfinder().parse(url, SOLD, "Patek Philippe").available)
-
     def test_chronext(self):
         url = "https://www.chronext.com/patek-philippe/nautilus/5711-1a-010-c123456"
         item = Chronext().parse(url, PCX, "Patek Philippe")
@@ -174,10 +168,6 @@ class SiteParseTests(unittest.TestCase):
         self.assertTrue(s.is_product_url("https://www.the1916company.com/pre-owned/patek-philippe/nautilus/nautilus-3800-1j-011", "patek-philippe"))
         self.assertFalse(s.is_product_url("https://www.the1916company.com/pre-owned/patek-philippe/nautilus/ref-5723/", "patek-philippe"))
         self.assertFalse(s.is_product_url("https://www.the1916company.com/pre-owned/rolex/submariner/123/", "patek-philippe"))
-        w = Watchfinder()
-        self.assertTrue(w.is_product_url("https://www.watchfinder.co.uk/watches/patek-philippe/nautilus/5711-1a-011/213781", "patek-philippe"))
-        self.assertTrue(w.is_product_url("https://www.watchfinder.co.uk/Patek%20Philippe/Nautilus/5711/59625/item/261134", "patek-philippe"))
-        self.assertFalse(w.is_product_url("https://www.watchfinder.co.uk/watches/patek-philippe/nautilus", "patek-philippe"))
         c = Chronext()
         self.assertTrue(c.is_product_url("https://www.chronext.com/patek-philippe/nautilus/5711-1a-010-c123456", "patek-philippe"))
         self.assertFalse(c.is_product_url("https://www.chronext.com/patek-philippe/nautilus-gold", "patek-philippe"))
@@ -258,20 +248,21 @@ class CrawlTests(unittest.TestCase):
             _run(go({"https://a.test/robots.txt": (200, "User-agent: *\nDisallow: /")}, "https://a.test/x"))
 
     def test_category_fallback(self):
-        base = "https://www.watchfinder.co.uk"
-        listing = f"{base}/watches/patek-philippe/nautilus/5726-1a-001/455474"
+        # Chronext lists no sitemap in robots.txt, so discovery falls back to paging the category page.
+        base = "https://www.chronext.com"
+        listing = f"{base}/patek-philippe/nautilus/5711-1a-010-c123456"
         pages = {
             f"{base}/robots.txt": (200, "User-agent: *\nAllow: /\n"),
-            f"{base}/watches/patek-philippe": (200, f'<a href="/watches/patek-philippe/nautilus/5726-1a-001/455474">x</a><a href="/watches/patek-philippe/nautilus">c</a>'),
-            listing: (200, PWF),
+            f"{base}/patek-philippe": (200, f'<a href="/patek-philippe/nautilus/5711-1a-010-c123456">x</a><a href="/patek-philippe/nautilus-gold">cat</a>'),
+            listing: (200, PCX),
         }
 
         async def go():
             async with httpx.AsyncClient(transport=_site_transport(pages, [])) as client:
-                return await crawl_site(Watchfinder(), PoliteFetcher(min_delay=0, client=client), ["Patek Philippe"], 5)
+                return await crawl_site(Chronext(), PoliteFetcher(min_delay=0, client=client), ["Patek Philippe"], 5)
 
         report = _run(go())
-        self.assertEqual([(l.source, l.listing_id, l.currency) for l in report.listings], [("watchfinder", "455474", "GBP")])
+        self.assertEqual([(l.source, l.reference, l.currency) for l in report.listings], [("chronext", "5711/1A-010", "USD")])
 
 
 class CliTests(unittest.TestCase):
@@ -280,12 +271,12 @@ class CliTests(unittest.TestCase):
         import dealer_scraper as cli
 
         sites, brands = cli.plan(cli.parse_args([]))
-        self.assertEqual(sites, ["the1916company", "watchfinder", "chronext"])
+        self.assertEqual(sites, ["the1916company", "chronext"])
         self.assertEqual(len(brands), 5)
         self.assertEqual(len(cli.plan(cli.parse_args(["--more-brands"]))[1]), 15)
         self.assertEqual(cli.parse_args(["--delay", "0.1"]).delay, 1.0)  # never faster than 1 request/s per site
         with self.assertRaises(SystemExit):
-            cli.main(["--sites", "watchfinder"])  # no --allow-network
+            cli.main(["--sites", "chronext"])  # no --allow-network
         with self.assertRaises(SystemExit):
             cli.plan(cli.parse_args(["--sites", "ebay"]))
         self.assertEqual(cli.main(["--dry-run"]), 0)

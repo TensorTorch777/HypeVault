@@ -150,7 +150,7 @@ export type DealerItem = {
 };
 
 export type DealerSection = {
-  source: "the1916company" | "watchfinder" | "chronext" | string;
+  source: "the1916company" | "chronext" | string;
   label: string;
   count: number;
   broadened: boolean;
@@ -167,7 +167,7 @@ export type DealerSearch = {
   note: string;
 };
 
-/** Dealer listings (The 1916 Company, Watchfinder, Chronext) for a live listing, from our crawler's snapshot. */
+/** Dealer listings (The 1916 Company, Chronext) for a live listing, from our crawler's snapshot. */
 export async function fetchListingDealers(listingId: string, limit = 8): Promise<DealerSearch> {
   const { data } = await api.get<DealerSearch>(`/listings/${listingId}/dealers`, { params: { limit } });
   return data;
