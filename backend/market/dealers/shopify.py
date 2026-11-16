@@ -53,6 +53,8 @@ class ShopifyDealerSite(DealerSite):
     reject_types = ("strap", "band", "accessory", "winder", "jewel", "ring", "necklace", "bracelet only", "service")
     per_page = 250
     max_feed_pages = 20
+    #: Shopify throttles products.json harder than pages; wait at least this long between feed requests.
+    feed_delay = 8.0
 
     # Set when the store tags or names its brands differently from canonical.
     vendor_aliases: dict[str, str] = {}
@@ -84,9 +86,19 @@ class ShopifyDealerSite(DealerSite):
         if cached is not None:
             return cached
         products: list[dict] = []
+        # Give the feed extra breathing room so stricter stores don't 429 us.
+        if fetcher.min_delay < self.feed_delay:
+            fetcher._last[f"delay:{urlsplit(self.base_url).scheme}://{urlsplit(self.base_url).netloc}"] = self.feed_delay
         for page in range(1, self.max_feed_pages + 1):
             url = f"{self.base_url}/products.json?limit={self.per_page}&page={page}"
-            data = await fetcher.get_json(url)
+            try:
+                data = await fetcher.get_json(url)
+            except BlockedError:
+                # A strict store that rate-limits the feed: keep what we have, skip the rest.
+                if products:
+                    _log.warning("%s: feed rate-limited after %d products; using what we have", self.source, len(products))
+                    break
+                raise
             batch = (data or {}).get("products") if isinstance(data, dict) else None
             if not batch:
                 break

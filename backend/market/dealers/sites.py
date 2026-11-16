@@ -393,13 +393,6 @@ class Chronext(DealerSite):
         return out[:6]
 
 
-def _shopify_sites() -> tuple:
-    # Imported lazily: shopify.py imports DealerSite from this module.
-    from market.dealers.shopify import SHOPIFY_SITES
-
-    return tuple(SHOPIFY_SITES)
-
-
 class EuropeanWatchCo(DealerSite):
     source = "europeanwatch"
     label = "European Watch Co."
@@ -416,7 +409,7 @@ class EuropeanWatchCo(DealerSite):
         "papers": ("Papers",),
         "case_size": ("Case Size", "Case Diameter", "Diameter"),
         "case_material": ("Case Material", "Metal", "Material"),
-        "dial": ("Dial",),
+        "dial": ("Dial Color", "Dial Colour", "Dial Type"),  # bare "Dial" grabs a UI label, not the value
         "movement": ("Movement", "Caliber", "Calibre"),
         "model": ("Model", "Collection"),
         "brand": ("Brand",),
@@ -426,6 +419,13 @@ class EuropeanWatchCo(DealerSite):
         clean = url.split("?")[0]
         # /watch/patek-philippe-5726a-001-...-73399  (trailing numeric id)
         return bool(re.match(rf"^https?://(?:www\.)?europeanwatch\.com/watch/{re.escape(slug)}-.+-\d+/?$", clean, re.I))
+
+    def parse(self, url: str, html: str, brand_hint: str | None = None) -> DealerListing | None:
+        listing = super().parse(url, html, brand_hint)
+        # EWC puts the year in the title as "...Circa 1976" when there's no spec row for it.
+        if listing and not listing.year:
+            listing.year = year_of(listing.title)
+        return listing
 
     def category_url(self, slug: str, page: int) -> str:
         # EWC paginates its brand pages with ?p=
@@ -439,10 +439,73 @@ class EuropeanWatchCo(DealerSite):
         return None
 
 
-SITES: dict[str, type[DealerSite]] = {
-    cls.source: cls for cls in (The1916Company, Chronext, EuropeanWatchCo, *_shopify_sites())
-}
-SOURCE_LABELS = {cls.source: cls.label for cls in SITES.values()}
+_HTML_SITES = (The1916Company, Chronext, EuropeanWatchCo)
+
+
+def _build_registry() -> dict[str, type[DealerSite]]:
+    # shopify.py imports from this module, so it is imported here (after this module is loaded), not at top level.
+    from market.dealers.shopify import SHOPIFY_SITES
+
+    return {cls.source: cls for cls in (*_HTML_SITES, *SHOPIFY_SITES)}
+
+
+class _LazyRegistry(dict):
+    """The site registry, populated on first access so sites.py has no import-time dependency on shopify.py."""
+
+    _ready = False
+
+    def _ensure(self) -> None:
+        if not self._ready:
+            self.update(_build_registry())
+            self._ready = True
+
+    def __getitem__(self, key):
+        self._ensure()
+        return super().__getitem__(key)
+
+    def __iter__(self):
+        self._ensure()
+        return super().__iter__()
+
+    def __len__(self):
+        self._ensure()
+        return super().__len__()
+
+    def values(self):
+        self._ensure()
+        return super().values()
+
+    def items(self):
+        self._ensure()
+        return super().items()
+
+    def __contains__(self, key):
+        self._ensure()
+        return super().__contains__(key)
+
+
+SITES: dict[str, type[DealerSite]] = _LazyRegistry()
+
+
+class _LazyLabels(dict):
+    def _ensure(self) -> None:
+        if not self:
+            self.update({k: v.label for k, v in SITES.items()})
+
+    def __getitem__(self, key):
+        self._ensure()
+        return super().__getitem__(key)
+
+    def get(self, key, default=None):
+        self._ensure()
+        return super().get(key, default)
+
+    def items(self):
+        self._ensure()
+        return super().items()
+
+
+SOURCE_LABELS = _LazyLabels()
 
 
 def site_for_url(url: str) -> DealerSite | None:
