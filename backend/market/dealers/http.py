@@ -200,6 +200,27 @@ class PoliteFetcher:
             raise BlockedError(f"{origin} served a bot challenge for {url}; stopping (not bypassing it)")
         return text
 
+    async def get_json(self, url: str, *, allow_missing: bool = True):
+        """Parsed JSON body; None for 404/410 (allow_missing) or a non-JSON/challenge response."""
+        import json as _json
+
+        resp = await self._request(url)
+        origin = _origin(url)
+        if resp.status_code in (404, 410) and allow_missing:
+            return None
+        if resp.status_code in (401, 403):
+            self._blocked.add(origin)
+            raise BlockedError(f"{origin} answered {resp.status_code} for {url}")
+        if resp.status_code >= 400:
+            raise FetchError(f"{url}: HTTP {resp.status_code}")
+        if looks_like_challenge(resp.text):
+            self._blocked.add(origin)
+            raise BlockedError(f"{origin} served a bot challenge for {url}; stopping (not bypassing it)")
+        try:
+            return resp.json()
+        except (ValueError, _json.JSONDecodeError):
+            return None
+
 
 def _origin(url: str) -> str:
     parts = urlsplit(url)

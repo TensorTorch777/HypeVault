@@ -117,29 +117,37 @@ Inspect `manifest.jsonl` rows with `duplicate_status=NEAR_DUPLICATE_CANDIDATE` a
 
 Before `--allow-network`, confirm that collecting and storing images from the chosen provider is permitted for your intended research use. Catalog CSVs and downloaded bytes remain local and must stay out of Git.
 
-## Dealer crawlers: The 1916 Company, Chronext
+## Dealer crawlers (The 1916 Company, Chronext, European Watch Co., Shopify dealers)
 
 Our own crawlers, no scraping service. Code: `backend/market/dealers/` (`http.py` polite fetcher,
-`extract.py` parsing, `sites.py` one class per dealer, `crawl.py` runner/export, `service.py` site search)
-and `scraper/dealer_scraper.py` (CLI).
+`extract.py` parsing, `sites.py` one class per HTML dealer, `shopify.py` a generic Shopify crawler,
+`crawl.py` runner/export, `service.py` site search) and `scraper/dealer_scraper.py` (CLI).
 
-How it works:
+Two kinds of source:
 
-1. **Discovery**: product URLs from the dealer's XML sitemaps (listed in robots.txt), filtered by brand;
-   if that finds too few, it pages through the brand's category listing.
-2. **Product pages**: schema.org JSON-LD and OpenGraph tags when present, then the labelled spec rows on
-   the page (Reference, Year, Box, Papers, Case size, ...). No fragile CSS selectors.
-3. **Politeness**: robots.txt is honoured (including Crawl-delay), one request per site every 3 s by
-   default (`--delay`, minimum 1 s), backoff on 429/5xx. A 403 or a bot-challenge page **stops** that
-   site; the crawler never tries to get past it. It identifies itself as `HypeVaultResearchBot/1.0`.
-4. **Output**: `local_data/dealers/<source>/listings.{csv,jsonl}`; with `--save-db`, rows for the five
-   supported brands go into `market_listings` (sources `the1916company`, `chronext`).
+- **HTML dealers** (`sites.py`): The 1916 Company, Chronext, European Watch Co. Discovery uses the
+  dealer's XML sitemaps (then category pages as fallback); product pages are read from schema.org
+  JSON-LD, OpenGraph and labelled spec rows — no fragile CSS selectors.
+- **Shopify dealers** (`shopify.py`): any Shopify storefront, read through its public `products.json`
+  feed (clean structured data: vendor, price, tags, images). One class covers all of them — add a store
+  by declaring a 3-line subclass in `SHOPIFY_SITES`. Watch Collectors UK is included.
+
+Politeness (both kinds): robots.txt honoured (including Crawl-delay), one request per site every 3 s by
+default (`--delay`, min 1 s), backoff on 429/5xx. A 403 or bot-challenge page **stops** that site; the
+crawler never tries to get past it. It identifies itself as `HypeVaultResearchBot/1.0`.
+
+Output: `local_data/dealers/<source>/listings.{csv,jsonl}`; with `--save-db`, rows for the five supported
+brands go into `market_listings`. `--sites` defaults to every registered dealer.
 
 ```bash
-python scraper/dealer_scraper.py --probe --allow-network                  # 1 page per site; shows parsed fields
-python scraper/dealer_scraper.py --allow-network --per-brand 30 --save-db  # five brands, both sites
+python scraper/dealer_scraper.py --probe --allow-network                   # 1 item per site; shows parsed fields
+python scraper/dealer_scraper.py --allow-network --per-brand 30 --save-db   # five brands, all dealers
+python scraper/dealer_scraper.py --allow-network --sites europeanwatch,watchcollectors --per-brand 50
 python scraper/dealer_scraper.py --allow-network --more-brands --download-images
 ```
+
+Always run `--probe` first against the live sites: it confirms which dealers respond and which fields
+parse, so a site that is bot-walled or has changed its markup is caught before a full crawl.
 
 The site shows the matches under "From dealers" on the listing page and the upload result screen
 (`GET /listings/{id}/dealers`, free text: `GET /market/dealers?q=...`), using rows from the last
@@ -153,6 +161,9 @@ Status from a live probe (Nov 2026):
 - **Chronext** — works. Title, price, currency, reference, condition and product photos from JSON-LD.
   Year, box/papers and case specs are rendered by JavaScript and are not in the server HTML, so they
   stay blank (we do not run a headless browser to get them).
+- **European Watch Co.** and **Shopify dealers (e.g. Watch Collectors UK)** — added as extra sources;
+  confirm each with `--probe` on your network before a full crawl, since stock and markup vary.
+
 **Watchfinder & Co. was evaluated and dropped.** Every page sits behind an AWS WAF JavaScript bot
 challenge that a polite HTTP crawler cannot pass without a real browser, which would conflict with the
 responsible-crawling stance here. The challenge is still detected by the fetcher (`looks_like_challenge`)

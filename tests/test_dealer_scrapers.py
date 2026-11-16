@@ -271,7 +271,9 @@ class CliTests(unittest.TestCase):
         import dealer_scraper as cli
 
         sites, brands = cli.plan(cli.parse_args([]))
-        self.assertEqual(sites, ["the1916company", "chronext"])
+        self.assertIn("the1916company", sites)
+        self.assertIn("chronext", sites)
+        self.assertIn("europeanwatch", sites)
         self.assertEqual(len(brands), 5)
         self.assertEqual(len(cli.plan(cli.parse_args(["--more-brands"]))[1]), 15)
         self.assertEqual(cli.parse_args(["--delay", "0.1"]).delay, 1.0)  # never faster than 1 request/s per site
@@ -280,6 +282,84 @@ class CliTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             cli.plan(cli.parse_args(["--sites", "ebay"]))
         self.assertEqual(cli.main(["--dry-run"]), 0)
+
+
+# A Shopify /products.json product (shape taken from a real watch-dealer feed).
+SHOPIFY_PRODUCT = {
+    "id": 7788990011,
+    "title": "Patek Philippe Nautilus 5711/1A-010 Blue Dial",
+    "handle": "patek-philippe-nautilus-5711-1a-010",
+    "vendor": "Patek Philippe",
+    "product_type": "Watches",
+    "body_html": "<p>Stainless steel, 40mm. Circa 2019.</p>",
+    "tags": ["Year:2019", "Reference:5711/1A-010", "Full Set", "Condition:Pre-owned", "Case Material:Steel"],
+    "variants": [{"price": "145000.00", "available": True}],
+    "images": [{"src": "https://cdn.shopify.com/s/files/1/x/5711-a.jpg?v=1"}, {"src": "https://cdn.shopify.com/s/files/1/x/5711-b.jpg"}],
+}
+
+STRAP_PRODUCT = {
+    "id": 1, "title": "Alligator Strap for Nautilus", "handle": "strap", "vendor": "Patek Philippe",
+    "product_type": "Straps", "tags": ["Accessory"], "variants": [{"price": "450.00", "available": True}], "images": [],
+}
+
+
+class ShopifyTests(unittest.TestCase):
+    def setUp(self):
+        from market.dealers.shopify import WatchCollectorsUK
+
+        self.site = WatchCollectorsUK()
+
+    def test_parse_product(self):
+        item = self.site.parse_product(SHOPIFY_PRODUCT, "Patek Philippe")
+        self.assertEqual((item.price, item.currency), (145000.0, "GBP"))
+        self.assertEqual(item.reference, "5711/1A-010")
+        self.assertEqual(item.year, "2019")
+        self.assertEqual((item.box, item.papers), (True, True))  # "Full Set"
+        self.assertEqual(item.case_size, "40mm")
+        self.assertEqual(item.case_material, "Steel")
+        self.assertEqual(item.condition, "Pre-owned")
+        self.assertEqual(len(item.image_urls), 2)
+        self.assertTrue(item.listing_url.endswith("/products/patek-philippe-nautilus-5711-1a-010"))
+
+    def test_brand_and_watch_filters(self):
+        self.assertTrue(self.site._matches_brand(SHOPIFY_PRODUCT, "Patek Philippe"))
+        self.assertFalse(self.site._matches_brand(SHOPIFY_PRODUCT, "Rolex"))
+        self.assertTrue(self.site._is_watch(SHOPIFY_PRODUCT))
+        self.assertFalse(self.site._is_watch(STRAP_PRODUCT))  # straps rejected
+
+    def test_discover_and_crawl_from_feed(self):
+        feed = {"products": [SHOPIFY_PRODUCT, STRAP_PRODUCT]}
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            url = str(request.url)
+            if "/robots.txt" in url:
+                return httpx.Response(200, text="User-agent: *\nAllow: /\n")
+            if "/products.json" in url and "page=1" in url:
+                return httpx.Response(200, json=feed)
+            if "/products.json" in url:
+                return httpx.Response(200, json={"products": []})
+            return httpx.Response(404, text="x")
+
+        async def go():
+            from market.dealers.crawl import crawl_site
+
+            async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+                return await crawl_site(self.site, PoliteFetcher(min_delay=0, client=client), ["Patek Philippe"], 10)
+
+        report = _run(go())
+        # The strap is filtered out; only the watch remains.
+        self.assertEqual([l.reference for l in report.listings], ["5711/1A-010"])
+        self.assertEqual(report.listings[0].source, "watchcollectors")
+
+
+class EuropeanWatchTests(unittest.TestCase):
+    def test_product_url_rules(self):
+        from market.dealers.sites import EuropeanWatchCo
+
+        s = EuropeanWatchCo()
+        self.assertTrue(s.is_product_url("https://www.europeanwatch.com/watch/patek-philippe-5726a-001-nautilus-73399", "patek-philippe"))
+        self.assertFalse(s.is_product_url("https://www.europeanwatch.com/brand/patek-philippe", "patek-philippe"))
+        self.assertEqual(s.listing_id("https://www.europeanwatch.com/watch/patek-philippe-5726a-001-nautilus-73399", {}), "73399")
 
 
 if __name__ == "__main__":

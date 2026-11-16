@@ -77,7 +77,7 @@ function Section({ section }: { section: DealerSection }) {
   );
 }
 
-/** Listings for this watch at The 1916 Company and Chronext, from our crawler's snapshot. */
+/** Listings for this watch from our crawled dealer sources (The 1916 Company, Chronext, and others). */
 export function DealerResults({ listingId, limit = 8, title = "From dealers" }: { listingId: string; limit?: number; title?: string }) {
   const q = useQuery({
     queryKey: ["dealers", listingId, limit],
@@ -86,10 +86,12 @@ export function DealerResults({ listingId, limit = 8, title = "From dealers" }: 
     retry: 1,
   });
 
+  const sourceNames = q.data?.sections.map((s) => s.label).join(" · ") || "Dealers";
+
   return (
     <section aria-labelledby={`dealers-${listingId}`} className="space-y-6">
       <div>
-        <p className="hv-eyebrow">The 1916 Company · Chronext</p>
+        <p className="hv-eyebrow">{sourceNames}</p>
         <h3 id={`dealers-${listingId}`} className="mt-2 font-display text-[1.6rem] font-extrabold uppercase leading-none text-white">
           {title}
         </h3>

@@ -39,14 +39,20 @@ LOGGER = logging.getLogger("hypevault.scraper.dealers")
 
 SUPPORTED_BRANDS = ["Patek Philippe", "Audemars Piguet", "Vacheron Constantin", "A. Lange & Söhne", "Richard Mille"]
 EXTRA_BRANDS = ["Rolex", "Omega", "Cartier", "Jaeger-LeCoultre", "IWC", "Breguet", "Hublot", "Panerai", "Tudor", "F.P. Journe"]
-ALL_SITES = ("the1916company", "chronext")
 PROBE_FIELDS = ("title", "price", "currency", "brand", "model", "reference", "year", "condition", "box", "papers",
                 "case_size", "case_material", "dial", "image_url")
 
 
+def all_sites() -> tuple[str, ...]:
+    """Site keys from the live registry, so new dealers appear here automatically."""
+    from market.dealers.sites import SITES
+
+    return tuple(SITES)
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--sites", default=",".join(ALL_SITES), help=f"Comma-separated: {', '.join(ALL_SITES)}")
+    p.add_argument("--sites", default="", help="Comma-separated site keys. Default: all registered dealers.")
     p.add_argument("--brands", default="", help="Comma-separated brands. Default: the five supported brands.")
     p.add_argument("--more-brands", action="store_true", help="Also crawl Rolex, Omega, Cartier, JLC, IWC, ...")
     p.add_argument("--per-brand", type=int, default=30, help="Product pages per brand per site.")
@@ -67,10 +73,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def plan(args: argparse.Namespace) -> tuple[list[str], list[str]]:
-    sites = [s.strip() for s in args.sites.split(",") if s.strip()]
-    unknown = [s for s in sites if s not in ALL_SITES]
+    registered = all_sites()
+    sites = [s.strip() for s in args.sites.split(",") if s.strip()] or list(registered)
+    unknown = [s for s in sites if s not in registered]
     if unknown:
-        raise SystemExit(f"unknown site(s): {', '.join(unknown)}. Choose from {', '.join(ALL_SITES)}.")
+        raise SystemExit(f"unknown site(s): {', '.join(unknown)}. Choose from {', '.join(registered)}.")
     if args.brands:
         brands = [b.strip() for b in args.brands.split(",") if b.strip()]
     else:

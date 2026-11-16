@@ -71,26 +71,39 @@ async def crawl_site(
         report.discovered += len(urls)
         _log.info("%s: %s -> %d product pages", site.source, brand, len(urls))
         for url in urls:
-            try:
-                html = await fetcher.get_text(url)
-            except BlockedError as exc:
-                report.blocked = str(exc)
-                _log.warning("%s: %s", site.source, exc)
-                return report
-            except DisallowedError:
-                report.skipped += 1
-                continue
-            except FetchError as exc:
-                report.errors.append(str(exc))
-                continue
-            report.pages_fetched += 1
-            if not html:
-                report.skipped += 1
-                continue
-            if save_html_dir is not None:
-                save_html_dir.mkdir(parents=True, exist_ok=True)
-                (save_html_dir / f"{site.source}-{site.listing_id(url, {})}.html").write_text(html, encoding="utf-8")
-            listing = site.parse(url, html, brand)
+            # Feed-based sites (Shopify) parse from their cached products.json — no per-page fetch.
+            if getattr(site, "uses_feed", False):
+                try:
+                    listing = await site.fetch_and_parse(fetcher, url, brand)
+                except BlockedError as exc:
+                    report.blocked = str(exc)
+                    _log.warning("%s: %s", site.source, exc)
+                    return report
+                except FetchError as exc:
+                    report.errors.append(str(exc))
+                    continue
+                report.pages_fetched += 1
+            else:
+                try:
+                    html = await fetcher.get_text(url)
+                except BlockedError as exc:
+                    report.blocked = str(exc)
+                    _log.warning("%s: %s", site.source, exc)
+                    return report
+                except DisallowedError:
+                    report.skipped += 1
+                    continue
+                except FetchError as exc:
+                    report.errors.append(str(exc))
+                    continue
+                report.pages_fetched += 1
+                if not html:
+                    report.skipped += 1
+                    continue
+                if save_html_dir is not None:
+                    save_html_dir.mkdir(parents=True, exist_ok=True)
+                    (save_html_dir / f"{site.source}-{site.listing_id(url, {})}.html").write_text(html, encoding="utf-8")
+                listing = site.parse(url, html, brand)
             if (
                 listing is None
                 or not _brand_matches(listing, brand)

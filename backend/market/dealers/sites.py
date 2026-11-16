@@ -393,7 +393,55 @@ class Chronext(DealerSite):
         return out[:6]
 
 
-SITES: dict[str, type[DealerSite]] = {cls.source: cls for cls in (The1916Company, Chronext)}
+def _shopify_sites() -> tuple:
+    # Imported lazily: shopify.py imports DealerSite from this module.
+    from market.dealers.shopify import SHOPIFY_SITES
+
+    return tuple(SHOPIFY_SITES)
+
+
+class EuropeanWatchCo(DealerSite):
+    source = "europeanwatch"
+    label = "European Watch Co."
+    base_url = "https://www.europeanwatch.com"
+    default_currency = "USD"
+    default_condition = "Pre-owned"
+    site_names = ("European Watch Co.", "European Watch Company", "EWC")
+    spec_labels = {
+        "reference": ("Reference", "Ref.", "Ref"),
+        "year": ("Year", "Circa"),
+        "condition": ("Condition",),
+        "box_papers": ("Box and Papers", "Box & Papers", "Accompaniments"),
+        "box": ("Box",),
+        "papers": ("Papers",),
+        "case_size": ("Case Size", "Case Diameter", "Diameter"),
+        "case_material": ("Case Material", "Metal", "Material"),
+        "dial": ("Dial",),
+        "movement": ("Movement", "Caliber", "Calibre"),
+        "model": ("Model", "Collection"),
+        "brand": ("Brand",),
+    }
+
+    def is_product_url(self, url: str, slug: str) -> bool:
+        clean = url.split("?")[0]
+        # /watch/patek-philippe-5726a-001-...-73399  (trailing numeric id)
+        return bool(re.match(rf"^https?://(?:www\.)?europeanwatch\.com/watch/{re.escape(slug)}-.+-\d+/?$", clean, re.I))
+
+    def category_url(self, slug: str, page: int) -> str:
+        # EWC paginates its brand pages with ?p=
+        return f"{self.base_url}/brand/{slug}" + (f"?p={page}" if page > 1 else "")
+
+    def listing_id(self, url: str, specs: dict[str, str]) -> str:
+        m = re.search(r"-(\d+)/?$", url.split("?")[0])
+        return m.group(1) if m else path_segments(url)[-1]
+
+    def model_from_url(self, url: str) -> str | None:
+        return None
+
+
+SITES: dict[str, type[DealerSite]] = {
+    cls.source: cls for cls in (The1916Company, Chronext, EuropeanWatchCo, *_shopify_sites())
+}
 SOURCE_LABELS = {cls.source: cls.label for cls in SITES.values()}
 
 
