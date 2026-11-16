@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 from contextlib import asynccontextmanager
 
@@ -18,6 +19,8 @@ from starlette.responses import Response
 from auth.routes import router as auth_router
 from config import settings
 from database import AsyncSessionLocal
+from inference.known_ai import preload as preload_known_ai
+from inference.live_screening import preload as preload_live_model
 from inference.checkpoint_identity import CheckpointIdentityError, checkpoint_identity_ready, verify_frozen_checkpoint
 from inference.benchmark_routes import router as benchmark_router
 from inference.research_routes import router as research_router
@@ -27,7 +30,7 @@ from listings.routes import router as listings_router
 from market.routes import router as market_router
 from market.service import ebay_configured
 from redis_client import close_redis, get_redis
-from s3_client import LOCAL_UPLOAD_DIR
+from storage import LOCAL_UPLOAD_DIR
 
 
 def _cors_allow_origins() -> list[str]:
@@ -57,7 +60,10 @@ async def lifespan(app: FastAPI):
             verify_frozen_checkpoint()
         except CheckpointIdentityError as exc:
             _log.exception("dinov3_checkpoint_identity_failed: %s", exc)
+        preload_tasks = [asyncio.create_task(asyncio.to_thread(f)) for f in (preload_live_model, preload_known_ai)]
         yield
+        for task in preload_tasks:
+            task.cancel()
     finally:
         try:
             await close_redis()
@@ -69,7 +75,7 @@ app = FastAPI(
     title="HypeVault API",
     version="1.0.0",
     description=(
-        "Legacy DINOv2 listing checks and a separate DINOv3 research prototype. "
+        "Listing photo screening with the DINOv3 + Perception Encoder model, and a research console comparing it with DINOv3 and DINOv2. "
         "Neither endpoint is a universal authenticity guarantee or an image-level brand verification."
     ),
     lifespan=lifespan,

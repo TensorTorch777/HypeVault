@@ -188,3 +188,29 @@ class Chrono24DatasetTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EbayImageSearchTests(unittest.TestCase):
+    def test_search_by_image_posts_base64_and_filters(self):
+        calls: list = []
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            calls.append(request)
+            if request.url.path.endswith("/oauth2/token"):
+                return httpx.Response(200, json={"access_token": "tok-123", "expires_in": 7200})
+            if request.url.path.endswith("/item_summary/search_by_image"):
+                return httpx.Response(200, json=SEARCH_FIXTURE)
+            return httpx.Response(404)
+
+        async def go():
+            client = EbayBrowseClient("app-id", "cert-id", environment="sandbox", pseudonym_salt="pepper",
+                                      http=httpx.AsyncClient(transport=httpx.MockTransport(handler)))
+            return await client.search_by_image("aGVsbG8=", limit=500)
+
+        items = asyncio.run(go())
+        self.assertEqual([i.external_id for i in items], ["v1|1111|0"])  # parts, other brands and zero prices dropped
+        req = calls[-1]
+        self.assertEqual(req.method, "POST")
+        self.assertEqual(json.loads(req.content), {"image": "aGVsbG8="})
+        self.assertEqual(req.url.params["category_ids"], "31387")
+        self.assertEqual(req.url.params["limit"], "200")

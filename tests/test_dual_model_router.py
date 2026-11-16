@@ -119,6 +119,7 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
             patch("inference.model_router.named_model_ready", new=AsyncMock(side_effect=ready)),
             patch("inference.model_router.named_model_serving_profile", new=AsyncMock(return_value=CPU_PROFILE)),
             patch("inference.model_router.triton_server_status", new=AsyncMock(return_value={"live": True, "ready": False})),
+            patch("inference.model_router.settings.live_screening_model", "dinov2_legacy"),
         ):
             report = await readiness_report()
         rows = {row["logical_id"]: row for row in report["models"]}
@@ -127,6 +128,18 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(rows["dinov2_legacy"]["ready"])
         self.assertEqual(rows["dinov2_legacy"]["unavailable_reason"], "PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE")
         self.assertTrue(rows["dinov2_legacy"]["same_model_as_live_route"])
+        self.assertFalse(rows["dinov3_experimental"]["same_model_as_live_route"])
+
+        # With DINOv3 on the live listing check, the flag follows it to the DINOv3 research model.
+        with (
+            patch("inference.model_router.named_model_ready", new=AsyncMock(side_effect=ready)),
+            patch("inference.model_router.named_model_serving_profile", new=AsyncMock(return_value=CPU_PROFILE)),
+            patch("inference.model_router.triton_server_status", new=AsyncMock(return_value={"live": True, "ready": False})),
+            patch("inference.model_router.settings.live_screening_model", "dinov3_frozen"),
+        ):
+            live_v3 = {row["logical_id"]: row for row in (await readiness_report())["models"]}
+        self.assertTrue(live_v3["dinov3_experimental"]["same_model_as_live_route"])
+        self.assertFalse(live_v3["dinov2_legacy"]["same_model_as_live_route"])
 
         with (
             patch("inference.model_router.named_model_ready", new=AsyncMock(side_effect=ready)),
@@ -356,10 +369,10 @@ class DualModelRouterTests(unittest.IsolatedAsyncioTestCase):
     def test_live_route_rejects_a_dinov3_selector_before_inference(self) -> None:
         routes = (REPO / "backend" / "inference" / "routes.py").read_text()
         # A request cannot pick the model; the refusal comes before any inference.
-        self.assertLess(routes.index("set by the server, not by the request"), routes.index("classify_listing_photo("))
+        self.assertLess(routes.index("set by the server, not by the request"), routes.index("classify_listing_photo_with_hold("))
         research = (REPO / "frontend" / "src" / "app" / "research" / "page.tsx").read_text()
         seller = (REPO / "frontend" / "src" / "app" / "seller" / "upload" / "page.tsx").read_text()
-        self.assertIn("EXPERIMENTAL — NOT APPROVED FOR PRODUCTION", research)
+        self.assertIn("Research result, not a production certificate", research)
         self.assertIn("dinov2_legacy", research)
         self.assertIn("dinov3_experimental", research)
         self.assertNotIn("dinov3_experimental", seller)

@@ -68,7 +68,7 @@ export function SiteFooter() {
         </p>
       </div>
       <div className="mx-auto mt-10 flex max-w-[77.5rem] flex-col gap-3 border-t border-primary/10 px-4 pt-8 text-[0.6875rem] leading-5 text-primary/50 sm:px-6 md:flex-row md:justify-between">
-        <p>© {new Date().getFullYear()} HypeVault · K. J. Somaiya School of Engineering · Research prototype</p>
+        <p>© {new Date().getFullYear()} HypeVault · Research prototype</p>
         <p>
           3D model: &ldquo;Richard Mille RM011&rdquo; by Denis V on Sketchfab,{" "}
           <a href="https://creativecommons.org/licenses/by-nc/4.0/" className="underline hover:text-primary" rel="noreferrer" target="_blank">CC BY-NC 4.0</a>

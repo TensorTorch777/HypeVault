@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, Field, computed_field, field_validator
@@ -10,7 +11,7 @@ from pydantic import BaseModel, Field, computed_field, field_validator
 from database import ListingCategory, ListingStatus
 from listings.customer_label import customer_label as label_for_listing
 from listings.customer_label import evidence_role as role_for_listing
-from s3_client import local_public_url
+from storage import local_public_url
 
 
 class ListingCreate(BaseModel):
@@ -73,13 +74,21 @@ class ListingRead(BaseModel):
         )
 
 
-class PresignRequest(BaseModel):
-    listing_id: UUID
-    filename: str = Field(..., max_length=255)
-    content_type: str = Field(..., max_length=128)
+class AdminListingRead(ListingRead):
+    """A listing in the admin review queue, with the seller it belongs to and the screening evidence."""
+
+    seller_email: str | None = None
+    screening_details: dict | None = None
+
+    @computed_field
+    @property
+    def proof_url(self) -> str | None:
+        """The seller's proof photo (watch beside today's date), when one was sent."""
+        proof = (self.screening_details or {}).get("proof") or {}
+        return local_public_url(proof.get("url"))
 
 
-class PresignResponse(BaseModel):
-    url: str
-    key: str
-    dev: bool | None = None
+class ReviewDecision(BaseModel):
+    decision: Literal["approve", "reject"]
+    note: str | None = Field(default=None, max_length=500)
+

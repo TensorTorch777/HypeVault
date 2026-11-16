@@ -38,15 +38,19 @@ async def search_dealers(
     canon = canonical_brand(brand) if brand else None
     since = date.today() - timedelta(days=settings.dealer_max_age_days)
     sections = []
-    for source in SITES:
-        rows, stats = await repository.find_listings(session, source, query, canon, limit=limit, since=since, sort="near_median")
+    for source, cls in SITES.items():
+        # Count/median are computed in each dealer's own currency, so GBP/EUR stores still get them.
+        cur = (getattr(cls, "default_currency", None) or "USD").upper()
+        rows, stats = await repository.find_listings(
+            session, source, query, canon, limit=limit, since=since, sort="near_median", stats_currency=cur
+        )
         broadened = False
         if not rows:
             # No exact match: same brand and collection (first terms of the query), still useful context.
             terms = repository.search_terms(query)
             if len(terms) > 3:
                 rows, stats = await repository.find_listings(
-                    session, source, " ".join(terms[:3]), canon, limit=limit, since=since, sort="near_median"
+                    session, source, " ".join(terms[:3]), canon, limit=limit, since=since, sort="near_median", stats_currency=cur
                 )
                 broadened = bool(rows)
         sections.append(

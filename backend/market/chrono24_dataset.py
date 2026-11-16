@@ -2,7 +2,7 @@
 
 The dataset is a third-party snapshot of public Chrono24 listings. It records no capture date,
 so `observed_at` stays empty and `observed_on` is the snapshot date given by the caller.
-It is the fallback when live search (market/chrono24_live.py) is off or fails.
+Chrono24's terms do not allow automated scraping, so this importer is the only Chrono24 path.
 """
 
 from __future__ import annotations

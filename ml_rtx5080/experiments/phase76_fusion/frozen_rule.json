@@ -1,0 +1,33 @@
+{
+  "rule": "dinov3_pe_v6",
+  "phase": 76,
+  "features": "DINOv3 pre+ft (Phase 75 view) + Perception Encoder L/14-336 pooled",
+  "pe_model": "vit_pe_core_large_patch14_336.fb",
+  "pe_hf_revision": "e63206c8e3a0e9b699e40f31080eebd78fd2258e",
+  "timm_version": "1.0.26",
+  "dinov3_view": "pre+ft",
+  "head": "StandardScaler + logistic regression (C = 0.05, balanced classes)",
+  "model": {
+    "path": "ml_rtx5080/experiments/phase76_fusion/dinov3_pe_v6_head.joblib",
+    "sha256": "5303d274770e5b3836a7622fae77bb07c445c16fb9148e31668ac37cbd1c881f"
+  },
+  "t_fake": -2.1848080566651094,
+  "training": {
+    "reals": {
+      "label0_train": 5000,
+      "ebay_v1_v5": 1314,
+      "coco": 2000
+    },
+    "generated": {
+      "bench_v1_v4_and_kandinsky": 2705,
+      "frontier": 2724,
+      "chatgpt_v5_and_gemini_v5": "150 images x10"
+    }
+  },
+  "threshold_source": "real photos only: Label_0 validation + benchmark_v1-v5 eBay (out-of-fold), at most 1% FAKE",
+  "development_real_fake_rate": 0.0099,
+  "coco_holdout_fake_rate": 0.018,
+  "motivating_case_score_in_training_context": -1.668,
+  "normalisation": "RGB, Lanczos short side 512, centre square, JPEG q90",
+  "frozen_before_any_v6_data": true
+}

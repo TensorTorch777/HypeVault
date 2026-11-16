@@ -5,3 +5,5 @@ timm>=0.9.12
 # Dial OCR for the seller hint (backend/inference/dial_text.py). Needs an ONNX Runtime build:
 # onnxruntime, or onnxruntime-gpu on a CUDA machine (do not install both).
 rapidocr==3.10.0
+# Reads signed Content Credentials (C2PA) labels, e.g. from ChatGPT and Gemini (backend/inference/provenance.py).
+c2pa-python==0.38.1

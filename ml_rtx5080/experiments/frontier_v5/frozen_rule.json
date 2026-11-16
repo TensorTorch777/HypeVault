@@ -1,0 +1,1018 @@
+{
+  "rule": "dinov3_frontier_v5",
+  "phase": 75,
+  "selected_candidate": "front_pre+ft+coco",
+  "features": "pre+ft",
+  "generated_sources": [
+    "bench",
+    "frontier",
+    "coco"
+  ],
+  "head": "StandardScaler + logistic regression (C = 0.05, balanced classes)",
+  "model": {
+    "path": "ml_rtx5080/experiments/frontier_v5/dinov3_frontier_v5_head.joblib",
+    "sha256": "4d007726c90899a01506b9147741fb6c1c98ee58eca9c72c0fe80dac9edc59ce"
+  },
+  "t_fake": -2.2150685289694794,
+  "threshold_source": "real photos only: Label_0 validation + benchmark_v1-v4 eBay (out-of-fold), at most 1% FAKE",
+  "development_real_fake_rate": 0.0097,
+  "normalisation": "RGB, Lanczos short side 512, centre square, JPEG q90",
+  "frozen_before_any_v5_scoring": true,
+  "design_results": {
+    "p74_ft": {
+      "unseen_generator_caught": [
+        1750,
+        2724
+      ],
+      "unseen_watch_prompts_caught": [
+        113,
+        144
+      ],
+      "real_fake_rate_mean": 0.0092,
+      "families": {
+        "OpenAI": [
+          178,
+          324
+        ],
+        "Google": [
+          288,
+          452
+        ]
+      },
+      "per_generator": {
+        "4o-26-3-25": [
+          28,
+          60
+        ],
+        "Efficient-Large-Model/Sana_Sprint_1.6B_1024px_diffusers": [
+          59,
+          60
+        ],
+        "FLUX.2-pro": [
+          42,
+          68
+        ],
+        "FLUX.2_max": [
+          30,
+          68
+        ],
+        "GLM-Image": [
+          47,
+          68
+        ],
+        "GPT-Image-1": [
+          30,
+          68
+        ],
+        "GPT-Image-1.5": [
+          29,
+          68
+        ],
+        "HunyuanImage-3.0": [
+          62,
+          68
+        ],
+        "Imagen-4.0": [
+          46,
+          68
+        ],
+        "Imagen-4.0-Ultra": [
+          50,
+          68
+        ],
+        "Qwen-Image": [
+          55,
+          68
+        ],
+        "Qwen-Image-2.0-pro": [
+          36,
+          68
+        ],
+        "Qwen-Image-2512": [
+          42,
+          68
+        ],
+        "Qwen/Qwen-Image-2512": [
+          24,
+          60
+        ],
+        "Seedream-4.0": [
+          35,
+          68
+        ],
+        "Seedream-4.5": [
+          32,
+          68
+        ],
+        "Seedream-5.0": [
+          35,
+          68
+        ],
+        "Tongyi-MAI/Z-Image-Turbo": [
+          26,
+          60
+        ],
+        "aurora-20-1-25": [
+          44,
+          60
+        ],
+        "black-forest-labs/FLUX.2-klein-4B": [
+          18,
+          60
+        ],
+        "dalle-3": [
+          59,
+          60
+        ],
+        "flux-1-pro": [
+          48,
+          60
+        ],
+        "flux-1.1-pro": [
+          33,
+          60
+        ],
+        "flux-2-pro-25-11-25": [
+          36,
+          60
+        ],
+        "frames-23-1-25": [
+          38,
+          60
+        ],
+        "gpt-image-2": [
+          32,
+          68
+        ],
+        "halfmoon-4-4-25": [
+          42,
+          60
+        ],
+        "hidream-I1-full": [
+          54,
+          60
+        ],
+        "hunyuan-image-2.1": [
+          54,
+          60
+        ],
+        "ideogram": [
+          37,
+          60
+        ],
+        "imagen-3": [
+          44,
+          60
+        ],
+        "imagen-4-ultra-24-7-25": [
+          44,
+          60
+        ],
+        "imagen-4.0-ultra-generate-exp-05-20": [
+          41,
+          60
+        ],
+        "janus-7b": [
+          57,
+          60
+        ],
+        "kling_v2_1": [
+          46,
+          68
+        ],
+        "lumina-17-2-25": [
+          52,
+          60
+        ],
+        "midjourney-5.2": [
+          47,
+          60
+        ],
+        "nano-banana-2.0": [
+          31,
+          68
+        ],
+        "nano-banana-pro": [
+          32,
+          68
+        ],
+        "recraft-v2": [
+          29,
+          60
+        ],
+        "recraft-v3-24-7-25": [
+          42,
+          60
+        ],
+        "seedream-3-24-7-25": [
+          36,
+          60
+        ],
+        "stable-diffusion-3": [
+          46,
+          60
+        ]
+      },
+      "coco_holdout_fake": [
+        263,
+        1000
+      ]
+    },
+    "front_ft": {
+      "unseen_generator_caught": [
+        2722,
+        2724
+      ],
+      "unseen_watch_prompts_caught": [
+        142,
+        144
+      ],
+      "real_fake_rate_mean": 0.0094,
+      "families": {
+        "OpenAI": [
+          324,
+          324
+        ],
+        "Google": [
+          452,
+          452
+        ]
+      },
+      "per_generator": {
+        "4o-26-3-25": [
+          60,
+          60
+        ],
+        "Efficient-Large-Model/Sana_Sprint_1.6B_1024px_diffusers": [
+          60,
+          60
+        ],
+        "FLUX.2-pro": [
+          68,
+          68
+        ],
+        "FLUX.2_max": [
+          67,
+          68
+        ],
+        "GLM-Image": [
+          68,
+          68
+        ],
+        "GPT-Image-1": [
+          68,
+          68
+        ],
+        "GPT-Image-1.5": [
+          68,
+          68
+        ],
+        "HunyuanImage-3.0": [
+          68,
+          68
+        ],
+        "Imagen-4.0": [
+          68,
+          68
+        ],
+        "Imagen-4.0-Ultra": [
+          68,
+          68
+        ],
+        "Qwen-Image": [
+          68,
+          68
+        ],
+        "Qwen-Image-2.0-pro": [
+          68,
+          68
+        ],
+        "Qwen-Image-2512": [
+          68,
+          68
+        ],
+        "Qwen/Qwen-Image-2512": [
+          60,
+          60
+        ],
+        "Seedream-4.0": [
+          68,
+          68
+        ],
+        "Seedream-4.5": [
+          67,
+          68
+        ],
+        "Seedream-5.0": [
+          68,
+          68
+        ],
+        "Tongyi-MAI/Z-Image-Turbo": [
+          60,
+          60
+        ],
+        "aurora-20-1-25": [
+          60,
+          60
+        ],
+        "black-forest-labs/FLUX.2-klein-4B": [
+          60,
+          60
+        ],
+        "dalle-3": [
+          60,
+          60
+        ],
+        "flux-1-pro": [
+          60,
+          60
+        ],
+        "flux-1.1-pro": [
+          60,
+          60
+        ],
+        "flux-2-pro-25-11-25": [
+          60,
+          60
+        ],
+        "frames-23-1-25": [
+          60,
+          60
+        ],
+        "gpt-image-2": [
+          68,
+          68
+        ],
+        "halfmoon-4-4-25": [
+          60,
+          60
+        ],
+        "hidream-I1-full": [
+          60,
+          60
+        ],
+        "hunyuan-image-2.1": [
+          60,
+          60
+        ],
+        "ideogram": [
+          60,
+          60
+        ],
+        "imagen-3": [
+          60,
+          60
+        ],
+        "imagen-4-ultra-24-7-25": [
+          60,
+          60
+        ],
+        "imagen-4.0-ultra-generate-exp-05-20": [
+          60,
+          60
+        ],
+        "janus-7b": [
+          60,
+          60
+        ],
+        "kling_v2_1": [
+          68,
+          68
+        ],
+        "lumina-17-2-25": [
+          60,
+          60
+        ],
+        "midjourney-5.2": [
+          60,
+          60
+        ],
+        "nano-banana-2.0": [
+          68,
+          68
+        ],
+        "nano-banana-pro": [
+          68,
+          68
+        ],
+        "recraft-v2": [
+          60,
+          60
+        ],
+        "recraft-v3-24-7-25": [
+          60,
+          60
+        ],
+        "seedream-3-24-7-25": [
+          60,
+          60
+        ],
+        "stable-diffusion-3": [
+          60,
+          60
+        ]
+      },
+      "coco_holdout_fake": [
+        999,
+        1000
+      ]
+    },
+    "front_pre+ft": {
+      "unseen_generator_caught": [
+        2724,
+        2724
+      ],
+      "unseen_watch_prompts_caught": [
+        144,
+        144
+      ],
+      "real_fake_rate_mean": 0.0097,
+      "families": {
+        "OpenAI": [
+          324,
+          324
+        ],
+        "Google": [
+          452,
+          452
+        ]
+      },
+      "per_generator": {
+        "4o-26-3-25": [
+          60,
+          60
+        ],
+        "Efficient-Large-Model/Sana_Sprint_1.6B_1024px_diffusers": [
+          60,
+          60
+        ],
+        "FLUX.2-pro": [
+          68,
+          68
+        ],
+        "FLUX.2_max": [
+          68,
+          68
+        ],
+        "GLM-Image": [
+          68,
+          68
+        ],
+        "GPT-Image-1": [
+          68,
+          68
+        ],
+        "GPT-Image-1.5": [
+          68,
+          68
+        ],
+        "HunyuanImage-3.0": [
+          68,
+          68
+        ],
+        "Imagen-4.0": [
+          68,
+          68
+        ],
+        "Imagen-4.0-Ultra": [
+          68,
+          68
+        ],
+        "Qwen-Image": [
+          68,
+          68
+        ],
+        "Qwen-Image-2.0-pro": [
+          68,
+          68
+        ],
+        "Qwen-Image-2512": [
+          68,
+          68
+        ],
+        "Qwen/Qwen-Image-2512": [
+          60,
+          60
+        ],
+        "Seedream-4.0": [
+          68,
+          68
+        ],
+        "Seedream-4.5": [
+          68,
+          68
+        ],
+        "Seedream-5.0": [
+          68,
+          68
+        ],
+        "Tongyi-MAI/Z-Image-Turbo": [
+          60,
+          60
+        ],
+        "aurora-20-1-25": [
+          60,
+          60
+        ],
+        "black-forest-labs/FLUX.2-klein-4B": [
+          60,
+          60
+        ],
+        "dalle-3": [
+          60,
+          60
+        ],
+        "flux-1-pro": [
+          60,
+          60
+        ],
+        "flux-1.1-pro": [
+          60,
+          60
+        ],
+        "flux-2-pro-25-11-25": [
+          60,
+          60
+        ],
+        "frames-23-1-25": [
+          60,
+          60
+        ],
+        "gpt-image-2": [
+          68,
+          68
+        ],
+        "halfmoon-4-4-25": [
+          60,
+          60
+        ],
+        "hidream-I1-full": [
+          60,
+          60
+        ],
+        "hunyuan-image-2.1": [
+          60,
+          60
+        ],
+        "ideogram": [
+          60,
+          60
+        ],
+        "imagen-3": [
+          60,
+          60
+        ],
+        "imagen-4-ultra-24-7-25": [
+          60,
+          60
+        ],
+        "imagen-4.0-ultra-generate-exp-05-20": [
+          60,
+          60
+        ],
+        "janus-7b": [
+          60,
+          60
+        ],
+        "kling_v2_1": [
+          68,
+          68
+        ],
+        "lumina-17-2-25": [
+          60,
+          60
+        ],
+        "midjourney-5.2": [
+          60,
+          60
+        ],
+        "nano-banana-2.0": [
+          68,
+          68
+        ],
+        "nano-banana-pro": [
+          68,
+          68
+        ],
+        "recraft-v2": [
+          60,
+          60
+        ],
+        "recraft-v3-24-7-25": [
+          60,
+          60
+        ],
+        "seedream-3-24-7-25": [
+          60,
+          60
+        ],
+        "stable-diffusion-3": [
+          60,
+          60
+        ]
+      },
+      "coco_holdout_fake": [
+        997,
+        1000
+      ]
+    },
+    "front_ft+coco": {
+      "unseen_generator_caught": [
+        2647,
+        2724
+      ],
+      "unseen_watch_prompts_caught": [
+        142,
+        144
+      ],
+      "real_fake_rate_mean": 0.0097,
+      "families": {
+        "OpenAI": [
+          322,
+          324
+        ],
+        "Google": [
+          449,
+          452
+        ]
+      },
+      "per_generator": {
+        "4o-26-3-25": [
+          60,
+          60
+        ],
+        "Efficient-Large-Model/Sana_Sprint_1.6B_1024px_diffusers": [
+          60,
+          60
+        ],
+        "FLUX.2-pro": [
+          68,
+          68
+        ],
+        "FLUX.2_max": [
+          67,
+          68
+        ],
+        "GLM-Image": [
+          68,
+          68
+        ],
+        "GPT-Image-1": [
+          68,
+          68
+        ],
+        "GPT-Image-1.5": [
+          67,
+          68
+        ],
+        "HunyuanImage-3.0": [
+          68,
+          68
+        ],
+        "Imagen-4.0": [
+          68,
+          68
+        ],
+        "Imagen-4.0-Ultra": [
+          68,
+          68
+        ],
+        "Qwen-Image": [
+          68,
+          68
+        ],
+        "Qwen-Image-2.0-pro": [
+          68,
+          68
+        ],
+        "Qwen-Image-2512": [
+          68,
+          68
+        ],
+        "Qwen/Qwen-Image-2512": [
+          30,
+          60
+        ],
+        "Seedream-4.0": [
+          68,
+          68
+        ],
+        "Seedream-4.5": [
+          64,
+          68
+        ],
+        "Seedream-5.0": [
+          68,
+          68
+        ],
+        "Tongyi-MAI/Z-Image-Turbo": [
+          56,
+          60
+        ],
+        "aurora-20-1-25": [
+          59,
+          60
+        ],
+        "black-forest-labs/FLUX.2-klein-4B": [
+          58,
+          60
+        ],
+        "dalle-3": [
+          60,
+          60
+        ],
+        "flux-1-pro": [
+          60,
+          60
+        ],
+        "flux-1.1-pro": [
+          57,
+          60
+        ],
+        "flux-2-pro-25-11-25": [
+          55,
+          60
+        ],
+        "frames-23-1-25": [
+          56,
+          60
+        ],
+        "gpt-image-2": [
+          67,
+          68
+        ],
+        "halfmoon-4-4-25": [
+          57,
+          60
+        ],
+        "hidream-I1-full": [
+          60,
+          60
+        ],
+        "hunyuan-image-2.1": [
+          59,
+          60
+        ],
+        "ideogram": [
+          58,
+          60
+        ],
+        "imagen-3": [
+          60,
+          60
+        ],
+        "imagen-4-ultra-24-7-25": [
+          60,
+          60
+        ],
+        "imagen-4.0-ultra-generate-exp-05-20": [
+          60,
+          60
+        ],
+        "janus-7b": [
+          52,
+          60
+        ],
+        "kling_v2_1": [
+          68,
+          68
+        ],
+        "lumina-17-2-25": [
+          60,
+          60
+        ],
+        "midjourney-5.2": [
+          60,
+          60
+        ],
+        "nano-banana-2.0": [
+          66,
+          68
+        ],
+        "nano-banana-pro": [
+          67,
+          68
+        ],
+        "recraft-v2": [
+          58,
+          60
+        ],
+        "recraft-v3-24-7-25": [
+          60,
+          60
+        ],
+        "seedream-3-24-7-25": [
+          58,
+          60
+        ],
+        "stable-diffusion-3": [
+          60,
+          60
+        ]
+      },
+      "coco_holdout_fake": [
+        72,
+        1000
+      ]
+    },
+    "front_pre+ft+coco": {
+      "unseen_generator_caught": [
+        2684,
+        2724
+      ],
+      "unseen_watch_prompts_caught": [
+        143,
+        144
+      ],
+      "real_fake_rate_mean": 0.0097,
+      "families": {
+        "OpenAI": [
+          324,
+          324
+        ],
+        "Google": [
+          452,
+          452
+        ]
+      },
+      "per_generator": {
+        "4o-26-3-25": [
+          60,
+          60
+        ],
+        "Efficient-Large-Model/Sana_Sprint_1.6B_1024px_diffusers": [
+          60,
+          60
+        ],
+        "FLUX.2-pro": [
+          68,
+          68
+        ],
+        "FLUX.2_max": [
+          68,
+          68
+        ],
+        "GLM-Image": [
+          68,
+          68
+        ],
+        "GPT-Image-1": [
+          68,
+          68
+        ],
+        "GPT-Image-1.5": [
+          68,
+          68
+        ],
+        "HunyuanImage-3.0": [
+          68,
+          68
+        ],
+        "Imagen-4.0": [
+          68,
+          68
+        ],
+        "Imagen-4.0-Ultra": [
+          68,
+          68
+        ],
+        "Qwen-Image": [
+          68,
+          68
+        ],
+        "Qwen-Image-2.0-pro": [
+          68,
+          68
+        ],
+        "Qwen-Image-2512": [
+          68,
+          68
+        ],
+        "Qwen/Qwen-Image-2512": [
+          26,
+          60
+        ],
+        "Seedream-4.0": [
+          68,
+          68
+        ],
+        "Seedream-4.5": [
+          67,
+          68
+        ],
+        "Seedream-5.0": [
+          68,
+          68
+        ],
+        "Tongyi-MAI/Z-Image-Turbo": [
+          60,
+          60
+        ],
+        "aurora-20-1-25": [
+          60,
+          60
+        ],
+        "black-forest-labs/FLUX.2-klein-4B": [
+          57,
+          60
+        ],
+        "dalle-3": [
+          60,
+          60
+        ],
+        "flux-1-pro": [
+          60,
+          60
+        ],
+        "flux-1.1-pro": [
+          58,
+          60
+        ],
+        "flux-2-pro-25-11-25": [
+          60,
+          60
+        ],
+        "frames-23-1-25": [
+          60,
+          60
+        ],
+        "gpt-image-2": [
+          68,
+          68
+        ],
+        "halfmoon-4-4-25": [
+          60,
+          60
+        ],
+        "hidream-I1-full": [
+          60,
+          60
+        ],
+        "hunyuan-image-2.1": [
+          60,
+          60
+        ],
+        "ideogram": [
+          60,
+          60
+        ],
+        "imagen-3": [
+          60,
+          60
+        ],
+        "imagen-4-ultra-24-7-25": [
+          60,
+          60
+        ],
+        "imagen-4.0-ultra-generate-exp-05-20": [
+          60,
+          60
+        ],
+        "janus-7b": [
+          60,
+          60
+        ],
+        "kling_v2_1": [
+          68,
+          68
+        ],
+        "lumina-17-2-25": [
+          60,
+          60
+        ],
+        "midjourney-5.2": [
+          60,
+          60
+        ],
+        "nano-banana-2.0": [
+          68,
+          68
+        ],
+        "nano-banana-pro": [
+          68,
+          68
+        ],
+        "recraft-v2": [
+          60,
+          60
+        ],
+        "recraft-v3-24-7-25": [
+          60,
+          60
+        ],
+        "seedream-3-24-7-25": [
+          60,
+          60
+        ],
+        "stable-diffusion-3": [
+          60,
+          60
+        ]
+      },
+      "coco_holdout_fake": [
+        37,
+        1000
+      ]
+    }
+  }
+}

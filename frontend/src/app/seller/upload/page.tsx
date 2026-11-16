@@ -7,8 +7,10 @@ import { useQuery } from "@tanstack/react-query";
 
 import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
 import { ImageUploader } from "@/components/ImageUploader";
+import { ProofPhotoForm } from "@/components/ProofPhotoForm";
 import { ScreeningResult, type ScreeningOutcome } from "@/components/ScreeningResult";
 import { DealerResults } from "@/components/market/DealerResults";
+import { WatchMarketLookup } from "@/components/market/WatchMarketLookup";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -208,7 +210,7 @@ export default function SellerUploadPage() {
                     <label className="text-xs font-semibold text-primary/70" htmlFor="seller-brand">Declared brand</label>
                     <DeclaredBrandSelect id="seller-brand" value={brand} onChange={setBrand} />
                     <p className="mt-2 text-xs leading-5 text-primary/55">
-                      {DECLARED_BRAND_NOTE} Legacy DINOv2 listing check. This is not the DINOv3 research prototype. An out-of-scope brand produces no authenticity result.
+                      {DECLARED_BRAND_NOTE} The photo is screened by the DINOv3 + Perception Encoder model. An out-of-scope brand produces no authenticity result.
                     </p>
                   </div>
                   <div className="grid gap-5 sm:grid-cols-2">
@@ -235,9 +237,10 @@ export default function SellerUploadPage() {
               {step === 2 ? (
                 <motion.div key="s2" initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : -8 }} transition={stepMotion} className="mt-8 space-y-4">
                   <p className="text-sm leading-6 text-primary/70">
-                    Three checks run on your photo: it must be at least 400 px on its shorter side, show a wristwatch, and look like an
-                    original photograph rather than an AI-generated or heavily edited image (legacy DINOv2 model). Pass all three and the
-                    watch is listed; otherwise you get the reason. Screening checks the photo, not the watch — it is not an authenticity
+                    Your photo must be at least 400 px on its shorter side, carry no signed AI label, not be a copy of a known AI
+                    image, show a wristwatch, and look like an original photograph rather than an AI-generated or edited image (DINOv3 +
+                    Perception Encoder model). Pass and the watch is listed; if screening is unsure, the listing is held until you send a
+                    proof photo; otherwise you get the reason. Screening checks the photo, not the watch — it is not an authenticity
                     guarantee.
                   </p>
                   <div className="min-h-[4.5rem] rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3" aria-live="polite">
@@ -264,6 +267,18 @@ export default function SellerUploadPage() {
               {step === 3 ? (
                 <motion.div key="s3" initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : -8 }} transition={stepMotion} className="mt-8 space-y-5">
                   {outcome ? <ScreeningResult outcome={outcome} /> : null}
+                  {outcome?.screening_code === "NEEDS_PROOF" && listingId ? (
+                    <ProofPhotoForm
+                      listingId={listingId}
+                      onSent={(l) =>
+                        setOutcome({
+                          listing_status: l.status as ScreeningOutcome["listing_status"],
+                          screening_code: l.screening_code ?? null,
+                          screening_reason: l.screening_reason ?? null,
+                        })
+                      }
+                    />
+                  ) : null}
                   {outcome?.listing_status === "live" && listingId ? (
                     <div className="border-t border-white/10 pt-6">
                       <DealerResults listingId={listingId} limit={4} title="At dealers" />
@@ -275,7 +290,7 @@ export default function SellerUploadPage() {
                         View listing
                       </Button>
                     ) : null}
-                    {outcome && outcome.listing_status !== "live" ? (
+                    {outcome && outcome.listing_status === "rejected" ? (
                       <Button
                         className="min-h-[2.75rem]"
                         onClick={() => {
@@ -292,6 +307,7 @@ export default function SellerUploadPage() {
                       Dashboard
                     </Button>
                   </div>
+                  {outcome && files[0] ? <WatchMarketLookup photo={files[0]} compact className="mt-4" /> : null}
                 </motion.div>
               ) : null}
             </AnimatePresence>

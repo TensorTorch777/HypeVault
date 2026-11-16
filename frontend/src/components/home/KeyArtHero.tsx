@@ -94,7 +94,7 @@ export function KeyArtHero({ panels, quality }: { panels: KeyArtPanel[]; quality
             Enter the market
           </Link>
           <p className="hidden text-right font-display text-[0.9375rem] font-bold uppercase leading-tight tracking-[0.04em] text-primary/80 sm:block">
-            DINOv2 · DINOv3
+            DINOv3 + Perception Encoder
             <br />
             <span className="text-primary/55">Screening every photo</span>
           </p>

@@ -13,8 +13,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from auth.jwt_handler import decode_token
-from config import settings
-from database import User, get_db
+from config import admin_email_set, settings
+from database import User, UserRole, get_db
 
 _log = logging.getLogger(__name__)
 
@@ -59,6 +59,9 @@ async def get_current_user(
                 detail="User not found",
                 headers={"WWW-Authenticate": "Bearer"},
             )
+        # Admin comes only from ADMIN_EMAILS, so a stale admin row is treated as a seller.
+        if user.role == UserRole.admin and user.email.strip().casefold() not in admin_email_set():
+            user.role = UserRole.seller
         return user
     except HTTPException:
         raise
@@ -114,8 +117,6 @@ async def require_seller(user: Annotated[User, Depends(get_current_user)]) -> Us
 
 
 async def require_admin(user: Annotated[User, Depends(get_current_user)]) -> User:
-    from database import UserRole
-
     if user.role != UserRole.admin:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin role required")
     return user

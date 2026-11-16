@@ -6,6 +6,7 @@ import axios from "axios";
 import { AuthBadge } from "@/components/AuthBadge";
 import { ResearchExplanation, type ResearchExplanationPayload } from "@/components/ResearchExplanation";
 import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
+import { WatchMarketLookup } from "@/components/market/WatchMarketLookup";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/layout/PageHero";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -22,17 +23,38 @@ import {
 
 const DINOV2_LEGACY = "dinov2_legacy";
 const DINOV3_EXPERIMENTAL = "dinov3_experimental";
-const MODEL_IDS = [DINOV2_LEGACY, DINOV3_EXPERIMENTAL] as const;
+const PHASE76_FUSION = "phase76_fusion";
+// The Phase 76 hybrid is the current model; DINOv3 and DINOv2 are kept here so all three can be compared.
+const MODEL_IDS = [PHASE76_FUSION, DINOV3_EXPERIMENTAL, DINOV2_LEGACY] as const;
 type ModelId = (typeof MODEL_IDS)[number];
+const COMPARE = "compare";
+type Choice = ModelId | typeof COMPARE;
 
 const MODEL_LABELS: Record<ModelId, string> = {
-  [DINOV2_LEGACY]: "DINOv2 — Legacy",
-  [DINOV3_EXPERIMENTAL]: "DINOv3 — Experimental — Not approved for production",
+  [PHASE76_FUSION]: "Hybrid DINOv3 + Perception Encoder — Current model",
+  [DINOV3_EXPERIMENTAL]: "DINOv3 — Previous model (research comparison)",
+  [DINOV2_LEGACY]: "DINOv2 — Earlier model (research comparison)",
+};
+
+// Benchmark figures are the pre-registered benchmark_v6_fresh results (results/report.json).
+const MODEL_NOTES: Record<ModelId, string> = {
+  [PHASE76_FUSION]:
+    "Current model: DINOv3 and Perception Encoder features with one frozen classifier. On the fresh benchmark_v6 it caught 30/30 ChatGPT and 17/17 Gemini images and flagged 2 of 102 real eBay photos. Research result, not a production certificate.",
+  [DINOV3_EXPERIMENTAL]: "Previous model: DINOv3 alone, kept for research comparison. Not a production certificate.",
+  [DINOV2_LEGACY]:
+    "Earlier model, kept for research comparison. On the fresh benchmark_v6 it caught 4/30 ChatGPT and 0/17 Gemini images and flagged 4 of 102 real eBay photos. Not a production certificate.",
 };
 
 const EXPECTED_MODEL: Record<ModelId, ResearchResult["model"]> = {
+  [PHASE76_FUSION]: "PHASE76_DINOV3_PE",
   [DINOV2_LEGACY]: "LEGACY_DINOV2",
   [DINOV3_EXPERIMENTAL]: "DINOV3_RESEARCH_PROTOTYPE",
+};
+
+const RAN_LABEL: Record<ResearchResult["model"], string> = {
+  PHASE76_DINOV3_PE: "Hybrid DINOv3 + Perception Encoder (current model)",
+  LEGACY_DINOV2: "DINOv2 (earlier model)",
+  DINOV3_RESEARCH_PROTOTYPE: "DINOv3 (previous model)",
 };
 
 type ResearchResult = {
@@ -44,7 +66,7 @@ type ResearchResult = {
   research_only: true;
   production_ready: false;
   checkpoint_sha: string | null;
-  model: "LEGACY_DINOV2" | "DINOV3_RESEARCH_PROTOTYPE";
+  model: "LEGACY_DINOV2" | "DINOV3_RESEARCH_PROTOTYPE" | "PHASE76_DINOV3_PE";
   model_version?: string;
 };
 
@@ -62,12 +84,14 @@ const UNAVAILABLE_REASONS: Record<string, string> = {
   TRITON_MODEL_NOT_READY: "not loaded in Triton",
   INSTANCE_KIND_UNKNOWN: "Triton instance kind unknown",
   PARITY_NOT_VALIDATED_FOR_SERVED_INSTANCE: "Triton parity not validated for this instance",
+  CUDA_UNAVAILABLE: "no GPU on this server",
+  HEAD_FILES_MISSING: "frozen head files missing",
 };
 
 type LaneOutcome =
   | { state: "unavailable" }
   | { state: "error"; message: string }
-  | { state: "ok"; body: ResearchResult };
+  | { state: "ok"; body: ResearchResult; explanation: ResearchExplanationPayload };
 
 type ReadinessReport = {
   server: { live: boolean; ready: boolean };
@@ -77,7 +101,7 @@ type ReadinessReport = {
 export default function ResearchDemoPage() {
   const [brand, setBrand] = useState("");
   const [file, setFile] = useState<File | null>(null);
-  const [modelId, setModelId] = useState<ModelId | null>(null);
+  const [modelId, setModelId] = useState<Choice | null>(null);
   const [readiness, setReadiness] = useState<ReadinessReport | null>(null);
   const [readinessErr, setReadinessErr] = useState<string | null>(null);
   const [result, setResult] = useState<{ selected: ModelId; body: ResearchResult } | null>(null);
@@ -112,11 +136,12 @@ export default function ResearchDemoPage() {
 
   const statusFor = (id: ModelId) => readiness?.models.find((m) => m.logical_id === id) ?? null;
   const isReady = (id: ModelId) => Boolean(statusFor(id)?.ready);
-  const experimental = modelId === DINOV3_EXPERIMENTAL;
-  const selectedStatus = modelId ? statusFor(modelId) : null;
+  const single = modelId && modelId !== COMPARE ? modelId : null;
+  const comparing = modelId === COMPARE;
+  const canRun = comparing ? MODEL_IDS.some(isReady) : Boolean(single && isReady(single));
 
   async function submit() {
-    if (!modelId || !isReady(modelId)) {
+    if (!single || !isReady(single)) {
       setErr("Serving status: unavailable. No other model will be used, and no result was produced.");
       return;
     }
@@ -124,7 +149,7 @@ export default function ResearchDemoPage() {
       setErr("Choose an image before running the research demo.");
       return;
     }
-    const selected = modelId;
+    const selected = single;
     setErr(null);
     setResult(null);
     setComparison(null);
@@ -172,9 +197,9 @@ export default function ResearchDemoPage() {
     }
   }
 
-  async function compareBoth() {
+  async function compareAll() {
     if (!file) {
-      setErr("Choose an image before comparing the two research models.");
+      setErr("Choose an image before comparing the research models.");
       return;
     }
     setErr(null);
@@ -202,7 +227,19 @@ export default function ResearchDemoPage() {
             };
             return;
           }
-          next[id] = { state: "ok", body: data };
+          // Each lane gets its own patch map, checked against that lane's classification.
+          let explanation: ResearchExplanationPayload;
+          try {
+            const explainBody = new FormData();
+            explainBody.append("image", file);
+            explainBody.append("brand", brand);
+            explainBody.append("logical_model", id);
+            const explained = await api.post<ResearchExplanationPayload>("/research/explain", explainBody);
+            explanation = explanationForVerifiedResult({ model: data.model, decision: data.decision }, explained.data);
+          } catch {
+            explanation = { status: "unavailable", reason: "The explanation request failed.", publication_decision: "BLOCKED" };
+          }
+          next[id] = { state: "ok", body: data, explanation };
         } catch (error) {
           const status = axios.isAxiosError(error) ? error.response?.status : undefined;
           const bodyStatus = axios.isAxiosError(error)
@@ -221,7 +258,7 @@ export default function ResearchDemoPage() {
     <PageHero
       eyebrow="Research console"
       title="Five-brand prototype"
-      subtitle="Run a photo through DINOv2 or the DINOv3 candidate and see which patches drove the score. Research only: nothing here publishes a listing."
+      subtitle="Run a photo through the DINOv3 + Perception Encoder hybrid, DINOv3 or DINOv2 and see which patches drove the score. Research only: nothing here publishes a listing."
       scene="neon_rain"
       render="/renders/rm_rm011/hero.webp"
       compact
@@ -233,7 +270,7 @@ export default function ResearchDemoPage() {
           <h2 className="mt-1 font-display text-[2rem] font-extrabold uppercase leading-none">Run a screening</h2>
           <p className="mt-3 text-sm text-primary/70">
             Authorized research selector. The selected brand is user-declared and is not independently verified from
-            the image. Neither model publishes a listing.
+            the image. No model here publishes a listing.
           </p>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -248,8 +285,9 @@ export default function ResearchDemoPage() {
               value={modelId ?? ""}
               disabled={!readiness || pending}
               onChange={(event) => {
-                setModelId(event.target.value as ModelId);
+                setModelId(event.target.value as Choice);
                 setResult(null);
+                setComparison(null);
                 setErr(null);
               }}
             >
@@ -264,6 +302,9 @@ export default function ResearchDemoPage() {
                   {readiness && !isReady(id) ? " (unavailable)" : ""}
                 </option>
               ))}
+              <option value={COMPARE} disabled={!MODEL_IDS.some(isReady)}>
+                Compare all three models (side by side)
+              </option>
             </select>
             {!readiness && !readinessErr ? <p className="mt-2 text-sm text-primary/60">Checking serving status</p> : null}
             {readinessErr ? <p className="mt-2 text-sm font-semibold text-danger" role="alert">{readinessErr}</p> : null}
@@ -285,10 +326,8 @@ export default function ResearchDemoPage() {
                 })}
               </ul>
             ) : null}
-            {modelId ? <p className="mt-2 text-sm text-primary/70">Selected model: {MODEL_LABELS[modelId]}</p> : null}
-            {experimental ? (
-              <p className="mt-2 text-sm font-semibold text-danger">EXPERIMENTAL — NOT APPROVED FOR PRODUCTION</p>
-            ) : null}
+            {single ? <p className="mt-2 text-sm text-primary/70">Selected model: {MODEL_LABELS[single]}</p> : null}
+            {comparing ? <p className="mt-2 text-sm text-primary/70">Selected: all three models, side by side</p> : null}
           </div>
           <div>
             <label className="text-xs font-semibold text-primary/55" htmlFor="research-brand">
@@ -336,22 +375,14 @@ export default function ResearchDemoPage() {
           <div className="flex flex-wrap gap-3">
             <Button
               className="min-h-[2.75rem]"
-              disabled={pending || !brand || !modelId || !selectedStatus?.ready}
-              onClick={() => void submit()}
+              disabled={pending || !brand || !file || !canRun}
+              onClick={() => void (comparing ? compareAll() : submit())}
             >
-              {pending ? "Running research demo" : "Run research demo"}
-            </Button>
-            <Button
-              variant="outline"
-              className="min-h-[2.75rem]"
-              disabled={pending || !file || !brand}
-              onClick={() => void compareBoth()}
-            >
-              Compare both models
+              {pending ? "Running" : comparing ? "Compare all three models" : "Run research demo"}
             </Button>
           </div>
           <p className="text-xs text-primary/60">
-            Comparison runs each research model separately on this image and declared brand. The two classifications are not combined, and neither one is treated as more accurate. Neither result publishes a listing.
+            Comparison runs each research model separately on this image and declared brand. The classifications are not combined, and on a single image no one result is treated as more accurate; each model&apos;s benchmark record is in its note. No result publishes a listing.
           </p>
           {err ? <p className="text-sm font-semibold text-danger" role="alert">{err}</p> : null}
           {result ? (
@@ -363,13 +394,11 @@ export default function ResearchDemoPage() {
                 declaredBrand={result.body.declared_brand}
               />
               <p className="text-sm text-primary/70">
-                Model that ran: {result.body.model}
+                Model that ran: {RAN_LABEL[result.body.model]}
                 {result.body.model_version ? ` version ${result.body.model_version}` : ""} (selected{" "}
                 {MODEL_LABELS[result.selected]})
               </p>
-              {result.body.model === "DINOV3_RESEARCH_PROTOTYPE" ? (
-                <p className="text-sm font-semibold text-danger">EXPERIMENTAL — NOT APPROVED FOR PRODUCTION</p>
-              ) : null}
+              <p className="text-sm text-primary/70">{MODEL_NOTES[result.selected]}</p>
               <p className="text-sm text-primary/70">Declared brand: {result.body.declared_brand}</p>
               <p className="text-sm text-primary/70">
                 brand_verification = {result.body.brand_verification} (the brand was not checked from the image)
@@ -388,44 +417,55 @@ export default function ResearchDemoPage() {
               />
             </div>
           ) : null}
-          {comparison ? (
-            <div className="space-y-3">
-              <p className="text-sm font-semibold text-primary">Research-only side-by-side classification</p>
-              <p className="text-sm text-primary/70">{DECLARED_BRAND_NOTE} {VALIDITY_NOT_ESTABLISHED}</p>
-              <div className="grid gap-3 md:grid-cols-2">
-                {MODEL_IDS.map((id) => {
-                  const lane = comparison[id];
-                  return (
-                    <div key={id} className="rounded-xl border border-primary/15 p-4">
-                      <p className="text-sm font-semibold">{MODEL_LABELS[id]}</p>
-                      {id === DINOV3_EXPERIMENTAL ? (
-                        <p className="mt-1 text-xs font-semibold text-danger">EXPERIMENTAL — NOT APPROVED FOR PRODUCTION</p>
-                      ) : (
-                        <p className="mt-1 text-xs text-primary/60">Legacy research path. Not a production certificate.</p>
-                      )}
-                      {lane?.state === "unavailable" ? (
-                        <p className="mt-3 text-sm text-primary/70" role="status">Serving status: unavailable. No result was produced for this model.</p>
-                      ) : null}
-                      {lane?.state === "error" ? (
-                        <p className="mt-3 text-sm font-semibold text-danger" role="alert">{lane.message}</p>
-                      ) : null}
-                      {lane?.state === "ok" ? (
-                        <div className="mt-3 space-y-2">
-                          <p className="text-sm">Model classification: {lane.body.decision} — research screening result, not verified.</p>
-                          <p className="text-sm text-primary/70">Declared brand: {lane.body.declared_brand}</p>
-                          <p className="text-sm text-primary/70">Model that ran: {lane.body.model}</p>
-                          <p className="text-xs text-primary/55">This lane cannot publish a listing.</p>
-                        </div>
-                      ) : null}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ) : null}
         </CardContent>
       </Card>
     </div>
+    {comparison ? (
+    <div className="mx-auto mt-6 max-w-6xl px-4">
+      <div className="space-y-3">
+        <p className="text-sm font-semibold text-primary">Research-only side-by-side classification</p>
+        <p className="text-sm text-primary/70">{DECLARED_BRAND_NOTE} {VALIDITY_NOT_ESTABLISHED}</p>
+        <div className="grid gap-3 lg:grid-cols-3">
+          {MODEL_IDS.map((id) => {
+            const lane = comparison[id];
+            return (
+              <div key={id} className="rounded-xl border border-primary/15 p-4">
+                <p className="text-sm font-semibold">{MODEL_LABELS[id]}</p>
+                <p className="mt-1 text-xs text-primary/60">{MODEL_NOTES[id]}</p>
+                {lane?.state === "unavailable" ? (
+                  <p className="mt-3 text-sm text-primary/70" role="status">Serving status: unavailable. No result was produced for this model.</p>
+                ) : null}
+                {lane?.state === "error" ? (
+                  <p className="mt-3 text-sm font-semibold text-danger" role="alert">{lane.message}</p>
+                ) : null}
+                {lane?.state === "ok" ? (
+                  <div className="mt-3 space-y-2">
+                    <p className="text-sm">Model classification: {lane.body.decision} — research screening result, not verified.</p>
+                    <p className="text-sm text-primary/70">Declared brand: {lane.body.declared_brand}</p>
+                    <p className="text-sm text-primary/70">Model that ran: {RAN_LABEL[lane.body.model]}</p>
+                    <p className="text-xs text-primary/55">This lane cannot publish a listing.</p>
+                    <ResearchExplanation
+                      imageUrl={previewUrl}
+                      imageWidth={previewSize.width}
+                      imageHeight={previewSize.height}
+                      payload={lane.explanation}
+                      pending={false}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+    ) : null}
+    {/* Once the photo has been classified, show what the watch in it sells for. */}
+    {file && (result || comparison) ? (
+      <div className="mx-auto mt-8 max-w-6xl px-4">
+        <WatchMarketLookup photo={file} />
+      </div>
+    ) : null}
     </div>
   );
 }

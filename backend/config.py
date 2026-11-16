@@ -30,22 +30,17 @@ class Settings(BaseSettings):
     auth_access_token_expire_hours: int = 24
     auth_refresh_token_expire_days: int = 7
 
-    aws_access_key_id: str = ""
-    aws_secret_access_key: str = ""
-    aws_region: str = "ap-south-1"
-    s3_bucket: str = "hypevault-listings"
-    sqs_queue_url: str = ""
 
     triton_host: str = "localhost"
     triton_port: int = 8001
 
-    # Local dev: serve uploads when S3 is not configured
+    # Listing photos are saved on local disk and served from this base URL
     public_api_base_url: str = "http://localhost:8000"
 
     # Price comparison scraper (Playwright). Use regional host, e.g. https://www.chrono24.in
     chrono24_search_base: str = "https://www.chrono24.in"
 
-    # Dealer listings (The 1916 Company and Chronext) come from our own crawler
+    # Dealer listings (The 1916 Company, Chronext, European Watch Co., Shopify stores) from our own crawler
     # (scraper/dealer_scraper.py --save-db). The site ignores rows older than this.
     dealer_max_age_days: int = 30
 
@@ -53,10 +48,10 @@ class Settings(BaseSettings):
     cors_origins: str = ""
 
     # ── Inference backend ───────────────────────────────────────────────────
-    # Origin check for listing photos: dinov2_legacy (the settings below) or dinov3_frozen (in-process
-    # on CUDA). DINOv2 stays the default: benchmark_v1 did not name DINOv3 the frontier model.
-    # See inference/live_screening.py.
-    live_screening_model: str = "dinov2_legacy"
+    # Origin check for listing photos: phase76_fusion (DINOv3 + Perception Encoder head, in-process on
+    # CUDA; passed benchmark_v6), dinov3_frozen (in-process on CUDA) or dinov2_legacy (the settings
+    # below). See inference/live_screening.py.
+    live_screening_model: str = "phase76_fusion"
     # Legacy DINOv2 route: triton = NVIDIA Triton gRPC. torch = load LOCAL_MODEL_PATH in-process.
     inference_backend: str = "triton"
     # Path to .pt from training (`torch.save({"model_state": ...})`). Relative paths are under repo root.
@@ -82,11 +77,27 @@ class Settings(BaseSettings):
     # Read the dial with OCR after screening and tell the seller when the brand name is unreadable.
     # Informational only: it never changes whether a listing goes live.
     dial_text_check: bool = True
+    # Reject files whose signed Content Credentials (C2PA) label says an AI made them (inference.provenance).
+    provenance_check: bool = True
+    # Reject copies (crops, rescales, screenshots) of AI images already seen (inference.known_ai, SSCD).
+    known_ai_check: bool = True
+    known_ai_min_similarity: float = 0.65
+    # Uploads rejected as AI are added here; a relative path is resolved from backend/.
+    known_ai_store: str = "local_known_ai"
+    # Phase 76 photos with P(AI) from this value up to its cut are held until the seller sends a proof photo
+    # and an admin approves (1.8% of 224 real eBay photos, 0 of 60 AI watch images fell in the band).
+    proof_hold_min_p_fake: float = 0.20
+    # Also hold (never reject) when the Phase 78 head, trained on screenshot-style copies, calls the photo AI.
+    phase78_hold: bool = True
     listing_min_short_side_px: int = 400
     # Deprecated: use inference_min_authentic_confidence. Kept for older .env files (unused in authenticate).
     inference_live_conf_threshold: float = 0.90
     upload_min_side_px: int = 400
     upload_max_bytes: int = 10 * 1024 * 1024
+    # Watch identification (search by photo). The gallery is built by scripts/build_watch_gallery.py;
+    # a relative path is resolved from the repository root.
+    identify_gallery_path: str = "backend/identify/data/watch_gallery.npz"
+    identify_min_side_px: int = 200
 
     # Comma-separated account emails allowed to call /research/*. Empty → nobody. Never set from a request.
     research_user_emails: str = ""

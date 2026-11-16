@@ -1,7 +1,9 @@
 """Read-only summary of the model benchmarks for the public benchmark page.
 
-Reports the pre-registered protocol, the latest confirmatory run if one exists, and whether the
-pipeline smoke test passed. Smoke-test numbers are never returned as results.
+`live_model` is the model that screens listings now and the benchmark that put it there
+(benchmark_v6, Phase 76), with the Phase 78 hold and the known-AI copy check. The rest is
+benchmark_v1, the first DINOv2-vs-DINOv3 comparison: its protocol, its confirmatory run and
+whether the pipeline smoke test passed. Smoke-test numbers are never returned as results.
 """
 
 from __future__ import annotations
@@ -18,6 +20,14 @@ router = APIRouter()
 _ML = Path(__file__).resolve().parents[2] / "ml_rtx5080"
 _BENCH = _ML / "benchmark_v1_real_vs_generated"
 _PHASE53 = _ML / "experiments" / "dinov2_vs_dinov3_full_scale" / "metrics.json"
+_V6 = _ML / "benchmark_v6_fresh"
+_V7 = _ML / "benchmark_v7_fresh" / "results" / "report.json"
+_PHASE78 = _ML / "experiments" / "phase78" / "screenshot_benchmark.json"
+_KNOWN_AI = _ML / "experiments" / "known_ai" / "measure.json"
+
+# benchmark_v6 groups and systems, in display order
+_V6_GROUPS = {"chatgpt_v6": "ChatGPT", "gemini_v6": "Gemini", "gemini_edu_v6": "Gemini, second account", "real_ebay_v6": "Real eBay photos"}
+_V6_SYSTEMS = {"dinov2_live": "DINOv2", "phase75_head": "Phase 75", "phase76_head": "DINOv3 + Perception Encoder"}
 
 
 def _load(path: Path) -> dict | None:
@@ -60,12 +70,76 @@ def _model_rows(analysis: dict | None) -> list[dict]:
     return rows
 
 
+def _kn(cell: dict | None) -> dict | None:
+    return None if not cell else {"k": cell["k"], "n": cell["n"]}
+
+
+def _live_model() -> dict | None:
+    """The live model and the evidence for it, read from the frozen result files."""
+    v6 = _load(_V6 / "results" / "report.json")
+    if not v6:
+        return None
+    protocol = _load(_V6 / "protocol.json") or {}
+    groups = [
+        {
+            "id": g,
+            "label": label,
+            "kind": "real" if g.startswith("real") else "generated",
+            "systems": {sid: _kn(v6["groups"][g]["all"].get(sid)) for sid in _V6_SYSTEMS},
+        }
+        for g, label in _V6_GROUPS.items()
+        if g in v6.get("groups", {})
+    ]
+    v7 = _load(_V7)
+    p78 = _load(_PHASE78)
+    known = _load(_KNOWN_AI)
+    return {
+        "id": "phase76_fusion",
+        "name": "DINOv3 + Perception Encoder",
+        "phase": v6.get("phase"),
+        "features": "DINOv3 ViT-B/16 (pretrained + fine-tuned) and Perception Encoder L/14-336, one logistic-regression head",
+        "benchmark": {
+            "name": v6.get("benchmark"),
+            "written_on": protocol.get("written_on"),
+            "scored_at": v6.get("scored_at"),
+            "question": protocol.get("question"),
+            "rule": (v6.get("success_criterion") or {}).get("rule"),
+            "met": (v6.get("success_criterion") or {}).get("met"),
+            "systems": _V6_SYSTEMS,
+            "groups": groups,
+            "caveat": "ChatGPT and Gemini were in this model's training data, so this is a seen-app result.",
+        },
+        "unseen_generators": None if not v7 else {
+            "name": v7.get("benchmark"),
+            "caught": _kn((v7["groups"].get("unseen_both") or {}).get("all", {}).get("phase76")),
+            "real_ebay_flagged": _kn((v7["groups"].get("real_ebay_v7") or {}).get("all", {}).get("phase76")),
+            "generators": "ERNIE, ERNIE Turbo, Sora 2, Veo 3, Wan 2.5",
+            "note": "General scenes, not watches. Phase 77, the challenger on this benchmark, was not better.",
+        },
+        "edited_copy_hold": None if not p78 else {
+            "rows": [
+                {"edit": edit, "phase76": p78.get(f"AI caught · {key}", {}).get("phase76"), "phase78": p78.get(f"AI caught · {key}", {}).get("phase78")}
+                for key, edit in (("original", "Original"), ("screenshot_style", "Screenshot-style"), ("crop70", "70% crop"), ("half_size", "Half size"))
+            ],
+            "real_flagged": p78.get("real photos wrongly flagged · original"),
+            "role": "Phase 78 flags more real photos, so it only holds a listing for a proof photo; it never rejects one.",
+        },
+        "known_ai": None if not known else {
+            "cut": known.get("cut"),
+            "edited_matched": (known.get("at_cut") or {}).get("edited_ai_matched"),
+            "real_matched": (known.get("at_cut") or {}).get("real_matched"),
+            "real_n": (known.get("at_cut") or {}).get("real_n"),
+        },
+    }
+
+
 @router.get("/summary")
 async def benchmark_summary() -> dict:
     protocol = _load(_BENCH / "protocol.json") or {}
     confirmatory, smoke = _latest_runs()
     phase53 = _load(_PHASE53)
     return {
+        "live_model": _live_model(),
         "protocol": {
             "name": protocol.get("protocol"),
             "status": protocol.get("status"),

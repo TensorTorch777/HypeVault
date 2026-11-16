@@ -1,0 +1,1483 @@
+{
+  "benchmark": "benchmark_v5_frontier",
+  "phase": 75,
+  "scored_at": "2026-10-24T04:47:11+00:00",
+  "protocol_sha256_at_scoring": "289e000a96352c874c25477ba252ad7d389f2cbbbdcf31c859bd33c9d98c9335",
+  "phase75_rule_sha256": "7ad940304119c38376cc9102d11b4687cdb43960347a75d24c150ad21ba608b9",
+  "phase75_head_sha256": "4d007726c90899a01506b9147741fb6c1c98ee58eca9c72c0fe80dac9edc59ce",
+  "phase74_head_sha256": "a9f932bc5d8f06a5c4a06dab5ce4df882f91e82d9cbfb93a8bdc0227dfe0bbbf",
+  "systems": {
+    "dinov2_live": "LEGACY_DINOV2 local torch, FAKE or authentic confidence < 0.88",
+    "dinov3_alone": "DINOv3 epoch_018, calibrated P(fake) >= 0.5",
+    "phase74_head": "Phase 74 head, score >= -2.183",
+    "phase75_head": "Phase 75 head (front_pre+ft+coco), score >= -2.215"
+  },
+  "note": "For generated sets the rate is the share caught (called FAKE); for real_ebay_v5 it is the share wrongly called FAKE.",
+  "groups": {
+    "chatgpt_v5": {
+      "all": {
+        "dinov2_live": {
+          "k": 3,
+          "n": 75,
+          "rate": 0.04,
+          "ci95": [
+            0.0083,
+            0.1125
+          ],
+          "lower95_one_sided": 0.011
+        },
+        "dinov3_alone": {
+          "k": 0,
+          "n": 75,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.048
+          ],
+          "lower95_one_sided": 0.0
+        },
+        "phase74_head": {
+          "k": 0,
+          "n": 75,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.048
+          ],
+          "lower95_one_sided": 0.0
+        },
+        "phase75_head": {
+          "k": 9,
+          "n": 75,
+          "rate": 0.12,
+          "ci95": [
+            0.0564,
+            0.2156
+          ],
+          "lower95_one_sided": 0.0641
+        }
+      },
+      "by_brand": {
+        "A. Lange & S\u00f6hne": {
+          "dinov2_live": {
+            "k": 2,
+            "n": 15,
+            "rate": 0.1333,
+            "ci95": [
+              0.0166,
+              0.4046
+            ],
+            "lower95_one_sided": 0.0242
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 1,
+            "n": 15,
+            "rate": 0.0667,
+            "ci95": [
+              0.0017,
+              0.3195
+            ],
+            "lower95_one_sided": 0.0034
+          }
+        },
+        "Audemars Piguet": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 1,
+            "n": 15,
+            "rate": 0.0667,
+            "ci95": [
+              0.0017,
+              0.3195
+            ],
+            "lower95_one_sided": 0.0034
+          }
+        },
+        "Patek Philippe": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 3,
+            "n": 15,
+            "rate": 0.2,
+            "ci95": [
+              0.0433,
+              0.4809
+            ],
+            "lower95_one_sided": 0.0568
+          }
+        },
+        "Richard Mille": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          }
+        },
+        "Vacheron Constantin": {
+          "dinov2_live": {
+            "k": 1,
+            "n": 15,
+            "rate": 0.0667,
+            "ci95": [
+              0.0017,
+              0.3195
+            ],
+            "lower95_one_sided": 0.0034
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 4,
+            "n": 15,
+            "rate": 0.2667,
+            "ci95": [
+              0.0779,
+              0.551
+            ],
+            "lower95_one_sided": 0.0967
+          }
+        }
+      },
+      "by_scene_type": {
+        "box_papers": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 2,
+            "n": 15,
+            "rate": 0.1333,
+            "ci95": [
+              0.0166,
+              0.4046
+            ],
+            "lower95_one_sided": 0.0242
+          }
+        },
+        "closeup": {
+          "dinov2_live": {
+            "k": 2,
+            "n": 15,
+            "rate": 0.1333,
+            "ci95": [
+              0.0166,
+              0.4046
+            ],
+            "lower95_one_sided": 0.0242
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          }
+        },
+        "hand": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          }
+        },
+        "surface": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 7,
+            "n": 15,
+            "rate": 0.4667,
+            "ci95": [
+              0.2127,
+              0.7341
+            ],
+            "lower95_one_sided": 0.2437
+          }
+        },
+        "wrist": {
+          "dinov2_live": {
+            "k": 1,
+            "n": 15,
+            "rate": 0.0667,
+            "ci95": [
+              0.0017,
+              0.3195
+            ],
+            "lower95_one_sided": 0.0034
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          }
+        }
+      }
+    },
+    "gemini_v5": {
+      "all": {
+        "dinov2_live": {
+          "k": 7,
+          "n": 75,
+          "rate": 0.0933,
+          "ci95": [
+            0.0384,
+            0.1829
+          ],
+          "lower95_one_sided": 0.0446
+        },
+        "dinov3_alone": {
+          "k": 1,
+          "n": 75,
+          "rate": 0.0133,
+          "ci95": [
+            0.0003,
+            0.0721
+          ],
+          "lower95_one_sided": 0.0007
+        },
+        "phase74_head": {
+          "k": 10,
+          "n": 75,
+          "rate": 0.1333,
+          "ci95": [
+            0.0658,
+            0.2316
+          ],
+          "lower95_one_sided": 0.0742
+        },
+        "phase75_head": {
+          "k": 27,
+          "n": 75,
+          "rate": 0.36,
+          "ci95": [
+            0.2523,
+            0.4791
+          ],
+          "lower95_one_sided": 0.2677
+        }
+      },
+      "by_brand": {
+        "A. Lange & S\u00f6hne": {
+          "dinov2_live": {
+            "k": 3,
+            "n": 15,
+            "rate": 0.2,
+            "ci95": [
+              0.0433,
+              0.4809
+            ],
+            "lower95_one_sided": 0.0568
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 2,
+            "n": 15,
+            "rate": 0.1333,
+            "ci95": [
+              0.0166,
+              0.4046
+            ],
+            "lower95_one_sided": 0.0242
+          },
+          "phase75_head": {
+            "k": 6,
+            "n": 15,
+            "rate": 0.4,
+            "ci95": [
+              0.1634,
+              0.6771
+            ],
+            "lower95_one_sided": 0.1909
+          }
+        },
+        "Audemars Piguet": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 2,
+            "n": 15,
+            "rate": 0.1333,
+            "ci95": [
+              0.0166,
+              0.4046
+            ],
+            "lower95_one_sided": 0.0242
+          },
+          "phase75_head": {
+            "k": 7,
+            "n": 15,
+            "rate": 0.4667,
+            "ci95": [
+              0.2127,
+              0.7341
+            ],
+            "lower95_one_sided": 0.2437
+          }
+        },
+        "Patek Philippe": {
+          "dinov2_live": {
+            "k": 2,
+            "n": 15,
+            "rate": 0.1333,
+            "ci95": [
+              0.0166,
+              0.4046
+            ],
+            "lower95_one_sided": 0.0242
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 3,
+            "n": 15,
+            "rate": 0.2,
+            "ci95": [
+              0.0433,
+              0.4809
+            ],
+            "lower95_one_sided": 0.0568
+          },
+          "phase75_head": {
+            "k": 8,
+            "n": 15,
+            "rate": 0.5333,
+            "ci95": [
+              0.2659,
+              0.7873
+            ],
+            "lower95_one_sided": 0.3
+          }
+        },
+        "Richard Mille": {
+          "dinov2_live": {
+            "k": 1,
+            "n": 15,
+            "rate": 0.0667,
+            "ci95": [
+              0.0017,
+              0.3195
+            ],
+            "lower95_one_sided": 0.0034
+          },
+          "dinov3_alone": {
+            "k": 1,
+            "n": 15,
+            "rate": 0.0667,
+            "ci95": [
+              0.0017,
+              0.3195
+            ],
+            "lower95_one_sided": 0.0034
+          },
+          "phase74_head": {
+            "k": 2,
+            "n": 15,
+            "rate": 0.1333,
+            "ci95": [
+              0.0166,
+              0.4046
+            ],
+            "lower95_one_sided": 0.0242
+          },
+          "phase75_head": {
+            "k": 3,
+            "n": 15,
+            "rate": 0.2,
+            "ci95": [
+              0.0433,
+              0.4809
+            ],
+            "lower95_one_sided": 0.0568
+          }
+        },
+        "Vacheron Constantin": {
+          "dinov2_live": {
+            "k": 1,
+            "n": 15,
+            "rate": 0.0667,
+            "ci95": [
+              0.0017,
+              0.3195
+            ],
+            "lower95_one_sided": 0.0034
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 15,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.218
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 1,
+            "n": 15,
+            "rate": 0.0667,
+            "ci95": [
+              0.0017,
+              0.3195
+            ],
+            "lower95_one_sided": 0.0034
+          },
+          "phase75_head": {
+            "k": 3,
+            "n": 15,
+            "rate": 0.2,
+            "ci95": [
+              0.0433,
+              0.4809
+            ],
+            "lower95_one_sided": 0.0568
+          }
+        }
+      },
+      "by_scene_type": {
+        "box_papers": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 3,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7076
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 3,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7076
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 1,
+            "n": 3,
+            "rate": 0.3333,
+            "ci95": [
+              0.0084,
+              0.9057
+            ],
+            "lower95_one_sided": 0.017
+          },
+          "phase75_head": {
+            "k": 1,
+            "n": 3,
+            "rate": 0.3333,
+            "ci95": [
+              0.0084,
+              0.9057
+            ],
+            "lower95_one_sided": 0.017
+          }
+        },
+        "closeup": {
+          "dinov2_live": {
+            "k": 1,
+            "n": 9,
+            "rate": 0.1111,
+            "ci95": [
+              0.0028,
+              0.4825
+            ],
+            "lower95_one_sided": 0.0057
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 9,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.3363
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 9,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.3363
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 0,
+            "n": 9,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.3363
+            ],
+            "lower95_one_sided": 0.0
+          }
+        },
+        "display": {
+          "dinov2_live": {
+            "k": 2,
+            "n": 9,
+            "rate": 0.2222,
+            "ci95": [
+              0.0281,
+              0.6001
+            ],
+            "lower95_one_sided": 0.041
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 9,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.3363
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 3,
+            "n": 9,
+            "rate": 0.3333,
+            "ci95": [
+              0.0749,
+              0.7007
+            ],
+            "lower95_one_sided": 0.0977
+          },
+          "phase75_head": {
+            "k": 4,
+            "n": 9,
+            "rate": 0.4444,
+            "ci95": [
+              0.137,
+              0.788
+            ],
+            "lower95_one_sided": 0.1688
+          }
+        },
+        "hand": {
+          "dinov2_live": {
+            "k": 1,
+            "n": 6,
+            "rate": 0.1667,
+            "ci95": [
+              0.0042,
+              0.6412
+            ],
+            "lower95_one_sided": 0.0085
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 6,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.4593
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 3,
+            "n": 6,
+            "rate": 0.5,
+            "ci95": [
+              0.1181,
+              0.8819
+            ],
+            "lower95_one_sided": 0.1532
+          },
+          "phase75_head": {
+            "k": 6,
+            "n": 6,
+            "rate": 1.0,
+            "ci95": [
+              0.5407,
+              1.0
+            ],
+            "lower95_one_sided": 0.607
+          }
+        },
+        "listing": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 3,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7076
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 3,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7076
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 3,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7076
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 0,
+            "n": 3,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7076
+            ],
+            "lower95_one_sided": 0.0
+          }
+        },
+        "surface": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 18,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.1853
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 18,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.1853
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 18,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.1853
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 5,
+            "n": 18,
+            "rate": 0.2778,
+            "ci95": [
+              0.0969,
+              0.5348
+            ],
+            "lower95_one_sided": 0.1164
+          }
+        },
+        "workbench": {
+          "dinov2_live": {
+            "k": 1,
+            "n": 3,
+            "rate": 0.3333,
+            "ci95": [
+              0.0084,
+              0.9057
+            ],
+            "lower95_one_sided": 0.017
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 3,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7076
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 3,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7076
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 3,
+            "n": 3,
+            "rate": 1.0,
+            "ci95": [
+              0.2924,
+              1.0
+            ],
+            "lower95_one_sided": 0.3684
+          }
+        },
+        "wrist": {
+          "dinov2_live": {
+            "k": 2,
+            "n": 24,
+            "rate": 0.0833,
+            "ci95": [
+              0.0103,
+              0.27
+            ],
+            "lower95_one_sided": 0.015
+          },
+          "dinov3_alone": {
+            "k": 1,
+            "n": 24,
+            "rate": 0.0417,
+            "ci95": [
+              0.0011,
+              0.2112
+            ],
+            "lower95_one_sided": 0.0021
+          },
+          "phase74_head": {
+            "k": 3,
+            "n": 24,
+            "rate": 0.125,
+            "ci95": [
+              0.0266,
+              0.3236
+            ],
+            "lower95_one_sided": 0.035
+          },
+          "phase75_head": {
+            "k": 8,
+            "n": 24,
+            "rate": 0.3333,
+            "ci95": [
+              0.1563,
+              0.5532
+            ],
+            "lower95_one_sided": 0.178
+          }
+        }
+      },
+      "prompts_1_36": {
+        "dinov2_live": {
+          "k": 3,
+          "n": 36,
+          "rate": 0.0833,
+          "ci95": [
+            0.0175,
+            0.2247
+          ],
+          "lower95_one_sided": 0.0231
+        },
+        "dinov3_alone": {
+          "k": 0,
+          "n": 36,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.0974
+          ],
+          "lower95_one_sided": 0.0
+        },
+        "phase74_head": {
+          "k": 6,
+          "n": 36,
+          "rate": 0.1667,
+          "ci95": [
+            0.0637,
+            0.3281
+          ],
+          "lower95_one_sided": 0.0752
+        },
+        "phase75_head": {
+          "k": 17,
+          "n": 36,
+          "rate": 0.4722,
+          "ci95": [
+            0.3041,
+            0.6451
+          ],
+          "lower95_one_sided": 0.3275
+        }
+      },
+      "prompts_37_75": {
+        "dinov2_live": {
+          "k": 4,
+          "n": 39,
+          "rate": 0.1026,
+          "ci95": [
+            0.0287,
+            0.2422
+          ],
+          "lower95_one_sided": 0.0358
+        },
+        "dinov3_alone": {
+          "k": 1,
+          "n": 39,
+          "rate": 0.0256,
+          "ci95": [
+            0.0006,
+            0.1348
+          ],
+          "lower95_one_sided": 0.0013
+        },
+        "phase74_head": {
+          "k": 4,
+          "n": 39,
+          "rate": 0.1026,
+          "ci95": [
+            0.0287,
+            0.2422
+          ],
+          "lower95_one_sided": 0.0358
+        },
+        "phase75_head": {
+          "k": 10,
+          "n": 39,
+          "rate": 0.2564,
+          "ci95": [
+            0.1304,
+            0.4213
+          ],
+          "lower95_one_sided": 0.1462
+        }
+      },
+      "confident_names_only": {
+        "dinov2_live": {
+          "k": 7,
+          "n": 63,
+          "rate": 0.1111,
+          "ci95": [
+            0.0459,
+            0.2156
+          ],
+          "lower95_one_sided": 0.0533
+        },
+        "dinov3_alone": {
+          "k": 1,
+          "n": 63,
+          "rate": 0.0159,
+          "ci95": [
+            0.0004,
+            0.0853
+          ],
+          "lower95_one_sided": 0.0008
+        },
+        "phase74_head": {
+          "k": 10,
+          "n": 63,
+          "rate": 0.1587,
+          "ci95": [
+            0.0788,
+            0.2726
+          ],
+          "lower95_one_sided": 0.0887
+        },
+        "phase75_head": {
+          "k": 26,
+          "n": 63,
+          "rate": 0.4127,
+          "ci95": [
+            0.2901,
+            0.5438
+          ],
+          "lower95_one_sided": 0.3077
+        }
+      }
+    },
+    "real_ebay_v5": {
+      "all": {
+        "dinov2_live": {
+          "k": 2,
+          "n": 144,
+          "rate": 0.0139,
+          "ci95": [
+            0.0017,
+            0.0493
+          ],
+          "lower95_one_sided": 0.0025
+        },
+        "dinov3_alone": {
+          "k": 0,
+          "n": 144,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.0253
+          ],
+          "lower95_one_sided": 0.0
+        },
+        "phase74_head": {
+          "k": 3,
+          "n": 144,
+          "rate": 0.0208,
+          "ci95": [
+            0.0043,
+            0.0597
+          ],
+          "lower95_one_sided": 0.0057
+        },
+        "phase75_head": {
+          "k": 3,
+          "n": 144,
+          "rate": 0.0208,
+          "ci95": [
+            0.0043,
+            0.0597
+          ],
+          "lower95_one_sided": 0.0057
+        }
+      },
+      "by_brand": {
+        "A. Lange & S\u00f6hne": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.1425
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.1425
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.1425
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 0,
+            "n": 24,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.1425
+            ],
+            "lower95_one_sided": 0.0
+          }
+        },
+        "Audemars Piguet": {
+          "dinov2_live": {
+            "k": 1,
+            "n": 40,
+            "rate": 0.025,
+            "ci95": [
+              0.0006,
+              0.1316
+            ],
+            "lower95_one_sided": 0.0013
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 40,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.0881
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 1,
+            "n": 40,
+            "rate": 0.025,
+            "ci95": [
+              0.0006,
+              0.1316
+            ],
+            "lower95_one_sided": 0.0013
+          },
+          "phase75_head": {
+            "k": 2,
+            "n": 40,
+            "rate": 0.05,
+            "ci95": [
+              0.0061,
+              0.1692
+            ],
+            "lower95_one_sided": 0.009
+          }
+        },
+        "Patek Philippe": {
+          "dinov2_live": {
+            "k": 0,
+            "n": 40,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.0881
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 40,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.0881
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 2,
+            "n": 40,
+            "rate": 0.05,
+            "ci95": [
+              0.0061,
+              0.1692
+            ],
+            "lower95_one_sided": 0.009
+          },
+          "phase75_head": {
+            "k": 0,
+            "n": 40,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.0881
+            ],
+            "lower95_one_sided": 0.0
+          }
+        },
+        "Vacheron Constantin": {
+          "dinov2_live": {
+            "k": 1,
+            "n": 40,
+            "rate": 0.025,
+            "ci95": [
+              0.0006,
+              0.1316
+            ],
+            "lower95_one_sided": 0.0013
+          },
+          "dinov3_alone": {
+            "k": 0,
+            "n": 40,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.0881
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase74_head": {
+            "k": 0,
+            "n": 40,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.0881
+            ],
+            "lower95_one_sided": 0.0
+          },
+          "phase75_head": {
+            "k": 1,
+            "n": 40,
+            "rate": 0.025,
+            "ci95": [
+              0.0006,
+              0.1316
+            ],
+            "lower95_one_sided": 0.0013
+          }
+        }
+      },
+      "by_scene_type": {}
+    }
+  },
+  "success_criterion": {
+    "rule": "Phase 75 head caught >= 80% on chatgpt_v5 AND on gemini_v5, and real_ebay_v5 FAKE <= 3%",
+    "chatgpt_v5_caught": {
+      "k": 9,
+      "n": 75,
+      "rate": 0.12,
+      "ci95": [
+        0.0564,
+        0.2156
+      ],
+      "lower95_one_sided": 0.0641
+    },
+    "gemini_v5_caught": {
+      "k": 27,
+      "n": 75,
+      "rate": 0.36,
+      "ci95": [
+        0.2523,
+        0.4791
+      ],
+      "lower95_one_sided": 0.2677
+    },
+    "real_ebay_v5_fake": {
+      "k": 3,
+      "n": 144,
+      "rate": 0.0208,
+      "ci95": [
+        0.0043,
+        0.0597
+      ],
+      "lower95_one_sided": 0.0057
+    },
+    "met": false
+  },
+  "motivating_case_testtest_jpeg": {
+    "id": "motivating_testtest",
+    "dinov2_live": false,
+    "dinov2_confidence": 0.994467,
+    "dinov3_alone": false,
+    "dinov3_p_fake": 0.0,
+    "phase74_head": false,
+    "phase74_score": -8.5311,
+    "phase75_head": false,
+    "phase75_score": -10.677
+  },
+  "exploratory_post_hoc": {
+    "note": "ROC AUC of each system's continuous score, generated set vs real_ebay_v5. Computed after the primary analysis; not part of the success criterion and not usable to pick a new threshold on this benchmark.",
+    "roc_auc": {
+      "chatgpt_v5": {
+        "dinov2_live": 0.69,
+        "dinov3_alone": 0.5,
+        "phase74_head": 0.66,
+        "phase75_head": 0.844
+      },
+      "gemini_v5": {
+        "dinov2_live": 0.723,
+        "dinov3_alone": 0.507,
+        "phase74_head": 0.763,
+        "phase75_head": 0.907
+      }
+    }
+  }
+}

@@ -62,11 +62,14 @@ async def find_listings(
     limit: int = 12,
     since: date | None = None,
     sort: str = "lowest",
+    stats_currency: str = "USD",
 ) -> tuple[list[MarketListing], dict | None]:
     """Matching rows plus count/min/median/max over every match.
 
     sort: "lowest" (cheapest first), "highest", or "near_median" (closest to the median
     asking price first, which shows what the typical listing looks like).
+    stats_currency: the currency the count/min/median/max are computed over (default USD);
+    pass a dealer's own currency so pound- or euro-priced stores still get a count and median.
     """
     clauses = _match(source, brand, query)
     if since is not None:
@@ -77,7 +80,7 @@ async def find_listings(
         func.min(MarketListing.price),
         func.percentile_cont(0.5).within_group(MarketListing.price),
         func.max(MarketListing.price),
-    ).where(where, MarketListing.currency == "USD")
+    ).where(where, MarketListing.currency == stats_currency)
     count, lo, median, hi = (await session.execute(stats_q)).one()
     stats = None if not count else {"count": int(count), "min": lo, "median": float(median), "max": hi}
     if sort == "highest":

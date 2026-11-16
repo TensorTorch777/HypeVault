@@ -8,7 +8,7 @@ import { Search, User } from "lucide-react";
 
 import { ME_QUERY_KEY, fetchMe, logoutRemote } from "@/lib/api";
 import { Monogram } from "@/components/brand/Lockup";
-import { canSell } from "@/lib/roles";
+import { canSell, isAdmin } from "@/lib/roles";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -71,6 +71,11 @@ export function TopNav() {
           {isSeller ? (
             <Link href="/seller/dashboard" className={linkClass("/seller/dashboard")}>
               Seller desk
+            </Link>
+          ) : null}
+          {isAdmin(me?.role) ? (
+            <Link href="/admin" className={linkClass("/admin")}>
+              Admin
             </Link>
           ) : null}
         </nav>

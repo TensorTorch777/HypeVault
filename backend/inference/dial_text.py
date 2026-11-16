@@ -59,6 +59,23 @@ def brand_in_lines(brand: str, lines: list[tuple[str, float]]) -> bool:
     return any(o in w for w in found for o in own)
 
 
+def read_dial_lines(pil: Image.Image) -> list[tuple[str, float]]:
+    """Every confident line of text in the photo and its centre crop. Empty when OCR is unavailable."""
+    try:
+        import numpy as np
+
+        lines: list[tuple[str, float]] = []
+        with _lock:
+            reader = _ocr()
+            for view in _views(pil.convert("RGB")):
+                res = reader(np.asarray(view))
+                lines += [(t, float(s)) for t, s in zip(res.txts or (), res.scores or ()) if s >= MIN_CONFIDENCE]
+        return lines
+    except Exception as exc:
+        _log.warning("dial_text_unavailable: %s", exc)
+        return []
+
+
 def read_dial_brand(pil: Image.Image, brand: str | None) -> DialText:
     if not brand or brand not in BRAND_WORDS:
         return "UNKNOWN"

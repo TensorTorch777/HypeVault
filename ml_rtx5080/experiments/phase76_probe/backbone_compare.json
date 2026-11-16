@@ -1,0 +1,38 @@
+{
+  "dinov3_pretrained_cls": {
+    "auc_mean": 0.865,
+    "chatgpt->gemini_caught": 0.547,
+    "gemini->chatgpt_caught": 0.307,
+    "testtest_caught_in_runs": 4
+  },
+  "dinov3_pre+ft (Phase 75 view)": {
+    "auc_mean": 0.928,
+    "chatgpt->gemini_caught": 0.573,
+    "gemini->chatgpt_caught": 0.42,
+    "testtest_caught_in_runs": 4
+  },
+  "dinov2_base_pretrained": {
+    "auc_mean": 0.828,
+    "chatgpt->gemini_caught": 0.267,
+    "gemini->chatgpt_caught": 0.18,
+    "testtest_caught_in_runs": 3
+  },
+  "clip_vit_l14": {
+    "auc_mean": 0.927,
+    "chatgpt->gemini_caught": 0.4,
+    "gemini->chatgpt_caught": 0.547,
+    "testtest_caught_in_runs": 3
+  },
+  "siglip2_so400m": {
+    "auc_mean": 0.918,
+    "chatgpt->gemini_caught": 0.6,
+    "gemini->chatgpt_caught": 0.22,
+    "testtest_caught_in_runs": 2
+  },
+  "pe_core_large": {
+    "auc_mean": 0.937,
+    "chatgpt->gemini_caught": 0.72,
+    "gemini->chatgpt_caught": 0.453,
+    "testtest_caught_in_runs": 3
+  }
+}

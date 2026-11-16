@@ -27,7 +27,9 @@ function isSeedConstant(listing: LabelSource): boolean {
 /** Publication visibility is not an authenticity claim. */
 export function customerLabel(listing: LabelSource): string {
   if (listing.customer_label) return listing.customer_label;
-  if (listing.status === "live" && listing.screening_code === "PASSED") return SCREENED_LISTED_LABEL;
+  if (listing.status === "live" && (listing.screening_code === "PASSED" || listing.screening_code === "REVIEW_APPROVED")) {
+    return SCREENED_LISTED_LABEL;
+  }
   if (listing.status === "pending") return PENDING_LABEL;
   if (listing.status === "rejected") return REJECTED_LABEL;
   if (isSeedConstant(listing)) return DEMO_LISTING_LABEL;
@@ -47,6 +49,24 @@ export function customerStatusCopy(listing: LabelSource): { title: string; detai
   }
   if (listing.status === "rejected" && listing.screening_reason) {
     return { title: "Not listed", detail: listing.screening_reason };
+  }
+  if (listing.status === "pending" && listing.screening_code === "NEEDS_PROOF") {
+    return {
+      title: "Held — proof photo needed",
+      detail: listing.screening_reason ?? "Send a photo of the watch beside today's date. An admin then checks it.",
+    };
+  }
+  if (listing.status === "pending" && listing.screening_code === "PROOF_SUBMITTED") {
+    return {
+      title: "Held — waiting for an admin check",
+      detail: "Proof photo received. Buyers cannot see this listing until an admin approves it.",
+    };
+  }
+  if (listing.status === "live" && listing.screening_code === "REVIEW_APPROVED") {
+    return {
+      title: "Listed — checked by an admin",
+      detail: "Listed after an admin checked the seller's proof photo. This is not a certificate of authenticity.",
+    };
   }
   if (listing.status === "live" && listing.screening_code === "PASSED") {
     return {

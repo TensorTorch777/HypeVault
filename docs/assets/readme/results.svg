@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="190" viewBox="0 0 1280 190" role="img" aria-labelledby="t d">
+  <title id="t">Headline results</title>
+  <desc id="d">Phase 76 DINOv3 plus Perception Encoder: 47 of 47 ChatGPT and Gemini images caught on benchmark_v6; 583 of 586 images from never-seen generators caught on benchmark_v7; known-AI copy check matched 99.8 percent of edited copies and 0 of 1,224 real photos; 2 of 102 real eBay photos flagged on benchmark_v6.</desc>
+  <defs>
+    <linearGradient id="g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF7EB6"/><stop offset="1" stop-color="#F5C451"/></linearGradient>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5EEAD4"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F5C451"/><stop offset="1" stop-color="#FF7EB6"/></linearGradient>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#5EEAD4"/></linearGradient>
+  </defs>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <animateTransform attributeName="transform" type="translate" values="0 0;0 -5;0 0" begin="0.25s" dur="3.6s" repeatCount="indefinite"/>
+    <rect x="0" y="12" width="302" height="166" rx="20" fill="#11122A"/>
+    <rect x="0" y="12" width="302" height="166" rx="20" fill="none" stroke="url(#g0)" stroke-width="2.5">
+      <animate attributeName="stroke-opacity" values="0.35;1;0.35" dur="3.2s" begin="0.0s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="24" y="34" width="44" height="5" rx="2.5" fill="url(#g0)"/>
+    <text x="24" y="98" font-size="46" font-weight="900" fill="url(#g0)">47 / 47</text>
+    <text x="24" y="130" font-size="17" font-weight="700" fill="#F2F0FA">ChatGPT + Gemini caught</text>
+    <text x="24" y="156" font-size="12" fill="#A9A6C4">benchmark_v6 · 30/30 ChatGPT · 17/17 Gemini</text>
+  </g>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <animateTransform attributeName="transform" type="translate" values="0 0;0 -5;0 0" begin="0.60s" dur="3.6s" repeatCount="indefinite"/>
+    <rect x="326" y="12" width="302" height="166" rx="20" fill="#11122A"/>
+    <rect x="326" y="12" width="302" height="166" rx="20" fill="none" stroke="url(#g1)" stroke-width="2.5">
+      <animate attributeName="stroke-opacity" values="0.35;1;0.35" dur="3.2s" begin="0.8s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="350" y="34" width="44" height="5" rx="2.5" fill="url(#g1)"/>
+    <text x="350" y="98" font-size="46" font-weight="900" fill="url(#g1)">583 / 586</text>
+    <text x="350" y="130" font-size="17" font-weight="700" fill="#F2F0FA">never-seen generators caught</text>
+    <text x="350" y="156" font-size="12" fill="#A9A6C4">benchmark_v7 · Sora 2, Veo 3, Wan, ERNIE</text>
+  </g>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <animateTransform attributeName="transform" type="translate" values="0 0;0 -5;0 0" begin="0.95s" dur="3.6s" repeatCount="indefinite"/>
+    <rect x="652" y="12" width="302" height="166" rx="20" fill="#11122A"/>
+    <rect x="652" y="12" width="302" height="166" rx="20" fill="none" stroke="url(#g2)" stroke-width="2.5">
+      <animate attributeName="stroke-opacity" values="0.35;1;0.35" dur="3.2s" begin="1.6s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="676" y="34" width="44" height="5" rx="2.5" fill="url(#g2)"/>
+    <text x="676" y="98" font-size="46" font-weight="900" fill="url(#g2)">99.8%</text>
+    <text x="676" y="130" font-size="17" font-weight="700" fill="#F2F0FA">edited AI copies matched</text>
+    <text x="676" y="156" font-size="12" fill="#A9A6C4">known-AI check · 0 of 1,224 real photos</text>
+  </g>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <animateTransform attributeName="transform" type="translate" values="0 0;0 -5;0 0" begin="1.30s" dur="3.6s" repeatCount="indefinite"/>
+    <rect x="978" y="12" width="302" height="166" rx="20" fill="#11122A"/>
+    <rect x="978" y="12" width="302" height="166" rx="20" fill="none" stroke="url(#g3)" stroke-width="2.5">
+      <animate attributeName="stroke-opacity" values="0.35;1;0.35" dur="3.2s" begin="2.4s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="1002" y="34" width="44" height="5" rx="2.5" fill="url(#g3)"/>
+    <text x="1002" y="98" font-size="46" font-weight="900" fill="url(#g3)">2 / 102</text>
+    <text x="1002" y="130" font-size="17" font-weight="700" fill="#F2F0FA">real eBay photos flagged</text>
+    <text x="1002" y="156" font-size="12" fill="#A9A6C4">benchmark_v6 · 3 / 122 on benchmark_v7</text>
+  </g>
+</svg>

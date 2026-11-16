@@ -1,0 +1,110 @@
+{
+  "x1_chatgpt_v5->gemini_v5": {
+    "caught": [
+      40,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      3,
+      144
+    ],
+    "coco_holdout_fake": [
+      32,
+      1000
+    ],
+    "dev_real_fake": 0.0097,
+    "auc_vs_real_ebay": 0.942,
+    "testtest_score": -6.533,
+    "t_fake": -2.083
+  },
+  "x1_gemini_v5->chatgpt_v5": {
+    "caught": [
+      24,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      4,
+      144
+    ],
+    "coco_holdout_fake": [
+      20,
+      1000
+    ],
+    "dev_real_fake": 0.0097,
+    "auc_vs_real_ebay": 0.933,
+    "testtest_score": -6.082,
+    "t_fake": -1.338
+  },
+  "x10_chatgpt_v5->gemini_v5": {
+    "caught": [
+      41,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      2,
+      144
+    ],
+    "coco_holdout_fake": [
+      31,
+      1000
+    ],
+    "dev_real_fake": 0.0097,
+    "auc_vs_real_ebay": 0.943,
+    "testtest_score": -6.04,
+    "t_fake": -1.953
+  },
+  "x10_gemini_v5->chatgpt_v5": {
+    "caught": [
+      27,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      2,
+      144
+    ],
+    "coco_holdout_fake": [
+      21,
+      1000
+    ],
+    "dev_real_fake": 0.0097,
+    "auc_vs_real_ebay": 0.939,
+    "testtest_score": -5.652,
+    "t_fake": -1.337
+  },
+  "x30_chatgpt_v5->gemini_v5": {
+    "caught": [
+      41,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      2,
+      144
+    ],
+    "coco_holdout_fake": [
+      31,
+      1000
+    ],
+    "dev_real_fake": 0.0097,
+    "auc_vs_real_ebay": 0.945,
+    "testtest_score": -5.701,
+    "t_fake": -2.051
+  },
+  "x30_gemini_v5->chatgpt_v5": {
+    "caught": [
+      30,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      3,
+      144
+    ],
+    "coco_holdout_fake": [
+      21,
+      1000
+    ],
+    "dev_real_fake": 0.0097,
+    "auc_vs_real_ebay": 0.942,
+    "testtest_score": -5.616,
+    "t_fake": -1.196
+  }
+}

@@ -77,7 +77,7 @@ export function ResearchExplanation({
         <div className="space-y-2">
           <div className="relative inline-block max-w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={imageUrl} alt="Research image with a sensitivity overlay" className="max-h-80 rounded-lg" />
+            <img src={imageUrl} alt="Research image with a sensitivity overlay" className="max-h-80 max-w-full rounded-lg" />
             <div className="pointer-events-none absolute inset-0">
               {sensitivity.patches.map((patch) => {
                 if (Math.abs(patch.delta_logit) < threshold || maxDelta <= 0) return null;

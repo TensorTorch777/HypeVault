@@ -47,6 +47,9 @@ def research_success_body(
     elif model == "LEGACY_DINOV2":
         if checkpoint_sha is not None or decision == "REVIEW":
             raise ValueError("a DINOv2 research body carries no DINOv3 checkpoint and no REVIEW policy")
+    elif model == "PHASE76_DINOV3_PE":
+        if not checkpoint_sha or decision == "REVIEW":
+            raise ValueError("a Phase 76 research body carries its head digest and no REVIEW policy")
     else:
         raise ValueError("unknown research model identity")
     return {

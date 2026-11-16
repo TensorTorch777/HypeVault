@@ -1,9 +1,10 @@
 """POST /authenticate — listing photo screening.
 
-A photo must be large enough, show a wristwatch (zero-shot CLIP) and pass the legacy
-DINOv2 origin check. Passing lists the watch; failing rejects it with a seller-facing
-reason (inference.screening). This route stays on DINOv2, not the frozen DINOv3 research
-candidate, and a listed watch is screened, not authenticity-certified.
+A photo must be large enough, carry no signed "made by AI" label (C2PA), not copy a known AI image (SSCD), show a
+wristwatch (zero-shot CLIP) and pass the origin check of the model set in LIVE_SCREENING_MODEL (default: the Phase 76
+DINOv3 + Perception Encoder hybrid). Passing lists the watch; an unsure or edited-looking photo is held for a proof
+photo (Phase 78); failing rejects it with a seller-facing reason (inference.screening). A listed watch is screened,
+not authenticity-certified.
 """
 
 from __future__ import annotations
@@ -22,15 +23,32 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from auth.deps import get_current_user
 from config import settings
 from database import Listing, ListingCategory, ListingStatus, User, get_db
-from inference.live_screening import RESPONSE_MODEL, LiveModelConfigurationError, classify_listing_photo
+from inference.live_screening import (
+    PHASE76_FUSION,
+    RESPONSE_MODEL,
+    LiveModelConfigurationError,
+    classify_listing_photo_with_hold,
+    min_authentic_confidence,
+)
 from inference.research_guard import deployment_mode
 from inference.schemas import AuthenticateResponse
 from inference.content_gate import score_watch
 from inference.dial_text import NOT_FOUND_HINT, read_dial_brand
-from inference.screening import check_content, check_origin, check_size
+from inference.provenance import read_ai_label
+from inference import known_ai
+from inference.screening import (
+    IMAGE_TOO_SMALL,
+    LIKELY_GENERATED,
+    check_content,
+    check_known_ai,
+    check_label,
+    check_origin,
+    check_size,
+    with_evidence,
+)
 from inference.scope_gate import evaluate_declared_brand, failure_body, log_scope_request, unsupported_scope_body
 from inference.verdict import apply_min_authentic_confidence
-from s3_client import upload_file_bytes
+from storage import upload_file_bytes
 
 _log = logging.getLogger(__name__)
 
@@ -43,7 +61,7 @@ ALLOWED_CT = {"image/jpeg", "image/png", "image/webp"}
     summary="Listing photo screening",
     description=(
         "Screens a listing photo: size, wristwatch present (CLIP), and a real-vs-generated check "
-        "by the model set in LIVE_SCREENING_MODEL (DINOV3_FROZEN or LEGACY_DINOV2, named in `model`). "
+        "by the model set in LIVE_SCREENING_MODEL (PHASE76_DINOV3_PE, DINOV3_FROZEN or LEGACY_DINOV2, named in `model`). "
         "Passing lists the watch; failing rejects it with a reason. research_candidate is false and "
         "production_validation is NOT_ESTABLISHED. "
         "The declared brand is not independently verified from the image. "
@@ -159,8 +177,26 @@ async def authenticate(
         listing.verdict = None
         listing.confidence = None
 
-        # 1. size, 2. is it a watch, 3. is it an original photo. Each can stop the listing.
+        # 1. size, 2. is it a watch, 3. the model's decision (Phase 76 rejects, Phase 78 / a borderline score holds).
+        # A signed AI label or a copy of a known AI image also stops the listing, but the model still runs so the
+        # seller sees what it decided (with_evidence).
         outcome = check_size(pil.width, pil.height, settings.listing_min_short_side_px)
+        label_outcome = known_outcome = None
+        if outcome is None and settings.provenance_check:
+            label_outcome = check_label(await asyncio.to_thread(read_ai_label, raw, ct))
+        known = None
+        if outcome is None and settings.known_ai_check:
+            try:
+                known = await asyncio.to_thread(known_ai.check, pil)
+            except Exception as exc:
+                _log.exception("known_ai_failed: %s", exc)
+                listing.status = ListingStatus.pending
+                await db.commit()
+                return JSONResponse(
+                    status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                    content=failure_body("MODEL_ERROR", "The known-image check did not run. The listing is held, not published."),
+                )
+            known_outcome = check_known_ai(known.similarity, settings.known_ai_min_similarity, known.source)
         content = None
         live_model_id = None
         if outcome is None:
@@ -177,7 +213,7 @@ async def authenticate(
             outcome = check_content(content)
         if outcome is None and content is not None:
             try:
-                raw_verdict, raw_confidence, live_model_id = await classify_listing_photo(pil)
+                raw_verdict, raw_confidence, live_model_id, edited_copy_margin = await classify_listing_photo_with_hold(pil)
             except LiveModelConfigurationError as exc:
                 _log.error("live_model_misconfigured: %s", exc)
                 listing.status = ListingStatus.pending
@@ -197,18 +233,25 @@ async def authenticate(
             verdict, confidence = apply_min_authentic_confidence(
                 raw_verdict,
                 raw_confidence,
-                settings.inference_min_authentic_confidence,
+                min_authentic_confidence(live_model_id),
             )
             listing.verdict = verdict
             listing.confidence = float(confidence)
             outcome = check_origin(
                 raw_verdict=raw_verdict,
                 raw_confidence=float(raw_confidence),
-                min_authentic_confidence=settings.inference_min_authentic_confidence,
+                min_authentic_confidence=min_authentic_confidence(live_model_id),
                 content=content,
                 origin_model=RESPONSE_MODEL[live_model_id],
+                hold_from_p_fake=settings.proof_hold_min_p_fake if live_model_id == PHASE76_FUSION else None,
+                edited_copy_margin=edited_copy_margin,
             )
         assert outcome is not None
+        if outcome.code != IMAGE_TOO_SMALL:
+            outcome = with_evidence(outcome, label=label_outcome, known=known_outcome)
+        if known is not None and (label_outcome is not None or outcome.code == LIKELY_GENERATED):
+            # Remember it, so a crop or screenshot of this image is caught next time.
+            await asyncio.to_thread(known_ai.remember, known.vector, f"upload:{outcome.code}:{list_uuid}")
 
         # Only photos that reached the origin check show a watch, so only they get a dial reading.
         dial_text = None
@@ -218,7 +261,11 @@ async def authenticate(
         listing.status = ListingStatus(outcome.status)
         listing.screening_code = outcome.code
         listing.screening_reason = outcome.reason
-        listing.screening_details = {**outcome.details, **({"dial_brand_text": dial_text} if dial_text else {})}
+        listing.screening_details = {
+            **outcome.details,
+            **({"dial_brand_text": dial_text} if dial_text else {}),
+            **({"known_ai_similarity": round(known.similarity, 4)} if known is not None else {}),
+        }
         await db.commit()
 
         log_scope_request(
@@ -238,7 +285,7 @@ async def authenticate(
             model_decision=listing.verdict,  # type: ignore[arg-type]
             screening_code=outcome.code,
             screening_reason=outcome.reason,
-            publication_decision="PUBLISHED" if outcome.status == "live" else "REJECTED",
+            publication_decision={"live": "PUBLISHED", "rejected": "REJECTED"}.get(outcome.status, "BLOCKED"),
             declared_brand=scope.canonical_brand or "",
             model=RESPONSE_MODEL.get(live_model_id),
             dial_brand_text=dial_text,

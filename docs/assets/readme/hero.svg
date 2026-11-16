@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="340" viewBox="0 0 1280 340" role="img" aria-labelledby="t d">
+  <title id="t">HypeVault</title>
+  <desc id="d">HypeVault: AI-photo screening for luxury-watch listings. A watch dial is scanned while the title shimmers.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B0C1A"/>
+      <stop offset="0.55" stop-color="#171233"/>
+      <stop offset="1" stop-color="#2B0F2C"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1280" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF7EB6"/>
+      <stop offset="0.25" stop-color="#F5C451"/>
+      <stop offset="0.5" stop-color="#5EEAD4"/>
+      <stop offset="0.75" stop-color="#A78BFA"/>
+      <stop offset="1" stop-color="#FF7EB6"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-640 0; 0 0; -640 0" dur="9s" repeatCount="indefinite"/>
+    </linearGradient>
+    <radialGradient id="glowPink"><stop offset="0" stop-color="#FF7EB6" stop-opacity="0.55"/><stop offset="1" stop-color="#FF7EB6" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glowGold"><stop offset="0" stop-color="#F5C451" stop-opacity="0.40"/><stop offset="1" stop-color="#F5C451" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glowTeal"><stop offset="0" stop-color="#5EEAD4" stop-opacity="0.35"/><stop offset="1" stop-color="#5EEAD4" stop-opacity="0"/></radialGradient>
+    <radialGradient id="dial" cx="0.42" cy="0.38" r="0.75">
+      <stop offset="0" stop-color="#2E3A7A"/>
+      <stop offset="0.7" stop-color="#18204A"/>
+      <stop offset="1" stop-color="#0E1330"/>
+    </radialGradient>
+    <linearGradient id="case" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8E7B0"/>
+      <stop offset="0.45" stop-color="#C9A24A"/>
+      <stop offset="1" stop-color="#7A5A1E"/>
+    </linearGradient>
+    <linearGradient id="scan" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5EEAD4" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#5EEAD4" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#5EEAD4" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="card"><rect width="1280" height="340" rx="22"/></clipPath>
+    <clipPath id="dialClip"><circle cx="1040" cy="170" r="104"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#card)">
+    <rect width="1280" height="340" fill="url(#bg)"/>
+    <circle cx="180" cy="60" r="220" fill="url(#glowPink)">
+      <animate attributeName="cx" values="180;300;180" dur="14s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="700" cy="330" r="240" fill="url(#glowGold)">
+      <animate attributeName="cx" values="700;560;700" dur="17s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1050" cy="60" r="200" fill="url(#glowTeal)">
+      <animate attributeName="cy" values="60;120;60" dur="12s" repeatCount="indefinite"/>
+    </circle>
+    <g stroke="#FFFFFF" stroke-opacity="0.05">
+      <path d="M0 85H1280M0 170H1280M0 255H1280"/>
+      <path d="M160 0V340M320 0V340M480 0V340M640 0V340M800 0V340"/>
+    </g>
+  </g>
+
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <text x="72" y="92" fill="#F5C451" font-size="15" font-weight="700" letter-spacing="5">LY PROJECT 2 · FIVE-BRAND RESEARCH PROTOTYPE</text>
+    <text x="68" y="178" fill="url(#title)" font-size="96" font-weight="900" letter-spacing="4">HYPEVAULT</text>
+    <text x="72" y="222" fill="#E8E6F5" font-size="24" font-weight="600">AI-photo screening for luxury-watch listings</text>
+    <g font-size="13" font-weight="700" letter-spacing="0.5">
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0 0;0 -3;0 0" begin="0.0s" dur="2.4s" repeatCount="indefinite"/>
+        <rect x="72" y="248" width="262" height="34" rx="17" fill="#FF7EB6" fill-opacity="0.16" stroke="#FF7EB6" stroke-opacity="0.6"/>
+        <text x="203" y="270" text-anchor="middle" fill="#FFC2DC">DINOv3 + PERCEPTION ENCODER</text>
+      </g>
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0 0;0 -3;0 0" begin="0.6s" dur="2.4s" repeatCount="indefinite"/>
+        <rect x="346" y="248" width="206" height="34" rx="17" fill="#5EEAD4" fill-opacity="0.14" stroke="#5EEAD4" stroke-opacity="0.6"/>
+        <text x="449" y="270" text-anchor="middle" fill="#A7F3E6">KNOWN-AI COPY CHECK</text>
+      </g>
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0 0;0 -3;0 0" begin="1.2s" dur="2.4s" repeatCount="indefinite"/>
+        <rect x="564" y="248" width="130" height="34" rx="17" fill="#F5C451" fill-opacity="0.14" stroke="#F5C451" stroke-opacity="0.6"/>
+        <text x="629" y="270" text-anchor="middle" fill="#FBE3A2">PROOF HOLD</text>
+      </g>
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0 0;0 -3;0 0" begin="1.8s" dur="2.4s" repeatCount="indefinite"/>
+        <rect x="706" y="248" width="152" height="34" rx="17" fill="#A78BFA" fill-opacity="0.16" stroke="#A78BFA" stroke-opacity="0.6"/>
+        <text x="782" y="270" text-anchor="middle" fill="#D9CCFF">ADMIN REVIEW</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- watch -->
+  <g>
+    <rect x="1004" y="10" width="72" height="60" rx="10" fill="#3A2A55"/>
+    <rect x="1004" y="270" width="72" height="60" rx="10" fill="#3A2A55"/>
+    <circle cx="1040" cy="170" r="122" fill="url(#case)"/>
+    <circle cx="1040" cy="170" r="112" fill="#0B0C1A"/>
+    <circle cx="1040" cy="170" r="104" fill="url(#dial)"/>
+    <rect x="1160" y="160" width="14" height="20" rx="3" fill="#C9A24A"/>
+    <g stroke="#F8E7B0" stroke-linecap="round">
+      <g stroke-width="5">
+        <path d="M1040 76V96"/><path d="M1040 244V264"/><path d="M946 170H966"/><path d="M1114 170H1134"/>
+      </g>
+      <g stroke-width="2.5">
+        <path d="M1087 89L1082 98" /><path d="M1121 123L1112 128"/><path d="M1121 217L1112 212"/><path d="M1087 251L1082 242"/>
+        <path d="M993 89L998 98"/><path d="M959 123L968 128"/><path d="M959 217L968 212"/><path d="M993 251L998 242"/>
+      </g>
+    </g>
+    <text x="1040" y="132" text-anchor="middle" fill="#F8E7B0" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="11" font-weight="700" letter-spacing="3">HV</text>
+    <g stroke-linecap="round">
+      <path d="M1040 170L1040 118" stroke="#F8E7B0" stroke-width="6" transform="rotate(300 1040 170)">
+        <animateTransform attributeName="transform" type="rotate" from="300 1040 170" to="660 1040 170" dur="600s" repeatCount="indefinite"/>
+      </path>
+      <path d="M1040 170L1040 94" stroke="#F8E7B0" stroke-width="4" transform="rotate(60 1040 170)">
+        <animateTransform attributeName="transform" type="rotate" from="60 1040 170" to="420 1040 170" dur="50s" repeatCount="indefinite"/>
+      </path>
+      <g transform="rotate(200 1040 170)">
+        <path d="M1040 190L1040 82" stroke="#FF7EB6" stroke-width="2"/>
+        <circle cx="1040" cy="170" r="6" fill="#FF7EB6"/>
+        <animateTransform attributeName="transform" type="rotate" from="200 1040 170" to="560 1040 170" dur="10s" repeatCount="indefinite"/>
+      </g>
+    </g>
+    <g clip-path="url(#dialClip)">
+      <rect x="930" y="40" width="220" height="34" fill="url(#scan)">
+        <animate attributeName="y" values="40;270;40" dur="4s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+    <circle cx="1040" cy="170" r="140" fill="none" stroke="#5EEAD4" stroke-opacity="0.65" stroke-width="2" stroke-dasharray="6 14">
+      <animateTransform attributeName="transform" type="rotate" from="0 1040 170" to="-360 1040 170" dur="24s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1040" cy="170" r="152" fill="none" stroke="#FF7EB6" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="2 10">
+      <animateTransform attributeName="transform" type="rotate" from="0 1040 170" to="360 1040 170" dur="36s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

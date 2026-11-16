@@ -12,7 +12,7 @@ class AuthenticateResponse(BaseModel):
 
     `listing_status` and `screening_reason` say whether the listing went live or was
     rejected, and why. `verdict` and `model` are null when the photo was stopped before
-    the origin model ran (too small, or no wristwatch found). `model` names the origin
+    the origin model ran (too small, an AI label in the file, or no wristwatch found). `model` names the origin
     model chosen by LIVE_SCREENING_MODEL. Going live is a screening result, never an
     authenticity certificate.
 
@@ -37,7 +37,7 @@ class AuthenticateResponse(BaseModel):
     publication_decision: Literal["PUBLISHED", "REJECTED", "BLOCKED"] = "BLOCKED"
     declared_brand: str
     brand_verification: Literal["NOT_PERFORMED"] = "NOT_PERFORMED"
-    model: Literal["DINOV3_FROZEN", "LEGACY_DINOV2"] | None = None
+    model: Literal["PHASE76_DINOV3_PE", "DINOV3_FROZEN", "LEGACY_DINOV2"] | None = None
     model_status: Literal["PHOTO_SCREENING"] = "PHOTO_SCREENING"
     research_candidate: Literal[False] = False
     production_validation: Literal["NOT_ESTABLISHED"] = "NOT_ESTABLISHED"
@@ -46,7 +46,8 @@ class AuthenticateResponse(BaseModel):
 class ResearchVerifyResponse(BaseModel):
     """Research result inside a user-declared five-brand scope.
 
-    `checkpoint_sha` is the frozen DINOv3 checkpoint for DINOv3 results and null for DINOv2.
+    `checkpoint_sha` is the frozen DINOv3 checkpoint for DINOv3 results, the hash-checked head for
+    Phase 76, and null for DINOv2.
     """
 
     model_config = ConfigDict(protected_namespaces=("settings_",))
@@ -60,6 +61,6 @@ class ResearchVerifyResponse(BaseModel):
     publication_decision: Literal["BLOCKED"] = "BLOCKED"
     checkpoint_sha: str | None
     policy_version: str
-    model: Literal["DINOV3_RESEARCH_PROTOTYPE", "LEGACY_DINOV2"] = "DINOV3_RESEARCH_PROTOTYPE"
+    model: Literal["DINOV3_RESEARCH_PROTOTYPE", "LEGACY_DINOV2", "PHASE76_DINOV3_PE"] = "DINOV3_RESEARCH_PROTOTYPE"
     model_version: str = "1"
-    model_scope: Literal["FIVE_BRAND_RESEARCH_PROTOTYPE", "LEGACY_DINOV2"] = "FIVE_BRAND_RESEARCH_PROTOTYPE"
+    model_scope: Literal["FIVE_BRAND_RESEARCH_PROTOTYPE", "LEGACY_DINOV2", "PHASE76_DINOV3_PE"] = "FIVE_BRAND_RESEARCH_PROTOTYPE"

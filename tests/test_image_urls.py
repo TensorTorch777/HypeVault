@@ -12,7 +12,7 @@ from unittest import mock
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "backend"))
 
-import s3_client  # noqa: E402
+import storage  # noqa: E402
 from listings.models import ListingRead  # noqa: E402
 
 NAME = "abc_listings_123_photo.jpg"
@@ -20,19 +20,19 @@ NAME = "abc_listings_123_photo.jpg"
 
 class LocalPublicUrlTests(unittest.TestCase):
     def setUp(self) -> None:
-        patcher = mock.patch.object(s3_client.settings, "public_api_base_url", "http://localhost:8000/")
+        patcher = mock.patch.object(storage.settings, "public_api_base_url", "http://localhost:8000/")
         patcher.start()
         self.addCleanup(patcher.stop)
 
     def test_stale_tunnel_host_is_replaced(self) -> None:
         stored = f"https://old-tunnel.ngrok-free.dev/static/local/{NAME}"
-        self.assertEqual(s3_client.local_public_url(stored), f"http://localhost:8000/static/local/{NAME}")
+        self.assertEqual(storage.local_public_url(stored), f"http://localhost:8000/static/local/{NAME}")
 
-    def test_s3_and_empty_urls_pass_through(self) -> None:
-        s3 = "https://bucket.s3.ap-south-1.amazonaws.com/listings/1/photo.jpg"
-        self.assertEqual(s3_client.local_public_url(s3), s3)
-        self.assertIsNone(s3_client.local_public_url(None))
-        self.assertEqual(s3_client.local_public_url(""), "")
+    def test_other_and_empty_urls_pass_through(self) -> None:
+        other = "https://i.ebayimg.com/images/g/abc/s-l1600.jpg"
+        self.assertEqual(storage.local_public_url(other), other)
+        self.assertIsNone(storage.local_public_url(None))
+        self.assertEqual(storage.local_public_url(""), "")
 
     def test_listing_response_uses_the_current_host(self) -> None:
         listing = ListingRead(

@@ -1,0 +1,118 @@
+{
+  "detectors": {
+    "frontier": "Thermostatic/community-forensics-frontier-detector-2026-08",
+    "commfor": "buildborderless/CommunityForensics-DeepfakeDet-ViT"
+  },
+  "sets": {
+    "REAL eBay photos (benchmark_v4 real_ebay_v4)": {
+      "label": "REAL",
+      "n": 270,
+      "flagged_as_ai": {
+        "frontier": "47/270",
+        "commfor": "3/270"
+      },
+      "correct_rate": {
+        "frontier": 0.826,
+        "commfor": 0.989
+      }
+    },
+    "REAL Label_0 photos": {
+      "label": "REAL",
+      "n": 200,
+      "flagged_as_ai": {
+        "frontier": "32/200",
+        "commfor": "0/200"
+      },
+      "correct_rate": {
+        "frontier": 0.84,
+        "commfor": 1.0
+      }
+    },
+    "REAL user photo 1_REAL_vacheron_constantin.jpg": {
+      "label": "REAL",
+      "n": 1,
+      "flagged_as_ai": {
+        "frontier": "0/1",
+        "commfor": "0/1"
+      },
+      "correct_rate": {
+        "frontier": 1.0,
+        "commfor": 1.0
+      },
+      "scores": [
+        {
+          "file": "1_REAL_vacheron_constantin.jpg",
+          "frontier_prob": 0.0518,
+          "commfor_prob": 0.0
+        }
+      ]
+    },
+    "AI user image testtest.jpeg (frontier generator)": {
+      "label": "AI",
+      "n": 1,
+      "flagged_as_ai": {
+        "frontier": "0/1",
+        "commfor": "0/1"
+      },
+      "correct_rate": {
+        "frontier": 0.0,
+        "commfor": 0.0
+      },
+      "scores": [
+        {
+          "file": "testtest.jpeg",
+          "frontier_prob": 0.0007,
+          "commfor_prob": 0.0
+        }
+      ]
+    },
+    "AI Kandinsky 2.2 (benchmark_v4)": {
+      "label": "AI",
+      "n": 283,
+      "flagged_as_ai": {
+        "frontier": "208/283",
+        "commfor": "46/283"
+      },
+      "correct_rate": {
+        "frontier": 0.735,
+        "commfor": 0.163
+      }
+    },
+    "AI Stable Cascade (benchmark_v4)": {
+      "label": "AI",
+      "n": 297,
+      "flagged_as_ai": {
+        "frontier": "294/297",
+        "commfor": "286/297"
+      },
+      "correct_rate": {
+        "frontier": 0.99,
+        "commfor": 0.963
+      }
+    },
+    "AI SDXL": {
+      "label": "AI",
+      "n": 200,
+      "flagged_as_ai": {
+        "frontier": "200/200",
+        "commfor": "172/200"
+      },
+      "correct_rate": {
+        "frontier": 1.0,
+        "commfor": 0.86
+      }
+    },
+    "AI SD 1.5": {
+      "label": "AI",
+      "n": 200,
+      "flagged_as_ai": {
+        "frontier": "200/200",
+        "commfor": "200/200"
+      },
+      "correct_rate": {
+        "frontier": 1.0,
+        "commfor": 1.0
+      }
+    }
+  }
+}

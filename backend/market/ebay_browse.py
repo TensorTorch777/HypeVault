@@ -134,6 +134,30 @@ class EbayBrowseClient:
         ]
         return items, int(body.get("total") or 0)
 
+    async def search_by_image(self, image_b64: str, *, limit: int = 50) -> list[MarketItem]:
+        """eBay's own visual search over live Wristwatches listings, best match first.
+
+        Same filters as `search`: listings outside the five brands, parts and copies are dropped.
+        """
+        token = await self.app_token()
+        resp = await self._http.post(
+            f"{self._base}/buy/browse/v1/item_summary/search_by_image",
+            params={"category_ids": WRISTWATCHES_CATEGORY_ID, "limit": max(1, min(limit, 200))},
+            headers={"Authorization": f"Bearer {token}", "X-EBAY-C-MARKETPLACE-ID": self.marketplace_id},
+            json={"image": image_b64},
+        )
+        if resp.status_code == 401:
+            self._token = None
+            raise EbayApiError(401, "token was rejected")
+        if resp.status_code != 200:
+            raise EbayApiError(resp.status_code, "image search request failed")
+        observed_at = datetime.now(timezone.utc)
+        return [
+            item
+            for raw in resp.json().get("itemSummaries") or []
+            if (item := self._to_item(raw, None, observed_at)) is not None
+        ]
+
     def _to_item(self, raw: dict, requested_brand: str | None, observed_at: datetime) -> MarketItem | None:
         price_obj = raw.get("price") or {}
         price = parse_price(price_obj.get("value"))

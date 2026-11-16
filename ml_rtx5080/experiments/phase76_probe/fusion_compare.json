@@ -1,0 +1,206 @@
+{
+  "dinov3: chatgpt_v5->gemini_v5": {
+    "caught": [
+      41,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      2,
+      144
+    ],
+    "coco_holdout_fake": [
+      31,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.943,
+    "testtest_fake": false,
+    "testtest_margin": -4.09
+  },
+  "dinov3: gemini_v5->chatgpt_v5": {
+    "caught": [
+      27,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      2,
+      144
+    ],
+    "coco_holdout_fake": [
+      21,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.939,
+    "testtest_fake": false,
+    "testtest_margin": -4.31
+  },
+  "pe: chatgpt_v5->gemini_v5": {
+    "caught": [
+      38,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      3,
+      144
+    ],
+    "coco_holdout_fake": [
+      11,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.914,
+    "testtest_fake": false,
+    "testtest_margin": -1.69
+  },
+  "pe: gemini_v5->chatgpt_v5": {
+    "caught": [
+      18,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      2,
+      144
+    ],
+    "coco_holdout_fake": [
+      19,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.919,
+    "testtest_fake": true,
+    "testtest_margin": 2.17
+  },
+  "clip: chatgpt_v5->gemini_v5": {
+    "caught": [
+      35,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      3,
+      144
+    ],
+    "coco_holdout_fake": [
+      36,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.892,
+    "testtest_fake": false,
+    "testtest_margin": -4.27
+  },
+  "clip: gemini_v5->chatgpt_v5": {
+    "caught": [
+      12,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      1,
+      144
+    ],
+    "coco_holdout_fake": [
+      31,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.91,
+    "testtest_fake": false,
+    "testtest_margin": -3.22
+  },
+  "dinov3+pe: chatgpt_v5->gemini_v5": {
+    "caught": [
+      48,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      2,
+      144
+    ],
+    "coco_holdout_fake": [
+      28,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.967,
+    "testtest_fake": false,
+    "testtest_margin": -1.65
+  },
+  "dinov3+pe: gemini_v5->chatgpt_v5": {
+    "caught": [
+      38,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      4,
+      144
+    ],
+    "coco_holdout_fake": [
+      28,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.954,
+    "testtest_fake": false,
+    "testtest_margin": -0.9
+  },
+  "dinov3+clip: chatgpt_v5->gemini_v5": {
+    "caught": [
+      40,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      2,
+      144
+    ],
+    "coco_holdout_fake": [
+      30,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.946,
+    "testtest_fake": false,
+    "testtest_margin": -4.31
+  },
+  "dinov3+clip: gemini_v5->chatgpt_v5": {
+    "caught": [
+      25,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      3,
+      144
+    ],
+    "coco_holdout_fake": [
+      22,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.923,
+    "testtest_fake": false,
+    "testtest_margin": -3.01
+  },
+  "dinov3+pe+clip: chatgpt_v5->gemini_v5": {
+    "caught": [
+      47,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      2,
+      144
+    ],
+    "coco_holdout_fake": [
+      25,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.966,
+    "testtest_fake": false,
+    "testtest_margin": -2.01
+  },
+  "dinov3+pe+clip: gemini_v5->chatgpt_v5": {
+    "caught": [
+      33,
+      75
+    ],
+    "real_ebay_v5_fake": [
+      2,
+      144
+    ],
+    "coco_holdout_fake": [
+      24,
+      1000
+    ],
+    "auc_vs_real_ebay": 0.948,
+    "testtest_fake": false,
+    "testtest_margin": -0.49
+  }
+}

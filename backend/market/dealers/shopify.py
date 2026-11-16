@@ -223,12 +223,5 @@ class WatchCollectorsUK(ShopifyDealerSite):
     default_condition = "Pre-owned"
 
 
-class WatchefreeShopify(ShopifyDealerSite):
-    # Placeholder slot kept intentionally minimal; real stores are declared in SHOPIFY_SITES below.
-    source = "shopify_generic"
-    label = "Shopify dealer"
-    base_url = ""
-
-
 #: Candidate Shopify dealers. The --probe run on the live network keeps the ones that respond with a feed.
 SHOPIFY_SITES: list[type[ShopifyDealerSite]] = [WatchCollectorsUK]

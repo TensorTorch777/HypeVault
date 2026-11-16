@@ -1,0 +1,69 @@
+{
+  "protocol": "benchmark_v6_fresh",
+  "phase": 76,
+  "status": "PRE_REGISTERED",
+  "written_on": "2026-10-29",
+  "written_before_any_data": true,
+  "question": "Does the frozen Phase 76 head (DINOv3 + Perception Encoder) catch at least 80% of fresh ChatGPT and Gemini watch images, for each app separately, while calling at most 3% of fresh real eBay photos FAKE? And does it catch more than the live DINOv2 check and the Phase 75 head?",
+  "why": "benchmark_v5_frontier failed (Phase 75: ChatGPT 12%, Gemini 36%). Exploratory work on the spent benchmark_v5 (experiments/phase76_probe/: phase76_probe, backbone_compare, fusion_compare) found that adding AI watch images and Perception Encoder features raised cross-app catch rates to 51-64% at about 2% real FAKE. Six feature combinations were compared on those same images, so those numbers are optimistic; this benchmark is the honest test.",
+  "expectation_stated_in_advance": "Development suggests about 50-65% caught. The 80% product bar is therefore expected to fail; the secondary comparisons are the realistic test of progress.",
+  "scope_limit": "Real photograph versus AI-generated image only. No counterfeit or authenticity claim. ChatGPT and Gemini images from benchmark_v5 are in training, so this is a seen-app, new-images test, not an unseen-generator test.",
+  "frozen_system": {
+    "rule": "ml_rtx5080/experiments/phase76_fusion/frozen_rule.json",
+    "rule_sha256": "a68d34bd57a6b86315a8d16f1481c9a922a31802e54ea82c8cdd91633bc1a5b8",
+    "head_sha256": "5303d274770e5b3836a7622fae77bb07c445c16fb9148e31668ac37cbd1c881f",
+    "code": "ml_rtx5080/phase76.py (FrozenFusionHead)"
+  },
+  "classes": {
+    "GENERATED": {
+      "chatgpt_v6": "PRIMARY. Made by the user by hand in the free ChatGPT web app from benchmark_v6_fresh/PROMPTS.md (30 prompts, prompts.tsv), one Temporary Chat per prompt, saved with the Download button. Minimum 20, at most 30 (one per prompt).",
+      "gemini_v6": "PRIMARY. The same 30 prompts in the free Gemini web app, a new chat per prompt, saved with the Download button. Minimum 20, at most 30."
+    },
+    "REAL_PHOTO": "real_ebay_v6: primary image of eBay listings fetched on the scoring day (Browse API, category 31387, five brands), up to 30 per brand, excluding every listing in benchmark_v1-v5, the identification gallery and market_listings rows observed before the scoring day. Target at least 20 per brand; when a brand has too few fresh listings, the benchmark_v5 relaxation applies (gallery and market_listings listings allowed, never earlier benchmark listings) and is logged. Whatever count results is reported; no minimum stops the run."
+  },
+  "prompt_file_sha256": "5f02e6fe89a95d3c7c8f9489304714ae01f3b12b92994364289d93b0d0da1741",
+  "watches": "30 models, 6 per brand, none used in the benchmark_v5 prompts.",
+  "scene_mix": {
+    "listing": 10,
+    "wrist": 8,
+    "box_papers": 5,
+    "closeup": 4,
+    "surface": 3
+  },
+  "normalisation": "Both classes: RGB, Lanczos so the short side is 512 px, centre square, JPEG q90. The pixel models never see file metadata.",
+  "no_peeking": "Images go straight into data/chatgpt_v6 and data/gemini_v6 by file name. Nobody trains, selects or thresholds on them, and no model scores are looked at before the single scoring run.",
+  "threshold_rule": "Fixed in frozen_rule.json before any v6 data: t_fake chosen on development real photos only (Label_0 validation + benchmark_v1-v5 eBay out-of-fold), at most 1% FAKE.",
+  "systems_compared": [
+    "LEGACY_DINOV2 live (0.88 rule)",
+    "Phase 75 head (frozen_rule.json of experiments/frontier_v5)",
+    "Phase 76 head (this protocol's frozen system)",
+    "C2PA AI label on the ORIGINAL downloaded file (backend/inference/provenance.py), reported separately"
+  ],
+  "primary_analysis": "Per app: caught / total with a one-sided 95% Clopper-Pearson lower bound. Real: FAKE / total with a 95% Clopper-Pearson upper bound.",
+  "success_criterion": "PRIMARY: Phase 76 caught >= 80% on chatgpt_v6 AND on gemini_v6, and real_ebay_v6 FAKE <= 3%.",
+  "secondary_criteria": [
+    "Phase 76 catches more chatgpt_v6 and more gemini_v6 images than DINOv2 live: exact one-sided McNemar test on paired images, p < 0.05 for each app.",
+    "The same against the Phase 75 head.",
+    "Real FAKE for Phase 76 is reported next to DINOv2 live on the same photos."
+  ],
+  "reported_breakdowns": [
+    "by scene type (listing scenes test the wrist-shot shortcut)",
+    "by brand",
+    "C2PA label present on the original files, per app"
+  ],
+  "motivating_case": "testtest.jpeg is never trained on. Note for honesty: its score under each feature combination was printed during the exploratory fusion probe that chose DINOv3 + PE, so its Phase 76 result (FAKE, score -1.67 vs t_fake -2.18) is not independent evidence and is reported apart.",
+  "runs_once": true,
+  "scoring_day": "2026-10-31, before the jury presentation.",
+  "deviations": {
+    "logged_on": "2026-10-30, before scoring and before any v6 score was computed",
+    "file_names": "The apps saved their own file names (ChatGPT: a title per image; Gemini: Gemini_Generated_Image_<random>.png), not chatgpt_<name>.png / gemini_<name>.png. Byte-identical repeat downloads were dropped (ChatGPT: 3 copies of prompt 8; Gemini: a second copy of prompt 5 and a re-download of every Edu image). ChatGPT: matched by download order; the titles agree with the prompts one by one. Gemini: a first match by download order was wrong (it assumed prompts 1-18); Claude then looked at a contact sheet of the Gemini images, only to tell which prompt each showed, and matched them to prompts 1-5 and 18-30. No model scored anything before this. Mapping: rename_log.json.",
+    "chatgpt_made_by": "The user made the ChatGPT images by hand, as PROMPTS.md asks.",
+    "gemini_made_by": "The Gemini images were made by a browser assistant in the user's accounts, not by hand. It reported one new chat per prompt and Gemini's full-size download button.",
+    "gemini_accounts": "The browser assistant reported prompts 1-17 made on the user's main account and 18-30 on the Somaiya Edu account with the Pro model, probably a different image generator. Main-account prompts 6-17 did not reach the computer during the run; the user downloaded them from the main-account chats on 2026-10-30 07:34-07:36 (in reverse order, matched by contact sheet), with Gemini's standard download: JPEG at about 1200x896, not the full-size PNG of prompts 1-5. gemini_v6, the primary group, is prompts 1-17 (17 images: Patek Philippe 6, Audemars Piguet 6, A. Lange & Söhne 5), below the minimum of 20. Prompts 18-30 (13 images) form gemini_edu_v6, reported apart and not in the success criterion. Both Gemini groups together are also reported, as exploratory.",
+    "gemini_prompt30": "Prompt 30 stalled on the Edu account and was run again in a new chat; two prompt-30 images exist. The one downloaded during the run (01:19) is kept; the later one (01:57) is dropped.",
+    "gemini_web_search": "The browser assistant reported that Gemini showed web sources (sothebys.com, Chrono24) under its replies for prompts 23 (RM 016) and 29 (VC Harmony) on the Edu account, so the model may have seen real listing photos. gemini_edu_v6 is reported with and without them.",
+    "gemini_resolution": "Main-account prompts 1-5: PNG 2400x1792 or 1792x2400; main-account prompts 6-17: JPEG 896-1376 px wide; Edu-account images: PNG 1376-1408 x 768 or 896x1200. All images are normalised to 512 px before scoring.",
+    "real_relaxation": "Fresh eBay listings ran short for A. Lange & Söhne (6) and Richard Mille (0), so the pre-registered relaxation was applied to those two brands (gallery and market_listings listings allowed, never earlier benchmark listings): Lange 11, Richard Mille 1. real_ebay_v6 = 102 photos (Patek 30, AP 30, VC 30, Lange 11, RM 1).",
+    "scoring_day": "Scored on 2026-10-30 instead of 2026-10-31 so the result is ready for the 2026-10-30 presentation, at the user's request. The real eBay photos were fetched the same day, so market_listings rows observed before 2026-10-30 are excluded."
+  }
+}

@@ -1,4 +1,4 @@
-"""Single sign-on: only institution Google Workspace accounts, roles decided by the server."""
+"""Single sign-on: institution Google Workspace accounts by default, roles decided by the server."""
 
 from __future__ import annotations
 
@@ -29,11 +29,14 @@ class SsoTests(unittest.TestCase):
         with self.assertRaises(SsoRefused):
             check_domain("someone@somaiya.edu", None, ALLOWED)
 
+    def test_wildcard_accepts_any_google_account(self) -> None:
+        self.assertEqual(check_domain("someone@gmail.com", None, frozenset({"*"})), "gmail.com")
+
     def test_admin_comes_only_from_the_server_list(self) -> None:
-        self.assertEqual(role_for("n.vadgaonkar@somaiya.edu", None, ADMINS), UserRole.admin)
-        self.assertEqual(role_for("N.Vadgaonkar@somaiya.edu", UserRole.buyer, ADMINS), UserRole.admin)
-        self.assertEqual(role_for("student@somaiya.edu", None, ADMINS), UserRole.seller)
-        self.assertEqual(role_for("student@somaiya.edu", UserRole.buyer, ADMINS), UserRole.seller)
+        self.assertEqual(role_for("n.vadgaonkar@somaiya.edu", ADMINS), UserRole.admin)
+        self.assertEqual(role_for("N.Vadgaonkar@somaiya.edu", ADMINS), UserRole.admin)
+        self.assertEqual(role_for("student@somaiya.edu", ADMINS), UserRole.seller)
+        self.assertEqual(role_for("someone@gmail.com", ADMINS), UserRole.seller)
 
     def test_admins_can_sell_and_admin_is_not_self_assignable(self) -> None:
         from auth.models import PUBLIC_REGISTRATION_ROLES

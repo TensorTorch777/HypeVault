@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="330" viewBox="0 0 1280 330" role="img" aria-labelledby="t d">
+  <title id="t">Listing photo screening pipeline</title>
+  <desc id="d">Seven checks in order: size, signed AI label, known-AI copy, is it a watch, DINOv3 plus Perception Encoder, edited-copy hold, admin review. Outcomes: listed, held for a proof photo, or not listed.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B0C1A"/><stop offset="1" stop-color="#1A1233"/></linearGradient>
+    <linearGradient id="rail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF7EB6"/><stop offset="0.33" stop-color="#F5C451"/><stop offset="0.66" stop-color="#5EEAD4"/><stop offset="1" stop-color="#A78BFA"/>
+    </linearGradient>
+    <radialGradient id="spark"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.4" stop-color="#FFE6F2"/><stop offset="1" stop-color="#FF7EB6" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1280" height="330" rx="22" fill="url(#bg)"/>
+  <text x="40" y="44" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="800" letter-spacing="4" fill="#F5C451">EVERY LISTING PHOTO, IN THIS ORDER</text>
+  <path d="M110 118H1170" stroke="url(#rail)" stroke-width="4" stroke-opacity="0.35"/>
+  <path d="M110 118H1170" stroke="url(#rail)" stroke-width="4" stroke-dasharray="14 18">
+    <animate attributeName="stroke-dashoffset" values="0;-64" dur="1.6s" repeatCount="indefinite"/>
+  </path>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <circle cx="110" cy="118" r="50" fill="none" stroke="#FF7EB6" stroke-width="3" opacity="0">
+      <animate attributeName="opacity" keyTimes="0;0.07;1" values="1;0;0" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="r" keyTimes="0;0.07;1" values="56;42;42" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="110" cy="118" r="36" fill="#12132A" stroke="#FF7EB6" stroke-width="3"/>
+    <circle cx="110" cy="118" r="36" fill="#FF7EB6" opacity="0.12">
+      <animate attributeName="opacity" keyTimes="0;0.07;1" values="0.55;0.12;0.12" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <text x="110" y="128" font-size="28" font-weight="900" fill="#FF7EB6">1</text>
+    <text x="110" y="188" font-size="15" font-weight="800" letter-spacing="1" fill="#F2F0FA">SIZE</text>
+    <text x="110" y="209" font-size="13" fill="#A9A6C4">at least 400 px</text>
+  </g>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <circle cx="287" cy="118" r="50" fill="none" stroke="#F5C451" stroke-width="3" opacity="0">
+      <animate attributeName="opacity" keyTimes="0;0.127;0.167;0.237;1" values="0;0;1;0;0" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="r" keyTimes="0;0.127;0.167;0.237;1" values="42;42;56;42;42" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="287" cy="118" r="36" fill="#12132A" stroke="#F5C451" stroke-width="3"/>
+    <circle cx="287" cy="118" r="36" fill="#F5C451" opacity="0.12">
+      <animate attributeName="opacity" keyTimes="0;0.127;0.167;0.237;1" values="0.12;0.12;0.55;0.12;0.12" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <text x="287" y="128" font-size="28" font-weight="900" fill="#F5C451">2</text>
+    <text x="287" y="188" font-size="15" font-weight="800" letter-spacing="1" fill="#F2F0FA">AI LABEL</text>
+    <text x="287" y="209" font-size="13" fill="#A9A6C4">signed C2PA tag</text>
+  </g>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <circle cx="463" cy="118" r="50" fill="none" stroke="#5EEAD4" stroke-width="3" opacity="0">
+      <animate attributeName="opacity" keyTimes="0;0.293;0.333;0.403;1" values="0;0;1;0;0" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="r" keyTimes="0;0.293;0.333;0.403;1" values="42;42;56;42;42" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="463" cy="118" r="36" fill="#12132A" stroke="#5EEAD4" stroke-width="3"/>
+    <circle cx="463" cy="118" r="36" fill="#5EEAD4" opacity="0.12">
+      <animate attributeName="opacity" keyTimes="0;0.293;0.333;0.403;1" values="0.12;0.12;0.55;0.12;0.12" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <text x="463" y="128" font-size="28" font-weight="900" fill="#5EEAD4">3</text>
+    <text x="463" y="188" font-size="15" font-weight="800" letter-spacing="1" fill="#F2F0FA">KNOWN AI</text>
+    <text x="463" y="209" font-size="13" fill="#A9A6C4">SSCD copy match</text>
+  </g>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <circle cx="640" cy="118" r="50" fill="none" stroke="#A78BFA" stroke-width="3" opacity="0">
+      <animate attributeName="opacity" keyTimes="0;0.460;0.500;0.570;1" values="0;0;1;0;0" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="r" keyTimes="0;0.460;0.500;0.570;1" values="42;42;56;42;42" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="640" cy="118" r="36" fill="#12132A" stroke="#A78BFA" stroke-width="3"/>
+    <circle cx="640" cy="118" r="36" fill="#A78BFA" opacity="0.12">
+      <animate attributeName="opacity" keyTimes="0;0.460;0.500;0.570;1" values="0.12;0.12;0.55;0.12;0.12" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <text x="640" y="128" font-size="28" font-weight="900" fill="#A78BFA">4</text>
+    <text x="640" y="188" font-size="15" font-weight="800" letter-spacing="1" fill="#F2F0FA">WATCH?</text>
+    <text x="640" y="209" font-size="13" fill="#A9A6C4">CLIP zero-shot</text>
+  </g>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <circle cx="817" cy="118" r="50" fill="none" stroke="#FF7EB6" stroke-width="3" opacity="0">
+      <animate attributeName="opacity" keyTimes="0;0.627;0.667;0.737;1" values="0;0;1;0;0" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="r" keyTimes="0;0.627;0.667;0.737;1" values="42;42;56;42;42" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="817" cy="118" r="36" fill="#12132A" stroke="#FF7EB6" stroke-width="3"/>
+    <circle cx="817" cy="118" r="36" fill="#FF7EB6" opacity="0.12">
+      <animate attributeName="opacity" keyTimes="0;0.627;0.667;0.737;1" values="0.12;0.12;0.55;0.12;0.12" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <text x="817" y="128" font-size="28" font-weight="900" fill="#FF7EB6">5</text>
+    <text x="817" y="188" font-size="15" font-weight="800" letter-spacing="1" fill="#F2F0FA">DINOv3 + PE</text>
+    <text x="817" y="209" font-size="13" fill="#A9A6C4">Phase 76 · rejects</text>
+  </g>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <circle cx="993" cy="118" r="50" fill="none" stroke="#F5C451" stroke-width="3" opacity="0">
+      <animate attributeName="opacity" keyTimes="0;0.793;0.833;0.903;1" values="0;0;1;0;0" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="r" keyTimes="0;0.793;0.833;0.903;1" values="42;42;56;42;42" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="993" cy="118" r="36" fill="#12132A" stroke="#F5C451" stroke-width="3"/>
+    <circle cx="993" cy="118" r="36" fill="#F5C451" opacity="0.12">
+      <animate attributeName="opacity" keyTimes="0;0.793;0.833;0.903;1" values="0.12;0.12;0.55;0.12;0.12" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <text x="993" y="128" font-size="28" font-weight="900" fill="#F5C451">6</text>
+    <text x="993" y="188" font-size="15" font-weight="800" letter-spacing="1" fill="#F2F0FA">EDITED COPY</text>
+    <text x="993" y="209" font-size="13" fill="#A9A6C4">Phase 78 · holds</text>
+  </g>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="middle">
+    <circle cx="1170" cy="118" r="50" fill="none" stroke="#5EEAD4" stroke-width="3" opacity="0">
+      <animate attributeName="opacity" keyTimes="0;0.93;1" values="0;0;1" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="r" keyTimes="0;0.93;1" values="42;42;56" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1170" cy="118" r="36" fill="#12132A" stroke="#5EEAD4" stroke-width="3"/>
+    <circle cx="1170" cy="118" r="36" fill="#5EEAD4" opacity="0.12">
+      <animate attributeName="opacity" keyTimes="0;0.93;1" values="0.12;0.12;0.55" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <text x="1170" y="128" font-size="28" font-weight="900" fill="#5EEAD4">7</text>
+    <text x="1170" y="188" font-size="15" font-weight="800" letter-spacing="1" fill="#F2F0FA">ADMIN</text>
+    <text x="1170" y="209" font-size="13" fill="#A9A6C4">checks the proof</text>
+  </g>
+  <circle r="14" fill="url(#spark)">
+    <animateMotion path="M110 118H1170" dur="8s" repeatCount="indefinite"/>
+  </circle>
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="1" text-anchor="middle">
+    <rect x="236" y="250" width="240" height="46" rx="23" fill="#34D399" fill-opacity="0.14" stroke="#34D399"/>
+    <text x="356" y="279" fill="#86EFAC">PASSED · LISTED</text>
+    <rect x="520" y="250" width="240" height="46" rx="23" fill="#F5C451" fill-opacity="0.14" stroke="#F5C451"/>
+    <text x="640" y="279" fill="#FBE3A2">UNSURE · HELD FOR PROOF</text>
+    <rect x="804" y="250" width="240" height="46" rx="23" fill="#F87171" fill-opacity="0.14" stroke="#F87171"/>
+    <text x="924" y="279" fill="#FCA5A5">AI · NOT LISTED</text>
+  </g>
+</svg>

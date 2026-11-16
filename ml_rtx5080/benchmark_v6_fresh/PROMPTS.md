@@ -1,0 +1,52 @@
+# Phase 76 — fresh test prompts (30, used in BOTH ChatGPT and Gemini)
+
+These test the frozen Phase 76 check on images it has never seen. The watches are new (none were in the
+earlier ChatGPT or Gemini sets), and a third of the scenes look like eBay seller photos, so the check
+cannot pass just by learning "wrist shot means AI".
+
+## How to make each image (same for ChatGPT and Gemini)
+
+1. **Start a new chat for every prompt.** In ChatGPT, use **Temporary Chat** (top right) so it has no memory of earlier images.
+   In Gemini, click **New chat** each time. One shared chat makes later images copy earlier ones, which spoiled part of the last test.
+2. Paste the prompt exactly.
+3. Save with the app's **Download** button. No screenshots, cropping or editing.
+4. Name the file `chatgpt_<name>.png` or `gemini_<name>.png` using the Name column,
+   for example `chatgpt_patek_worldtime5230_V01.png`. If you keep the default names, download in table order and say so.
+5. Leave them in **Downloads** and tell me, or put them in `data/chatgpt_v6/` and `data/gemini_v6/`.
+
+If an app refuses because of a brand name, start the prompt with `A luxury watch that looks like` and add `_alt` to the file name.
+**Minimum 20 per app; the goal is all 30 in each (60 images).** Please make them by hand rather than with a browser assistant.
+Don't send the images to Claude: they are matched by file name and scored once, on 31 October.
+
+| # | Name | Scene | Prompt | ChatGPT | Gemini |
+|---|---|---|---|---|---|
+| 1 | `patek_worldtime5230_V01` | listing | A plain phone photo of a Patek Philippe World Time 5230G in white gold with a blue dial and brown leather strap, lying flat on a white sheet of paper for an online sale listing, overhead daylight, slight shadow. | [ ] | [ ] |
+| 2 | `patek_annualcal5205_V02` | wrist | A casual phone photo of a Patek Philippe Annual Calendar 5205G in white gold with a grey-blue dial on a man's wrist while he types on a laptop, office lighting. | [ ] | [ ] |
+| 3 | `patek_perpetual5320_V03` | box_papers | A realistic phone photo of a Patek Philippe Perpetual Calendar 5320G with a cream dial in its open red leather box, with the warranty card and booklet beside it on a table. | [ ] | [ ] |
+| 4 | `patek_twenty4_V04` | wrist | A realistic phone photo of a Patek Philippe Twenty~4 steel watch with a diamond bezel on a woman's wrist holding a shopping bag, outdoor street, afternoon. | [ ] | [ ] |
+| 5 | `patek_cubitus5821_V05` | listing | A seller's photo of a Patek Philippe Cubitus 5821 steel watch with a green dial held between two fingers against a plain grey wall, indoor light, slightly soft focus. | [ ] | [ ] |
+| 6 | `patek_goldenellipse_V06` | closeup | A close-up phone photo of the dial of a Patek Philippe Golden Ellipse in rose gold with an ebony black sunburst dial, a little dust on the crystal, desk lamp light. | [ ] | [ ] |
+| 7 | `ap_rooffshorediver_V07` | listing | A plain phone photo of an Audemars Piguet Royal Oak Offshore Diver 15720 with a blue dial and rubber strap on a dark wooden table for a resale listing, flash on, reflection on the crystal. | [ ] | [ ] |
+| 8 | `ap_rojumbo16202_V08` | wrist | A realistic phone photo of an Audemars Piguet Royal Oak Jumbo 16202 steel watch with a blue tapisserie dial on a wrist resting on a car door at a petrol station, daylight. | [ ] | [ ] |
+| 9 | `ap_roperpetual26574_V09` | box_papers | A realistic photo of an Audemars Piguet Royal Oak Perpetual Calendar 26574 steel watch with a blue dial next to its wooden box and papers on a hotel bed. | [ ] | [ ] |
+| 10 | `ap_rochrono26240_V10` | listing | A seller's phone photo of an Audemars Piguet Royal Oak Chronograph 26240 steel watch with a black dial on a white towel, a measuring tape beside it, overhead light. | [ ] | [ ] |
+| 11 | `ap_millenary_V11` | surface | A realistic phone photo of an Audemars Piguet Millenary watch with an oval case and an off-centre dial lying on a stack of magazines on a coffee table, evening lamp light. | [ ] | [ ] |
+| 12 | `ap_roconcept_V12` | wrist | A realistic phone photo of an Audemars Piguet Royal Oak Concept Flying Tourbillon in titanium on a wrist in a dim bar, neon light reflections, slight motion blur. | [ ] | [ ] |
+| 13 | `lange_odysseus_V13` | listing | A plain phone photo of an A. Lange & Söhne Odysseus steel watch with a blue dial, lying on a black cloth for an online listing, soft window light. | [ ] | [ ] |
+| 14 | `lange_littlelange1_V14` | wrist | A realistic phone photo of an A. Lange & Söhne Little Lange 1 in rose gold with a silver dial on a woman's wrist holding a coffee cup in a train, window light. | [ ] | [ ] |
+| 15 | `lange_richardlange_V15` | closeup | A close-up phone photo of an A. Lange & Söhne Richard Lange in white gold with a white enamel dial, the case back flipped open showing the movement, workbench light. | [ ] | [ ] |
+| 16 | `lange_grandlange1_V16` | box_papers | A realistic phone photo of an A. Lange & Söhne Grand Lange 1 in pink gold with a black dial in its open box with the certificate, on a wooden desk. | [ ] | [ ] |
+| 17 | `lange_1815chrono_V17` | listing | A seller's photo of an A. Lange & Söhne 1815 Chronograph in white gold with a black dial held in a palm, plain beige background, indoor light. | [ ] | [ ] |
+| 18 | `lange_lange1tourbillon_V18` | surface | A realistic photo of an A. Lange & Söhne Lange 1 Tourbillon Perpetual Calendar lying next to a fountain pen on a leather desk mat, warm light. | [ ] | [ ] |
+| 19 | `rm_rm6501_V19` | listing | A plain phone photo of a Richard Mille RM 65-01 split-seconds chronograph in carbon on a white table for a resale listing, ceiling light, slight glare. | [ ] | [ ] |
+| 20 | `rm_rm7201_V20` | wrist | A realistic phone photo of a Richard Mille RM 72-01 lifestyle chronograph in ceramic on a wrist on a yacht deck, bright sun, sea behind. | [ ] | [ ] |
+| 21 | `rm_rm0701_V21` | wrist | A realistic phone photo of a Richard Mille RM 07-01 ladies watch with a gem-set bezel on a woman's wrist at a restaurant table, warm light. | [ ] | [ ] |
+| 22 | `rm_rm010_V22` | listing | A seller's phone photo of a Richard Mille RM 010 in rose gold with a skeleton dial on a glass display counter in a pawn shop, fluorescent light. | [ ] | [ ] |
+| 23 | `rm_rm016_V23` | box_papers | A realistic photo of a Richard Mille RM 016 in titanium with its large box, papers and spare strap on a kitchen table, daylight. | [ ] | [ ] |
+| 24 | `rm_rm029_V24` | closeup | A close-up phone photo of the skeleton dial of a Richard Mille RM 029 in red gold, showing the big date and the screws on the bezel, desk lamp light. | [ ] | [ ] |
+| 25 | `vc_american1921_V25` | listing | A plain phone photo of a Vacheron Constantin Historiques American 1921 in white gold with a tilted silver dial on a white bed sheet for a sale listing, morning light. | [ ] | [ ] |
+| 26 | `vc_egerie_V26` | wrist | A realistic phone photo of a Vacheron Constantin Égérie steel watch with a moon phase on a woman's wrist on a park bench, autumn daylight. | [ ] | [ ] |
+| 27 | `vc_quaidelile_V27` | surface | A realistic phone photo of a Vacheron Constantin Quai de l'Île watch with a skeleton dial on a marble windowsill, rain on the window behind, grey daylight. | [ ] | [ ] |
+| 28 | `vc_cornesdevache_V28` | box_papers | A realistic phone photo of a Vacheron Constantin Historiques Cornes de Vache 1955 chronograph in its open box with papers on a desk, lamp light. | [ ] | [ ] |
+| 29 | `vc_harmony_V29` | listing | A seller's photo of a Vacheron Constantin Harmony chronograph in rose gold with a silver dial held in a hand above a plain white table, overhead light. | [ ] | [ ] |
+| 30 | `vc_metiersdart_V30` | closeup | A close-up phone photo of a Vacheron Constantin Métiers d'Art watch with an enamel painted dial, a fingerprint on the crystal, desk light. | [ ] | [ ] |
