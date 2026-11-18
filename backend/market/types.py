@@ -12,6 +12,8 @@ from inference.scope_gate import evaluate_declared_brand
 
 SOURCE_EBAY = "ebay"
 SOURCE_CHRONO24_DATASET = "chrono24_dataset"
+# Section key in a market search for every crawled dealer (rows keep their own source, e.g. "chronext").
+SOURCE_DEALERS = "dealers"
 
 _PRICE_RE = re.compile(r"[-+]?\d[\d,]*(?:\.\d+)?")
 

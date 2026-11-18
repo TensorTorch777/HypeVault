@@ -11,7 +11,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from config import settings
 from market import repository
 from market.ebay_browse import EbayApiError, EbayBrowseClient, EbayNotConfigured
-from market.types import SOURCE_CHRONO24_DATASET, SOURCE_EBAY, canonical_brand, price_stats
+from market.dealers.service import NOTE as DEALER_NOTE
+from market.dealers.service import dealer_section
+from market.types import SOURCE_CHRONO24_DATASET, SOURCE_DEALERS, SOURCE_EBAY, canonical_brand, price_stats
 
 _log = logging.getLogger(__name__)
 _TOKEN_KEY = "market:ebay:app_token"
@@ -121,6 +123,25 @@ def found_in(ebay: dict, chrono24: dict) -> dict:
     }
 
 
+async def _dealers_section(session: AsyncSession, query: str, brand: str | None) -> dict:
+    """Crawled dealer listings. Read after eBay and the dataset, and never allowed to break them."""
+    try:
+        return await dealer_section(session, query, brand)
+    except Exception as exc:
+        _log.warning("market_dealers_failed: %s", exc)
+        try:
+            await session.rollback()  # leave the session usable for the caller
+        except Exception:
+            pass
+        return {
+            "status": "error",
+            "max_age_days": settings.dealer_max_age_days,
+            "searched": [],
+            "dealers": [],
+            "note": DEALER_NOTE,
+        }
+
+
 async def search_market(
     session: AsyncSession,
     redis,
@@ -131,8 +152,9 @@ async def search_market(
     limit: int = 12,
     fallback_query: str | None = None,
 ) -> dict:
-    """Search both sources. When nothing matches anywhere and a shorter `fallback_query` is given
-    ("Nautilus" for "Nautilus 5711/1A"), search again with it."""
+    """Search eBay and the Chrono24 dataset. When nothing matches in either and a shorter `fallback_query`
+    is given ("Nautilus" for "Nautilus 5711/1A"), search again with it. Dealer listings are then read for the
+    query that was used; they do not change whether the fallback runs, so eBay behaves as it did before."""
     query = " ".join((query or "").split())[:200]
     fallback = " ".join((fallback_query or "").split())[:200]
     canonical = canonical_brand(brand) if brand else None
@@ -147,6 +169,8 @@ async def search_market(
         ebay = await _ebay_section(session, redis, fallback, canonical)
         chrono24 = await _chrono24_section(session, fallback, canonical, sort, limit)
         used = fallback
+    # `found` keeps its eBay/dataset meaning; the dealer outcome is in sources.dealers.status.
+    dealers = await _dealers_section(session, used, canonical)
     return {
         "query": query,
         "query_used": used,
@@ -155,7 +179,7 @@ async def search_market(
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "currency": "USD",
         "found": found_in(ebay, chrono24),
-        "sources": {SOURCE_EBAY: ebay, SOURCE_CHRONO24_DATASET: chrono24},
+        "sources": {SOURCE_EBAY: ebay, SOURCE_CHRONO24_DATASET: chrono24, SOURCE_DEALERS: dealers},
     }
 
 

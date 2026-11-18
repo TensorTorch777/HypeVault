@@ -40,6 +40,10 @@ class Settings(BaseSettings):
     # Price comparison scraper (Playwright). Use regional host, e.g. https://www.chrono24.in
     chrono24_search_base: str = "https://www.chrono24.in"
 
+    # Dealer listings (The 1916 Company, Chronext, European Watch Co., Shopify stores) from our own crawler
+    # (scraper/dealer_scraper.py --save-db). The site ignores rows older than this.
+    dealer_max_age_days: int = 30
+
     # Comma-separated origins for browser dev (e.g. Next on :3001). Empty → sensible localhost defaults.
     cors_origins: str = ""
 

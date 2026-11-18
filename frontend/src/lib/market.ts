@@ -57,9 +57,10 @@ export type MarketSearch = {
   brand: string | null;
   generated_at: string;
   currency: string;
-  /** true: has listings · false: searched, none · null: eBay not connected or failed */
+  /** true: has listings · false: searched, none · null: eBay not connected or failed. Dealers: see sources.dealers.status. */
   found?: { ebay: boolean | null; chrono24_dataset: boolean };
-  sources: { ebay: EbaySection; chrono24_dataset: Chrono24Section };
+  /** `dealers` is optional so an API without it (older deploy) still renders eBay and the dataset. */
+  sources: { ebay: EbaySection; chrono24_dataset: Chrono24Section; dealers?: DealersSection };
 };
 
 export type IdentifyCandidate = {
@@ -147,6 +148,45 @@ export async function fetchListingMarket(listingId: string): Promise<MarketSearc
   const { data } = await api.get<MarketSearch>(`/listings/${listingId}/comparison`);
   return data;
 }
+
+export type DealerItem = {
+  source: string;
+  title: string;
+  brand: string;
+  model: string | null;
+  reference: string | null;
+  price: number;
+  currency: string;
+  condition: string | null;
+  year: string | null;
+  item_url: string | null;
+  image_url: string | null;
+  box: boolean | null;
+  papers: boolean | null;
+  case_size: string | null;
+  observed_on: string;
+};
+
+/** One dealer's matches. Stats are in that dealer's own currency, never mixed with eBay's USD. */
+export type DealerGroup = {
+  source: "the1916company" | "chronext" | "europeanwatch" | "watchcollectors" | string;
+  label: string;
+  currency: string;
+  count: number;
+  stats: PriceStats | null;
+  last_seen: string;
+  items: DealerItem[];
+};
+
+/** Crawled dealer listings, part of every market search (read from our crawl snapshot, not live). */
+export type DealersSection = {
+  status: "ok" | "no_match" | "error";
+  max_age_days: number;
+  /** Every dealer that was searched; `dealers` holds only the ones with matches. */
+  searched: string[];
+  dealers: DealerGroup[];
+  note: string;
+};
 
 export async function fetchMarketHistory(q: string, brand?: string | null): Promise<MarketHistory> {
   const { data } = await api.get<MarketHistory>("/market/history", { params: { q, ...(brand ? { brand } : {}) } });
