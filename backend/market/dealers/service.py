@@ -11,9 +11,11 @@ from __future__ import annotations
 from datetime import date, timedelta
 from urllib.parse import urlsplit
 
+from sqlalchemy import and_, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from config import settings
+from database import MarketListing
 from market import repository
 from market.dealers.sites import SITES, SOURCE_LABELS
 
@@ -43,16 +45,58 @@ def _item(row) -> dict:
     return d
 
 
+async def _dealer_matches(
+    session: AsyncSession, source: str, query: str, brand: str | None, since: date, limit: int
+) -> tuple[list[MarketListing], dict | None, str | None]:
+    """One dealer's current listings matching the query: rows (closest to the median first), stats, currency.
+
+    Each crawl adds one observation per watch per day, so only the newest row per listing counts; otherwise a
+    watch seen in two weekly crawls would appear twice and skew the count and median. Cards and stats use one
+    currency, the one most of the dealer's matches are priced in, so a median never mixes USD with GBP or EUR.
+    """
+    clauses = repository._match(source, brand, query) + [MarketListing.observed_on >= since]
+    latest = (
+        select(MarketListing.id)
+        .where(and_(*clauses))
+        .distinct(MarketListing.external_id)
+        .order_by(MarketListing.external_id, MarketListing.observed_on.desc(), MarketListing.imported_at.desc())
+    )
+    current = MarketListing.id.in_(latest.scalar_subquery())
+    top = (
+        await session.execute(
+            select(MarketListing.currency)
+            .where(current)
+            .group_by(MarketListing.currency)
+            .order_by(func.count().desc(), MarketListing.currency)
+            .limit(1)
+        )
+    ).first()
+    if top is None:
+        return [], None, None
+    currency = top[0]
+    where = and_(current, MarketListing.currency == currency)
+    count, lo, median, hi = (
+        await session.execute(
+            select(
+                func.count(),
+                func.min(MarketListing.price),
+                func.percentile_cont(0.5).within_group(MarketListing.price),
+                func.max(MarketListing.price),
+            ).where(where)
+        )
+    ).one()
+    stats = {"count": int(count), "min": lo, "median": float(median), "max": hi} if count else None
+    order = func.abs(MarketListing.price - stats["median"]) if stats else MarketListing.price
+    rows = list((await session.execute(select(MarketListing).where(where).order_by(order, MarketListing.id).limit(limit))).scalars())
+    return rows, stats, currency
+
+
 async def dealer_section(session: AsyncSession, query: str, brand: str | None, *, limit: int = 8) -> dict:
     """Matches per dealer for `query` (already normalised) and the canonical `brand`, newest crawl window only."""
     since = date.today() - timedelta(days=settings.dealer_max_age_days)
     groups = []
-    for source, cls in SITES.items():
-        # Count/median in each dealer's own currency, so GBP stores still get them. Never mixed with eBay's USD.
-        currency = (getattr(cls, "default_currency", None) or "USD").upper()
-        rows, stats = await repository.find_listings(
-            session, source, query, brand, limit=limit, since=since, sort="near_median", stats_currency=currency
-        )
+    for source in SITES:
+        rows, stats, currency = await _dealer_matches(session, source, query, brand, since, limit)
         if not rows:
             continue
         groups.append(

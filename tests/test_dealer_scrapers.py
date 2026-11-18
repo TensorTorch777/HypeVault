@@ -327,6 +327,15 @@ class ShopifyTests(unittest.TestCase):
         self.assertTrue(self.site._is_watch(SHOPIFY_PRODUCT))
         self.assertFalse(self.site._is_watch(STRAP_PRODUCT))  # straps rejected
 
+    def test_serviced_watches_are_kept(self):
+        # Whole words only: a pre-owned watch tagged "Serviced" or "Service History" is still a watch.
+        serviced = {**SHOPIFY_PRODUCT, "tags": ["Serviced", "Service History", "Year:2019"]}
+        self.assertTrue(self.site._is_watch(serviced))
+        self.assertTrue(self.site._is_watch({**SHOPIFY_PRODUCT, "tags": "Serviced, Full Set"}))  # comma-separated tags
+        self.assertTrue(self.site._is_watch({**SHOPIFY_PRODUCT, "product_type": "Spring Drive Watches"}))  # not "ring"
+        self.assertFalse(self.site._is_watch({**SHOPIFY_PRODUCT, "product_type": "Watch Service"}))
+        self.assertFalse(self.site._is_watch({**SHOPIFY_PRODUCT, "product_type": "Watches", "tags": ["Accessories"]}))
+
     def test_discover_and_crawl_from_feed(self):
         feed = {"products": [SHOPIFY_PRODUCT, STRAP_PRODUCT]}
 

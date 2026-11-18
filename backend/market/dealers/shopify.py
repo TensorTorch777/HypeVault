@@ -50,8 +50,12 @@ class ShopifyDealerSite(DealerSite):
 
     uses_feed = True  # crawl.py parses these from the cached feed, no per-page fetch
 
-    #: product_type / tag / vendor values that are not wristwatches we want.
-    reject_types = ("strap", "band", "accessory", "winder", "jewel", "ring", "necklace", "bracelet only", "service")
+    #: Product types (whole words) or whole tags that are not wristwatches we want. Whole words only, so a
+    #: "Serviced" or "Service History" tag on a pre-owned watch does not count as a "service" product.
+    reject_types = (
+        "strap", "band", "accessory", "accessories", "winder", "jewel", "jewellery", "jewelry", "ring",
+        "necklace", "bracelet only", "service",
+    )
     per_page = 250
     max_feed_pages = 20
     #: Shopify throttles products.json harder than pages; wait at least this long between feed requests.
@@ -81,8 +85,13 @@ class ShopifyDealerSite(DealerSite):
         return len(words) >= 2 and all(w in hay for w in words[:2])
 
     def _is_watch(self, product: dict) -> bool:
-        blob = f"{product.get('product_type','')} {' '.join(str(t) for t in product.get('tags', []))}".casefold()
-        return not any(bad in blob for bad in self.reject_types)
+        reject = re.compile(r"\b(?:" + "|".join(re.escape(t) for t in self.reject_types) + r")s?\b", re.IGNORECASE)
+        if reject.search(str(product.get("product_type") or "")):
+            return False
+        tags = product.get("tags") or []
+        if isinstance(tags, str):
+            tags = _TAG_SPLIT.split(tags)
+        return not any(reject.fullmatch(str(t).strip()) for t in tags)
 
     async def _feed(self, fetcher: PoliteFetcher) -> list[dict]:
         """All products from the store feed (cached per run)."""
