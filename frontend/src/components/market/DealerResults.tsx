@@ -1,10 +1,9 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
 
-import { Skeleton } from "@/components/ui/skeleton";
-import { type DealerItem, type DealerSection, fetchListingDealers, formatDate, formatPrice } from "@/lib/market";
+import { type DealerGroup, type DealerItem, type DealersSection, formatDate, formatPrice } from "@/lib/market";
+import { cn } from "@/lib/utils";
 
 function boxPapers(item: DealerItem): string | null {
   if (item.box && item.papers) return "Box & papers";
@@ -55,70 +54,61 @@ function DealerCard({ item }: { item: DealerItem }) {
   );
 }
 
-function Section({ section }: { section: DealerSection }) {
+function Group({ group, compact }: { group: DealerGroup; compact: boolean }) {
+  const items = compact ? group.items.slice(0, 4) : group.items;
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h4 className="text-sm font-bold text-white">{section.label}</h4>
+        <h4 className="text-sm font-bold text-white">{group.label}</h4>
         <p className="text-[0.6875rem] text-primary/50">
-          {section.items.length
-            ? `${section.count} match${section.count === 1 ? "" : "es"}${section.broadened ? " in this collection" : ""}`
-            : "No current listings"}
+          {group.count} match{group.count === 1 ? "" : "es"}
+          {group.stats && group.count > 1 ? ` · median ${formatPrice(group.stats.median, group.currency)}` : ""}
         </p>
       </div>
-      {section.items.length ? (
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
-          {section.items.map((item) => (
-            <DealerCard key={`${item.source}-${item.item_url}`} item={item} />
-          ))}
-        </div>
-      ) : null}
+      <div className={cn("grid grid-cols-2 gap-4", !compact && "md:grid-cols-3 xl:grid-cols-4")}>
+        {items.map((item) => (
+          <DealerCard key={`${item.source}-${item.item_url}`} item={item} />
+        ))}
+      </div>
     </div>
   );
 }
 
-/** Listings for this watch from our crawled dealer sources (The 1916 Company, Chronext, and others). */
-export function DealerResults({ listingId, limit = 8, title = "From dealers" }: { listingId: string; limit?: number; title?: string }) {
-  const q = useQuery({
-    queryKey: ["dealers", listingId, limit],
-    queryFn: () => fetchListingDealers(listingId, limit),
-    staleTime: 10 * 60 * 1000,
-    retry: 1,
-  });
-
-  const sourceNames = q.data?.sections.map((s) => s.label).join(" · ") || "Dealers";
-
+/**
+ * Dealer listings from our crawler (The 1916 Company, Chronext, ...). MarketPanel renders this below the eBay
+ * and dataset listings from the same market search, so it always comes after eBay and uses the same query.
+ */
+export function DealerResults({ section, compact = false }: { section: DealersSection; compact?: boolean }) {
+  const withMatches = section.dealers.filter((g) => g.items.length);
   return (
-    <section aria-labelledby={`dealers-${listingId}`} className="space-y-6">
+    <section aria-labelledby="dealers-title" className="space-y-6">
       <div>
-        <p className="hv-eyebrow">{sourceNames}</p>
-        <h3 id={`dealers-${listingId}`} className="mt-2 font-display text-[1.6rem] font-extrabold uppercase leading-none text-white">
-          {title}
+        {withMatches.length ? <p className="hv-eyebrow">{withMatches.map((g) => g.label).join(" · ")}</p> : null}
+        <h3 id="dealers-title" className="mt-2 font-display text-[2rem] font-extrabold uppercase leading-none text-primary">
+          From dealers
         </h3>
-        {q.data ? <p className="mt-2 text-xs text-primary/55">Matches for “{q.data.query}”, last {q.data.max_age_days} days</p> : null}
+        <p className="mt-2 text-xs text-primary/55">
+          Dealer asking prices from our latest crawl, last {section.max_age_days} days. Prices in each dealer&rsquo;s currency.
+        </p>
       </div>
 
-      {q.isLoading ? (
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4" aria-busy="true">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} className="aspect-[3/4] rounded-[1.125rem]" />
+      {section.status === "error" ? (
+        <p className="text-sm text-danger" role="alert">
+          Dealer listings are unavailable right now.
+        </p>
+      ) : withMatches.length ? (
+        <div className="space-y-8">
+          {withMatches.map((g) => (
+            <Group key={g.source} group={g} compact={compact} />
           ))}
         </div>
-      ) : q.isError ? (
-        <p className="text-sm text-danger" role="alert">Dealer listings are unavailable right now.</p>
-      ) : q.data && q.data.total ? (
-        <div className="space-y-8">
-          {q.data.sections
-            .filter((s) => s.items.length)
-            .map((s) => (
-              <Section key={s.source} section={s} />
-            ))}
-        </div>
       ) : (
-        <p className="text-sm text-primary/60">No dealer listings matched this watch in the latest crawl.</p>
+        <p className="text-sm text-primary/60">
+          No dealer listings matched this watch in the latest crawl{section.searched.length ? ` (searched ${section.searched.join(", ")})` : ""}.
+        </p>
       )}
 
-      {q.data?.note ? <p className="text-[0.6875rem] leading-5 text-primary/45">{q.data.note}</p> : null}
+      <p className="text-[0.6875rem] leading-5 text-primary/45">{section.note}</p>
     </section>
   );
 }

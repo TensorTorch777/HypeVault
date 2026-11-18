@@ -149,9 +149,17 @@ python scraper/dealer_scraper.py --allow-network --more-brands --download-images
 Always run `--probe` first against the live sites: it confirms which dealers respond and which fields
 parse, so a site that is bot-walled or has changed its markup is caught before a full crawl.
 
-The site shows the matches under "From dealers" on the listing page and the upload result screen
-(`GET /listings/{id}/dealers`, free text: `GET /market/dealers?q=...`), using rows from the last
+Dealers are part of the normal market search, the same pipeline as eBay: `search_market` returns
+`sources.dealers` next to `sources.ebay` and `sources.chrono24_dataset`, for the same query and brand
+(`GET /listings/{id}/comparison`, `GET /market/search?q=...`). The shared market panel shows them under
+"From dealers", always after the eBay listings, on the listing page, the upload result and the market page.
+They never change the eBay results, the eBay median or whether the shorter fallback query runs, and a failed
+dealer lookup is reported as `status: "error"` without affecting eBay. Rows come from the last
 `DEALER_MAX_AGE_DAYS` (default 30). Re-run the crawl (e.g. weekly) to keep it current.
+
+Unlike eBay, dealers are not queried live on a page view: eBay has a search API that answers in one call,
+while a dealer crawl walks sitemaps one request every few seconds. So the crawl runs on a schedule and the
+site reads its snapshot, the way it reads the Chrono24 dataset.
 Prices are in each dealer's currency.
 
 Status from a live probe (Nov 2026):

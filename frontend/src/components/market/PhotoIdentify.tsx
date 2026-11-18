@@ -267,6 +267,13 @@ export function FoundBanner({ data }: { data: MarketSearch }) {
       <div className={cn("flex flex-wrap items-center gap-2", (nowhere || usedFallback) && "mt-3")}>
         <SourceChip label="eBay" state={ebay} count={data.sources.ebay.stats?.count ?? data.sources.ebay.items.length} />
         <SourceChip label="Chrono24 dataset" state={c24} count={data.sources.chrono24_dataset.stats?.count} />
+        {data.sources.dealers && data.sources.dealers.status !== "error" ? (
+          <SourceChip
+            label="Dealers"
+            state={data.sources.dealers.dealers.length > 0}
+            count={data.sources.dealers.dealers.reduce((n, g) => n + g.count, 0)}
+          />
+        ) : null}
         <a
           href={chrono24SearchUrl(shown, data.brand)}
           target="_blank"

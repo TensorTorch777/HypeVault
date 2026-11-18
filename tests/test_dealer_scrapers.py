@@ -351,6 +351,113 @@ class ShopifyTests(unittest.TestCase):
         self.assertEqual([l.reference for l in report.listings], ["5711/1A-010"])
         self.assertEqual(report.listings[0].source, "watchcollectors")
 
+    def test_brand_from_title_when_vendor_is_the_store(self):
+        # Watch Collectors UK sets vendor to its own name; the brand has to come from the title.
+        product = {**SHOPIFY_PRODUCT, "vendor": "Watch Collectors UK"}
+        item = self.site.parse_product(product, "Patek Philippe")
+        self.assertEqual(item.brand, "Patek Philippe")
+        self.assertEqual([m.brand for m in to_market_items([item])], ["Patek Philippe"])  # reaches market_listings
+        # A real brand in vendor still wins, and an unrelated title does not borrow the hint.
+        self.assertEqual(self.site.parse_product(SHOPIFY_PRODUCT, "Rolex").brand, "Patek Philippe")
+        other = {**SHOPIFY_PRODUCT, "vendor": "Watch Collectors UK", "title": "Rolex Submariner 124060"}
+        self.assertEqual(self.site.parse_product(other, "Patek Philippe").brand, "Watch Collectors UK")
+
+    def _crawl_feed(self, served_currency: str | None):
+        seen_cookies: list[str] = []
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            url = str(request.url)
+            if "/robots.txt" in url:
+                return httpx.Response(200, text="User-agent: *\nAllow: /\n")
+            if "/products.json" in url:
+                seen_cookies.append(request.headers.get("cookie", ""))
+                headers = {"set-cookie": f"cart_currency={served_currency}; path=/"} if served_currency else {}
+                products = [SHOPIFY_PRODUCT] if "page=1" in url else []
+                return httpx.Response(200, json={"products": products}, headers=headers)
+            return httpx.Response(404, text="x")
+
+        async def go():
+            from market.dealers.crawl import crawl_site
+
+            async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+                return await crawl_site(self.site, PoliteFetcher(min_delay=0, client=client), ["Patek Philippe", "Audemars Piguet"], 10)
+
+        return _run(go()), seen_cookies
+
+    def test_feed_asks_for_the_store_market(self):
+        report, cookies = self._crawl_feed("GBP")
+        self.assertIn("localization=GB", cookies[0])
+        self.assertIn("cart_currency=GBP", cookies[0])
+        self.assertEqual([(l.price, l.currency) for l in report.listings], [(145000.0, "GBP")])
+
+    def test_converted_prices_are_refused_not_relabelled(self):
+        # Shopify Markets priced the feed in rupees (visitor IP in India): skip the store, don't call it GBP.
+        report, cookies = self._crawl_feed("INR")
+        self.assertEqual(report.listings, [])
+        self.assertTrue(any("INR" in e for e in report.errors))
+        self.assertEqual(len(cookies), 1)  # the feed is not refetched for the second brand
+
+
+class MarketSearchDealerTests(unittest.TestCase):
+    """Dealers ride along in search_market without changing what eBay and the dataset return."""
+
+    EBAY_HIT = {"status": "ok", "items": [{"price": 1.0}], "stats": None, "fetched_at": None, "cached": False}
+    EBAY_EMPTY = {"status": "ok", "items": [], "stats": None, "fetched_at": None, "cached": False}
+    C24_EMPTY = {"status": "no_match", "items": [], "stats": None}
+    DEALERS_HIT = {"status": "ok", "max_age_days": 30, "searched": ["Chronext"], "dealers": [{"label": "Chronext", "items": [{}], "count": 1}], "note": "n"}
+
+    def _search(self, ebay, c24, dealers, **kw):
+        from unittest import mock
+
+        import market.service as svc
+
+        ebay_mock = mock.AsyncMock(side_effect=ebay if isinstance(ebay, list) else [ebay, ebay])
+        c24_mock = mock.AsyncMock(side_effect=c24 if isinstance(c24, list) else [c24, c24])
+        dealer_mock = mock.AsyncMock(side_effect=dealers) if isinstance(dealers, Exception) else mock.AsyncMock(return_value=dealers)
+        session = mock.AsyncMock()
+        with mock.patch.object(svc, "_ebay_section", ebay_mock), mock.patch.object(svc, "_chrono24_section", c24_mock), mock.patch.object(
+            svc, "dealer_section", dealer_mock
+        ):
+            out = _run(svc.search_market(session, None, kw.pop("q", "Nautilus 5711/1A"), "Patek Philippe", **kw))
+        return out, ebay_mock, dealer_mock, session
+
+    def test_dealers_follow_ebay_in_the_same_response(self):
+        out, _, dealer_mock, _ = self._search(self.EBAY_HIT, self.C24_EMPTY, self.DEALERS_HIT)
+        self.assertEqual(list(out["sources"]), ["ebay", "chrono24_dataset", "dealers"])
+        self.assertIs(out["sources"]["ebay"], self.EBAY_HIT)  # eBay section passed through untouched
+        self.assertEqual(out["found"], {"ebay": True, "chrono24_dataset": False})  # unchanged contract
+        self.assertEqual(out["sources"]["dealers"]["status"], "ok")
+        dealer_mock.assert_awaited_once_with(mock_any(), "Nautilus 5711/1A", "Patek Philippe")
+
+    def test_dealer_matches_do_not_stop_the_ebay_fallback(self):
+        # Nothing on eBay or in the dataset: the shorter query runs, even though dealers had matches.
+        out, ebay_mock, dealer_mock, _ = self._search(
+            [self.EBAY_EMPTY, self.EBAY_HIT], [self.C24_EMPTY, self.C24_EMPTY], self.DEALERS_HIT, fallback_query="Nautilus"
+        )
+        self.assertEqual(out["tried"], ["Nautilus 5711/1A", "Nautilus"])
+        self.assertEqual(ebay_mock.await_count, 2)
+        self.assertEqual(dealer_mock.await_args.args[1], "Nautilus")  # dealers searched with the query that was used
+
+    def test_dealer_failure_leaves_ebay_intact(self):
+        out, _, _, session = self._search(self.EBAY_HIT, self.C24_EMPTY, RuntimeError("db down"))
+        self.assertEqual(out["sources"]["dealers"]["status"], "error")
+        self.assertEqual(out["found"], {"ebay": True, "chrono24_dataset": False})
+        self.assertIs(out["sources"]["ebay"], self.EBAY_HIT)
+        session.rollback.assert_awaited()
+
+    def test_card_images_are_resized_on_imgix_only(self):
+        from market.dealers.service import _card_image
+
+        self.assertEqual(_card_image("https://watchbox-cdn.imgix.net/a.png"), "https://watchbox-cdn.imgix.net/a.png?w=640&auto=format")
+        self.assertEqual(_card_image("https://cdn-products.chronext.com/a.png"), "https://cdn-products.chronext.com/a.png")
+        self.assertIsNone(_card_image(None))
+
+
+def mock_any():
+    from unittest import mock
+
+    return mock.ANY
+
 
 class EuropeanWatchTests(unittest.TestCase):
     def test_product_url_rules(self):

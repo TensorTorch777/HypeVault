@@ -100,6 +100,24 @@ class PoliteFetcher:
         if self._owns_client:
             await self._client.aclose()
 
+    # ── cookies ──────────────────────────────────────────────────────────────
+
+    def set_cookies(self, url: str, values: dict[str, str]) -> None:
+        """Send these cookies to the URL's host (e.g. a store's country and currency choice)."""
+        host = urlsplit(url).hostname or ""
+        for name, value in values.items():
+            self._client.cookies.set(name, value, domain=host)
+
+    def cookie_values(self, url: str, name: str) -> list[str]:
+        """Every value held for cookie `name` that applies to the URL's host: ours and any the site set."""
+        host = urlsplit(url).hostname or ""
+        out = []
+        for c in self._client.cookies.jar:
+            domain = c.domain.lstrip(".")
+            if c.name == name and (host == domain or host.endswith("." + domain)):
+                out.append(c.value or "")
+        return out
+
     # ── robots.txt ───────────────────────────────────────────────────────────
 
     async def _load_robots(self, origin: str) -> urllib.robotparser.RobotFileParser:

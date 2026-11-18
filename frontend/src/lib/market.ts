@@ -57,9 +57,10 @@ export type MarketSearch = {
   brand: string | null;
   generated_at: string;
   currency: string;
-  /** true: has listings · false: searched, none · null: eBay not connected or failed */
+  /** true: has listings · false: searched, none · null: eBay not connected or failed. Dealers: see sources.dealers.status. */
   found?: { ebay: boolean | null; chrono24_dataset: boolean };
-  sources: { ebay: EbaySection; chrono24_dataset: Chrono24Section };
+  /** `dealers` is optional so an API without it (older deploy) still renders eBay and the dataset. */
+  sources: { ebay: EbaySection; chrono24_dataset: Chrono24Section; dealers?: DealersSection };
 };
 
 export type IdentifyCandidate = {
@@ -160,36 +161,32 @@ export type DealerItem = {
   year: string | null;
   item_url: string | null;
   image_url: string | null;
-  image_urls: string[];
   box: boolean | null;
   papers: boolean | null;
   case_size: string | null;
   observed_on: string;
 };
 
-export type DealerSection = {
+/** One dealer's matches. Stats are in that dealer's own currency, never mixed with eBay's USD. */
+export type DealerGroup = {
   source: "the1916company" | "chronext" | "europeanwatch" | "watchcollectors" | string;
   label: string;
+  currency: string;
   count: number;
-  broadened: boolean;
-  last_seen: string | null;
+  stats: PriceStats | null;
+  last_seen: string;
   items: DealerItem[];
 };
 
-export type DealerSearch = {
-  query: string;
-  brand: string | null;
+/** Crawled dealer listings, part of every market search (read from our crawl snapshot, not live). */
+export type DealersSection = {
+  status: "ok" | "no_match" | "error";
   max_age_days: number;
-  total: number;
-  sections: DealerSection[];
+  /** Every dealer that was searched; `dealers` holds only the ones with matches. */
+  searched: string[];
+  dealers: DealerGroup[];
   note: string;
 };
-
-/** Dealer listings (The 1916 Company, Chronext) for a live listing, from our crawler's snapshot. */
-export async function fetchListingDealers(listingId: string, limit = 8): Promise<DealerSearch> {
-  const { data } = await api.get<DealerSearch>(`/listings/${listingId}/dealers`, { params: { limit } });
-  return data;
-}
 
 export async function fetchMarketHistory(q: string, brand?: string | null): Promise<MarketHistory> {
   const { data } = await api.get<MarketHistory>("/market/history", { params: { q, ...(brand ? { brand } : {}) } });

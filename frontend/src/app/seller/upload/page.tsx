@@ -9,7 +9,6 @@ import { DeclaredBrandSelect } from "@/components/DeclaredBrandSelect";
 import { ImageUploader } from "@/components/ImageUploader";
 import { ProofPhotoForm } from "@/components/ProofPhotoForm";
 import { ScreeningResult, type ScreeningOutcome } from "@/components/ScreeningResult";
-import { DealerResults } from "@/components/market/DealerResults";
 import { WatchMarketLookup } from "@/components/market/WatchMarketLookup";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -278,11 +277,6 @@ export default function SellerUploadPage() {
                         })
                       }
                     />
-                  ) : null}
-                  {outcome?.listing_status === "live" && listingId ? (
-                    <div className="border-t border-white/10 pt-6">
-                      <DealerResults listingId={listingId} limit={4} title="At dealers" />
-                    </div>
                   ) : null}
                   <div className="flex flex-wrap gap-3">
                     {outcome?.listing_status === "live" && listingId ? (

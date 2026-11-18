@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-import { DealerResults } from "@/components/market/DealerResults";
 import { MarketPanel } from "@/components/market/MarketPanel";
 import { ProductVisualPanel } from "@/components/product/ProductVisualPanel";
 import { ProofPhotoForm } from "@/components/ProofPhotoForm";
@@ -118,11 +117,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         <div className="mt-10">
           <MarketPanel data={marketQ.data} loading={listingQ.isLoading || marketQ.isLoading} error={marketQ.isError} />
         </div>
-        {listing?.id && listing.status === "live" ? (
-          <div className="mt-16">
-            <DealerResults listingId={String(listing.id)} />
-          </div>
-        ) : null}
       </section>
       )}
     </div>

@@ -22,6 +22,7 @@ from market.dealers.extract import (
 )
 from market.dealers.http import BlockedError, FetchError, PoliteFetcher
 from market.dealers.sites import DealerListing, DealerSite, _CONDITION_SCHEMA
+from market.types import canonical_brand
 
 _log = logging.getLogger(__name__)
 
@@ -58,6 +59,9 @@ class ShopifyDealerSite(DealerSite):
 
     # Set when the store tags or names its brands differently from canonical.
     vendor_aliases: dict[str, str] = {}
+    #: The store's home market. Shopify Markets converts prices into the visitor's local currency, picked
+    #: from the IP address (from India it served rupees), so the crawl asks for this market explicitly.
+    country: str | None = None
 
     def _brand_terms(self, brand: str) -> list[str]:
         base = brand.casefold()
@@ -89,6 +93,8 @@ class ShopifyDealerSite(DealerSite):
         # Give the feed extra breathing room so stricter stores don't 429 us.
         if fetcher.min_delay < self.feed_delay:
             fetcher._last[f"delay:{urlsplit(self.base_url).scheme}://{urlsplit(self.base_url).netloc}"] = self.feed_delay
+        if self.country and self.default_currency:
+            fetcher.set_cookies(self.base_url, {"localization": self.country, "cart_currency": self.default_currency})
         for page in range(1, self.max_feed_pages + 1):
             url = f"{self.base_url}/products.json?limit={self.per_page}&page={page}"
             try:
@@ -99,6 +105,11 @@ class ShopifyDealerSite(DealerSite):
                     _log.warning("%s: feed rate-limited after %d products; using what we have", self.source, len(products))
                     break
                 raise
+            try:
+                self._check_currency(fetcher)
+            except FetchError:
+                self._feed_cache = []  # don't refetch the feed for every brand in this run
+                raise
             batch = (data or {}).get("products") if isinstance(data, dict) else None
             if not batch:
                 break
@@ -108,6 +119,26 @@ class ShopifyDealerSite(DealerSite):
         self._feed_cache = products
         _log.info("%s: %d products in feed", self.source, len(products))
         return products
+
+    def _check_currency(self, fetcher: PoliteFetcher) -> None:
+        """The feed has no currency field. Shopify reports the one it priced in via the cart_currency cookie;
+        if that is not the store's own currency, stop rather than label converted prices as GBP."""
+        expected = (self.default_currency or "").upper()
+        served = {v.upper() for v in fetcher.cookie_values(self.base_url, "cart_currency") if v}
+        wrong = served - {expected}
+        if expected and wrong:
+            raise FetchError(f"{self.source}: store priced the feed in {', '.join(sorted(wrong))}, not {expected}; skipping")
+
+    def _brand(self, product: dict, title: str, brand_hint: str | None) -> str | None:
+        """The vendor field is the watch brand on some stores and the store's own name on others."""
+        vendor = str(product.get("vendor") or "")
+        if vendor in self.vendor_aliases:
+            return self.vendor_aliases[vendor]
+        if canonical_brand(vendor):
+            return vendor
+        if brand_hint and self._matches_brand({"title": title}, brand_hint):
+            return brand_hint
+        return vendor or brand_hint
 
     async def discover(self, fetcher: PoliteFetcher, brand: str, limit: int) -> list[str]:
         out: list[str] = []
@@ -191,7 +222,7 @@ class ShopifyDealerSite(DealerSite):
             listing_url=f"{self.base_url}/products/{product.get('handle')}",
             price=price,
             currency=(currency or self.default_currency or "").upper() or None,
-            brand=self.vendor_aliases.get(product.get("vendor", ""), product.get("vendor")) or brand_hint,
+            brand=self._brand(product, title, brand_hint),
             model=_tag_value(tags, "model", "collection") or (product.get("product_type") or None),
             reference=reference,
             condition=_CONDITION_SCHEMA.get((condition or "").casefold(), condition) or self.default_condition,
@@ -220,6 +251,7 @@ class WatchCollectorsUK(ShopifyDealerSite):
     label = "Watch Collectors UK"
     base_url = "https://watchcollectors.co.uk"
     default_currency = "GBP"
+    country = "GB"
     default_condition = "Pre-owned"
 
 

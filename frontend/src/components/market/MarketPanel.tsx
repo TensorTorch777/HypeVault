@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { ArrowUpRight, Database, Radio } from "lucide-react";
 
+import { DealerResults } from "@/components/market/DealerResults";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   type HistogramBin,
@@ -283,6 +284,13 @@ export function MarketPanel({
           <p className="mt-5 rounded-[1.125rem] border border-dashed border-white/15 p-8 text-center text-[0.875rem] text-primary/60">No listings match this search yet.</p>
         )}
       </section>
+
+      {/* Crawled dealer listings always come after eBay and the dataset, from the same search. */}
+      {data.sources.dealers ? (
+        <div className="mt-14 border-t border-white/10 pt-10">
+          <DealerResults section={data.sources.dealers} compact={compact} />
+        </div>
+      ) : null}
     </div>
   );
 }

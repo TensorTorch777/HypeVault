@@ -26,7 +26,6 @@ from listings.models import (
     ReviewDecision,
 )
 from market.routes import _redis_or_none
-from market.dealers.service import search_dealers
 from market.service import search_market
 from storage import upload_file_bytes
 
@@ -169,26 +168,6 @@ async def price_comparison(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Price comparison unavailable. Please try again.",
         )
-
-
-@router.get("/{listing_id}/dealers")
-async def dealer_matches(
-    listing_id: uuid.UUID,
-    db: Annotated[AsyncSession, Depends(get_db)],
-    viewer: Annotated[User | None, Depends(get_optional_user)],
-    limit: int = 8,
-) -> dict:
-    """Dealer listings (1916 Company, Chronext) for this watch, after it passes screening."""
-    listing = await db.get(Listing, listing_id)
-    if not _visible(listing, viewer):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Listing not found")
-    if listing.status != ListingStatus.live:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Dealer search runs after the listing passes screening")
-    try:
-        return await search_dealers(db, listing.product_name, listing.brand, limit=max(1, min(limit, 24)))
-    except Exception as exc:
-        _log.exception("dealer_matches_failed: %s", exc)
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Dealer search unavailable")
 
 
 @router.get("/{listing_id}", response_model=ListingRead)
