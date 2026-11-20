@@ -1,0 +1,75 @@
+# Presentation deployment on EC2. Deliberately excludes GPU/Triton until a CUDA EC2
+# instance, NVIDIA Container Toolkit, a valid Triton model repository and checkpoints exist.
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: hypevault
+      POSTGRES_DB: hypevault
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set_in_env_aws}
+    volumes:
+      - hypevault-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hypevault -d hypevault"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - hypevault-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.backend.aws
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+asyncpg://hypevault:${POSTGRES_PASSWORD:?set_in_env_aws}@postgres:5432/hypevault
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET:?set_in_env_aws}
+      PUBLIC_API_BASE_URL: ${PUBLIC_BASE_URL:?set_in_env_aws}
+      TRITON_HOST: triton
+      TRITON_PORT: "8001"
+      PASSWORD_LOGIN_ENABLED: "false"
+      COOKIE_SECURE: "false"
+    volumes:
+      - hypevault-uploads:/app/backend/local_uploads
+      - hypevault-known-ai:/app/backend/local_known_ai
+      - ../ml_rtx5080:/app/ml_rtx5080:ro
+      - ../backend/identify/data:/app/backend/identify/data:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.frontend.aws
+    restart: unless-stopped
+    environment:
+      INTERNAL_API_URL: http://backend:8000
+      NEXT_PUBLIC_API_URL: ""
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "80:3000"
+    depends_on:
+      - backend
+
+volumes:
+  hypevault-postgres:
+  hypevault-redis:
+  hypevault-uploads:
+  hypevault-known-ai:
