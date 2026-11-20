@@ -1,0 +1,18 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci --no-audit --no-fund
+
+COPY frontend/ ./
+
+# Next.js evaluates rewrites while building. Do not point browser traffic to localhost:8000.
+ENV INTERNAL_API_URL=http://backend:8000 \
+    NEXT_PUBLIC_API_URL="" \
+    NODE_ENV=production
+
+RUN npm run build
+
+EXPOSE 3000
+CMD ["npm", "run", "start"]
